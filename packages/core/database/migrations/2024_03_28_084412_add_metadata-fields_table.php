@@ -8,6 +8,7 @@ use Shopper\Core\Helpers\Migration;
 
 return new class extends Migration
 {
+    /** @var string[] */
     protected array $tables = [
         'brands',
         'channels',
@@ -25,7 +26,7 @@ return new class extends Migration
     public function up(): void
     {
         foreach ($this->tables as $table) {
-            Schema::table($this->getTableName($table), function (Blueprint $blueprint): void {
+            Schema::table($this->getTableName($table), static function (Blueprint $blueprint): void {
                 $blueprint->json('metadata')->nullable();
             });
         }

@@ -32,30 +32,30 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property string $slug
- * @property string|null $sku
- * @property string|null $barcode
- * @property ProductType|null $type
- * @property bool $is_visible
- * @property bool $featured
- * @property Weight $weight_unit
- * @property float|null $weight_value
- * @property Length $height_unit
- * @property float|null $height_value
- * @property Length $width_unit
- * @property float|null $width_value
- * @property Length $depth_unit
- * @property float|null $depth_value
- * @property Volume $volume_unit
- * @property float|null $volume_value
- * @property int|null $security_stock
- * @property int $variants_stock
- * @property string|null $seo_title
- * @property string|null $seo_description
- * @property string|null $external_id
- * @property \Illuminate\Support\Carbon|null $published_at
- * @property array<array-key, mixed>|null $metadata
+ * @property-read string $name
+ * @property-read string $slug
+ * @property-read string|null $sku
+ * @property-read string|null $barcode
+ * @property-read ProductType|null $type
+ * @property-read bool $is_visible
+ * @property-read bool $featured
+ * @property-read Weight $weight_unit
+ * @property-read float|null $weight_value
+ * @property-read Length $height_unit
+ * @property-read float|null $height_value
+ * @property-read Length $width_unit
+ * @property-read float|null $width_value
+ * @property-read Length $depth_unit
+ * @property-read float|null $depth_value
+ * @property-read Volume $volume_unit
+ * @property-read float|null $volume_value
+ * @property-read int|null $security_stock
+ * @property-read int $variants_stock
+ * @property-read string|null $seo_title
+ * @property-read string|null $seo_description
+ * @property-read string|null $external_id
+ * @property-read \Illuminate\Support\Carbon|null $published_at
+ * @property-read array<string, mixed>|null $metadata
  * @property-read int $stock
  * @property-read Brand $brand
  * @property-read \Illuminate\Support\Collection<int, Channel> $channels
@@ -69,10 +69,11 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 class Product extends Model implements HasReviews, SpatieHasMedia
 {
     use HasDimensions;
-
     use HasDiscounts;
+
     /** @use HasFactory<ProductFactory> */
     use HasFactory;
+
     use HasMedia;
     use HasPrices;
     use HasSlug;

@@ -22,9 +22,18 @@ class ZoneFactory extends Factory
      */
     public function definition(): array
     {
+        $currency = Currency::query()->firstOrCreate(
+            ['code' => 'USD'],
+            [
+                'name' => 'US Dollar',
+                'symbol' => '$',
+                'format' => '$1,234.56',
+            ]
+        );
+
         return [
             'name' => $this->faker->unique()->word().' Zone',
-            'currency_id' => Currency::factory(),
+            'currency_id' => $currency->id,
         ];
     }
 }

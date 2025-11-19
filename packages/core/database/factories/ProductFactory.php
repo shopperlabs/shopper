@@ -81,4 +81,11 @@ class ProductFactory extends Factory
             'type' => ProductType::Standard(),
         ]);
     }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (Product $product) {
+            $product->loadMissing('prices');
+        });
+    }
 }

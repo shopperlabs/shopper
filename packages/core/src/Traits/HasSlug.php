@@ -11,12 +11,12 @@ trait HasSlug
 {
     public static function findBySlug(string $slug): self
     {
-        return static::where('slug', $slug)->firstOrFail();
+        return static::query()->where('slug', $slug)->firstOrFail();
     }
 
     protected function slug(): Attribute
     {
-        return Attribute::set(fn ($value): string => $this->generateUniqueSlug($value));
+        return Attribute::set(fn (string $value): string => $this->generateUniqueSlug($value));
     }
 
     protected function generateUniqueSlug(string $value): string

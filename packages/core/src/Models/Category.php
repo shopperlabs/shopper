@@ -19,11 +19,11 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property string $slug
- * @property bool $is_enabled
- * @property int|null $parent_id
- * @property null|self $parent
+ * @property-read string $name
+ * @property-read string $slug
+ * @property-read bool $is_enabled
+ * @property-read int|null $parent_id
+ * @property-read null|self $parent
  */
 #[ObservedBy(CategoryObserver::class)]
 class Category extends Model implements SpatieHasMedia
@@ -58,9 +58,7 @@ class Category extends Model implements SpatieHasMedia
 
     public function updateStatus(bool $status = true): void
     {
-        $this->is_enabled = $status;
-
-        $this->save();
+        $this->update(['is_enabled' => $status]);
     }
 
     /**

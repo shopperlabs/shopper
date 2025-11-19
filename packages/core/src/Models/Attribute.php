@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
+use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -16,19 +16,20 @@ use Shopper\Core\Traits\HasSlug;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property string $slug
- * @property string | null $description
- * @property FieldType $type
- * @property bool $is_enabled
- * @property bool $is_searchable
- * @property bool $is_filterable
- * @property string|null $icon
- * @property string $type_formatted
- * @property \Illuminate\Database\Eloquent\Collection | AttributeValue[] $values
+ * @property-read string $name
+ * @property-read string $slug
+ * @property-read string|null $description
+ * @property-read FieldType $type
+ * @property-read bool $is_enabled
+ * @property-read bool $is_searchable
+ * @property-read bool $is_filterable
+ * @property-read string|null $icon
+ * @property-read string $type_formatted
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, AttributeValue> $values
  */
 class Attribute extends Model
 {
+    /** @use HasFactory<AttributeFactory> */
     use HasFactory;
     use HasSlug;
 
@@ -43,7 +44,7 @@ class Attribute extends Model
     }
 
     /**
-     * @return array<array-key, mixed>
+     * @return array<array-key, FieldType>
      */
     public static function fieldsWithValues(): array
     {
@@ -149,9 +150,9 @@ class Attribute extends Model
         ];
     }
 
-    protected function typeFormatted(): LaravelAttribute
+    protected function typeFormatted(): CastAttribute
     {
-        return LaravelAttribute::make(
+        return CastAttribute::make(
             get: fn (): string => self::typesFields()[$this->type->value]
         );
     }

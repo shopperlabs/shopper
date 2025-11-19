@@ -14,14 +14,14 @@ use Shopper\Core\Helpers\Price as PriceHelper;
 
 /**
  * @property-read int $id
- * @property int | null $amount
- * @property int | null $compare_amount
- * @property int | null $cost_amount
- * @property string $currency_code
- * @property int $currency_id
- * @property int $priceable_id
- * @property string $priceable_type
- * @property Currency $currency
+ * @property-read int|null $amount
+ * @property-read int|null $compare_amount
+ * @property-read int|null $cost_amount
+ * @property-read string $currency_code
+ * @property-read int $currency_id
+ * @property-read int $priceable_id
+ * @property-read string $priceable_type
+ * @property-read Currency $currency
  */
 class Price extends Model
 {
@@ -88,24 +88,24 @@ class Price extends Model
     protected function amount(): Attribute
     {
         return Attribute::make(
-            get: fn (int $value) => $value / 100,
-            set: fn (int $value) => $value * 100,
+            get: fn (?int $value) => $value ? $value / 100 : null,
+            set: fn (?int $value) => $value ? $value * 100 : null,
         );
     }
 
     protected function compareAmount(): Attribute
     {
         return Attribute::make(
-            get: fn (int $value) => $value / 100,
-            set: fn (int $value) => $value * 100,
+            get: fn (?int $value) => $value ? $value / 100 : null,
+            set: fn (?int $value) => $value ? $value * 100 : null,
         );
     }
 
     protected function costAmount(): Attribute
     {
         return Attribute::make(
-            get: fn (int $value) => $value / 100,
-            set: fn (int $value) => $value * 100,
+            get: fn (?int $value) => $value ? $value / 100 : null,
+            set: fn (?int $value) => $value ? $value * 100 : null,
         );
     }
 }

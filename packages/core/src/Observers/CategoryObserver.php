@@ -30,8 +30,8 @@ final class CategoryObserver
             $parent = (new CategoryRepository)
                 ->getById($category->parent_id, ['slug']);
 
-            if ($parent) {
-                $category->slug = $parent->slug.'-'.$category->name;
+            if ($parent instanceof Category) {
+                $category->fill(['slug' => $parent->slug.'-'.$category->name]);
             }
         }
     }

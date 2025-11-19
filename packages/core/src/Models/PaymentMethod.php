@@ -24,19 +24,13 @@ use Shopper\Core\Traits\HasZones;
  */
 class PaymentMethod extends Model
 {
+    /** @use HasFactory<PaymentMethodFactory> */
     use HasFactory;
+
     use HasSlug;
     use HasZones;
 
     protected $guarded = [];
-
-    protected $casts = [
-        'is_enabled' => 'boolean',
-    ];
-
-    protected $appends = [
-        'logo_url',
-    ];
 
     public function getTable(): string
     {
@@ -57,10 +51,17 @@ class PaymentMethod extends Model
         return PaymentMethodFactory::new();
     }
 
+    protected function casts(): array
+    {
+        return [
+            'is_enabled' => 'boolean',
+        ];
+    }
+
     protected function LogoUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->logo ? shopper_asset($this->logo) : null,
+            get: fn (): ?string => $this->logo ? shopper_asset($this->logo) : null,
         );
     }
 }

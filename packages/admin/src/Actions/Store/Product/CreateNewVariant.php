@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\DB;
 use Shopper\Actions\Store\InitialQuantityInventory;
 use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Repositories\VariantRepository;
+use Throwable;
 
 final class CreateNewVariant
 {
+    /**
+     * @param  array<string, mixed>  $state
+     *
+     * @throws Throwable
+     */
     public function __invoke(array $state): ProductVariant
     {
         $data = Arr::except($state, ['quantity', 'prices', 'values']);

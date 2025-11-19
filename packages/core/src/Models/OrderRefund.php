@@ -24,13 +24,10 @@ use Shopper\Core\Enum\OrderRefundStatus;
  */
 class OrderRefund extends Model
 {
+    /** @use HasFactory<OrderRefundFactory> */
     use HasFactory;
 
     protected $guarded = [];
-
-    protected $casts = [
-        'status' => OrderRefundStatus::class,
-    ];
 
     public function __construct(array $attributes = [])
     {
@@ -46,11 +43,18 @@ class OrderRefund extends Model
         return shopper_table('order_refunds');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function customer(): BelongsTo
     {
+        // @phpstan-ignore-next-line
         return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
     }
 
+    /**
+     * @return BelongsTo<Order, $this>
+     */
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class, 'order_id');
@@ -59,6 +63,13 @@ class OrderRefund extends Model
     protected static function newFactory(): OrderRefundFactory
     {
         return OrderRefundFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'status' => OrderRefundStatus::class,
+        ];
     }
 
     protected function setDefaultOrderRefundStatus(): void

@@ -17,7 +17,7 @@ use Shopper\Core\Models\Attribute;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class AttributeForm extends SlideOverComponent implements HasForms
 {
@@ -25,6 +25,9 @@ class AttributeForm extends SlideOverComponent implements HasForms
 
     public ?Attribute $attribute = null;
 
+    /**
+     * @var array<string, mixed>|null
+     */
     public ?array $data = [];
 
     public function mount(?int $attributeId = null): void
@@ -45,10 +48,11 @@ class AttributeForm extends SlideOverComponent implements HasForms
                     ->required()
                     ->live(onBlur: true)
                     ->maxLength(75)
-                    ->afterStateUpdated(function (string $operation, $state, Forms\Set $set): void {
-                        $set('slug', Str::slug($state));
+                    ->afterStateUpdated(function (string $operation, ?string $state, Forms\Set $set): void {
+                        if ($state) {
+                            $set('slug', Str::slug($state));
+                        }
                     }),
-
                 Forms\Components\TextInput::make('slug')
                     ->label(__('shopper::forms.label.slug'))
                     ->disabled()
@@ -56,33 +60,26 @@ class AttributeForm extends SlideOverComponent implements HasForms
                     ->required()
                     ->maxLength(255)
                     ->unique(table: Attribute::class, column: 'slug', ignoreRecord: true),
-
                 Forms\Components\Select::make('type')
                     ->label(__('shopper::forms.label.type'))
                     ->options(FieldType::class)
                     ->required()
                     ->native(false),
-
                 Components\Form\IconPicker::make('icon')
                     ->label(__('shopper::forms.label.icon')),
-
                 Forms\Components\Textarea::make('description')
                     ->label(__('shopper::forms.label.description'))
                     ->hint(__('shopper::words.characters', ['number' => 100]))
                     ->maxLength(100)
                     ->rows(3),
-
                 Forms\Components\Toggle::make('is_enabled')
                     ->label(__('shopper::forms.actions.enable'))
                     ->onColor('success')
                     ->helperText(__('shopper::pages/attributes.attribute_visibility')),
-
                 Components\Separator::make(),
-
                 Forms\Components\Checkbox::make('is_searchable')
                     ->label(__('shopper::forms.label.is_searchable'))
                     ->helperText(__('shopper::pages/attributes.searchable_description')),
-
                 Forms\Components\Checkbox::make('is_filterable')
                     ->label(__('shopper::forms.label.is_filterable'))
                     ->helperText(__('shopper::pages/attributes.filtrable_description')),

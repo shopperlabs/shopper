@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+use Shopper\Core\Enum\OrderRefundStatus;
+use Shopper\Core\Models\Order;
+use Shopper\Core\Models\OrderRefund;
+use Shopper\Core\Models\User;
+
+uses(Tests\TestCase::class);
+
+describe(OrderRefund::class, function (): void {
+    it('belongs to order', function (): void {
+        $order = Order::factory()->create();
+        $refund = OrderRefund::factory()->create(['order_id' => $order->id]);
+
+        expect($refund->order->id)->toBe($order->id);
+    });
+
+    it('belongs to customer', function (): void {
+        $user = User::factory()->create();
+        $order = Order::factory()->create();
+        $refund = OrderRefund::factory()->create([
+            'order_id' => $order->id,
+            'user_id' => $user->id,
+        ]);
+
+        expect($refund->customer->id)->toBe($user->id);
+    });
+
+    it('has status enum', function (): void {
+        $order = Order::factory()->create();
+        $refund = OrderRefund::factory()->create([
+            'order_id' => $order->id,
+            'status' => OrderRefundStatus::Pending,
+        ]);
+
+        expect($refund->status)->toBe(OrderRefundStatus::Pending);
+    });
+})->group('order', 'models');

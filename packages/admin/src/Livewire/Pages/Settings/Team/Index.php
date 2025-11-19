@@ -15,6 +15,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Models\Role;
+use Shopper\Core\Models\User;
 use Shopper\Core\Repositories\UserRepository;
 
 #[Layout('shopper::components.layouts.setting')]
@@ -38,8 +39,8 @@ class Index extends Component implements HasForms, HasTable
                     ->view('shopper::livewire.tables.cells.administrators.name'),
                 Tables\Columns\TextColumn::make('email')
                     ->label(__('shopper::forms.label.email'))
-                    ->icon(fn ($record): string => $record->email_verified_at ? 'untitledui-check-verified-02' : 'untitledui-alert-circle')
-                    ->iconColor(fn ($record): string => $record->email_verified_at ? 'success' : 'danger'),
+                    ->icon(fn (User $record): string => $record->email_verified_at ? 'untitledui-check-verified-02' : 'untitledui-alert-circle')
+                    ->iconColor(fn (User $record): string => $record->email_verified_at ? 'success' : 'danger'),
                 Tables\Columns\TextColumn::make('roles_label')
                     ->label(__('shopper::forms.label.role'))
                     ->badge(),

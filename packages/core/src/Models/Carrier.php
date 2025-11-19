@@ -14,14 +14,14 @@ use Shopper\Core\Traits\HasZones;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property bool $is_enabled
- * @property string | null $slug
- * @property string | null $logo
- * @property string | null $link_url
- * @property string | null $description
- * @property int | null $shipping_amount
- * @property array $metadata
+ * @property-read string $name
+ * @property-read bool $is_enabled
+ * @property-read string|null $slug
+ * @property-read string|null $logo
+ * @property-read string|null $link_url
+ * @property-read string|null $description
+ * @property-read int|null $shipping_amount
+ * @property-read array<string, mixed>|null $metadata
  */
 class Carrier extends Model
 {
@@ -53,6 +53,11 @@ class Carrier extends Model
     public function options(): HasMany
     {
         return $this->hasMany(CarrierOption::class);
+    }
+
+    protected static function newFactory(): CarrierFactory
+    {
+        return CarrierFactory::new();
     }
 
     protected function casts(): array

@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table($this->getTableName('channels'), function (Blueprint $table): void {
+        Schema::table($this->getTableName('channels'), static function (Blueprint $table): void {
             $table->boolean('is_enabled')->default(false)->after('is_default');
         });
     }

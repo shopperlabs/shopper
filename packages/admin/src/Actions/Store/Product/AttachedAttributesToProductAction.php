@@ -9,6 +9,10 @@ use Shopper\Core\Models\Product;
 
 final class AttachedAttributesToProductAction
 {
+    /**
+     * @param  array<int, mixed>  $attributes
+     * @param  array<array-key, mixed>  $customValues
+     */
     public function __invoke(Product $product, array $attributes, array $customValues = []): void
     {
         foreach ($attributes as $attributeId => $values) {

@@ -86,7 +86,7 @@ class Zone extends Model
 
     public function currencyCode(): Attribute
     {
-        return Attribute::get(fn () => $this->loadMissing('currency')->currency->code);
+        return Attribute::get(fn (): string => $this->loadMissing('currency')->currency->code);
     }
 
     /**
@@ -136,6 +136,11 @@ class Zone extends Model
     public function shippingOptions(): HasMany
     {
         return $this->hasMany(CarrierOption::class);
+    }
+
+    protected static function newFactory(): ZoneFactory
+    {
+        return ZoneFactory::new();
     }
 
     protected function casts(): array

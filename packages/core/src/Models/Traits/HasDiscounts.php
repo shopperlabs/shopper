@@ -5,16 +5,21 @@ declare(strict_types=1);
 namespace Shopper\Core\Models\Traits;
 
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Shopper\Core\Models\DiscountDetail;
+use Shopper\Core\Models\Discount;
 
 trait HasDiscounts
 {
     /**
-     * @return MorphToMany<DiscountDetail, $this>
+     * @return MorphToMany<Discount, $this>
      */
     public function discounts(): MorphToMany
     {
-        return $this->morphedByMany(DiscountDetail::class, 'discountable')
-            ->orderBy('created_at', 'desc');
+        return $this->morphToMany(
+            Discount::class,
+            'discountable',
+            shopper_table('discountables'),
+            'discountable_id',
+            'discount_id'
+        )->orderBy('created_at', 'desc');
     }
 }

@@ -14,10 +14,9 @@ use Spatie\Permission\Models\Permission as Model;
  */
 class Permission extends Model
 {
-    protected $casts = [
-        'can_be_removed' => 'boolean',
-    ];
-
+    /**
+     * @return array<string, string>
+     */
     public static function groups(): array
     {
         return [
@@ -73,5 +72,12 @@ class Permission extends Model
             'description' => __('This permission allow you to removed a record of :item.', ['item' => $item]),
             'can_be_removed' => false,
         ]);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'can_be_removed' => 'boolean',
+        ];
     }
 }

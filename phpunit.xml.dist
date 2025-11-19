@@ -8,21 +8,20 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false">
+         stopOnFailure="false"
+>
     <testsuites>
         <testsuite name="Tests">
             <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src/</directory>
-        </whitelist>
-    </filter>
+    <logging>
+        <junit outputFile="build/report.junit.xml"/>
+    </logging>
     <source>
         <include>
-            <directory>packages/admin</directory>
-            <directory>packages/core</directory>
+            <directory>packages/admin/src</directory>
+            <directory>packages/core/src</directory>
         </include>
     </source>
     <php>

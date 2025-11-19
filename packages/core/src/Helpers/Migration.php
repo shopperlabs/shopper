@@ -12,16 +12,9 @@ use Shopper\Core\Enum\Dimension\Weight;
 
 abstract class Migration extends BaseMigration
 {
-    protected string $prefix = '';
-
-    public function __construct()
-    {
-        $this->prefix = config('shopper.core.table_prefix');
-    }
-
     public function getTableName(string $table): string
     {
-        return $this->prefix.$table;
+        return shopper_table($table);
     }
 
     public function addCommonFields(Blueprint $table, bool $hasSoftDelete = false): void

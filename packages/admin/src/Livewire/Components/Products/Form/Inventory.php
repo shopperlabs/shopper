@@ -33,7 +33,7 @@ class Inventory extends Component implements HasForms, HasTable
     public $product;
 
     /**
-     * @var array<array-key, mixed>|null
+     * @var array<string, mixed>|null
      */
     public ?array $data = [];
 
@@ -99,7 +99,7 @@ class Inventory extends Component implements HasForms, HasTable
                     ->label(__('shopper::pages/settings/menu.location')),
                 Tables\Columns\TextColumn::make('adjustment')
                     ->label(__('shopper::words.adjustment'))
-                    ->color(function (InventoryHistory $record) {
+                    ->color(function (InventoryHistory $record): string {
                         if ($record->old_quantity > 0) {
                             return 'success';
                         }
@@ -113,7 +113,7 @@ class Inventory extends Component implements HasForms, HasTable
                     ->alignRight(),
                 Tables\Columns\TextColumn::make('quantity')
                     ->label(__('shopper::pages/products.inventory.movement'))
-                    ->color(fn (InventoryHistory $record) => $record->quantity <= 0 ? 'danger' : 'gray')
+                    ->color(fn (InventoryHistory $record): string => $record->quantity <= 0 ? 'danger' : 'gray')
                     ->alignRight()
                     ->summarize([
                         Tables\Columns\Summarizers\Sum::make()
@@ -184,7 +184,7 @@ class Inventory extends Component implements HasForms, HasTable
             ->filters([
                 Tables\Filters\SelectFilter::make('inventory')
                     ->relationship('inventory', 'name')
-                    ->native(false),
+                    ->searchable(),
             ])
             ->groups([
                 Tables\Grouping\Group::make('inventory.name')

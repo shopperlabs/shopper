@@ -15,14 +15,14 @@ use Shopper\Core\Traits\HasSlug;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property string|null $slug
- * @property string|null $description
- * @property string|null $timezone
- * @property string|null $url
- * @property bool $is_default
- * @property bool $is_enabled
- * @property array<array-key, mixed>|null $metadata
+ * @property-read string $name
+ * @property-read string|null $slug
+ * @property-read string|null $description
+ * @property-read string|null $timezone
+ * @property-read string|null $url
+ * @property-read bool $is_default
+ * @property-read bool $is_enabled
+ * @property-read array<array-key, mixed>|null $metadata
  * @property-read \Illuminate\Support\Collection<int, Product> $products
  */
 #[ObservedBy(ChannelObserver::class)]

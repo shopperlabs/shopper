@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->getTableName('currencies'), function (Blueprint $table): void {
+        Schema::create($this->getTableName('currencies'), static function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->string('code', 10)->index();

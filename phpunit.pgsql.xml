@@ -18,15 +18,10 @@
     <logging>
         <junit outputFile="build/report.junit.xml"/>
     </logging>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".blade.php">packages/</directory>
-        </whitelist>
-    </filter>
     <source>
         <include>
-            <directory>packages/admin</directory>
-            <directory>packages/core</directory>
+            <directory>packages/admin/src</directory>
+            <directory>packages/core/src</directory>
         </include>
     </source>
     <php>

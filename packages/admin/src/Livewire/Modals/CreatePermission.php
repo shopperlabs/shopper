@@ -23,6 +23,9 @@ class CreatePermission extends ModalComponent implements HasForms
 
     public int $roleId;
 
+    /**
+     * @var array<string, mixed>|null
+     */
     public ?array $data = [];
 
     public static function modalMaxWidth(): string

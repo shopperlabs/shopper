@@ -12,31 +12,30 @@ use Shopper\Core\Database\Factories\CurrencyFactory;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property string $code
- * @property string $symbol
- * @property string $format
- * @property float $exchange_rate
- * @property bool $is_enabled
+ * @property-read string $name
+ * @property-read string $code
+ * @property-read string $symbol
+ * @property-read string $format
+ * @property-read float $exchange_rate
+ * @property-read bool $is_enabled
  */
 class Currency extends Model
 {
+    /** @use HasFactory<CurrencyFactory> */
     use HasFactory;
 
     public $timestamps = false;
 
     protected $guarded = [];
 
-    protected $casts = [
-        'exchange_rate' => 'float',
-        'is_enabled' => 'boolean',
-    ];
-
     public function getTable(): string
     {
         return shopper_table('currencies');
     }
 
+    /**
+     * @return HasOne<Zone, $this>
+     */
     public function zone(): HasOne
     {
         return $this->hasOne(Zone::class);
@@ -52,5 +51,13 @@ class Currency extends Model
     protected static function newFactory(): CurrencyFactory
     {
         return CurrencyFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'exchange_rate' => 'float',
+            'is_enabled' => 'boolean',
+        ];
     }
 }

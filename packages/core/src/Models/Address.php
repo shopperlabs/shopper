@@ -15,33 +15,28 @@ use Shopper\Core\Observers\AddressObserver;
 
 /**
  * @property-read int $id
- * @property string $last_name
- * @property string | null $first_name
- * @property string $full_name
- * @property string | null $company_name
- * @property string $street_address
- * @property string | null $street_address_plus
- * @property string $postal_code
- * @property string $city
- * @property AddressType $type
- * @property string | null $phone_number
- * @property bool $shipping_default
- * @property bool $billing_default
- * @property int $user_id
- * @property int $country_id
+ * @property-read string $last_name
+ * @property-read string|null $first_name
+ * @property-read string $full_name
+ * @property-read string|null $company_name
+ * @property-read string $street_address
+ * @property-read string|null $street_address_plus
+ * @property-read string $postal_code
+ * @property-read string $city
+ * @property-read AddressType $type
+ * @property-read string|null $phone_number
+ * @property-read bool $shipping_default
+ * @property-read bool $billing_default
+ * @property-read int $user_id
+ * @property-read int $country_id
  */
 #[ObservedBy(AddressObserver::class)]
 class Address extends Model
 {
+    /** @use HasFactory<AddressFactory> */
     use HasFactory;
 
     protected $guarded = [];
-
-    protected $casts = [
-        'billing_default' => 'boolean',
-        'shipping_default' => 'boolean',
-        'type' => AddressType::class,
-    ];
 
     public function getTable(): string
     {
@@ -58,11 +53,17 @@ class Address extends Model
         return $this->billing_default === true;
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
     }
 
+    /**
+     * @return BelongsTo<Country, $this>
+     */
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'country_id');
@@ -73,11 +74,20 @@ class Address extends Model
         return AddressFactory::new();
     }
 
+    protected function casts(): array
+    {
+        return [
+            'billing_default' => 'boolean',
+            'shipping_default' => 'boolean',
+            'type' => AddressType::class,
+        ];
+    }
+
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->first_name
-                ? $this->first_name.' '.$this->last_name
+            get: fn (): string => $this->first_name
+                ? implode(' ', [$this->first_name, $this->last_name])
                 : $this->last_name
         );
     }

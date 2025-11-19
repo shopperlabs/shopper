@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table($this->getTableName('products'), function (Blueprint $table): void {
+        Schema::table($this->getTableName('products'), static function (Blueprint $table): void {
             $table->renameColumn(from: 'requires_shipping', to: 'require_shipping');
         });
     }

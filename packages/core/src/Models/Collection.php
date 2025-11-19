@@ -17,11 +17,11 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
- * @property CollectionType $type
- * @property string $name
- * @property string $slug
- * @property string|null $description
- * @property array<array-key, mixed>|null $metadata
+ * @property-read CollectionType $type
+ * @property-read string $name
+ * @property-read string $slug
+ * @property-read string|null $description
+ * @property-read array<string, mixed>|null $metadata
  * @property-read \Illuminate\Support\Collection<int, CollectionRule> $rules
  * @property-read \Illuminate\Support\Collection<int, Product> $products
  */
@@ -71,7 +71,7 @@ class Collection extends Model implements SpatieHasMedia
      */
     public function scopeManual(Builder $query): Builder
     {
-        return $query->where('type', CollectionType::Manual());
+        return $query->where('type', CollectionType::Manual);
     }
 
     /**
@@ -80,7 +80,7 @@ class Collection extends Model implements SpatieHasMedia
      */
     public function scopeAutomatic(Builder $query): Builder
     {
-        return $query->where('type', CollectionType::Auto());
+        return $query->where('type', CollectionType::Auto);
     }
 
     /**

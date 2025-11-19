@@ -53,11 +53,16 @@ class OrderAddress extends Model
         return $this->belongsTo(config('auth.providers.users.model', User::class), 'customer_id');
     }
 
+    protected static function newFactory(): OrderAddressFactory
+    {
+        return OrderAddressFactory::new();
+    }
+
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->first_name
-                ? $this->first_name.' '.$this->last_name
+            get: fn (): string => $this->first_name
+                ? implode(' ', [$this->first_name, $this->last_name])
                 : $this->last_name
         );
     }

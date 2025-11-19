@@ -12,11 +12,11 @@ use Shopper\Core\Database\Factories\DiscountDetailFactory;
 
 /**
  * @property-read int $id
- * @property string $condition
- * @property string $discountable_type
- * @property int $discountable_id
- * @property int $discount_id
- * @property int $total_use
+ * @property-read string $condition
+ * @property-read string $discountable_type
+ * @property-read int $discountable_id
+ * @property-read int $discount_id
+ * @property-read int $total_use
  * @property-read Discount $discount
  * @property-read Model $discountable
  */

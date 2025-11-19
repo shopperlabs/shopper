@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Shopper\Core\Enum\GenderType;
 use Shopper\Core\Helpers\Migration;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table): void {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn('name');
             $table->string('password')->nullable()->change();
 
-            $table->after('id', function (Blueprint $table): void {
+            $table->after('id', static function (Blueprint $table): void {
                 $table->string('first_name')->nullable();
                 $table->string('last_name');
-                $table->string('gender')->default(GenderType::Male());
+                $table->string('gender');
                 $table->string('phone_number')->nullable();
                 $table->date('birth_date')->nullable();
                 $table->string('avatar_type')->default('avatar_ui');
@@ -33,7 +32,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table): void {
+        Schema::table('users', static function (Blueprint $table): void {
             $table->dropColumn([
                 'first_name',
                 'last_name',

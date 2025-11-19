@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
+use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,17 +12,18 @@ use Shopper\Core\Database\Factories\AttributeProductFactory;
 
 /**
  * @property-read int $id
- * @property int $attribute_id
- * @property int $product_id
- * @property string | null $attribute_custom_value
- * @property int | null $attribute_value_id
- * @property AttributeValue | null $value
+ * @property-read int $attribute_id
+ * @property-read int $product_id
+ * @property-read string|null $attribute_custom_value
+ * @property-read int|null $attribute_value_id
+ * @property-read AttributeValue|null $value
  * @property-read string $real_value
- * @property Product $product
- * @property Attribute $attribute
+ * @property-read Product $product
+ * @property-read Attribute $attribute
  */
 class AttributeProduct extends Model
 {
+    /** @use HasFactory<AttributeProductFactory> */
     use HasFactory;
 
     public $timestamps = false;
@@ -34,16 +35,25 @@ class AttributeProduct extends Model
         return shopper_table('attribute_product');
     }
 
+    /**
+     * @return BelongsTo<Attribute, $this>
+     */
     public function attribute(): BelongsTo
     {
         return $this->belongsTo(Attribute::class, 'attribute_id');
     }
 
+    /**
+     * @return BelongsTo<Product, $this>
+     */
     public function product(): BelongsTo
     {
         return $this->belongsTo(config('shopper.models.product'), 'product_id');
     }
 
+    /**
+     * @return BelongsTo<AttributeValue, $this>
+     */
     public function value(): BelongsTo
     {
         return $this->belongsTo(AttributeValue::class, 'attribute_value_id');
@@ -54,8 +64,8 @@ class AttributeProduct extends Model
         return AttributeProductFactory::new();
     }
 
-    protected function realValue(): LaravelAttribute
+    protected function realValue(): CastAttribute
     {
-        return LaravelAttribute::get(fn (): string => $this->attribute_custom_value ?? $this->value?->value);
+        return CastAttribute::get(fn (): string => $this->attribute_custom_value ?? $this->value?->value);
     }
 }

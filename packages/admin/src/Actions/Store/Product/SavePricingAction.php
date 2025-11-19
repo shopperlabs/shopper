@@ -9,6 +9,9 @@ use Shopper\Core\Models\Price;
 
 final class SavePricingAction
 {
+    /**
+     * @param  array<string, mixed>  $pricing
+     */
     public function __invoke(array $pricing, Model $model): void
     {
         foreach ($pricing as $key => $price) {

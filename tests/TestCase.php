@@ -17,11 +17,15 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use JaOcero\RadioDeck\RadioDeckServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
+use Milon\Barcode\BarcodeServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use PDO;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Core\Database\Seeders\ShopperSeeder;
+use Shopper\Core\Models\Currency;
+use Shopper\Core\Models\Setting;
 use Shopper\Core\Models\User;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
@@ -29,7 +33,6 @@ use Spatie\LivewireWizard\WizardServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
 use TailwindMerge\Laravel\TailwindMergeServiceProvider;
-use PDO;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -54,6 +57,7 @@ abstract class TestCase extends BaseTestCase
     {
         return [
             ActionsServiceProvider::class,
+            BarcodeServiceProvider::class,
             BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
             BladeUntitledUIIconsServiceProvider::class,
@@ -96,6 +100,9 @@ abstract class TestCase extends BaseTestCase
             ...$app['config']->get('view.paths'),
             __DIR__.'/../packages/admin/resources/views',
         ]);
+
+        $app['config']->set('shopper.currency.default', 'USD');
+        $app['config']->set('shopper.currency.currencies', ['USD']);
 
         $app['config']->set('database.connections.sqlite', [
             'driver' => 'sqlite',

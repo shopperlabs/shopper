@@ -15,44 +15,51 @@ use Shopper\Core\Observers\InventoryObserver;
 
 /**
  * @property-read int $id
- * @property int $country_id
- * @property string $name
- * @property string $code
- * @property string $email
- * @property string $city
- * @property string|null $description
- * @property string|null $street_address
- * @property string|null $street_address_plus
- * @property string $postal_code
- * @property string|null $phone_number
- * @property bool $is_default
+ * @property-read int $country_id
+ * @property-read string $name
+ * @property-read string $code
+ * @property-read string $email
+ * @property-read string $city
+ * @property-read string|null $description
+ * @property-read string|null $street_address
+ * @property-read string|null $street_address_plus
+ * @property-read string $postal_code
+ * @property-read string|null $phone_number
+ * @property-read bool $is_default
  */
 #[ObservedBy(InventoryObserver::class)]
 class Inventory extends Model
 {
+    /** @use HasFactory<InventoryFactory> */
     use HasFactory;
 
     protected $guarded = [];
-
-    protected $casts = [
-        'is_default' => 'boolean',
-    ];
 
     public function getTable(): string
     {
         return shopper_table('inventories');
     }
 
+    /**
+     * @param  Builder<Inventory>  $query
+     * @return Builder<Inventory>
+     */
     public function scopeDefault(Builder $query): Builder
     {
         return $query->where('is_default', true);
     }
 
+    /**
+     * @return BelongsTo<Country, $this>
+     */
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'country_id');
     }
 
+    /**
+     * @return HasMany<InventoryHistory, $this>
+     */
     public function histories(): HasMany
     {
         return $this->hasMany(InventoryHistory::class);
@@ -61,5 +68,12 @@ class Inventory extends Model
     protected static function newFactory(): InventoryFactory
     {
         return InventoryFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_default' => 'boolean',
+        ];
     }
 }

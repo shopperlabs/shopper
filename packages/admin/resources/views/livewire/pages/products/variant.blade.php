@@ -98,7 +98,7 @@
                             <x-filament-tables::header-cell class="lg:py-3" />
                         </x-slot>
 
-                        @foreach($variant->values->loadMissing('attribute') as $value)
+                        @foreach ($variant->values->loadMissing('attribute') as $value)
                             <x-filament-tables::row>
                                 <x-filament-tables::cell>
                                     <div class="grid w-full gap-y-1 py-2 px-3">
@@ -148,9 +148,9 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::forms.label.barcode') }}
                             </dt>
-                            @if($variant->barcode)
+                            @if ($variant->barcode)
                                 <dd class="mt-2 space-y-1.5 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
-                                    {!! DNS1D::getBarcodeHTML($variant->barcode, config('shopper.core.barcode_type')) !!}
+                                    {!! Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($variant->barcode, config('shopper.core.barcode_type')) !!}
                                 </dd>
                             @endif
                         </div>
@@ -173,7 +173,7 @@
                     {{ $this->mediaAction }}
                 </div>
                 <div class="p-4 space-y-6">
-                    @if($this->variant->media->isEmpty())
+                    @if ($this->variant->media->isEmpty())
                         <div class="text-center text-sm leading-5">
                             <p class="text-sm/5 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::words.images') }}
@@ -184,7 +184,7 @@
                         </div>
                     @endif
 
-                    @if($this->variant->getFirstMedia(config('shopper.media.storage.thumbnail_collection')))
+                    @if ($this->variant->getFirstMedia(config('shopper.media.storage.thumbnail_collection')))
                         <div class="space-y-3">
                             <p class="text-sm/5 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::forms.label.thumbnail') }}
@@ -197,13 +197,13 @@
                         </div>
                     @endif
 
-                    @if($this->variant->getMedia(config('shopper.media.storage.collection_name'))->isNotEmpty())
+                    @if ($this->variant->getMedia(config('shopper.media.storage.collection_name'))->isNotEmpty())
                         <div class="space-y-3">
                             <p class="text-sm/5 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::words.images') }}
                             </p>
                             <div class="flex flex-wrap gap-4">
-                                @foreach($this->variant->getMedia(config('shopper.media.storage.collection_name')) as $media)
+                                @foreach ($this->variant->getMedia(config('shopper.media.storage.collection_name')) as $media)
                                     <img
                                         class="rounded-lg max-w-none object-cover object-center ring-white dark:ring-gray-900 size-[3.5rem]"
                                         src="{{ $media->getFullUrl() }}"

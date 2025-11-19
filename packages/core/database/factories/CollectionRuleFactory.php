@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Shopper\Core\Enum\Operator;
+use Shopper\Core\Enum\Rule;
 use Shopper\Core\Models\CollectionRule;
 
 /**
@@ -22,8 +24,8 @@ class CollectionRuleFactory extends Factory
     public function definition(): array
     {
         return [
-            'rule' => $this->faker->word(),
-            'operator' => $this->faker->word(),
+            'rule' => $this->faker->randomElement(Rule::cases()),
+            'operator' => $this->faker->randomElement(Operator::cases()),
             'value' => $this->faker->word(),
         ];
     }

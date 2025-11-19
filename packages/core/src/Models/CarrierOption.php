@@ -20,7 +20,7 @@ use Shopper\Core\Database\Factories\CarrierOptionFactory;
  * @property-read bool $is_enabled
  * @property-read Zone $zone
  * @property-read Carrier $carrier
- * @property-read array<array-key, mixed>|null $metadata
+ * @property-read array<string, mixed>|null $metadata
  */
 class CarrierOption extends Model
 {
@@ -80,8 +80,8 @@ class CarrierOption extends Model
     protected function price(): Attribute
     {
         return Attribute::make(
-            get: fn (int $value) => $value / 100,
-            set: fn (int $value) => $value * 100,
+            get: fn (int $value): int => $value / 100,
+            set: fn (int $value): int => $value * 100,
         );
     }
 }

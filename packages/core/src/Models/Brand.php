@@ -15,28 +15,24 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property string | null $slug
- * @property string | null $website
- * @property string | null $description
- * @property int $position
- * @property bool $is_enabled
- * @property string | null $seo_title
- * @property string | null $seo_description
- * @property array $metadata
+ * @property-read string $name
+ * @property-read string|null $slug
+ * @property-read string|null $website
+ * @property-read string|null $description
+ * @property-read int $position
+ * @property-read bool $is_enabled
+ * @property-read string|null $seo_title
+ * @property-read string|null $seo_description
+ * @property-read array<string, mixed>|null $metadata
  */
 class Brand extends Model implements SpatieHasMedia
 {
+    /** @use HasFactory<BrandFactory> */
     use HasFactory;
     use HasMedia;
     use HasSlug;
 
     protected $guarded = [];
-
-    protected $casts = [
-        'is_enabled' => 'boolean',
-        'metadata' => 'array',
-    ];
 
     public function getTable(): string
     {
@@ -45,9 +41,7 @@ class Brand extends Model implements SpatieHasMedia
 
     public function updateStatus(bool $status = true): void
     {
-        $this->is_enabled = $status;
-
-        $this->save();
+        $this->update(['is_enabled' => $status]);
     }
 
     /**
@@ -59,13 +53,25 @@ class Brand extends Model implements SpatieHasMedia
         return $query->where('is_enabled', true);
     }
 
+    /**
+     * @return HasMany<Product, $this>
+     */
     public function products(): HasMany
     {
+        // @phpstan-ignore-next-line
         return $this->hasMany(config('shopper.models.product'));
     }
 
     protected static function newFactory(): BrandFactory
     {
         return BrandFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_enabled' => 'boolean',
+            'metadata' => 'array',
+        ];
     }
 }

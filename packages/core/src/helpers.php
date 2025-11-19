@@ -12,6 +12,7 @@ use Shopper\Core\Models\Setting;
 if (! function_exists('generate_number')) {
     function generate_number(): string
     {
+        /** @var ?Order $lastOrder */
         $lastOrder = Order::query()->orderBy('id', 'desc')
             ->limit(1)
             ->first();
@@ -91,6 +92,9 @@ if (! function_exists('shopper_setting')) {
 }
 
 if (! function_exists('useTryCatch')) {
+    /**
+     * @return array<array-key, mixed>
+     */
     function useTryCatch(Closure $closure, ?Closure $catchable = null): array
     {
         $result = null;

@@ -10,14 +10,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table($this->getTableName('attributes'), function (Blueprint $table): void {
+        Schema::table($this->getTableName('attributes'), static function (Blueprint $table): void {
             $table->string('icon')->nullable();
         });
     }
 
     public function down(): void
     {
-        Schema::table($this->getTableName('attributes'), function (Blueprint $table): void {
+        Schema::table($this->getTableName('attributes'), static function (Blueprint $table): void {
             $table->dropColumn('icon');
         });
     }

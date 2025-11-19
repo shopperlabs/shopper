@@ -12,6 +12,7 @@ return new class extends Migration
     {
         Schema::create($this->getTableName('order_addresses'), function (Blueprint $table): void {
             $this->addCommonFields($table);
+
             $this->addForeignKey($table, 'customer_id', 'users');
             $table->string('last_name');
             $table->string('first_name');
