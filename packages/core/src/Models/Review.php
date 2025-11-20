@@ -18,6 +18,8 @@ use Shopper\Core\Database\Factories\ReviewFactory;
  * @property-read string|null $content
  * @property-read int $reviewrateable_id
  * @property-read string $reviewrateable_type
+ * @property-read int $author_id
+ * @property-read string $author_type
  * @property-read int $rating
  */
 class Review extends Model
@@ -32,11 +34,17 @@ class Review extends Model
         return shopper_table('reviews');
     }
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function reviewrateable(): MorphTo
     {
         return $this->morphTo();
     }
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function author(): MorphTo
     {
         return $this->morphTo('author');

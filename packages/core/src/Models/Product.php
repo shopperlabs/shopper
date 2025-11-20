@@ -25,10 +25,10 @@ use Shopper\Core\Models\Traits\HasDimensions;
 use Shopper\Core\Models\Traits\HasDiscounts;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasPrices;
+use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasStock;
 use Shopper\Core\Models\Traits\InteractsWithReviews;
 use Shopper\Core\Observers\ProductObserver;
-use Shopper\Core\Traits\HasSlug;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**

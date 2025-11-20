@@ -21,7 +21,7 @@ class DefaultMenu implements Menu, Serializable
     use CallableTrait;
 
     /**
-     * @var Collection<int, Group>
+     * @var Collection<array-key, Group>
      */
     protected Collection $groups;
 
@@ -74,7 +74,7 @@ class DefaultMenu implements Menu, Serializable
     }
 
     /**
-     * @return Collection<int, Group>
+     * @return Collection<array-key, Group>
      */
     public function getGroups(): Collection
     {

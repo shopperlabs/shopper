@@ -18,7 +18,7 @@ trait HasStock
         return $this->stock > 0 && $this->stock >= $quantity;
     }
 
-    public function getStock(?DateTimeInterface $date = null): int
+    public function getStock(string|DateTimeInterface|null $date = null): int
     {
         $date = $date ?: Carbon::now();
 
@@ -45,16 +45,25 @@ trait HasStock
             ->sum('quantity');
     }
 
+    /**
+     * @param  array<string, mixed>  $arguments
+     */
     public function mutateStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
         return $this->createStockMutation($quantity, $inventoryId, $arguments);
     }
 
+    /**
+     * @param  array<string, mixed>  $arguments
+     */
     public function decreaseStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
         return $this->createStockMutation(-1 * abs($quantity), $inventoryId, $arguments);
     }
 
+    /**
+     * @param  array<string, mixed>  $arguments
+     */
     public function clearStock(?int $inventoryId = null, ?int $newQuantity = null, array $arguments = []): bool
     {
         $this->inventoryHistories()->delete();
@@ -66,6 +75,9 @@ trait HasStock
         return true;
     }
 
+    /**
+     * @param  array<string, mixed>  $arguments
+     */
     public function setStock(int $newQuantity, int $inventoryId, array $arguments = []): ?InventoryHistory
     {
         $currentStock = $this->stock;
@@ -78,6 +90,9 @@ trait HasStock
         return $this->createStockMutation($deltaStock, $inventoryId, $arguments);
     }
 
+    /**
+     * @param  array<string, mixed>  $arguments
+     */
     public function createStockMutation(int $quantity, int $inventoryId, array $arguments = []): InventoryHistory
     {
         $reference = Arr::get($arguments, 'reference');
@@ -101,13 +116,9 @@ trait HasStock
      */
     public function inventoryHistories(): MorphMany
     {
-        return $this->morphMany(InventoryHistory::class, 'stockable')
-            ->orderBy('created_at', 'desc');
+        return $this->morphMany(InventoryHistory::class, 'stockable');
     }
 
-    /**
-     * @return Attribute<non-falsy-string, never>
-     */
     protected function stock(): Attribute
     {
         return Attribute::make(

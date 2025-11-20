@@ -6,6 +6,9 @@ namespace Shopper\Traits;
 
 trait LoadComponents
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function loadLivewireComponents(string $feature): array
     {
         return array_merge(

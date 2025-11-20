@@ -10,6 +10,7 @@ use Shopper\Core\Models\Currency;
 
 final class CurrenciesTableSeeder extends Seeder
 {
+    /** @var array<string, array<string, mixed>> */
     protected array $currencies;
 
     public function __construct()

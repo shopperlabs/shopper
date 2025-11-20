@@ -17,7 +17,7 @@
     "source": "https://github.com/shopperlabs/framework"
   },
   "require": {
-    "php": "^8.2",
+    "php": "^8.3",
     "bacon/bacon-qr-code": "^2.0",
     "codeat3/blade-phosphor-icons": "^2.0",
     "codewithdennis/filament-select-tree": "^3.1",

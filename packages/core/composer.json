@@ -4,7 +4,7 @@
   "license": "MIT",
   "require": {
     "ext-intl": "*",
-    "php": "^8.2",
+    "php": "^8.3",
     "filament/support": "^3.3",
     "laravel/prompts": "^0.3.5",
     "mckenziearts/blade-untitledui-icons": "^1.4",

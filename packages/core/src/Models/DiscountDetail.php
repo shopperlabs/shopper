@@ -40,6 +40,9 @@ class DiscountDetail extends Model
         return $this->belongsTo(Discount::class, 'discount_id');
     }
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function discountable(): MorphTo
     {
         return $this->morphTo();

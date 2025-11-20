@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\ChannelFactory;
+use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Observers\ChannelObserver;
-use Shopper\Core\Traits\HasSlug;
 
 /**
  * @property-read int $id

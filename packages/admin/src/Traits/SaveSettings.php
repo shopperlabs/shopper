@@ -9,6 +9,9 @@ use Shopper\Core\Models\Setting;
 
 trait SaveSettings
 {
+    /**
+     * @param  array<string, mixed>  $keys
+     */
     public function saveSettings(array $keys): void
     {
         foreach ($keys as $key => $value) {

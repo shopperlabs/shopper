@@ -5,20 +5,6 @@ declare(strict_types=1);
 use Illuminate\Support\Str;
 use Shopper\ShopperPanel;
 
-if (! function_exists('active')) {
-    function active(array $routes, string $activeClass = 'active', string $defaultClass = '', bool $condition = true): string
-    {
-        return call_user_func_array([app('router'), 'is'], $routes) && $condition ? $activeClass : $defaultClass;
-    }
-}
-
-if (! function_exists('is_active')) {
-    function is_active(array $routes): bool
-    {
-        return (bool) call_user_func_array([app('router'), 'is'], $routes);
-    }
-}
-
 if (! function_exists('get_asset_id')) {
     function get_asset_id(string $file, ?string $manifestPath = null): ?string
     {
@@ -28,7 +14,8 @@ if (! function_exists('get_asset_id')) {
             return null;
         }
 
-        $manifest = json_decode(file_get_contents($manifestPath), associative: true);
+        /** @var array<string, mixed> $manifest */
+        $manifest = json_decode((string) file_get_contents($manifestPath), associative: true);
 
         $file = "/{$file}";
 

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\ZoneFactory;
-use Shopper\Core\Traits\HasSlug;
+use Shopper\Core\Models\Traits\HasSlug;
 
 /**
  * @property-read int $id

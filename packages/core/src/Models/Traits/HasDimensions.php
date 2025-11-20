@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 trait HasDimensions
 {
-    /**
-     * @return Attribute<non-falsy-string, never>
-     */
     protected function width(): Attribute
     {
         return Attribute::get(
@@ -18,9 +15,6 @@ trait HasDimensions
         );
     }
 
-    /**
-     * @return Attribute<non-falsy-string, never>
-     */
     protected function weight(): Attribute
     {
         return Attribute::get(
@@ -28,9 +22,6 @@ trait HasDimensions
         );
     }
 
-    /**
-     * @return Attribute<non-falsy-string, never>
-     */
     protected function height(): Attribute
     {
         return Attribute::get(
@@ -38,9 +29,6 @@ trait HasDimensions
         );
     }
 
-    /**
-     * @return Attribute<non-falsy-string, never>
-     */
     protected function depth(): Attribute
     {
         return Attribute::get(
@@ -48,9 +36,6 @@ trait HasDimensions
         );
     }
 
-    /**
-     * @return Attribute<non-falsy-string, never>
-     */
     protected function volume(): Attribute
     {
         return Attribute::get(

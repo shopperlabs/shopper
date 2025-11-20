@@ -10,6 +10,7 @@ use Shopper\Core\Models\Country;
 
 final class CountriesTableSeeder extends Seeder
 {
+    /** @var array<int, array<string, mixed>> */
     protected array $countries;
 
     public function __construct()

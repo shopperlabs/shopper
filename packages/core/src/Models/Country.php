@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Database\Factories\CountryFactory;
-use Shopper\Core\Traits\HasZones;
+use Shopper\Core\Models\Traits\HasZones;
 
 /**
  * @property-read int $id

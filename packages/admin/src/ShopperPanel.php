@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper;
 
 use Closure;
+use Exception;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Foundation\Vite;
@@ -34,6 +35,11 @@ final class ShopperPanel
         $this->theme = $theme;
     }
 
+    /**
+     * @param  string|array<string, mixed>  $theme
+     *
+     * @throws Exception
+     */
     public function registerViteTheme(string|array $theme, ?string $buildDirectory = null): void
     {
         $this->theme = app(Vite::class)($theme, $buildDirectory);

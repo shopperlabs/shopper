@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum\Dimension;
 
+use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 use Shopper\Core\Traits\HasEnumStaticMethods;
 
@@ -12,7 +13,7 @@ use Shopper\Core\Traits\HasEnumStaticMethods;
  * @method static string G()
  * @method static string LBS()
  */
-enum Weight: string
+enum Weight: string implements HasLabel
 {
     use ArrayableEnum;
     use HasEnumStaticMethods;
@@ -22,4 +23,13 @@ enum Weight: string
     case G = 'g';
 
     case LBS = 'lbs';
+
+    public function getLabel(): string
+    {
+        return match ($this) {
+            self::KG => 'kg',
+            self::G => 'g',
+            self::LBS => 'lbs',
+        };
+    }
 }

@@ -132,11 +132,11 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->query(fn (Builder $query, array $data): Builder => $query
                         ->when(
                             $data['start_at_from'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('start_at', '>=', $date),
+                            fn (Builder $query, mixed $date): Builder => $query->whereDate('start_at', '>=', $date),
                         )
                         ->when(
                             $data['start_at_until'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('start_at', '<=', $date),
+                            fn (Builder $query, mixed $date): Builder => $query->whereDate('start_at', '<=', $date),
                         )),
             ])
             ->emptyStateIcon('heroicon-o-gift')

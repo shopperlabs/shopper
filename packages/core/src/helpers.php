@@ -44,6 +44,7 @@ if (! function_exists('shopper_table')) {
 if (! function_exists('shopper_asset')) {
     function shopper_asset(string $file): string
     {
+        // @phpstan-ignore-next-line
         return Storage::disk(config('shopper.media.storage.disk_name'))->url($file);
     }
 }
@@ -70,7 +71,7 @@ if (! function_exists('shopper_currency')) {
 if (! function_exists('shopper_money_format')) {
     function shopper_money_format(int|float $amount, ?string $currency = null): string
     {
-        return Number::currency(
+        return (string) Number::currency(
             number: $amount,
             in: $currency ?? shopper_currency(),
             locale: app()->getLocale()

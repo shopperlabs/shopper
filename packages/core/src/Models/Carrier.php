@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\CarrierFactory;
-use Shopper\Core\Traits\HasSlug;
-use Shopper\Core\Traits\HasZones;
+use Shopper\Core\Models\Traits\HasSlug;
+use Shopper\Core\Models\Traits\HasZones;
 
 /**
  * @property-read int $id

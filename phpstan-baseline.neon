@@ -19,124 +19,10 @@ parameters:
 			path: packages/admin/src/Actions/Auth/AttemptToAuthenticate.php
 
 		-
-			message: '#^Method Shopper\\Actions\\Auth\\AttemptToAuthenticate\:\:handle\(\) has parameter \$request with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Actions/Auth/AttemptToAuthenticate.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Auth\\ConfirmPassword\:\:__invoke\(\) has parameter \$user with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Actions/Auth/ConfirmPassword.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Auth\\DisableTwoFactorAuthentication\:\:__invoke\(\) has parameter \$user with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Actions/Auth/DisableTwoFactorAuthentication.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Auth\\EnableTwoFactorAuthentication\:\:__invoke\(\) has parameter \$user with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Actions/Auth/EnableTwoFactorAuthentication.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Auth\\GenerateNewRecoveryCodes\:\:__invoke\(\) has parameter \$user with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Actions/Auth/GenerateNewRecoveryCodes.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Support\\Optional\:\:\$two_factor_secret\.$#'
-			identifier: property.notFound
-			count: 1
-			path: packages/admin/src/Actions/Auth/RedirectIfTwoFactorAuthenticatable.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Auth\\RedirectIfTwoFactorAuthenticatable\:\:handle\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: packages/admin/src/Actions/Auth/RedirectIfTwoFactorAuthenticatable.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Auth\\RedirectIfTwoFactorAuthenticatable\:\:handle\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Actions/Auth/RedirectIfTwoFactorAuthenticatable.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Auth\\RedirectIfTwoFactorAuthenticatable\:\:twoFactorChallengeResponse\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: packages/admin/src/Actions/Auth/RedirectIfTwoFactorAuthenticatable.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Auth\\RedirectIfTwoFactorAuthenticatable\:\:twoFactorChallengeResponse\(\) has parameter \$user with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Actions/Auth/RedirectIfTwoFactorAuthenticatable.php
-
-		-
 			message: '#^Method Shopper\\Actions\\Auth\\RedirectIfTwoFactorAuthenticatable\:\:validateCredentials\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
 			path: packages/admin/src/Actions/Auth/RedirectIfTwoFactorAuthenticatable.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Auth\\RedirectIfTwoFactorAuthenticatable\:\:validateCredentials\(\) has parameter \$request with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Actions/Auth/RedirectIfTwoFactorAuthenticatable.php
-
-		-
-			message: '#^If condition is always true\.$#'
-			identifier: if.alwaysTrue
-			count: 1
-			path: packages/admin/src/Actions/Store/InitialQuantityInventory.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Store\\InitialQuantityInventory\:\:__invoke\(\) has parameter \$product with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Actions/Store/InitialQuantityInventory.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Store\\Product\\AttachedAttributesToProductAction\:\:__invoke\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Actions/Store/Product/AttachedAttributesToProductAction.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Store\\Product\\AttachedAttributesToProductAction\:\:__invoke\(\) has parameter \$customValues with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Actions/Store/Product/AttachedAttributesToProductAction.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Store\\Product\\CreateNewVariant\:\:__invoke\(\) has parameter \$state with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Actions/Store/Product/CreateNewVariant.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Store\\Product\\SavePricingAction\:\:__invoke\(\) has parameter \$pricing with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Actions/Store/Product/SavePricingAction.php
-
-		-
-			message: '#^Cannot call method delete\(\) on stdClass\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: packages/admin/src/Actions/Store/Product/SaveProductVariantsAction.php
-
-		-
-			message: '#^Method Shopper\\Actions\\Store\\Product\\SaveProductVariantsAction\:\:__invoke\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Actions/Store/Product/SaveProductVariantsAction.php
 
 		-
 			message: '#^Method Shopper\\Actions\\Store\\SaveAndDispatchDiscountAction\:\:__invoke\(\) has parameter \$customersIds with no value type specified in iterable type array\.$#'
@@ -157,34 +43,10 @@ parameters:
 			path: packages/admin/src/Actions/Store/SaveAndDispatchDiscountAction.php
 
 		-
-			message: '#^Method Shopper\\Components\\Form\\AddressField\:\:make\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Components/Form/AddressField.php
-
-		-
 			message: '#^Parameter \#1 \$label of method Filament\\Forms\\Components\\Component\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 6
 			path: packages/admin/src/Components/Form/AddressField.php
-
-		-
-			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:mapWithKeys\(\) expects callable\(stdClass, int\)\: array\<int, non\-falsy\-string\>, Closure\(Shopper\\Core\\Models\\Country\)\: non\-empty\-array\<int, non\-falsy\-string\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Components/Form/CountrySelect.php
-
-		-
-			message: '#^Method Shopper\\Components\\Form\\CurrenciesField\:\:make\(\) has parameter \$currencies with generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Components/Form/CurrenciesField.php
-
-		-
-			message: '#^Method Shopper\\Components\\Form\\CurrenciesField\:\:make\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Components/Form/CurrenciesField.php
 
 		-
 			message: '#^Parameter \#1 \$label of method Filament\\Forms\\Components\\Component\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
@@ -223,12 +85,6 @@ parameters:
 			path: packages/admin/src/Components/Form/IconPicker.php
 
 		-
-			message: '#^Method Shopper\\Components\\Form\\IconPicker\:\:getCacheDuration\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: packages/admin/src/Components/Form/IconPicker.php
-
-		-
 			message: '#^Method Shopper\\Components\\Form\\IconPicker\:\:getDisallowedIcons\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -247,12 +103,6 @@ parameters:
 			path: packages/admin/src/Components/Form/IconPicker.php
 
 		-
-			message: '#^Method Shopper\\Components\\Form\\IconPicker\:\:loadIcons\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Components/Form/IconPicker.php
-
-		-
 			message: '#^Method Shopper\\Components\\Form\\IconPicker\:\:options\(\) has parameter \$options with generic interface Illuminate\\Contracts\\Support\\Arrayable but does not specify its types\: TKey, TValue$#'
 			identifier: missingType.generics
 			count: 1
@@ -261,12 +111,6 @@ parameters:
 		-
 			message: '#^Method Shopper\\Components\\Form\\IconPicker\:\:sets\(\) has parameter \$sets with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Components/Form/IconPicker.php
-
-		-
-			message: '#^Method Shopper\\Components\\Form\\IconPicker\:\:tryCache\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: packages/admin/src/Components/Form/IconPicker.php
 
@@ -302,12 +146,6 @@ parameters:
 
 		-
 			message: '#^Property Shopper\\Components\\Form\\IconPicker\:\:\$itemTemplate \(Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null\) does not accept Closure\|Illuminate\\Contracts\\Support\\Htmlable\|Illuminate\\Contracts\\View\\View\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: packages/admin/src/Components/Form/IconPicker.php
-
-		-
-			message: '#^Property Shopper\\Components\\Form\\IconPicker\:\:\$layout \(string\) does not accept Closure\|string\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: packages/admin/src/Components/Form/IconPicker.php
@@ -355,20 +193,8 @@ parameters:
 			path: packages/admin/src/Components/Form/TextInputSelect.php
 
 		-
-			message: '#^Parameter \#1 \$label of method Filament\\Actions\\StaticAction\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Components/WizardColumn.php
-
-		-
 			message: '#^Cannot cast non\-empty\-array\|int\|string\|true to string\.$#'
 			identifier: cast.string
-			count: 1
-			path: packages/admin/src/Console/ComponentPublishCommand.php
-
-		-
-			message: '#^Method Shopper\\Console\\ComponentPublishCommand\:\:getBaseConfigurationFiles\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Console/ComponentPublishCommand.php
 
@@ -389,12 +215,6 @@ parameters:
 			identifier: argument.type
 			count: 2
 			path: packages/admin/src/Console/MakePageCommand.php
-
-		-
-			message: '#^Call to an undefined static method Shopper\\Core\\Models\\User\:\:where\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: packages/admin/src/Console/UserCommand.php
 
 		-
 			message: '#^Method Shopper\\Contracts\\HasForm\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
@@ -421,46 +241,10 @@ parameters:
 			path: packages/admin/src/Facades/Shopper.php
 
 		-
-			message: '#^Method Shopper\\Helpers\\MapProductOptions\:\:generate\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Helpers/MapProductOptions.php
-
-		-
-			message: '#^Method Shopper\\Helpers\\MapProductOptions\:\:mapOption\(\) has parameter \$values with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Helpers/MapProductOptions.php
-
-		-
-			message: '#^Method Shopper\\Helpers\\MapProductOptions\:\:mapOption\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Helpers/MapProductOptions.php
-
-		-
-			message: '#^Method Shopper\\Helpers\\MapProductOptions\:\:mapOptionValue\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Helpers/MapProductOptions.php
-
-		-
 			message: '#^Parameter \#2 \$message of function abort expects string, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Http/Middleware/Dashboard.php
-
-		-
-			message: '#^Method Shopper\\Http\\Middleware\\HasConfiguration\:\:handle\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: packages/admin/src/Http/Middleware/HasConfiguration.php
-
-		-
-			message: '#^Method Shopper\\Http\\Middleware\\RedirectIfAuthenticated\:\:handle\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: packages/admin/src/Http/Middleware/RedirectIfAuthenticated.php
 
 		-
 			message: '#^Access to an undefined property Shopper\\Http\\Requests\\TwoFactorLoginRequest\:\:\$code\.$#'
@@ -477,12 +261,6 @@ parameters:
 		-
 			message: '#^Method Shopper\\Http\\Requests\\TwoFactorLoginRequest\:\:challengedUser\(\) has no return type specified\.$#'
 			identifier: missingType.return
-			count: 1
-			path: packages/admin/src/Http/Requests/TwoFactorLoginRequest.php
-
-		-
-			message: '#^Method Shopper\\Http\\Requests\\TwoFactorLoginRequest\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Http/Requests/TwoFactorLoginRequest.php
 
@@ -523,12 +301,6 @@ parameters:
 			path: packages/admin/src/Jobs/AttachedDiscountToProducts.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:user\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: packages/admin/src/Livewire/Components/Account/Devices.php
-
-		-
 			message: '#^Method Shopper\\Livewire\\Components\\Account\\Devices\:\:createAgent\(\) has parameter \$session with no type specified\.$#'
 			identifier: missingType.parameter
 			count: 1
@@ -539,12 +311,6 @@ parameters:
 			identifier: missingType.generics
 			count: 1
 			path: packages/admin/src/Livewire/Components/Account/Devices.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Account\\Dropdown\:\:\$user has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/Components/Account/Dropdown.php
 
 		-
 			message: '#^Parameter \#1 \$description of method Filament\\Forms\\Components\\Section\:\:description\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
@@ -577,18 +343,6 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Account/Password.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Authenticatable\|Illuminate\\Database\\Eloquent\\Model\:\:toArray\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: packages/admin/src/Livewire/Components/Account/Profile.php
-
-		-
-			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Authenticatable\|Illuminate\\Database\\Eloquent\\Model\:\:update\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: packages/admin/src/Livewire/Components/Account/Profile.php
-
-		-
 			message: '#^Parameter \#1 \$description of method Filament\\Forms\\Components\\Section\:\:description\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -601,26 +355,8 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Account/Profile.php
 
 		-
-			message: '#^Parameter \#1 \$model of method Filament\\Forms\\ComponentContainer\:\:model\(\) expects Illuminate\\Database\\Eloquent\\Model\|string\|null, Illuminate\\Contracts\\Auth\\Authenticatable\|Illuminate\\Database\\Eloquent\\Model\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Account/Profile.php
-
-		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Account/Profile.php
-
-		-
-			message: '#^Parameter \$ignorable of method Filament\\Forms\\Components\\Field\:\:unique\(\) expects Closure\|Illuminate\\Database\\Eloquent\\Model\|null, Illuminate\\Contracts\\Auth\\Authenticatable\|Illuminate\\Database\\Eloquent\\Model\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Account/Profile.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Account\\Profile\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Livewire/Components/Account/Profile.php
 
@@ -667,26 +403,8 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Collection/CollectionProducts.php
 
 		-
-			message: '#^Method Shopper\\Livewire\\Components\\Customers\\Addresses\:\:addresses\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/Components/Customers/Addresses.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Customers\\Addresses\:\:\$customer has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/Components/Customers/Addresses.php
-
-		-
 			message: '#^Method Shopper\\Livewire\\Components\\Customers\\Orders\:\:orders\(\) return type with generic interface Illuminate\\Contracts\\Pagination\\Paginator does not specify its types\: TKey, TValue$#'
 			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/Components/Customers/Orders.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Customers\\Orders\:\:\$customer has no type specified\.$#'
-			identifier: missingType.property
 			count: 1
 			path: packages/admin/src/Livewire/Components/Customers/Orders.php
 
@@ -695,24 +413,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Livewire/Components/Initialization/InitializationWizard.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Initialization\\Steps\\StoreAddress\:\:saveSettings\(\) has parameter \$keys with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Initialization/Steps/StoreAddress.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Initialization\\Steps\\StoreAddress\:\:stepInfo\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Initialization/Steps/StoreAddress.php
-
-		-
-			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:mapWithKeys\(\) expects callable\(stdClass, int\)\: array\<mixed\>, Closure\(Shopper\\Core\\Models\\Setting\)\: non\-empty\-array\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Initialization/Steps/StoreAddress.php
 
 		-
 			message: '#^Parameter \#1 \$label of method Filament\\Forms\\Components\\Component\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
@@ -725,30 +425,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Livewire/Components/Initialization/Steps/StoreAddress.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Initialization\\Steps\\StoreAddress\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Initialization/Steps/StoreAddress.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Initialization\\Steps\\StoreInformation\:\:saveSettings\(\) has parameter \$keys with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Initialization/Steps/StoreInformation.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Initialization\\Steps\\StoreInformation\:\:stepInfo\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Initialization/Steps/StoreInformation.php
-
-		-
-			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:mapWithKeys\(\) expects callable\(stdClass, int\)\: array\<mixed\>, Closure\(Shopper\\Core\\Models\\Setting\)\: non\-empty\-array\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Initialization/Steps/StoreInformation.php
 
 		-
 			message: '#^Parameter \#1 \$label of method Filament\\Forms\\Components\\Component\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
@@ -773,18 +449,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Livewire/Components/Initialization/Steps/StoreInformation.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Initialization\\Steps\\StoreInformation\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Initialization/Steps/StoreInformation.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Initialization\\Steps\\StoreSocialLink\:\:saveSettings\(\) has parameter \$keys with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Initialization/Steps/StoreSocialLink.php
 
 		-
 			message: '#^Method Shopper\\Livewire\\Components\\Initialization\\Steps\\StoreSocialLink\:\:stepInfo\(\) return type has no value type specified in iterable type array\.$#'
@@ -841,102 +505,6 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Modal.php
 
 		-
-			message: '#^Method Shopper\\Livewire\\Components\\Products\\Attributes\\MultipleChoice\:\:currentValues\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Attributes/MultipleChoice.php
-
-		-
-			message: '#^PHPDoc tag @property for property Shopper\\Livewire\\Components\\Products\\Attributes\\MultipleChoice\:\:\$currentValues contains generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Attributes/MultipleChoice.php
-
-		-
-			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Attributes/MultipleChoice.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Attributes\\MultipleChoice\:\:\$selected type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Attributes/MultipleChoice.php
-
-		-
-			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Collection\<int, Shopper\\Core\\Models\\AttributeProduct\>\|Shopper\\Core\\Models\\AttributeProduct\:\:delete\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Attributes/SingleChoice.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Products\\Attributes\\SingleChoice\:\:saveData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Attributes/SingleChoice.php
-
-		-
-			message: '#^Parameter \#1 \$body of method Filament\\Notifications\\Notification\:\:body\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: packages/admin/src/Livewire/Components/Products/Attributes/SingleChoice.php
-
-		-
-			message: '#^Parameter \#1 \$label of method Filament\\Actions\\StaticAction\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: packages/admin/src/Livewire/Components/Products/Attributes/SingleChoice.php
-
-		-
-			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: packages/admin/src/Livewire/Components/Products/Attributes/SingleChoice.php
-
-		-
-			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Collection\<int, Shopper\\Core\\Models\\AttributeProduct\>\|Shopper\\Core\\Models\\AttributeProduct\:\:delete\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Attributes/Text.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Products\\Attributes\\Text\:\:saveData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Attributes/Text.php
-
-		-
-			message: '#^Parameter \#1 \$body of method Filament\\Notifications\\Notification\:\:body\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: packages/admin/src/Livewire/Components/Products/Attributes/Text.php
-
-		-
-			message: '#^Parameter \#1 \$label of method Filament\\Actions\\StaticAction\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: packages/admin/src/Livewire/Components/Products/Attributes/Text.php
-
-		-
-			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 2
-			path: packages/admin/src/Livewire/Components/Products/Attributes/Text.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Attributes\\Text\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Attributes/Text.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Attributes\\Text\:\:\$model \(Shopper\\Core\\Models\\AttributeProduct\|null\) does not accept object\|null\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Attributes/Text.php
-
-		-
 			message: '#^Parameter \#1 \$description of method Filament\\Tables\\Table\:\:emptyStateDescription\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -961,22 +529,10 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Products/Form/Attributes.php
 
 		-
-			message: '#^Parameter \#1 \$label of method Filament\\Tables\\Grouping\\Group\:\:label\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Attributes.php
-
-		-
 			message: '#^Parameter \#1 \$title of method Filament\\Actions\\MountableAction\:\:successNotificationTitle\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Livewire/Components/Products/Form/Attributes.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Products\\Form\\Edit\:\:mount\(\) has parameter \$product with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Edit.php
 
 		-
 			message: '#^Parameter \#1 \$label of method Filament\\Forms\\Components\\Component\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
@@ -1011,12 +567,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$text of method Filament\\Forms\\Components\\Field\:\:helperText\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Files.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Form\\Files\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Livewire/Components/Products/Form/Files.php
 
@@ -1057,12 +607,6 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Products/Form/Inventory.php
 
 		-
-			message: '#^Parameter \#1 \$label of method Filament\\Tables\\Grouping\\Group\:\:label\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Inventory.php
-
-		-
 			message: '#^Parameter \#1 \$query of method Filament\\Tables\\Table\:\:query\(\) expects Closure\|Illuminate\\Database\\Eloquent\\Builder\|null, Illuminate\\Database\\Query\\Builder given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1087,12 +631,6 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Products/Form/Inventory.php
 
 		-
-			message: '#^Method Shopper\\Livewire\\Components\\Products\\Form\\Media\:\:mount\(\) has parameter \$product with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Media.php
-
-		-
 			message: '#^Parameter \#1 \$body of method Filament\\Notifications\\Notification\:\:body\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1111,30 +649,6 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Products/Form/Media.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Form\\Media\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Media.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Form\\Media\:\:\$product has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Media.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Products\\Form\\RelatedProducts\:\:mount\(\) has parameter \$product with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/RelatedProducts.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Products\\Form\\RelatedProducts\:\:productsIds\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/RelatedProducts.php
-
-		-
 			message: '#^Parameter \#1 \$label of method Filament\\Actions\\StaticAction\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1147,32 +661,8 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Products/Form/RelatedProducts.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Form\\RelatedProducts\:\:\$product has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/RelatedProducts.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Products\\Form\\Seo\:\:mount\(\) has parameter \$product with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Seo.php
-
-		-
 			message: '#^Parameter \#1 \$body of method Filament\\Notifications\\Notification\:\:body\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Seo.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Form\\Seo\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Seo.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Form\\Seo\:\:\$product has no type specified\.$#'
-			identifier: missingType.property
 			count: 1
 			path: packages/admin/src/Livewire/Components/Products/Form/Seo.php
 
@@ -1185,18 +675,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Form\\Shipping\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Form\\Shipping\:\:\$product has no type specified\.$#'
-			identifier: missingType.property
 			count: 1
 			path: packages/admin/src/Livewire/Components/Products/Form/Shipping.php
 
@@ -1237,12 +715,6 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Products/Form/Variants.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Components\\Products\\Form\\Variants\:\:\$product has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Variants.php
-
-		-
 			message: '#^Parameter \#1 \$heading of method Filament\\Tables\\Table\:\:emptyStateHeading\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1259,12 +731,6 @@ parameters:
 			identifier: argument.type
 			count: 4
 			path: packages/admin/src/Livewire/Components/Products/Pricing.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Components\\Products\\ProductTypeConfiguration\:\:saveSettings\(\) has parameter \$keys with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/ProductTypeConfiguration.php
 
 		-
 			message: '#^Parameter \#1 \$label of method Filament\\Forms\\Components\\Component\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
@@ -1341,12 +807,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Settings/Locations/InventoryForm.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Components\\Settings\\Locations\\InventoryForm\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Livewire/Components/Settings/Locations/InventoryForm.php
 
@@ -1471,12 +931,6 @@ parameters:
 			path: packages/admin/src/Livewire/Modals/CreatePermission.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Modals\\CreatePermission\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Modals/CreatePermission.php
-
-		-
 			message: '#^Parameter \#1 \$label of method Filament\\Forms\\Components\\Component\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 3
@@ -1525,24 +979,6 @@ parameters:
 			path: packages/admin/src/Livewire/Modals/PaymentMethodForm.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Modals\\PaymentMethodForm\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Modals/PaymentMethodForm.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Modals\\RelatedProductsList\:\:mount\(\) has parameter \$ids with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Modals/RelatedProductsList.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Modals\\RelatedProductsList\:\:products\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/Modals/RelatedProductsList.php
-
-		-
 			message: '#^Parameter \#1 \$body of method Filament\\Notifications\\Notification\:\:body\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1551,24 +987,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Modals/RelatedProductsList.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Modals\\RelatedProductsList\:\:\$exceptProductIds type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Modals/RelatedProductsList.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Modals\\RelatedProductsList\:\:\$product has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/Modals/RelatedProductsList.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Modals\\RelatedProductsList\:\:\$selectedProducts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Livewire/Modals/RelatedProductsList.php
 
@@ -1655,12 +1073,6 @@ parameters:
 			identifier: argument.type
 			count: 3
 			path: packages/admin/src/Livewire/Pages/Brand/Index.php
-
-		-
-			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Authenticatable\|Illuminate\\Database\\Eloquent\\Model\:\:can\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: packages/admin/src/Livewire/Pages/Category/Index.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\View\:\:title\(\)\.$#'
@@ -1807,12 +1219,6 @@ parameters:
 			path: packages/admin/src/Livewire/Pages/Customers/Create.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Pages\\Customers\\Create\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Pages/Customers/Create.php
-
-		-
 			message: '#^Anonymous function should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 2
@@ -1861,12 +1267,6 @@ parameters:
 			path: packages/admin/src/Livewire/Pages/Customers/Show.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Pages\\Customers\\Show\:\:\$customer has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/Pages/Customers/Show.php
-
-		-
 			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\View\:\:title\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -1875,12 +1275,6 @@ parameters:
 		-
 			message: '#^Anonymous function should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
-			count: 2
-			path: packages/admin/src/Livewire/Pages/Discount/Index.php
-
-		-
-			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Authenticatable\|Illuminate\\Database\\Eloquent\\Model\:\:can\(\)\.$#'
-			identifier: method.notFound
 			count: 2
 			path: packages/admin/src/Livewire/Pages/Discount/Index.php
 
@@ -2047,18 +1441,6 @@ parameters:
 			path: packages/admin/src/Livewire/Pages/Product/Variant.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Pages\\Product\\Variant\:\:\$product has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/Pages/Product/Variant.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Pages\\Product\\Variant\:\:\$variant has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/Pages/Product/Variant.php
-
-		-
 			message: '#^Anonymous function should return string but returns array\|string\|null\.$#'
 			identifier: return.type
 			count: 1
@@ -2089,18 +1471,6 @@ parameters:
 			path: packages/admin/src/Livewire/Pages/Settings/General.php
 
 		-
-			message: '#^Method Shopper\\Livewire\\Pages\\Settings\\General\:\:saveSettings\(\) has parameter \$keys with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Pages/Settings/General.php
-
-		-
-			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:mapWithKeys\(\) expects callable\(stdClass, int\)\: array\<mixed\>, Closure\(Shopper\\Core\\Models\\Setting\)\: non\-empty\-array\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Pages/Settings/General.php
-
-		-
 			message: '#^Parameter \#1 \$description of method Filament\\Forms\\Components\\Section\:\:description\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 5
@@ -2121,12 +1491,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Pages/Settings/General.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Pages\\Settings\\General\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Livewire/Pages/Settings/General.php
 
@@ -2269,12 +1633,6 @@ parameters:
 			path: packages/admin/src/Livewire/Pages/Settings/Team/RolePermission.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Pages\\Settings\\Team\\RolePermission\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Pages/Settings/Team/RolePermission.php
-
-		-
 			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\View\:\:title\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -2295,12 +1653,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AddCollectionForm.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\AddCollectionForm\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Livewire/SlideOvers/AddCollectionForm.php
 
@@ -2329,48 +1681,6 @@ parameters:
 			path: packages/admin/src/Livewire/SlideOvers/AddProduct.php
 
 		-
-			message: '#^Class Shopper\\Livewire\\SlideOvers\\AddVariant has PHPDoc tag @property for property \$variantsOptions with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AddVariant.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\AddVariant\:\:currencies\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AddVariant.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\AddVariant\:\:options\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AddVariant.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\AddVariant\:\:variantAlreadyExist\(\) has parameter \$optionsValues with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AddVariant.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\AddVariant\:\:variantsOptions\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AddVariant.php
-
-		-
-			message: '#^PHPDoc tag @property for property Shopper\\Livewire\\SlideOvers\\AddVariant\:\:\$currencies contains generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AddVariant.php
-
-		-
-			message: '#^PHPDoc tag @property for property Shopper\\Livewire\\SlideOvers\\AddVariant\:\:\$options contains generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AddVariant.php
-
-		-
 			message: '#^Parameter \#1 \$body of method Filament\\Notifications\\Notification\:\:body\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -2397,12 +1707,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AddVariant.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\AddVariant\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Livewire/SlideOvers/AddVariant.php
 
@@ -2449,22 +1753,10 @@ parameters:
 			path: packages/admin/src/Livewire/SlideOvers/AttributeForm.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\AttributeForm\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AttributeForm.php
-
-		-
 			message: '#^Right side of \|\| is always true\.$#'
 			identifier: booleanOr.rightAlwaysTrue
 			count: 1
 			path: packages/admin/src/Livewire/SlideOvers/AttributeForm.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\AttributeValues\:\:formSchema\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AttributeValues.php
 
 		-
 			message: '#^Parameter \#1 \$body of method Filament\\Notifications\\Notification\:\:body\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
@@ -2509,12 +1801,6 @@ parameters:
 			path: packages/admin/src/Livewire/SlideOvers/AttributeValues.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\AttributeValues\:\:\$values with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/AttributeValues.php
-
-		-
 			message: '#^Parameter \#1 \$label of method Filament\\Forms\\Components\\Component\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 5
@@ -2529,18 +1815,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/BrandForm.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\BrandForm\:\:\$brand has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/BrandForm.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\BrandForm\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Livewire/SlideOvers/BrandForm.php
 
@@ -2569,18 +1843,6 @@ parameters:
 			path: packages/admin/src/Livewire/SlideOvers/CategoryForm.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\CategoryForm\:\:\$category has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/CategoryForm.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\CategoryForm\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/CategoryForm.php
-
-		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:mapToGroups\(\) expects callable\(stdClass, int\)\: array\<int, int\|null\>, Closure\(Shopper\\Core\\Models\\AttributeProduct\)\: non\-empty\-array\<int, int\|null\> given\.$#'
 			identifier: argument.type
 			count: 1
@@ -2595,18 +1857,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ChooseProductAttributes.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\ChooseProductAttributes\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ChooseProductAttributes.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\ChooseProductAttributes\:\:\$productId has no type specified\.$#'
-			identifier: missingType.property
 			count: 1
 			path: packages/admin/src/Livewire/SlideOvers/ChooseProductAttributes.php
 
@@ -2725,50 +1975,8 @@ parameters:
 			path: packages/admin/src/Livewire/SlideOvers/DiscountForm.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$attribute\.$#'
-			identifier: property.notFound
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$value\.$#'
-			identifier: property.notFound
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\GenerateVariants\:\:mapVariantsToProductOptions\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\GenerateVariants\:\:mapVariantsToProductOptions\(\) has parameter \$variants with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\GenerateVariants\:\:mapVariantsToProductOptions\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\GenerateVariants\:\:removeVariant\(\) has parameter \$key with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<\(int\|string\),Illuminate\\Database\\Eloquent\\Model\>\:\:mapWithKeys\(\) contains unresolvable type\.$#'
-			identifier: argument.unresolvableType
+			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
+			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
 
@@ -2776,85 +1984,7 @@ parameters:
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\GenerateVariants\:\:\$availableOptions type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\GenerateVariants\:\:\$variants type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<\(int\|string\),Illuminate\\Database\\Eloquent\\Model\>\:\:mapWithKeys\(\) contains unresolvable type\.$#'
-			identifier: method.unresolvableReturnType
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Unable to resolve the template type TKey in call to function collect$#'
-			identifier: argument.templateType
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Unable to resolve the template type TValue in call to function collect$#'
-			identifier: argument.templateType
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/GenerateVariants.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\ManagePricing\:\:currencies\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
 			path: packages/admin/src/Livewire/SlideOvers/ManagePricing.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\ManagePricing\:\:getModelPrices\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ManagePricing.php
-
-		-
-			message: '#^PHPDoc tag @property for property Shopper\\Livewire\\SlideOvers\\ManagePricing\:\:\$currencies contains generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ManagePricing.php
-
-		-
-			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ManagePricing.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\ManagePricing\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ManagePricing.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\ManagePricing\:\:\$model has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ManagePricing.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\ReOrderCategories\:\:updateCategoryOrder\(\) has parameter \$groups with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ReOrderCategories.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\ReOrderCategories\:\:updateGroupOrder\(\) has parameter \$items with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ReOrderCategories.php
 
 		-
 			message: '#^Parameter \#1 \$label of method Filament\\Actions\\StaticAction\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
@@ -2893,46 +2023,10 @@ parameters:
 			path: packages/admin/src/Livewire/SlideOvers/ShippingOptionForm.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\ShippingOptionForm\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ShippingOptionForm.php
-
-		-
 			message: '#^Property Shopper\\Livewire\\SlideOvers\\ShippingOptionForm\:\:\$title \(string\|null\) does not accept array\|string\|null\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: packages/admin/src/Livewire/SlideOvers/ShippingOptionForm.php
-
-		-
-			message: '#^Class Shopper\\Livewire\\SlideOvers\\UpdateVariant has PHPDoc tag @property for property \$variantsOptions with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/UpdateVariant.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\UpdateVariant\:\:options\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/UpdateVariant.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\UpdateVariant\:\:variantAlreadyExist\(\) has parameter \$optionsValues with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/UpdateVariant.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\SlideOvers\\UpdateVariant\:\:variantsOptions\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/UpdateVariant.php
-
-		-
-			message: '#^PHPDoc tag @property for property Shopper\\Livewire\\SlideOvers\\UpdateVariant\:\:\$options contains generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/UpdateVariant.php
 
 		-
 			message: '#^Parameter \#1 \$label of method Filament\\Forms\\Components\\Component\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
@@ -2943,24 +2037,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/UpdateVariant.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\UpdateVariant\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/UpdateVariant.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\UpdateVariant\:\:\$product has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/UpdateVariant.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\UpdateVariant\:\:\$variant has no type specified\.$#'
-			identifier: missingType.property
 			count: 1
 			path: packages/admin/src/Livewire/SlideOvers/UpdateVariant.php
 
@@ -3007,64 +2083,16 @@ parameters:
 			path: packages/admin/src/Livewire/SlideOvers/ZoneForm.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\ZoneForm\:\:\$countriesInZone type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ZoneForm.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\ZoneForm\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/ZoneForm.php
-
-		-
 			message: '#^Property Shopper\\Livewire\\SlideOvers\\ZoneForm\:\:\$title \(string\|null\) does not accept array\|string\|null\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: packages/admin/src/Livewire/SlideOvers/ZoneForm.php
 
 		-
-			message: '#^Method Shopper\\Notifications\\AdminSendCredentials\:\:toMail\(\) has parameter \$notifiable with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Notifications/AdminSendCredentials.php
-
-		-
-			message: '#^Method Shopper\\Notifications\\AdminSendCredentials\:\:via\(\) has parameter \$notifiable with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Notifications/AdminSendCredentials.php
-
-		-
-			message: '#^Method Shopper\\Notifications\\AdminSendCredentials\:\:via\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Notifications/AdminSendCredentials.php
-
-		-
 			message: '#^Parameter \#1 \$subject of method Illuminate\\Notifications\\Messages\\SimpleMessage\:\:subject\(\) expects string, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Notifications/AdminSendCredentials.php
-
-		-
-			message: '#^Method Shopper\\Notifications\\CustomerSendCredentials\:\:toMail\(\) has parameter \$notifiable with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Notifications/CustomerSendCredentials.php
-
-		-
-			message: '#^Method Shopper\\Notifications\\CustomerSendCredentials\:\:via\(\) has parameter \$notifiable with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/admin/src/Notifications/CustomerSendCredentials.php
-
-		-
-			message: '#^Method Shopper\\Notifications\\CustomerSendCredentials\:\:via\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Notifications/CustomerSendCredentials.php
 
 		-
 			message: '#^Parameter \#1 \$greeting of method Illuminate\\Notifications\\Messages\\SimpleMessage\:\:greeting\(\) expects string, array\|string\|null given\.$#'
@@ -3085,12 +2113,6 @@ parameters:
 			path: packages/admin/src/Providers/FeatureServiceProvider.php
 
 		-
-			message: '#^Method Shopper\\Providers\\FeatureServiceProvider\:\:loadLivewireComponents\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Providers/FeatureServiceProvider.php
-
-		-
 			message: '#^Property Shopper\\Providers\\FeatureServiceProvider\:\:\$componentsConfig type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -3101,18 +2123,6 @@ parameters:
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 4
 			path: packages/admin/src/Providers/SidebarServiceProvider.php
-
-		-
-			message: '#^Method Shopper\\Providers\\TwoFactorAuthenticationProvider\:\:verify\(\) should return bool but returns bool\|int\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/admin/src/Providers/TwoFactorAuthenticationProvider.php
-
-		-
-			message: '#^Method Shopper\\ShopperPanel\:\:registerViteTheme\(\) has parameter \$theme with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/ShopperPanel.php
 
 		-
 			message: '#^Parameter \#1 \$string of static method Illuminate\\Support\\Str\:\:of\(\) expects string, Illuminate\\Contracts\\Support\\Htmlable\|string\|null given\.$#'
@@ -3127,124 +2137,10 @@ parameters:
 			path: packages/admin/src/ShopperPanel.php
 
 		-
-			message: '#^Method Shopper\\ShopperServiceProvider\:\:getLivewireComponents\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/ShopperServiceProvider.php
-
-		-
-			message: '#^Method Shopper\\ShopperServiceProvider\:\:loadLivewireComponents\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/ShopperServiceProvider.php
-
-		-
-			message: '#^Property Shopper\\ShopperServiceProvider\:\:\$componentsConfig type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/ShopperServiceProvider.php
-
-		-
-			message: '#^Property Shopper\\ShopperServiceProvider\:\:\$configFiles type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/ShopperServiceProvider.php
-
-		-
 			message: '#^Method Shopper\\Sidebar\\SidebarCreator\:\:create\(\) has parameter \$view with no type specified\.$#'
 			identifier: missingType.parameter
 			count: 1
 			path: packages/admin/src/Sidebar/SidebarCreator.php
-
-		-
-			message: '#^Function active\(\) has parameter \$routes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/helpers.php
-
-		-
-			message: '#^Function is_active\(\) has parameter \$routes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/helpers.php
-
-		-
-			message: '#^Parameter \#1 \$callback of function call_user_func_array expects callable\(\)\: mixed, array\{mixed, ''is''\} given\.$#'
-			identifier: argument.type
-			count: 2
-			path: packages/admin/src/helpers.php
-
-		-
-			message: '#^Parameter \#1 \$json of function json_decode expects string, string\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/helpers.php
-
-		-
-			message: '#^Parameter \#1 \$title of static method Illuminate\\Support\\Str\:\:slug\(\) expects string, array\|string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/core/database/factories/CategoryFactory.php
-
-		-
-			message: '#^Class Shopper\\Core\\Database\\Factories\\InventoryHistoryFactory extends generic class Illuminate\\Database\\Eloquent\\Factories\\Factory but does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/database/factories/InventoryHistoryFactory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Database\\Factories\\ProductFactory\:\:external\(\) return type with generic class Illuminate\\Database\\Eloquent\\Factories\\Factory does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/database/factories/ProductFactory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Database\\Factories\\ProductFactory\:\:publish\(\) return type with generic class Illuminate\\Database\\Eloquent\\Factories\\Factory does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/database/factories/ProductFactory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Database\\Factories\\ProductFactory\:\:standard\(\) return type with generic class Illuminate\\Database\\Eloquent\\Factories\\Factory does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/database/factories/ProductFactory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Database\\Factories\\ProductFactory\:\:variant\(\) return type with generic class Illuminate\\Database\\Eloquent\\Factories\\Factory does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/database/factories/ProductFactory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Database\\Factories\\ProductFactory\:\:virtual\(\) return type with generic class Illuminate\\Database\\Eloquent\\Factories\\Factory does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/database/factories/ProductFactory.php
-
-		-
-			message: '#^Class Shopper\\Core\\Database\\Factories\\SettingFactory extends generic class Illuminate\\Database\\Eloquent\\Factories\\Factory but does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/database/factories/SettingFactory.php
-
-		-
-			message: '#^Property Shopper\\Core\\Helpers\\Migration@anonymous/core/database/migrations/2024_03_28_084412_add_metadata\-fields_table\.php\:9\:\:\$tables type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/database/migrations/2024_03_28_084412_add_metadata-fields_table.php
-
-		-
-			message: '#^Property Shopper\\Core\\Database\\Seeders\\CountriesTableSeeder\:\:\$countries type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/database/seeders/CountriesTableSeeder.php
-
-		-
-			message: '#^Property Shopper\\Core\\Database\\Seeders\\CurrenciesTableSeeder\:\:\$currencies type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/database/seeders/CurrenciesTableSeeder.php
 
 		-
 			message: '#^Method Shopper\\Core\\Contracts\\HasReviews\:\:ratings\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\MorphMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
@@ -3253,26 +2149,8 @@ parameters:
 			path: packages/core/src/Contracts/HasReviews.php
 
 		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:all\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
-
-		-
 			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:all\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
 			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
-
-		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:create\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
-
-		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:get\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/core/src/Contracts/RepositoryContract.php
 
@@ -3283,32 +2161,8 @@ parameters:
 			path: packages/core/src/Contracts/RepositoryContract.php
 
 		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:getByColumn\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
-
-		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:getById\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
-
-		-
 			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:query\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
 			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
-
-		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:update\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
-
-		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:update\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/core/src/Contracts/RepositoryContract.php
 
@@ -3319,52 +2173,10 @@ parameters:
 			path: packages/core/src/Contracts/RepositoryContract.php
 
 		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:with\(\) has parameter \$relations with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
-
-		-
-			message: '#^Property Shopper\\Core\\CoreServiceProvider\:\:\$configFiles type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/CoreServiceProvider.php
-
-		-
-			message: '#^Method Shopper\\Core\\Enum\\AddressType\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/AddressType.php
-
-		-
 			message: '#^Method Shopper\\Core\\Enum\\CollectionType\:\:getDescription\(\) should return string but returns array\|string\|null\.$#'
 			identifier: return.type
 			count: 1
 			path: packages/core/src/Enum/CollectionType.php
-
-		-
-			message: '#^Method Shopper\\Core\\Enum\\CollectionType\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/CollectionType.php
-
-		-
-			message: '#^Method Shopper\\Core\\Enum\\DiscountApplyTo\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/DiscountApplyTo.php
-
-		-
-			message: '#^Method Shopper\\Core\\Enum\\DiscountEligibility\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/DiscountEligibility.php
-
-		-
-			message: '#^Method Shopper\\Core\\Enum\\DiscountRequirement\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/DiscountRequirement.php
 
 		-
 			message: '#^Method Shopper\\Core\\Enum\\DiscountType\:\:getDescription\(\) should return string but returns array\|string\|null\.$#'
@@ -3373,880 +2185,118 @@ parameters:
 			path: packages/core/src/Enum/DiscountType.php
 
 		-
-			message: '#^Method Shopper\\Core\\Enum\\DiscountType\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/DiscountType.php
-
-		-
-			message: '#^Method Shopper\\Core\\Enum\\FieldType\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/FieldType.php
-
-		-
-			message: '#^Method Shopper\\Core\\Enum\\GenderType\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/GenderType.php
-
-		-
-			message: '#^Method Shopper\\Core\\Enum\\Operator\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/Operator.php
-
-		-
-			message: '#^Method Shopper\\Core\\Enum\\OrderRefundStatus\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/OrderRefundStatus.php
-
-		-
-			message: '#^Method Shopper\\Core\\Enum\\OrderStatus\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/OrderStatus.php
-
-		-
-			message: '#^Method Shopper\\Core\\Enum\\PaymentStatus\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Enum/PaymentStatus.php
-
-		-
 			message: '#^Method Shopper\\Core\\Enum\\ProductType\:\:getDescriptions\(\) should return string but returns array\|string\|null\.$#'
 			identifier: return.type
 			count: 1
 			path: packages/core/src/Enum/ProductType.php
 
 		-
-			message: '#^Method Shopper\\Core\\Enum\\ProductType\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/core/src/Models/Product.php
+
+		-
+			message: '#^Method Shopper\\Core\\Models\\Product\:\:averageCustomerServiceRating\(\) has parameter \$round with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: packages/core/src/Models/Product.php
+
+		-
+			message: '#^Method Shopper\\Core\\Models\\Product\:\:averageFriendlyRating\(\) has parameter \$round with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: packages/core/src/Models/Product.php
+
+		-
+			message: '#^Method Shopper\\Core\\Models\\Product\:\:averagePricingRating\(\) has parameter \$round with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: packages/core/src/Models/Product.php
+
+		-
+			message: '#^Method Shopper\\Core\\Models\\Product\:\:averageQualityRating\(\) has parameter \$round with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: packages/core/src/Models/Product.php
+
+		-
+			message: '#^Method Shopper\\Core\\Models\\Product\:\:averageRating\(\) has parameter \$round with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: packages/core/src/Models/Product.php
+
+		-
+			message: '#^Method Shopper\\Core\\Models\\Product\:\:deleteRating\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: packages/core/src/Models/Product.php
+
+		-
+			message: '#^Method Shopper\\Core\\Models\\Product\:\:prices\(\) should return Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, static\(Shopper\\Core\\Models\\Product\)\> but returns Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, \$this\(Shopper\\Core\\Models\\Product\)\>\.$#'
 			identifier: return.type
 			count: 1
-			path: packages/core/src/Enum/ProductType.php
+			path: packages/core/src/Models/Product.php
 
 		-
-			message: '#^Method Shopper\\Core\\Enum\\Rule\:\:getLabel\(\) should return string but returns array\|string\|null\.$#'
-			identifier: return.type
+			message: '#^Method Shopper\\Core\\Models\\Product\:\:rating\(\) has parameter \$author with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
-			path: packages/core/src/Enum/Rule.php
+			path: packages/core/src/Models/Product.php
 
 		-
-			message: '#^Method Shopper\\Core\\Macros\\Arr\:\:getPermutationIds\(\) has parameter \$permutation with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Method Shopper\\Core\\Models\\Product\:\:rating\(\) has parameter \$parent with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
-			path: packages/core/src/Macros/Arr.php
+			path: packages/core/src/Models/Product.php
 
 		-
-			message: '#^Method Shopper\\Core\\Macros\\Arr\:\:getPermutationIds\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Method Shopper\\Core\\Models\\Product\:\:updateRating\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
-			path: packages/core/src/Macros/Arr.php
+			path: packages/core/src/Models/Product.php
 
 		-
-			message: '#^Method Shopper\\Core\\Macros\\Arr\:\:performPermutationIntoWord\(\) has parameter \$permutation with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Method Shopper\\Core\\Models\\Product\:\:updateRating\(\) has parameter \$parent with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
-			path: packages/core/src/Macros/Arr.php
+			path: packages/core/src/Models/Product.php
 
 		-
-			message: '#^Method Shopper\\Core\\Macros\\Arr\:\:permutate\(\) has parameter \$tuples with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, static\(Shopper\\Core\\Models\\Product\)\>\) of method Shopper\\Core\\Models\\Product\:\:prices\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, Shopper\\Core\\Models\\Product\>\) of method Shopper\\Contracts\\Priceable\<Shopper\\Core\\Models\\Product\>\:\:prices\(\)$#'
+			identifier: method.childReturnType
 			count: 1
-			path: packages/core/src/Macros/Arr.php
+			path: packages/core/src/Models/Product.php
 
 		-
-			message: '#^Method Shopper\\Core\\Macros\\Arr\:\:permutate\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Macros/Arr.php
-
-		-
-			message: '#^Method Shopper\\Core\\Macros\\Arr\:\:recursiveArrayDiffAssoc\(\) has parameter \$array with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Macros/Arr.php
-
-		-
-			message: '#^Method Shopper\\Core\\Macros\\Arr\:\:recursiveArrayDiffAssoc\(\) has parameter \$compare with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Macros/Arr.php
-
-		-
-			message: '#^Method Shopper\\Core\\Macros\\Arr\:\:recursiveArrayDiffAssoc\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Macros/Arr.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Address uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Address.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Address\:\:country\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Address.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Address\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Address.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Address\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Address.php
-
-		-
-			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:belongsTo\(\)$#'
+			message: '#^Unable to resolve the template type TValue in call to function collect$#'
 			identifier: argument.templateType
 			count: 1
-			path: packages/core/src/Models/Address.php
+			path: packages/core/src/Models/Product.php
 
 		-
-			message: '#^Class Shopper\\Core\\Models\\Attribute uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Attribute.php
-
-		-
-			message: '#^PHPDoc tag @property for property Shopper\\Core\\Models\\Attribute\:\:\$values contains generic class Illuminate\\Database\\Eloquent\\Collection but does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Attribute.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\AttributeProduct uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/AttributeProduct.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\AttributeProduct\:\:attribute\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/AttributeProduct.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\AttributeProduct\:\:product\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/AttributeProduct.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\AttributeProduct\:\:value\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/AttributeProduct.php
-
-		-
-			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:belongsTo\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: packages/core/src/Models/AttributeProduct.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\AttributeValue uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/AttributeValue.php
-
-		-
-			message: '#^PHPDoc tag @property\-read for property Shopper\\Core\\Models\\AttributeValue\:\:\$variants contains generic class Illuminate\\Database\\Eloquent\\Collection but does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/AttributeValue.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Brand has PHPDoc tag @property for property \$metadata with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Brand.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Brand uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Brand.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Brand\:\:products\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Brand.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Brand\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Brand.php
-
-		-
-			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:hasMany\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: packages/core/src/Models/Brand.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Carrier has PHPDoc tag @property for property \$metadata with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Carrier.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Carrier uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Carrier.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Carrier\:\:options\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Carrier.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Carrier\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Carrier.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\CarrierOption has PHPDoc tag @property for property \$metadata with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/CarrierOption.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\CarrierOption uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/CarrierOption.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\CarrierOption\:\:carrier\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/CarrierOption.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\CarrierOption\:\:scopeEnabled\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/CarrierOption.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\CarrierOption\:\:scopeEnabled\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/CarrierOption.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\CarrierOption\:\:zone\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/CarrierOption.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\CarrierOption\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/CarrierOption.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\CollectionRule uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/CollectionRule.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\CollectionRule\:\:collection\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/CollectionRule.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\CollectionRule\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/CollectionRule.php
-
-		-
-			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:belongsTo\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: packages/core/src/Models/CollectionRule.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Country has PHPDoc tag @property for property \$currencies with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Country.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Country has PHPDoc tag @property for property \$phone_calling_code with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Country.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Country uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Country.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Country\:\:\$appends type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Country.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Country\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Country.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Currency uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Currency.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Currency\:\:zone\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasOne does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Currency.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Currency\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Currency.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Discount has PHPDoc tag @property for property \$metadata with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Discount.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\DiscountDetail\:\:discountable\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\MorphTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/DiscountDetail.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Geolocation has PHPDoc tag @property for property \$extreme_ip_lookup with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Geolocation.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Geolocation has PHPDoc tag @property for property \$ip_api with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Geolocation.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Geolocation uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Geolocation.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Geolocation\:\:order\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Geolocation.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Geolocation\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Geolocation.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Geolocation\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Geolocation.php
-
-		-
-			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:belongsTo\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: packages/core/src/Models/Geolocation.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Inventory uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Inventory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Inventory\:\:country\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Inventory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Inventory\:\:histories\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Inventory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Inventory\:\:scopeDefault\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Inventory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Inventory\:\:scopeDefault\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Inventory.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Inventory\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Inventory.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\InventoryHistory uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/InventoryHistory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\InventoryHistory\:\:inventory\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/InventoryHistory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\InventoryHistory\:\:reference\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\MorphTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/InventoryHistory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\InventoryHistory\:\:stockable\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\MorphTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/InventoryHistory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\InventoryHistory\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/InventoryHistory.php
-
-		-
-			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:belongsTo\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: packages/core/src/Models/InventoryHistory.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Legal\:\:scopeEnabled\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Legal.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Legal\:\:scopeEnabled\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Legal.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Legal\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Legal.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Order uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:__construct\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:billingAddress\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:channel\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:children\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:customer\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:items\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:parent\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:paymentMethod\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:refund\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasOne does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:shippingAddress\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:shippingOption\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Order\:\:zone\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Order\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:belongsTo\(\)$#'
-			identifier: argument.templateType
-			count: 2
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\OrderAddress uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderAddress.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\OrderAddress\:\:customer\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderAddress.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\OrderAddress\:\:orders\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderAddress.php
-
-		-
-			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:belongsTo\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: packages/core/src/Models/OrderAddress.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\OrderItem uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderItem.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\OrderItem\:\:order\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderItem.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\OrderItem\:\:product\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\MorphTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderItem.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\OrderRefund uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderRefund.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\OrderRefund\:\:__construct\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/OrderRefund.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\OrderRefund\:\:customer\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderRefund.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\OrderRefund\:\:order\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderRefund.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\OrderRefund\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/OrderRefund.php
-
-		-
-			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:belongsTo\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: packages/core/src/Models/OrderRefund.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\OrderShipping has PHPDoc tag @property for property \$voucher with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/OrderShipping.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\OrderShipping uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderShipping.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\OrderShipping\:\:carrier\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderShipping.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\OrderShipping\:\:order\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/OrderShipping.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\OrderShipping\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/OrderShipping.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\PaymentMethod uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/PaymentMethod.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\PaymentMethod\:\:\$appends type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/PaymentMethod.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\PaymentMethod\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/PaymentMethod.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Permission\:\:groups\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Permission.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Permission\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Permission.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Price uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Price.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Price\:\:currency\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Price.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Price\:\:priceable\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\MorphTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Price.php
-
-		-
-			message: '#^PHPDoc tag @property\-read for property Shopper\\Core\\Models\\ProductVariant\:\:\$prices contains generic class Illuminate\\Database\\Eloquent\\Collection but does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: packages/core/src/Models/ProductVariant.php
 
 		-
-			message: '#^PHPDoc tag @property\-read for property Shopper\\Core\\Models\\ProductVariant\:\:\$values contains generic class Illuminate\\Database\\Eloquent\\Collection but does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
+			message: '#^Method Shopper\\Core\\Models\\ProductVariant\:\:prices\(\) should return Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, static\(Shopper\\Core\\Models\\ProductVariant\)\> but returns Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, \$this\(Shopper\\Core\\Models\\ProductVariant\)\>\.$#'
+			identifier: return.type
 			count: 1
 			path: packages/core/src/Models/ProductVariant.php
 
 		-
-			message: '#^Call to an undefined static method Shopper\\Core\\Models\\Review\:\:find\(\)\.$#'
-			identifier: staticMethod.notFound
+			message: '#^Return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, static\(Shopper\\Core\\Models\\ProductVariant\)\>\) of method Shopper\\Core\\Models\\ProductVariant\:\:prices\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, Shopper\\Core\\Models\\ProductVariant\>\) of method Shopper\\Contracts\\Priceable\<Shopper\\Core\\Models\\ProductVariant\>\:\:prices\(\)$#'
+			identifier: method.childReturnType
 			count: 1
-			path: packages/core/src/Models/Review.php
+			path: packages/core/src/Models/ProductVariant.php
 
 		-
-			message: '#^Class Shopper\\Core\\Models\\Review uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
+			message: '#^Unable to resolve the template type TValue in call to function collect$#'
+			identifier: argument.templateType
 			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:author\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\MorphTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:createRating\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:getAllRatings\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:getAllRatings\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:getApprovedRatings\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:getApprovedRatings\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:getNotApprovedRatings\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:getNotApprovedRatings\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:getRecentRatings\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:getRecentRatings\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:getRecentUserRatings\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:getRecentUserRatings\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:reviewrateable\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\MorphTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Method Shopper\\Core\\Models\\Review\:\:updateRating\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Review\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Review.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\Role\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Role.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\Setting uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/Setting.php
+			path: packages/core/src/Models/ProductVariant.php
 
 		-
 			message: '#^Method Shopper\\Core\\Models\\Setting\:\:lockedAttributesDisplayName\(\) should return string but returns array\|string\|null\.$#'
@@ -4255,541 +2305,7 @@ parameters:
 			path: packages/core/src/Models/Setting.php
 
 		-
-			message: '#^Property Shopper\\Core\\Models\\Setting\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/Setting.php
-
-		-
-			message: '#^Anonymous function should return string but returns array\|string\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/Models/User.php
-
-		-
-			message: '#^Class Shopper\\Core\\Models\\User uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/User.php
-
-		-
 			message: '#^Method Shopper\\Core\\Models\\User\:\:recoveryCodes\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: packages/core/src/Models/User.php
-
-		-
-			message: '#^PHPDoc tag @property\-read for property Shopper\\Core\\Models\\User\:\:\$orders contains generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Models/User.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\User\:\:\$appends type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/User.php
-
-		-
-			message: '#^Property Shopper\\Core\\Models\\User\:\:\$casts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Models/User.php
-
-		-
-			message: '#^Method Shopper\\Core\\Observers\\CategoryObserver\:\:creating\(\) has parameter \$model with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/core/src/Observers/CategoryObserver.php
-
-		-
-			message: '#^Method Shopper\\Core\\Observers\\CategoryObserver\:\:ensureParentSlugIsCorrectlySet\(\) has parameter \$category with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/core/src/Observers/CategoryObserver.php
-
-		-
-			message: '#^Method Shopper\\Core\\Observers\\CategoryObserver\:\:updating\(\) has parameter \$model with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/core/src/Observers/CategoryObserver.php
-
-		-
-			message: '#^Method Shopper\\Core\\Repositories\\Repository\:\:all\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Method Shopper\\Core\\Repositories\\Repository\:\:all\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Method Shopper\\Core\\Repositories\\Repository\:\:create\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Method Shopper\\Core\\Repositories\\Repository\:\:get\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Method Shopper\\Core\\Repositories\\Repository\:\:get\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Method Shopper\\Core\\Repositories\\Repository\:\:getByColumn\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Method Shopper\\Core\\Repositories\\Repository\:\:getById\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Method Shopper\\Core\\Repositories\\Repository\:\:query\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Method Shopper\\Core\\Repositories\\Repository\:\:update\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Method Shopper\\Core\\Repositories\\Repository\:\:update\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Method Shopper\\Core\\Repositories\\Repository\:\:with\(\) has parameter \$relations with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Property Shopper\\Core\\Repositories\\Repository\:\:\$query with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Property Shopper\\Core\\Repositories\\Repository\:\:\$with type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/Repositories/Repository.php
-
-		-
-			message: '#^Access to an undefined property object\:\:\$id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: packages/core/src/helpers.php
-
-		-
-			message: '#^Call to an undefined method Illuminate\\Contracts\\Filesystem\\Filesystem\:\:url\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: packages/core/src/helpers.php
-
-		-
-			message: '#^Function shopper_money_format\(\) should return string but returns string\|false\.$#'
-			identifier: return.type
-			count: 1
-			path: packages/core/src/helpers.php
-
-		-
-			message: '#^Function useTryCatch\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/core/src/helpers.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Builder\\Append\:\:route\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Contracts/Builder/Append.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Builder\\Append\:\:route\(\) has parameter \$route with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Contracts/Builder/Append.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Builder\\Group\:\:getItems\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Contracts/Builder/Group.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Builder\\Item\:\:getAppends\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Contracts/Builder/Item.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Builder\\Item\:\:getBadges\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Contracts/Builder/Item.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Builder\\Item\:\:getIconAttributes\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Contracts/Builder/Item.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Builder\\Item\:\:route\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Contracts/Builder/Item.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Builder\\Item\:\:route\(\) has parameter \$route with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Contracts/Builder/Item.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Builder\\Item\:\:setIcon\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Contracts/Builder/Item.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Builder\\Itemable\:\:getItems\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Contracts/Builder/Itemable.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Builder\\Menu\:\:getGroups\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Contracts/Builder/Menu.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Routeable\:\:route\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Contracts/Routeable.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Routeable\:\:route\(\) has parameter \$route with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Contracts/Routeable.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\ShouldCache\:\:getCacheables\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Contracts/ShouldCache.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Contracts\\Sidebar\:\:build\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: packages/sidebar/src/Contracts/Sidebar.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultAppend\:\:__unserialize\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultAppend.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultAppend\:\:getCacheables\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultAppend.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultAppend\:\:route\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultAppend.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultAppend\:\:route\(\) has parameter \$route with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultAppend.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultAppend\:\:\$cacheables type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultAppend.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultBadge\:\:__unserialize\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultBadge.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultBadge\:\:getCacheables\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultBadge.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultBadge\:\:\$cacheables type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultBadge.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultGroup\:\:__unserialize\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultGroup.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultGroup\:\:call\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultGroup.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultGroup\:\:call\(\) has parameter \$caller with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultGroup.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultGroup\:\:getCacheables\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultGroup.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultGroup\:\:getItems\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultGroup.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultGroup\:\:\$cacheables type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultGroup.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultGroup\:\:\$items with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultGroup.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultItem\:\:__unserialize\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultItem\:\:call\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultItem\:\:call\(\) has parameter \$caller with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultItem\:\:getAppends\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultItem\:\:getBadges\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultItem\:\:getCacheables\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultItem\:\:getIconAttributes\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultItem\:\:getItems\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultItem\:\:route\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultItem\:\:route\(\) has parameter \$route with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultItem\:\:setIcon\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultItem\:\:\$appends with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultItem\:\:\$badges with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultItem\:\:\$cacheables type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultItem\:\:\$iconAttributes type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultItem\:\:\$items with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultItem.php
-
-		-
-			message: '#^Cannot call method get\(\) on array\|\(Illuminate\\Support\\Collection&iterable\<Shopper\\Sidebar\\Contracts\\Builder\\Group\>\)\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Cannot call method has\(\) on array\|\(Illuminate\\Support\\Collection&iterable\<Shopper\\Sidebar\\Contracts\\Builder\\Group\>\)\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Cannot call method put\(\) on array\|\(Illuminate\\Support\\Collection&iterable\<Shopper\\Sidebar\\Contracts\\Builder\\Group\>\)\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Cannot call method sortBy\(\) on array\|\(Illuminate\\Support\\Collection&iterable\<Shopper\\Sidebar\\Contracts\\Builder\\Group\>\)\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultMenu\:\:__unserialize\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultMenu\:\:call\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultMenu\:\:call\(\) has parameter \$caller with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultMenu\:\:getCacheables\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Domain\\DefaultMenu\:\:getGroups\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultMenu\:\:\$cacheables type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultMenu\:\:\$groups type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultMenu\:\:\$groups type has no value type specified in iterable type array\|\(Illuminate\\Support\\Collection&iterable\<Shopper\\Sidebar\\Contracts\\Builder\\Group\>\)\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\Domain\\DefaultMenu\:\:\$groups with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/sidebar/src/Domain/DefaultMenu.php
-
-		-
-			message: '#^Call to an undefined method Illuminate\\Contracts\\Cache\\Repository\:\:tags\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: packages/sidebar/src/Infrastructure/UserBasedCacheResolver.php
-
-		-
-			message: '#^Call to an undefined method Illuminate\\Contracts\\Cache\\Repository\:\:tags\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: packages/sidebar/src/Infrastructure/UserBasedSidebarFlusher.php
-
-		-
-			message: '#^Method Shopper\\Sidebar\\Middleware\\ResolveSidebars\:\:handle\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: packages/sidebar/src/Middleware/ResolveSidebars.php
-
-		-
-			message: '#^Property Shopper\\Sidebar\\SidebarManager\:\:\$sidebars type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/sidebar/src/SidebarManager.php

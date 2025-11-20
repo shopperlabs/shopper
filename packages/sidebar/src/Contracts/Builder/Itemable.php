@@ -13,6 +13,9 @@ interface Itemable
 
     public function addItem(Item $item): Item;
 
+    /**
+     * @return Collection<int, Item>
+     */
     public function getItems(): Collection;
 
     public function hasItems(): bool;

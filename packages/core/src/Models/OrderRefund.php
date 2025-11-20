@@ -29,6 +29,9 @@ class OrderRefund extends Model
 
     protected $guarded = [];
 
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
     public function __construct(array $attributes = [])
     {
         if (! isset($attributes['status'])) {

@@ -35,6 +35,9 @@ class OrderItem extends Model
         return shopper_table('order_items');
     }
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function product(): MorphTo
     {
         return $this->morphTo();

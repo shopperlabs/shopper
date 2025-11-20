@@ -50,11 +50,17 @@ class InventoryHistory extends Model
         return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
     }
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function stockable(): MorphTo
     {
         return $this->morphTo();
     }
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function reference(): MorphTo
     {
         return $this->morphTo();

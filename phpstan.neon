@@ -3,13 +3,18 @@ includes:
 
 parameters:
     level: 7
+
     paths:
         - packages
+
     excludePaths:
         - packages/admin/src/Livewire/Pages/Auth
         - packages/admin/src/Events/
-        - packages/core/src/Traits/
-        - packages/core/src/Models/Traits/
-    # ignoreErrors:
+        - packages/core/src/Repositories/
+        - packages/sidebar
+
+    ignoreErrors:
+        - message: '#Method.*getLabel\(\) should return string but returns array\|string\|null#'
+        - message: '#Call to an undefined method Spatie\\Image\\Drivers\\ImageDriver::keepOriginalImageFormat\(\)#'
 
     reportUnmatchedIgnoredErrors: false

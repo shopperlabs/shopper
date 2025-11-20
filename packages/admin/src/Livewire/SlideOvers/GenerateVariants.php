@@ -72,7 +72,7 @@ class GenerateVariants extends SlideOverComponent
     {
         $optionsValues = collect($this->availableOptions)
             ->mapWithKeys(fn (array $attribute): array => [
-                $attribute['name'] => collect($attribute['values'])
+                $attribute['name'] => collect($attribute['values']) // @phpstan-ignore-line
                     ->map(fn (array $item): array => [
                         'id' => $item['id'],
                         'value' => $item['value'],

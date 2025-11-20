@@ -7,6 +7,9 @@ namespace Shopper\Core\Models\Traits;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Models\Discount;
 
+/**
+ * @property-read \Illuminate\Support\Collection<int, Discount> $discounts
+ */
 trait HasDiscounts
 {
     /**
@@ -20,6 +23,6 @@ trait HasDiscounts
             shopper_table('discountables'),
             'discountable_id',
             'discount_id'
-        )->orderBy('created_at', 'desc');
+        );
     }
 }

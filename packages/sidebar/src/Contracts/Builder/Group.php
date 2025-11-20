@@ -32,5 +32,8 @@ interface Group extends Authorizable, Itemable
 
     public function setGroupItemsClass(string $class): self;
 
+    /**
+     * @return Collection<int, Item>
+     */
     public function getItems(): Collection;
 }

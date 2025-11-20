@@ -22,7 +22,7 @@ final class ShippingField
                     fn (): Forms\Components\Select => Forms\Components\Select::make('width_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
-                        ->options(Dimension\Length::toArray())
+                        ->options(Dimension\Length::class)
                         ->default(Dimension\Length::CM)
                 ),
             TextInputSelect::make('height_value')
@@ -32,7 +32,7 @@ final class ShippingField
                     fn (): Forms\Components\Select => Forms\Components\Select::make('height_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
-                        ->options(Dimension\Length::toArray())
+                        ->options(Dimension\Length::class)
                         ->default(Dimension\Length::CM)
                 ),
             TextInputSelect::make('weight_value')
@@ -42,7 +42,7 @@ final class ShippingField
                     fn (): Forms\Components\Select => Forms\Components\Select::make('weight_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
-                        ->options(Dimension\Weight::toArray())
+                        ->options(Dimension\Weight::class)
                         ->default(Dimension\Weight::KG)
                 ),
             TextInputSelect::make('volume_value')
@@ -52,7 +52,7 @@ final class ShippingField
                     fn (): Forms\Components\Select => Forms\Components\Select::make('volume_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
-                        ->options(Dimension\Volume::toArray())
+                        ->options(Dimension\Volume::class)
                         ->default(Dimension\Volume::ML)
                 ),
             TextInputSelect::make('depth_value')
@@ -62,7 +62,7 @@ final class ShippingField
                     fn (): Forms\Components\Select => Forms\Components\Select::make('depth_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
-                        ->options(Dimension\Length::toArray())
+                        ->options(Dimension\Length::class)
                         ->default(Dimension\Length::CM)
                 ),
         ];

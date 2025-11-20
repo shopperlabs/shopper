@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Traits;
+namespace Shopper\Core\Models\Traits;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Str;
@@ -34,7 +34,7 @@ trait HasSlug
 
     private function slugExists(string $slug, ?int $ignoreId = null): bool
     {
-        $query = $this->where('slug', $slug);
+        $query = $this->newQuery()->where('slug', $slug);
 
         if ($ignoreId) {
             $query->where('id', '!=', $ignoreId);

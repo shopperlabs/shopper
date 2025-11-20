@@ -36,14 +36,14 @@ trait CanBeCacheable
         return $this;
     }
 
-    public function getCacheDuration()
+    public function getCacheDuration(): mixed
     {
         $duration = $this->cacheDuration ?? now()->add(config('shopper.admin.icon-picker.duration', '7 days'));
 
         return $this->evaluate($duration);
     }
 
-    protected function tryCache(string $key, Closure $callback)
+    protected function tryCache(string $key, Closure $callback): mixed
     {
         if (! $this->getCacheable()) {
             return $callback->call($this);

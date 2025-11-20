@@ -15,6 +15,7 @@ final class CoreServiceProvider extends PackageServiceProvider
 {
     use HasRegisterConfigAndMigrationFiles;
 
+    /** @var string[] */
     protected array $configFiles = [
         'core',
         'media',

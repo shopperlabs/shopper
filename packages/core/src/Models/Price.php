@@ -75,6 +75,9 @@ class Price extends Model
         return $this->belongsTo(Currency::class, 'currency_id');
     }
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function priceable(): MorphTo
     {
         return $this->morphTo();
