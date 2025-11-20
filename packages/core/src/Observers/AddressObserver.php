@@ -29,9 +29,10 @@ final class AddressObserver
                 ->where('shipping_default', true)
                 ->first();
 
-            if ($defaultAddress) {
-                $defaultAddress->shipping_default = false;
-                $defaultAddress->saveQuietly();
+            if ($defaultAddress instanceof Address) {
+                $defaultAddress->updateQuietly([
+                    'shipping_default' => false,
+                ]);
             }
         }
     }
@@ -45,9 +46,10 @@ final class AddressObserver
                 ->where('billing_default', true)
                 ->first();
 
-            if ($defaultAddress) {
-                $defaultAddress->billing_default = false;
-                $defaultAddress->saveQuietly();
+            if ($defaultAddress instanceof Address) {
+                $defaultAddress->updateQuietly([
+                    'billing_default' => false,
+                ]);
             }
         }
     }

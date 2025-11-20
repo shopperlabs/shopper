@@ -22,6 +22,7 @@ class Files extends Component implements HasForms
 
     public Product $product;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void

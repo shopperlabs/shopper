@@ -9,6 +9,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -19,17 +20,21 @@ use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
  * @property Form $form
- * @property Collection $currencies
+ * @property Collection<int, Currency> $currencies
  */
 class ManagePricing extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
+    /**
+     * @var Model
+     */
     public $model;
 
     #[Locked]
     public ?int $currencyId = null;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public static function panelMaxWidth(): string
@@ -38,7 +43,7 @@ class ManagePricing extends SlideOverComponent implements HasForms
     }
 
     /**
-     * @param  class-string | string  $modelType
+     * @param  class-string|string  $modelType
      */
     public function mount(int $modelId, string $modelType, ?int $currencyId = null): void
     {
@@ -56,6 +61,9 @@ class ManagePricing extends SlideOverComponent implements HasForms
             ->model($this->model);
     }
 
+    /**
+     * @return Collection<int, Currency>
+     */
     #[Computed]
     public function currencies(): Collection
     {
@@ -92,6 +100,9 @@ class ManagePricing extends SlideOverComponent implements HasForms
         return view('shopper::livewire.slide-overs.add-pricing');
     }
 
+    /**
+     * @return array<array-key, array<string, mixed>>
+     */
     protected function getModelPrices(): array
     {
         $prices = collect();

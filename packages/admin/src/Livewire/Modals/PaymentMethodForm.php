@@ -23,6 +23,7 @@ class PaymentMethodForm extends ModalComponent implements HasForms
 
     public ?int $paymentId = null;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public static function modalMaxWidth(): string

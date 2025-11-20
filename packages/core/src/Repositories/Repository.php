@@ -18,6 +18,7 @@ abstract class Repository implements RepositoryContract
 
     protected DatabaseManager $database;
 
+    /** @var array<string, mixed> */
     protected array $with = [];
 
     public function __construct()

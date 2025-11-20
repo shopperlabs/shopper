@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Lazy;
 use Livewire\Component;
+use Shopper\Core\Models\Product;
+use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Repositories\VariantRepository;
 
 #[Lazy]
@@ -25,6 +27,7 @@ class Variants extends Component implements HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
+    /** @var Product */
     public $product;
 
     public function placeholder(): View
@@ -60,7 +63,7 @@ class Variants extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('stock')
                     ->label(__('shopper::layout.tables.current_stock'))
                     ->formatStateUsing(
-                        fn ($record): HtmlString => new HtmlString(Blade::render(<<<BLADE
+                        fn (ProductVariant $record): HtmlString => new HtmlString(Blade::render(<<<BLADE
                             <div class="flex items-center">
                                 <x-shopper::stock-badge :stock="{$record->stock}" />
                                 {{ __('shopper::words.in_stock') }}
@@ -96,7 +99,7 @@ class Variants extends Component implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon('untitledui-edit-04')
                     ->action(
-                        fn ($record) => $this->redirectRoute(
+                        fn (ProductVariant $record) => $this->redirectRoute(
                             name: 'shopper.products.variant',
                             parameters: ['productId' => $this->product->id, 'variantId' => $record->id],
                         ),

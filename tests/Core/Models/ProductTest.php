@@ -9,10 +9,12 @@ use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Collection;
+use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\DiscountDetail;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\InventoryHistory;
+use Shopper\Core\Models\Price;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Models\Review;
@@ -418,5 +420,39 @@ describe(Product::class, function (): void {
         $product = Product::factory()->create();
 
         expect($product)->toBeInstanceOf(Spatie\MediaLibrary\HasMedia::class);
+    });
+
+    it('deletes prices when product is deleted', function (): void {
+        $product = Product::factory()->create();
+        $currency = Currency::query()->first();
+
+        Price::factory()->create([
+            'priceable_id' => $product->id,
+            'priceable_type' => $product->getMorphClass(),
+            'currency_id' => $currency->id,
+        ]);
+
+        expect($product->prices()->count())->toBe(1);
+
+        $product->delete();
+
+        expect(Price::query()->where('priceable_id', $product->id)->count())->toBe(0);
+    });
+
+    it('clears stock when product is deleted', function (): void {
+        $inventory = Inventory::factory()->create();
+        $product = Product::factory()->create();
+
+        $product->mutateStock($inventory->id, 10, ['old_quantity' => 0]);
+
+        expect($product->stock)->toBe(10)
+            ->and($product->inventoryHistories()->count())->toBe(1);
+
+        $product->delete();
+
+        expect(InventoryHistory::query()
+            ->where('stockable_id', $product->id)
+            ->where('stockable_type', $product->getMorphClass())
+            ->count())->toBe(0);
     });
 })->group('product', 'models');

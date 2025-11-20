@@ -31,6 +31,7 @@ class RolePermission extends Component implements HasActions, HasForms
 
     public Role $role;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void

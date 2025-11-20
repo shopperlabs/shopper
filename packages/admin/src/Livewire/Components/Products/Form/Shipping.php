@@ -12,6 +12,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Components;
+use Shopper\Core\Models\Product;
 
 /**
  * @property Form $form
@@ -20,8 +21,10 @@ class Shipping extends Component implements HasForms
 {
     use InteractsWithForms;
 
+    /** @var Product */
     public $product;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void

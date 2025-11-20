@@ -37,7 +37,7 @@ class IconPicker extends Select
 
     protected bool|Closure $show;
 
-    protected string $layout = 'floating';
+    protected string|Closure $layout = 'floating';
 
     public function setUp(): void
     {
@@ -47,25 +47,29 @@ class IconPicker extends Select
         $this->layout($this->layout);
 
         $this->getSearchResultsUsing = function (IconPicker $component, string $search, Collection $icons) {
-
             $iconsHash = md5(serialize($icons));
             $key = "icon-picker.results.{$iconsHash}.{$search}";
 
-            return $this->tryCache($key, fn () => collect($icons)
-                ->flatten()
-                ->filter(fn (string $icon) => str_contains($icon, $search))
-                ->mapWithKeys(fn (string $icon) => [$icon => $component->getItemTemplate(['icon' => $icon])])
-                ->toArray());
+            return $this->tryCache(
+                $key,
+                fn (): array => collect($icons)
+                    ->flatten()
+                    ->filter(fn (string $icon) => str_contains($icon, $search))
+                    ->mapWithKeys(fn (string $icon) => [$icon => $component->getItemTemplate(['icon' => $icon])])
+                    ->toArray()
+            );
         };
 
         $this->getOptionLabelUsing = function (IconPicker $component, $value) {
             if ($value) {
                 return $component->getItemTemplate(['icon' => $value]);
             }
+
+            return null;
         };
 
         $this
-            ->itemTemplate(fn (IconPicker $component, string $icon) => view('shopper::filament.icon-picker-item', [
+            ->itemTemplate(fn (IconPicker $component, string $icon): string => view('shopper::filament.icon-picker-item', [
                 'icon' => $icon,
             ])->render())
             ->placeholder(__('shopper::forms.placeholder.icon_placeholder'));

@@ -101,9 +101,6 @@ abstract class TestCase extends BaseTestCase
             __DIR__.'/../packages/admin/resources/views',
         ]);
 
-        $app['config']->set('shopper.currency.default', 'USD');
-        $app['config']->set('shopper.currency.currencies', ['USD']);
-
         $app['config']->set('database.connections.sqlite', [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', ':memory:'),

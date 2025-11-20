@@ -36,6 +36,7 @@ class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOv
 
     public ?string $description = null;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(?int $optionId = null): void
@@ -67,7 +68,6 @@ class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOv
                             ->label(__('shopper::forms.label.name'))
                             ->placeholder('Standard option...')
                             ->required(),
-
                         Forms\Components\TextInput::make('price') // @phpstan-ignore-line
                             ->label(__('shopper::forms.label.price'))
                             ->numeric()
@@ -75,14 +75,12 @@ class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOv
                             ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                             ->suffix($this->zone->currency->code)
                             ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
-
                         Forms\Components\Select::make('carrier_id')
                             ->label(__('shopper::pages/settings/carriers.title'))
                             ->options($this->zone->carriers->pluck('name', 'id'))
                             ->required()
                             ->native(false)
                             ->columnSpan('full'),
-
                         Forms\Components\Textarea::make('description')
                             ->label(__('shopper::forms.label.description'))
                             ->hint(__('shopper::words.characters', ['number' => 200]))
@@ -91,13 +89,10 @@ class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOv
                             ->columnSpan('full'),
                     ])
                     ->columns(),
-
                 Forms\Components\Toggle::make('is_enabled')
                     ->label(__('shopper::forms.label.visibility'))
                     ->helperText(__('shopper::pages/settings/zones.shipping_options.option_visibility')),
-
                 Separator::make(),
-
                 Forms\Components\KeyValue::make('metadata')
                     ->label('Metadata')
                     ->reorderable(),

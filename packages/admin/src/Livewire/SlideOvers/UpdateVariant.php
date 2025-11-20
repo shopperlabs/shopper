@@ -83,7 +83,6 @@ class UpdateVariant extends SlideOverComponent implements HasForms
                     ->maxLength(255),
                 Forms\Components\Checkbox::make('allow_backorder')
                     ->label(__('shopper::pages/products.allow_backorder')),
-
                 Forms\Components\Group::make()
                     ->visible(fn (): bool => count($this->variantsOptions) > 0)
                     ->schema([
@@ -105,7 +104,6 @@ class UpdateVariant extends SlideOverComponent implements HasForms
                                 )->toArray()
                             )
                             ->columns(3),
-
                         Forms\Components\Placeholder::make('alert')
                             ->visible(fn (Forms\Get $get): bool => $get('values') !== null && $this->alert)
                             ->hiddenLabel()
@@ -119,9 +117,7 @@ class UpdateVariant extends SlideOverComponent implements HasForms
                             )
                             ->columnSpanFull(),
                     ]),
-
                 Components\Separator::make(),
-
                 Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\Placeholder::make('dimensions')
@@ -133,7 +129,6 @@ class UpdateVariant extends SlideOverComponent implements HasForms
                                     </p>
                                 BLADE))
                             ),
-
                         Forms\Components\Grid::make()
                             ->schema(Components\Form\ShippingField::make()),
                     ]),

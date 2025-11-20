@@ -29,6 +29,7 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
 
     public ?Attribute $attribute = null;
 
+    /** @var Collection<int, AttributeValue> */
     public Collection $values;
 
     public static function panelMaxWidth(): string
@@ -42,6 +43,9 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
         $this->values = $this->attribute->values;
     }
 
+    /**
+     * @return array<array-key, Forms\Components\Component>
+     */
     public function formSchema(): array
     {
         return [
@@ -50,7 +54,6 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                 ->helperText(__('shopper::modals.attributes.key_description'))
                 ->required()
                 ->unique(table: AttributeValue::class, column: 'key', ignoreRecord: true),
-
             Forms\Components\TextInput::make('value')
                 ->label(__('shopper::forms.label.value'))
                 ->placeholder('My value')
@@ -69,7 +72,6 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
             ->columns([
                 Tables\Columns\TextColumn::make('key')
                     ->label(__('shopper::forms.label.key')),
-
                 Tables\Columns\TextColumn::make('id')
                     ->label('Hex')
                     ->formatStateUsing(fn (AttributeValue $record): View => view(
@@ -77,7 +79,6 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                         ['key' => $record->key]
                     ))
                     ->visible($this->attribute->type === FieldType::ColorPicker),
-
                 Tables\Columns\TextColumn::make('value')
                     ->label(__('shopper::forms.label.value')),
             ])
@@ -101,7 +102,6 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
 
                         $this->dispatch('$refresh');
                     }),
-
                 Tables\Actions\Action::make('delete')
                     ->icon('untitledui-trash-03')
                     ->color('danger')

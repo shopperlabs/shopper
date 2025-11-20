@@ -64,6 +64,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read \Illuminate\Support\Collection<int, Collection> $collections
  * @property-read \Illuminate\Support\Collection<int, ProductVariant> $variants
  * @property-read \Illuminate\Support\Collection<int, Price> $prices
+ * @property-read \Illuminate\Support\Collection<int, Product> $relatedProducts
  */
 #[ObservedBy(ProductObserver::class)]
 class Product extends Model implements HasReviews, SpatieHasMedia

@@ -40,6 +40,7 @@ class AddVariant extends SlideOverComponent implements HasForms
     #[Locked]
     public int $productId;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public static function panelMaxWidth(): string
@@ -72,7 +73,6 @@ class AddVariant extends SlideOverComponent implements HasForms
                                     ->label(__('shopper::forms.label.sku'))
                                     ->unique(shopper_table('product_variants'), 'sku')
                                     ->maxLength(255),
-
                                 Forms\Components\Group::make()
                                     ->visible(fn (): bool => count($this->variantsOptions) > 0)
                                     ->schema([
@@ -85,7 +85,6 @@ class AddVariant extends SlideOverComponent implements HasForms
                                                     </p>
                                                 BLADE))
                                             ),
-
                                         Forms\Components\Group::make()
                                             ->schema(
                                                 $this->options->map(
@@ -104,7 +103,6 @@ class AddVariant extends SlideOverComponent implements HasForms
                                                 )->toArray()
                                             )
                                             ->columns(3),
-
                                         Forms\Components\Placeholder::make('alert')
                                             ->visible(fn (Forms\Get $get): bool => $get('values') !== null && $this->variantAlreadyExist($get('values')))
                                             ->hiddenLabel()
@@ -126,7 +124,6 @@ class AddVariant extends SlideOverComponent implements HasForms
                                     throw new Halt;
                                 }
                             }),
-
                         Components\Wizard\StepColumn::make(__('shopper::words.media'))
                             ->icon('untitledui-image')
                             ->schema([
@@ -147,12 +144,10 @@ class AddVariant extends SlideOverComponent implements HasForms
                                     ->columnSpanFull(),
                             ])
                             ->columns(5),
-
                         Components\Wizard\StepColumn::make(__('shopper::words.pricing'))
                             ->icon('untitledui-coins-stacked-02')
                             ->schema(CurrenciesField::make($this->currencies))
                             ->statePath('prices'),
-
                         Components\Wizard\StepColumn::make(__('shopper::pages/settings/menu.location'))
                             ->icon('untitledui-package')
                             ->schema([
@@ -163,14 +158,12 @@ class AddVariant extends SlideOverComponent implements HasForms
                                             {{ __('shopper::pages/products.stock_inventory_description', ['item' => __('shopper::pages/products.variants.single')]) }}
                                         </p>
                                     BLADE))),
-
                                 Forms\Components\Grid::make()
                                     ->schema([
                                         Forms\Components\TextInput::make('barcode')
                                             ->label(__('shopper::forms.label.barcode'))
                                             ->unique(shopper_table('product_variants'), 'barcode')
                                             ->maxLength(255),
-
                                         Forms\Components\TextInput::make('quantity')
                                             ->label(__('shopper::forms.label.quantity'))
                                             ->numeric()
@@ -213,6 +206,9 @@ class AddVariant extends SlideOverComponent implements HasForms
         );
     }
 
+    /**
+     * @return Collection<int, Currency>
+     */
     #[Computed]
     public function currencies(): Collection
     {

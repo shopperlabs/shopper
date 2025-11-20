@@ -19,28 +19,28 @@ use Shopper\Core\Observers\OrderObserver;
 
 /**
  * @property-read int $id
- * @property string $number
- * @property int $price_amount
- * @property string $notes
- * @property string $currency_code
- * @property int $total_amount
- * @property int | null $zone_id
- * @property int | null $shipping_address_id
- * @property int | null $payment_method_id
- * @property int | null $billing_address_id
- * @property int | null $customer_id
- * @property int | null $channel_id
- * @property int | null $parent_order_id
- * @property \Illuminate\Support\Carbon | null $canceled_at
- * @property OrderStatus $status
+ * @property-read string $number
+ * @property-read int $price_amount
+ * @property-read string $notes
+ * @property-read string $currency_code
+ * @property-read int $total_amount
+ * @property-read int|null $zone_id
+ * @property-read int|null $shipping_address_id
+ * @property-read int|null $payment_method_id
+ * @property-read int|null $billing_address_id
+ * @property-read int|null $customer_id
+ * @property-read int|null $channel_id
+ * @property-read int|null $parent_order_id
+ * @property-read \Illuminate\Support\Carbon|null $canceled_at
+ * @property-read OrderStatus $status
  * @property-read CarrierOption $shippingOption
- * @property-read OrderAddress | null $shippingAddress
- * @property-read OrderAddress | null $billingAddress
- * @property-read PaymentMethod | null $paymentMethod
- * @property-read Zone | null $zone
- * @property-read Channel | null $channel
- * @property-read Order | null $parent
- * @property-read \Illuminate\Foundation\Auth\User | User $customer
+ * @property-read OrderAddress|null $shippingAddress
+ * @property-read OrderAddress|null $billingAddress
+ * @property-read PaymentMethod|null $paymentMethod
+ * @property-read Zone|null $zone
+ * @property-read Channel|null $channel
+ * @property-read Order|null $parent
+ * @property-read \Illuminate\Foundation\Auth\User|User $customer
  * @property-read \Illuminate\Support\Collection<int, OrderItem> $items
  * @property-read \Illuminate\Support\Collection<int, Order> $children
  */

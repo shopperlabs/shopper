@@ -32,9 +32,7 @@ class Inventory extends Component implements HasForms, HasTable
     /** @var Product */
     public $product;
 
-    /**
-     * @var array<string, mixed>|null
-     */
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     /**

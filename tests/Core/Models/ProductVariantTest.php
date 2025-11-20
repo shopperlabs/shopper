@@ -5,6 +5,10 @@ declare(strict_types=1);
 use Shopper\Core\Enum\Dimension\Length;
 use Shopper\Core\Enum\Dimension\Weight;
 use Shopper\Core\Enum\ProductType;
+use Shopper\Core\Models\Currency;
+use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\InventoryHistory;
+use Shopper\Core\Models\Price;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Models\User;
@@ -52,5 +56,39 @@ describe(ProductVariant::class, function (): void {
         $variant = ProductVariant::factory()->create();
 
         expect($variant->values())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\BelongsToMany::class);
+    });
+
+    it('deletes prices when variant is deleted', function (): void {
+        $variant = ProductVariant::factory()->create();
+        $currency = Currency::query()->first();
+
+        Price::factory()->create([
+            'priceable_id' => $variant->id,
+            'priceable_type' => $variant->getMorphClass(),
+            'currency_id' => $currency->id,
+        ]);
+
+        expect($variant->prices()->count())->toBe(1);
+
+        $variant->delete();
+
+        expect(Price::query()->where('priceable_id', $variant->id)->count())->toBe(0);
+    });
+
+    it('clears stock when variant is deleted', function (): void {
+        $inventory = Inventory::factory()->create();
+        $variant = ProductVariant::factory()->create();
+
+        $variant->mutateStock($inventory->id, 10, ['old_quantity' => 0]);
+
+        expect($variant->stock)->toBe(10)
+            ->and($variant->inventoryHistories()->count())->toBe(1);
+
+        $variant->delete();
+
+        expect(InventoryHistory::query()
+            ->where('stockable_id', $variant->id)
+            ->where('stockable_type', $variant->getMorphClass())
+            ->count())->toBe(0);
     });
 })->group('product', 'models');

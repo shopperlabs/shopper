@@ -35,6 +35,7 @@ describe(OrderRefund::class, function (): void {
             'status' => OrderRefundStatus::Pending,
         ]);
 
-        expect($refund->status)->toBe(OrderRefundStatus::Pending);
+        expect($refund->status)->toBe(OrderRefundStatus::Pending)
+            ->and($refund->status->getLabel())->toBe(__('shopper-core::status.pending'));
     });
 })->group('order', 'models');

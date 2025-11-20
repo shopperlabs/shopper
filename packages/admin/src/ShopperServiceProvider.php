@@ -12,6 +12,7 @@ use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
+use Shopper\Concerns\TwoFactorAuthenticationProvider;
 use Shopper\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
 use Shopper\Contracts\LoginResponse as LoginResponseContract;
 use Shopper\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
@@ -31,7 +32,6 @@ use Shopper\Livewire\Components;
 use Shopper\Livewire\Pages;
 use Shopper\Providers\FeatureServiceProvider;
 use Shopper\Providers\SidebarServiceProvider;
-use Shopper\Providers\TwoFactorAuthenticationProvider;
 use Shopper\Traits\LoadComponents;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -160,6 +160,9 @@ final class ShopperServiceProvider extends PackageServiceProvider
         }
     }
 
+    /**
+     * @return string[]
+     */
     protected function getLivewireComponents(): array
     {
         return [
@@ -171,9 +174,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'initialize-store-information' => Components\Initialization\Steps\StoreInformation::class,
             'initialize-store-address' => Components\Initialization\Steps\StoreAddress::class,
             'initialize-store-social-link' => Components\Initialization\Steps\StoreSocialLink::class,
-            'products.attributes.multiple-choice' => Components\Products\Attributes\MultipleChoice::class,
-            'products.attributes.single-choice' => Components\Products\Attributes\SingleChoice::class,
-            'products.attributes.text' => Components\Products\Attributes\Text::class,
         ];
     }
 

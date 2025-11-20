@@ -80,7 +80,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
             ->label(__('shopper::forms.actions.cancel_order'))
             ->visible($this->order->canBeCancelled())
             ->action(function (): void {
-                $this->order->update(['status' => OrderStatus::Cancelled()]);
+                $this->order->update(['status' => OrderStatus::Cancelled]);
 
                 event(new Cancel($this->order));
 
@@ -97,7 +97,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
             ->label(__('shopper-core::status.registered'))
             ->visible($this->order->isPending())
             ->action(function (): void {
-                $this->order->update(['status' => OrderStatus::Register()]);
+                $this->order->update(['status' => OrderStatus::Register]);
 
                 event(new Registered($this->order));
 
@@ -114,7 +114,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
             ->label(__('shopper::forms.actions.mark_paid'))
             ->visible($this->order->isPending() || $this->order->isRegister())
             ->action(function (): void {
-                $this->order->update(['status' => OrderStatus::Paid()]);
+                $this->order->update(['status' => OrderStatus::Paid]);
 
                 event(new Paid($this->order));
 
@@ -131,7 +131,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
             ->label(__('shopper::forms.actions.mark_complete'))
             ->visible($this->order->isPaid())
             ->action(function (): void {
-                $this->order->update(['status' => OrderStatus::Completed()]);
+                $this->order->update(['status' => OrderStatus::Completed]);
 
                 event(new Completed($this->order));
 

@@ -24,15 +24,14 @@ final class InventoryObserver
     private function ensureOnlyOneIsDefault(Inventory $inventory): void
     {
         if ($inventory->is_default) {
-            /** @var Inventory | null $defaultInventory */
+            /** @var Inventory|null $defaultInventory */
             $defaultInventory = Inventory::query()
                 ->where('id', '!=', $inventory->id)
                 ->where('is_default', false)
                 ->first();
 
-            if ($defaultInventory) {
-                $defaultInventory->is_default = false;
-                $defaultInventory->saveQuietly();
+            if ($defaultInventory instanceof Inventory) {
+                $defaultInventory->updateQuietly(['is_default' => false]);
             }
         }
     }

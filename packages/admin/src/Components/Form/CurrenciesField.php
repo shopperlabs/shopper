@@ -11,6 +11,10 @@ use Shopper\Core\Models\Currency;
 
 final class CurrenciesField
 {
+    /**
+     * @param  Collection<int, Currency>  $currencies
+     * @return array<array-key, Forms\Components\Component>
+     */
     public static function make(Collection $currencies): array
     {
         return $currencies

@@ -70,7 +70,7 @@ class GenerateVariants extends SlideOverComponent
     public function mapVariantPermutations(): void
     {
         $optionsValues = collect($this->availableOptions)
-            ->mapWithKeys(fn ($attribute) => [
+            ->mapWithKeys(fn (array $attribute): array => [
                 $attribute['name'] => collect($attribute['values'])
                     ->map(fn (array $item) => [
                         'id' => $item['id'],
@@ -105,8 +105,9 @@ class GenerateVariants extends SlideOverComponent
     }
 
     #[Computed]
-    public function product(): Model
+    public function product(): Product
     {
+        /** @var Product */
         return (new ProductRepository)->with(['options', 'options.values'])->getById($this->productId);
     }
 

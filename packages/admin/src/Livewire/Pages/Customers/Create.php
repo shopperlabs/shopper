@@ -12,6 +12,7 @@ use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -34,6 +35,7 @@ class Create extends AbstractPageComponent implements HasForms
 {
     use InteractsWithForms;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void
@@ -126,6 +128,7 @@ class Create extends AbstractPageComponent implements HasForms
 
     public function store(): void
     {
+        /** @var array<string, mixed> $data */
         $data = $this->form->getState();
         $customerData = Arr::except($data, ['address', 'send_mail', 'password_confirmation']);
         $address = array_merge(Arr::only($data, ['address'])['address'], [
@@ -161,7 +164,7 @@ class Create extends AbstractPageComponent implements HasForms
         return view('shopper::livewire.pages.customers.create', [
             'countries' => Cache::get(
                 key: 'countries-settings',
-                default: fn () => Country::query()->orderBy('name')->get()
+                default: fn (): Collection => Country::query()->orderBy('name')->get()
             ),
         ])
             ->title(__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')]));

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Shopper\Core\Database\Factories\UserFactory;
+use Shopper\Core\Enum\GenderType;
 use Shopper\Core\Models\Traits\HasDiscounts;
 use Shopper\Core\Models\Traits\HasProfilePhoto;
 use Shopper\Traits\TwoFactorAuthenticatable;
@@ -24,14 +25,20 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read string|null $first_name
  * @property-read string $last_name
  * @property-read string $email
+ * @property-read bool $opt_in
+ * @property-read GenderType $gender
  * @property-read string $avatar_type
+ * @property-read string|null $timezone
  * @property-read string|null $avatar_location
  * @property-read string|null $phone_number
+ * @property-read string|null $last_login_ip
  * @property-read Carbon|null $email_verified_at
  * @property-read Carbon|null $birth_date
+ * @property-read Carbon|null $last_login_at
  * @property-read string|null $two_factor_recovery_codes
  * @property-read string|null $two_factor_secret
- * @property-read \Illuminate\Support\Collection | Order[] $orders
+ * @property-read \Illuminate\Support\Collection<int, Order> $orders
+ * @property-read \Illuminate\Support\Collection<int, Address> $addresses
  */
 class User extends Authenticatable
 {
@@ -133,6 +140,8 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'last_login_at' => 'datetime',
             'birth_date' => 'datetime',
+            'gender' => GenderType::class,
+            'opt_in' => 'bool',
         ];
     }
 

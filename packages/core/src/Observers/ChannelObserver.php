@@ -22,16 +22,15 @@ final class ChannelObserver
     private function ensureOnlyOneIsDefault(Channel $channel): void
     {
         if ($channel->is_default) {
-            /** @var Channel | null $defaultChannel */
+            /** @var Channel|null $defaultChannel */
             $defaultChannel = (new ChannelRepository)
                 ->query()
                 ->where('id', '!=', $channel->id)
                 ->where('is_default', true)
                 ->first();
 
-            if ($defaultChannel) {
-                $defaultChannel->is_default = false;
-                $defaultChannel->saveQuietly();
+            if ($defaultChannel instanceof Channel) {
+                $defaultChannel->updateQuietly(['is_default' => false]);
             }
         }
     }

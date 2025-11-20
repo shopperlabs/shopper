@@ -31,9 +31,10 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
-    public $productId;
+    public int $productId;
 
     public static function panelMaxWidth(): string
     {
@@ -107,7 +108,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
                                         ->where('product_id', $this->productId)
                                         ->whereIn('attribute_id', $get('attributes'))
                                         ->get()
-                                        ->mapToGroups(fn (AttributeProduct $attributeProduct) => [
+                                        ->mapToGroups(fn (AttributeProduct $attributeProduct): array => [
                                             $attributeProduct->attribute_id => $attributeProduct->attribute_value_id,
                                         ]);
 

@@ -26,7 +26,7 @@ class DiscountFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => $this->faker->word(),
+            'code' => $this->faker->unique()->regexify('[A-Z0-9]{8}'),
             'is_active' => $this->faker->boolean(),
             'type' => $this->faker->randomElement(DiscountType::values()),
             'value' => $this->faker->numberBetween(10, 1000),

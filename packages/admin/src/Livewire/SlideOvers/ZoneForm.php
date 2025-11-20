@@ -39,8 +39,10 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
 
     public ?string $description = null;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
+    /** @var array<array-key, int> */
     public array $countriesInZone = [];
 
     public static function panelMaxWidth(): string
@@ -86,16 +88,16 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
                             ->placeholder('Africa')
                             ->required()
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function ($state, Forms\Set $set): void {
-                                $set('slug', Str::slug($state));
+                            ->afterStateUpdated(function (?string $state, Forms\Set $set): void {
+                                if ($state) {
+                                    $set('slug', Str::slug($state));
+                                }
                             }),
                         Forms\Components\Hidden::make('slug'),
-
                         Forms\Components\TextInput::make('code')
                             ->label(__('shopper::forms.label.code'))
                             ->placeholder('AF'),
                     ]),
-
                 Forms\Components\Select::make('countries')
                     ->label(__('shopper::forms.label.countries'))
                     ->placeholder(__('shopper::forms.placeholder.select_countries'))
@@ -112,7 +114,6 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
                         fn (int $value): bool => in_array($value, $this->countriesInZone)
                     )
                     ->native(false),
-
                 Forms\Components\Select::make('currency_id')
                     ->label(__('shopper::forms.label.currency'))
                     ->placeholder(__('shopper::forms.placeholder.choose_currency'))
@@ -124,11 +125,9 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
                     )
                     ->native(false)
                     ->required(),
-
                 Forms\Components\Toggle::make('is_enabled')
                     ->label(__('shopper::forms.label.visibility'))
                     ->helperText(__('shopper::words.set_visibility', ['name' => mb_strtolower(__('shopper::pages/settings/menu.zone'))])),
-
                 Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\Placeholder::make('providers')
@@ -138,7 +137,6 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
                                     {{ __('shopper::pages/settings/zones.providers_description') }}
                                 </p>
                             Blade))),
-
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\Select::make('payments')
@@ -147,7 +145,6 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
                                     ->searchable()
                                     ->multiple()
                                     ->required(),
-
                                 Forms\Components\Select::make('carriers')
                                     ->label(__('shopper::pages/settings/carriers.title'))
                                     ->options(Carrier::query()->pluck('name', 'id'))
@@ -156,9 +153,7 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
                                     ->required(),
                             ]),
                     ]),
-
                 Separator::make(),
-
                 Forms\Components\KeyValue::make('metadata')
                     ->label('Metadata')
                     ->reorderable(),

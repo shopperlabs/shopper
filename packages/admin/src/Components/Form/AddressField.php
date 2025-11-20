@@ -18,6 +18,9 @@ final class AddressField
         return $prefix.'.';
     }
 
+    /**
+     * @return array<array-key, Components\Component>
+     */
     public static function make(?string $prefix = null): array
     {
         return [

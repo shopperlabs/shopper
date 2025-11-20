@@ -33,7 +33,7 @@ class Edit extends Component implements HasForms
     public $product;
 
     /**
-     * @var array<array-key, mixed>|null
+     * @var array<string, mixed>|null
      */
     public ?array $data = [];
 

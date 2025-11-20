@@ -89,7 +89,7 @@
     "refactor": "rector",
     "test:lint": "pint --test",
     "test:refactor": "./vendor/bin/rector --dry-run",
-    "test:unit": "pest --colors=always --coverage --parallel",
+    "test:unit": "pest --colors=always --coverage --parallel --min=80",
     "test:sqlite": "pest --configuration=phpunit.sqlite.xml --colors=always --coverage --parallel",
     "test:mysql": "pest --configuration=phpunit.mysql.xml",
     "test:pgsql": "pest --configuration=phpunit.pgsql.xml",

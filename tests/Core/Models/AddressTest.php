@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Shopper\Core\Enum\AddressType;
+use Shopper\Core\Exceptions\UndefinedEnumCaseError;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\User;
 
@@ -15,7 +16,9 @@ describe(Address::class, function (): void {
         $billing = Address::factory()->create(['type' => AddressType::Billing, 'user_id' => $user->id]);
 
         expect($shipping->type)->toBe(AddressType::Shipping)
-            ->and($billing->type)->toBe(AddressType::Billing);
+            ->and($shipping->type->getLabel())->toBe(__('shopper-core::enum/address.shipping'))
+            ->and($billing->type)->toBe(AddressType::Billing)
+            ->and($billing->type->getLabel())->toBe(__('shopper-core::enum/address.billing'));
     });
 
     it('has full address', function (): void {
@@ -42,4 +45,16 @@ describe(Address::class, function (): void {
 
         expect($address->user->id)->toBe($user->id);
     });
+
+    it('can call enum cases as static methods', function (): void {
+        expect(AddressType::Billing())->toBe('billing')
+            ->and(AddressType::Shipping())->toBe('shipping');
+    });
+
+    it('throws exception when calling undefined enum case', function (): void {
+        AddressType::Delivery();
+    })->throws(
+        UndefinedEnumCaseError::class,
+        'Undefined constant Shopper\Core\Enum\AddressType::Delivery.'
+    );
 })->group('address', 'models');

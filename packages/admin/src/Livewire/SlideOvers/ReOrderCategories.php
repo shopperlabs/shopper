@@ -11,6 +11,9 @@ use Shopper\Livewire\Components\SlideOverComponent;
 
 class ReOrderCategories extends SlideOverComponent
 {
+    /**
+     * @param  array<array-key, mixed>  $items
+     */
     public function updateGroupOrder(array $items): void
     {
         foreach ($items as $item) {
@@ -22,6 +25,9 @@ class ReOrderCategories extends SlideOverComponent
         $this->dispatch('category-save');
     }
 
+    /**
+     * @param  array<array-key, mixed>  $groups
+     */
     public function updateCategoryOrder(array $groups): void
     {
         foreach ($groups as $group) {
