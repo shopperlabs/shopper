@@ -15,7 +15,7 @@ class LegalPage extends Component
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.legal', [
-            'legals' => Legal::query()->get()->mapWithKeys(fn (Legal $item) => [$item->slug => $item]),
+            'legals' => Legal::query()->get()->mapWithKeys(fn (Legal $item): array => [$item->slug => $item]),
         ])
             ->title(__('shopper::pages/settings/global.legal.title'));
     }

@@ -99,7 +99,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
         $this->app->singleton(
             TwoFactorAuthenticationProviderContract::class,
-            fn ($app) => new TwoFactorAuthenticationProvider($app->make(Google2FA::class))
+            fn ($app): TwoFactorAuthenticationProvider => new TwoFactorAuthenticationProvider($app->make(Google2FA::class))
         );
 
         $this->app->bind(LoginResponseContract::class, LoginResponse::class);
@@ -117,7 +117,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
         TextColumn::macro('currency', function (string|Closure|null $currency = null): TextColumn {
             /*** @var TextColumn $this */
             // @phpstan-ignore-next-line
-            $this->formatStateUsing(static function (Column $column, $state) use ($currency): ?string {
+            $this->formatStateUsing(static function (Column $column, ?int $state) use ($currency): ?string {
                 if (blank($state)) {
                     return null;
                 }

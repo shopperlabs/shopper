@@ -104,7 +104,7 @@ describe(Permissions::class, function (): void {
 
         $groupPermissions = $component->viewData('groupPermissions');
 
-        expect($groupPermissions)->toBeInstanceOf(\Illuminate\Support\Collection::class)
+        expect($groupPermissions)->toBeInstanceOf(Illuminate\Support\Collection::class)
             ->and($groupPermissions->has('Products'))->toBeTrue()
             ->and($groupPermissions->has('Orders'))->toBeTrue()
             ->and($groupPermissions->get('Products'))->toHaveCount(2)

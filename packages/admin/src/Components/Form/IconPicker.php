@@ -54,13 +54,13 @@ class IconPicker extends Select
                 $key,
                 fn (): array => collect($icons)
                     ->flatten()
-                    ->filter(fn (string $icon) => str_contains($icon, $search))
-                    ->mapWithKeys(fn (string $icon) => [$icon => $component->getItemTemplate(['icon' => $icon])])
+                    ->filter(fn (string $icon): bool => str_contains($icon, $search))
+                    ->mapWithKeys(fn (string $icon): array => [$icon => $component->getItemTemplate(['icon' => $icon])])
                     ->toArray()
             );
         };
 
-        $this->getOptionLabelUsing = function (IconPicker $component, $value) {
+        $this->getOptionLabelUsing = function (IconPicker $component, ?string $value) {
             if ($value) {
                 return $component->getItemTemplate(['icon' => $value]);
             }
@@ -214,6 +214,9 @@ class IconPicker extends Select
         throw new BadMethodCallException('Method not allowed.');
     }
 
+    /**
+     * @return Collection<array-key, mixed>
+     */
     private function loadIcons(): Collection
     {
         $iconsHash = md5(serialize($this->getSets()));
@@ -230,7 +233,7 @@ class IconPicker extends Select
                 $sets = collect($iconsFactory->all());
 
                 if ($allowedSets) {
-                    $sets = $sets->filter(fn ($value, $key) => in_array($key, $allowedSets));
+                    $sets = $sets->filter(fn ($value, $key): bool => in_array($key, $allowedSets));
                 }
 
                 return [$sets, $allowedIcons, $disallowedIcons];

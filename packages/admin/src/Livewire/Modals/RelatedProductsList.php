@@ -37,12 +37,15 @@ class RelatedProductsList extends ModalComponent
      */
     public function mount(int $productId, array $ids = []): void
     {
-        $this->product = (new ProductRepository)->getById($productId);
+        /** @var Product $product */
+        $product = (new ProductRepository)->getById($productId);
+        $this->product = $product;
         $this->exceptProductIds = $ids;
     }
 
     /**
      * @return Collection<int, Product>
+     *
      * @throws \Shopper\Core\Exceptions\ModelRepositoryException
      */
     #[Computed]

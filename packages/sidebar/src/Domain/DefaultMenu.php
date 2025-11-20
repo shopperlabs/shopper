@@ -68,7 +68,7 @@ class DefaultMenu implements Menu, Serializable
 
     public function addGroup(Group $group): Menu
     {
-        $this->groups->put($group->getName(), $group);
+        $this->groups->put($group->getName(), $group); // @phpstan-ignore-line
 
         return $this;
     }
@@ -78,7 +78,7 @@ class DefaultMenu implements Menu, Serializable
      */
     public function getGroups(): Collection
     {
-        return $this->groups->sortBy(fn (Group $group) => $group->getWeight());
+        return $this->groups->sortBy(fn (Group $group): int => $group->getWeight());
     }
 
     public function add(Menu $menu): Menu

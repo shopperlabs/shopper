@@ -54,7 +54,7 @@ class PaymentMethodForm extends ModalComponent implements HasForms
                     ->placeholder('NotchPay')
                     ->required()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', $state)),
+                    ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('slug', $state)),
                 Components\Hidden::make('slug'),
                 Components\TextInput::make('link_url')
                     ->label(__('shopper::forms.label.payment_doc'))

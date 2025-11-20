@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Shopper\Core\Models\DiscountDetail;
 use Shopper\Core\Models\Discount;
+use Shopper\Core\Models\DiscountDetail;
 use Shopper\Core\Models\Product;
 
 /**

@@ -28,10 +28,10 @@ use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Form $form
- * @property Collection $currencies
- * @property Collection $options
- * @property array $variantsOptions
+ * @property-read Form $form
+ * @property-read Collection<int, Currency> $currencies
+ * @property-read Collection<string, mixed> $options
+ * @property-read array<array-key, mixed> $variantsOptions
  */
 class AddVariant extends SlideOverComponent implements HasForms
 {
@@ -88,7 +88,7 @@ class AddVariant extends SlideOverComponent implements HasForms
                                         Forms\Components\Group::make()
                                             ->schema(
                                                 $this->options->map(
-                                                    fn ($option): Forms\Components\Select => Forms\Components\Select::make('values.'.$option['id'])
+                                                    fn (array $option): Forms\Components\Select => Forms\Components\Select::make('values.'.$option['id'])
                                                         ->label($option['name'])
                                                         ->key($option['key'])
                                                         ->required()
@@ -96,7 +96,7 @@ class AddVariant extends SlideOverComponent implements HasForms
                                                         ->optionsLimit(10)
                                                         ->options(
                                                             collect($option['values'])->mapWithKeys(
-                                                                fn ($value): array => [$value['id'] => $value['value']]
+                                                                fn (array $value): array => [$value['id'] => $value['value']]
                                                             )
                                                         )
                                                         ->native(false)
@@ -212,15 +212,23 @@ class AddVariant extends SlideOverComponent implements HasForms
     #[Computed]
     public function currencies(): Collection
     {
-        return Currency::query()
+        /** @var Collection<int, Currency> $currencies */
+        $currencies = Currency::query()
             ->select('id', 'name', 'code', 'symbol')
             ->whereIn(
                 column: 'id',
                 values: shopper_setting('currencies')
             )
             ->get();
+
+        return $currencies;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     *
+     * @throws \Shopper\Core\Exceptions\ModelRepositoryException
+     */
     #[Computed]
     public function variantsOptions(): array
     {
@@ -235,6 +243,9 @@ class AddVariant extends SlideOverComponent implements HasForms
             ->toArray();
     }
 
+    /**
+     * @return Collection<string, mixed>
+     */
     #[Computed]
     public function options(): Collection
     {
@@ -249,6 +260,9 @@ class AddVariant extends SlideOverComponent implements HasForms
         return view('shopper::livewire.slide-overs.add-variant');
     }
 
+    /**
+     * @param  array<array-key, mixed>  $optionsValues
+     */
     protected function variantAlreadyExist(array $optionsValues = []): bool
     {
         foreach ($this->variantsOptions as $option) {

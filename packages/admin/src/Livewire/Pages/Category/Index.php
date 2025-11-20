@@ -13,6 +13,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Shopper\Core\Models\Category;
 use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HasAuthenticated;
@@ -31,12 +32,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(
-                (new CategoryRepository)
-                    ->query()
-                    ->with('parent')
-                    ->latest()
-            )
+            ->query((new CategoryRepository)->query()->with('parent')->latest())
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
@@ -45,7 +41,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->formatStateUsing(
-                        fn ($record) => view('shopper::livewire.tables.cells.categories.name', [
+                        fn (Category $record): View => view('shopper::livewire.tables.cells.categories.name', [
                             'category' => $record,
                         ])
                     )
@@ -72,7 +68,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon('untitledui-edit-04')
                     ->action(
-                        fn ($record) => $this->dispatch(
+                        fn (Category $record) => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.category-form',
                             arguments: ['categoryId' => $record->id]
@@ -101,7 +97,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.disable'))
                     ->icon('untitledui-slash-circle-01')
                     ->action(function (Collection $records): void {
-                        $records->each->updateStatus(status: false); // @phpstan-ignore-line
+                        $records->each->updateStatus(false); // @phpstan-ignore-line
 
                         Notification::make()
                             ->title(
@@ -139,7 +135,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->icon('untitledui-switch-vertical')
                     ->color('gray')
                     ->action(
-                        fn ($record) => $this->dispatch(
+                        fn (Category $record) => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.re-order-categories'
                         )

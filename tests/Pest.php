@@ -8,8 +8,7 @@ use Shopper\Core\Models\Setting;
 pest()->project()->github('shopperlabs/shopper');
 
 /**
- * @param  array<array-key, string>  $currencies
- * @param  string  $defaultCurrency
+ * @param  array<string>  $currencies
  */
 function setupCurrencies(array $currencies = ['USD'], string $defaultCurrency = 'USD'): void
 {

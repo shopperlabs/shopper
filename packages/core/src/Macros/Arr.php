@@ -29,7 +29,7 @@ class Arr
 
         $permutations = \Illuminate\Support\Arr::crossJoin(...$values);
 
-        return array_map(fn ($combination) => array_combine($keys, $combination), $permutations);
+        return array_map(fn (array $combination): array => array_combine($keys, $combination), $permutations);
     }
 
     /**

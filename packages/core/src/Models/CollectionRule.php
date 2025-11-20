@@ -58,6 +58,7 @@ class CollectionRule extends Model
      */
     public function collection(): BelongsTo
     {
+        // @phpstan-ignore-next-line
         return $this->belongsTo(config('shopper.models.collection'), 'collection_id');
     }
 

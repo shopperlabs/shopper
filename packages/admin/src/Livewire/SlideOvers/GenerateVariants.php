@@ -6,7 +6,6 @@ namespace Shopper\Livewire\SlideOvers;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -28,8 +27,10 @@ class GenerateVariants extends SlideOverComponent
     #[Locked]
     public int $productId;
 
+    /** @var array<string, mixed> */
     public array $availableOptions = [];
 
+    /** @var array<string, mixed> */
     public array $variants = [];
 
     public static function panelMaxWidth(): string
@@ -72,7 +73,7 @@ class GenerateVariants extends SlideOverComponent
         $optionsValues = collect($this->availableOptions)
             ->mapWithKeys(fn (array $attribute): array => [
                 $attribute['name'] => collect($attribute['values'])
-                    ->map(fn (array $item) => [
+                    ->map(fn (array $item): array => [
                         'id' => $item['id'],
                         'value' => $item['value'],
                     ]),
@@ -101,7 +102,7 @@ class GenerateVariants extends SlideOverComponent
             ])
             ->toArray();
 
-        $this->variants = $this->mapVariantsToProductOptions($optionsValues, $variants);
+        $this->variants = $this->mapVariantsToProductOptions($optionsValues, $variants); // @phpstan-ignore-line
     }
 
     #[Computed]
@@ -124,7 +125,7 @@ class GenerateVariants extends SlideOverComponent
     /**
      * @param  array<array-key, mixed>  $options
      * @param  array<array-key, mixed>  $variants
-     * @return array<string, mixed>
+     * @return list<array<string, mixed>>
      */
     protected function mapVariantsToProductOptions(array $options, array $variants): array
     {

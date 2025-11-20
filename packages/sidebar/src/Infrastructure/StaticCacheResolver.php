@@ -23,6 +23,6 @@ final class StaticCacheResolver implements SidebarResolver
     {
         $duration = $this->config->get('sidebar.cache.duration');
 
-        return $this->cache->remember(CacheKey::get($name), $duration, fn () => $this->resolver->resolve($name));
+        return $this->cache->remember(CacheKey::get($name), $duration, fn (): Sidebar => $this->resolver->resolve($name));
     }
 }

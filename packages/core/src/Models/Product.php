@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Arr;
+use Shopper\Contracts\Priceable;
 use Shopper\Core\Contracts\HasReviews;
 use Shopper\Core\Database\Factories\ProductFactory;
 use Shopper\Core\Enum\Dimension\Length;
@@ -63,11 +64,12 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read \Illuminate\Support\Collection<int, Attribute> $options
  * @property-read \Illuminate\Support\Collection<int, Collection> $collections
  * @property-read \Illuminate\Support\Collection<int, ProductVariant> $variants
- * @property-read \Illuminate\Support\Collection<int, Price> $prices
  * @property-read \Illuminate\Support\Collection<int, Product> $relatedProducts
+ *
+ * @implements Priceable<Product>
  */
 #[ObservedBy(ProductObserver::class)]
-class Product extends Model implements HasReviews, SpatieHasMedia
+class Product extends Model implements HasReviews, Priceable, SpatieHasMedia
 {
     use HasDimensions;
     use HasDiscounts;
@@ -99,7 +101,7 @@ class Product extends Model implements HasReviews, SpatieHasMedia
             }
         }
 
-        return CastAttribute::get(fn () => $stock);
+        return CastAttribute::get(fn (): int => $stock);
     }
 
     public function canUseShipping(): bool

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Shopper\Core\Models\Product;
-use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\OrderItem;
+use Shopper\Core\Models\Product;
 
 /**
  * @extends Factory<OrderItem>

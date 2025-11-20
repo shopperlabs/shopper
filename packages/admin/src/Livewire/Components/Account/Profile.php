@@ -16,13 +16,14 @@ use Shopper\Core\Models\User;
 use Shopper\Traits\HasAuthenticated;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class Profile extends Component implements HasForms
 {
     use HasAuthenticated;
     use InteractsWithForms;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void

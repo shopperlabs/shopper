@@ -18,7 +18,7 @@ final class CurrenciesField
     public static function make(Collection $currencies): array
     {
         return $currencies
-            ->map(fn (Currency $currency, $index): Forms\Components\Group => Forms\Components\Group::make()
+            ->map(fn (Currency $currency, int $index): Forms\Components\Group => Forms\Components\Group::make()
                 ->schema([
                     Forms\Components\Placeholder::make($currency->code)
                         ->label("{$currency->name} ({$currency->symbol})"),
@@ -30,7 +30,7 @@ final class CurrenciesField
                                 ->statePath($currency->id.'.amount')
                                 ->numeric()
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
-                                ->required(fn (Forms\Get $get) => $get($currency->id.'.compare_amount') !== null)
+                                ->required(fn (Forms\Get $get): bool => $get($currency->id.'.compare_amount') !== null)
                                 ->suffix($currency->code)
                                 ->live()
                                 ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
@@ -39,7 +39,7 @@ final class CurrenciesField
                                 ->helperText(__('shopper::pages/products.compare_price_help_text'))
                                 ->statePath($currency->id.'.compare_amount')
                                 ->afterStateUpdated(
-                                    fn (?string $state, Forms\Set $set) => $state ?? $set($currency->id.'.compare_amount', null)
+                                    fn (?string $state, Forms\Set $set): mixed => $state ?? $set($currency->id.'.compare_amount', null)
                                 )
                                 ->numeric()
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])

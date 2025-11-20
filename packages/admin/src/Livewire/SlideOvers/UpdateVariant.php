@@ -25,9 +25,9 @@ use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Form $form
- * @property Collection $options
- * @property array $variantsOptions
+ * @property-read Form $form
+ * @property-read Collection<string, mixed> $options
+ * @property-read array<array-key, mixed> $variantsOptions
  */
 class UpdateVariant extends SlideOverComponent implements HasForms
 {
@@ -89,7 +89,7 @@ class UpdateVariant extends SlideOverComponent implements HasForms
                         Forms\Components\Group::make()
                             ->schema(
                                 $this->options->map(
-                                    fn ($option): Forms\Components\Select => Forms\Components\Select::make('values.'.$option['id'])
+                                    fn (array $option): Forms\Components\Select => Forms\Components\Select::make('values.'.$option['id'])
                                         ->label($option['name'])
                                         ->key($option['key'])
                                         ->required()
@@ -97,7 +97,7 @@ class UpdateVariant extends SlideOverComponent implements HasForms
                                         ->optionsLimit(10)
                                         ->options(
                                             collect($option['values'])->mapWithKeys(
-                                                fn ($value): array => [$value['id'] => $value['value']]
+                                                fn (array $value): array => [$value['id'] => $value['value']]
                                             )
                                         )
                                         ->native(false)
@@ -165,7 +165,7 @@ class UpdateVariant extends SlideOverComponent implements HasForms
     }
 
     /**
-     * @return Collection<array-key, mixed>
+     * @return Collection<string, mixed>
      */
     #[Computed]
     public function options(): Collection
@@ -189,7 +189,7 @@ class UpdateVariant extends SlideOverComponent implements HasForms
             ->map(
                 fn (ProductVariant $variant): array => $variant->values->pluck('id')->toArray() // @phpstan-ignore-line
             )
-            ->reject(fn ($value) => array_diff($value, $this->variant->values->pluck('id')->toArray()) === [])
+            ->reject(fn ($value): bool => array_diff($value, $this->variant->values->pluck('id')->toArray()) === [])
             ->values()
             ->toArray();
     }

@@ -66,7 +66,7 @@ describe(CreateRole::class, function (): void {
 
         Livewire::test(CreateRole::class)
             ->fillForm([
-                'name' => 'custom_role_' . uniqid(),
+                'name' => 'custom_role_'.uniqid(),
             ])
             ->call('save')
             ->assertHasNoFormErrors();

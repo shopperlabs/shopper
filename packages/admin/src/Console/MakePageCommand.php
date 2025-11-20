@@ -104,7 +104,7 @@ class MakePageCommand extends FileManipulationCommand
         $path[] = $name;
 
         return collect($path)
-            ->map(fn ($segment) => Str::kebab($segment))
+            ->map(fn (string $segment) => Str::kebab($segment))
             ->implode('.');
     }
 

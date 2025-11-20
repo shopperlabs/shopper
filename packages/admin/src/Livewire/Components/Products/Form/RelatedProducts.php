@@ -64,7 +64,7 @@ class RelatedProducts extends Component implements HasActions, HasForms
     #[Computed]
     public function productsIds(): array
     {
-        return array_merge($this->product->relatedProducts->modelKeys(), [$this->product->id]);
+        return array_merge($this->product->relatedProducts->pluck('id')->toArray(), [$this->product->id]);
     }
 
     public function render(): View

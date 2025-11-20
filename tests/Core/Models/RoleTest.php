@@ -8,7 +8,6 @@ use Shopper\Core\Models\User;
 
 uses(Tests\TestCase::class);
 
-
 describe(Role::class, function (): void {
     it('has users relationship', function (): void {
         $role = Role::create(['name' => 'test-role']);

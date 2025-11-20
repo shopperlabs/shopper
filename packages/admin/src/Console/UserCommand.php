@@ -33,24 +33,27 @@ final class UserCommand extends Command
             label: 'Your Email Address',
             placeholder: 'admin@laravelshopper.dev',
             required: true,
-            validate: fn (string $value) => User::where('email', $value)->exists()
+            validate: fn (string $value): ?string => User::query()->where('email', $value)->exists()
                     ? 'A user with that email already exists.'
                     : null,
         );
+
         $first_name = text(
             label: 'What is your First Name',
             placeholder: 'Shopper',
             required: true,
         );
+
         $last_name = text(
             label: 'What is your Last Name',
             placeholder: 'User',
             required: true,
         );
+
         $password = password(
             label: 'Choose a Password',
             required: true,
-            validate: fn (string $value) => match (true) {
+            validate: fn (string $value): ?string => match (true) {
                 mb_strlen($value) < 6 => 'The password must be at least 6 characters.',
                 default => null
             },

@@ -29,6 +29,7 @@ class Brand extends Model implements SpatieHasMedia
 {
     /** @use HasFactory<BrandFactory> */
     use HasFactory;
+
     use HasMedia;
     use HasSlug;
 

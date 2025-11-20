@@ -13,7 +13,7 @@ class GenerateNewRecoveryCodes
     {
         $user->forceFill([
             'two_factor_recovery_codes' => encrypt(json_encode(
-                Collection::times(8, fn () => RecoveryCode::generate())->all()
+                Collection::times(8, fn (): string => RecoveryCode::generate())->all()
             )),
         ])->save();
     }

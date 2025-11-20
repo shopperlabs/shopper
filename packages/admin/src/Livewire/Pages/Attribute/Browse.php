@@ -67,7 +67,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                             arguments: ['attributeId' => $record->id]
                         )
                     )
-                    ->visible(fn (Attribute $record) => in_array($record->type, Attribute::fieldsWithValues())),
+                    ->visible(fn (Attribute $record): bool => in_array($record->type, Attribute::fieldsWithValues())),
 
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
@@ -118,7 +118,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.disable'))
                     ->icon('untitledui-slash-circle-01')
                     ->action(function (Collection $records): void {
-                        $records->each->updateStatus(status: false); // @phpstan-ignore-line
+                        $records->each->updateStatus(false); // @phpstan-ignore-line
 
                         Notification::make()
                             ->title(__('shopper::components.tables.status.updated'))

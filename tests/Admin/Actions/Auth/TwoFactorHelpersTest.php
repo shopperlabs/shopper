@@ -16,7 +16,7 @@ describe(RecoveryCode::class, function (): void {
     });
 
     it('generates unique recovery codes', function (): void {
-        $codes = collect(range(1, 100))->map(fn () => RecoveryCode::generate());
+        $codes = collect(range(1, 100))->map(fn (): string => RecoveryCode::generate());
 
         expect($codes->unique()->count())->toBe(100);
     });
@@ -28,7 +28,7 @@ describe(TwoFactorAuthenticationProvider::class, function (): void {
         $secret = $provider->generateSecretKey();
 
         expect($secret)->toBeString()
-            ->and(strlen($secret))->toBeGreaterThanOrEqual(16);
+            ->and(mb_strlen($secret))->toBeGreaterThanOrEqual(16);
     });
 
     it('generates qr code url', function (): void {

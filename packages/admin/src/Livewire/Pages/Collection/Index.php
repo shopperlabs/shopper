@@ -11,6 +11,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Shopper\Core\Models\Collection;
 use Shopper\Core\Repositories\CollectionRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -27,11 +28,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(
-                (new CollectionRepository)
-                    ->query()
-                    ->with('rules')
-            )
+            ->query((new CollectionRepository)->query()->with('rules'))
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
@@ -43,13 +40,13 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->label(__('shopper::forms.label.type'))
-                    ->formatStateUsing(fn ($record): string => $record->isAutomatic() ? __('shopper::pages/collections.automatic') : __('shopper::pages/collections.manual'))
+                    ->formatStateUsing(fn (Collection $record): string => $record->isAutomatic() ? __('shopper::pages/collections.automatic') : __('shopper::pages/collections.manual'))
                     ->badge()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('shopper::pages/collections.product_conditions'))
                     ->formatStateUsing(
-                        fn ($record): string => $record->rules->isNotEmpty() ? ucfirst($record->firstRule()) : 'N/A'
+                        fn (Collection $record): string => $record->rules->isNotEmpty() ? ucfirst($record->firstRule()) : 'N/A'
                     ),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
@@ -60,7 +57,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon('untitledui-edit-04')
                     ->url(
-                        fn ($record): string => route(
+                        fn (Collection $record): string => route(
                             name: 'shopper.collections.edit',
                             parameters: ['collection' => $record]
                         ),
@@ -70,7 +67,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->modalIcon('untitledui-trash-03')
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->action(fn ($record) => $record->delete()),
+                    ->action(fn (Collection $record) => $record->delete()),
             ]);
     }
 

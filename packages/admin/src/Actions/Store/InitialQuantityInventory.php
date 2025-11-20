@@ -6,14 +6,14 @@ namespace Shopper\Actions\Store;
 
 use Shopper\Core\Models\Inventory;
 
-final readonly class InitialQuantityInventory
+final class InitialQuantityInventory
 {
-    public function __invoke(int $quantity, $product): void
+    public function __invoke(int $quantity, mixed $product): void
     {
-        /** @var Inventory $inventory */
+        /** @var ?Inventory $inventory */
         $inventory = Inventory::query()->scopes('default')->first();
 
-        if ($inventory) {
+        if ($inventory instanceof Inventory) {
             $product->mutateStock(
                 inventoryId: $inventory->id,
                 quantity: $quantity,

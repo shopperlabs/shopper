@@ -15,21 +15,20 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\Product\SavePricingAction;
 use Shopper\Components\Form\CurrenciesField;
+use Shopper\Contracts\Priceable;
 use Shopper\Core\Models\Currency;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Form $form
- * @property Collection<int, Currency> $currencies
+ * @property-read Form $form
+ * @property-read Collection<int, Currency> $currencies
  */
 class ManagePricing extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    /**
-     * @var Model
-     */
-    public $model;
+    /** @var (Model&Priceable<Model>) */
+    public Model&Priceable $model;
 
     #[Locked]
     public ?int $currencyId = null;
@@ -67,13 +66,16 @@ class ManagePricing extends SlideOverComponent implements HasForms
     #[Computed]
     public function currencies(): Collection
     {
-        return Currency::query()
+        /** @var Collection<int, Currency> $currencies */
+        $currencies = Currency::query()
             ->select('id', 'name', 'code', 'symbol')
             ->whereIn(
                 column: 'id',
                 values: $this->currencyId ? [$this->currencyId] : shopper_setting('currencies')
             )
             ->get();
+
+        return $currencies;
     }
 
     public function save(): void
@@ -107,6 +109,7 @@ class ManagePricing extends SlideOverComponent implements HasForms
     {
         $prices = collect();
 
+        // @phpstan-ignore-next-line
         foreach ($this->model->prices as $price) {
             $prices->put(
                 $price->currency_id,

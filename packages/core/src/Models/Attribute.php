@@ -31,6 +31,7 @@ class Attribute extends Model
 {
     /** @use HasFactory<AttributeFactory> */
     use HasFactory;
+
     use HasSlug;
 
     protected $guarded = [];
@@ -82,9 +83,7 @@ class Attribute extends Model
 
     public function updateStatus(bool $status = true): void
     {
-        $this->is_enabled = $status;
-
-        $this->save();
+        $this->update(['is_enabled' => $status]);
     }
 
     /**

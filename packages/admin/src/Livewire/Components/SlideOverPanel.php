@@ -79,7 +79,7 @@ class SlideOverPanel extends Component
     {
         return $this->getPublicPropertyTypes($component)
             ->intersectByKeys($attributes)
-            ->map(fn ($className, $propName) => $this->resolveParameter($attributes, $propName, $className));
+            ->map(fn ($className, $propName): mixed => $this->resolveParameter($attributes, $propName, $className));
     }
 
     /**

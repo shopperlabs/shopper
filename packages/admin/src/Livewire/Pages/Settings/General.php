@@ -32,9 +32,7 @@ class General extends Component implements HasForms
     use InteractsWithForms;
     use SaveSettings;
 
-    /**
-     * @var array<string, mixed>|null
-     */
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void
@@ -63,7 +61,7 @@ class General extends Component implements HasForms
 
         $this->form->fill(
             $settings->mapWithKeys(
-                fn (Setting $item) => [$item['key'] => $item['value']]
+                fn (Setting $item): array => [$item['key'] => $item['value']]
             )->toArray()
         );
     }

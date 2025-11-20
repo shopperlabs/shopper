@@ -10,22 +10,25 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Shopper\Core\Models\Setting;
 use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 final class StoreAddress extends StepComponent implements HasForms
 {
     use InteractsWithForms;
     use SaveSettings;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void
     {
+        /** @var Collection<int, Setting> $settings */
         $settings = Setting::query()->whereIn('key', [
             'street_address',
             'city',
@@ -37,7 +40,7 @@ final class StoreAddress extends StepComponent implements HasForms
 
         $this->form->fill(
             $settings->mapWithKeys(
-                fn (Setting $item) => [$item['key'] => $item['value']]
+                fn (Setting $item): array => [$item['key'] => $item['value']]
             )->toArray()
         );
     }
@@ -51,16 +54,13 @@ final class StoreAddress extends StepComponent implements HasForms
                     ->placeholder('Akwa Avenue 34')
                     ->columnSpan(['lg' => 2])
                     ->required(),
-
                 Forms\Components\TextInput::make('postal_code')
                     ->label(__('shopper::forms.label.postal_code'))
                     ->placeholder('00237')
                     ->required(),
-
                 Forms\Components\TextInput::make('city')
                     ->label(__('shopper::forms.label.city'))
                     ->required(),
-
                 Forms\Components\TextInput::make('phone_number')
                     ->label(__('shopper::forms.label.phone_number'))
                     ->columnSpan(['lg' => 2]),
@@ -81,6 +81,9 @@ final class StoreAddress extends StepComponent implements HasForms
         $this->nextStep();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function stepInfo(): array
     {
         return [

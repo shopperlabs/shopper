@@ -37,7 +37,7 @@ class Price extends Model
 
     public function currencyCode(): Attribute
     {
-        return Attribute::get(fn () => $this->loadMissing('currency')->currency->code);
+        return Attribute::get(fn (): string => $this->loadMissing('currency')->currency->code);
     }
 
     public function amountPrice(): ?PriceHelper
@@ -88,24 +88,24 @@ class Price extends Model
     protected function amount(): Attribute
     {
         return Attribute::make(
-            get: fn (?int $value) => $value ? $value / 100 : null,
-            set: fn (?int $value) => $value ? $value * 100 : null,
+            get: fn (?int $value): float|int|null => $value ? $value / 100 : null,
+            set: fn (?int $value): ?int => $value ? $value * 100 : null,
         );
     }
 
     protected function compareAmount(): Attribute
     {
         return Attribute::make(
-            get: fn (?int $value) => $value ? $value / 100 : null,
-            set: fn (?int $value) => $value ? $value * 100 : null,
+            get: fn (?int $value): float|int|null => $value ? $value / 100 : null,
+            set: fn (?int $value): ?int => $value ? $value * 100 : null,
         );
     }
 
     protected function costAmount(): Attribute
     {
         return Attribute::make(
-            get: fn (?int $value) => $value ? $value / 100 : null,
-            set: fn (?int $value) => $value ? $value * 100 : null,
+            get: fn (?int $value): float|int|null => $value ? $value / 100 : null,
+            set: fn (?int $value): ?int => $value ? $value * 100 : null,
         );
     }
 }

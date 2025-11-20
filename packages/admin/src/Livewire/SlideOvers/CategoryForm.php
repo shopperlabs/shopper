@@ -15,25 +15,33 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
+use Shopper\Core\Models\Category;
 use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class CategoryForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
+    /**
+     * @var Category
+     */
     public $category;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(?int $categoryId = null): void
     {
-        $this->category = $categoryId
+        /** @var Category $category */
+        $category = $categoryId
             ? (new CategoryRepository)->query()->find($categoryId)
             : (new CategoryRepository)->query()->newModelInstance();
+
+        $this->category = $category;
 
         $this->form->fill($this->category->toArray());
     }
@@ -51,8 +59,10 @@ class CategoryForm extends SlideOverComponent implements HasForms
                             ->placeholder('Women, Baby Shoes, MacBook...')
                             ->required()
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (string $operation, $state, Set $set): void {
-                                $set('slug', Str::slug($state));
+                            ->afterStateUpdated(function (string $operation, ?string $state, Set $set): void {
+                                if ($state) {
+                                    $set('slug', Str::slug($state));
+                                }
                             }),
                         Components\Hidden::make('slug'),
                         Components\Select::make('parent_id')
@@ -62,7 +72,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
                                 titleAttribute: 'name',
                                 modifyQueryUsing: fn (Builder $query) => $query->where('is_enabled', true)
                             )
-                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->load('parent')->getLabelOptionName())
+                            ->getOptionLabelFromRecordUsing(fn (Category $record) => $record->load('parent')->getLabelOptionName())
                             ->preload()
                             ->searchable()
                             ->optionsLimit(20)
@@ -100,8 +110,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
                     ->collapsible()
                     ->compact()
                     ->schema([
-                        Components\KeyValue::make('metadata')
-                            ->reorderable(),
+                        Components\KeyValue::make('metadata')->reorderable(),
                     ]),
             ])
             ->statePath('data')

@@ -17,7 +17,7 @@ use Shopper\Core\Database\Factories\OrderShippingFactory;
  * @property-read Carbon|null $returned_at
  * @property-read string|null $tracking_number
  * @property-read string|null $tracking_url
- * @property-read array|null $voucher
+ * @property-read array<string, mixed>|null $voucher
  * @property-read int $order_id
  * @property-read int|null $carrier_id
  * @property-read Order $order

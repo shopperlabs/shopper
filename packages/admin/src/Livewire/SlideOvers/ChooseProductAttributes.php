@@ -81,7 +81,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
                                 ->columns(3)
                                 ->live()
                                 ->afterStateUpdated(
-                                    fn (RadioDeck $component) => $component->getContainer()
+                                    fn (RadioDeck $component): Forms\ComponentContainer => $component->getContainer()
                                         ->getParentComponent()
                                         ->getContainer()
                                         ->getComponent('values')

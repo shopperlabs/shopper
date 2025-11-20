@@ -8,14 +8,14 @@ use Spatie\Permission\Models\Permission as Model;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property string|null $display_name
- * @property bool $can_be_removed
+ * @property-read string $name
+ * @property-read string|null $display_name
+ * @property-read bool $can_be_removed
  */
 class Permission extends Model
 {
     /**
-     * @return array<string, string>
+     * @return array<string, array<string, mixed>|string|null>
      */
     public static function groups(): array
     {

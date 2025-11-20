@@ -67,7 +67,7 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        self::deleting(function ($model): void {
+        self::deleting(function (self $model): void {
             $model->roles()->detach();
             $model->addresses()->delete();
         });
@@ -169,7 +169,7 @@ class User extends Authenticatable
 
         return Attribute::make(
             get: fn (): string => count($roles)
-                ? implode(', ', array_map(fn (string $item) => ucwords($item), $roles))
+                ? implode(', ', array_map(fn (string $item): string => ucwords($item), $roles))
                 : 'N/A'
         );
     }

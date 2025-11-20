@@ -18,7 +18,7 @@ use Shopper\Components\Separator;
 use Shopper\Core\Models\Inventory;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class InventoryForm extends Component implements HasForms
 {
@@ -26,6 +26,7 @@ class InventoryForm extends Component implements HasForms
 
     public Inventory $inventory;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void
@@ -47,8 +48,10 @@ class InventoryForm extends Component implements HasForms
                             ->placeholder('White House')
                             ->required()
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (string $operation, $state, Forms\Set $set): void {
-                                $set('code', Str::slug($state));
+                            ->afterStateUpdated(function (string $operation, ?string $state, Forms\Set $set): void {
+                                if ($state) {
+                                    $set('code', Str::slug($state));
+                                }
                             }),
                         Forms\Components\Hidden::make('code'),
                         Forms\Components\TextInput::make('email')

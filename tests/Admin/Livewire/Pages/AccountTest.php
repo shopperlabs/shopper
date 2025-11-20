@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Livewire\Pages\Account;
 use Shopper\Core\Models\User;
+use Shopper\Livewire\Pages\Account;
 
 uses(Tests\TestCase::class);
 

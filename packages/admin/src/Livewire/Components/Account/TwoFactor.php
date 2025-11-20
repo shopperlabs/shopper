@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Account;
 
 use Filament\Notifications\Notification;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
@@ -13,10 +12,11 @@ use Livewire\Component;
 use Shopper\Actions\Auth\DisableTwoFactorAuthentication;
 use Shopper\Actions\Auth\EnableTwoFactorAuthentication;
 use Shopper\Actions\Auth\GenerateNewRecoveryCodes;
+use Shopper\Core\Models\User;
 use Shopper\Traits\ConfirmsPasswords;
 
 /**
- * @property Authenticatable $user
+ * @property User $user
  */
 class TwoFactor extends Component
 {
@@ -87,9 +87,12 @@ class TwoFactor extends Component
     }
 
     #[Computed]
-    public function user(): Authenticatable
+    public function user(): User
     {
-        return shopper()->auth()->user();
+        /** @var User $user */
+        $user = shopper()->auth()->user();
+
+        return $user;
     }
 
     #[Computed]

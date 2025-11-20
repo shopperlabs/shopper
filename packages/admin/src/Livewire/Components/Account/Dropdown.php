@@ -7,13 +7,14 @@ namespace Shopper\Livewire\Components\Account;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Shopper\Core\Models\User;
 use Shopper\Traits\HasAuthenticated;
 
 class Dropdown extends Component
 {
     use HasAuthenticated;
 
-    public $user;
+    public User $user;
 
     public function mount(): void
     {

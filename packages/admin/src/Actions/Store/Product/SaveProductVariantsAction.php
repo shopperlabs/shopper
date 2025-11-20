@@ -64,9 +64,9 @@ final class SaveProductVariantsAction
 
         $variantIds = collect($variants)->pluck('variant_id');
 
-        $product->variants()->whereNotIn('id', $variantIds)
-            ->get()
-            ->each(fn (ProductVariant $variant) => $variant->delete());
+        /** @var \Illuminate\Support\Collection<int, ProductVariant> $variantsToDelete */
+        $variantsToDelete = $product->variants()->whereNotIn('id', $variantIds)->get();
+        $variantsToDelete->each(fn (ProductVariant $variant) => $variant->delete());
 
         DB::commit();
 

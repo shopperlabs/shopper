@@ -23,7 +23,7 @@ class Devices extends Component
         }
 
         return DB::table('sessions')
-            ->where('user_id', auth()->user()->getKey())
+            ->where('user_id', shopper()->auth()->user()->getKey()) // @phpstan-ignore-line
             ->orderBy('last_activity', 'desc')
             ->limit(3)
             ->get()->map(fn ($session) => (object) [

@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
-use Shopper\Core\Models\Attribute;
-use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Product;
-use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\GenerateVariants;
 

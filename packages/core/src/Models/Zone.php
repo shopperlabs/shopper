@@ -56,8 +56,8 @@ class Zone extends Model
         $countries = $this->countries->pluck('name')->toArray();
 
         return Attribute::make(
-            get: fn () => count($countries)
-                ? implode(', ', array_map(fn (string $item) => ucwords($item), $countries))
+            get: fn (): string => count($countries)
+                ? implode(', ', array_map(fn (string $item): string => ucwords($item), $countries))
                 : 'N/A'
         );
     }
@@ -67,8 +67,8 @@ class Zone extends Model
         $carriers = $this->carriers->pluck('name')->toArray();
 
         return Attribute::make(
-            get: fn () => count($carriers)
-                ? implode(', ', array_map(fn (string $item) => ucwords($item), $carriers))
+            get: fn (): string => count($carriers)
+                ? implode(', ', array_map(fn (string $item): string => ucwords($item), $carriers))
                 : 'N/A'
         );
     }
@@ -78,8 +78,8 @@ class Zone extends Model
         $paymentsMethods = $this->paymentMethods->pluck('title')->toArray();
 
         return Attribute::make(
-            get: fn () => count($paymentsMethods)
-                ? implode(', ', array_map(fn (string $item) => ucwords($item), $paymentsMethods))
+            get: fn (): string => count($paymentsMethods)
+                ? implode(', ', array_map(fn (string $item): string => ucwords($item), $paymentsMethods))
                 : 'N/A'
         );
     }

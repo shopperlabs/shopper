@@ -47,7 +47,7 @@ class RolePermission extends Component implements HasActions, HasForms
                     ->label(__('shopper::modals.roles.labels.name'))
                     ->placeholder('manager')
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('display_name', Str::title($state)))
+                    ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('display_name', Str::title($state)))
                     ->required(),
                 Components\TextInput::make('display_name')
                     ->label(__('shopper::forms.label.display_name'))

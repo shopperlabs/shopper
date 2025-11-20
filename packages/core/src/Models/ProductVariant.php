@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Shopper\Contracts\Priceable;
 use Shopper\Core\Database\Factories\ProductVariantFactory;
 use Shopper\Core\Enum\Dimension\Length;
 use Shopper\Core\Enum\Dimension\Volume;
@@ -43,16 +44,18 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read array<array-key, mixed>|null $metadata
  * @property-read int $stock
  * @property-read Product $product
- * @property-read \Illuminate\Database\Eloquent\Collection<array-key, Price> $prices
- * @property-read \Illuminate\Database\Eloquent\Collection<array-key, AttributeValue> $values
+ * @property-read \Illuminate\Support\Collection<int, AttributeValue> $values
+ *
+ * @implements Priceable<ProductVariant>
  */
 #[ObservedBy(ProductVariantObserver::class)]
-class ProductVariant extends Model implements SpatieHasMedia
+class ProductVariant extends Model implements Priceable, SpatieHasMedia
 {
     use HasDimensions;
 
     /** @use HasFactory<ProductVariantFactory> */
     use HasFactory;
+
     use HasMedia;
     use HasPrices;
     use HasStock;

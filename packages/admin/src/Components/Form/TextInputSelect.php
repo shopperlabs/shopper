@@ -26,7 +26,7 @@ class TextInputSelect extends TextInput
     public function select(Closure|Select $closure): self
     {
         if ($closure instanceof Select) {
-            $this->selectComponentClosure = fn () => $closure;
+            $this->selectComponentClosure = fn (): Select => $closure;
 
             return $this;
         }

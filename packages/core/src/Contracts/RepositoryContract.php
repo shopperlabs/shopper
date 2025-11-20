@@ -54,10 +54,5 @@ interface RepositoryContract
      */
     public function with(array|string $relations);
 
-    /**
-     * @template TModel of Model
-     *
-     * @return Builder<TModel>
-     */
     public function query(): Builder;
 }

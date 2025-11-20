@@ -6,17 +6,21 @@ namespace Shopper\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Shopper\Core\Models\User;
 
 final class CustomerSendCredentials extends Notification
 {
     public function __construct(public string $password) {}
 
-    public function via($notifiable): array
+    /**
+     * @return array<string>
+     */
+    public function via(object $notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(User $notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject(__('Welcome to ').config('app.name'))

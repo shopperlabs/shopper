@@ -71,69 +71,84 @@ class Review extends Model
     }
 
     /**
-     * @return Collection<int, $this>
+     * @return Collection<int, Review>
      */
     public function getAllRatings(int $id, string $sort = 'desc'): Collection
     {
-        return $this->newQuery()
+        /** @var Collection<int, Review> $results */
+        $results = $this->newQuery()
             ->select('*')
             ->where('reviewrateable_id', $id)
             ->orderBy('created_at', $sort)
             ->get();
+
+        return $results;
     }
 
     /**
-     * @return Collection<int, $this>
+     * @return Collection<int, Review>
      */
     public function getApprovedRatings(int $id, string $sort = 'desc'): Collection
     {
-        return $this->newQuery()
+        /** @var Collection<int, Review> $results */
+        $results = $this->newQuery()
             ->select('*')
             ->where('reviewrateable_id', $id)
             ->where('approved', true)
             ->orderBy('created_at', $sort)
             ->get();
+
+        return $results;
     }
 
     /**
-     * @return Collection<int, $this>
+     * @return Collection<int, Review>
      */
     public function getNotApprovedRatings(int $id, string $sort = 'desc'): Collection
     {
-        return $this->newQuery()
+        /** @var Collection<int, Review> $results */
+        $results = $this->newQuery()
             ->select('*')
             ->where('reviewrateable_id', $id)
             ->where('approved', false)
             ->orderBy('created_at', $sort)
             ->get();
+
+        return $results;
     }
 
     /**
-     * @return Collection<int, $this>
+     * @return Collection<int, Review>
      */
     public function getRecentRatings(int $id, int $limit = 5, string $sort = 'desc'): Collection
     {
-        return $this->newQuery()
+        /** @var Collection<int, Review> $results */
+        $results = $this->newQuery()
             ->select('*')
             ->where('reviewrateable_id', $id)
             ->where('approved', true)
             ->orderBy('created_at', $sort)
             ->limit($limit)
             ->get();
+
+        return $results;
     }
 
     /**
-     * @return Collection<int, $this>
+     * @return Collection<int, Review>
      */
     public function getRecentUserRatings(int $id, int $limit = 5, bool $approved = true, string $sort = 'desc'): Collection
     {
-        return $this->newQuery()
+        /** @var Collection<int, Review> $results */
+        $results = $this->newQuery()
             ->select('*')
             ->where('author_id', $id)
             ->where('approved', $approved)
             ->orderBy('created_at', $sort)
             ->limit($limit)
             ->get();
+
+        return $results;
     }
 
     public function deleteRating(int $id): ?bool

@@ -20,8 +20,8 @@ final class MapProductOptions
         $values = AttributeProduct::with(['attribute', 'value'])
             ->where('product_id', $product->id)
             ->get()
-            ->map(fn ($attributeProduct) => $attributeProduct->value)
-            ->filter(fn ($value) => $value instanceof AttributeValue);
+            ->map(fn (AttributeProduct $attributeProduct) => $attributeProduct->value)
+            ->filter(fn (mixed $value): bool => $value instanceof AttributeValue);
 
         $options = collect();
 
@@ -31,14 +31,14 @@ final class MapProductOptions
             }
 
             $attributeValues = $values->where('attribute_id', $option->id)
-                ->map(fn ($attributeValue) => self::mapOptionValue($attributeValue))
+                ->map(fn ($attributeValue): array => self::mapOptionValue($attributeValue))
                 ->toArray();
 
             $options->push(self::mapOption($option, $attributeValues));
         }
 
         return $options->groupBy('id')
-            ->map(fn ($group, $key) => Arr::collapse($group))
+            ->map(fn ($group, $key): array => Arr::collapse($group))
             ->values()
             ->toArray();
     }

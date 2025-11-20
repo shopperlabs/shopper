@@ -19,7 +19,7 @@ final class ShippingField
                 ->label(__('shopper::forms.label.width'))
                 ->numeric()
                 ->select(
-                    fn () => Forms\Components\Select::make('width_unit')
+                    fn (): Forms\Components\Select => Forms\Components\Select::make('width_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
                         ->options(Dimension\Length::toArray())
@@ -29,7 +29,7 @@ final class ShippingField
                 ->label(__('shopper::forms.label.height'))
                 ->numeric()
                 ->select(
-                    fn () => Forms\Components\Select::make('height_unit')
+                    fn (): Forms\Components\Select => Forms\Components\Select::make('height_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
                         ->options(Dimension\Length::toArray())
@@ -39,7 +39,7 @@ final class ShippingField
                 ->label(__('shopper::forms.label.weight'))
                 ->numeric()
                 ->select(
-                    fn () => Forms\Components\Select::make('weight_unit')
+                    fn (): Forms\Components\Select => Forms\Components\Select::make('weight_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
                         ->options(Dimension\Weight::toArray())
@@ -49,7 +49,7 @@ final class ShippingField
                 ->label(__('shopper::forms.label.volume'))
                 ->numeric()
                 ->select(
-                    fn () => Forms\Components\Select::make('volume_unit')
+                    fn (): Forms\Components\Select => Forms\Components\Select::make('volume_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
                         ->options(Dimension\Volume::toArray())
@@ -59,7 +59,7 @@ final class ShippingField
                 ->label(__('shopper::forms.label.depth'))
                 ->numeric()
                 ->select(
-                    fn () => Forms\Components\Select::make('depth_unit')
+                    fn (): Forms\Components\Select => Forms\Components\Select::make('depth_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
                         ->options(Dimension\Length::toArray())

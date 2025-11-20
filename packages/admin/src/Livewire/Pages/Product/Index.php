@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Events\Products\Deleted;
+use Shopper\Core\Models\Product;
 use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -82,7 +83,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         ->label(__('shopper::forms.actions.edit'))
                         ->icon('untitledui-edit-04')
                         ->color('primary')
-                        ->action(fn ($record) => $this->redirectRoute(
+                        ->action(fn (Product $record) => $this->redirectRoute(
                             name: 'shopper.products.edit',
                             parameters: ['product' => $record]
                         )),
@@ -91,7 +92,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         ->modalIcon('untitledui-trash-03')
                         ->color('danger')
                         ->requiresConfirmation()
-                        ->action(function ($record): void {
+                        ->action(function (Product $record): void {
                             event(new Deleted($record));
 
                             $record->delete();

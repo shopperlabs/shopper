@@ -10,6 +10,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
@@ -17,17 +18,19 @@ use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 final class StoreInformation extends StepComponent implements HasForms
 {
     use InteractsWithForms;
     use SaveSettings;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void
     {
+        /** @var Collection<int, Setting> $settings */
         $settings = Setting::query()->whereIn('key', [
             'name',
             'email',
@@ -41,7 +44,7 @@ final class StoreInformation extends StepComponent implements HasForms
 
         $this->form->fill(
             $settings->mapWithKeys(
-                fn (Setting $item) => [$item['key'] => $item['value']]
+                fn (Setting $item): array => [$item['key'] => $item['value']]
             )->toArray()
         );
     }
@@ -57,7 +60,6 @@ final class StoreInformation extends StepComponent implements HasForms
                             ->prefixIcon('untitledui-shop')
                             ->maxLength(100)
                             ->required(),
-
                         Forms\Components\TextInput::make('email')
                             ->label(__('shopper::forms.label.email'))
                             ->prefixIcon('untitledui-mail')
@@ -66,7 +68,6 @@ final class StoreInformation extends StepComponent implements HasForms
                             ->email()
                             ->required(),
                     ]),
-
                 Forms\Components\Select::make('country_id')
                     ->label(__('shopper::forms.label.country'))
                     ->options(
@@ -80,7 +81,6 @@ final class StoreInformation extends StepComponent implements HasForms
                     )
                     ->searchable()
                     ->native(false),
-
                 Forms\Components\Select::make('currencies')
                     ->label(__('shopper::forms.label.currencies'))
                     ->helperText(__('shopper::pages/onboarding.currencies_description'))
@@ -91,7 +91,6 @@ final class StoreInformation extends StepComponent implements HasForms
                     ->required()
                     ->live()
                     ->native(false),
-
                 Forms\Components\Select::make('default_currency_id')
                     ->label(__('shopper::forms.label.default_currency'))
                     ->helperText(__('shopper::pages/onboarding.currency_description'))
@@ -104,7 +103,6 @@ final class StoreInformation extends StepComponent implements HasForms
                     )
                     ->native(false)
                     ->required(),
-
                 Forms\Components\Textarea::make('about')
                     ->label(__('shopper::forms.label.about'))
                     ->helperText(__('shopper::pages/onboarding.about_description'))
@@ -125,6 +123,9 @@ final class StoreInformation extends StepComponent implements HasForms
             ->send();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function stepInfo(): array
     {
         return [

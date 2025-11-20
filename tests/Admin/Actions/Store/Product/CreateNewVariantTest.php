@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Shopper\Actions\Store\Product\CreateNewVariant;
-use Shopper\Actions\Store\Product\SavePricingAction;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Inventory;

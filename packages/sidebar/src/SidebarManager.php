@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Shopper\Sidebar;
 
 use Illuminate\Contracts\Container\Container;
+use Shopper\Sidebar\Contracts\Sidebar;
 use Shopper\Sidebar\Exceptions\LogicException;
 use Shopper\Sidebar\Infrastructure\SidebarFlusher;
 use Shopper\Sidebar\Infrastructure\SidebarResolver;
 
 class SidebarManager
 {
+    /** @var array<string> */
     protected array $sidebars = [];
 
     public function __construct(
@@ -33,7 +35,7 @@ class SidebarManager
     {
         foreach ($this->sidebars as $name) {
             $sidebar = $this->resolver->resolve($name);
-            $this->container->singleton($name, fn () => $sidebar);
+            $this->container->singleton($name, fn (): Sidebar => $sidebar);
         }
     }
 

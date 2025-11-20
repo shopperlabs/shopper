@@ -99,7 +99,7 @@ describe(User::class, function (): void {
     it('has orders relationship', function (): void {
         $user = User::factory()->create();
 
-        expect($user->orders())->toBeInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class);
+        expect($user->orders())->toBeInstanceOf(Illuminate\Database\Eloquent\Relations\HasMany::class);
     });
 
     it('has addresses relationship', function (): void {

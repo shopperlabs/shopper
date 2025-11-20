@@ -2,10 +2,7 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Password;
 use Livewire\Livewire;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Auth\ForgotPassword;
 
 uses(Tests\TestCase::class);

@@ -9,11 +9,15 @@ use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Shopper\Core\Models\Address;
+use Shopper\Core\Models\User;
 
 class Addresses extends Component
 {
-    public $customer;
+    public User $customer;
 
+    /**
+     * @return Collection<int, Address>
+     */
     #[Computed(persist: true)]
     public function addresses(): Collection
     {

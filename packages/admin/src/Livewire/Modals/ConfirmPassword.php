@@ -7,6 +7,7 @@ namespace Shopper\Livewire\Modals;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use Shopper\Actions\Auth\ConfirmPassword as ConfirmPasswordAction;
+use Shopper\Core\Models\User;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Components\ModalComponent;
 
@@ -28,7 +29,10 @@ class ConfirmPassword extends ModalComponent
 
     public function confirmPassword(): void
     {
-        if (! app(ConfirmPasswordAction::class)(Shopper::auth(), Shopper::auth()->user(), $this->confirmablePassword)) {
+        /** @var User $user */
+        $user = Shopper::auth()->user();
+
+        if (! app(ConfirmPasswordAction::class)(Shopper::auth(), $user, $this->confirmablePassword)) {
             throw ValidationException::withMessages([
                 'confirmable_password' => [__('shopper::notifications.auth.password')],
             ]);

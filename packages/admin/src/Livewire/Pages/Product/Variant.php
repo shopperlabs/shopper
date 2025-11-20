@@ -38,8 +38,12 @@ class Variant extends AbstractPageComponent implements HasActions, HasForms
     {
         $this->authorize('edit_products');
 
-        $this->product = (new ProductRepository)->getById($productId);
-        $this->variant = (new VariantRepository)
+        /** @var Product $product */
+        $product = (new ProductRepository)->getById($productId);
+        $this->product = $product;
+
+        /** @var ProductVariant $variant */
+        $variant = (new VariantRepository)
             ->with([
                 'prices',
                 'media',
@@ -47,6 +51,8 @@ class Variant extends AbstractPageComponent implements HasActions, HasForms
                 'values.attribute',
             ])
             ->getById($variantId);
+
+        $this->variant = $variant;
     }
 
     public function updateStockAction(): Action

@@ -100,7 +100,7 @@ if (! function_exists('useTryCatch')) {
         $result = null;
         $throwable = null;
 
-        $catch = $catchable ?? fn (Throwable $exception) => $exception;
+        $catch = $catchable ?? fn (Throwable $exception): Throwable => $exception;
 
         try {
             $result = $closure();

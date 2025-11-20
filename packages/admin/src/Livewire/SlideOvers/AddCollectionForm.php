@@ -19,12 +19,13 @@ use Shopper\Core\Repositories\CollectionRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class AddCollectionForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void
@@ -47,10 +48,11 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                             ->placeholder('Summers Collections, Christmas promotions...')
                             ->required()
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (string $operation, $state, Forms\Set $set): void {
-                                $set('slug', Str::slug($state));
+                            ->afterStateUpdated(function (string $operation, ?string $state, Forms\Set $set): void {
+                                if ($state) {
+                                    $set('slug', Str::slug($state));
+                                }
                             }),
-
                         Forms\Components\TextInput::make('slug')
                             ->label(__('shopper::forms.label.slug'))
                             ->disabled()
@@ -58,19 +60,16 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                             ->required()
                             ->maxLength(255)
                             ->unique(table: config('shopper.models.collection'), column: 'slug'),
-
                         Forms\Components\DateTimePicker::make('published_at')
                             ->label(__('shopper::forms.label.availability'))
                             ->native(false)
                             ->default(now())
                             ->minDate(now())
                             ->helperText(__('shopper::pages/collections.availability_description')),
-
                         Forms\Components\Radio::make('type')
                             ->label(__('shopper::pages/collections.filter_type'))
                             ->required()
                             ->options(CollectionType::class),
-
                         Forms\Components\RichEditor::make('description')
                             ->label(__('shopper::forms.label.description'))
                             ->toolbarButtons([
@@ -83,7 +82,6 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                                 'undo',
                             ]),
                     ]),
-
                 Section::make(__('shopper::words.media'))
                     ->collapsible()
                     ->compact()
@@ -94,18 +92,15 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                             ->image()
                             ->maxSize(config('shopper.media.max_size.thumbnail')),
                     ]),
-
                 Section::make(__('shopper::words.seo.slug'))
                     ->collapsed()
                     ->compact()
                     ->schema(SeoField::make()),
-
                 Section::make('Metadata')
                     ->collapsed()
                     ->compact()
                     ->schema([
-                        Forms\Components\KeyValue::make('metadata')
-                            ->reorderable(),
+                        Forms\Components\KeyValue::make('metadata')->reorderable(),
                     ]),
             ])
             ->statePath('data')

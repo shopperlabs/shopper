@@ -14,6 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Models\User;
 use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -51,7 +52,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('country')
                     ->label(__('shopper::forms.label.country'))
                     ->getStateUsing(
-                        fn ($record): ?string => $record->addresses->first()?->country?->name
+                        fn (User $record): ?string => $record->addresses->first()?->country?->name // @phpstan-ignore-line
                     )
                     ->sortable(),
                 Tables\Columns\TextColumn::make('orders_count')
@@ -68,7 +69,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Actions\Action::make('view')
                     ->label(__('shopper::forms.actions.view'))
                     ->icon('untitledui-eye')
-                    ->action(fn ($record) => $this->redirectRoute(
+                    ->action(fn (User $record) => $this->redirectRoute(
                         name: 'shopper.customers.show',
                         parameters: ['user' => $record],
                         navigate: true

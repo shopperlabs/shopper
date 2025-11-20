@@ -50,7 +50,7 @@ class UsersRole extends Component implements HasForms, HasTable
                     ->label(__('shopper::forms.label.access'))
                     ->color('gray')
                     ->formatStateUsing(
-                        fn (User $record) => $record->hasRole(config('shopper.core.roles.admin'))
+                        fn (User $record): string|array|null => $record->hasRole(config('shopper.core.roles.admin'))
                         ? __('shopper::words.full')
                         : __('shopper::words.limited')
                     ),
@@ -58,7 +58,7 @@ class UsersRole extends Component implements HasForms, HasTable
             ->actions([
                 Tables\Actions\DeleteAction::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
-                    ->visible(fn (User $record) => shopper()->auth()->user()->isAdmin() && ! $record->isAdmin()) // @phpstan-ignore-line
+                    ->visible(fn (User $record): bool => shopper()->auth()->user()->isAdmin() && ! $record->isAdmin()) // @phpstan-ignore-line
                     ->successNotificationTitle(__('shopper::notifications.users_roles.admin_deleted')),
             ])
             ->emptyStateIcon('untitledui-users')
