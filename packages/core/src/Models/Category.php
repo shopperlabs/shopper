@@ -13,6 +13,7 @@ use Shopper\Core\Database\Factories\CategoryFactory;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Observers\CategoryObserver;
+use Shopper\Core\Traits\HasModelContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
@@ -24,6 +25,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
  * @property-read bool $is_enabled
  * @property-read int|null $parent_id
  * @property-read null|self $parent
+ * @property-read \Illuminate\Support\Collection<int, Product> $products
  */
 #[ObservedBy(CategoryObserver::class)]
 class Category extends Model implements SpatieHasMedia
@@ -32,10 +34,16 @@ class Category extends Model implements SpatieHasMedia
     use HasFactory;
 
     use HasMedia;
+    use HasModelContract;
     use HasRecursiveRelationships;
     use HasSlug;
 
     protected $guarded = [];
+
+    public static function configKey(): string
+    {
+        return 'category';
+    }
 
     public function getTable(): string
     {

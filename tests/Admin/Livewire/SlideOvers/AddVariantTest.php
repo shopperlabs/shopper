@@ -7,14 +7,17 @@ use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Inventory;
-use Shopper\Core\Models\Product;
-use Shopper\Core\Models\ProductVariant;
+use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\ProductVariant;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\AddVariant;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+    config()->set('shopper.models.variant', ProductVariant::class);
+
     setupCurrencies();
 
     $this->user = User::factory()->create();

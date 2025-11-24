@@ -6,7 +6,7 @@ namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
+use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,6 +29,7 @@ use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasStock;
 use Shopper\Core\Models\Traits\InteractsWithReviews;
 use Shopper\Core\Observers\ProductObserver;
+use Shopper\Core\Traits\HasModelContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -78,6 +79,7 @@ class Product extends Model implements HasReviews, Priceable, SpatieHasMedia
     use HasFactory;
 
     use HasMedia;
+    use HasModelContract;
     use HasPrices;
     use HasSlug;
     use HasStock;
@@ -85,12 +87,17 @@ class Product extends Model implements HasReviews, Priceable, SpatieHasMedia
 
     protected $guarded = [];
 
+    public static function configKey(): string
+    {
+        return 'product';
+    }
+
     public function getTable(): string
     {
         return shopper_table('products');
     }
 
-    public function variantsStock(): CastAttribute
+    public function variantsStock(): LaravelAttribute
     {
         $stock = 0;
 
@@ -101,7 +108,7 @@ class Product extends Model implements HasReviews, Priceable, SpatieHasMedia
             }
         }
 
-        return CastAttribute::get(fn (): int => $stock);
+        return LaravelAttribute::get(fn (): int => $stock);
     }
 
     public function canUseShipping(): bool

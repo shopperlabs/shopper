@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\ChannelFactory;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Observers\ChannelObserver;
+use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
@@ -22,7 +23,7 @@ use Shopper\Core\Observers\ChannelObserver;
  * @property-read string|null $url
  * @property-read bool $is_default
  * @property-read bool $is_enabled
- * @property-read array<array-key, mixed>|null $metadata
+ * @property-read array<string, mixed>|null $metadata
  * @property-read \Illuminate\Support\Collection<int, Product> $products
  */
 #[ObservedBy(ChannelObserver::class)]
@@ -31,9 +32,15 @@ class Channel extends Model
     /** @use HasFactory<ChannelFactory> */
     use HasFactory;
 
+    use HasModelContract;
     use HasSlug;
 
     protected $guarded = [];
+
+    public static function configKey(): string
+    {
+        return 'channel';
+    }
 
     public function getTable(): string
     {

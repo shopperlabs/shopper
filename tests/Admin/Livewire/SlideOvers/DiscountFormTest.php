@@ -9,15 +9,17 @@ use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Models\User;
 use Shopper\Jobs\AttachedDiscountToCustomers;
 use Shopper\Jobs\AttachedDiscountToProducts;
 use Shopper\Livewire\SlideOvers\DiscountForm;
+use Tests\Core\Stubs\Product;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('add_discounts', 'edit_discounts');
     $this->actingAs($this->user);

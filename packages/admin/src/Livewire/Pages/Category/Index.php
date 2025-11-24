@@ -14,7 +14,6 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Shopper\Core\Models\Category;
-use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HasAuthenticated;
 
@@ -32,7 +31,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query((new CategoryRepository)->query()->with('parent')->latest())
+            ->query(Category::resolvedQuery()->with('parent')->latest())
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
@@ -71,7 +70,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         fn (Category $record) => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.category-form',
-                            arguments: ['categoryId' => $record->id]
+                            arguments: ['category' => $record]
                         )
                     )
                     ->visible($this->getUser()->can('edit_categories')),

@@ -22,8 +22,6 @@ use Shopper\Components\Form\CurrenciesField;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
-use Shopper\Core\Repositories\ProductRepository;
-use Shopper\Core\Repositories\VariantRepository;
 use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 
@@ -226,13 +224,11 @@ class AddVariant extends SlideOverComponent implements HasForms
 
     /**
      * @return array<array-key, mixed>
-     *
-     * @throws \Shopper\Core\Exceptions\ModelRepositoryException
      */
     #[Computed]
     public function variantsOptions(): array
     {
-        return (new VariantRepository)->query()
+        return ProductVariant::resolvedQuery()
             ->with('values')
             ->select('product_id', 'id')
             ->where('product_id', $this->productId)
@@ -249,8 +245,7 @@ class AddVariant extends SlideOverComponent implements HasForms
     #[Computed]
     public function options(): Collection
     {
-        /** @var Product $product */
-        $product = (new ProductRepository)->getById($this->productId);
+        $product = Product::resolvedQuery()->find($this->productId);
 
         return collect(MapProductOptions::generate($product));
     }

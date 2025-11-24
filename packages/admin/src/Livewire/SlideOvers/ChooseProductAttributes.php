@@ -21,11 +21,11 @@ use Shopper\Components;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
-use Shopper\Core\Repositories\ProductRepository;
+use Shopper\Core\Models\Product;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class ChooseProductAttributes extends SlideOverComponent implements HasForms
 {
@@ -179,7 +179,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
         $values = data_get($this->form->getState(), 'values');
 
         app()->call(AttachedAttributesToProductAction::class, [
-            'product' => (new ProductRepository)->getById($this->productId),
+            'product' => Product::resolvedQuery()->find($this->productId),
             'attributes' => Arr::except($values, 'custom_value'),
             'customValues' => Arr::get($values, 'custom_value', []),
         ]);

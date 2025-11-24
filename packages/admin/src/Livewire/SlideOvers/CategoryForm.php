@@ -16,7 +16,6 @@ use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Category;
-use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
@@ -26,22 +25,14 @@ class CategoryForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    /**
-     * @var Category
-     */
-    public $category;
+    public Category $category;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
 
-    public function mount(?int $categoryId = null): void
+    public function mount(?Category $category = null): void
     {
-        /** @var Category $category */
-        $category = $categoryId
-            ? (new CategoryRepository)->query()->find($categoryId)
-            : (new CategoryRepository)->query()->newModelInstance();
-
-        $this->category = $category;
+        $this->category = $category ?? Category::resolvedQuery()->newModelInstance();
 
         $this->form->fill($this->category->toArray());
     }
@@ -126,7 +117,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
         } else {
             $this->authorize('add_categories');
 
-            $category = (new CategoryRepository)->create($this->form->getState());
+            $category = Category::resolvedQuery()->create($this->form->getState());
             $this->form->model($category)->saveRelationships();
         }
 

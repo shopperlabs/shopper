@@ -29,7 +29,7 @@ describe(Brand::class, function (): void {
         Brand::factory()->count(3)->create(['is_enabled' => true]);
         Brand::factory()->count(2)->create(['is_enabled' => false]);
 
-        $enabledBrands = Brand::enabled()->get();
+        $enabledBrands = Brand::resolvedQuery()->scopes('enabled')->get();
 
         expect($enabledBrands)->toHaveCount(3);
     });

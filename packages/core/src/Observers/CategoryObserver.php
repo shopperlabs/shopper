@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Core\Observers;
 
 use Shopper\Core\Models\Category;
-use Shopper\Core\Repositories\CategoryRepository;
 
 final class CategoryObserver
 {
@@ -26,9 +25,7 @@ final class CategoryObserver
     private function ensureParentSlugIsCorrectlySet(Category $category): void
     {
         if (filled($category->parent_id)) {
-            /** @var Category|null $parent */
-            $parent = (new CategoryRepository)
-                ->getById($category->parent_id, ['slug']);
+            $parent = Category::resolvedQuery()->find($category->parent_id);
 
             if ($parent instanceof Category) {
                 $category->fill(['slug' => $parent->slug.'-'.$category->name]);

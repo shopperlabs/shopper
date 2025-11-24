@@ -17,9 +17,10 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Models\Collection;
+use Shopper\Core\Models\Product;
 
 /**
- * @property-read array<int, array-key> $productsIds
+ * @property-read array<int> $productsIds
  */
 class CollectionProducts extends Component implements HasForms, HasTable
 {
@@ -29,12 +30,12 @@ class CollectionProducts extends Component implements HasForms, HasTable
     public Collection $collection;
 
     /**
-     * @return array<int, array-key>
+     * @return array<int>
      */
     #[Computed]
     public function productsIds(): array
     {
-        return $this->collection->products->modelKeys(); // @phpstan-ignore-line
+        return $this->collection->products->pluck('id')->toArray();
     }
 
     public function table(Table $table): Table
@@ -57,7 +58,7 @@ class CollectionProducts extends Component implements HasForms, HasTable
                     ->modalIcon('untitledui-trash-03')
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->action(function ($record): void {
+                    ->action(function (Product $record): void {
                         $this->collection->products()->detach([$record->id]);
 
                         $this->dispatch('onProductsAddInCollection');
@@ -80,7 +81,6 @@ class CollectionProducts extends Component implements HasForms, HasTable
                         arguments: ['collection' => $this->collection]
                     ))
                     ->visible($this->collection->isAutomatic()),
-
                 Tables\Actions\Action::make('products')
                     ->label(__('shopper::forms.label.browse'))
                     ->icon('untitledui-book-open')

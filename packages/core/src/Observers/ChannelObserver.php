@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Core\Observers;
 
 use Shopper\Core\Models\Channel;
-use Shopper\Core\Repositories\ChannelRepository;
 
 final class ChannelObserver
 {
@@ -22,16 +21,12 @@ final class ChannelObserver
     private function ensureOnlyOneIsDefault(Channel $channel): void
     {
         if ($channel->is_default) {
-            /** @var Channel|null $defaultChannel */
-            $defaultChannel = (new ChannelRepository)
-                ->query()
+            $defaultChannel = Channel::resolvedQuery()
                 ->where('id', '!=', $channel->id)
                 ->where('is_default', true)
                 ->first();
 
-            if ($defaultChannel instanceof Channel) {
-                $defaultChannel->updateQuietly(['is_default' => false]);
-            }
+            $defaultChannel?->updateQuietly(['is_default' => false]);
         }
     }
 }

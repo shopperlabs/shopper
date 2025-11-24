@@ -6,22 +6,26 @@ namespace Shopper\Livewire\Modals;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as EloquentCollection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
-use Shopper\Core\Repositories\CollectionRepository;
-use Shopper\Core\Repositories\ProductRepository;
+use Shopper\Core\Models\Collection;
+use Shopper\Core\Models\Product;
 use Shopper\Livewire\Components\ModalComponent;
 
 class CollectionProductsList extends ModalComponent
 {
-    public $collection;
+    public Collection $collection;
 
     public string $search = '';
 
+    /**
+     * @var array<int>
+     */
     #[Locked]
     public array $exceptProductIds = [];
 
+    /** @var array<int> */
     public array $selectedProducts = [];
 
     public static function modalMaxWidth(): string
@@ -29,17 +33,22 @@ class CollectionProductsList extends ModalComponent
         return 'xl';
     }
 
-    public function mount(int $collectionId, array $exceptProductIds = []): void
+    /**
+     * @param  array<int>  $exceptProductIds
+     */
+    public function mount(?Collection $collection = null, array $exceptProductIds = []): void
     {
-        $this->collection = (new CollectionRepository)->getById($collectionId);
+        $this->collection = $collection;
         $this->exceptProductIds = $exceptProductIds;
     }
 
+    /**
+     * @return EloquentCollection<int, Product>
+     */
     #[Computed]
-    public function products(): Collection
+    public function products(): EloquentCollection
     {
-        return (new ProductRepository) // @phpstan-ignore-line
-            ->query()
+        return Product::resolvedQuery()
             ->where(
                 column: 'name',
                 operator: 'like',

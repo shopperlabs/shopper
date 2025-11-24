@@ -20,6 +20,7 @@ class Modal extends Component
 {
     public ?string $activeComponent;
 
+    /** @var array<string, mixed> */
     public array $components = [];
 
     public function resetState(): void

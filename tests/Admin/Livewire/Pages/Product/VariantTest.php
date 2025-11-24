@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
-use Shopper\Core\Models\Product;
-use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Product\Variant;
+use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\ProductVariant;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+    config()->set('shopper.models.variant', ProductVariant::class);
+
     setupCurrencies();
 
     $this->user = User::factory()->create();
@@ -25,8 +28,8 @@ beforeEach(function (): void {
 describe(Variant::class, function (): void {
     it('can render variant page', function (): void {
         Livewire::test(Variant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $this->variant->id,
+            'product' => $this->product,
+            'variant' => $this->variant,
         ])
             ->assertOk()
             ->assertViewIs('shopper::livewire.pages.products.variant');
@@ -34,8 +37,8 @@ describe(Variant::class, function (): void {
 
     it('loads product and variant with relations on mount', function (): void {
         $component = Livewire::test(Variant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $this->variant->id,
+            'product' => $this->product,
+            'variant' => $this->variant,
         ]);
 
         expect($component->get('product'))->not->toBeNull()
@@ -49,16 +52,16 @@ describe(Variant::class, function (): void {
         $this->actingAs($user);
 
         Livewire::test(Variant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $this->variant->id,
+            'product' => $this->product,
+            'variant' => $this->variant,
         ])
             ->assertForbidden();
     });
 
     it('can update variant stock information', function (): void {
         Livewire::test(Variant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $this->variant->id,
+            'product' => $this->product,
+            'variant' => $this->variant,
         ])
             ->callAction('updateStock', data: [
                 'sku' => 'NEW-SKU-123',
@@ -79,8 +82,8 @@ describe(Variant::class, function (): void {
         ]);
 
         Livewire::test(Variant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $this->variant->id,
+            'product' => $this->product,
+            'variant' => $this->variant,
         ])
             ->callAction('updateStock', data: [
                 'sku' => 'EXISTING-SKU',
@@ -89,14 +92,14 @@ describe(Variant::class, function (): void {
     });
 
     it('validates unique barcode when updating stock', function (): void {
-        $existingVariant = ProductVariant::factory()->create([
+        ProductVariant::factory()->create([
             'product_id' => $this->product->id,
             'barcode' => '9999999999',
         ]);
 
         Livewire::test(Variant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $this->variant->id,
+            'product' => $this->product,
+            'variant' => $this->variant,
         ])
             ->callAction('updateStock', data: [
                 'barcode' => '9999999999',
@@ -106,8 +109,8 @@ describe(Variant::class, function (): void {
 
     it('has media action', function (): void {
         Livewire::test(Variant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $this->variant->id,
+            'product' => $this->product,
+            'variant' => $this->variant,
         ])
             ->assertActionExists('media');
     });

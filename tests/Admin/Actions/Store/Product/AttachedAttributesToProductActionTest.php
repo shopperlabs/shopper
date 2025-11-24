@@ -6,12 +6,14 @@ use Shopper\Actions\Store\Product\AttachedAttributesToProductAction;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\AttributeValue;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Models\User;
+use Tests\Core\Stubs\Product;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
 

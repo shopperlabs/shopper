@@ -3,13 +3,15 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Brand\Index;
+use Tests\Core\Stubs\Brand;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.brand', Brand::class);
+
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('browse_brands');
     $this->actingAs($this->user);

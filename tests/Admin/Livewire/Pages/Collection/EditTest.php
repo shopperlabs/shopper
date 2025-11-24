@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Enum\CollectionType;
-use Shopper\Core\Models\Collection;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Collection\Edit;
+use Tests\Core\Stubs\Collection;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.collection', Collection::class);
+
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('edit_collections');
     $this->actingAs($this->user);
@@ -20,7 +22,7 @@ describe(Edit::class, function (): void {
     it('can render collection edit component', function (): void {
         $collection = Collection::factory()->create();
 
-        Livewire::test(Edit::class, ['collection' => $collection->id])
+        Livewire::test(Edit::class, ['collection' => $collection])
             ->assertOk()
             ->assertViewIs('shopper::livewire.pages.collections.edit');
     });
@@ -28,7 +30,7 @@ describe(Edit::class, function (): void {
     it('loads collection data on mount', function (): void {
         $collection = Collection::factory()->create(['name' => 'Test Collection']);
 
-        $component = Livewire::test(Edit::class, ['collection' => $collection->id]);
+        $component = Livewire::test(Edit::class, ['collection' => $collection]);
 
         expect($component->get('collection'))->not->toBeNull()
             ->and($component->get('collection')->name)->toBe('Test Collection');
@@ -37,7 +39,7 @@ describe(Edit::class, function (): void {
     it('initializes form with collection data', function (): void {
         $collection = Collection::factory()->create();
 
-        $component = Livewire::test(Edit::class, ['collection' => $collection->id]);
+        $component = Livewire::test(Edit::class, ['collection' => $collection]);
 
         expect($component->get('data'))->toBeArray();
     });
@@ -45,7 +47,7 @@ describe(Edit::class, function (): void {
     it('can edit a collection', function (): void {
         $collection = Collection::factory()->create();
 
-        Livewire::test(Edit::class, ['collection' => $collection->id])
+        Livewire::test(Edit::class, ['collection' => $collection])
             ->fillForm([
                 'name' => 'My manual collection',
             ])
@@ -59,7 +61,7 @@ describe(Edit::class, function (): void {
     it('cannot change type of collection on edit form', function (): void {
         $collection = Collection::factory(['type' => CollectionType::Manual()])->create();
 
-        Livewire::test(Edit::class, ['collection' => $collection->id])
+        Livewire::test(Edit::class, ['collection' => $collection])
             ->fillForm([
                 'name' => 'My manual collection',
                 'type' => CollectionType::Auto(),

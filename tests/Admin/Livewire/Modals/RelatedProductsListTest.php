@@ -3,13 +3,15 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\Modals\RelatedProductsList;
+use Tests\Core\Stubs\Product;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
 
@@ -18,30 +20,30 @@ beforeEach(function (): void {
 
 describe(RelatedProductsList::class, function (): void {
     it('can render related products list modal', function (): void {
-        Livewire::test(RelatedProductsList::class, ['productId' => $this->product->id])
+        Livewire::test(RelatedProductsList::class, ['product' => $this->product])
             ->assertOk();
     });
 
     it('initializes with correct product', function (): void {
-        $component = Livewire::test(RelatedProductsList::class, ['productId' => $this->product->id]);
+        $component = Livewire::test(RelatedProductsList::class, ['product' => $this->product]);
 
         expect($component->get('product')->id)->toBe($this->product->id);
     });
 
     it('initializes with empty search string', function (): void {
-        $component = Livewire::test(RelatedProductsList::class, ['productId' => $this->product->id]);
+        $component = Livewire::test(RelatedProductsList::class, ['product' => $this->product]);
 
         expect($component->get('search'))->toBe('');
     });
 
     it('initializes with empty selected products array', function (): void {
-        $component = Livewire::test(RelatedProductsList::class, ['productId' => $this->product->id]);
+        $component = Livewire::test(RelatedProductsList::class, ['product' => $this->product]);
 
         expect($component->get('selectedProducts'))->toBe([]);
     });
 
     it('can update search string', function (): void {
-        $component = Livewire::test(RelatedProductsList::class, ['productId' => $this->product->id])
+        $component = Livewire::test(RelatedProductsList::class, ['product' => $this->product])
             ->set('search', 'test product');
 
         expect($component->get('search'))->toBe('test product');
@@ -51,7 +53,7 @@ describe(RelatedProductsList::class, function (): void {
         $relatedProduct1 = Product::factory()->create();
         $relatedProduct2 = Product::factory()->create();
 
-        $component = Livewire::test(RelatedProductsList::class, ['productId' => $this->product->id])
+        $component = Livewire::test(RelatedProductsList::class, ['product' => $this->product])
             ->set('selectedProducts', [$relatedProduct1->id, $relatedProduct2->id]);
 
         expect($component->get('selectedProducts'))->toBe([$relatedProduct1->id, $relatedProduct2->id]);
@@ -61,7 +63,7 @@ describe(RelatedProductsList::class, function (): void {
         $relatedProduct1 = Product::factory()->create();
         $relatedProduct2 = Product::factory()->create();
 
-        Livewire::test(RelatedProductsList::class, ['productId' => $this->product->id])
+        Livewire::test(RelatedProductsList::class, ['product' => $this->product])
             ->set('selectedProducts', [$relatedProduct1->id, $relatedProduct2->id])
             ->call('addSelectedProducts');
 
@@ -78,7 +80,7 @@ describe(RelatedProductsList::class, function (): void {
 
         $newProduct = Product::factory()->create();
 
-        Livewire::test(RelatedProductsList::class, ['productId' => $this->product->id])
+        Livewire::test(RelatedProductsList::class, ['product' => $this->product])
             ->set('selectedProducts', [$newProduct->id])
             ->call('addSelectedProducts');
 
@@ -92,7 +94,7 @@ describe(RelatedProductsList::class, function (): void {
     it('redirects to product edit page after adding products', function (): void {
         $relatedProduct = Product::factory()->create();
 
-        Livewire::test(RelatedProductsList::class, ['productId' => $this->product->id])
+        Livewire::test(RelatedProductsList::class, ['product' => $this->product])
             ->set('selectedProducts', [$relatedProduct->id])
             ->call('addSelectedProducts')
             ->assertRedirect(route('shopper.products.edit', [
@@ -104,7 +106,7 @@ describe(RelatedProductsList::class, function (): void {
     it('sends notification after adding products', function (): void {
         $relatedProduct = Product::factory()->create();
 
-        Livewire::test(RelatedProductsList::class, ['productId' => $this->product->id])
+        Livewire::test(RelatedProductsList::class, ['product' => $this->product])
             ->set('selectedProducts', [$relatedProduct->id])
             ->call('addSelectedProducts')
             ->assertNotified();
@@ -115,7 +117,7 @@ describe(RelatedProductsList::class, function (): void {
         $excludedProduct2 = Product::factory()->create();
 
         $component = Livewire::test(RelatedProductsList::class, [
-            'productId' => $this->product->id,
+            'product' => $this->product,
             'ids' => [$excludedProduct1->id, $excludedProduct2->id],
         ]);
 
@@ -127,7 +129,7 @@ describe(RelatedProductsList::class, function (): void {
         $excludedProduct = Product::factory()->create(['name' => 'Excluded Product']);
 
         $component = Livewire::test(RelatedProductsList::class, [
-            'productId' => $this->product->id,
+            'product' => $this->product,
             'ids' => [$excludedProduct->id],
         ]);
 
@@ -142,7 +144,7 @@ describe(RelatedProductsList::class, function (): void {
         $excludedProduct = Product::factory()->create(['name' => 'Test Excluded']);
 
         $component = Livewire::test(RelatedProductsList::class, [
-            'productId' => $this->product->id,
+            'product' => $this->product,
             'ids' => [$excludedProduct->id],
         ])
             ->set('search', 'Test');
@@ -157,7 +159,7 @@ describe(RelatedProductsList::class, function (): void {
         $otherProduct = Product::factory()->create(['name' => 'Other Product']);
 
         $component = Livewire::test(RelatedProductsList::class, [
-            'productId' => $this->product->id,
+            'product' => $this->product,
             'ids' => [$this->product->id],
         ]);
 

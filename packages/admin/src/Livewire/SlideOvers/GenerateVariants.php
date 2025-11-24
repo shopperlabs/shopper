@@ -14,8 +14,6 @@ use Shopper\Core\Macros\Arr;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
-use Shopper\Core\Repositories\ProductRepository;
-use Shopper\Core\Repositories\VariantRepository;
 use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 
@@ -80,7 +78,7 @@ class GenerateVariants extends SlideOverComponent
             ])
             ->toArray();
 
-        $variants = (new VariantRepository)->query()
+        $variants = ProductVariant::resolvedQuery()
             ->with(['prices', 'values', 'prices.currency' => function ($query): void {
                 $query->where('code', shopper_currency());
             }])
@@ -108,8 +106,9 @@ class GenerateVariants extends SlideOverComponent
     #[Computed]
     public function product(): Product
     {
-        /** @var Product */
-        return (new ProductRepository)->with(['options', 'options.values'])->getById($this->productId);
+        return Product::resolvedQuery()
+            ->with(['options', 'options.values'])
+            ->findOrFail($this->productId);
     }
 
     public function removeVariant(string|int $key): void

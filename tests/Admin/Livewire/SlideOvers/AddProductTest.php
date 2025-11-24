@@ -10,13 +10,15 @@ use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Inventory;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\AddProduct;
+use Tests\Core\Stubs\Product;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('add_products');
     $this->actingAs($this->user);

@@ -11,35 +11,35 @@ trait HasDimensions
     protected function width(): Attribute
     {
         return Attribute::get(
-            fn (): string => "{$this->width_value} {$this->width_unit->value}",
+            fn (): ?string => $this->width_value ? "{$this->width_value} {$this->width_unit->value}" : null,
         );
     }
 
     protected function weight(): Attribute
     {
         return Attribute::get(
-            fn (): string => "{$this->weight_value} {$this->weight_unit->value}",
+            fn (): ?string => $this->weight_value ? "{$this->weight_value} {$this->weight_unit->value}" : null,
         );
     }
 
     protected function height(): Attribute
     {
         return Attribute::get(
-            fn (): string => "{$this->height_value} {$this->height_unit->value}",
+            fn (): ?string => $this->height_value ? "{$this->height_value} {$this->height_unit->value}" : null,
         );
     }
 
     protected function depth(): Attribute
     {
         return Attribute::get(
-            fn (): string => "{$this->depth_value} {$this->depth_unit->value}",
+            fn (): ?string => $this->depth_value ? "{$this->depth_value} {$this->depth_unit->value}" : null,
         );
     }
 
     protected function volume(): Attribute
     {
         return Attribute::get(
-            fn (): string => "{$this->volume_value} {$this->volume_unit->value}",
+            fn (): ?string => $this->volume_value ? "{$this->volume_value} {$this->volume_unit->value}" : null,
         );
     }
 }

@@ -6,144 +6,150 @@ use Illuminate\Support\Facades\Bus;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\DiscountDetail;
-use Shopper\Core\Models\Product;
 use Shopper\Jobs\AttachedDiscountToProducts;
+use Tests\Core\Stubs\Product;
 
 uses(Tests\TestCase::class);
 
-it('can be dispatched', function (): void {
-    Bus::fake();
+beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+});
 
-    $discount = Discount::factory()->create();
-    $products = Product::factory()->count(3)->create();
+describe(AttachedDiscountToProducts::class, function (): void {
+    it('can be dispatched', function (): void {
+        Bus::fake();
 
-    AttachedDiscountToProducts::dispatch(
-        DiscountApplyTo::Products(),
-        $products->pluck('id')->toArray(),
-        $discount
-    );
+        $discount = Discount::factory()->create();
+        $products = Product::factory()->count(3)->create();
 
-    Bus::assertDispatched(AttachedDiscountToProducts::class);
-})->group('jobs', 'discount');
+        AttachedDiscountToProducts::dispatch(
+            DiscountApplyTo::Products(),
+            $products->pluck('id')->toArray(),
+            $discount
+        );
 
-it('attaches discount to selected products', function (): void {
-    $discount = Discount::factory()->create();
-    $products = Product::factory()->count(3)->create();
+        Bus::assertDispatched(AttachedDiscountToProducts::class);
+    });
 
-    $job = new AttachedDiscountToProducts(
-        applyTo: DiscountApplyTo::Products(),
-        productIds: $products->pluck('id')->toArray(),
-        discount: $discount
-    );
+    it('attaches discount to selected products', function (): void {
+        $discount = Discount::factory()->create();
+        $products = Product::factory()->count(3)->create();
 
-    $job->handle();
+        $job = new AttachedDiscountToProducts(
+            applyTo: DiscountApplyTo::Products(),
+            productIds: $products->pluck('id')->toArray(),
+            discount: $discount
+        );
 
-    expect($discount->items()->where('condition', 'apply_to')->count())->toBe(3);
+        $job->handle();
 
-    foreach ($products as $product) {
-        $detail = DiscountDetail::query()
-            ->where('discount_id', $discount->id)
-            ->where('discountable_id', $product->id)
-            ->where('condition', 'apply_to')
-            ->first();
+        expect($discount->items()->where('condition', 'apply_to')->count())->toBe(3);
 
-        expect($detail)->not->toBeNull()
-            ->and($detail->discountable_type)->toBe(config('shopper.models.product'));
-    }
-})->group('jobs', 'discount');
+        foreach ($products as $product) {
+            $detail = DiscountDetail::query()
+                ->where('discount_id', $discount->id)
+                ->where('discountable_id', $product->id)
+                ->where('condition', 'apply_to')
+                ->first();
 
-it('removes unselected products from discount', function (): void {
-    $discount = Discount::factory()->create();
-    $existingProducts = Product::factory()->count(3)->create();
+            expect($detail)->not->toBeNull()
+                ->and($detail->discountable_type)->toBe(config('shopper.models.product'));
+        }
+    });
 
-    foreach ($existingProducts as $product) {
+    it('removes unselected products from discount', function (): void {
+        $discount = Discount::factory()->create();
+        $existingProducts = Product::factory()->count(3)->create();
+
+        foreach ($existingProducts as $product) {
+            DiscountDetail::factory()->create([
+                'discount_id' => $discount->id,
+                'discountable_id' => $product->id,
+                'discountable_type' => config('shopper.models.product'),
+                'condition' => 'apply_to',
+            ]);
+        }
+
+        $newProducts = Product::factory()->count(2)->create();
+
+        $job = new AttachedDiscountToProducts(
+            applyTo: DiscountApplyTo::Products(),
+            productIds: $newProducts->pluck('id')->toArray(),
+            discount: $discount
+        );
+
+        $job->handle();
+
+        expect($discount->items()->where('condition', 'apply_to')->count())->toBe(2);
+
+        foreach ($existingProducts as $product) {
+            expect(
+                $discount->items()
+                    ->where('discountable_id', $product->id)
+                    ->where('condition', 'apply_to')
+                    ->exists()
+            )->toBeFalse();
+        }
+
+        foreach ($newProducts as $product) {
+            expect(
+                $discount->items()
+                    ->where('discountable_id', $product->id)
+                    ->where('condition', 'apply_to')
+                    ->exists()
+            )->toBeTrue();
+        }
+    });
+
+    it('removes all products when apply_to is not products', function (): void {
+        $discount = Discount::factory()->create();
+
+        DiscountDetail::factory()->count(3)->create([
+            'discount_id' => $discount->id,
+            'condition' => 'apply_to',
+        ]);
+
+        $job = new AttachedDiscountToProducts(
+            applyTo: DiscountApplyTo::Order(),
+            productIds: [],
+            discount: $discount
+        );
+
+        $job->handle();
+
+        expect($discount->items()->where('condition', 'apply_to')->count())->toBe(0);
+    });
+
+    it('updates existing product discount associations', function (): void {
+        $discount = Discount::factory()->create();
+        $product = Product::factory()->create();
+
         DiscountDetail::factory()->create([
             'discount_id' => $discount->id,
             'discountable_id' => $product->id,
             'discountable_type' => config('shopper.models.product'),
             'condition' => 'apply_to',
         ]);
-    }
 
-    $newProducts = Product::factory()->count(2)->create();
+        $initialCount = DiscountDetail::query()
+            ->where('discount_id', $discount->id)
+            ->where('discountable_id', $product->id)
+            ->count();
 
-    $job = new AttachedDiscountToProducts(
-        applyTo: DiscountApplyTo::Products(),
-        productIds: $newProducts->pluck('id')->toArray(),
-        discount: $discount
-    );
+        $job = new AttachedDiscountToProducts(
+            applyTo: DiscountApplyTo::Products(),
+            productIds: [$product->id],
+            discount: $discount
+        );
 
-    $job->handle();
+        $job->handle();
 
-    expect($discount->items()->where('condition', 'apply_to')->count())->toBe(2);
+        $finalCount = DiscountDetail::query()
+            ->where('discount_id', $discount->id)
+            ->where('discountable_id', $product->id)
+            ->count();
 
-    foreach ($existingProducts as $product) {
-        expect(
-            $discount->items()
-                ->where('discountable_id', $product->id)
-                ->where('condition', 'apply_to')
-                ->exists()
-        )->toBeFalse();
-    }
-
-    foreach ($newProducts as $product) {
-        expect(
-            $discount->items()
-                ->where('discountable_id', $product->id)
-                ->where('condition', 'apply_to')
-                ->exists()
-        )->toBeTrue();
-    }
-})->group('jobs', 'discount');
-
-it('removes all products when apply_to is not products', function (): void {
-    $discount = Discount::factory()->create();
-
-    DiscountDetail::factory()->count(3)->create([
-        'discount_id' => $discount->id,
-        'condition' => 'apply_to',
-    ]);
-
-    $job = new AttachedDiscountToProducts(
-        applyTo: DiscountApplyTo::Order(),
-        productIds: [],
-        discount: $discount
-    );
-
-    $job->handle();
-
-    expect($discount->items()->where('condition', 'apply_to')->count())->toBe(0);
-})->group('jobs', 'discount');
-
-it('updates existing product discount associations', function (): void {
-    $discount = Discount::factory()->create();
-    $product = Product::factory()->create();
-
-    DiscountDetail::factory()->create([
-        'discount_id' => $discount->id,
-        'discountable_id' => $product->id,
-        'discountable_type' => config('shopper.models.product'),
-        'condition' => 'apply_to',
-    ]);
-
-    $initialCount = DiscountDetail::query()
-        ->where('discount_id', $discount->id)
-        ->where('discountable_id', $product->id)
-        ->count();
-
-    $job = new AttachedDiscountToProducts(
-        applyTo: DiscountApplyTo::Products(),
-        productIds: [$product->id],
-        discount: $discount
-    );
-
-    $job->handle();
-
-    $finalCount = DiscountDetail::query()
-        ->where('discount_id', $discount->id)
-        ->where('discountable_id', $product->id)
-        ->count();
-
-    expect($finalCount)->toBe($initialCount)
-        ->and($finalCount)->toBe(1);
+        expect($finalCount)->toBe($initialCount)
+            ->and($finalCount)->toBe(1);
+    });
 })->group('jobs', 'discount');

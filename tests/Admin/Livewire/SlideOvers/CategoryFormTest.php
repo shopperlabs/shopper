@@ -3,14 +3,15 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\Category;
 use Shopper\Core\Models\User;
-use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\SlideOvers\CategoryForm;
+use Tests\Core\Stubs\Category;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.category', Category::class);
+
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('add_categories', 'edit_categories');
     $this->actingAs($this->user);
@@ -35,10 +36,10 @@ describe(CategoryForm::class, function (): void {
             ->assertHasNoFormErrors()
             ->assertRedirectToRoute('shopper.categories.index');
 
-        expect((new CategoryRepository)->count())->toBe(1);
+        expect(Category::resolvedQuery()->count())->toBe(1);
     });
 
-    it('will generate a slug when brand slug already exists', function (): void {
+    it('will generate a slug when category slug already exists', function (): void {
         Category::factory()->create(['name' => 'Old category', 'slug' => 'my-first-category']);
 
         Livewire::test(CategoryForm::class)
@@ -49,9 +50,9 @@ describe(CategoryForm::class, function (): void {
             ->call('save')
             ->assertRedirectToRoute('shopper.categories.index');
 
-        expect((new CategoryRepository)->count())
+        expect(Category::resolvedQuery()->count())
             ->toBe(2)
-            ->and((new CategoryRepository)->getById(2)?->slug)
+            ->and(Category::resolvedQuery()->find(2)?->slug)
             ->toBe('my-first-category-1');
     });
 
@@ -68,7 +69,7 @@ describe(CategoryForm::class, function (): void {
             ->assertHasNoFormErrors()
             ->assertRedirectToRoute('shopper.categories.index');
 
-        expect((new CategoryRepository)->count())->toBe(2);
+        expect(Category::resolvedQuery()->count())->toBe(2);
     });
 
     it('has parent_id field null when parent category is deleted', function (): void {

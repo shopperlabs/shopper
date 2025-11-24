@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\BrandFactory;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
+use Shopper\Core\Traits\HasModelContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -31,9 +32,15 @@ class Brand extends Model implements SpatieHasMedia
     use HasFactory;
 
     use HasMedia;
+    use HasModelContract;
     use HasSlug;
 
     protected $guarded = [];
+
+    public static function configKey(): string
+    {
+        return 'brand';
+    }
 
     public function getTable(): string
     {

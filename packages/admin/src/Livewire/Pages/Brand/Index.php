@@ -13,7 +13,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Shopper\Core\Repositories\BrandRepository;
+use Shopper\Core\Models\Brand;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -30,7 +30,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query((new BrandRepository)->query())
+            ->query(Brand::resolvedQuery())
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('Logo')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
@@ -60,10 +60,10 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon('untitledui-edit-04')
                     ->action(
-                        fn ($record) => $this->dispatch(
+                        fn (Brand $record) => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.brand-form',
-                            arguments: ['brandId' => $record->id]
+                            arguments: ['brand' => $record]
                         )
                     )
                     ->visible(Shopper::auth()->user()->can('edit_brands')),
@@ -89,7 +89,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.disable'))
                     ->icon('untitledui-slash-circle-01')
                     ->action(function (Collection $records): void {
-                        $records->each->updateStatus(status: false); // @phpstan-ignore-line
+                        $records->each->updateStatus(false); // @phpstan-ignore-line
 
                         Notification::make()
                             ->title(__('shopper::components.tables.status.updated'))

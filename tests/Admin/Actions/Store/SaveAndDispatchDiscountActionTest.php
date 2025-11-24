@@ -9,10 +9,10 @@ use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Models\User;
 use Shopper\Jobs\AttachedDiscountToCustomers;
 use Shopper\Jobs\AttachedDiscountToProducts;
+use Tests\Core\Stubs\Product;
 use Tests\TestCase;
 
 uses(TestCase::class);
@@ -21,6 +21,8 @@ uses(TestCase::class);
  * @var TestCase $this
  */
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+
     $this->products = Product::factory()->count(3)->publish()->create();
     $this->users = User::factory()->count(3)->create();
     $this->formValues = [

@@ -15,32 +15,23 @@ use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Brand;
-use Shopper\Core\Repositories\BrandRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class BrandForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    /**
-     * @var Brand
-     */
-    public $brand;
+    public Brand $brand;
 
     /** @var array<array-key, mixed>|null */
     public ?array $data = [];
 
-    public function mount(?int $brandId = null): void
+    public function mount(?Brand $brand = null): void
     {
-        /** @var Brand $brand */
-        $brand = $brandId
-            ? (new BrandRepository)->getById($brandId)
-            : (new BrandRepository)->query()->newModelInstance();
-
-        $this->brand = $brand;
+        $this->brand = $brand ?? Brand::resolvedQuery()->newModelInstance();
 
         $this->form->fill($this->brand->toArray());
     }
@@ -116,8 +107,7 @@ class BrandForm extends SlideOverComponent implements HasForms
         } else {
             $this->authorize('add_brands');
 
-            /** @var Brand $brand */
-            $brand = (new BrandRepository)->create($this->form->getState());
+            $brand = Brand::resolvedQuery()->create($this->form->getState());
             $this->form->model($brand)->saveRelationships();
         }
 

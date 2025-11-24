@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
-use Shopper\Core\Models\Product;
+use Tests\Core\Stubs\Product;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\Components\Products\Form\Variants;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
 

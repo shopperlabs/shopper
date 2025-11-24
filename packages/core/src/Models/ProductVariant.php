@@ -19,6 +19,7 @@ use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasPrices;
 use Shopper\Core\Models\Traits\HasStock;
 use Shopper\Core\Observers\ProductVariantObserver;
+use Shopper\Core\Traits\HasModelContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -57,10 +58,16 @@ class ProductVariant extends Model implements Priceable, SpatieHasMedia
     use HasFactory;
 
     use HasMedia;
+    use HasModelContract;
     use HasPrices;
     use HasStock;
 
     protected $guarded = [];
+
+    public static function configKey(): string
+    {
+        return 'variant';
+    }
 
     public function getTable(): string
     {

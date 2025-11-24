@@ -13,15 +13,21 @@ use Shopper\Core\Database\Factories\CollectionFactory;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
+use Shopper\Core\Traits\HasModelContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
- * @property-read CollectionType $type
  * @property-read string $name
  * @property-read string $slug
+ * @property-read CollectionType $type
  * @property-read string|null $description
+ * @property-read string|null $match_conditions
+ * @property-read string|null $sort
+ * @property-read \Illuminate\Support\Carbon $published_at
  * @property-read array<string, mixed>|null $metadata
+ * @property-read string|null $seo_title
+ * @property-read string|null $seo_description
  * @property-read \Illuminate\Support\Collection<int, CollectionRule> $rules
  * @property-read \Illuminate\Support\Collection<int, Product> $products
  */
@@ -31,9 +37,15 @@ class Collection extends Model implements SpatieHasMedia
     use HasFactory;
 
     use HasMedia;
+    use HasModelContract;
     use HasSlug;
 
     protected $guarded = [];
+
+    public static function configKey(): string
+    {
+        return 'collection';
+    }
 
     public function getTable(): string
     {

@@ -27,6 +27,7 @@ class CollectionFactory extends Factory
             'slug' => $this->faker->unique()->slug(),
             'type' => $this->faker->randomElement(CollectionType::values()),
             'description' => $this->faker->text(),
+            'published_at' => $this->faker->date(),
         ];
     }
 }

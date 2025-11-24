@@ -16,7 +16,6 @@ use Illuminate\Contracts\View\View;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Events\Products\Deleted;
 use Shopper\Core\Models\Product;
-use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -34,8 +33,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     {
         return $table
             ->query(
-                (new ProductRepository)
-                    ->query()
+                Product::resolvedQuery()
                     ->with(['brand', 'variants'])
                     ->withCount(['variants'])
                     ->latest()

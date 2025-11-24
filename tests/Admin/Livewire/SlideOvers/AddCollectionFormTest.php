@@ -5,12 +5,14 @@ declare(strict_types=1);
 use Livewire\Livewire;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\User;
-use Shopper\Core\Repositories\CollectionRepository;
 use Shopper\Livewire\SlideOvers\AddCollectionForm;
+use Tests\Core\Stubs\Collection;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.collection', Collection::class);
+
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('add_collections');
     $this->actingAs($this->user);
@@ -37,10 +39,10 @@ describe(AddCollectionForm::class, function (): void {
             ->assertRedirectToRoute(
                 'shopper.collections.edit',
                 [
-                    'collection' => (new CollectionRepository)->getById(1),
+                    'collection' => Collection::resolvedQuery()->find(1),
                 ]
             );
 
-        expect((new CollectionRepository)->count())->toBe(1);
+        expect(Collection::resolvedQuery()->count())->toBe(1);
     });
 })->group('livewire', 'slideovers', 'collections');

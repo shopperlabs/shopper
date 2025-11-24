@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
-use Shopper\Core\Models\Product;
-use Shopper\Core\Models\ProductVariant;
+use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\ProductVariant;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\UpdateVariant;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+    config()->set('shopper.models.variant', ProductVariant::class);
+
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
 
@@ -22,8 +25,8 @@ beforeEach(function (): void {
 describe(UpdateVariant::class, function (): void {
     it('can render update variant slideover', function (): void {
         Livewire::test(UpdateVariant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $this->variant->id,
+            'product' => $this->product,
+            'variant' => $this->variant,
         ])
             ->assertOk();
     });
@@ -36,8 +39,8 @@ describe(UpdateVariant::class, function (): void {
         ]);
 
         $component = Livewire::test(UpdateVariant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $variant->id,
+            'product' => $this->product,
+            'variant' => $variant,
         ]);
 
         expect($component->get('variant'))->not->toBeNull()
@@ -48,8 +51,8 @@ describe(UpdateVariant::class, function (): void {
 
     it('can update variant basic information', function (): void {
         Livewire::test(UpdateVariant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $this->variant->id,
+            'product' => $this->product,
+            'variant' => $this->variant,
         ])
             ->fillForm([
                 'name' => 'Updated Variant Name',
@@ -67,8 +70,8 @@ describe(UpdateVariant::class, function (): void {
 
     it('can update variant shipping dimensions', function (): void {
         Livewire::test(UpdateVariant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $this->variant->id,
+            'product' => $this->product,
+            'variant' => $this->variant,
         ])
             ->fillForm([
                 'name' => 'Variant with Dimensions',
@@ -90,8 +93,8 @@ describe(UpdateVariant::class, function (): void {
 
     it('redirects to variant page after update', function (): void {
         Livewire::test(UpdateVariant::class, [
-            'productId' => $this->product->id,
-            'variantId' => $this->variant->id,
+            'product' => $this->product,
+            'variant' => $this->variant,
         ])
             ->fillForm([
                 'name' => 'Updated Name',

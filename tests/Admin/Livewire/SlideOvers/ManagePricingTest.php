@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Models\Currency;
-use Shopper\Core\Models\Product;
-use Shopper\Core\Models\ProductVariant;
+use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\ProductVariant;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\ManagePricing;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+    config()->set('shopper.models.variant', ProductVariant::class);
+
     setupCurrencies(['USD', 'EUR']);
 
     $this->user = User::factory()->create();

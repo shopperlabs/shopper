@@ -6,19 +6,19 @@ namespace Shopper\Livewire\SlideOvers;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
-use Shopper\Core\Repositories\CategoryRepository;
+use Shopper\Core\Models\Category;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 class ReOrderCategories extends SlideOverComponent
 {
     /**
-     * @param  array<array-key, mixed>  $items
+     * @param  array<string, mixed>  $items
      */
     public function updateGroupOrder(array $items): void
     {
         foreach ($items as $item) {
-            (new CategoryRepository)
-                ->getById((int) $item['value'])
+            Category::resolvedQuery()
+                ->findOrFail((int) $item['value'])
                 ->update(['position' => $item['order']]);
         }
 
@@ -26,14 +26,14 @@ class ReOrderCategories extends SlideOverComponent
     }
 
     /**
-     * @param  array<array-key, mixed>  $groups
+     * @param  array<string, mixed>  $groups
      */
     public function updateCategoryOrder(array $groups): void
     {
         foreach ($groups as $group) {
             foreach ($group['items'] as $item) {
-                (new CategoryRepository)
-                    ->getById((int) $item['value'])
+                Category::resolvedQuery()
+                    ->findOrFail((int) $item['value'])
                     ->update([
                         'parent_id' => (int) $group['value'],
                         'position' => $item['order'],
@@ -48,10 +48,9 @@ class ReOrderCategories extends SlideOverComponent
     public function render(): View
     {
         return view('shopper::livewire.slide-overs.re-order-categories', [
-            'categories' => (new CategoryRepository)
+            'categories' => Category::resolvedQuery()
                 ->with('children')
-                ->query()
-                ->where('parent_id', null)
+                ->whereNull('parent_id')
                 ->orderBy('position')
                 ->get(),
         ]);

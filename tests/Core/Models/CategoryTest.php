@@ -12,7 +12,7 @@ describe(Category::class, function (): void {
         Category::factory()->create(['is_enabled' => false, 'slug' => 'disabled-category']);
         $enabled = Category::factory()->create(['is_enabled' => true, 'slug' => 'enabled-category']);
 
-        $result = Category::enabled()->where('id', $enabled->id)->first();
+        $result = Category::resolvedQuery()->scopes('enabled')->where('id', $enabled->id)->first();
 
         expect($result->id)->toBe($enabled->id)
             ->and($result->is_enabled)->toBeTrue();
@@ -21,7 +21,7 @@ describe(Category::class, function (): void {
     it('updates status', function (): void {
         $category = Category::factory()->create(['is_enabled' => false, 'slug' => 'test-category']);
 
-        $category->updateStatus(true);
+        $category->updateStatus();
 
         expect($category->fresh()->is_enabled)->toBeTrue();
     });

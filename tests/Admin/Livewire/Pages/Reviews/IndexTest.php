@@ -3,14 +3,16 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Review;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Reviews\Index;
+use Tests\Core\Stubs\Product;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
 });

@@ -14,28 +14,29 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
-use Shopper\Core\Repositories\CollectionRepository;
+use Shopper\Core\Models\Collection;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class Edit extends AbstractPageComponent implements HasForms
 {
     use InteractsWithForms;
 
-    public $collection;
+    public ?Collection $collection = null;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
-    public function mount(int $collection): void
+    public function mount(?Collection $collection = null): void
     {
         $this->authorize('edit_collections');
 
-        $this->collection = (new CollectionRepository)->with('rules')->getById($collection);
+        $this->collection = $collection?->load('rules');
 
-        $this->form->fill($this->collection->toArray());
+        $this->form->fill($this->collection?->toArray() ?? []);
     }
 
     public function form(Form $form): Form
@@ -51,10 +52,11 @@ class Edit extends AbstractPageComponent implements HasForms
                                     ->placeholder('Summers Collections, Christmas promotions...')
                                     ->required()
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function (string $operation, $state, Forms\Set $set): void {
-                                        $set('slug', Str::slug($state));
+                                    ->afterStateUpdated(function (string $operation, ?string $state, Forms\Set $set): void {
+                                        if ($state) {
+                                            $set('slug', Str::slug($state));
+                                        }
                                     }),
-
                                 Forms\Components\TextInput::make('slug')
                                     ->label(__('shopper::forms.label.slug'))
                                     ->disabled()
@@ -75,11 +77,9 @@ class Edit extends AbstractPageComponent implements HasForms
                                 'underline',
                                 'undo',
                             ]),
-
                         Forms\Components\Livewire::make(CollectionProducts::class, ['collection' => $this->collection]),
                     ])
                     ->columnSpan(['lg' => 2]),
-
                 Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\SpatieMediaLibraryFileUpload::make('file')
@@ -87,13 +87,12 @@ class Edit extends AbstractPageComponent implements HasForms
                             ->collection(config('shopper.media.storage.thumbnail_collection'))
                             ->image()
                             ->maxSize(config('shopper.media.max_size.thumbnail')),
-
                         Forms\Components\DateTimePicker::make('published_at')
                             ->label(__('shopper::forms.label.availability'))
                             ->native(false)
+                            ->required()
                             ->default(now())
                             ->helperText(__('shopper::pages/collections.availability_description')),
-
                         Forms\Components\Group::make()
                             ->schema([
                                 Forms\Components\Placeholder::make(__('shopper::words.seo.slug'))
@@ -106,9 +105,7 @@ class Edit extends AbstractPageComponent implements HasForms
 
                                 ...SeoField::make(),
                             ]),
-
-                        Forms\Components\KeyValue::make('metadata')
-                            ->reorderable(),
+                        Forms\Components\KeyValue::make('metadata')->reorderable(),
                     ])
                     ->columnSpan(['lg' => 1]),
             ])

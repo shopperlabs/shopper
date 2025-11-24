@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopper\Actions\Store\Product;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Shopper\Actions\Store\InitialQuantityInventory;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
-use Shopper\Core\Repositories\VariantRepository;
 use Throwable;
 
 final class SaveProductVariantsAction
@@ -26,12 +26,12 @@ final class SaveProductVariantsAction
         foreach ($variants as $variantState) {
             /** @var ProductVariant $variant */
             $variant = $variantState['variant_id']
-            ? (new VariantRepository)->getById($variantState['variant_id'])
-            : (new VariantRepository)->create([
-                'name' => $variantState['name'],
-                'product_id' => $product->id,
-                'sku' => $variantState['sku'],
-            ]);
+                ? ProductVariant::resolvedQuery()->findOrFail($variantState['variant_id'])
+                : ProductVariant::resolvedQuery()->create([
+                    'name' => $variantState['name'],
+                    'product_id' => $product->id,
+                    'sku' => $variantState['sku'],
+                ]);
 
             $price = (float) $variantState['price'];
 
@@ -64,7 +64,7 @@ final class SaveProductVariantsAction
 
         $variantIds = collect($variants)->pluck('variant_id');
 
-        /** @var \Illuminate\Support\Collection<int, ProductVariant> $variantsToDelete */
+        /** @var Collection<int, ProductVariant> $variantsToDelete */
         $variantsToDelete = $product->variants()->whereNotIn('id', $variantIds)->get();
         $variantsToDelete->each(fn (ProductVariant $variant) => $variant->delete());
 

@@ -3,14 +3,15 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\User;
-use Shopper\Core\Repositories\BrandRepository;
 use Shopper\Livewire\SlideOvers\BrandForm;
+use Tests\Core\Stubs\Brand;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.brand', Brand::class);
+
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('add_brands', 'edit_brands');
     $this->actingAs($this->user);
@@ -46,9 +47,9 @@ describe(BrandForm::class, function (): void {
             ->call('save')
             ->assertRedirectToRoute('shopper.brands.index');
 
-        expect((new BrandRepository)->count())
+        expect(Brand::resolvedQuery()->count())
             ->toBe(2)
-            ->and((new BrandRepository)->getById(2)?->slug)
+            ->and(Brand::resolvedQuery()->find(2)?->slug)
             ->toBe('nike-1');
     });
 })->group('livewire', 'slideovers', 'brands');

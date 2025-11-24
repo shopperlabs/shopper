@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 use Shopper\Actions\Store\Product\SavePricingAction;
 use Shopper\Core\Models\Currency;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Models\User;
+use Tests\Core\Stubs\Product;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
 });

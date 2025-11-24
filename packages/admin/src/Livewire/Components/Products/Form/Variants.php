@@ -19,7 +19,6 @@ use Livewire\Attributes\Lazy;
 use Livewire\Component;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
-use Shopper\Core\Repositories\VariantRepository;
 
 #[Lazy]
 class Variants extends Component implements HasForms, HasTable
@@ -27,8 +26,7 @@ class Variants extends Component implements HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
-    /** @var Product */
-    public $product;
+    public Product $product;
 
     public function placeholder(): View
     {
@@ -39,8 +37,7 @@ class Variants extends Component implements HasForms, HasTable
     {
         return $table
             ->query(
-                (new VariantRepository)
-                    ->query()
+                ProductVariant::resolvedQuery()
                     ->where('product_id', $this->product->id)
                     ->latest()
             )

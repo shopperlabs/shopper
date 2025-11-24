@@ -21,13 +21,13 @@ use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
+use Shopper\Core\Models\Product;
+use Shopper\Core\Models\User;
 use Shopper\Core\Models\Zone;
-use Shopper\Core\Repositories\ProductRepository;
-use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class DiscountForm extends SlideOverComponent implements HasForms
 {
@@ -36,7 +36,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
     public Discount $discount;
 
     /**
-     * @var array<array-key, mixed>|null
+     * @var array<string, mixed>|null
      */
     public ?array $data = [];
 
@@ -210,8 +210,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->live(),
                         Forms\Components\Select::make('products')
                             ->options(
-                                (new ProductRepository)
-                                    ->query()
+                                Product::resolvedQuery()
                                     ->scopes('publish')
                                     ->get()
                                     ->pluck('name', 'id')
@@ -235,8 +234,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->live(),
                         Forms\Components\Select::make('customers')
                             ->options(
-                                (new UserRepository)
-                                    ->query()
+                                User::query()
                                     ->scopes('customers')
                                     ->get()
                                     ->pluck('full_name', 'id')

@@ -79,6 +79,6 @@ jobs:
           done
           echo "Postgres did not become ready in time" && exit
       - name: Execute tests
-        run: ./vendor/bin/pest --configuration=phpunit.${{ matrix.db }}.xml
+        run: ./vendor/bin/pest --configuration=phpunit.${{ matrix.db }}.xml --parallel
         env:
           DB_PASSWORD: password

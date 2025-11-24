@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Shopper\Core\Models\Product;
-use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Livewire\Components\ModalComponent;
 
 /**
@@ -18,10 +17,7 @@ use Shopper\Livewire\Components\ModalComponent;
  */
 class RelatedProductsList extends ModalComponent
 {
-    /**
-     * @var Product
-     */
-    public $product;
+    public Product $product;
 
     public string $search = '';
 
@@ -35,24 +31,19 @@ class RelatedProductsList extends ModalComponent
     /**
      * @param  array<int>  $ids
      */
-    public function mount(int $productId, array $ids = []): void
+    public function mount(?Product $product = null, array $ids = []): void
     {
-        /** @var Product $product */
-        $product = (new ProductRepository)->getById($productId);
         $this->product = $product;
         $this->exceptProductIds = $ids;
     }
 
     /**
      * @return Collection<int, Product>
-     *
-     * @throws \Shopper\Core\Exceptions\ModelRepositoryException
      */
     #[Computed]
     public function products(): Collection
     {
-        return (new ProductRepository) // @phpstan-ignore-line
-            ->query()
+        return Product::resolvedQuery()
             ->where(
                 column: 'name',
                 operator: 'like',

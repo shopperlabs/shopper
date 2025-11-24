@@ -13,11 +13,11 @@ describe(Channel::class, function (): void {
         Channel::factory()->count(2)->create(['is_enabled' => true]);
         Channel::factory()->count(3)->create(['is_enabled' => false]);
 
-        expect(Channel::enabled()->count())->toBeGreaterThanOrEqual(3);
+        expect(Channel::resolvedQuery()->scopes('enabled')->count())->toBeGreaterThanOrEqual(3);
     });
 
     it('scopes default channel', function (): void {
-        $channel = Channel::default()->first();
+        $channel = Channel::resolvedQuery()->scopes('default')->first();
 
         expect($channel)->not->toBeNull()
             ->and($channel->is_default)->toBeTrue();

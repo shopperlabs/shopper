@@ -19,8 +19,6 @@ use Shopper\Components;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
-use Shopper\Core\Repositories\ProductRepository;
-use Shopper\Core\Repositories\VariantRepository;
 use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 
@@ -33,41 +31,28 @@ class UpdateVariant extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    /**
-     * @var ProductVariant
-     */
-    public $variant;
+    public ?ProductVariant $variant = null;
 
-    /**
-     * @var Product
-     */
-    public $product;
+    public ?Product $product = null;
 
-    /**
-     * @var array<string, mixed>|null
-     */
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public bool $alert = false;
 
-    public function mount(int $productId, int $variantId): void
+    public function mount(?Product $product = null, ?ProductVariant $variant = null): void
     {
-        /** @var Product $product */
-        $product = (new ProductRepository)->getById($productId);
-        /** @var ProductVariant $variant */
-        $variant = (new VariantRepository)->with(['values', 'values.attribute'])->getById($variantId);
-
         $this->product = $product;
-        $this->variant = $variant;
+        $this->variant = $variant?->load(['values', 'values.attribute']);
 
         $this->form->fill(array_merge(
-            $this->variant->toArray(),
+            $this->variant?->toArray() ?? [],
             count($this->variantsOptions)
-                ? ['values' => $this->variant->values->mapWithKeys( // @phpstan-ignore-line
+                ? ['values' => $this->variant?->values->mapWithKeys(
                     fn (AttributeValue $value): array => [
                         $value->attribute->id => $value->id,
                     ]
-                )->toArray()]
+                )->toArray() ?? []]
                 : [],
         ));
     }
@@ -175,21 +160,19 @@ class UpdateVariant extends SlideOverComponent implements HasForms
 
     /**
      * @return array<array-key, mixed>
-     *
-     * @throws \Shopper\Core\Exceptions\ModelRepositoryException
      */
     #[Computed]
     public function variantsOptions(): array
     {
-        return (new VariantRepository)->query()
+        return ProductVariant::resolvedQuery()
             ->with('values')
             ->select('product_id', 'id')
-            ->where('product_id', $this->product->id)
+            ->where('product_id', $this->product?->id)
             ->get()
             ->map(
                 fn (ProductVariant $variant): array => $variant->values->pluck('id')->toArray() // @phpstan-ignore-line
             )
-            ->reject(fn ($value): bool => array_diff($value, $this->variant->values->pluck('id')->toArray()) === [])
+            ->reject(fn ($value): bool => array_diff($value, $this->variant?->values->pluck('id')->toArray() ?? []) === [])
             ->values()
             ->toArray();
     }

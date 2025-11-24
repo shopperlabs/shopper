@@ -8,7 +8,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Shopper\Actions\Store\InitialQuantityInventory;
 use Shopper\Core\Models\ProductVariant;
-use Shopper\Core\Repositories\VariantRepository;
 use Throwable;
 
 final class CreateNewVariant
@@ -24,8 +23,7 @@ final class CreateNewVariant
 
         DB::beginTransaction();
 
-        /** @var ProductVariant $variant */
-        $variant = (new VariantRepository)->create($data);
+        $variant = ProductVariant::resolvedQuery()->create($data);
 
         if ($pricing = data_get($state, 'prices')) {
             app()->call(SavePricingAction::class, [

@@ -5,13 +5,15 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use Shopper\Core\Events\Products\Deleted;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Product\Edit;
+use Tests\Core\Stubs\Product;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
+    config()->set('shopper.models.product', Product::class);
+
     setupCurrencies();
 
     $this->user = User::factory()->create();
@@ -24,7 +26,7 @@ describe(Edit::class, function (): void {
     it('can render product edit page', function (): void {
         $product = Product::factory()->create();
 
-        Livewire::test(Edit::class, ['product' => $product->id])
+        Livewire::test(Edit::class, ['product' => $product])
             ->assertOk()
             ->assertViewIs('shopper::livewire.pages.products.edit');
     });
@@ -32,7 +34,7 @@ describe(Edit::class, function (): void {
     it('loads product with prices on mount', function (): void {
         $product = Product::factory()->create(['name' => 'Test Product']);
 
-        $component = Livewire::test(Edit::class, ['product' => $product->id]);
+        $component = Livewire::test(Edit::class, ['product' => $product]);
 
         expect($component->get('product'))->not->toBeNull()
             ->and($component->get('product')->name)->toBe('Test Product');
@@ -44,14 +46,14 @@ describe(Edit::class, function (): void {
 
         $product = Product::factory()->create();
 
-        Livewire::test(Edit::class, ['product' => $product->id])
+        Livewire::test(Edit::class, ['product' => $product])
             ->assertForbidden();
     });
 
     it('has active tab property', function (): void {
         $product = Product::factory()->create();
 
-        $component = Livewire::test(Edit::class, ['product' => $product->id]);
+        $component = Livewire::test(Edit::class, ['product' => $product]);
 
         expect($component->get('activeTab'))->toBe('detail');
     });
@@ -61,13 +63,13 @@ describe(Edit::class, function (): void {
 
         $product = Product::factory()->create();
 
-        Livewire::test(Edit::class, ['product' => $product->id])
+        Livewire::test(Edit::class, ['product' => $product])
             ->callAction('delete')
             ->assertRedirectToRoute('shopper.products.index')
             ->assertNotified(__('shopper::notifications.delete', ['item' => __('shopper::pages/products.single')]));
 
         Event::assertDispatched(Deleted::class);
-        expect(Product::query()->count())->toBe(0);
+        expect(Product::resolvedQuery()->count())->toBe(0);
     });
 
     it('delete action requires delete_products permission', function (): void {
@@ -77,14 +79,14 @@ describe(Edit::class, function (): void {
 
         $product = Product::factory()->create();
 
-        Livewire::test(Edit::class, ['product' => $product->id])
+        Livewire::test(Edit::class, ['product' => $product])
             ->assertActionHidden('delete');
     });
 
     it('delete action requires confirmation', function (): void {
         $product = Product::factory()->create();
 
-        Livewire::test(Edit::class, ['product' => $product->id])
+        Livewire::test(Edit::class, ['product' => $product])
             ->assertActionExists('delete')
             ->assertActionHasIcon('delete', 'untitledui-trash-03');
     });

@@ -15,7 +15,6 @@ use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Collection;
-use Shopper\Core\Repositories\CollectionRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
@@ -63,8 +62,9 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                         Forms\Components\DateTimePicker::make('published_at')
                             ->label(__('shopper::forms.label.availability'))
                             ->native(false)
+                            ->required()
                             ->default(now())
-                            ->minDate(now())
+                            ->minDate(now()->subHour())
                             ->helperText(__('shopper::pages/collections.availability_description')),
                         Forms\Components\Radio::make('type')
                             ->label(__('shopper::pages/collections.filter_type'))
@@ -110,7 +110,7 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
     public function store(): void
     {
         /** @var Collection $collection */
-        $collection = (new CollectionRepository)->create($this->form->getState());
+        $collection = Collection::resolvedQuery()->create($this->form->getState());
         $this->form->model($collection)->saveRelationships();
 
         Notification::make()
