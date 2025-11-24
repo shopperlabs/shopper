@@ -116,7 +116,9 @@ or pretty much anything similar you can imagine. When you set up your store Shop
 the same time as your first location with the same address information.
 
 ```php
-(new ChannelRepository())->create([
+use Shopper\Core\Models\Channel;
+
+Channel::query()->create([
   'name' => $name = __('Web Store'),
   'slug' => $name,
   'url' => env('APP_URL'),

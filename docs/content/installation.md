@@ -4,7 +4,7 @@ Quick start guide for installing and configuring Laravel Shopper on your existin
 
 ## Supported Versions of Laravel
 
-**Laravel 10 and Laravel 11 are supported.** It feels like this section needs more than one sentence but it really doesn't. That first one said all that needs saying.
+**Laravel 11+ are supported.** It feels like this section needs more than one sentence but it really doesn't. That first one said all that needs saying.
 
 ## Install Shopper
 
@@ -32,14 +32,17 @@ And we're all good to go!
 
 ## Prepare your User Model
 
-Extend your current User Model \(usually `app/Models/User.php`\) using the `Shopper\Core\Models\User as Authenticatable` alias:
+Make your current User Model \(usually `app/Models/User.php`\) implement the `ShopperUser` interface and use the `ShopperUser` trait:
 
 ```php filename=app/Models/User.php
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Shopper\Core\Contracts\ShopperUser as ShopperUserContract;
+use Shopper\Core\Traits\ShopperUser;
 
-use Shopper\Core\Models\User as Authenticatable; 
-
-class User extends Authenticatable
+class User extends Authenticatable implements ShopperUserContract
 {
+  use ShopperUser;
+
   // ...
 }
 ```

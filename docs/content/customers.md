@@ -9,11 +9,11 @@ The first page under the "Customers" menu gives you a list of all the registered
   <div class="caption">Customers</div>
 </div>
 
-During the [installation](/installing#update-existing-files) of Shopper, one of the first things required is to inherit to our model User the features of the model User that is in Shopper.
+During the [installation](/installing#prepare-your-user-model) of Shopper, one of the first things required is to make your User model implement the `ShopperUser` interface and use the `ShopperUser` trait.
 
 ## Model
 
-The model used is `App\Models\User` which extends the `\Shopper\Core\Models\User` model. 
+The model used is `App\Models\User` which implements the `\Shopper\Core\Contracts\ShopperUser` interface. 
 
 :::warning
 During the installation of Shopper, the `name` column of the users table is removed and replaced by 2 new fields which are `first_name` and `last_name`.
@@ -106,7 +106,7 @@ And you can also check the **Send customer credentials** checkbox to send an ema
 The Livewire component used to create a customer is `Shopper\Livewire\Livewire\Pages\Customers\Create`
 
 ```php
-$customer = (new UserRepository())->create([
+$customer = User::query()->create([
   'last_name' => $this->last_name,
   'first_name' => $this->first_name,
   'email' => $this->email,
@@ -116,7 +116,7 @@ $customer = (new UserRepository())->create([
   'opt_in' => $this->opt_in,
 ]);
 
-$customer->assignRole(config('shopper.system.users.default_role'));
+$customer->assignRole(config('shopper.core.roles.user'));
 ```
 
 :::info

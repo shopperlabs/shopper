@@ -16,9 +16,10 @@ To access dashboard, you need to have the role `administrator` this role can be 
 |
 */
 
-'users' => [
-  'admin_role' => 'administrator', // [tl! highlight]
-  'default_role' => 'user',
+'roles' => [
+  'admin' => 'administrator', // [tl! highlight]
+  'manager' => 'manager',
+  'user' => 'user',
 ],
 ```
 
@@ -100,7 +101,7 @@ And the **Permission** model is `Shopper\Core\Models\Permission`
 The **Permission** model has some groups as shown here
 
 ```php
-namespace Shopper\Core\Models\User;
+namespace Shopper\Core\Models;
 
 use Spatie\Permission\Models\Permission as SpatiePermission;
 

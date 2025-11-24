@@ -98,7 +98,9 @@ or pretty much anything similar you can imagine.
 During the shopper installation, with the execution of the seeder `ShopperSeeder`, we create a default sale channel named `Web Store` .
 
 ```php
-(new ChannelRepository())->create([
+use Shopper\Core\Models\Channel;
+
+Channel::query()->create([
   'name' => $name = __('Web Store'),
   'slug' => $name,
   'url' => env('APP_URL'),
@@ -139,14 +141,15 @@ To edit your shop information, you must:
 The component used to update store setting of the store is found in the component configuration file `config/shopper/components.php`, It's the `Shopper\Framework\Http\Livewire\Settings\General` component.
 
 ```php
-use Shopper\Http\Livewire\Components;
+use Shopper\Livewire\Components;
+use Shopper\Livewire\Pages;
 
 return [
-  'livewire' => [
+  'pages' => [
 
-    'settings.inventories.create' => Components\Settings\Inventories\Create::class,
-    'settings.inventories.edit' => Components\Settings\Inventories\Edit::class,
-    'settings.general' => Components\Settings\General::class, // [tl! focus]
+    'general' => Pages\Settings\General::class, // [tl! focus]
+    'location-index' => Pages\Settings\Locations\Index::class,
+    'location-create' => Pages\Settings\Locations\Create::class,
     'settings.legal.privacy' => Components\Settings\Legal\Privacy::class,
     'settings.legal.refund' => Components\Settings\Legal\Refund::class,
 
