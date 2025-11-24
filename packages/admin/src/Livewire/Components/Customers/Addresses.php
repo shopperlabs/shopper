@@ -8,12 +8,12 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Models\Address;
-use Shopper\Core\Models\User;
 
 class Addresses extends Component
 {
-    public User $customer;
+    public ShopperUser $customer;
 
     /**
      * @return Collection<int, Address>
@@ -22,7 +22,7 @@ class Addresses extends Component
     public function addresses(): Collection
     {
         return Address::with('country')
-            ->whereBelongsTo($this->customer)
+            ->whereBelongsTo($this->customer) // @phpstan-ignore-line
             ->get();
     }
 

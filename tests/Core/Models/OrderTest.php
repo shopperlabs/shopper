@@ -10,8 +10,8 @@ use Shopper\Core\Models\OrderAddress;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\OrderRefund;
 use Shopper\Core\Models\PaymentMethod;
-use Shopper\Core\Models\User;
 use Shopper\Core\Models\Zone;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

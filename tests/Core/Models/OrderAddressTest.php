@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Models\OrderAddress;
-use Shopper\Core\Models\User;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

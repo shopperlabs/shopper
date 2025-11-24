@@ -6,9 +6,9 @@ use Shopper\Actions\Store\Product\CreateNewVariant;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Inventory;
-use Shopper\Core\Models\User;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\ProductVariant;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

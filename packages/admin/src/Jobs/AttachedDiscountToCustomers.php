@@ -12,7 +12,6 @@ use Illuminate\Queue\SerializesModels;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\DiscountDetail;
-use Shopper\Core\Models\User;
 
 class AttachedDiscountToCustomers implements ShouldQueue
 {
@@ -21,6 +20,9 @@ class AttachedDiscountToCustomers implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
+    /**
+     * @param  array<int>  $customersIds
+     */
     public function __construct(
         public string $eligibility,
         public array $customersIds,
@@ -42,7 +44,7 @@ class AttachedDiscountToCustomers implements ShouldQueue
                     attributes: [
                         'discount_id' => $this->discount->id,
                         'discountable_id' => $customerId,
-                        'discountable_type' => config('auth.providers.users.model', User::class),
+                        'discountable_type' => config('auth.providers.users.model'),
                     ],
                     values: ['condition' => 'eligibility']
                 );

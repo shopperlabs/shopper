@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
-use Tests\Core\Stubs\Product;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\GenerateVariants;
+use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

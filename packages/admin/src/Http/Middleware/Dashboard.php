@@ -7,7 +7,7 @@ namespace Shopper\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Shopper\Contracts\ShopperUser;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Facades\Shopper;
 use Spatie\Permission\Contracts\Permission;
 

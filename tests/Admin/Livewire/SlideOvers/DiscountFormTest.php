@@ -9,11 +9,11 @@ use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
-use Shopper\Core\Models\User;
 use Shopper\Jobs\AttachedDiscountToCustomers;
 use Shopper\Jobs\AttachedDiscountToProducts;
 use Shopper\Livewire\SlideOvers\DiscountForm;
 use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

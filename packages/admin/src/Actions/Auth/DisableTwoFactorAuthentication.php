@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopper\Actions\Auth;
 
-use Shopper\Core\Models\User;
+use Shopper\Core\Contracts\ShopperUser;
 
 class DisableTwoFactorAuthentication
 {
-    public function __invoke(User $user): void
+    public function __invoke(ShopperUser $user): void
     {
         $user->forceFill([
             'two_factor_secret' => null,

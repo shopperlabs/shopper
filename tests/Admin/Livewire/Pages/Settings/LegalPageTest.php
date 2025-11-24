@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Models\Legal;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Settings\LegalPage;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

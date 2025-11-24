@@ -14,15 +14,16 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Shopper\Components\Section;
-use Shopper\Core\Models\User;
+use Shopper\Core\Contracts\ShopperUser;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class Password extends Component implements HasForms
 {
     use InteractsWithForms;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void
@@ -64,7 +65,7 @@ class Password extends Component implements HasForms
 
     public function save(): void
     {
-        /** @var User $user */
+        /** @var ShopperUser $user */
         $user = shopper()->auth()->user();
 
         $user->update(['password' => Hash::make(value: $this->form->getState()['password'])]);

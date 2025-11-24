@@ -13,9 +13,8 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Enum\OrderStatus;
-use Shopper\Core\Models\User;
-use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Index extends AbstractPageComponent implements HasForms, HasTable
@@ -30,10 +29,11 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
 
     public function table(Table $table): Table
     {
+        $userModel = config('auth.providers.users.model');
+
         return $table
             ->query(
-                (new UserRepository)
-                    ->query()
+                $userModel::query()
                     ->with(['addresses', 'addresses.country'])
                     ->scopes('customers')
                     ->latest()
@@ -52,7 +52,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('country')
                     ->label(__('shopper::forms.label.country'))
                     ->getStateUsing(
-                        fn (User $record): ?string => $record->addresses->first()?->country?->name // @phpstan-ignore-line
+                        fn (ShopperUser $record): ?string => $record->addresses->first()?->country?->name // @phpstan-ignore-line
                     )
                     ->sortable(),
                 Tables\Columns\TextColumn::make('orders_count')
@@ -69,7 +69,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Actions\Action::make('view')
                     ->label(__('shopper::forms.actions.view'))
                     ->icon('untitledui-eye')
-                    ->action(fn (User $record) => $this->redirectRoute(
+                    ->action(fn (ShopperUser $record) => $this->redirectRoute(
                         name: 'shopper.customers.show',
                         parameters: ['user' => $record],
                         navigate: true
@@ -89,11 +89,11 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->query(fn (Builder $query, array $data): Builder => $query
                         ->when(
                             $data['created_from'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            fn (Builder $query, mixed $date): Builder => $query->whereDate('created_at', '>=', $date),
                         )
                         ->when(
                             $data['created_until'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            fn (Builder $query, mixed $date): Builder => $query->whereDate('created_at', '<=', $date),
                         )),
             ])
             ->persistFiltersInSession();

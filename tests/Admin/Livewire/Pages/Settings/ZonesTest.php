@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\User;
 use Shopper\Core\Models\Zone;
 use Shopper\Livewire\Pages\Settings\Zones;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

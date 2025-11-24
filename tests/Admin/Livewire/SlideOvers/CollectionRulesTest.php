@@ -5,8 +5,8 @@ declare(strict_types=1);
 use Livewire\Livewire;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Collection;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\CollectionRules;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

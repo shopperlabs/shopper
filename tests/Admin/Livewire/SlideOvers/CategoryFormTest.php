@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\CategoryForm;
 use Tests\Core\Stubs\Category;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

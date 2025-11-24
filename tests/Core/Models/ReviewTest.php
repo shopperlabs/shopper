@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Review;
-use Shopper\Core\Models\User;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

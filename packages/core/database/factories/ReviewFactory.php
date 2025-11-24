@@ -7,7 +7,7 @@ namespace Shopper\Core\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Review;
-use Shopper\Core\Models\User;
+use Tests\Core\Stubs\User;
 
 /**
  * @extends Factory<Review>

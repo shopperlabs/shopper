@@ -15,19 +15,19 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\GenderField;
 use Shopper\Components\Section;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Models\Role;
-use Shopper\Core\Models\User;
-use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Notifications\AdminSendCredentials;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class CreateTeamMember extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void
@@ -95,9 +95,10 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
     public function store(): void
     {
         $data = $this->form->getState();
+        $userModel = config('auth.providers.users.model');
 
-        /** @var User $user */
-        $user = (new UserRepository)->create([
+        /** @var ShopperUser $user */
+        $user = $userModel::create([
             'email' => $data['email'],
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -120,6 +121,7 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
             $user->notify(new AdminSendCredentials($data['password']));
         }
 
+        /** @var \Illuminate\Database\Eloquent\Model $user */
         Notification::make()
             ->body(__('shopper::notifications.create', ['item' => $user->full_name]))
             ->success()

@@ -6,8 +6,8 @@ use Livewire\Livewire;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Events\Orders;
 use Shopper\Core\Models\Order;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Order\Detail;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

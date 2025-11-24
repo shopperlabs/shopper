@@ -6,13 +6,13 @@ use Livewire\Livewire;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Inventory;
-use Shopper\Core\Models\User;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Components\Initialization\InitializationWizard;
 use Shopper\Livewire\Components\Initialization\Steps\StoreAddress;
 use Shopper\Livewire\Components\Initialization\Steps\StoreInformation;
 use Shopper\Livewire\Components\Initialization\Steps\StoreSocialLink;
 use Shopper\Livewire\Pages\Initialization;
+use Tests\Core\Stubs\User;
 use Tests\TestCase;
 
 uses(TestCase::class);

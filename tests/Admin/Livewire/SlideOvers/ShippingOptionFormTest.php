@@ -6,9 +6,9 @@ use Livewire\Livewire;
 use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Currency;
-use Shopper\Core\Models\User;
 use Shopper\Core\Models\Zone;
 use Shopper\Livewire\SlideOvers\ShippingOptionForm;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

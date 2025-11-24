@@ -6,14 +6,11 @@ namespace Shopper\Livewire\Components\Customers;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Core\Models\User;
+use Shopper\Core\Contracts\ShopperUser;
 
 class Profile extends Component
 {
-    /**
-     * @var User
-     */
-    public $customer;
+    public ShopperUser $customer;
 
     public function render(): View
     {

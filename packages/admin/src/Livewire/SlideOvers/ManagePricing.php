@@ -15,7 +15,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\Product\SavePricingAction;
 use Shopper\Components\Form\CurrenciesField;
-use Shopper\Contracts\Priceable;
+use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Models\Currency;
 use Shopper\Livewire\Components\SlideOverComponent;
 

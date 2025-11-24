@@ -12,11 +12,11 @@ use Livewire\Component;
 use Shopper\Actions\Auth\DisableTwoFactorAuthentication;
 use Shopper\Actions\Auth\EnableTwoFactorAuthentication;
 use Shopper\Actions\Auth\GenerateNewRecoveryCodes;
-use Shopper\Core\Models\User;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Traits\ConfirmsPasswords;
 
 /**
- * @property User $user
+ * @property-read ShopperUser $user
  */
 class TwoFactor extends Component
 {
@@ -87,9 +87,9 @@ class TwoFactor extends Component
     }
 
     #[Computed]
-    public function user(): User
+    public function user(): ShopperUser
     {
-        /** @var User $user */
+        /** @var ShopperUser $user */
         $user = shopper()->auth()->user();
 
         return $user;

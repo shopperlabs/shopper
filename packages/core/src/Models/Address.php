@@ -54,7 +54,7 @@ class Address extends Model
     }
 
     /**
-     * @return BelongsTo<User, $this>
+     * @return BelongsTo<\Shopper\Core\Contracts\ShopperUser, $this>
      */
     public function user(): BelongsTo
     {

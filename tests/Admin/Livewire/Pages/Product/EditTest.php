@@ -5,9 +5,9 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use Shopper\Core\Events\Products\Deleted;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Product\Edit;
 use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

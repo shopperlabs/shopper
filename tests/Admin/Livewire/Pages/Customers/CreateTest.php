@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Country;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Customers\Create;
 use Shopper\Notifications\CustomerSendCredentials;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

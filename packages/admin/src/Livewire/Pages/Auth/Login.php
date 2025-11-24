@@ -29,7 +29,7 @@ final class Login extends Component
 
     public bool $remember = false;
 
-    public function authenticate()
+    public function authenticate(): mixed
     {
         $this->validate();
 

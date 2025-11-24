@@ -7,10 +7,10 @@ use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Inventory;
+use Shopper\Livewire\SlideOvers\AddVariant;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\ProductVariant;
-use Shopper\Core\Models\User;
-use Shopper\Livewire\SlideOvers\AddVariant;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

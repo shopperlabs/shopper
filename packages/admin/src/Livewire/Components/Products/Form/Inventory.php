@@ -29,16 +29,12 @@ class Inventory extends Component implements HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
-    /** @var Product */
-    public $product;
+    public Product $product;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
 
-    /**
-     * @param  Product  $product
-     */
-    public function mount($product): void
+    public function mount(Product $product): void
     {
         $this->product = $product;
 
@@ -98,15 +94,11 @@ class Inventory extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('adjustment')
                     ->label(__('shopper::words.adjustment'))
                     ->color(function (InventoryHistory $record): string {
-                        if ($record->old_quantity > 0) {
-                            return 'success';
-                        }
-
                         if ($record->old_quantity <= 0) {
                             return 'danger';
                         }
 
-                        return 'gray';
+                        return 'success';
                     })
                     ->alignRight(),
                 Tables\Columns\TextColumn::make('quantity')
@@ -186,7 +178,7 @@ class Inventory extends Component implements HasForms, HasTable
             ])
             ->groups([
                 Tables\Grouping\Group::make('inventory.name')
-                    ->label(__('shopper::pages/settings/menu.location')) // @phpstan-ignore-line
+                    ->label(__('shopper::pages/settings/menu.location'))
                     ->collapsible(),
             ]);
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Shopper\Core\Models\Geolocation;
 use Shopper\Core\Models\Order;
-use Shopper\Core\Models\User;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

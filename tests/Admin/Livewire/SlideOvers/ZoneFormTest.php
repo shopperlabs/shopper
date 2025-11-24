@@ -7,9 +7,9 @@ use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\PaymentMethod;
-use Shopper\Core\Models\User;
 use Shopper\Core\Models\Zone;
 use Shopper\Livewire\SlideOvers\ZoneForm;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

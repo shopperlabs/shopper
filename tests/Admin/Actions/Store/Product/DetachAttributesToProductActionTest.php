@@ -6,9 +6,9 @@ use Shopper\Actions\Store\Product\DetachAttributesToProductAction;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\AttributeValue;
-use Shopper\Core\Models\User;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\ProductVariant;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

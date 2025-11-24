@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\User;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\Auth\Login;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

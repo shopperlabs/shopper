@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Shopper\Core\Models\User;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Facades\Shopper;
 use Shopper\Traits\TwoFactorAuthenticatable;
 
@@ -52,7 +52,7 @@ class RedirectIfTwoFactorAuthenticatable
         ]);
     }
 
-    protected function twoFactorChallengeResponse(User $user, bool $remember): JsonResponse|RedirectResponse
+    protected function twoFactorChallengeResponse(ShopperUser $user, bool $remember): JsonResponse|RedirectResponse
     {
         request()->session()->put([
             'login.id' => $user->getKey(),

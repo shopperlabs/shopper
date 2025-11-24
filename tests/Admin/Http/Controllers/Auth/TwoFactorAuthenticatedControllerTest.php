@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use PragmaRX\Google2FA\Google2FA;
-use Shopper\Core\Models\User;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

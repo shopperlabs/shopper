@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Shopper\Actions\Auth;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
-use Shopper\Core\Models\User;
+use Shopper\Core\Contracts\ShopperUser;
 
 class ConfirmPassword
 {
-    public function __invoke(StatefulGuard $guard, User $user, string $password): bool
+    public function __invoke(StatefulGuard $guard, ShopperUser $user, string $password): bool
     {
+        /** @var \Illuminate\Database\Eloquent\Model $user */
         return $guard->validate([
             'email' => $user->email,
             'password' => $password,

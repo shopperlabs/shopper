@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\Modals\LogoutOthersBrowser;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

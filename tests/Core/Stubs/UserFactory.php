@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Database\Factories;
+namespace Tests\Core\Stubs;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Shopper\Core\Enum\GenderType;
-use Shopper\Core\Models\User;
 
 /**
  * @extends Factory<User>

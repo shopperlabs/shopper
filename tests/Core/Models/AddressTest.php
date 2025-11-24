@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Exceptions\UndefinedEnumCaseError;
 use Shopper\Core\Models\Address;
-use Shopper\Core\Models\User;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

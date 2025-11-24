@@ -16,22 +16,6 @@ use Shopper\Traits\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * @property-read int $id
- * @property-read string $full_name
- * @property-read string $picture
- * @property-read string|null $first_name
- * @property-read string $last_name
- * @property-read string $email
- * @property-read bool $opt_in
- * @property-read GenderType $gender
- * @property-read string $avatar_type
- * @property-read string|null $timezone
- * @property-read string|null $avatar_location
- * @property-read string|null $phone_number
- * @property-read string|null $last_login_ip
- * @property-read \Illuminate\Support\Carbon|null $email_verified_at
- * @property-read \Illuminate\Support\Carbon|null $birth_date
- * @property-read \Illuminate\Support\Carbon|null $last_login_at
  * @property-read string|null $two_factor_recovery_codes
  * @property-read string|null $two_factor_secret
  * @property-read \Illuminate\Support\Collection<int, Order> $orders
@@ -46,12 +30,21 @@ trait ShopperUser
 
     public static function bootShopperUser(): void
     {
-        parent::boot();
-
-        self::deleting(function (self $model): void {
+        static::deleting(function (self $model): void {
             $model->roles()->detach();
             $model->addresses()->delete();
         });
+    }
+
+    public function initializeShopperUser(): void
+    {
+        $this->mergeCasts([
+            'email_verified_at' => 'datetime',
+            'last_login_at' => 'datetime',
+            'birth_date' => 'datetime',
+            'gender' => GenderType::class,
+            'opt_in' => 'bool',
+        ]);
     }
 
     public function isAdmin(): bool
@@ -108,17 +101,6 @@ trait ShopperUser
                 config('shopper.core.roles.manager'),
             ]);
         });
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'last_login_at' => 'datetime',
-            'birth_date' => 'datetime',
-            'gender' => GenderType::class,
-            'opt_in' => 'bool',
-        ];
     }
 
     protected function fullName(): Attribute

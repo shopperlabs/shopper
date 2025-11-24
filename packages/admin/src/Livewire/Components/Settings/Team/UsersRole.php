@@ -13,9 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Models\Role;
-use Shopper\Core\Models\User;
-use Shopper\Core\Repositories\UserRepository;
 
 class UsersRole extends Component implements HasForms, HasTable
 {
@@ -26,11 +25,12 @@ class UsersRole extends Component implements HasForms, HasTable
 
     public function table(Table $table): Table
     {
+        $userModel = config('auth.providers.users.model');
+
         return $table
             ->query(
-                (new UserRepository)
+                $userModel::query()
                     ->with('roles')
-                    ->query()
                     ->whereHas('roles', function (Builder $query): void {
                         $query->where('name', $this->role->name);
                     })
@@ -41,8 +41,14 @@ class UsersRole extends Component implements HasForms, HasTable
                     ->view('shopper::livewire.tables.cells.administrators.name'),
                 Tables\Columns\TextColumn::make('email')
                     ->label(__('shopper::forms.label.email'))
-                    ->icon(fn (User $record): string => $record->email_verified_at ? 'untitledui-check-verified-02' : 'untitledui-alert-circle')
-                    ->iconColor(fn (User $record): string => $record->email_verified_at ? 'success' : 'danger'),
+                    ->icon(function (ShopperUser $record): string {
+                        /** @var \Illuminate\Database\Eloquent\Model $record */
+                        return $record->email_verified_at ? 'untitledui-check-verified-02' : 'untitledui-alert-circle';
+                    })
+                    ->iconColor(function (ShopperUser $record): string {
+                        /** @var \Illuminate\Database\Eloquent\Model $record */
+                        return $record->email_verified_at ? 'success' : 'danger';
+                    }),
                 Tables\Columns\TextColumn::make('roles_label')
                     ->label(__('shopper::forms.label.role'))
                     ->badge(),
@@ -50,7 +56,7 @@ class UsersRole extends Component implements HasForms, HasTable
                     ->label(__('shopper::forms.label.access'))
                     ->color('gray')
                     ->formatStateUsing(
-                        fn (User $record): string|array|null => $record->hasRole(config('shopper.core.roles.admin'))
+                        fn (ShopperUser $record): string|array|null => $record->hasRole(config('shopper.core.roles.admin'))
                         ? __('shopper::words.full')
                         : __('shopper::words.limited')
                     ),
@@ -58,7 +64,7 @@ class UsersRole extends Component implements HasForms, HasTable
             ->actions([
                 Tables\Actions\DeleteAction::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
-                    ->visible(fn (User $record): bool => shopper()->auth()->user()->isAdmin() && ! $record->isAdmin()) // @phpstan-ignore-line
+                    ->visible(fn (ShopperUser $record): bool => shopper()->auth()->user()->isAdmin() && ! $record->isAdmin()) // @phpstan-ignore-line
                     ->successNotificationTitle(__('shopper::notifications.users_roles.admin_deleted')),
             ])
             ->emptyStateIcon('untitledui-users')

@@ -8,12 +8,12 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Models\Order;
-use Shopper\Core\Models\User;
 
 class Orders extends Component
 {
-    public User $customer;
+    public ShopperUser $customer;
 
     #[Computed(persist: true)]
     public function orders(): Paginator

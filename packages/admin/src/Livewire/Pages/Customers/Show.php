@@ -11,8 +11,8 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Shopper\Core\Models\User;
-use Shopper\Core\Repositories\UserRepository;
+use Illuminate\Database\Eloquent\Model;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Show extends AbstractPageComponent implements HasActions, HasForms
@@ -20,7 +20,7 @@ class Show extends AbstractPageComponent implements HasActions, HasForms
     use InteractsWithActions;
     use InteractsWithForms;
 
-    public User $customer;
+    public ShopperUser $customer;
 
     public function deleteAction(): Action
     {
@@ -45,15 +45,20 @@ class Show extends AbstractPageComponent implements HasActions, HasForms
     {
         $this->authorize('read_customers');
 
-        /** @var User $customer */
-        $customer = (new UserRepository)->with(['addresses', 'orders'])->getById($user);
+        $userModel = config('auth.providers.users.model');
+
+        /** @var ShopperUser $customer */
+        $customer = $userModel::query()->with(['addresses', 'orders'])->findOrFail($user);
 
         $this->customer = $customer;
     }
 
     public function render(): View
     {
+        /** @var Model&ShopperUser $customer */
+        $customer = $this->customer;
+
         return view('shopper::livewire.pages.customers.show')
-            ->title(__('shopper::forms.actions.show_label', ['label' => $this->customer->full_name]));
+            ->title(__('shopper::forms.actions.show_label', ['label' => $customer->full_name]));
     }
 }

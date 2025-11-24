@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Shopper\Actions\Store\Product\SavePricingAction;
 use Shopper\Core\Models\Currency;
-use Shopper\Core\Models\User;
 use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

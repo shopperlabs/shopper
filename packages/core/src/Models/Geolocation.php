@@ -34,12 +34,12 @@ class Geolocation extends Model
     }
 
     /**
-     * @return BelongsTo<User, $this>
+     * @return BelongsTo<\Shopper\Core\Contracts\ShopperUser, $this>
      */
     public function user(): BelongsTo
     {
         // @phpstan-ignore-next-line
-        return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
+        return $this->belongsTo(config('auth.providers.users.model'), 'user_id');
     }
 
     /**

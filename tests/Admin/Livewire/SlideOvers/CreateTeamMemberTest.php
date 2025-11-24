@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 use Shopper\Core\Models\Role;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\CreateTeamMember;
 use Shopper\Notifications\AdminSendCredentials;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

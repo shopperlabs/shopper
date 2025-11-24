@@ -6,8 +6,8 @@ use Livewire\Livewire;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\AttributeValues;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

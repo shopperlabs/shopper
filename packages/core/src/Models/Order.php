@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Database\Factories\OrderFactory;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Helpers\Price;
@@ -40,7 +41,7 @@ use Shopper\Core\Observers\OrderObserver;
  * @property-read Zone|null $zone
  * @property-read Channel|null $channel
  * @property-read Order|null $parent
- * @property-read \Illuminate\Foundation\Auth\User|User $customer
+ * @property-read \Illuminate\Foundation\Auth\User|ShopperUser $customer
  * @property-read \Illuminate\Support\Collection<int, OrderItem> $items
  * @property-read \Illuminate\Support\Collection<int, Order> $children
  */
@@ -135,12 +136,12 @@ class Order extends Model
     }
 
     /**
-     * @return BelongsTo<User, $this>
+     * @return BelongsTo<Model, $this>
      */
     public function customer(): BelongsTo
     {
         // @phpstan-ignore-next-line
-        return $this->belongsTo(config('auth.providers.users.model', User::class), 'customer_id');
+        return $this->belongsTo(config('auth.providers.users.model'), 'customer_id');
     }
 
     /**

@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Brand\Index;
 use Tests\Core\Stubs\Brand;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

@@ -6,9 +6,9 @@ use Livewire\Livewire;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
-use Tests\Core\Stubs\Product;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\ChooseProductAttributes;
+use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

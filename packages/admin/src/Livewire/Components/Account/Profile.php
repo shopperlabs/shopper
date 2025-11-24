@@ -12,7 +12,6 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Components\Section;
-use Shopper\Core\Models\User;
 use Shopper\Traits\HasAuthenticated;
 
 /**
@@ -61,7 +60,7 @@ class Profile extends Component implements HasForms
                                     ->email()
                                     ->required()
                                     ->unique(
-                                        table: config('auth.providers.users.model', User::class),
+                                        table: config('auth.providers.users.model'),
                                         ignorable: $this->getUser()
                                     ),
                                 Components\TextInput::make('phone_number')

@@ -8,7 +8,6 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
-use Shopper\Core\Models\User;
 
 use function Laravel\Prompts\info;
 use function Laravel\Prompts\password;
@@ -29,11 +28,13 @@ final class UserCommand extends Command
 
     protected function createUser(): void
     {
+        $userModel = config('auth.providers.users.model');
+
         $email = text(
             label: 'Your Email Address',
             placeholder: 'admin@laravelshopper.dev',
             required: true,
-            validate: fn (string $value): ?string => User::query()->where('email', $value)->exists()
+            validate: fn (string $value): ?string => $userModel::query()->where('email', $value)->exists()
                     ? 'A user with that email already exists.'
                     : null,
         );
@@ -72,10 +73,8 @@ final class UserCommand extends Command
             'last_login_ip' => request()->getClientIp(),
         ];
 
-        $model = config('auth.providers.users.model', User::class);
-
         try {
-            $user = tap((new $model)->forceFill($userData))->save(); // @phpstan-ignore-line
+            $user = tap((new $userModel)->forceFill($userData))->save(); // @phpstan-ignore-line
 
             $user->assignRole(config('shopper.core.roles.admin'));
         } catch (Exception|QueryException $e) {

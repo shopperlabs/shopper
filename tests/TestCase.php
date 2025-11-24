@@ -26,7 +26,7 @@ use Shopper\Core\CoreServiceProvider;
 use Shopper\Core\Database\Seeders\ShopperSeeder;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
-use Shopper\Core\Models\User;
+use Tests\Core\Stubs\User;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
 use Spatie\LivewireWizard\WizardServiceProvider;

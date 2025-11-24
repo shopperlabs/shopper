@@ -10,7 +10,6 @@ parameters:
     excludePaths:
         - packages/admin/src/Livewire/Pages/Auth
         - packages/admin/src/Events/
-        - packages/core/src/Repositories/
         - packages/sidebar
 
     ignoreErrors:

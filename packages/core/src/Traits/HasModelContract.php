@@ -62,8 +62,19 @@ trait HasModelContract
 
         return (new $modelClass)::resolvedQuery()
             ->where($field ?? $this->getRouteKeyName(), $value)
-            ->withTrashed()
+            ->withTrashed() // @phpstan-ignore-line
             ->first();
+    }
+
+    public function getMorphClass(): string
+    {
+        $baseClass = static::getShopperBaseClass();
+
+        if ($baseClass !== null && $baseClass !== static::class) {
+            return $baseClass;
+        }
+
+        return parent::getMorphClass();
     }
 
     protected static function validateModelConfiguration(): void
@@ -94,17 +105,6 @@ trait HasModelContract
         }
 
         return null;
-    }
-
-    public function getMorphClass(): string
-    {
-        $baseClass = static::getShopperBaseClass();
-
-        if ($baseClass !== null && $baseClass !== static::class) {
-            return $baseClass;
-        }
-
-        return parent::getMorphClass();
     }
 
     protected function fireModelEvent($event, $halt = true): mixed

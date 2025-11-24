@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Shopper\Core\Models\User;
 use Shopper\Facades\Shopper;
+use Tests\Core\Stubs\User;
 use Tests\TestCase;
 
 uses(TestCase::class);

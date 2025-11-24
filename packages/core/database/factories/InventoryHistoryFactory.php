@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\InventoryHistory;
 use Shopper\Core\Models\Product;
-use Shopper\Core\Models\User;
+use Tests\Core\Stubs\User;
 
 /**
  * @extends Factory<InventoryHistory>

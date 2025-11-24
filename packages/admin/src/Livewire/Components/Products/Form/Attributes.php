@@ -54,8 +54,8 @@ class Attributes extends Component implements HasForms, HasTable
             ])
             ->groups([
                 Tables\Grouping\Group::make('attribute_id')
-                    ->label(__('shopper::forms.label.attribute')) // @phpstan-ignore-line
-                    ->getTitleFromRecordUsing(fn ($record): string => $record->attribute->name),
+                    ->label(__('shopper::forms.label.attribute'))
+                    ->getTitleFromRecordUsing(fn (AttributeProduct $record): string => $record->attribute->name),
             ])
             ->defaultGroup('attribute_id')
             ->headerActions([

@@ -6,7 +6,7 @@ namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Shopper\Core\Models\Geolocation;
-use Shopper\Core\Models\User;
+use Tests\Core\Stubs\User;
 
 /**
  * @extends Factory<Geolocation>

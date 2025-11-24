@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Shopper\Notifications;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Shopper\Core\Models\User;
+use Shopper\Core\Contracts\ShopperUser;
 
 final class AdminSendCredentials extends Notification
 {
@@ -20,7 +21,7 @@ final class AdminSendCredentials extends Notification
         return ['mail'];
     }
 
-    public function toMail(User $notifiable): MailMessage
+    public function toMail(ShopperUser&Model $notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject(__('Welcome to Shopper'))

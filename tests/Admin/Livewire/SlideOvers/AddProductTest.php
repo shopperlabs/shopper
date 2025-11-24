@@ -10,9 +10,9 @@ use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Inventory;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\SlideOvers\AddProduct;
 use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

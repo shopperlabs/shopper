@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Bus;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\DiscountDetail;
-use Shopper\Core\Models\User;
 use Shopper\Jobs\AttachedDiscountToCustomers;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

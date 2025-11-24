@@ -22,7 +22,6 @@ use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Product;
-use Shopper\Core\Models\User;
 use Shopper\Core\Models\Zone;
 use Shopper\Livewire\Components\SlideOverComponent;
 
@@ -234,7 +233,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->live(),
                         Forms\Components\Select::make('customers')
                             ->options(
-                                User::query()
+                                config('auth.providers.users.model')::query()
                                     ->scopes('customers')
                                     ->get()
                                     ->pluck('full_name', 'id')

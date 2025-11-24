@@ -19,6 +19,18 @@ parameters:
 			path: packages/admin/src/Actions/Auth/AttemptToAuthenticate.php
 
 		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/admin/src/Actions/Auth/ConfirmPassword.php
+
+		-
+			message: '#^PHPDoc tag @var with type Illuminate\\Database\\Eloquent\\Model is not subtype of native type Shopper\\Core\\Contracts\\ShopperUser\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: packages/admin/src/Actions/Auth/ConfirmPassword.php
+
+		-
 			message: '#^Method Shopper\\Actions\\Auth\\RedirectIfTwoFactorAuthenticatable\:\:validateCredentials\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -241,7 +253,7 @@ parameters:
 			path: packages/admin/src/Facades/Shopper.php
 
 		-
-			message: '#^Parameter \#2 \$message of function abort expects string, array\|string\|null given\.$#'
+			message: '#^Parameter \#3 \$message of function abort_if expects string, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Http/Middleware/Dashboard.php
@@ -289,12 +301,6 @@ parameters:
 			path: packages/admin/src/Http/Requests/TwoFactorLoginRequest.php
 
 		-
-			message: '#^Method Shopper\\Jobs\\AttachedDiscountToCustomers\:\:__construct\(\) has parameter \$customersIds with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Jobs/AttachedDiscountToCustomers.php
-
-		-
 			message: '#^Method Shopper\\Jobs\\AttachedDiscountToProducts\:\:__construct\(\) has parameter \$productIds with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -337,12 +343,6 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Account/Password.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Components\\Account\\Password\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Account/Password.php
-
-		-
 			message: '#^Parameter \#1 \$description of method Filament\\Forms\\Components\\Section\:\:description\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -355,7 +355,19 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Account/Profile.php
 
 		-
+			message: '#^Parameter \#1 \$model of method Filament\\Forms\\ComponentContainer\:\:model\(\) expects Illuminate\\Database\\Eloquent\\Model\|string\|null, Shopper\\Core\\Contracts\\ShopperUser given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/admin/src/Livewire/Components/Account/Profile.php
+
+		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/admin/src/Livewire/Components/Account/Profile.php
+
+		-
+			message: '#^Parameter \$ignorable of method Filament\\Forms\\Components\\Field\:\:unique\(\) expects Closure\|Illuminate\\Database\\Eloquent\\Model\|null, Shopper\\Core\\Contracts\\ShopperUser given\.$#'
 			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Livewire/Components/Account/Profile.php
@@ -407,6 +419,18 @@ parameters:
 			identifier: missingType.generics
 			count: 1
 			path: packages/admin/src/Livewire/Components/Customers/Orders.php
+
+		-
+			message: '#^Parameter \#1 \$related of method Illuminate\\Database\\Eloquent\\Builder\<Shopper\\Core\\Models\\Order\>\:\:whereBelongsTo\(\) expects Illuminate\\Database\\Eloquent\\Collection\<int, Illuminate\\Database\\Eloquent\\Model\>\|Illuminate\\Database\\Eloquent\\Model, Shopper\\Core\\Contracts\\ShopperUser given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/admin/src/Livewire/Components/Customers/Orders.php
+
+		-
+			message: '#^Property Shopper\\Livewire\\Components\\Customers\\Profile\:\:\$customer has unknown class Shopper\\Livewire\\Components\\Customers\\User as its type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/admin/src/Livewire/Components/Customers/Profile.php
 
 		-
 			message: '#^Method Shopper\\Livewire\\Components\\Initialization\\InitializationWizard\:\:steps\(\) return type has no value type specified in iterable type array\.$#'
@@ -487,12 +511,6 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Modal.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Components\\Modal\:\:\$components type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Modal.php
-
-		-
 			message: '#^Unable to resolve the template type TKey in call to function collect$#'
 			identifier: argument.templateType
 			count: 1
@@ -526,6 +544,12 @@ parameters:
 			message: '#^Parameter \#1 \$label of method Filament\\Tables\\Columns\\Column\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 4
+			path: packages/admin/src/Livewire/Components/Products/Form/Attributes.php
+
+		-
+			message: '#^Parameter \#1 \$label of method Filament\\Tables\\Grouping\\Group\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
 			path: packages/admin/src/Livewire/Components/Products/Form/Attributes.php
 
 		-
@@ -571,12 +595,6 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Products/Form/Files.php
 
 		-
-			message: '#^Comparison operation "\<\=" between int\<min, 0\>\|null and 0 is always true\.$#'
-			identifier: smallerOrEqual.alwaysTrue
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Inventory.php
-
-		-
 			message: '#^Parameter \#1 \$description of method Filament\\Forms\\Components\\Section\:\:description\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -607,6 +625,12 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Products/Form/Inventory.php
 
 		-
+			message: '#^Parameter \#1 \$label of method Filament\\Tables\\Grouping\\Group\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/admin/src/Livewire/Components/Products/Form/Inventory.php
+
+		-
 			message: '#^Parameter \#1 \$query of method Filament\\Tables\\Table\:\:query\(\) expects Closure\|Illuminate\\Database\\Eloquent\\Builder\|null, Illuminate\\Database\\Query\\Builder given\.$#'
 			identifier: argument.type
 			count: 1
@@ -622,12 +646,6 @@ parameters:
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 2
-			path: packages/admin/src/Livewire/Components/Products/Form/Inventory.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 1
 			path: packages/admin/src/Livewire/Components/Products/Form/Inventory.php
 
 		-
@@ -817,6 +835,18 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Settings/Team/Permissions.php
 
 		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$email_verified_at\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/admin/src/Livewire/Components/Settings/Team/UsersRole.php
+
+		-
+			message: '#^PHPDoc tag @var with type Illuminate\\Database\\Eloquent\\Model is not subtype of native type Shopper\\Core\\Contracts\\ShopperUser\.$#'
+			identifier: varTag.nativeType
+			count: 2
+			path: packages/admin/src/Livewire/Components/Settings/Team/UsersRole.php
+
+		-
 			message: '#^Parameter \#1 \$heading of method Filament\\Tables\\Table\:\:emptyStateHeading\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -883,40 +913,22 @@ parameters:
 			path: packages/admin/src/Livewire/Components/SlideOverPanel.php
 
 		-
-			message: '#^Method Shopper\\Livewire\\Modals\\CollectionProductsList\:\:mount\(\) has parameter \$exceptProductIds with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Modals/CollectionProductsList.php
-
-		-
-			message: '#^Method Shopper\\Livewire\\Modals\\CollectionProductsList\:\:products\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
-			count: 1
-			path: packages/admin/src/Livewire/Modals/CollectionProductsList.php
-
-		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Livewire/Modals/CollectionProductsList.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Modals\\CollectionProductsList\:\:\$collection has no type specified\.$#'
-			identifier: missingType.property
+			message: '#^PHPDoc tag @var for variable \$user contains unknown class Shopper\\Livewire\\Modals\\User\.$#'
+			identifier: class.notFound
 			count: 1
-			path: packages/admin/src/Livewire/Modals/CollectionProductsList.php
+			path: packages/admin/src/Livewire/Modals/ConfirmPassword.php
 
 		-
-			message: '#^Property Shopper\\Livewire\\Modals\\CollectionProductsList\:\:\$exceptProductIds type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Parameter \#2 \$user of callable Shopper\\Actions\\Auth\\ConfirmPassword expects Shopper\\Core\\Contracts\\ShopperUser, Shopper\\Livewire\\Modals\\User given\.$#'
+			identifier: argument.type
 			count: 1
-			path: packages/admin/src/Livewire/Modals/CollectionProductsList.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Modals\\CollectionProductsList\:\:\$selectedProducts type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: packages/admin/src/Livewire/Modals/CollectionProductsList.php
+			path: packages/admin/src/Livewire/Modals/ConfirmPassword.php
 
 		-
 			message: '#^Parameter \#1 \$label of method Filament\\Forms\\Components\\Component\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
@@ -1081,6 +1093,12 @@ parameters:
 			path: packages/admin/src/Livewire/Pages/Category/Index.php
 
 		-
+			message: '#^Call to an undefined method Shopper\\Core\\Contracts\\ShopperUser\:\:can\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: packages/admin/src/Livewire/Pages/Category/Index.php
+
+		-
 			message: '#^Parameter \#1 \$description of method Filament\\Tables\\Columns\\TextColumn\:\:description\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1131,18 +1149,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Pages/Collection/Edit.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Pages\\Collection\\Edit\:\:\$collection has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: packages/admin/src/Livewire/Pages/Collection/Edit.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Pages\\Collection\\Edit\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Livewire/Pages/Collection/Edit.php
 
@@ -1249,6 +1255,12 @@ parameters:
 			path: packages/admin/src/Livewire/Pages/Customers/Index.php
 
 		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model&Shopper\\Core\\Contracts\\ShopperUser\:\:\$full_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/admin/src/Livewire/Pages/Customers/Show.php
+
+		-
 			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\View\:\:title\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -1282,6 +1294,12 @@ parameters:
 			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\View\:\:title\(\)\.$#'
 			identifier: method.notFound
 			count: 1
+			path: packages/admin/src/Livewire/Pages/Discount/Index.php
+
+		-
+			message: '#^Call to an undefined method Shopper\\Core\\Contracts\\ShopperUser\:\:can\(\)\.$#'
+			identifier: method.notFound
+			count: 2
 			path: packages/admin/src/Livewire/Pages/Discount/Index.php
 
 		-
@@ -1371,12 +1389,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Pages/Product/Edit.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\Pages\\Product\\Edit\:\:\$product has no type specified\.$#'
-			identifier: missingType.property
 			count: 1
 			path: packages/admin/src/Livewire/Pages/Product/Edit.php
 
@@ -1573,9 +1585,21 @@ parameters:
 			path: packages/admin/src/Livewire/Pages/Settings/Payment.php
 
 		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$email_verified_at\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/admin/src/Livewire/Pages/Settings/Team/Index.php
+
+		-
 			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\View\:\:title\(\)\.$#'
 			identifier: method.notFound
 			count: 1
+			path: packages/admin/src/Livewire/Pages/Settings/Team/Index.php
+
+		-
+			message: '#^PHPDoc tag @var with type Illuminate\\Database\\Eloquent\\Model is not subtype of native type Shopper\\Core\\Contracts\\ShopperUser\.$#'
+			identifier: varTag.nativeType
+			count: 2
 			path: packages/admin/src/Livewire/Pages/Settings/Team/Index.php
 
 		-
@@ -1885,6 +1909,12 @@ parameters:
 			path: packages/admin/src/Livewire/SlideOvers/CollectionRules.php
 
 		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$full_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/admin/src/Livewire/SlideOvers/CreateTeamMember.php
+
+		-
 			message: '#^Parameter \#1 \$body of method Filament\\Notifications\\Notification\:\:body\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1911,12 +1941,6 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$text of method Filament\\Forms\\Components\\Field\:\:helperText\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/SlideOvers/CreateTeamMember.php
-
-		-
-			message: '#^Property Shopper\\Livewire\\SlideOvers\\CreateTeamMember\:\:\$data type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
 			count: 1
 			path: packages/admin/src/Livewire/SlideOvers/CreateTeamMember.php
 
@@ -2089,10 +2113,40 @@ parameters:
 			path: packages/admin/src/Livewire/SlideOvers/ZoneForm.php
 
 		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model&Shopper\\Core\\Contracts\\ShopperUser\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/admin/src/Notifications/AdminSendCredentials.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model&Shopper\\Core\\Contracts\\ShopperUser\:\:\$full_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/admin/src/Notifications/AdminSendCredentials.php
+
+		-
 			message: '#^Parameter \#1 \$subject of method Illuminate\\Notifications\\Messages\\SimpleMessage\:\:subject\(\) expects string, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Notifications/AdminSendCredentials.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/admin/src/Notifications/CustomerSendCredentials.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$full_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/admin/src/Notifications/CustomerSendCredentials.php
+
+		-
+			message: '#^PHPDoc tag @var with type Illuminate\\Database\\Eloquent\\Model is not subtype of native type Shopper\\Core\\Contracts\\ShopperUser\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: packages/admin/src/Notifications/CustomerSendCredentials.php
 
 		-
 			message: '#^Parameter \#1 \$greeting of method Illuminate\\Notifications\\Messages\\SimpleMessage\:\:greeting\(\) expects string, array\|string\|null given\.$#'
@@ -2143,34 +2197,52 @@ parameters:
 			path: packages/admin/src/Sidebar/SidebarCreator.php
 
 		-
+			message: '#^Trait Shopper\\Traits\\TwoFactorAuthenticatable is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: packages/admin/src/Traits/TwoFactorAuthenticatable.php
+
+		-
 			message: '#^Method Shopper\\Core\\Contracts\\HasReviews\:\:ratings\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\MorphMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
 			identifier: missingType.generics
 			count: 1
 			path: packages/core/src/Contracts/HasReviews.php
 
 		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:all\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
+			message: '#^PHPDoc tag @mixin contains invalid type Illuminate\\Notifications\\Notifiable\.$#'
+			identifier: mixin.trait
 			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
+			path: packages/core/src/Contracts/ShopperUser.php
 
 		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:get\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
-			identifier: missingType.generics
+			message: '#^PHPDoc tag @mixin contains invalid type Spatie\\Permission\\Traits\\HasRoles\.$#'
+			identifier: mixin.trait
 			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
+			path: packages/core/src/Contracts/ShopperUser.php
 
 		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:query\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
-			identifier: missingType.generics
+			message: '#^Type \$this\(Shopper\\Core\\Contracts\\ShopperUser\) in generic type Illuminate\\Database\\Eloquent\\Relations\\HasMany\<Shopper\\Core\\Models\\Address, \$this\(Shopper\\Core\\Contracts\\ShopperUser\)\> in PHPDoc tag @return is not subtype of template type TDeclaringModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\HasMany\.$#'
+			identifier: generics.notSubtype
 			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
+			path: packages/core/src/Contracts/ShopperUser.php
 
 		-
-			message: '#^Method Shopper\\Core\\Contracts\\RepositoryContract\:\:with\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Type \$this\(Shopper\\Core\\Contracts\\ShopperUser\) in generic type Illuminate\\Database\\Eloquent\\Relations\\HasMany\<Shopper\\Core\\Models\\Order, \$this\(Shopper\\Core\\Contracts\\ShopperUser\)\> in PHPDoc tag @return is not subtype of template type TDeclaringModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\HasMany\.$#'
+			identifier: generics.notSubtype
 			count: 1
-			path: packages/core/src/Contracts/RepositoryContract.php
+			path: packages/core/src/Contracts/ShopperUser.php
+
+		-
+			message: '#^Type static\(Shopper\\Core\\Contracts\\ShopperUser\) in generic type Illuminate\\Database\\Eloquent\\Builder\<static\(Shopper\\Core\\Contracts\\ShopperUser\)\> in PHPDoc tag @param for parameter \$query is not subtype of template type TModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Builder\.$#'
+			identifier: generics.notSubtype
+			count: 2
+			path: packages/core/src/Contracts/ShopperUser.php
+
+		-
+			message: '#^Type static\(Shopper\\Core\\Contracts\\ShopperUser\) in generic type Illuminate\\Database\\Eloquent\\Builder\<static\(Shopper\\Core\\Contracts\\ShopperUser\)\> in PHPDoc tag @return is not subtype of template type TModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Builder\.$#'
+			identifier: generics.notSubtype
+			count: 2
+			path: packages/core/src/Contracts/ShopperUser.php
 
 		-
 			message: '#^Method Shopper\\Core\\Enum\\CollectionType\:\:getDescription\(\) should return string but returns array\|string\|null\.$#'
@@ -2191,7 +2263,79 @@ parameters:
 			path: packages/core/src/Enum/ProductType.php
 
 		-
+			message: '#^Type Shopper\\Core\\Contracts\\ShopperUser in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<Shopper\\Core\\Contracts\\ShopperUser, \$this\(Shopper\\Core\\Models\\Address\)\> in PHPDoc tag @return is not subtype of template type TRelatedModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: packages/core/src/Models/Address.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<static\(Shopper\\Core\\Models\\Brand\)\>\:\:withTrashed\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/core/src/Models/Brand.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<static\(Shopper\\Core\\Models\\Category\)\>\:\:withTrashed\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/core/src/Models/Category.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<static\(Shopper\\Core\\Models\\Channel\)\>\:\:withTrashed\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/core/src/Models/Channel.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<static\(Shopper\\Core\\Models\\Collection\)\>\:\:withTrashed\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/core/src/Models/Collection.php
+
+		-
+			message: '#^PHPDoc tag @property\-read for property Shopper\\Core\\Models\\Geolocation\:\:\$user contains unknown class Shopper\\Core\\Models\\User\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/core/src/Models/Geolocation.php
+
+		-
+			message: '#^Type Shopper\\Core\\Contracts\\ShopperUser in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<Shopper\\Core\\Contracts\\ShopperUser, \$this\(Shopper\\Core\\Models\\Geolocation\)\> in PHPDoc tag @return is not subtype of template type TRelatedModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: packages/core/src/Models/Geolocation.php
+
+		-
+			message: '#^Type Shopper\\Core\\Contracts\\ShopperUser in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<Shopper\\Core\\Contracts\\ShopperUser, \$this\(Shopper\\Core\\Models\\InventoryHistory\)\> in PHPDoc tag @return is not subtype of template type TRelatedModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: packages/core/src/Models/InventoryHistory.php
+
+		-
+			message: '#^Type Shopper\\Core\\Contracts\\ShopperUser in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<Shopper\\Core\\Contracts\\ShopperUser, \$this\(Shopper\\Core\\Models\\OrderAddress\)\> in PHPDoc tag @return is not subtype of template type TRelatedModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: packages/core/src/Models/OrderAddress.php
+
+		-
+			message: '#^PHPDoc tag @property\-read for property Shopper\\Core\\Models\\OrderRefund\:\:\$customer contains unknown class Shopper\\Core\\Models\\User\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/core/src/Models/OrderRefund.php
+
+		-
+			message: '#^Type Shopper\\Core\\Contracts\\ShopperUser in generic type Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\<Shopper\\Core\\Contracts\\ShopperUser, \$this\(Shopper\\Core\\Models\\OrderRefund\)\> in PHPDoc tag @return is not subtype of template type TRelatedModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: packages/core/src/Models/OrderRefund.php
+
+		-
 			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/core/src/Models/Product.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<static\(Shopper\\Core\\Models\\Product\)\>\:\:withTrashed\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: packages/core/src/Models/Product.php
@@ -2263,7 +2407,7 @@ parameters:
 			path: packages/core/src/Models/Product.php
 
 		-
-			message: '#^Return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, static\(Shopper\\Core\\Models\\Product\)\>\) of method Shopper\\Core\\Models\\Product\:\:prices\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, Shopper\\Core\\Models\\Product\>\) of method Shopper\\Contracts\\Priceable\<Shopper\\Core\\Models\\Product\>\:\:prices\(\)$#'
+			message: '#^Return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, static\(Shopper\\Core\\Models\\Product\)\>\) of method Shopper\\Core\\Models\\Product\:\:prices\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, Shopper\\Core\\Models\\Product\>\) of method Shopper\\Core\\Contracts\\Priceable\<Shopper\\Core\\Models\\Product\>\:\:prices\(\)$#'
 			identifier: method.childReturnType
 			count: 1
 			path: packages/core/src/Models/Product.php
@@ -2281,13 +2425,19 @@ parameters:
 			path: packages/core/src/Models/ProductVariant.php
 
 		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<static\(Shopper\\Core\\Models\\ProductVariant\)\>\:\:withTrashed\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/core/src/Models/ProductVariant.php
+
+		-
 			message: '#^Method Shopper\\Core\\Models\\ProductVariant\:\:prices\(\) should return Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, static\(Shopper\\Core\\Models\\ProductVariant\)\> but returns Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, \$this\(Shopper\\Core\\Models\\ProductVariant\)\>\.$#'
 			identifier: return.type
 			count: 1
 			path: packages/core/src/Models/ProductVariant.php
 
 		-
-			message: '#^Return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, static\(Shopper\\Core\\Models\\ProductVariant\)\>\) of method Shopper\\Core\\Models\\ProductVariant\:\:prices\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, Shopper\\Core\\Models\\ProductVariant\>\) of method Shopper\\Contracts\\Priceable\<Shopper\\Core\\Models\\ProductVariant\>\:\:prices\(\)$#'
+			message: '#^Return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, static\(Shopper\\Core\\Models\\ProductVariant\)\>\) of method Shopper\\Core\\Models\\ProductVariant\:\:prices\(\) should be compatible with return type \(Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\Price, Shopper\\Core\\Models\\ProductVariant\>\) of method Shopper\\Core\\Contracts\\Priceable\<Shopper\\Core\\Models\\ProductVariant\>\:\:prices\(\)$#'
 			identifier: method.childReturnType
 			count: 1
 			path: packages/core/src/Models/ProductVariant.php
@@ -2305,7 +2455,13 @@ parameters:
 			path: packages/core/src/Models/Setting.php
 
 		-
-			message: '#^Method Shopper\\Core\\Models\\User\:\:recoveryCodes\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
+			message: '#^Trait Shopper\\Core\\Models\\Traits\\HasProfilePhoto is used zero times and is not analysed\.$#'
+			identifier: trait.unused
 			count: 1
-			path: packages/core/src/Models/User.php
+			path: packages/core/src/Models/Traits/HasProfilePhoto.php
+
+		-
+			message: '#^Trait Shopper\\Core\\Traits\\ShopperUser is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: packages/core/src/Traits/ShopperUser.php

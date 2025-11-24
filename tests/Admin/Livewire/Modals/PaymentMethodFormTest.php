@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Models\PaymentMethod;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\Modals\PaymentMethodForm;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

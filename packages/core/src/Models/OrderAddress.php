@@ -45,12 +45,12 @@ class OrderAddress extends Model
     }
 
     /**
-     * @return BelongsTo<User, $this>
+     * @return BelongsTo<\Shopper\Core\Contracts\ShopperUser, $this>
      */
     public function customer(): BelongsTo
     {
         // @phpstan-ignore-next-line
-        return $this->belongsTo(config('auth.providers.users.model', User::class), 'customer_id');
+        return $this->belongsTo(config('auth.providers.users.model'), 'customer_id');
     }
 
     protected static function newFactory(): OrderAddressFactory

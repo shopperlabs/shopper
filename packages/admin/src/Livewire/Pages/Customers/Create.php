@@ -21,10 +21,9 @@ use Shopper\Components\Form\AddressField;
 use Shopper\Components\Form\GenderField;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Country;
-use Shopper\Core\Models\User;
-use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Notifications\CustomerSendCredentials;
 
@@ -123,7 +122,7 @@ class Create extends AbstractPageComponent implements HasForms
                     ]),
             ])
             ->statePath('data')
-            ->model(config('auth.providers.users.model', User::class));
+            ->model(config('auth.providers.users.model'));
     }
 
     public function store(): void
@@ -137,8 +136,10 @@ class Create extends AbstractPageComponent implements HasForms
             'type' => AddressType::Shipping,
         ]);
 
-        /** @var User $customer */
-        $customer = (new UserRepository)->create(array_merge(
+        $userModel = config('auth.providers.users.model');
+
+        /** @var ShopperUser $customer */
+        $customer = $userModel::create(array_merge(
             $customerData,
             ['email_verified_at' => now()->toDateTimeString()],
         ));

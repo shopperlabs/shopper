@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Event;
 use Shopper\Actions\Auth\DisableTwoFactorAuthentication;
 use Shopper\Actions\Auth\EnableTwoFactorAuthentication;
 use Shopper\Actions\Auth\GenerateNewRecoveryCodes;
-use Shopper\Core\Models\User;
 use Shopper\Events\TwoFactor\TwoFactorAuthenticationEnabled;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

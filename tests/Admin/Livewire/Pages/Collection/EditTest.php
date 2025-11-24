@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Enum\CollectionType;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\Collection\Edit;
 use Tests\Core\Stubs\Collection;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

@@ -14,22 +14,18 @@ use Livewire\Component;
 use Shopper\Core\Models\Product;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class Media extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    /** @var Product */
-    public $product;
+    public Product $product;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
 
-    /**
-     * @param  Product  $product
-     */
-    public function mount($product): void
+    public function mount(Product $product): void
     {
         $this->product = $product;
 

@@ -70,7 +70,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('currency_code')
                     ->label(__('shopper::forms.label.price_amount'))
                     ->formatStateUsing(
-                        fn ($state, Order $record): string => shopper_money_format(amount: $record->total(), currency: $state)
+                        fn (string $state, Order $record): string => shopper_money_format(amount: $record->total(), currency: $state)
                     ),
                 Tables\Columns\TextColumn::make('zone.name')
                     ->label(__('shopper::pages/settings/zones.single'))

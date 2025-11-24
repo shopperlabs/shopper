@@ -6,14 +6,14 @@ namespace Shopper\Actions\Auth;
 
 use Illuminate\Support\Collection;
 use Shopper\Contracts\TwoFactorAuthenticationProvider;
-use Shopper\Core\Models\User;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Events\TwoFactor\TwoFactorAuthenticationEnabled;
 
 class EnableTwoFactorAuthentication
 {
     public function __construct(protected TwoFactorAuthenticationProvider $provider) {}
 
-    public function __invoke(User $user): void
+    public function __invoke(ShopperUser $user): void
     {
         $user->forceFill([
             'two_factor_secret' => encrypt($this->provider->generateSecretKey()),

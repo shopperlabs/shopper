@@ -5,8 +5,8 @@ declare(strict_types=1);
 use Livewire\Livewire;
 use Shopper\Core\Models\Permission;
 use Shopper\Core\Models\Role;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\Modals\CreatePermission;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 

@@ -14,6 +14,7 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\WithPagination;
+use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Events\Orders\AddNote;
 use Shopper\Core\Events\Orders\Cancel;
@@ -21,11 +22,10 @@ use Shopper\Core\Events\Orders\Completed;
 use Shopper\Core\Events\Orders\Paid;
 use Shopper\Core\Events\Orders\Registered;
 use Shopper\Core\Models\Order;
-use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 /**
- * @property-read User|null $customer
+ * @property-read ShopperUser|null $customer
  */
 class Detail extends AbstractPageComponent implements HasActions, HasForms
 {
@@ -67,9 +67,11 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
     }
 
     #[Computed(persist: true)]
-    public function customer(): ?User
+    public function customer(): ?ShopperUser
     {
-        return User::query()
+        $userModel = config('auth.providers.users.model');
+
+        return $userModel::query()
             ->withCount('orders')
             ->find($this->order->customer_id);
     }

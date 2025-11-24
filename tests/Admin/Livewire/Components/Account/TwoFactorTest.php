@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use Shopper\Actions\Auth\DisableTwoFactorAuthentication;
 use Shopper\Actions\Auth\GenerateNewRecoveryCodes;
-use Shopper\Core\Models\User;
 use Shopper\Events\TwoFactor\TwoFactorAuthenticationEnabled;
 use Shopper\Livewire\Components\Account\TwoFactor;
+use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 
