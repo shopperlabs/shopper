@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Traits;
 
+use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Contracts\ShopperUser;
 
 trait HasAuthenticated
 {
-    public function getUser(): ShopperUser
+    public function getUser(): Model&ShopperUser
     {
-        /** @var ShopperUser $user */
+        /** @var Model&ShopperUser $user */
         $user = shopper()->auth()->user();
 
         return $user;

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Database\Factories\DiscountDetailFactory;
+use Shopper\Core\Models\Contracts\DiscountDetail as DiscountDetailContract;
 
 /**
  * @property-read int $id
@@ -20,7 +21,7 @@ use Shopper\Core\Database\Factories\DiscountDetailFactory;
  * @property-read Discount $discount
  * @property-read Model $discountable
  */
-class DiscountDetail extends Model
+class DiscountDetail extends Model implements DiscountDetailContract
 {
     /** @use HasFactory<DiscountDetailFactory> */
     use HasFactory;

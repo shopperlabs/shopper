@@ -17,6 +17,7 @@ use Shopper\Core\Database\Factories\OrderFactory;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Helpers\Price;
 use Shopper\Core\Observers\OrderObserver;
+use Shopper\Core\Models\Contracts\Order as OrderContract;
 
 /**
  * @property-read int $id
@@ -46,7 +47,7 @@ use Shopper\Core\Observers\OrderObserver;
  * @property-read \Illuminate\Support\Collection<int, Order> $children
  */
 #[ObservedBy(OrderObserver::class)]
-class Order extends Model
+class Order extends Model implements OrderContract
 {
     /** @use HasFactory<OrderFactory> */
     use HasFactory;

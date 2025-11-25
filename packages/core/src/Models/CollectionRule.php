@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\CollectionRuleFactory;
 use Shopper\Core\Enum\Operator;
 use Shopper\Core\Enum\Rule;
+use Shopper\Core\Models\Contracts\CollectionRule as CollectionRuleContract;
 
 /**
  * @property-read int $id
@@ -22,7 +23,7 @@ use Shopper\Core\Enum\Rule;
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  */
-class CollectionRule extends Model
+class CollectionRule extends Model implements CollectionRuleContract
 {
     /** @use HasFactory<CollectionRuleFactory> */
     use HasFactory;

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Shopper\Core\Database\Factories\SettingFactory;
+use Shopper\Core\Models\Contracts\Setting as SettingContract;
 
 /**
  * @property-read int $id
@@ -15,7 +16,7 @@ use Shopper\Core\Database\Factories\SettingFactory;
  * @property-read string $display_name
  * @property-read mixed $value
  */
-class Setting extends Model
+class Setting extends Model implements SettingContract
 {
     /** @use HasFactory<SettingFactory> */
     use HasFactory;

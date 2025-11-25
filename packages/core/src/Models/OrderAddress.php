@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\OrderAddressFactory;
+use Shopper\Core\Models\Contracts\OrderAddress as OrderAddressContract;
 
 /**
  * @property-read int $id
@@ -24,7 +25,7 @@ use Shopper\Core\Database\Factories\OrderAddressFactory;
  * @property-read string|null $phone
  * @property-read string|null $country_name
  */
-class OrderAddress extends Model
+class OrderAddress extends Model implements OrderAddressContract
 {
     /** @use HasFactory<OrderAddressFactory> */
     use HasFactory;

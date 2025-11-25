@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Database\Factories\PaymentMethodFactory;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasZones;
+use Shopper\Core\Models\Contracts\PaymentMethod as PaymentMethodContract;
 
 /**
  * @property-read int $id
@@ -22,7 +23,7 @@ use Shopper\Core\Models\Traits\HasZones;
  * @property string|null $link_url
  * @property string|null $instructions
  */
-class PaymentMethod extends Model
+class PaymentMethod extends Model implements PaymentMethodContract
 {
     /** @use HasFactory<PaymentMethodFactory> */
     use HasFactory;

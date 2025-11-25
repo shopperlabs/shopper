@@ -21,26 +21,20 @@ use Shopper\Core\Models\Product;
 use Shopper\Feature;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class Edit extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    /**
-     * @var Product
-     */
-    public $product;
+    public Product $product;
 
     /**
      * @var array<string, mixed>|null
      */
     public ?array $data = [];
 
-    /**
-     * @param  Product  $product
-     */
-    public function mount($product): void
+    public function mount(Product $product): void
     {
         $this->product = $product;
 
@@ -118,6 +112,7 @@ class Edit extends Component implements HasForms
                                     ->label(__('shopper::forms.label.brand'))
                                     ->relationship('brand', 'name', fn (Builder $query) => $query->where('is_enabled', true))
                                     ->searchable()
+                                    ->preload()
                                     ->visible(Feature::enabled('brand')),
                                 SelectTree::make('categories')
                                     ->label(__('shopper::pages/categories.menu'))

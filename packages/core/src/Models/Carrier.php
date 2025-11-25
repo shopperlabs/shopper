@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\CarrierFactory;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasZones;
+use Shopper\Core\Models\Contracts\Carrier as CarrierContract;
 
 /**
  * @property-read int $id
@@ -23,7 +24,7 @@ use Shopper\Core\Models\Traits\HasZones;
  * @property-read int|null $shipping_amount
  * @property-read array<string, mixed>|null $metadata
  */
-class Carrier extends Model
+class Carrier extends Model implements CarrierContract
 {
     /** @use HasFactory<CarrierFactory> */
     use HasFactory;

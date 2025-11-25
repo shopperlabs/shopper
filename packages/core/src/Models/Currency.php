@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Shopper\Core\Database\Factories\CurrencyFactory;
+use Shopper\Core\Models\Contracts\Currency as CurrencyContract;
 
 /**
  * @property-read int $id
@@ -19,7 +20,7 @@ use Shopper\Core\Database\Factories\CurrencyFactory;
  * @property-read float $exchange_rate
  * @property-read bool $is_enabled
  */
-class Currency extends Model
+class Currency extends Model implements CurrencyContract
 {
     /** @use HasFactory<CurrencyFactory> */
     use HasFactory;

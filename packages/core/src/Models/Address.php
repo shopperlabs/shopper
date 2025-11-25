@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\AddressFactory;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Observers\AddressObserver;
+use Shopper\Core\Models\Contracts\Address as AddressContract;
 
 /**
  * @property-read int $id
@@ -31,7 +32,7 @@ use Shopper\Core\Observers\AddressObserver;
  * @property-read int $country_id
  */
 #[ObservedBy(AddressObserver::class)]
-class Address extends Model
+class Address extends Model implements AddressContract
 {
     /** @use HasFactory<AddressFactory> */
     use HasFactory;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Account;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Contracts\ShopperUser;
@@ -14,7 +15,10 @@ class Dropdown extends Component
 {
     use HasAuthenticated;
 
-    public ShopperUser $user;
+    /**
+     * @var Model&ShopperUser
+     */
+    public $user;
 
     public function mount(): void
     {

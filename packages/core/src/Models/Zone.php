@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\ZoneFactory;
 use Shopper\Core\Models\Traits\HasSlug;
+use Shopper\Core\Models\Contracts\Zone as ZoneContract;
 
 /**
  * @property-read int $id
@@ -32,7 +33,7 @@ use Shopper\Core\Models\Traits\HasSlug;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PaymentMethod> $paymentMethods
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Country> $countries
  */
-class Zone extends Model
+class Zone extends Model implements ZoneContract
 {
     /** @use HasFactory<ZoneFactory> */
     use HasFactory;

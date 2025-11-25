@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\AttributeProductFactory;
+use Shopper\Core\Models\Contracts\AttributeProduct as AttributeProductContract;
 
 /**
  * @property-read int $id
@@ -21,7 +22,7 @@ use Shopper\Core\Database\Factories\AttributeProductFactory;
  * @property-read Product $product
  * @property-read Attribute $attribute
  */
-class AttributeProduct extends Model
+class AttributeProduct extends Model implements AttributeProductContract
 {
     /** @use HasFactory<AttributeProductFactory> */
     use HasFactory;

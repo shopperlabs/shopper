@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\InventoryFactory;
 use Shopper\Core\Observers\InventoryObserver;
+use Shopper\Core\Models\Contracts\Inventory as InventoryContract;
 
 /**
  * @property-read int $id
@@ -28,7 +29,7 @@ use Shopper\Core\Observers\InventoryObserver;
  * @property-read bool $is_default
  */
 #[ObservedBy(InventoryObserver::class)]
-class Inventory extends Model
+class Inventory extends Model implements InventoryContract
 {
     /** @use HasFactory<InventoryFactory> */
     use HasFactory;

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Database\Factories\CountryFactory;
 use Shopper\Core\Models\Traits\HasZones;
+use Shopper\Core\Models\Contracts\Country as CountryContract;
 
 /**
  * @property-read int $id
@@ -25,7 +26,7 @@ use Shopper\Core\Models\Traits\HasZones;
  * @property-read array<array-key, mixed> $phone_calling_code
  * @property-read array<array-key, mixed> $currencies
  */
-class Country extends Model
+class Country extends Model implements CountryContract
 {
     /** @use HasFactory<CountryFactory> */
     use HasFactory;

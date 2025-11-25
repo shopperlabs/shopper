@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Shopper\Core\Database\Factories\AttributeValueFactory;
+use Shopper\Core\Models\Contracts\AttributeValue as AttributeValueContract;
 
 /**
  * @property-read int $id
@@ -19,7 +20,7 @@ use Shopper\Core\Database\Factories\AttributeValueFactory;
  * @property-read Attribute $attribute
  * @property-read \Illuminate\Database\Eloquent\Collection<array-key, ProductVariant> $variants
  */
-class AttributeValue extends Model
+class AttributeValue extends Model implements AttributeValueContract
 {
     /** @use HasFactory<AttributeValueFactory> */
     use HasFactory;

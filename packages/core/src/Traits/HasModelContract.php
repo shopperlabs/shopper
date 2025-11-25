@@ -6,6 +6,8 @@ namespace Shopper\Core\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Arr;
 use Shopper\Core\Exceptions\InvalidModelConfigurationException;
 
 /**
@@ -32,7 +34,71 @@ trait HasModelContract
     }
 
     /**
+     * Handle dynamic static method calls into the model.
+     */
+    public static function __callStatic($method, $parameters)
+    {
+        if (! static::isShopperInstance()) {
+            return (new (static::configuredClass()))->$method(...$parameters);
+        }
+
+        return (new static)->$method(...$parameters);
+    }
+
+    /**
+     * Check if the current class is the Shopper base class.
+     */
+    public static function isShopperInstance(): bool
+    {
+        return static::class === static::configuredClass();
+    }
+
+    /**
+     * Create a new Eloquent query builder for the model.
+     */
+    public function newModelQuery(): Builder
+    {
+        $concreteClass = static::configuredClass();
+        $parentClass = get_parent_class($concreteClass);
+
+        if ($parentClass === 'Shopper\Core\Models\BaseModel' || $this instanceof $concreteClass) {
+            return parent::newModelQuery();
+        }
+
+        return $this->newEloquentBuilder(
+            $this->newBaseQueryBuilder()
+        )->setModel(
+            static::withoutEvents(
+                fn () => $this->replicateInto($concreteClass)
+            )
+        );
+    }
+
+    public function replicateInto($newClass): Model
+    {
+        $defaults = array_values(array_filter([
+            $this->getKeyName(),
+            $this->getCreatedAtColumn(),
+            $this->getUpdatedAtColumn(),
+            ...$this->uniqueIds(),
+            'laravel_through_key',
+        ]));
+
+        $attributes = Arr::except(
+            $this->getAttributes(), $defaults
+        );
+
+        return tap(new $newClass, function ($instance) use ($attributes): Model {
+            $instance->setRawAttributes($attributes);
+            $instance->setRelations($this->relations);
+
+            return $instance;
+        });
+    }
+
+    /**
      * @return Builder<static>
+     * @deprecated Use standard Eloquent methods instead (e.g., Model::query())
      */
     public static function resolvedQuery(): Builder
     {
@@ -51,7 +117,7 @@ trait HasModelContract
     {
         $modelClass = static::configuredClass();
 
-        return (new $modelClass)::resolvedQuery()
+        return $modelClass::query()
             ->where($field ?? $this->getRouteKeyName(), $value)
             ->first();
     }
@@ -60,7 +126,7 @@ trait HasModelContract
     {
         $modelClass = static::configuredClass();
 
-        return (new $modelClass)::resolvedQuery()
+        return $modelClass::query()
             ->where($field ?? $this->getRouteKeyName(), $value)
             ->withTrashed() // @phpstan-ignore-line
             ->first();
@@ -68,9 +134,24 @@ trait HasModelContract
 
     public function getMorphClass(): string
     {
+        $morphMap = Relation::morphMap();
+
+        $configuredClass = static::configuredClass();
+        $alias = array_search($configuredClass, $morphMap, true);
+
+        if ($alias !== false) {
+            return $alias;
+        }
+
         $baseClass = static::getShopperBaseClass();
 
         if ($baseClass !== null && $baseClass !== static::class) {
+            $alias = array_search($baseClass, $morphMap, true);
+
+            if ($alias !== false) {
+                return $alias;
+            }
+
             return $baseClass;
         }
 

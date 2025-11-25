@@ -14,6 +14,7 @@ use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Observers\CategoryObserver;
 use Shopper\Core\Traits\HasModelContract;
+use Shopper\Core\Models\Contracts\Category as CategoryContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
@@ -28,7 +29,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
  * @property-read \Illuminate\Support\Collection<int, Product> $products
  */
 #[ObservedBy(CategoryObserver::class)]
-class Category extends Model implements SpatieHasMedia
+class Category extends Model implements CategoryContract, SpatieHasMedia
 {
     /** @use HasFactory<CategoryFactory> */
     use HasFactory;

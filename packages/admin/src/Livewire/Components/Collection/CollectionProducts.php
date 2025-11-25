@@ -90,7 +90,7 @@ class CollectionProducts extends Component implements HasForms, HasTable
                         'openModal',
                         component: 'shopper-modals.products-list',
                         arguments: [
-                            'collectionId' => $this->collection->id,
+                            'collection' => $this->collection,
                             'exceptProductIds' => $this->productsIds,
                         ]
                     ))

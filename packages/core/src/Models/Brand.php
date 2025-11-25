@@ -12,6 +12,7 @@ use Shopper\Core\Database\Factories\BrandFactory;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Traits\HasModelContract;
+use Shopper\Core\Models\Contracts\Brand as BrandContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -26,7 +27,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read string|null $seo_description
  * @property-read array<string, mixed>|null $metadata
  */
-class Brand extends Model implements SpatieHasMedia
+class Brand extends Model implements BrandContract, SpatieHasMedia
 {
     /** @use HasFactory<BrandFactory> */
     use HasFactory;

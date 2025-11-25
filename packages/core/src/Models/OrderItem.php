@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Database\Factories\OrderItemFactory;
+use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
 
 /**
  * @property-read int $id
@@ -23,7 +24,7 @@ use Shopper\Core\Database\Factories\OrderItemFactory;
  * @property-read int $order_id
  * @property-read Order $order
  */
-class OrderItem extends Model
+class OrderItem extends Model implements OrderItemContract
 {
     /** @use HasFactory<OrderItemFactory> */
     use HasFactory;

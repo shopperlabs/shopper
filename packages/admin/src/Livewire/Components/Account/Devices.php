@@ -15,6 +15,9 @@ use Stevebauman\Location\Facades\Location;
 
 class Devices extends Component
 {
+    /**
+     * @return Collection<int, object>
+     */
     #[Computed]
     public function sessions(): Collection
     {
@@ -40,10 +43,10 @@ class Devices extends Component
         return view('shopper::livewire.components.account.devices');
     }
 
-    protected function createAgent($session): Agent
+    protected function createAgent(object $session): Agent
     {
         return tap(new Agent, function ($agent) use ($session): void {
-            $agent->setUserAgent($session->user_agent);
+            $agent->setUserAgent($session->user_agent); // @phpstan-ignore-line
         });
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\OrderShippingFactory;
+use Shopper\Core\Models\Contracts\OrderShipping as OrderShippingContract;
 
 /**
  * @property-read int $id
@@ -23,7 +24,7 @@ use Shopper\Core\Database\Factories\OrderShippingFactory;
  * @property-read Order $order
  * @property-read Carrier|null $carrier
  */
-class OrderShipping extends Model
+class OrderShipping extends Model implements OrderShippingContract
 {
     /** @use HasFactory<OrderShippingFactory> */
     use HasFactory;

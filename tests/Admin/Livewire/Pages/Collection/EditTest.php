@@ -59,7 +59,7 @@ describe(Edit::class, function (): void {
     });
 
     it('cannot change type of collection on edit form', function (): void {
-        $collection = Collection::factory(['type' => CollectionType::Manual()])->create();
+        $collection = Collection::factory(['type' => CollectionType::Manual])->create();
 
         Livewire::test(Edit::class, ['collection' => $collection])
             ->fillForm([

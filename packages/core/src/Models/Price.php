@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Database\Factories\PriceFactory;
 use Shopper\Core\Helpers\Price as PriceHelper;
+use Shopper\Core\Models\Contracts\Price as PriceContract;
 
 /**
  * @property-read int $id
@@ -23,7 +24,7 @@ use Shopper\Core\Helpers\Price as PriceHelper;
  * @property-read string $priceable_type
  * @property-read Currency $currency
  */
-class Price extends Model
+class Price extends Model implements PriceContract
 {
     /** @use HasFactory<PriceFactory> */
     use HasFactory;

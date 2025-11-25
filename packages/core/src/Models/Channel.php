@@ -13,6 +13,7 @@ use Shopper\Core\Database\Factories\ChannelFactory;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Observers\ChannelObserver;
 use Shopper\Core\Traits\HasModelContract;
+use Shopper\Core\Models\Contracts\Channel as ChannelContract;
 
 /**
  * @property-read int $id
@@ -27,7 +28,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read \Illuminate\Support\Collection<int, Product> $products
  */
 #[ObservedBy(ChannelObserver::class)]
-class Channel extends Model
+class Channel extends Model implements ChannelContract
 {
     /** @use HasFactory<ChannelFactory> */
     use HasFactory;

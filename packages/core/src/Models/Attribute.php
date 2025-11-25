@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\AttributeFactory;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Traits\HasSlug;
+use Shopper\Core\Models\Contracts\Attribute as AttributeContract;
 
 /**
  * @property-read int $id
@@ -27,7 +28,7 @@ use Shopper\Core\Models\Traits\HasSlug;
  * @property-read string $type_formatted
  * @property-read \Illuminate\Database\Eloquent\Collection<int, AttributeValue> $values
  */
-class Attribute extends Model
+class Attribute extends Model implements AttributeContract
 {
     /** @use HasFactory<AttributeFactory> */
     use HasFactory;

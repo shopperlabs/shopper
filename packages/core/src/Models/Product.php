@@ -21,6 +21,7 @@ use Shopper\Core\Enum\Dimension\Length;
 use Shopper\Core\Enum\Dimension\Volume;
 use Shopper\Core\Enum\Dimension\Weight;
 use Shopper\Core\Enum\ProductType;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Traits\HasDimensions;
 use Shopper\Core\Models\Traits\HasDiscounts;
 use Shopper\Core\Models\Traits\HasMedia;
@@ -70,7 +71,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @implements Priceable<Product>
  */
 #[ObservedBy(ProductObserver::class)]
-class Product extends Model implements HasReviews, Priceable, SpatieHasMedia
+class Product extends Model implements HasReviews, Priceable, ProductContract, SpatieHasMedia
 {
     use HasDimensions;
     use HasDiscounts;
@@ -95,20 +96,6 @@ class Product extends Model implements HasReviews, Priceable, SpatieHasMedia
     public function getTable(): string
     {
         return shopper_table('products');
-    }
-
-    public function variantsStock(): LaravelAttribute
-    {
-        $stock = 0;
-
-        if ($this->variants->isNotEmpty()) {
-            /** @var ProductVariant $variant */
-            foreach ($this->variants as $variant) {
-                $stock += $variant->stock;
-            }
-        }
-
-        return LaravelAttribute::get(fn (): int => $stock);
     }
 
     public function canUseShipping(): bool
@@ -144,6 +131,11 @@ class Product extends Model implements HasReviews, Priceable, SpatieHasMedia
     public function isStandard(): bool
     {
         return $this->type === ProductType::Standard;
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->is_visible && $this->published_at && $this->published_at <= now();
     }
 
     /**
@@ -257,6 +249,20 @@ class Product extends Model implements HasReviews, Priceable, SpatieHasMedia
     protected static function newFactory(): ProductFactory
     {
         return ProductFactory::new();
+    }
+
+    protected function variantsStock(): LaravelAttribute
+    {
+        $stock = 0;
+
+        if ($this->variants->isNotEmpty()) {
+            /** @var ProductVariant $variant */
+            foreach ($this->variants as $variant) {
+                $stock += $variant->stock;
+            }
+        }
+
+        return LaravelAttribute::get(fn (): int => $stock);
     }
 
     protected function casts(): array

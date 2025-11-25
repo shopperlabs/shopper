@@ -14,6 +14,7 @@ use Shopper\Core\Database\Factories\ProductVariantFactory;
 use Shopper\Core\Enum\Dimension\Length;
 use Shopper\Core\Enum\Dimension\Volume;
 use Shopper\Core\Enum\Dimension\Weight;
+use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Core\Models\Traits\HasDimensions;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasPrices;
@@ -50,7 +51,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @implements Priceable<ProductVariant>
  */
 #[ObservedBy(ProductVariantObserver::class)]
-class ProductVariant extends Model implements Priceable, SpatieHasMedia
+class ProductVariant extends Model implements Priceable, ProductVariantContract, SpatieHasMedia
 {
     use HasDimensions;
 

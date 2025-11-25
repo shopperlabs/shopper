@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Database\Factories\ReviewFactory;
+use Shopper\Core\Models\Contracts\Review as ReviewContract;
 
 /**
  * @property-read int $id
@@ -22,7 +23,7 @@ use Shopper\Core\Database\Factories\ReviewFactory;
  * @property-read string $author_type
  * @property-read int $rating
  */
-class Review extends Model
+class Review extends Model implements ReviewContract
 {
     /** @use HasFactory<ReviewFactory> */
     use HasFactory;

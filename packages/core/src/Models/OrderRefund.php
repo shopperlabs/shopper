@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\OrderRefundFactory;
 use Shopper\Core\Enum\OrderRefundStatus;
+use Shopper\Core\Models\Contracts\OrderRefund as OrderRefundContract;
 
 /**
  * @property-read int $id
@@ -22,7 +23,7 @@ use Shopper\Core\Enum\OrderRefundStatus;
  * @property-read Order $order
  * @property-read User|null $customer
  */
-class OrderRefund extends Model
+class OrderRefund extends Model implements OrderRefundContract
 {
     /** @use HasFactory<OrderRefundFactory> */
     use HasFactory;

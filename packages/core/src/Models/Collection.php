@@ -14,6 +14,7 @@ use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Traits\HasModelContract;
+use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -31,7 +32,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read \Illuminate\Support\Collection<int, CollectionRule> $rules
  * @property-read \Illuminate\Support\Collection<int, Product> $products
  */
-class Collection extends Model implements SpatieHasMedia
+class Collection extends Model implements CollectionContract, SpatieHasMedia
 {
     /** @use HasFactory<CollectionFactory> */
     use HasFactory;

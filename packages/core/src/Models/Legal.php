@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Models\Traits\HasSlug;
+use Shopper\Core\Models\Contracts\Legal as LegalContract;
 
 /**
  * @property-read int $id
@@ -18,7 +19,7 @@ use Shopper\Core\Models\Traits\HasSlug;
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  */
-class Legal extends Model
+class Legal extends Model implements LegalContract
 {
     use HasSlug;
 

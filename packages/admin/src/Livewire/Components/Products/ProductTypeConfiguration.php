@@ -14,7 +14,7 @@ use Livewire\Component;
 use Shopper\Traits\SaveSettings;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class ProductTypeConfiguration extends Component implements HasForms
 {
@@ -42,7 +42,7 @@ class ProductTypeConfiguration extends Component implements HasForms
                     ->label(__('shopper::pages/products.product_type'))
                     ->debounce()
                     ->live()
-                    ->afterStateUpdated(function ($state): void {
+                    ->afterStateUpdated(function (bool $state): void {
                         $this->saveSettings(['default_product_type' => $state ? $this->defaultProductType : null]);
 
                         $this->dispatch('product-type.updated');

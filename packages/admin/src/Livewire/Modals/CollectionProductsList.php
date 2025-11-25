@@ -48,7 +48,7 @@ class CollectionProductsList extends ModalComponent
     #[Computed]
     public function products(): EloquentCollection
     {
-        return Product::resolvedQuery()
+        return Product::query()
             ->where(
                 column: 'name',
                 operator: 'like',

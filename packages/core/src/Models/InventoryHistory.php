@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Database\Factories\InventoryHistoryFactory;
+use Shopper\Core\Models\Contracts\InventoryHistory as InventoryHistoryContract;
 
 /**
  * @property-read int $id
@@ -21,7 +22,7 @@ use Shopper\Core\Database\Factories\InventoryHistoryFactory;
  * @property-read int $inventory_id
  * @property-read string|int $adjustment
  */
-class InventoryHistory extends Model
+class InventoryHistory extends Model implements InventoryHistoryContract
 {
     /** @use HasFactory<InventoryHistoryFactory> */
     use HasFactory;

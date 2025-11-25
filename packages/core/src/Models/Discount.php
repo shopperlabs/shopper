@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\DiscountFactory;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Models\Contracts\Discount as DiscountContract;
 
 /**
  * @property-read int $id
@@ -30,7 +31,7 @@ use Shopper\Core\Enum\DiscountType;
  * @property-read Zone $zone
  * @property-read \Illuminate\Database\Eloquent\Collection<array-key, DiscountDetail> $items
  */
-class Discount extends Model
+class Discount extends Model implements DiscountContract
 {
     /** @use HasFactory<DiscountFactory> */
     use HasFactory;
