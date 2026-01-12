@@ -13,7 +13,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
-use Shopper\Core\Events\Products\Deleted;
+use Shopper\Core\Events\Products\ProductDeleted;
 use Shopper\Core\Models\Product;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -44,7 +44,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
             ->color('danger')
             ->button()
             ->action(function (): void {
-                event(new Deleted($this->product));
+                event(new ProductDeleted($this->product));
 
                 $this->product->delete();
 

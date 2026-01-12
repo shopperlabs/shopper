@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,16 +22,16 @@ use Shopper\Core\Models\Contracts\Discount as DiscountContract;
  * @property-read int $value
  * @property-read string $apply_to
  * @property-read string $eligibility
- * @property-read int|null $usage_limit
+ * @property-read ?int $usage_limit
  * @property-read int $total_use
- * @property-read int|null $zone_id
+ * @property-read ?int $zone_id
  * @property-read bool $usage_limit_per_user
  * @property-read bool $is_active
  * @property-read array<string, mixed>|null $metadata
- * @property-read \Illuminate\Support\Carbon $start_at
- * @property-read \Illuminate\Support\Carbon|null $end_at
+ * @property-read CarbonInterface $start_at
+ * @property-read ?CarbonInterface $end_at
  * @property-read Zone $zone
- * @property-read \Illuminate\Database\Eloquent\Collection<array-key, DiscountDetail> $items
+ * @property-read Collection<array-key, DiscountDetail> $items
  */
 class Discount extends Model implements DiscountContract
 {

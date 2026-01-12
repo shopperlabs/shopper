@@ -18,7 +18,7 @@ use Shopper\Core\Models\Contracts\DiscountDetail as DiscountDetailContract;
  * @property-read int $discountable_id
  * @property-read int $discount_id
  * @property-read int $total_use
- * @property-read Discount $discount
+ * @property-read Contracts\Discount $discount
  * @property-read Model $discountable
  */
 class DiscountDetail extends Model implements DiscountDetailContract

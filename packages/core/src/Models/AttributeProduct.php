@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
+use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,9 +15,9 @@ use Shopper\Core\Models\Contracts\AttributeProduct as AttributeProductContract;
  * @property-read int $id
  * @property-read int $attribute_id
  * @property-read int $product_id
- * @property-read string|null $attribute_custom_value
- * @property-read int|null $attribute_value_id
- * @property-read AttributeValue|null $value
+ * @property-read ?string $attribute_custom_value
+ * @property-read ?int $attribute_value_id
+ * @property-read ?Contracts\AttributeValue $value
  * @property-read string $real_value
  * @property-read Product $product
  * @property-read Attribute $attribute
@@ -66,8 +66,8 @@ class AttributeProduct extends Model implements AttributeProductContract
         return AttributeProductFactory::new();
     }
 
-    protected function realValue(): CastAttribute
+    protected function realValue(): LaravelAttribute
     {
-        return CastAttribute::get(fn (): string => $this->attribute_custom_value ?? $this->value?->value);
+        return LaravelAttribute::get(fn (): string => $this->attribute_custom_value ?? $this->value?->value);
     }
 }

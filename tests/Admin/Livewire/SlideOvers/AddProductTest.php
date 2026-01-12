@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
-use Shopper\Core\Events\Products\Created;
+use Shopper\Core\Events\Products\ProductCreated;
 use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Channel;
@@ -39,7 +39,7 @@ describe(AddProduct::class, function (): void {
             ->call('store')
             ->assertHasNoFormErrors();
 
-        Event::assertDispatched(Created::class);
+        Event::assertDispatched(ProductCreated::class);
 
         expect(Product::query()->count())->toBe(1);
     });
@@ -65,7 +65,7 @@ describe(AddProduct::class, function (): void {
 
         $product = Product::query()->first();
 
-        Event::assertDispatched(Created::class);
+        Event::assertDispatched(ProductCreated::class);
 
         expect(Product::query()->count())
             ->toBe(1)
@@ -92,7 +92,7 @@ describe(AddProduct::class, function (): void {
             ->call('store')
             ->assertHasNoFormErrors();
 
-        Event::assertDispatched(Created::class);
+        Event::assertDispatched(ProductCreated::class);
 
         $product = Product::query()->first();
 

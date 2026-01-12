@@ -22,7 +22,7 @@ use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
  * @property-read int $product_id
  * @property-read string $product_type
  * @property-read int $order_id
- * @property-read Order $order
+ * @property-read Contracts\Order $order
  */
 class OrderItem extends Model implements OrderItemContract
 {

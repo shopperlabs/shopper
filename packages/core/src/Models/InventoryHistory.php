@@ -15,9 +15,9 @@ use Shopper\Core\Models\Contracts\InventoryHistory as InventoryHistoryContract;
 /**
  * @property-read int $id
  * @property-read int $quantity
- * @property-read int|null $old_quantity
- * @property-read string|null $event
- * @property-read string|null $description
+ * @property-read ?int $old_quantity
+ * @property-read ?string $event
+ * @property-read ?string $description
  * @property-read int $user_id
  * @property-read int $inventory_id
  * @property-read string|int $adjustment

@@ -16,11 +16,11 @@ use Livewire\Attributes\Validate;
 use Livewire\WithPagination;
 use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Enum\OrderStatus;
-use Shopper\Core\Events\Orders\AddNote;
-use Shopper\Core\Events\Orders\Cancel;
-use Shopper\Core\Events\Orders\Completed;
-use Shopper\Core\Events\Orders\Paid;
-use Shopper\Core\Events\Orders\Registered;
+use Shopper\Core\Events\Orders\AddNoteToOrder;
+use Shopper\Core\Events\Orders\OrderCancel;
+use Shopper\Core\Events\Orders\OrderCompleted;
+use Shopper\Core\Events\Orders\OrderPaid;
+use Shopper\Core\Events\Orders\OrderRegistered;
 use Shopper\Core\Models\Order;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -58,7 +58,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
 
         $this->order->update(['notes' => $this->notes]);
 
-        event(new AddNote($this->order));
+        event(new AddNoteToOrder($this->order));
 
         Notification::make()
             ->body(__('shopper::pages/orders.notifications.note_added'))
@@ -84,7 +84,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
             ->action(function (): void {
                 $this->order->update(['status' => OrderStatus::Cancelled]);
 
-                event(new Cancel($this->order));
+                event(new OrderCancel($this->order));
 
                 Notification::make()
                     ->body(__('shopper::pages/orders.notifications.cancelled'))
@@ -101,7 +101,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
             ->action(function (): void {
                 $this->order->update(['status' => OrderStatus::Register]);
 
-                event(new Registered($this->order));
+                event(new OrderRegistered($this->order));
 
                 Notification::make()
                     ->body(__('shopper::pages/orders.notifications.registered'))
@@ -118,7 +118,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
             ->action(function (): void {
                 $this->order->update(['status' => OrderStatus::Paid]);
 
-                event(new Paid($this->order));
+                event(new OrderPaid($this->order));
 
                 Notification::make()
                     ->body(__('shopper::pages/orders.notifications.paid'))
@@ -135,7 +135,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
             ->action(function (): void {
                 $this->order->update(['status' => OrderStatus::Completed]);
 
-                event(new Completed($this->order));
+                event(new OrderCompleted($this->order));
 
                 Notification::make()
                     ->body(__('shopper::pages/orders.notifications.completed'))

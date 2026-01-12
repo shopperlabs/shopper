@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,7 +19,7 @@ use Shopper\Core\Models\Contracts\AttributeValue as AttributeValueContract;
  * @property-read int $position
  * @property-read int $attribute_id
  * @property-read Attribute $attribute
- * @property-read \Illuminate\Database\Eloquent\Collection<array-key, ProductVariant> $variants
+ * @property-read Collection<int, ProductVariant> $variants
  */
 class AttributeValue extends Model implements AttributeValueContract
 {

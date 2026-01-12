@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,8 +18,8 @@ use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Database\Factories\OrderFactory;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Helpers\Price;
-use Shopper\Core\Observers\OrderObserver;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
+use Shopper\Core\Observers\OrderObserver;
 
 /**
  * @property-read int $id
@@ -26,25 +28,25 @@ use Shopper\Core\Models\Contracts\Order as OrderContract;
  * @property-read string $notes
  * @property-read string $currency_code
  * @property-read int $total_amount
- * @property-read int|null $zone_id
- * @property-read int|null $shipping_address_id
- * @property-read int|null $payment_method_id
- * @property-read int|null $billing_address_id
- * @property-read int|null $customer_id
- * @property-read int|null $channel_id
- * @property-read int|null $parent_order_id
- * @property-read \Illuminate\Support\Carbon|null $canceled_at
+ * @property-read ?int $zone_id
+ * @property-read ?int $shipping_address_id
+ * @property-read ?int $payment_method_id
+ * @property-read ?int $billing_address_id
+ * @property-read ?int $customer_id
+ * @property-read ?int $channel_id
+ * @property-read ?int $parent_order_id
+ * @property-read ?CarbonInterface $canceled_at
  * @property-read OrderStatus $status
  * @property-read CarrierOption $shippingOption
- * @property-read OrderAddress|null $shippingAddress
- * @property-read OrderAddress|null $billingAddress
- * @property-read PaymentMethod|null $paymentMethod
- * @property-read Zone|null $zone
- * @property-read Channel|null $channel
- * @property-read Order|null $parent
+ * @property-read ?OrderAddress $shippingAddress
+ * @property-read ?OrderAddress $billingAddress
+ * @property-read ?PaymentMethod $paymentMethod
+ * @property-read ?Zone $zone
+ * @property-read ?Channel $channel
+ * @property-read ?Order $parent
  * @property-read \Illuminate\Foundation\Auth\User|ShopperUser $customer
- * @property-read \Illuminate\Support\Collection<int, OrderItem> $items
- * @property-read \Illuminate\Support\Collection<int, Order> $children
+ * @property-read Collection<int, OrderItem> $items
+ * @property-read Collection<int, Order> $children
  */
 #[ObservedBy(OrderObserver::class)]
 class Order extends Model implements OrderContract
@@ -68,16 +70,20 @@ class Order extends Model implements OrderContract
         parent::__construct($attributes);
     }
 
+    public function setDefaultOrderStatus(): void
+    {
+        $this->setRawAttributes(
+            array_merge(
+                $this->attributes,
+                ['status' => OrderStatus::Pending]
+            ),
+            true
+        );
+    }
+
     public function getTable(): string
     {
         return shopper_table('orders');
-    }
-
-    public function totalAmount(): Attribute
-    {
-        return Attribute::get(
-            fn (): Price => Price::from(amount: $this->total(), currency: $this->currency_code)
-        );
     }
 
     public function total(): int
@@ -121,7 +127,7 @@ class Order extends Model implements OrderContract
     }
 
     /**
-     * @return BelongsTo<OrderAddress, $this>
+     * @return BelongsTo<Contracts\OrderAddress, $this>
      */
     public function shippingAddress(): BelongsTo
     {
@@ -129,7 +135,7 @@ class Order extends Model implements OrderContract
     }
 
     /**
-     * @return BelongsTo<OrderAddress, $this>
+     * @return BelongsTo<Contracts\OrderAddress, $this>
      */
     public function billingAddress(): BelongsTo
     {
@@ -137,7 +143,7 @@ class Order extends Model implements OrderContract
     }
 
     /**
-     * @return BelongsTo<Model, $this>
+     * @return BelongsTo<ShopperUser, $this>
      */
     public function customer(): BelongsTo
     {
@@ -163,21 +169,21 @@ class Order extends Model implements OrderContract
     }
 
     /**
-     * @return BelongsTo<$this, $this>
+     * @return BelongsTo<static, $this>
      */
     public function parent(): BelongsTo
     {
         // @phpstan-ignore-next-line
-        return $this->belongsTo(self::class, 'parent_order_id');
+        return $this->belongsTo(static::class, 'parent_order_id');
     }
 
     /**
-     * @return HasMany<$this, $this>
+     * @return HasMany<static, $this>
      */
     public function children(): HasMany
     {
         // @phpstan-ignore-next-line
-        return $this->hasMany(self::class, 'parent_order_id');
+        return $this->hasMany(static::class, 'parent_order_id');
     }
 
     /**
@@ -217,22 +223,18 @@ class Order extends Model implements OrderContract
         return OrderFactory::new();
     }
 
+    protected function totalAmount(): Attribute
+    {
+        return Attribute::get(
+            fn (): Price => Price::from(amount: $this->total(), currency: $this->currency_code)
+        );
+    }
+
     protected function casts(): array
     {
         return [
             'status' => OrderStatus::class,
             'canceled_at' => 'datetime',
         ];
-    }
-
-    protected function setDefaultOrderStatus(): void
-    {
-        $this->setRawAttributes(
-            array_merge(
-                $this->attributes,
-                ['status' => OrderStatus::Pending]
-            ),
-            true
-        );
     }
 }

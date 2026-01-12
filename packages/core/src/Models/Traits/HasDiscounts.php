@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models\Traits;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Models\Discount;
 
 /**
- * @property-read \Illuminate\Support\Collection<int, Discount> $discounts
+ * @property-read Collection<int, \Shopper\Core\Models\Contracts\Discount> $discounts
  */
 trait HasDiscounts
 {

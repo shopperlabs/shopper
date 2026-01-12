@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,8 +20,8 @@ use Shopper\Core\Models\Contracts\CollectionRule as CollectionRuleContract;
  * @property-read string $value
  * @property-read int $collection_id
  * @property-read Collection $collection
- * @property-read Carbon $created_at
- * @property-read Carbon $updated_at
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  */
 class CollectionRule extends Model implements CollectionRuleContract
 {

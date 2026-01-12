@@ -61,7 +61,7 @@ describe(Detail::class, function (): void {
             ->set('notes', 'This is a test note')
             ->call('leaveNotes');
 
-        Event::assertDispatched(Orders\AddNote::class, fn ($event): bool => $event->order->id === $order->id);
+        Event::assertDispatched(Orders\AddNoteToOrder::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
     it('updates order notes when leaving notes', function (): void {
@@ -86,7 +86,7 @@ describe(Detail::class, function (): void {
         Livewire::test(Detail::class, ['order' => $order])
             ->callAction('cancelOrder');
 
-        Event::assertDispatched(Orders\Cancel::class, fn ($event): bool => $event->order->id === $order->id);
+        Event::assertDispatched(Orders\OrderCancel::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
     it('updates order status to cancelled', function (): void {
@@ -112,7 +112,7 @@ describe(Detail::class, function (): void {
         Livewire::test(Detail::class, ['order' => $order])
             ->callAction('register');
 
-        Event::assertDispatched(Orders\Registered::class, fn ($event): bool => $event->order->id === $order->id);
+        Event::assertDispatched(Orders\OrderRegistered::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
     it('updates order status to register', function (): void {
@@ -138,7 +138,7 @@ describe(Detail::class, function (): void {
         Livewire::test(Detail::class, ['order' => $order])
             ->callAction('markPaid');
 
-        Event::assertDispatched(Orders\Paid::class, fn ($event): bool => $event->order->id === $order->id);
+        Event::assertDispatched(Orders\OrderPaid::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
     it('updates order status to paid', function (): void {
@@ -164,7 +164,7 @@ describe(Detail::class, function (): void {
         Livewire::test(Detail::class, ['order' => $order])
             ->callAction('markComplete');
 
-        Event::assertDispatched(Orders\Completed::class, fn ($event): bool => $event->order->id === $order->id);
+        Event::assertDispatched(Orders\OrderCompleted::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
     it('updates order status to completed', function (): void {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,27 +27,27 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 /**
  * @property-read int $id
  * @property-read string $name
- * @property-read string|null $sku
- * @property-read string|null $barcode
- * @property-read string|null $ean
- * @property-read string|null $upc
+ * @property-read ?string $sku
+ * @property-read ?string $barcode
+ * @property-read ?string $ean
+ * @property-read ?string $upc
  * @property-read Weight $weight_unit
- * @property-read float|null $weight_value
+ * @property-read ?float $weight_value
  * @property-read Length $height_unit
- * @property-read float|null $height_value
+ * @property-read ?float $height_value
  * @property-read Length $width_unit
- * @property-read float|null $width_value
+ * @property-read ?float $width_value
  * @property-read Length $depth_unit
- * @property-read float|null $depth_value
+ * @property-read ?float $depth_value
  * @property-read Volume $volume_unit
- * @property-read float|null $volume_value
+ * @property-read ?float $volume_value
  * @property-read bool $allow_backorder
  * @property-read int $position
  * @property-read int $product_id
  * @property-read array<array-key, mixed>|null $metadata
  * @property-read int $stock
- * @property-read Product $product
- * @property-read \Illuminate\Support\Collection<int, AttributeValue> $values
+ * @property-read Contracts\Product $product
+ * @property-read Collection<int, AttributeValue> $values
  *
  * @implements Priceable<ProductVariant>
  */

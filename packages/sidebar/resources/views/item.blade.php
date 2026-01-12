@@ -13,8 +13,8 @@
         @if($item->withSpa()) wire:navigate @endif
         @if($item->getNewTab()) target="_blank" @endif
     >
-        @if($item->getIcon() !== null)
-            @if($item->iconSvg())
+        @if ($item->getIcon() !== null)
+            @if ($item->iconSvg())
                 {!! $item->getIcon() !!}
             @else
                 {{ svg(
@@ -27,13 +27,13 @@
 
         <span class="item-name">{{ $item->getName() }}</span>
 
-        @foreach($badges as $badge)
+        @foreach ($badges as $badge)
             {!! $badge !!}
         @endforeach
 
-        @if($item->hasItems())
+        @if ($item->hasItems())
             <span class="toggle">
-                @if($item->toggleIconSvg())
+                @if ($item->toggleIconSvg())
                     {!! $active ? $item->getActiveToggleIcon() : $item->getToggleIcon() !!}
                 @else
                     @svg(
@@ -45,13 +45,13 @@
         @endif
     </a>
 
-    @foreach($appends as $append)
+    @foreach ($appends as $append)
         {!! $append !!}
     @endforeach
 
-    @if(count($items) > 0)
+    @if (count($items) > 0)
         <ul role="list" class="submenu">
-            @foreach($items as $item)
+            @foreach ($items as $item)
                 {!! $item !!}
             @endforeach
         </ul>

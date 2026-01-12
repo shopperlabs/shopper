@@ -19,7 +19,7 @@ use Shopper\Core\Models\Contracts\Geolocation as GeolocationContract;
  * @property-read array<array-key, mixed>|null $ip_api
  * @property-read array<array-key, mixed>|null $extreme_ip_lookup
  * @property-read \Illuminate\Foundation\Auth\User|ShopperUser $user
- * @property-read Order $order
+ * @property-read Contracts\Order $order
  */
 class Geolocation extends Model implements GeolocationContract
 {

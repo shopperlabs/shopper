@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
-use Shopper\Core\Events\Products\Deleted;
+use Shopper\Core\Events\Products\ProductDeleted;
 use Shopper\Livewire\Pages\Product\Edit;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
@@ -68,7 +68,7 @@ describe(Edit::class, function (): void {
             ->assertRedirectToRoute('shopper.products.index')
             ->assertNotified(__('shopper::notifications.delete', ['item' => __('shopper::pages/products.single')]));
 
-        Event::assertDispatched(Deleted::class);
+        Event::assertDispatched(ProductDeleted::class);
         expect(Product::resolvedQuery()->count())->toBe(0);
     });
 

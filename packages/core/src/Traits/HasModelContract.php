@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
+use Illuminate\Support\HigherOrderTapProxy;
 use Shopper\Core\Exceptions\InvalidModelConfigurationException;
 
 /**
@@ -16,6 +17,18 @@ use Shopper\Core\Exceptions\InvalidModelConfigurationException;
 trait HasModelContract
 {
     protected static bool $dispatchesParentEvents = true;
+
+    /**
+     * Handle dynamic static method calls into the model.
+     */
+    public static function __callStatic($method, $parameters)
+    {
+        if (! static::isShopperInstance()) {
+            return (new (static::configuredClass()))->$method(...$parameters);
+        }
+
+        return (new static)->$method(...$parameters);
+    }
 
     abstract public static function configKey(): string;
 
@@ -34,18 +47,6 @@ trait HasModelContract
     }
 
     /**
-     * Handle dynamic static method calls into the model.
-     */
-    public static function __callStatic($method, $parameters)
-    {
-        if (! static::isShopperInstance()) {
-            return (new (static::configuredClass()))->$method(...$parameters);
-        }
-
-        return (new static)->$method(...$parameters);
-    }
-
-    /**
      * Check if the current class is the Shopper base class.
      */
     public static function isShopperInstance(): bool
@@ -54,11 +55,34 @@ trait HasModelContract
     }
 
     /**
+     * @return Builder<static>
+     *
+     * @deprecated Use standard Eloquent methods instead (e.g., Model::query())
+     */
+    public static function resolvedQuery(): Builder
+    {
+        return static::configuredClass()::query();
+    }
+
+    /**
+     * @param  class-string  $observer
+     */
+    public static function observeUsingConfiguredClass(string $observer): void
+    {
+        static::configuredClass()::observe($observer);
+    }
+
+    /**
      * Create a new Eloquent query builder for the model.
      */
     public function newModelQuery(): Builder
     {
         $concreteClass = static::configuredClass();
+
+        if (static::class === $concreteClass) {
+            return parent::newModelQuery();
+        }
+
         $parentClass = get_parent_class($concreteClass);
 
         if ($parentClass === 'Shopper\Core\Models\BaseModel' || $this instanceof $concreteClass) {
@@ -74,7 +98,7 @@ trait HasModelContract
         );
     }
 
-    public function replicateInto($newClass): Model
+    public function replicateInto($newClass): HigherOrderTapProxy
     {
         $defaults = array_values(array_filter([
             $this->getKeyName(),
@@ -85,7 +109,8 @@ trait HasModelContract
         ]));
 
         $attributes = Arr::except(
-            $this->getAttributes(), $defaults
+            $this->getAttributes(),
+            $defaults
         );
 
         return tap(new $newClass, function ($instance) use ($attributes): Model {
@@ -94,23 +119,6 @@ trait HasModelContract
 
             return $instance;
         });
-    }
-
-    /**
-     * @return Builder<static>
-     * @deprecated Use standard Eloquent methods instead (e.g., Model::query())
-     */
-    public static function resolvedQuery(): Builder
-    {
-        return static::configuredClass()::query();
-    }
-
-    /**
-     * @param  class-string  $observer
-     */
-    public static function observeUsingConfiguredClass(string $observer): void
-    {
-        static::configuredClass()::observe($observer);
     }
 
     public function resolveRouteBinding($value, $field = null): ?static
@@ -199,6 +207,12 @@ trait HasModelContract
         $parentClass = static::getShopperBaseClass();
 
         if ($parentClass === null || $parentClass === static::class) {
+            return $result;
+        }
+
+        $readOnlyEvents = ['retrieved', 'booting', 'booted'];
+
+        if (in_array($event, $readOnlyEvents, true)) {
             return $result;
         }
 

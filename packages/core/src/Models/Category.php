@@ -6,15 +6,16 @@ namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\CategoryFactory;
+use Shopper\Core\Models\Contracts\Category as CategoryContract;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Observers\CategoryObserver;
 use Shopper\Core\Traits\HasModelContract;
-use Shopper\Core\Models\Contracts\Category as CategoryContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
@@ -24,9 +25,9 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
  * @property-read string $name
  * @property-read string $slug
  * @property-read bool $is_enabled
- * @property-read int|null $parent_id
- * @property-read null|self $parent
- * @property-read \Illuminate\Support\Collection<int, Product> $products
+ * @property-read ?int $parent_id
+ * @property-read ?static $parent
+ * @property-read Collection<int, Contracts\Product> $products
  */
 #[ObservedBy(CategoryObserver::class)]
 class Category extends Model implements CategoryContract, SpatieHasMedia
@@ -70,9 +71,6 @@ class Category extends Model implements CategoryContract, SpatieHasMedia
         $this->update(['is_enabled' => $status]);
     }
 
-    /**
-     * Use to display custom label into filament relationship select form component
-     */
     public function getLabelOptionName(): string
     {
         return $this->parent
@@ -90,11 +88,11 @@ class Category extends Model implements CategoryContract, SpatieHasMedia
     }
 
     /**
-     * @return HasManyOfDescendants<Category, $this>
+     * @return HasManyOfDescendants<static, $this>
      */
     public function descendantCategories(): HasManyOfDescendants
     {
-        return $this->hasManyOfDescendants(self::class, 'parent_id');
+        return $this->hasManyOfDescendants(static::class, 'parent_id');
     }
 
     /**

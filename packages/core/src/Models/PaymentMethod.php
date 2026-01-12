@@ -17,11 +17,11 @@ use Shopper\Core\Models\Contracts\PaymentMethod as PaymentMethodContract;
  * @property-read int $id
  * @property string $title
  * @property string $slug
- * @property string|null $logo
- * @property string|null $logo_url
- * @property string|null $description
- * @property string|null $link_url
- * @property string|null $instructions
+ * @property ?string $logo
+ * @property ?string $logo_url
+ * @property ?string $description
+ * @property ?string $link_url
+ * @property ?string $instructions
  */
 class PaymentMethod extends Model implements PaymentMethodContract
 {

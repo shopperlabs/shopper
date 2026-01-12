@@ -19,6 +19,7 @@ use Shopper\Core\Models\Contracts\Currency as CurrencyContract;
  * @property-read string $format
  * @property-read float $exchange_rate
  * @property-read bool $is_enabled
+ * @property-read ?Zone $zone
  */
 class Currency extends Model implements CurrencyContract
 {

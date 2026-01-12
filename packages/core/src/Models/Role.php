@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Role as Model;
  * @property-read string $guard_name
  * @property-read bool $can_be_removed
  * @property-read string $display_name
- * @property-read string|null $description
+ * @property-read ?string $description
  */
 class Role extends Model
 {

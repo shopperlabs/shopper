@@ -21,11 +21,11 @@ use Shopper\Core\Models\Contracts\Inventory as InventoryContract;
  * @property-read string $code
  * @property-read string $email
  * @property-read string $city
- * @property-read string|null $description
- * @property-read string|null $street_address
- * @property-read string|null $street_address_plus
+ * @property-read ?string $description
+ * @property-read ?string $street_address
+ * @property-read ?string $street_address_plus
  * @property-read string $postal_code
- * @property-read string|null $phone_number
+ * @property-read ?string $phone_number
  * @property-read bool $is_default
  */
 #[ObservedBy(InventoryObserver::class)]

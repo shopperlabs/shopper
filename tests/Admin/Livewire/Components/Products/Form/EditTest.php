@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
-use Shopper\Core\Events\Products\Updated;
+use Shopper\Core\Events\Products\ProductUpdated;
 use Shopper\Livewire\Components\Products\Form\Edit;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
@@ -34,7 +34,7 @@ describe(Edit::class, function (): void {
 
         $product->refresh();
 
-        Event::assertDispatched(Updated::class);
+        Event::assertDispatched(ProductUpdated::class);
 
         expect($product->slug)->toBe('demo-product');
     });
@@ -60,7 +60,7 @@ describe(Edit::class, function (): void {
 
         $product->refresh();
 
-        Event::assertDispatched(Updated::class);
+        Event::assertDispatched(ProductUpdated::class);
 
         expect($product->external_id)->toBe($uuid);
     });

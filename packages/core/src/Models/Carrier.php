@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -17,12 +18,13 @@ use Shopper\Core\Models\Contracts\Carrier as CarrierContract;
  * @property-read int $id
  * @property-read string $name
  * @property-read bool $is_enabled
- * @property-read string|null $slug
- * @property-read string|null $logo
- * @property-read string|null $link_url
- * @property-read string|null $description
- * @property-read int|null $shipping_amount
+ * @property-read ?string $slug
+ * @property-read ?string $logo
+ * @property-read ?string $link_url
+ * @property-read ?string $description
+ * @property-read ?int $shipping_amount
  * @property-read array<string, mixed>|null $metadata
+ * @property-read Collection<int, CarrierOption> $options
  */
 class Carrier extends Model implements CarrierContract
 {

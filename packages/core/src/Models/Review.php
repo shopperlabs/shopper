@@ -15,8 +15,8 @@ use Shopper\Core\Models\Contracts\Review as ReviewContract;
  * @property-read int $id
  * @property-read bool $approved
  * @property-read bool $is_recommended
- * @property-read string|null $title
- * @property-read string|null $content
+ * @property-read ?string $title
+ * @property-read ?string $content
  * @property-read int $reviewrateable_id
  * @property-read string $reviewrateable_type
  * @property-read int $author_id

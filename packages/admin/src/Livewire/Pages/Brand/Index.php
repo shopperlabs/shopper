@@ -13,7 +13,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Shopper\Core\Models\Brand;
+use Shopper\Core\Models\Contracts\Brand as BrandContract;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -30,7 +30,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Brand::resolvedQuery())
+            ->query(app(BrandContract::class)::query()->latest())
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('Logo')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
@@ -60,7 +60,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon('untitledui-edit-04')
                     ->action(
-                        fn (Brand $record) => $this->dispatch(
+                        fn (BrandContract $record) => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.brand-form',
                             arguments: ['brand' => $record]

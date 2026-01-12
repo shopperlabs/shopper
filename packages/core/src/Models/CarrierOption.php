@@ -19,8 +19,8 @@ use Shopper\Core\Models\Contracts\CarrierOption as CarrierOptionContract;
  * @property-read int $zone_id
  * @property-read int $carrier_id
  * @property-read bool $is_enabled
- * @property-read Zone $zone
- * @property-read Carrier $carrier
+ * @property-read Contracts\Zone $zone
+ * @property-read Contracts\Carrier $carrier
  * @property-read array<string, mixed>|null $metadata
  */
 class CarrierOption extends Model implements CarrierOptionContract

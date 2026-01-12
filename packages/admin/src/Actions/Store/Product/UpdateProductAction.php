@@ -6,7 +6,7 @@ namespace Shopper\Actions\Store\Product;
 
 use Filament\Forms\Form;
 use Illuminate\Support\Arr;
-use Shopper\Core\Events\Products\Updated;
+use Shopper\Core\Events\Products\ProductUpdated;
 use Shopper\Core\Models\Product;
 use Shopper\Feature;
 
@@ -28,7 +28,7 @@ final class UpdateProductAction
 
         $product->refresh();
 
-        event(new Updated($product));
+        event(new ProductUpdated($product));
 
         return $product;
     }

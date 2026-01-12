@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
@@ -37,36 +38,36 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read int $id
  * @property-read string $name
  * @property-read string $slug
- * @property-read string|null $sku
- * @property-read string|null $barcode
- * @property-read ProductType|null $type
+ * @property-read ?string $sku
+ * @property-read ?string $barcode
+ * @property-read ?ProductType $type
  * @property-read bool $is_visible
  * @property-read bool $featured
  * @property-read Weight $weight_unit
- * @property-read float|null $weight_value
+ * @property-read ?float $weight_value
  * @property-read Length $height_unit
- * @property-read float|null $height_value
+ * @property-read ?float $height_value
  * @property-read Length $width_unit
- * @property-read float|null $width_value
+ * @property-read ?float $width_value
  * @property-read Length $depth_unit
- * @property-read float|null $depth_value
+ * @property-read ?float $depth_value
  * @property-read Volume $volume_unit
- * @property-read float|null $volume_value
- * @property-read int|null $security_stock
+ * @property-read ?float $volume_value
+ * @property-read ?int $security_stock
  * @property-read int $variants_stock
- * @property-read string|null $seo_title
- * @property-read string|null $seo_description
- * @property-read string|null $external_id
- * @property-read \Illuminate\Support\Carbon|null $published_at
+ * @property-read ?string $seo_title
+ * @property-read ?string $seo_description
+ * @property-read ?string $external_id
+ * @property-read ?CarbonInterface $published_at
  * @property-read array<string, mixed>|null $metadata
  * @property-read int $stock
  * @property-read Brand $brand
- * @property-read \Illuminate\Support\Collection<int, Channel> $channels
- * @property-read \Illuminate\Support\Collection<int, Category> $categories
- * @property-read \Illuminate\Support\Collection<int, Attribute> $options
- * @property-read \Illuminate\Support\Collection<int, Collection> $collections
- * @property-read \Illuminate\Support\Collection<int, ProductVariant> $variants
- * @property-read \Illuminate\Support\Collection<int, Product> $relatedProducts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Contracts\Channel> $channels
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Contracts\Category> $categories
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Contracts\Attribute> $options
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Contracts\Collection> $collections
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Contracts\ProductVariant> $variants
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductContract> $relatedProducts
  *
  * @implements Priceable<Product>
  */

@@ -13,7 +13,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Shopper\Core\Models\Category;
+use Shopper\Core\Models\Contracts\Category as CategoryContract;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HasAuthenticated;
 
@@ -31,7 +31,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Category::resolvedQuery()->with('parent')->latest())
+            ->query(app(CategoryContract::class)::query()->with('parent')->latest())
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
@@ -40,7 +40,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->formatStateUsing(
-                        fn (Category $record): View => view('shopper::livewire.tables.cells.categories.name', [
+                        fn (CategoryContract $record): View => view('shopper::livewire.tables.cells.categories.name', [
                             'category' => $record,
                         ])
                     )
@@ -67,7 +67,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon('untitledui-edit-04')
                     ->action(
-                        fn (Category $record) => $this->dispatch(
+                        fn (CategoryContract $record) => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.category-form',
                             arguments: ['category' => $record]
@@ -134,7 +134,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->icon('untitledui-switch-vertical')
                     ->color('gray')
                     ->action(
-                        fn (Category $record) => $this->dispatch(
+                        fn () => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.re-order-categories'
                         )

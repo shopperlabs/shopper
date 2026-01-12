@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,15 +24,15 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read string $name
  * @property-read string $slug
  * @property-read CollectionType $type
- * @property-read string|null $description
- * @property-read string|null $match_conditions
- * @property-read string|null $sort
- * @property-read \Illuminate\Support\Carbon $published_at
+ * @property-read ?string $description
+ * @property-read ?string $match_conditions
+ * @property-read ?string $sort
+ * @property-read CarbonInterface $published_at
  * @property-read array<string, mixed>|null $metadata
- * @property-read string|null $seo_title
- * @property-read string|null $seo_description
- * @property-read \Illuminate\Support\Collection<int, CollectionRule> $rules
- * @property-read \Illuminate\Support\Collection<int, Product> $products
+ * @property-read ?string $seo_title
+ * @property-read ?string $seo_description
+ * @property-read EloquentCollection<int, CollectionRule> $rules
+ * @property-read EloquentCollection<int, Contracts\Product> $products
  */
 class Collection extends Model implements CollectionContract, SpatieHasMedia
 {

@@ -23,8 +23,8 @@ use Shopper\Core\Models\Contracts\Country as CountryContract;
  * @property-read string $svg_flag
  * @property-read float $latitude
  * @property-read float $longitude
- * @property-read array<array-key, mixed> $phone_calling_code
- * @property-read array<array-key, mixed> $currencies
+ * @property-read array<string, mixed> $phone_calling_code
+ * @property-read array<string, mixed> $currencies
  */
 class Country extends Model implements CountryContract
 {
@@ -40,6 +40,11 @@ class Country extends Model implements CountryContract
     public function getTable(): string
     {
         return shopper_table('countries');
+    }
+
+    public function countryFlag(): string
+    {
+        return url(shopper()->prefix().'/images/flags/'.mb_strtolower($this->cca2).'.svg');
     }
 
     protected static function newFactory(): CountryFactory
@@ -58,7 +63,7 @@ class Country extends Model implements CountryContract
     protected function svgFlag(): Attribute
     {
         return Attribute::get(
-            fn (): string => url(shopper()->prefix().'/images/flags/'.mb_strtolower($this->cca2).'.svg')
+            fn (): string => $this->countryFlag()
         );
     }
 }

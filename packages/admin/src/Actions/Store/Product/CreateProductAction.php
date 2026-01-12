@@ -7,7 +7,7 @@ namespace Shopper\Actions\Store\Product;
 use Filament\Forms\Form;
 use Illuminate\Support\Arr;
 use Shopper\Actions\Store\InitialQuantityInventory;
-use Shopper\Core\Events\Products\Created;
+use Shopper\Core\Events\Products\ProductCreated;
 use Shopper\Core\Models\Product;
 use Shopper\Feature;
 
@@ -40,7 +40,7 @@ final class CreateProductAction
             ]);
         }
 
-        event(new Created($product));
+        event(new ProductCreated($product));
 
         return $product;
     }
