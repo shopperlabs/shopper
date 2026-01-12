@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\AttributeFactory;
 use Shopper\Core\Enum\FieldType;
-use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Contracts\Attribute as AttributeContract;
+use Shopper\Core\Models\Traits\HasSlug;
 
 /**
  * @property-read int $id

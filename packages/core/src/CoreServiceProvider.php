@@ -7,7 +7,6 @@ namespace Shopper\Core;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Shopper\Core\Console\InstallCommand;
-use Shopper\Core\Models;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;

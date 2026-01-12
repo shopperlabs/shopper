@@ -36,7 +36,7 @@ class Geolocation extends Model implements GeolocationContract
     }
 
     /**
-     * @return BelongsTo<\Shopper\Core\Contracts\ShopperUser, $this>
+     * @return BelongsTo<ShopperUser, $this>
      */
     public function user(): BelongsTo
     {

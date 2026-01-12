@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\CollectionFactory;
 use Shopper\Core\Enum\CollectionType;
+use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Traits\HasModelContract;
-use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**

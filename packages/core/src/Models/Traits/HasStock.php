@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Shopper\Core\Models\InventoryHistory;
 
 trait HasStock
@@ -95,6 +96,8 @@ trait HasStock
      */
     public function createStockMutation(int $quantity, int $inventoryId, array $arguments = []): InventoryHistory
     {
+        /** @var int $authId */
+        $authId = Auth::id();
         $reference = Arr::get($arguments, 'reference');
 
         $createArguments = collect([
@@ -103,10 +106,11 @@ trait HasStock
             'description' => Arr::get($arguments, 'description'),
             'event' => Arr::get($arguments, 'event'),
             'inventory_id' => $inventoryId,
-            'user_id' => auth()->id(),
+            'user_id' => $authId,
         ])->when($reference, fn ($collection) => $collection
             ->put('reference_type', $reference->getMorphClass())
-            ->put('reference_id', $reference->getKey()))->toArray();
+            ->put('reference_id', $reference->getKey()))
+            ->toArray();
 
         return $this->inventoryHistories()->create($createArguments);
     }

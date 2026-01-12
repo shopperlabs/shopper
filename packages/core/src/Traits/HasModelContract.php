@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
-use Illuminate\Support\HigherOrderTapProxy;
 use Shopper\Core\Exceptions\InvalidModelConfigurationException;
 
 /**
@@ -20,6 +19,8 @@ trait HasModelContract
 
     /**
      * Handle dynamic static method calls into the model.
+     *
+     * @phpstan-return mixed
      */
     public static function __callStatic($method, $parameters)
     {
@@ -27,7 +28,7 @@ trait HasModelContract
             return (new (static::configuredClass()))->$method(...$parameters);
         }
 
-        return (new static)->$method(...$parameters);
+        return (new static)->$method(...$parameters); // @phpstan-ignore new.static
     }
 
     abstract public static function configKey(): string;
@@ -74,21 +75,23 @@ trait HasModelContract
 
     /**
      * Create a new Eloquent query builder for the model.
+     *
+     * @return Builder<static>
      */
     public function newModelQuery(): Builder
     {
         $concreteClass = static::configuredClass();
-
-        if (static::class === $concreteClass) {
-            return parent::newModelQuery();
-        }
-
+        $shopperBaseClass = static::getShopperBaseClass();
         $parentClass = get_parent_class($concreteClass);
 
-        if ($parentClass === 'Shopper\Core\Models\BaseModel' || $this instanceof $concreteClass) {
+        // If the configured class directly extends a Shopper base model
+        // OR if we're already an instance of the configured class, use parent behavior
+        if ($parentClass === $shopperBaseClass || $this instanceof $concreteClass) {
+            /** @var Builder<static> */
             return parent::newModelQuery();
         }
 
+        /** @var Builder<static> */
         return $this->newEloquentBuilder(
             $this->newBaseQueryBuilder()
         )->setModel(
@@ -98,7 +101,13 @@ trait HasModelContract
         );
     }
 
-    public function replicateInto($newClass): HigherOrderTapProxy
+    /**
+     * Replicate the model into a new instance of a different class.
+     *
+     * @param  class-string<static>  $newClass
+     * @return static
+     */
+    public function replicateInto(string $newClass): Model
     {
         $defaults = array_values(array_filter([
             $this->getKeyName(),
@@ -113,12 +122,12 @@ trait HasModelContract
             $defaults
         );
 
-        return tap(new $newClass, function ($instance) use ($attributes): Model {
-            $instance->setRawAttributes($attributes);
-            $instance->setRelations($this->relations);
+        /** @var static $instance */
+        $instance = new $newClass;
+        $instance->setRawAttributes($attributes);
+        $instance->setRelations($this->relations);
 
-            return $instance;
-        });
+        return $instance;
     }
 
     public function resolveRouteBinding($value, $field = null): ?static
@@ -190,6 +199,7 @@ trait HasModelContract
             if (str_starts_with($parent, 'Shopper\\Core\\Models\\')) {
                 return $parent;
             }
+
             $class = $parent;
         }
 

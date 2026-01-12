@@ -7,8 +7,8 @@ namespace Shopper\Core\Models;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Contracts\Legal as LegalContract;
+use Shopper\Core\Models\Traits\HasSlug;
 
 /**
  * @property-read int $id

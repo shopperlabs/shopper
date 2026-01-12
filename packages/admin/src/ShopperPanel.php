@@ -6,7 +6,7 @@ namespace Shopper;
 
 use Closure;
 use Exception;
-use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Foundation\Vite;
 use Illuminate\Support\Facades\Event;
@@ -20,8 +20,9 @@ final class ShopperPanel
 
     private string|Htmlable|null $theme = null;
 
-    public function auth(): Guard
+    public function auth(): StatefulGuard
     {
+        /** @var StatefulGuard */
         return auth()->guard(config('shopper.auth.guard'));
     }
 

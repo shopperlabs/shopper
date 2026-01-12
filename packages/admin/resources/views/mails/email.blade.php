@@ -17,7 +17,7 @@
             {{ $greeting }}
         </p>
     @else
-        @if ($level === 'error')
+        @if (isset($level) && $level === 'error')
             <p style="font-weight: 500">@lang('Whoops!')</p>
         @else
             <p style="font-weight: 500">@lang('Hello!')</p>
@@ -32,14 +32,14 @@
     {{-- Action Button --}}
     @isset($actionText)
         <?php
-        switch ($level) {
-            case 'success':
-            case 'error':
-                $color = $level;
-                break;
-            default:
-                $color = 'primary';
-        }
+            switch ($level ?? 'info') {
+                case 'success':
+                case 'error':
+                    $color = $level ?? 'info';
+                    break;
+                default:
+                    $color = 'primary';
+            }
         ?>
 
         @component('shopper::mails.html.button', ['url' => $actionUrl, 'color' => $color])
@@ -62,7 +62,7 @@
                 line-height: 2.5;
                 letter-spacing: normal;
                 color: #001737;
-                margin-bottom: 0px;
+                margin-bottom: 0;
             "
         >
             {{ $salutation }}
@@ -76,7 +76,7 @@
                 line-height: 1.71;
                 letter-spacing: normal;
                 color: #001737;
-                margin-bottom: 0px;
+                margin-bottom: 0;
             "
         >
             @lang('Regards')

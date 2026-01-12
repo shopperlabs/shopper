@@ -60,7 +60,7 @@ class OrderRefund extends Model implements OrderRefundContract
     }
 
     /**
-     * @return BelongsTo<\Shopper\Core\Contracts\ShopperUser, $this>
+     * @return BelongsTo<ShopperUser, $this>
      */
     public function customer(): BelongsTo
     {

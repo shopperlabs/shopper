@@ -47,6 +47,11 @@ class TextInputSelect extends TextInput
         return $this->selectComponentClosure !== null;
     }
 
+    /**
+     * @param  array<string, mixed>  &$attributes
+     *
+     * @param-out  array<string, mixed>  $attributes
+     */
     public function dehydrateValidationAttributes(array &$attributes): void
     {
         $attributes[$this->getStatePath()] = $this->getValidationAttribute();
@@ -71,6 +76,7 @@ class TextInputSelect extends TextInput
     public function hydrateState(?array &$hydratedDefaultState, bool $andCallHydrationHooks = true): void
     {
         parent::hydrateState($hydratedDefaultState, $andCallHydrationHooks);
+
         if ($this->hasSelect()) {
             $this->getSelectComponent()->hydrateState($hydratedDefaultState, $andCallHydrationHooks);
         }
