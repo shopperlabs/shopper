@@ -38,14 +38,14 @@ describe(RolePermission::class, function (): void {
 
     it('can update role name', function (): void {
         Livewire::test(RolePermission::class, ['role' => $this->role])
-            ->set('data.name', 'manager')
-            ->set('data.display_name', 'Manager')
+            ->set('data.name', 'blogger')
+            ->set('data.display_name', 'Blogger')
             ->call('save');
 
         $this->role->refresh();
 
-        expect($this->role->name)->toBe('manager')
-            ->and($this->role->display_name)->toBe('Manager');
+        expect($this->role->name)->toBe('blogger')
+            ->and($this->role->display_name)->toBe('Blogger');
     });
 
     it('auto-generates display name from name', function (): void {
@@ -72,8 +72,8 @@ describe(RolePermission::class, function (): void {
 
     it('sends notification after successful save', function (): void {
         Livewire::test(RolePermission::class, ['role' => $this->role])
-            ->set('data.name', 'manager')
-            ->set('data.display_name', 'Manager')
+            ->set('data.name', 'blogger')
+            ->set('data.display_name', 'Blogger')
             ->call('save')
             ->assertNotified();
     });

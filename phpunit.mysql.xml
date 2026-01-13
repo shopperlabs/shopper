@@ -27,6 +27,8 @@
     <php>
         <env name="APP_ENV" value="self-testing"/>
         <env name="APP_KEY" value="base64:yk+bUVuZa1p86Dqjk9OjVK2R1pm6XHxC6xEKFq8utH0="/>
-         <env name="DB_CONNECTION" value="mysql"/>
+        <env name="DB_CONNECTION" value="mysql"/>
+        <env name="DB_USERNAME" value="valet"/>
+        <env name="DB_PASSWORD" value="root1234"/>
     </php>
 </phpunit>
