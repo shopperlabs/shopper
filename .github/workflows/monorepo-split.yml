@@ -17,7 +17,7 @@ jobs:
           - core
           - sidebar
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - id: previous-tag
         uses: 'WyriHaximus/github-action-get-previous-tag@master'
       - name: Monorepo Split of ${{ matrix.package }}
