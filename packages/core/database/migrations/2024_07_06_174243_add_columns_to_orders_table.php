@@ -21,4 +21,22 @@ return new class extends Migration
             $table->timestamp('canceled_at')->nullable();
         });
     }
+
+    public function down(): void
+    {
+        Schema::table($this->getTableName('orders'), function (Blueprint $table): void {
+            $table->dropForeign(['zone_id']);
+            $table->dropForeign(['billing_address_id']);
+            $table->dropForeign(['shipping_address_id']);
+            $table->dropForeign(['shipping_option_id']);
+
+            $table->dropColumn([
+                'zone_id',
+                'billing_address_id',
+                'shipping_address_id',
+                'shipping_option_id',
+                'canceled_at',
+            ]);
+        });
+    }
 };

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Database\Seeders\Auth;
+namespace Shopper\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -16,22 +16,22 @@ final class RolesTableSeeder extends Seeder
 
         Role::create([
             'name' => config('shopper.core.roles.admin'),
-            'display_name' => __('Administrator'),
-            'description' => __('Site administrator with access to shop admin panel and developer tools.'),
+            'display_name' => __('shopper-core::roles.admin.display_name'),
+            'description' => __('shopper-core::roles.admin.description'),
             'can_be_removed' => false,
         ]);
 
         Role::create([
             'name' => config('shopper.core.roles.manager'),
-            'display_name' => __('Manager'),
-            'description' => __('Site manager with access to shop admin panel and publishing menus.'),
+            'display_name' => __('shopper-core::roles.manager.display_name'),
+            'description' => __('shopper-core::roles.manager.description'),
             'can_be_removed' => false,
         ]);
 
         Role::create([
             'name' => config('shopper.core.roles.user'),
-            'display_name' => __('User'),
-            'description' => __('Site customer role with access on front site.'),
+            'display_name' => __('shopper-core::roles.user.display_name'),
+            'description' => __('shopper-core::roles.user.description'),
             'can_be_removed' => false,
         ]);
 

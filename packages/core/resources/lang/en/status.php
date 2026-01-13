@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 return [
-
     'archived' => 'Archived',
     'awaiting' => 'Awaiting',
     'cancelled' => 'Cancelled',
@@ -20,5 +19,4 @@ return [
     'refunded' => 'Refunded',
     'rejected' => 'Rejected',
     'shipped' => 'Shipped',
-
 ];

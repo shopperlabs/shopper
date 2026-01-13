@@ -19,7 +19,7 @@
   "require": {
     "php": "^8.3",
     "bacon/bacon-qr-code": "^2.0",
-    "codeat3/blade-phosphor-icons": "^2.0",
+    "codeat3/blade-phosphor-icons": "^2.3",
     "codewithdennis/filament-select-tree": "^3.1",
     "danharrin/livewire-rate-limiting": "^1.0|^2.0",
     "filament/forms": "^3.3",

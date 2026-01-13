@@ -14,4 +14,12 @@ return new class extends Migration
             $this->addForeignKey($table, 'zone_id', $this->getTableName('zones'));
         });
     }
+
+    public function down(): void
+    {
+        Schema::table($this->getTableName('discounts'), function (Blueprint $table): void {
+            $table->dropForeign(['zone_id']);
+            $table->dropColumn('zone_id');
+        });
+    }
 };
