@@ -49,7 +49,7 @@
     "spatie/laravel-livewire-wizard": "^2.2",
     "spatie/laravel-package-tools": "^1.15",
     "stevebauman/location": "^7.2",
-    "symplify/monorepo-builder": "^11.0"
+    "symplify/monorepo-builder": "^12.4"
   },
   "autoload": {
     "files": [
