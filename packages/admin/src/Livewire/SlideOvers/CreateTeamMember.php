@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\GenderField;
 use Shopper\Components\Section;
-use Shopper\Core\Contracts\ShopperUser;
+use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Core\Models\Role;
 use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Notifications\AdminSendCredentials;

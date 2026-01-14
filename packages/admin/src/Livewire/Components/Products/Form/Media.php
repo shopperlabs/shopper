@@ -11,7 +11,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 
 /**
  * @property-read Form $form
@@ -20,15 +20,13 @@ class Media extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public Product $product;
+    public ProductContract $product;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
 
-    public function mount(Product $product): void
+    public function mount(): void
     {
-        $this->product = $product;
-
         $this->form->fill($this->product->toArray());
     }
 

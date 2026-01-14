@@ -20,7 +20,7 @@ use JaOcero\RadioDeck\Forms\Components\RadioDeck;
 use Shopper\Actions\Store\Product\CreateProductAction;
 use Shopper\Components;
 use Shopper\Core\Enum\ProductType;
-use Shopper\Core\Models\Channel;
+use Shopper\Core\Models\Contracts\Channel as ChannelContract;
 use Shopper\Feature;
 use Shopper\Livewire\Components\Products\ProductTypeConfiguration;
 use Shopper\Livewire\Components\SlideOverComponent;
@@ -53,7 +53,7 @@ class AddProduct extends SlideOverComponent implements HasForms
         $this->startStep = $this->currentProductType ? 2 : 1;
 
         $this->form->fill(array_merge([
-            'channels' => Channel::resolvedQuery()
+            'channels' => resolve(ChannelContract::class)::query()
                 ->where('is_default', true)
                 ->pluck('id')
                 ->toArray(),
@@ -261,8 +261,10 @@ class AddProduct extends SlideOverComponent implements HasForms
         $this->validate();
 
         $product = app()->call(CreateProductAction::class, [
-            'form' => $this->form,
+            'values' => $this->form->getState(),
         ]);
+
+        $this->form->model($product)->saveRelationships();
 
         Notification::make()
             ->title(__('shopper::notifications.create', ['item' => $product->name]))

@@ -14,14 +14,14 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\WithPagination;
-use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Events\Orders\AddNoteToOrder;
 use Shopper\Core\Events\Orders\OrderCancel;
 use Shopper\Core\Events\Orders\OrderCompleted;
 use Shopper\Core\Events\Orders\OrderPaid;
 use Shopper\Core\Events\Orders\OrderRegistered;
-use Shopper\Core\Models\Order;
+use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 /**
@@ -33,7 +33,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
     use InteractsWithForms;
     use WithPagination;
 
-    public Order $order;
+    public OrderContract $order;
 
     public int $perPage = 3;
 
@@ -151,11 +151,11 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
                 ->items()
                 ->with('product', 'product.media', 'product.prices')
                 ->simplePaginate($this->perPage),
-            'nextOrder' => Order::query()
+            'nextOrder' => resolve(OrderContract::class)::query()
                 ->where('id', '>', $this->order->id)
                 ->oldest('id')
                 ->first(),
-            'prevOrder' => Order::query()
+            'prevOrder' => resolve(OrderContract::class)::query()
                 ->where('id', '<', $this->order->id)
                 ->latest('id')
                 ->first(),

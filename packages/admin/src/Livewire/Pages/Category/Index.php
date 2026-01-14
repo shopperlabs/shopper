@@ -31,7 +31,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(app(CategoryContract::class)::query()->with('parent')->latest())
+            ->query(resolve(CategoryContract::class)::query()->with('parent')->latest())
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
@@ -48,7 +48,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->sortable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->label(__('shopper::forms.label.slug'))
-                    ->description(__('shopper::words.slug_description'))
                     ->badge()
                     ->color('gray'),
                 Tables\Columns\IconColumn::make('is_enabled')
@@ -65,7 +64,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->actions([
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->icon('untitledui-edit-04')
+                    ->icon('untitledui-edit-03')
+                    ->iconButton()
                     ->action(
                         fn (CategoryContract $record) => $this->dispatch(
                             'openPanel',
@@ -74,6 +74,15 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         )
                     )
                     ->visible($this->getUser()->can('edit_categories')),
+                Tables\Actions\Action::make('delete')
+                    ->label(__('shopper::forms.actions.delete'))
+                    ->icon('untitledui-trash-03')
+                    ->iconButton()
+                    ->modalIcon('untitledui-trash-03')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->action(fn (CategoryContract $record) => $record->delete())
+                    ->visible($this->getUser()->can('delete_categories')),
             ])
             ->groupedBulkActions([
                 Tables\Actions\BulkAction::make('enabled')

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::as('products.')->group(function (): void {
     Route::get('/', config('shopper.components.product.pages.product-index'))->name('index');
     Route::get('/{product}/edit', config('shopper.components.product.pages.product-edit'))->name('edit');
-    Route::get('/{productId}/variants/{variantId}', config('shopper.components.product.pages.variant-edit'))
+    Route::get('/{product}/variants/{variant}', config('shopper.components.product.pages.variant-edit'))
         ->name('variant');
 });
 

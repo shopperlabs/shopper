@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
-use Shopper\Core\Models\Category;
+use Shopper\Core\Models\Contracts\Category;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
@@ -32,7 +32,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
 
     public function mount(?Category $category = null): void
     {
-        $this->category = $category ?? Category::resolvedQuery()->newModelInstance();
+        $this->category = $category ?? resolve(Category::class)::query()->newModelInstance();
 
         $this->form->fill($this->category->toArray());
     }
@@ -117,7 +117,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
         } else {
             $this->authorize('add_categories');
 
-            $category = Category::resolvedQuery()->create($this->form->getState());
+            $category = resolve(Category::class)::query()->create($this->form->getState());
             $this->form->model($category)->saveRelationships();
         }
 

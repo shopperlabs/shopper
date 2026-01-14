@@ -14,7 +14,7 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Shopper\Core\Contracts\ShopperUser;
+use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Core\Models\Role;
 
 #[Layout('shopper::components.layouts.setting')]

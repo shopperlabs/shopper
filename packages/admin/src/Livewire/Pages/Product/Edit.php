@@ -14,7 +14,7 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Shopper\Core\Events\Products\ProductDeleted;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Edit extends AbstractPageComponent implements HasActions, HasForms
@@ -22,27 +22,28 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
     use InteractsWithActions;
     use InteractsWithForms;
 
-    public ?Product $product = null;
+    public ProductContract $product;
 
     #[Url(as: 'tab')]
     public string $activeTab = 'detail';
 
-    public function mount(?Product $product = null): void
+    public function mount(): void
     {
         $this->authorize('edit_products');
 
-        $this->product = $product?->load('prices');
+        $this->product?->load('prices');
     }
 
     public function deleteAction(): Action
     {
-        return Action::make(__('shopper::forms.actions.delete'))
-            ->requiresConfirmation()
+        return Action::make('delete')
+            ->label(__('shopper::forms.actions.delete'))
             ->icon('untitledui-trash-03')
             ->modalIcon('untitledui-trash-03')
+            ->requiresConfirmation()
             ->authorize('delete_products', $this->product)
+            ->visible(shopper()->auth()->user()->can('delete_products'))
             ->color('danger')
-            ->button()
             ->action(function (): void {
                 event(new ProductDeleted($this->product));
 

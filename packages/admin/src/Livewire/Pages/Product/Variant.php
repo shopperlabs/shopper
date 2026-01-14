@@ -13,8 +13,8 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Contracts\View\View;
-use Shopper\Core\Models\Product;
-use Shopper\Core\Models\ProductVariant;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Variant extends AbstractPageComponent implements HasActions, HasForms
@@ -22,16 +22,15 @@ class Variant extends AbstractPageComponent implements HasActions, HasForms
     use InteractsWithActions;
     use InteractsWithForms;
 
-    public ?Product $product = null;
+    public ?ProductContract $product = null;
 
-    public ?ProductVariant $variant = null;
+    public ?ProductVariantContract $variant = null;
 
-    public function mount(?Product $product = null, ?ProductVariant $variant = null): void
+    public function mount(): void
     {
         $this->authorize('edit_products');
 
-        $this->product = $product;
-        $this->variant = $variant?->load([
+        $this->variant?->load([
             'prices',
             'media',
             'values',

@@ -356,7 +356,7 @@
                         <div class="shrink-0">
                             <img
                                 class="flex size-10 items-center justify-center rounded-full bg-gray-400 ring-4 ring-white dark:bg-gray-500 dark:ring-gray-800"
-                                src="{{ auth()->user()->picture }}"
+                                src="{{ shopper()->auth()->user()->picture }}"
                                 alt="Customer avatar"
                             />
                         </div>

@@ -37,7 +37,7 @@
                     <x-shopper::heading>
                         <x-slot:title>
                             <div class="space-y-1">
-                                @if($product->type)
+                                @if ($product->type)
                                     <x-filament::badge
                                         :color="$product->type->getColor()"
                                         :icon="$product->type->getIcon()"
@@ -46,6 +46,7 @@
                                         {{ $product->type->getLabel() }}
                                     </x-filament::badge>
                                 @endif
+
                                 <h2
                                     class="font-heading text-2xl font-bold leading-6 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:leading-9"
                                 >

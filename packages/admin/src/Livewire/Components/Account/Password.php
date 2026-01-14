@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Shopper\Components\Section;
-use Shopper\Core\Contracts\ShopperUser;
+use Shopper\Core\Models\Contracts\ShopperUser;
 
 /**
  * @property-read Form $form

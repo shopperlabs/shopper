@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Shopper\Core\Contracts\ShopperUser;
+use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Facades\Shopper;
 use Shopper\Traits\TwoFactorAuthenticatable;
 

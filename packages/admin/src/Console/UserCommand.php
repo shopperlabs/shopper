@@ -8,9 +8,11 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
+use Shopper\Core\Enum\GenderType;
 
 use function Laravel\Prompts\info;
 use function Laravel\Prompts\password;
+use function Laravel\Prompts\select;
 use function Laravel\Prompts\text;
 
 final class UserCommand extends Command
@@ -51,6 +53,12 @@ final class UserCommand extends Command
             required: true,
         );
 
+        $gender = select(
+            label: 'Select your gender',
+            options: GenderType::options(),
+            default: GenderType::Male(),
+        );
+
         $password = password(
             label: 'Choose a Password',
             required: true,
@@ -67,6 +75,7 @@ final class UserCommand extends Command
             'email' => $email,
             'first_name' => $first_name,
             'last_name' => $last_name,
+            'gender' => $gender,
             'password' => Hash::make($password),
             'last_login_at' => now()->toDateTimeString(),
             'email_verified_at' => now()->toDateTimeString(),

@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
-use Shopper\Core\Contracts\ShopperUser;
+use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Core\Models\Role;
 
 class UsersRole extends Component implements HasForms, HasTable
@@ -41,14 +41,8 @@ class UsersRole extends Component implements HasForms, HasTable
                     ->view('shopper::livewire.tables.cells.administrators.name'),
                 Tables\Columns\TextColumn::make('email')
                     ->label(__('shopper::forms.label.email'))
-                    ->icon(function (ShopperUser $record): string {
-                        /** @var \Illuminate\Database\Eloquent\Model $record */
-                        return $record->email_verified_at ? 'untitledui-check-verified-02' : 'untitledui-alert-circle';
-                    })
-                    ->iconColor(function (ShopperUser $record): string {
-                        /** @var \Illuminate\Database\Eloquent\Model $record */
-                        return $record->email_verified_at ? 'success' : 'danger';
-                    }),
+                    ->icon(fn (ShopperUser $record): string => $record->email_verified_at ? 'untitledui-check-verified-02' : 'untitledui-alert-circle')
+                    ->iconColor(fn (ShopperUser $record): string => $record->email_verified_at ? 'success' : 'danger'),
                 Tables\Columns\TextColumn::make('roles_label')
                     ->label(__('shopper::forms.label.role'))
                     ->badge(),

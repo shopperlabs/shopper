@@ -30,7 +30,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Attribute::query())
+            ->query(Attribute::query()->latest())
             ->columns([
                 IconColumn::make('icon')
                     ->label(__('shopper::forms.label.icon')),
@@ -68,10 +68,10 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                         )
                     )
                     ->visible(fn (Attribute $record): bool => in_array($record->type, Attribute::fieldsWithValues())),
-
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->icon('untitledui-edit-04')
+                    ->icon('untitledui-edit-03')
+                    ->iconButton()
                     ->action(
                         fn (Attribute $record) => $this->dispatch(
                             'openPanel',
@@ -79,7 +79,16 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                             arguments: ['attributeId' => $record->id]
                         )
                     )
-                    ->visible(auth()->user()->can('edit_attributes')),
+                    ->visible(shopper()->auth()->user()->can('edit_attributes')),
+                Tables\Actions\Action::make('delete')
+                    ->label(__('shopper::forms.actions.delete'))
+                    ->icon('untitledui-trash-03')
+                    ->iconButton()
+                    ->modalIcon('untitledui-trash-03')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->action(fn (Attribute $record) => $record->delete())
+                    ->visible(shopper()->auth()->user()->can('delete_attributes')),
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make()

@@ -53,7 +53,7 @@
                                 @if ($permission->users->count() > 0)
                                     <div class="flex items-center space-x-2">
                                         <div class="flex shrink-0 -space-x-1">
-                                            @foreach ($permission->users->limit(3) as $user)
+                                            @foreach ($permission->users->take(3) as $user)
                                                 <img
                                                     class="shadow-solid size-6 max-w-none rounded-full"
                                                     src="{{ $user->picture }}"

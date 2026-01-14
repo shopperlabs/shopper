@@ -10,16 +10,23 @@ use Shopper\Jobs\AttachedDiscountToProducts;
 
 final readonly class SaveAndDispatchDiscountAction
 {
+    /**
+     * @param  array<string, mixed>  $values
+     * @param  array<int>  $productsIds
+     * @param  array<int>  $customersIds
+     */
     public function __invoke(
         array $values,
         ?int $discountId = null,
         array $productsIds = [],
         array $customersIds = []
     ): Discount {
-        $discount = Discount::query()->updateOrCreate(
-            attributes: ['id' => $discountId],
-            values: $values,
-        );
+        if ($discountId) {
+            $discount = Discount::query()->findOrFail($discountId);
+            $discount->update($values);
+        } else {
+            $discount = Discount::query()->create($values);
+        }
 
         AttachedDiscountToProducts::dispatch(
             data_get($values, 'apply_to'),

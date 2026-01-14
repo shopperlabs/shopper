@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Shopper\Core\Models\Collection;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Collection as CollectionContract;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 
 /**
  * @property-read array<int> $productsIds
@@ -27,7 +27,7 @@ class CollectionProducts extends Component implements HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
-    public Collection $collection;
+    public CollectionContract $collection;
 
     /**
      * @return array<int>
@@ -52,16 +52,17 @@ class CollectionProducts extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('name'),
             ])
             ->actions([
-                Tables\Actions\Action::make(__('shopper::forms.actions.delete'))
+                Tables\Actions\Action::make('delete')
+                    ->label(__('shopper::forms.label.delete'))
                     ->icon('untitledui-trash-03')
                     ->iconButton()
                     ->modalIcon('untitledui-trash-03')
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->action(function (Product $record): void {
+                    ->action(function (ProductContract $record): void {
                         $this->collection->products()->detach([$record->id]);
 
-                        $this->dispatch('onProductsAddInCollection');
+                        $this->dispatch('collection.add.product');
 
                         Notification::make()
                             ->title(__('shopper::pages/collections.remove_product'))
@@ -100,7 +101,7 @@ class CollectionProducts extends Component implements HasForms, HasTable
             ->emptyStateDescription(__('shopper::pages/collections.empty_collections'));
     }
 
-    #[On('onProductsAddInCollection')]
+    #[On('collection.add.product')]
     public function render(): View
     {
         return view('shopper::livewire.components.collections.products');

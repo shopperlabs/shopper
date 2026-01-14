@@ -9,15 +9,15 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Livewire\Components\ModalComponent;
 
 /**
- * @property-read Collection<int, Product> $products
+ * @property-read Collection<int, ProductContract> $products
  */
 class RelatedProductsList extends ModalComponent
 {
-    public Product $product;
+    public ProductContract $product;
 
     public string $search = '';
 
@@ -31,19 +31,19 @@ class RelatedProductsList extends ModalComponent
     /**
      * @param  array<int>  $ids
      */
-    public function mount(?Product $product = null, array $ids = []): void
+    public function mount(?ProductContract $product = null, array $ids = []): void
     {
         $this->product = $product;
         $this->exceptProductIds = $ids;
     }
 
     /**
-     * @return Collection<int, Product>
+     * @return Collection<int, ProductContract>
      */
     #[Computed]
     public function products(): Collection
     {
-        return Product::resolvedQuery()
+        return resolve(ProductContract::class)::query()
             ->where(
                 column: 'name',
                 operator: 'like',

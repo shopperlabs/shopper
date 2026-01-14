@@ -11,7 +11,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
-use Shopper\Core\Models\Order;
+use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Index extends AbstractPageComponent implements HasForms, HasTable
@@ -28,7 +28,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     {
         return $table
             ->query(
-                Order::query()
+                resolve(OrderContract::class)::query()
                     ->with([
                         'customer',
                         'items',
@@ -56,21 +56,21 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::words.customer'))
                     ->searchable()
                     ->sortable()
-                    ->formatStateUsing(fn (Order $record): View => view(
+                    ->formatStateUsing(fn (OrderContract $record): View => view(
                         'shopper::livewire.tables.cells.orders.customer',
                         ['order' => $record]
                     ))
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('shopper::words.purchased'))
-                    ->formatStateUsing(fn (Order $record): View => view(
+                    ->formatStateUsing(fn (OrderContract $record): View => view(
                         'shopper::livewire.tables.cells.orders.purchased',
                         ['order' => $record]
                     )),
                 Tables\Columns\TextColumn::make('currency_code')
                     ->label(__('shopper::forms.label.price_amount'))
                     ->formatStateUsing(
-                        fn (string $state, Order $record): string => shopper_money_format(amount: $record->total(), currency: $state)
+                        fn (string $state, OrderContract $record): string => shopper_money_format(amount: $record->total(), currency: $state)
                     ),
                 Tables\Columns\TextColumn::make('zone.name')
                     ->label(__('shopper::pages/settings/zones.single'))
@@ -83,7 +83,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Actions\Action::make('view')
                     ->label(__('shopper::words.details'))
                     ->url(
-                        fn (Order $record): string => route(
+                        fn (OrderContract $record): string => route(
                             name: 'shopper.orders.detail',
                             parameters: ['order' => $record]
                         ),

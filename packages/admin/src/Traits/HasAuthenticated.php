@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Core\Contracts\ShopperUser;
+use Shopper\Core\Models\Contracts\ShopperUser;
 
 trait HasAuthenticated
 {

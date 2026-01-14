@@ -6,22 +6,20 @@ namespace Shopper\Livewire\Modals;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
-use Shopper\Core\Models\Collection;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Collection as CollectionContract;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Livewire\Components\ModalComponent;
 
 class CollectionProductsList extends ModalComponent
 {
-    public Collection $collection;
+    public CollectionContract $collection;
 
     public string $search = '';
 
-    /**
-     * @var array<int>
-     */
+    /** @var array<int> */
     #[Locked]
     public array $exceptProductIds = [];
 
@@ -36,19 +34,19 @@ class CollectionProductsList extends ModalComponent
     /**
      * @param  array<int>  $exceptProductIds
      */
-    public function mount(?Collection $collection = null, array $exceptProductIds = []): void
+    public function mount(?CollectionContract $collection = null, array $exceptProductIds = []): void
     {
         $this->collection = $collection;
         $this->exceptProductIds = $exceptProductIds;
     }
 
     /**
-     * @return EloquentCollection<int, Product>
+     * @return Collection<int, ProductContract>
      */
     #[Computed]
-    public function products(): EloquentCollection
+    public function products(): Collection
     {
-        return Product::query()
+        return resolve(ProductContract::class)::query()
             ->where(
                 column: 'name',
                 operator: 'like',
@@ -63,7 +61,7 @@ class CollectionProductsList extends ModalComponent
         $currentProducts = $this->collection->products->pluck('id')->toArray();
         $this->collection->products()->sync(array_merge($this->selectedProducts, $currentProducts));
 
-        $this->dispatch('onProductsAddInCollection');
+        $this->dispatch('collection.add.product');
 
         Notification::make()
             ->title(__('shopper::pages/collections.modal.success_message'))

@@ -25,7 +25,7 @@
                 {{ __('shopper::pages/products.inventory.stock_description') }}
             </x-filament::section.description>
         </div>
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-2 lg:max-w-3xl">
             {{ $this->table }}
         </div>
     </section>

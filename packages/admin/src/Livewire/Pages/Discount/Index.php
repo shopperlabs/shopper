@@ -85,7 +85,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->actions([
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->icon('untitledui-edit-04')
+                    ->icon('untitledui-edit-03')
+                    ->iconButton()
                     ->action(
                         fn (Discount $record) => $this->dispatch(
                             'openPanel',
@@ -94,6 +95,15 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         )
                     )
                     ->visible($this->getUser()->can('edit_discounts')),
+                Tables\Actions\Action::make('delete')
+                    ->label(__('shopper::forms.actions.delete'))
+                    ->icon('untitledui-trash-03')
+                    ->iconButton()
+                    ->modalIcon('untitledui-trash-03')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->action(fn (Discount $record) => $record->delete())
+                    ->visible($this->getUser()->can('delete_discounts')),
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make()

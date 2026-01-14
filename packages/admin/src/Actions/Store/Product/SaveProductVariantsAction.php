@@ -7,8 +7,8 @@ namespace Shopper\Actions\Store\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Shopper\Actions\Store\InitialQuantityInventory;
-use Shopper\Core\Models\Product;
-use Shopper\Core\Models\ProductVariant;
+use Shopper\Core\Models\Contracts\Product;
+use Shopper\Core\Models\Contracts\ProductVariant;
 use Throwable;
 
 final class SaveProductVariantsAction
@@ -26,8 +26,8 @@ final class SaveProductVariantsAction
         foreach ($variants as $variantState) {
             /** @var ProductVariant $variant */
             $variant = $variantState['variant_id']
-                ? ProductVariant::resolvedQuery()->findOrFail($variantState['variant_id'])
-                : ProductVariant::resolvedQuery()->create([
+                ? resolve(ProductVariant::class)::query()->findOrFail($variantState['variant_id'])
+                : resolve(ProductVariant::class)::query()->create([
                     'name' => $variantState['name'],
                     'product_id' => $product->id,
                     'sku' => $variantState['sku'],
@@ -36,7 +36,8 @@ final class SaveProductVariantsAction
             $price = (float) $variantState['price'];
 
             if ($price > 0) {
-                $defaultCurrencyId = (int) shopper_setting('default_currency_id');
+                /** @var int $defaultCurrencyId */
+                $defaultCurrencyId = shopper_setting('default_currency_id');
 
                 $variant->prices()
                     ->where('currency_id', $defaultCurrencyId)
@@ -48,7 +49,8 @@ final class SaveProductVariantsAction
                 ]);
             }
 
-            $stock = (int) data_get($variantState, 'stock');
+            /** @var int $stock */
+            $stock = data_get($variantState, 'stock');
 
             if ($stock > 0) {
                 $variant->clearStock();

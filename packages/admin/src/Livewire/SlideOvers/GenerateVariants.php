@@ -12,18 +12,15 @@ use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\Product\SaveProductVariantsAction;
 use Shopper\Core\Macros\Arr;
 use Shopper\Core\Models\AttributeValue;
-use Shopper\Core\Models\Product;
-use Shopper\Core\Models\ProductVariant;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 
-/**
- * @property-read Product $product
- */
 class GenerateVariants extends SlideOverComponent
 {
     #[Locked]
-    public int $productId;
+    public ProductContract $product;
 
     /** @var array<string, mixed> */
     public array $availableOptions = [];
@@ -38,6 +35,8 @@ class GenerateVariants extends SlideOverComponent
 
     public function mount(): void
     {
+        $this->product->loadMissing(['options', 'options.values']);
+
         $this->setupProductAttributes();
     }
 
@@ -78,13 +77,13 @@ class GenerateVariants extends SlideOverComponent
             ])
             ->toArray();
 
-        $variants = ProductVariant::resolvedQuery()
+        $variants = resolve(ProductVariantContract::class)::query()
             ->with(['prices', 'values', 'prices.currency' => function ($query): void {
                 $query->where('code', shopper_currency());
             }])
-            ->where('product_id', $this->productId)
+            ->where('product_id', $this->product->id)
             ->get()
-            ->map(fn (ProductVariant $variant): array => [ // @phpstan-ignore-line
+            ->map(fn (ProductVariantContract $variant): array => [ // @phpstan-ignore-line
                 'id' => $variant->id,
                 'sku' => $variant->sku,
                 'price' => $variant->prices()->first()?->amount ?: 0,
@@ -101,14 +100,6 @@ class GenerateVariants extends SlideOverComponent
             ->toArray();
 
         $this->variants = $this->mapVariantsToProductOptions($optionsValues, $variants); // @phpstan-ignore-line
-    }
-
-    #[Computed]
-    public function product(): Product
-    {
-        return Product::resolvedQuery()
-            ->with(['options', 'options.values'])
-            ->findOrFail($this->productId);
     }
 
     public function removeVariant(string|int $key): void

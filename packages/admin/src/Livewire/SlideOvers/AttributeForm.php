@@ -101,9 +101,9 @@ class AttributeForm extends SlideOverComponent implements HasForms
             ->success()
             ->send();
 
-        $this->dispatch('attribute-save');
-
         $this->closePanel();
+
+        $this->redirect(route('shopper.attributes.index'), navigate: true);
     }
 
     public function render(): View

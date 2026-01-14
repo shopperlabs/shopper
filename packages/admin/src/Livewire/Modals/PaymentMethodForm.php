@@ -15,7 +15,7 @@ use Shopper\Core\Models\PaymentMethod;
 use Shopper\Livewire\Components\ModalComponent;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class PaymentMethodForm extends ModalComponent implements HasForms
 {
@@ -77,10 +77,12 @@ class PaymentMethodForm extends ModalComponent implements HasForms
 
     public function save(): void
     {
-        PaymentMethod::query()->updateOrCreate(
-            attributes: ['id' => $this->paymentId],
-            values: $this->form->getState()
-        );
+        if ($this->paymentId) {
+            $paymentMethod = PaymentMethod::query()->findOrFail($this->paymentId);
+            $paymentMethod->update($this->form->getState());
+        } else {
+            PaymentMethod::query()->create($this->form->getState());
+        }
 
         Notification::make()
             ->title(__('shopper::notifications.payment.add'))

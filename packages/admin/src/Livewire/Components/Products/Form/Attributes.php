@@ -15,8 +15,9 @@ use Livewire\Attributes\Lazy;
 use Livewire\Component;
 use Shopper\Actions\Store\Product\DetachAttributesToProductAction;
 use Shopper\Components\Tables\IconColumn;
+use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 
 #[Lazy]
 class Attributes extends Component implements HasForms, HasTable
@@ -24,8 +25,7 @@ class Attributes extends Component implements HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
-    /** @var Product */
-    public $product;
+    public ProductContract $product;
 
     public function placeholder(): View
     {
@@ -65,9 +65,10 @@ class Attributes extends Component implements HasForms, HasTable
                         fn () => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.choose-product-attributes',
-                            arguments: ['productId' => $this->product->id]
+                            arguments: ['product' => $this->product]
                         )
-                    ),
+                    )
+                    ->visible(Attribute::query()->count() > 0),
             ])
             ->actions([
                 Tables\Actions\Action::make('delete')

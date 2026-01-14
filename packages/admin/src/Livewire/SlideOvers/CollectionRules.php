@@ -12,18 +12,19 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Enum\Operator;
 use Shopper\Core\Enum\Rule;
-use Shopper\Core\Models\Collection;
+use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class CollectionRules extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    public Collection $collection;
+    public CollectionContract $collection;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public static function panelMaxWidth(): string
@@ -47,7 +48,6 @@ class CollectionRules extends SlideOverComponent implements HasForms
                         'all' => __('shopper::pages/collections.conditions.all'),
                         'any' => __('shopper::pages/collections.conditions.any'),
                     ]),
-
                 Forms\Components\Repeater::make('rules')
                     ->relationship()
                     ->label(__('shopper::pages/collections.conditions.title'))
@@ -57,12 +57,10 @@ class CollectionRules extends SlideOverComponent implements HasForms
                             ->label(__('shopper::pages/collections.conditions.choose_rule'))
                             ->options(Rule::class)
                             ->required(),
-
                         Forms\Components\Select::make('operator')
                             ->label(__('shopper::pages/collections.conditions.select_operator'))
                             ->options(Operator::class)
                             ->required(),
-
                         Forms\Components\TextInput::make('value')
                             ->label(__('shopper::forms.label.value'))
                             ->required(),

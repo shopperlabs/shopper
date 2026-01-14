@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Enum\CollectionType;
-use Shopper\Core\Models\Collection;
+use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
@@ -109,8 +109,8 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
 
     public function store(): void
     {
-        /** @var Collection $collection */
-        $collection = Collection::resolvedQuery()->create($this->form->getState());
+        /** @var CollectionContract $collection */
+        $collection = resolve(CollectionContract::class)::query()->create($this->form->getState());
         $this->form->model($collection)->saveRelationships();
 
         Notification::make()

@@ -30,7 +30,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(app(BrandContract::class)::query()->latest())
+            ->query(resolve(BrandContract::class)::query()->latest())
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('Logo')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
@@ -58,7 +58,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->actions([
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->icon('untitledui-edit-04')
+                    ->icon('untitledui-edit-03')
+                    ->iconButton()
                     ->action(
                         fn (BrandContract $record) => $this->dispatch(
                             'openPanel',
@@ -67,6 +68,15 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         )
                     )
                     ->visible(Shopper::auth()->user()->can('edit_brands')),
+                Tables\Actions\Action::make('delete')
+                    ->label(__('shopper::forms.actions.delete'))
+                    ->icon('untitledui-trash-03')
+                    ->iconButton()
+                    ->modalIcon('untitledui-trash-03')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->action(fn (BrandContract $record) => $record->delete())
+                    ->visible(Shopper::auth()->user()->can('delete_brands')),
             ])
             ->groupedBulkActions([
                 Tables\Actions\BulkAction::make('enabled')
@@ -118,6 +128,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             ->success()
                             ->send();
                     })
+                    ->visible(Shopper::auth()->user()->can('delete_brands'))
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([

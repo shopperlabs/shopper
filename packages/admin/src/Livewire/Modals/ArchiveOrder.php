@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
-use Shopper\Core\Models\Order;
+use Shopper\Core\Events\Orders\OrderArchived;
+use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Livewire\Components\ModalComponent;
 
 class ArchiveOrder extends ModalComponent
 {
-    public Order $order;
+    public OrderContract $order;
 
     public static function modalMaxWidth(): string
     {
@@ -20,6 +21,8 @@ class ArchiveOrder extends ModalComponent
     public function archived(): void
     {
         $this->order->delete();
+
+        event(new OrderArchived($this->order));
 
         session()->flash('success', __('shopper::notifications.orders.archived'));
 

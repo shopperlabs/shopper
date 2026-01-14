@@ -36,6 +36,7 @@ return [
         'products.form.seo' => Components\Products\Form\Seo::class,
         'products.form.shipping' => Components\Products\Form\Shipping::class,
         'products.form.variants' => Components\Products\Form\Variants::class,
+
         'products.variant-stock' => Components\Products\VariantStock::class,
         'products.type-configuration' => Components\Products\ProductTypeConfiguration::class,
         'products.pricing' => Components\Products\Pricing::class,

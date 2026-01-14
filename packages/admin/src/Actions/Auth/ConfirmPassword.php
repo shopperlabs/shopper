@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Actions\Auth;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
-use Shopper\Core\Contracts\ShopperUser;
+use Shopper\Core\Models\Contracts\ShopperUser;
 
 class ConfirmPassword
 {

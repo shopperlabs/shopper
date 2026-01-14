@@ -6,7 +6,7 @@ namespace Shopper\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Shopper\Core\Contracts\ShopperUser;
+use Shopper\Core\Models\Contracts\ShopperUser;
 
 final class CustomerSendCredentials extends Notification
 {

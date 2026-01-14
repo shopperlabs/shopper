@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use Shopper\Actions\Store\Product\UpdateProductAction;
 use Shopper\Components;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Feature;
 
 /**
@@ -27,17 +27,15 @@ class Edit extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public Product $product;
+    public ProductContract $product;
 
     /**
      * @var array<string, mixed>|null
      */
     public ?array $data = [];
 
-    public function mount(Product $product): void
+    public function mount(): void
     {
-        $this->product = $product;
-
         $this->form->fill($this->product->toArray());
     }
 
@@ -162,9 +160,11 @@ class Edit extends Component implements HasForms
         $this->validate();
 
         $this->product = app()->call(UpdateProductAction::class, [
-            'form' => $this->form,
+            'values' => $this->form->getState(),
             'product' => $this->product,
         ]);
+
+        $this->form->model($this->product)->saveRelationships();
 
         $this->dispatch('product.updated');
 

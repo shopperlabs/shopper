@@ -15,7 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Events\Products\ProductDeleted;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -33,7 +33,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     {
         return $table
             ->query(
-                Product::resolvedQuery()
+                resolve(ProductContract::class)::query()
                     ->with(['brand', 'variants'])
                     ->withCount(['variants'])
                     ->latest()
@@ -42,7 +42,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->label(__('shopper::forms.label.thumbnail'))
-                    ->square(),
+                    ->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable()
@@ -81,20 +81,23 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         ->label(__('shopper::forms.actions.edit'))
                         ->icon('untitledui-edit-04')
                         ->color('primary')
-                        ->action(fn (Product $record) => $this->redirectRoute(
+                        ->action(fn (ProductContract $record) => $this->redirectRoute(
                             name: 'shopper.products.edit',
-                            parameters: ['product' => $record]
-                        )),
+                            parameters: ['product' => $record],
+                            navigate: true
+                        ))
+                        ->visible(shopper()->auth()->user()->can('edit_products')),
                     Tables\Actions\Action::make(__('shopper::forms.actions.delete'))
                         ->icon('untitledui-trash-03')
                         ->modalIcon('untitledui-trash-03')
                         ->color('danger')
                         ->requiresConfirmation()
-                        ->action(function (Product $record): void {
+                        ->action(function (ProductContract $record): void {
                             event(new ProductDeleted($record));
 
                             $record->delete();
-                        }),
+                        })
+                        ->visible(shopper()->auth()->user()->can('delete_products')),
                 ])
                     ->tooltip('Actions'),
             ])

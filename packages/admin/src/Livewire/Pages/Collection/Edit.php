@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
-use Shopper\Core\Models\Collection;
+use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -25,16 +25,16 @@ class Edit extends AbstractPageComponent implements HasForms
 {
     use InteractsWithForms;
 
-    public ?Collection $collection = null;
+    public ?CollectionContract $collection = null;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
 
-    public function mount(?Collection $collection = null): void
+    public function mount(): void
     {
         $this->authorize('edit_collections');
 
-        $this->collection = $collection?->load('rules');
+        $this->collection?->load('rules');
 
         $this->form->fill($this->collection?->toArray() ?? []);
     }
@@ -65,7 +65,6 @@ class Edit extends AbstractPageComponent implements HasForms
                                     ->maxLength(255)
                                     ->unique(config('shopper.models.collection'), 'slug', ignoreRecord: true),
                             ]),
-
                         Forms\Components\RichEditor::make('description')
                             ->label(__('shopper::forms.label.description'))
                             ->toolbarButtons([

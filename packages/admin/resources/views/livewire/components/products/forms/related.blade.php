@@ -14,7 +14,7 @@
                     type="button"
                     wire:click="$dispatch('openModal', {
                         component: 'shopper-modals.related-products-list',
-                        arguments: { productId: {{ $product->id }}, ids: {{ json_encode($this->productsIds) }} },
+                        arguments: { product: {{ $product }}, ids: {{ json_encode($this->productsIds) }} },
                     })"
                 >
                     {{ __('shopper::layout.account_dropdown.add_product') }}
@@ -86,7 +86,7 @@
                         type="button"
                         wire:click="$dispatch('openModal', {
                             component: 'shopper-modals.related-products-list',
-                            arguments: { productId: {{ $product->id }}, ids: {{ json_encode($this->productsIds) }} },
+                            arguments: { product: {{ $product }}, ids: {{ json_encode($this->productsIds) }} },
                         })"
                     >
                         <x-untitledui-plus class="mr-2 size-5" stroke-width="1.5" aria-hidden="true" />

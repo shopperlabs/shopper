@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Lazy;
 use Livewire\Component;
-use Shopper\Core\Models\Product;
-use Shopper\Core\Models\ProductVariant;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 
 #[Lazy]
 class Variants extends Component implements HasForms, HasTable
@@ -26,7 +26,7 @@ class Variants extends Component implements HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
-    public Product $product;
+    public ProductContract $product;
 
     public function placeholder(): View
     {
@@ -37,7 +37,7 @@ class Variants extends Component implements HasForms, HasTable
     {
         return $table
             ->query(
-                ProductVariant::resolvedQuery()
+                resolve(ProductVariantContract::class)::query()
                     ->where('product_id', $this->product->id)
                     ->latest()
             )
@@ -45,7 +45,7 @@ class Variants extends Component implements HasForms, HasTable
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->label(__('shopper::forms.label.thumbnail'))
-                    ->square(),
+                    ->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable()
@@ -60,7 +60,7 @@ class Variants extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('stock')
                     ->label(__('shopper::layout.tables.current_stock'))
                     ->formatStateUsing(
-                        fn (ProductVariant $record): HtmlString => new HtmlString(Blade::render(<<<BLADE
+                        fn (ProductVariantContract $record): HtmlString => new HtmlString(Blade::render(<<<BLADE
                             <div class="flex items-center">
                                 <x-shopper::stock-badge :stock="{$record->stock}" />
                                 {{ __('shopper::words.in_stock') }}
@@ -77,7 +77,7 @@ class Variants extends Component implements HasForms, HasTable
                         fn () => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.generate-variants',
-                            arguments: ['productId' => $this->product->id]
+                            arguments: ['product' => $this->product]
                         )
                     )
                     ->visible($this->product->options->count() > 0),
@@ -87,22 +87,24 @@ class Variants extends Component implements HasForms, HasTable
                         fn () => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.add-variant',
-                            arguments: ['productId' => $this->product->id]
+                            arguments: ['product' => $this->product]
                         )
                     ),
             ])
             ->actions([
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->icon('untitledui-edit-04')
+                    ->iconButton()
+                    ->icon('untitledui-edit-03')
                     ->action(
-                        fn (ProductVariant $record) => $this->redirectRoute(
+                        fn (ProductVariantContract $record) => $this->redirectRoute(
                             name: 'shopper.products.variant',
-                            parameters: ['productId' => $this->product->id, 'variantId' => $record->id],
+                            parameters: ['product' => $this->product, 'variant' => $record],
                         ),
                     ),
                 Tables\Actions\DeleteAction::make()
                     ->icon('untitledui-trash-03')
+                    ->iconButton()
                     ->modalIcon('untitledui-trash-03')
                     ->successNotificationTitle(__('shopper::pages/products.notifications.variation_delete')),
             ])

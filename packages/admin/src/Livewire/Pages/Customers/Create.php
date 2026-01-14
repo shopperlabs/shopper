@@ -21,14 +21,14 @@ use Shopper\Components\Form\AddressField;
 use Shopper\Components\Form\GenderField;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
-use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Enum\AddressType;
+use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Core\Models\Country;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Notifications\CustomerSendCredentials;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class Create extends AbstractPageComponent implements HasForms
 {
@@ -129,6 +129,9 @@ class Create extends AbstractPageComponent implements HasForms
     {
         /** @var array<string, mixed> $data */
         $data = $this->form->getState();
+        $sendMail = data_get($data, 'send_mail');
+        $password = data_get($data, 'password_confirmation');
+
         $customerData = Arr::except($data, ['address', 'send_mail', 'password_confirmation']);
         $address = array_merge(Arr::only($data, ['address'])['address'], [
             'first_name' => $data['first_name'],
@@ -145,11 +148,10 @@ class Create extends AbstractPageComponent implements HasForms
         ));
 
         $customer->assignRole(config('shopper.core.roles.user'));
-
         $customer->addresses()->create($address);
 
-        if ($data['send_mail']) {
-            $customer->notify(new CustomerSendCredentials($data['password_confirmation']));
+        if ($sendMail) {
+            $customer->notify(new CustomerSendCredentials($password));
         }
 
         Notification::make()

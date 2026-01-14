@@ -21,7 +21,7 @@ use Shopper\Components;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
@@ -34,7 +34,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
     /** @var array<string, mixed>|null */
     public ?array $data = [];
 
-    public int $productId;
+    public ProductContract $product;
 
     public static function panelMaxWidth(): string
     {
@@ -105,7 +105,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
                                         ->get();
 
                                     $selectedAttributes = AttributeProduct::query()
-                                        ->where('product_id', $this->productId)
+                                        ->where('product_id', $this->product->id)
                                         ->whereIn('attribute_id', $get('attributes'))
                                         ->get()
                                         ->mapToGroups(fn (AttributeProduct $attributeProduct): array => [
@@ -179,7 +179,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
         $values = data_get($this->form->getState(), 'values');
 
         app()->call(AttachedAttributesToProductAction::class, [
-            'product' => Product::resolvedQuery()->find($this->productId),
+            'product' => $this->product,
             'attributes' => Arr::except($values, 'custom_value'),
             'customValues' => Arr::get($values, 'custom_value', []),
         ]);
@@ -190,7 +190,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
             ->send();
 
         $this->redirect(
-            route('shopper.products.edit', ['product' => $this->productId, 'tab' => 'attributes']),
+            route('shopper.products.edit', ['product' => $this->product, 'tab' => 'attributes']),
             navigate: true
         );
     }

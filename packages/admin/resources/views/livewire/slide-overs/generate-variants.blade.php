@@ -3,19 +3,19 @@
     :title="__('shopper::pages/products.variants.generate')"
     :description="__('shopper::pages/products.variants.generate_description')"
 >
-    @if(count($availableOptions))
+    @if (count($availableOptions))
         <x-shopper::card class="overflow-hidden">
             <x-filament-tables::table>
                 <x-slot name="header">
                     <x-filament-tables::header-cell class="lg:py-3">
-                          <span class="fi-ta-header-cell-label text-sm font-semibold text-gray-950 dark:text-white">
+                        <span class="fi-ta-header-cell-label text-sm font-semibold text-gray-950 dark:text-white">
                             {{ __('shopper::pages/attributes.menu') }}
-                          </span>
+                        </span>
                     </x-filament-tables::header-cell>
                     <x-filament-tables::header-cell class="lg:py-3" />
                 </x-slot>
 
-                @foreach(collect($availableOptions) as $attribute)
+                @foreach (collect($availableOptions) as $attribute)
                     <x-filament-tables::row>
                         <x-filament-tables::cell>
                             <div class="grid w-full gap-y-1 py-2 px-3">
@@ -26,7 +26,7 @@
                         </x-filament-tables::cell>
                         <x-filament-tables::cell>
                             <div class="flex items-center flex-wrap gap-3 w-full gap-y-1 py-2 px-3">
-                                @foreach(collect($attribute['values']) as $option)
+                                @foreach (collect($attribute['values']) as $option)
                                     <x-filament::badge color="gray">{{ $option['value'] }}</x-filament::badge>
                                 @endforeach
                             </div>
@@ -37,20 +37,20 @@
         </x-shopper::card>
     @endif
 
-    @if(count($variants))
+    @if (count($variants))
         <div class="mt-10 border-t pt-6 border-gray-200 dark:border-white/10">
             <h4 class="font-heading font-semibold text-xl text-gray-900 dark:text-white">
                 {{ __('shopper::pages/products.variants.title') }}
             </h4>
             <div class="mt-5 space-y-4">
-                @foreach($variants as $index => $variant)
+                @foreach ($variants as $index => $variant)
                     <x-shopper::card class="divide-y divide-gray-200 dark:divide-white/10" x-data="{ expanded: true }" wire:key="variant_{{ $variant['key'] }}">
                         <div class="flex items-center justify-between gap-4 py-2 px-3">
                             <button @click="expanded = ! expanded" type="button" class="flex items-center w-full h-fit flex-1 gap-2 text-sm/5 font-medium text-gray-700 dark:text-gray-300">
                                 <x-phosphor-swatches-duotone class="size-5" aria-hidden="true" />
                                 {{ $variant['name'] }}
 
-                                @if(! $variant['variant_id'])
+                                @if (! $variant['variant_id'])
                                     <x-filament::badge color="info" size="sm">{{ __('shopper-core::status.new') }}</x-filament::badge>
                                 @endif
                             </button>

@@ -8,8 +8,8 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
-use Shopper\Core\Contracts\ShopperUser;
-use Shopper\Core\Models\Order;
+use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Core\Models\Contracts\Order as OrderContract;
 
 class Orders extends Component
 {
@@ -18,7 +18,7 @@ class Orders extends Component
     #[Computed(persist: true)]
     public function orders(): Paginator
     {
-        return Order::with([
+        return resolve(OrderContract::class)::with([
             'items',
             'items.product',
             'items.product.media',

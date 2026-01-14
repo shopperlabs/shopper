@@ -6,7 +6,7 @@ namespace Shopper\Livewire\Components\Customers;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Core\Contracts\ShopperUser;
+use Shopper\Core\Models\Contracts\ShopperUser;
 
 class Profile extends Component
 {

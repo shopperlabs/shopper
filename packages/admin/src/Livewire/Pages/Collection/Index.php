@@ -6,12 +6,15 @@ namespace Shopper\Livewire\Pages\Collection;
 
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Tables;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
-use Shopper\Core\Models\Collection;
+use Illuminate\Database\Eloquent\Collection;
+use Shopper\Core\Models\Contracts\Collection as CollectionContract;
+use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Index extends AbstractPageComponent implements HasForms, HasTable
@@ -27,7 +30,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Collection::resolvedQuery()->with('rules'))
+            ->query(resolve(CollectionContract::class)::query()->with('rules')->latest())
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
@@ -39,13 +42,13 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->label(__('shopper::forms.label.type'))
-                    ->formatStateUsing(fn (Collection $record): string => $record->isAutomatic() ? __('shopper::pages/collections.automatic') : __('shopper::pages/collections.manual'))
+                    ->formatStateUsing(fn (CollectionContract $record): string => $record->isAutomatic() ? __('shopper::pages/collections.automatic') : __('shopper::pages/collections.manual'))
                     ->badge()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('shopper::pages/collections.product_conditions'))
                     ->formatStateUsing(
-                        fn (Collection $record): string => $record->rules->isNotEmpty() ? ucfirst($record->firstRule()) : 'N/A'
+                        fn (CollectionContract $record): string => $record->rules->isNotEmpty() ? ucfirst($record->firstRule()) : 'N/A'
                     ),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
@@ -54,19 +57,44 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->actions([
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->icon('untitledui-edit-04')
+                    ->icon('untitledui-edit-03')
+                    ->iconButton()
                     ->url(
-                        fn (Collection $record): string => route(
+                        fn (CollectionContract $record): string => route(
                             name: 'shopper.collections.edit',
                             parameters: ['collection' => $record]
                         ),
-                    ),
-                Tables\Actions\Action::make(__('shopper::forms.actions.delete'))
+                    )
+                    ->visible(Shopper::auth()->user()->can('edit_collections')),
+                Tables\Actions\Action::make('delete')
+                    ->label(__('shopper::forms.actions.delete'))
                     ->icon('untitledui-trash-03')
+                    ->iconButton()
                     ->modalIcon('untitledui-trash-03')
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->action(fn (Collection $record) => $record->delete()),
+                    ->action(fn (CollectionContract $record) => $record->delete())
+                    ->visible(Shopper::auth()->user()->can('delete_collections')),
+            ])
+            ->groupedBulkActions([
+                Tables\Actions\DeleteBulkAction::make()
+                    ->label(__('shopper::forms.actions.delete'))
+                    ->icon('untitledui-trash-03')
+                    ->requiresConfirmation()
+                    ->action(function (Collection $records): void {
+                        $records->each->delete();
+
+                        Notification::make()
+                            ->title(
+                                __('shopper::notifications.delete', [
+                                    'item' => __('shopper::pages/collections.single'),
+                                ])
+                            )
+                            ->success()
+                            ->send();
+                    })
+                    ->visible(Shopper::auth()->user()->can('delete_collections'))
+                    ->deselectRecordsAfterCompletion(),
             ]);
     }
 

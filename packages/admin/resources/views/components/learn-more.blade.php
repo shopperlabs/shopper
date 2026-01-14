@@ -8,7 +8,7 @@
         <div class="bg-white px-4 py-3 text-sm leading-5 text-gray-500 dark:bg-transparent dark:text-gray-400">
             {{ __('shopper::words.learn_more') }}
             <a
-                href="https://laravelshopper.dev/docs/2.x/{{ $link }}"
+                href="https://docs.laravelshopper.dev/v2/{{ $link }}"
                 target="_blank"
                 class="ml-1 inline-flex items-center text-primary-600 transition-colors duration-150 ease-in-out hover:text-primary-500"
             >

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Actions\Store\Product;
 
 use Illuminate\Support\Arr;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product;
 
 final class AttachedAttributesToProductAction
 {

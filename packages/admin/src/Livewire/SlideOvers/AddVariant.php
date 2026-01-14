@@ -11,7 +11,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Support\Exceptions\Halt;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Computed;
@@ -19,9 +19,9 @@ use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\Product\CreateNewVariant;
 use Shopper\Components;
 use Shopper\Components\Form\CurrenciesField;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Core\Models\Currency;
-use Shopper\Core\Models\Product;
-use Shopper\Core\Models\ProductVariant;
 use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 
@@ -36,7 +36,7 @@ class AddVariant extends SlideOverComponent implements HasForms
     use InteractsWithForms;
 
     #[Locked]
-    public int $productId;
+    public ProductContract $product;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -185,9 +185,9 @@ class AddVariant extends SlideOverComponent implements HasForms
     {
         $data = $this->form->getState();
 
-        /** @var ProductVariant $variant */
+        /** @var ProductVariantContract $variant */
         $variant = app()->call(CreateNewVariant::class, [
-            'state' => array_merge($data, ['product_id' => $this->productId]),
+            'state' => array_merge($data, ['product_id' => $this->product->id]),
         ]);
 
         $this->form->model($variant)->saveRelationships();
@@ -199,7 +199,7 @@ class AddVariant extends SlideOverComponent implements HasForms
             ->send();
 
         $this->redirect(
-            route('shopper.products.variant', ['variantId' => $variant->id, 'productId' => $this->productId]),
+            route('shopper.products.variant', ['product' => $this->product, 'variant' => $variant]),
             navigate: true
         );
     }
@@ -210,16 +210,11 @@ class AddVariant extends SlideOverComponent implements HasForms
     #[Computed]
     public function currencies(): Collection
     {
-        /** @var Collection<int, Currency> $currencies */
-        $currencies = Currency::query()
+        /** @var Collection<int, Currency> */
+        return Currency::query()
             ->select('id', 'name', 'code', 'symbol')
-            ->whereIn(
-                column: 'id',
-                values: shopper_setting('currencies')
-            )
+            ->whereIn('id', shopper_setting('currencies'))
             ->get();
-
-        return $currencies;
     }
 
     /**
@@ -228,26 +223,24 @@ class AddVariant extends SlideOverComponent implements HasForms
     #[Computed]
     public function variantsOptions(): array
     {
-        return ProductVariant::resolvedQuery()
+        return resolve(ProductVariantContract::class)::query()
             ->with('values')
             ->select('product_id', 'id')
-            ->where('product_id', $this->productId)
+            ->where('product_id', $this->product->id)
             ->get()
             ->map(
-                fn (ProductVariant $variant): array => $variant->values->pluck('id')->toArray() // @phpstan-ignore-line
+                fn (ProductVariantContract $variant): array => $variant->values->pluck('id')->toArray() // @phpstan-ignore-line
             )
             ->toArray();
     }
 
     /**
-     * @return Collection<string, mixed>
+     * @return \Illuminate\Support\Collection<string, mixed>
      */
     #[Computed]
-    public function options(): Collection
+    public function options(): \Illuminate\Support\Collection
     {
-        $product = Product::resolvedQuery()->find($this->productId);
-
-        return collect(MapProductOptions::generate($product));
+        return collect(MapProductOptions::generate($this->product));
     }
 
     public function render(): View

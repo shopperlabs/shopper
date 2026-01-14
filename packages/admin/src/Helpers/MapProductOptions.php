@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\AttributeValue;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product;
 
 final class MapProductOptions
 {

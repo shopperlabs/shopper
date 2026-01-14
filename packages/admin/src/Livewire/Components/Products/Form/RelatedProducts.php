@@ -14,7 +14,7 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
 use Livewire\Component;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 
 #[Lazy]
 class RelatedProducts extends Component implements HasActions, HasForms
@@ -22,13 +22,9 @@ class RelatedProducts extends Component implements HasActions, HasForms
     use InteractsWithActions;
     use InteractsWithForms;
 
-    /** @var Product */
-    public $product;
+    public ProductContract $product;
 
-    /**
-     * @param  Product  $product
-     */
-    public function mount($product): void
+    public function mount(): void
     {
         $this->product->load('relatedProducts');
     }
@@ -59,7 +55,7 @@ class RelatedProducts extends Component implements HasActions, HasForms
     }
 
     /**
-     * @return array<array-key, int>
+     * @return array<int>
      */
     #[Computed]
     public function productsIds(): array

@@ -19,7 +19,7 @@ use Shopper\Contracts\PanelContract;
 
 class SlideOverPanel extends Component
 {
-    public ?string $activeComponent;
+    public ?string $activeComponent = null;
 
     /** @var array<string, array<string, mixed>> */
     public array $components = [];

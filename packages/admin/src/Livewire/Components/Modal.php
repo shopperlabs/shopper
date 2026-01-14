@@ -13,12 +13,13 @@ use Illuminate\Support\Reflector;
 use Livewire\Component;
 use Livewire\Mechanisms\ComponentRegistry;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionProperty;
 use Shopper\Contracts\ModalContract;
 
 class Modal extends Component
 {
-    public ?string $activeComponent;
+    public ?string $activeComponent = null;
 
     /** @var array<string, mixed> */
     public array $components = [];
@@ -32,6 +33,8 @@ class Modal extends Component
     /**
      * @param  array<string, mixed>  $arguments
      * @param  array<string, mixed>  $modalAttributes
+     *
+     * @throws ReflectionException
      */
     public function openModal(string $component, array $arguments = [], array $modalAttributes = []): void
     {

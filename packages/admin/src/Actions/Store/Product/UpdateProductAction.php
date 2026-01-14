@@ -4,28 +4,17 @@ declare(strict_types=1);
 
 namespace Shopper\Actions\Store\Product;
 
-use Filament\Forms\Form;
-use Illuminate\Support\Arr;
 use Shopper\Core\Events\Products\ProductUpdated;
-use Shopper\Core\Models\Product;
-use Shopper\Feature;
+use Shopper\Core\Models\Contracts\Product;
 
 final class UpdateProductAction
 {
-    public function __invoke(Form $form, Product $product): Product
+    /**
+     * @param  array<string, mixed>  $values
+     */
+    public function __invoke(array $values, Product $product): Product
     {
-        $state = $form->getState();
-
-        $product->update(Arr::except($state, ['categories']));
-
-        if (Feature::enabled('category')) {
-            $categoriesIds = (array) data_get($state, 'categories');
-
-            if (count($categoriesIds) > 0) {
-                $product->categories()->sync($categoriesIds);
-            }
-        }
-
+        $product->update($values);
         $product->refresh();
 
         event(new ProductUpdated($product));

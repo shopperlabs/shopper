@@ -11,16 +11,16 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 
 /**
- * @property Form $form
+ * @property-read Form $form
  */
 class Files extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public Product $product;
+    public ProductContract $product;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];

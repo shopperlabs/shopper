@@ -8,20 +8,20 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
-use Shopper\Core\Contracts\ShopperUser;
-use Shopper\Core\Models\Address;
+use Shopper\Core\Models\Contracts\Address as AddressContract;
+use Shopper\Core\Models\Contracts\ShopperUser;
 
 class Addresses extends Component
 {
     public ShopperUser $customer;
 
     /**
-     * @return Collection<int, Address>
+     * @return Collection<int, AddressContract>
      */
     #[Computed(persist: true)]
     public function addresses(): Collection
     {
-        return Address::with('country')
+        return resolve(AddressContract::class)::with('country')
             ->whereBelongsTo($this->customer) // @phpstan-ignore-line
             ->get();
     }
