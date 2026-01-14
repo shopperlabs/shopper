@@ -25,7 +25,7 @@ class AttributeFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'slug' => $this->faker->slug(),
-            'description' => $this->faker->paragraph(),
+            'description' => $this->faker->sentence(),
             'type' => $this->faker->randomElement(FieldType::values()),
             'icon' => null,
             'is_enabled' => $this->faker->boolean(),

@@ -17,15 +17,15 @@ enum GenderType: string implements HasLabel
     use ArrayableEnum;
     use HasEnumStaticMethods;
 
-    case Male = 'male';
-
     case Female = 'female';
+
+    case Male = 'male';
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::Male => __('shopper::words.male'),
             self::Female => __('shopper::words.female'),
+            self::Male => __('shopper::words.male'),
         };
     }
 }

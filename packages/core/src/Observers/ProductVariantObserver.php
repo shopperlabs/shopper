@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Observers;
 
-use Shopper\Core\Models\ProductVariant;
+use Shopper\Core\Models\Contracts\ProductVariant;
 
-final class ProductVariantObserver
+class ProductVariantObserver
 {
     public function deleting(ProductVariant $variant): void
     {

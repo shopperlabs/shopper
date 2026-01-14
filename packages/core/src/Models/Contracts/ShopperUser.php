@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Contracts;
+namespace Shopper\Core\Models\Contracts;
 
+use Carbon\CarbonInterface;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,19 +16,19 @@ use Shopper\Core\Models\Order;
  * @property-read int $id
  * @property-read string $full_name
  * @property-read string $picture
- * @property-read string|null $first_name
+ * @property-read ?string $first_name
  * @property-read string $last_name
  * @property-read string $email
  * @property-read bool $opt_in
  * @property-read GenderType $gender
  * @property-read string $avatar_type
- * @property-read string|null $timezone
- * @property-read string|null $avatar_location
- * @property-read string|null $phone_number
- * @property-read string|null $last_login_ip
- * @property-read \Illuminate\Support\Carbon|null $email_verified_at
- * @property-read \Illuminate\Support\Carbon|null $birth_date
- * @property-read \Illuminate\Support\Carbon|null $last_login_at
+ * @property-read ?string $timezone
+ * @property-read ?string $avatar_location
+ * @property-read ?string $phone_number
+ * @property-read ?string $last_login_ip
+ * @property-read ?CarbonInterface $email_verified_at
+ * @property-read ?CarbonInterface $birth_date
+ * @property-read ?CarbonInterface $last_login_at
  *
  * @mixin \Illuminate\Database\Eloquent\Model
  * @mixin \Illuminate\Notifications\Notifiable

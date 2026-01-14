@@ -19,7 +19,7 @@ use Shopper\Core\Models\Contracts\AttributeValue as AttributeValueContract;
  * @property-read int $position
  * @property-read int $attribute_id
  * @property-read Attribute $attribute
- * @property-read Collection<int, ProductVariant> $variants
+ * @property-read Collection<int, Contracts\ProductVariant> $variants
  */
 class AttributeValue extends Model implements AttributeValueContract
 {

@@ -7,7 +7,7 @@ namespace Shopper\Core\Events\Orders;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Shopper\Core\Models\Order;
+use Shopper\Core\Models\Contracts\Order;
 
 class AddNoteToOrder
 {

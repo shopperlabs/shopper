@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Shopper\Core\Models\Order;
+use Shopper\Core\Models\Contracts\Order;
 
 final class OrderDeleted implements ShouldQueueAfterCommit
 {

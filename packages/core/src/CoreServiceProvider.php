@@ -54,12 +54,15 @@ final class CoreServiceProvider extends PackageServiceProvider
     protected function registerModelBindings(): void
     {
         $models = [
+            'address' => Models\Contracts\Address::class,
             'brand' => Models\Contracts\Brand::class,
             'category' => Models\Contracts\Category::class,
             'collection' => Models\Contracts\Collection::class,
             'product' => Models\Contracts\Product::class,
             'variant' => Models\Contracts\ProductVariant::class,
             'channel' => Models\Contracts\Channel::class,
+            'order' => Models\Contracts\Order::class,
+            'inventory' => Models\Contracts\Inventory::class,
         ];
 
         foreach ($models as $configKey => $contract) {
@@ -70,12 +73,15 @@ final class CoreServiceProvider extends PackageServiceProvider
     protected function bootModelRelationName(): void
     {
         Relation::morphMap([
+            'address' => config('shopper.models.address'),
             'brand' => config('shopper.models.brand'),
             'category' => config('shopper.models.category'),
             'collection' => config('shopper.models.collection'),
             'product' => config('shopper.models.product'),
             'variant' => config('shopper.models.variant'),
             'channel' => config('shopper.models.channel'),
+            'order' => config('shopper.models.order'),
+            'inventory' => config('shopper.models.inventory'),
         ]);
     }
 }

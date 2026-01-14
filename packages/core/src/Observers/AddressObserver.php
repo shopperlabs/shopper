@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Observers;
 
-use Shopper\Core\Models\Address;
+use Shopper\Core\Models\Contracts\Address;
 
-final class AddressObserver
+class AddressObserver
 {
     public function creating(Address $address): void
     {
@@ -23,7 +23,7 @@ final class AddressObserver
     private function ensureOnlyOneDefaultShipping(Address $address): void
     {
         if ($address->shipping_default) {
-            $defaultAddress = Address::query()
+            $defaultAddress = resolve(Address::class)::query()
                 ->where('id', '!=', $address->id)
                 ->where('user_id', $address->user_id)
                 ->where('shipping_default', true)
@@ -40,7 +40,7 @@ final class AddressObserver
     private function ensureOnlyOneDefaultBilling(Address $address): void
     {
         if ($address->billing_default) {
-            $defaultAddress = Address::query()
+            $defaultAddress = resolve(Address::class)::query()
                 ->where('id', '!=', $address->id)
                 ->where('user_id', $address->user_id)
                 ->where('billing_default', true)

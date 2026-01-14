@@ -24,8 +24,8 @@ enum AddressType: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::Shipping => __('shopper-core::enum/address.shipping'),
             self::Billing => __('shopper-core::enum/address.billing'),
+            self::Shipping => __('shopper-core::enum/address.shipping'),
         };
     }
 }

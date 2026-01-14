@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Observers;
 
-use Shopper\Core\Models\Channel;
+use Shopper\Core\Models\Contracts\Channel;
 
-final class ChannelObserver
+class ChannelObserver
 {
     public function creating(Channel $channel): void
     {
@@ -21,7 +21,7 @@ final class ChannelObserver
     private function ensureOnlyOneIsDefault(Channel $channel): void
     {
         if ($channel->is_default) {
-            $defaultChannel = Channel::resolvedQuery()
+            $defaultChannel = resolve(Channel::class)::query()
                 ->where('id', '!=', $channel->id)
                 ->where('is_default', true)
                 ->first();

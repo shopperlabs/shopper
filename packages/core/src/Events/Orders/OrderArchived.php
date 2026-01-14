@@ -11,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Shopper\Core\Models\Contracts\Order;
 
-final class OrderCreated implements ShouldQueueAfterCommit
+final class OrderArchived implements ShouldQueueAfterCommit
 {
     use Dispatchable, InteractsWithQueue, InteractsWithSockets, SerializesModels;
 

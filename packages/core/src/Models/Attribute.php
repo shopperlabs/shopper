@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,20 +15,22 @@ use Shopper\Core\Database\Factories\AttributeFactory;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Contracts\Attribute as AttributeContract;
 use Shopper\Core\Models\Traits\HasSlug;
+use Shopper\Core\Observers\AttributeObserver;
 
 /**
  * @property-read int $id
  * @property-read string $name
  * @property-read string $slug
- * @property-read string|null $description
+ * @property-read ?string $description
  * @property-read FieldType $type
  * @property-read bool $is_enabled
  * @property-read bool $is_searchable
  * @property-read bool $is_filterable
- * @property-read string|null $icon
+ * @property-read ?string $icon
  * @property-read string $type_formatted
  * @property-read \Illuminate\Database\Eloquent\Collection<int, AttributeValue> $values
  */
+#[ObservedBy([AttributeObserver::class])]
 class Attribute extends Model implements AttributeContract
 {
     /** @use HasFactory<AttributeFactory> */

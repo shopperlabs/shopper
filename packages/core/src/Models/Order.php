@@ -14,12 +14,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Database\Factories\OrderFactory;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Helpers\Price;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
+use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Core\Observers\OrderObserver;
+use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
@@ -43,7 +44,7 @@ use Shopper\Core\Observers\OrderObserver;
  * @property-read ?PaymentMethod $paymentMethod
  * @property-read ?Zone $zone
  * @property-read ?Channel $channel
- * @property-read ?Order $parent
+ * @property-read ?static $parent
  * @property-read \Illuminate\Foundation\Auth\User|ShopperUser $customer
  * @property-read Collection<int, OrderItem> $items
  * @property-read Collection<int, Order> $children
@@ -54,6 +55,7 @@ class Order extends Model implements OrderContract
     /** @use HasFactory<OrderFactory> */
     use HasFactory;
 
+    use HasModelContract;
     use SoftDeletes;
 
     protected $guarded = [];
@@ -68,6 +70,11 @@ class Order extends Model implements OrderContract
         }
 
         parent::__construct($attributes);
+    }
+
+    public static function configKey(): string
+    {
+        return 'order';
     }
 
     public function setDefaultOrderStatus(): void
@@ -127,7 +134,7 @@ class Order extends Model implements OrderContract
     }
 
     /**
-     * @return BelongsTo<Contracts\OrderAddress, $this>
+     * @return BelongsTo<OrderAddress, $this>
      */
     public function shippingAddress(): BelongsTo
     {
@@ -135,7 +142,7 @@ class Order extends Model implements OrderContract
     }
 
     /**
-     * @return BelongsTo<Contracts\OrderAddress, $this>
+     * @return BelongsTo<OrderAddress, $this>
      */
     public function billingAddress(): BelongsTo
     {
@@ -152,7 +159,7 @@ class Order extends Model implements OrderContract
     }
 
     /**
-     * @return BelongsTo<Channel, $this>
+     * @return BelongsTo<Contracts\Channel, $this>
      */
     public function channel(): BelongsTo
     {

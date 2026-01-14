@@ -6,7 +6,7 @@ namespace Shopper\Core\Listeners\Products;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Shopper\Core\Events\Products\ProductPurchased;
-use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\Contracts\Inventory;
 
 final class DecreaseProductInventory implements ShouldQueue
 {
@@ -14,7 +14,8 @@ final class DecreaseProductInventory implements ShouldQueue
     {
         $product = $event->product;
         $quantity = $event->quantity;
-        $inventoryId = $event->inventoryId ?: Inventory::query()->scopes('default')->firstOrFail()->id;
+        $inventoryId = $event->inventoryId
+            ?: resolve(Inventory::class)::query()->scopes('default')->firstOrFail()->id;
 
         $product->decreaseStock(
             inventoryId: $inventoryId,

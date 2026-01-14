@@ -9,14 +9,14 @@ use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\Product;
 
 final class ProductPurchased implements ShouldQueueAfterCommit
 {
     use Dispatchable, InteractsWithQueue, InteractsWithSockets, SerializesModels;
 
     public function __construct(
-        public readonly ProductContract $product,
+        public readonly Product $product,
         public readonly int $quantity,
         public readonly ?int $inventoryId = null
     ) {}

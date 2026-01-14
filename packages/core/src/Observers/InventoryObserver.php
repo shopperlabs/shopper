@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Observers;
 
-use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\Contracts\Inventory;
 
-final class InventoryObserver
+class InventoryObserver
 {
     public function creating(Inventory $inventory): void
     {
@@ -25,7 +25,7 @@ final class InventoryObserver
     {
         if ($inventory->is_default) {
             /** @var Inventory|null $defaultInventory */
-            $defaultInventory = Inventory::query()
+            $defaultInventory = resolve(Inventory::class)::query()
                 ->where('id', '!=', $inventory->id)
                 ->where('is_default', false)
                 ->first();

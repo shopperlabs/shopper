@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Observers;
 
-use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Contracts\Product;
 
-final class ProductObserver
+class ProductObserver
 {
     public function deleting(Product $product): void
     {

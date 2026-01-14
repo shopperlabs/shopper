@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Observers;
 
-use Shopper\Core\Models\Category;
+use Shopper\Core\Models\Contracts\Category;
 
-final class CategoryObserver
+class CategoryObserver
 {
     public function creating(Category $category): void
     {
@@ -25,7 +25,7 @@ final class CategoryObserver
     private function ensureParentSlugIsCorrectlySet(Category $category): void
     {
         if (filled($category->parent_id)) {
-            $parent = Category::resolvedQuery()->find($category->parent_id);
+            $parent = resolve(Category::class)::query()->find($category->parent_id);
 
             if ($parent instanceof Category) {
                 $category->fill(['slug' => $parent->slug.'-'.$category->name]);

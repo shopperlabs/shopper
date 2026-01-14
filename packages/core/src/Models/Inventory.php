@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\InventoryFactory;
 use Shopper\Core\Models\Contracts\Inventory as InventoryContract;
 use Shopper\Core\Observers\InventoryObserver;
+use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
@@ -34,7 +35,14 @@ class Inventory extends Model implements InventoryContract
     /** @use HasFactory<InventoryFactory> */
     use HasFactory;
 
+    use HasModelContract;
+
     protected $guarded = [];
+
+    public static function configKey(): string
+    {
+        return 'inventory';
+    }
 
     public function getTable(): string
     {

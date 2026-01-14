@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Database\Factories\OrderAddressFactory;
 use Shopper\Core\Models\Contracts\OrderAddress as OrderAddressContract;
+use Shopper\Core\Models\Contracts\ShopperUser;
 
 /**
  * @property-read int $id

@@ -7,10 +7,10 @@ namespace Shopper\Core\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Database\Factories\OrderRefundFactory;
 use Shopper\Core\Enum\OrderRefundStatus;
 use Shopper\Core\Models\Contracts\OrderRefund as OrderRefundContract;
+use Shopper\Core\Models\Contracts\ShopperUser;
 
 /**
  * @property-read int $id

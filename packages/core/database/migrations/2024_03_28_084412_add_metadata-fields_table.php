@@ -27,7 +27,7 @@ return new class extends Migration
     {
         foreach ($this->tables as $table) {
             Schema::table($this->getTableName($table), static function (Blueprint $blueprint): void {
-                $blueprint->json('metadata')->nullable();
+                $blueprint->jsonb('metadata')->nullable();
             });
         }
     }

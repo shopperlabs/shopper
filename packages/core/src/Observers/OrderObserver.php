@@ -6,9 +6,9 @@ namespace Shopper\Core\Observers;
 
 use Shopper\Core\Events\Orders\OrderCreated;
 use Shopper\Core\Events\Orders\OrderDeleted;
-use Shopper\Core\Models\Order;
+use Shopper\Core\Models\Contracts\Order;
 
-final class OrderObserver
+class OrderObserver
 {
     public function created(Order $order): void
     {

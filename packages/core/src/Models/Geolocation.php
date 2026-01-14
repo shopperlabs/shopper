@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Shopper\Core\Contracts\ShopperUser;
 use Shopper\Core\Database\Factories\GeolocationFactory;
 use Shopper\Core\Models\Contracts\Geolocation as GeolocationContract;
+use Shopper\Core\Models\Contracts\ShopperUser;
 
 /**
  * @property-read int $id
