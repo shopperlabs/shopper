@@ -62,23 +62,30 @@
                                     <div class="mt-2 sm:flex sm:justify-between">
                                         <div class="sm:flex sm:gap-x-4">
                                             @if ($inventory->country)
-                                            <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                                                <img
-                                                    src="{{ $inventory->country->svg_flag }}"
-                                                    alt="{{ $inventory->country->name }} flag"
-                                                    class="size-5 shrink-0 rounded-full object-cover"
-                                                />
-                                                {{ $inventory->country->name }}
-                                            </div>
+                                                <div
+                                                    class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
+                                                >
+                                                    <img
+                                                        src="{{ $inventory->country->svg_flag }}"
+                                                        alt="{{ $inventory->country->name }} flag"
+                                                        class="size-5 shrink-0 rounded-full object-cover"
+                                                    />
+                                                    {{ $inventory->country->name }}
+                                                </div>
                                             @endif
-                                            <div class="mt-2 flex gap-2 items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
+
+                                            <div
+                                                class="mt-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
+                                            >
                                                 <x-untitledui-marker-pin-02
                                                     class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
                                                     aria-hidden="true"
                                                 />
                                                 {{ $inventory->city }}
                                             </div>
-                                            <div class="mt-2 flex gap-2 items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
+                                            <div
+                                                class="mt-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
+                                            >
                                                 <x-untitledui-phone
                                                     class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
                                                     aria-hidden="true"
@@ -86,7 +93,9 @@
                                                 {{ $inventory->phone_number ?? __('shopper::words.number_not_set') }}
                                             </div>
                                         </div>
-                                        <div class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
+                                        <div
+                                            class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
+                                        >
                                             <x-untitledui-calendar
                                                 class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
                                                 aria-hidden="true"

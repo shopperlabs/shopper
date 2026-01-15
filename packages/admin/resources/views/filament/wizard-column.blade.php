@@ -1,8 +1,8 @@
 @php
     $isContained = $isContained();
     $statePath = $getStatePath();
-    $previousAction = $getAction('previous');
-    $nextAction = $getAction('next');
+    $previousAction = $getAction("previous");
+    $nextAction = $getAction("next");
 @endphp
 
 <div
@@ -104,12 +104,15 @@
     x-on:next-wizard-step.window="if ($event.detail.statePath === '{{ $statePath }}') nextStep()"
     {{
         $attributes
-            ->merge([
-                'id' => $getId()
-            ], escape: false)
+            ->merge(
+                [
+                    "id" => $getId(),
+                ],
+                escape: false,
+            )
             ->merge($getExtraAttributes(), escape: false)
             ->merge($getExtraAlpineAttributes(), escape: false)
-            ->class(['fi-fo-wizard h-full', 'fi-contained' => $isContained])
+            ->class(["fi-fo-wizard h-full", "fi-contained" => $isContained])
     }}
 >
     <input
@@ -150,7 +153,7 @@
                     x-on:click="step = @js($step->getId())"
                     x-bind:disabled="! isStepAccessible(@js($step->getId()))"
                     role="step"
-                    class="fi-fo-wizard-header-step-button flex h-full w-full border-gray-200 dark:border-white/10 items-center gap-x-4 px-6 py-4 text-start truncate md:border-r"
+                    class="fi-fo-wizard-header-step-button flex h-full w-full items-center gap-x-4 truncate border-gray-200 px-6 py-4 text-start dark:border-white/10 md:border-r"
                 >
                     <div
                         class="fi-fo-wizard-header-step-icon-ctn flex size-10 shrink-0 items-center justify-center rounded-full"
@@ -195,7 +198,7 @@
                                         getStepIndex(step) === {{ $loop->index }},
                                 }"
                             >
-                                {{ str_pad($loop->index + 1, 2, '0', STR_PAD_LEFT) }}
+                                {{ str_pad($loop->index + 1, 2, "0", STR_PAD_LEFT) }}
                             </span>
                         @endif
                     </div>
@@ -226,26 +229,28 @@
                     </div>
                 </button>
 
-                {{--@if (! $loop->last)
+                {{--
+                    @if (! $loop->last)
                     <div
-                        aria-hidden="true"
-                        class="fi-fo-wizard-header-step-separator absolute end-0 hidden h-full w-5 md:block"
+                    aria-hidden="true"
+                    class="fi-fo-wizard-header-step-separator absolute end-0 hidden h-full w-5 md:block"
                     >
-                        <svg
-                            fill="none"
-                            preserveAspectRatio="none"
-                            viewBox="0 0 22 80"
-                            class="h-full w-full text-gray-200 dark:text-white/5 rtl:rotate-180"
-                        >
-                            <path
-                                d="M0 -2L20 40L0 82"
-                                stroke-linejoin="round"
-                                stroke="currentColor"
-                                vector-effect="non-scaling-stroke"
-                            />
-                        </svg>
+                    <svg
+                    fill="none"
+                    preserveAspectRatio="none"
+                    viewBox="0 0 22 80"
+                    class="h-full w-full text-gray-200 dark:text-white/5 rtl:rotate-180"
+                    >
+                    <path
+                    d="M0 -2L20 40L0 82"
+                    stroke-linejoin="round"
+                    stroke="currentColor"
+                    vector-effect="non-scaling-stroke"
+                    />
+                    </svg>
                     </div>
-                @endif--}}
+                    @endif
+                --}}
             </li>
         @endforeach
     </ol>
@@ -256,9 +261,9 @@
 
     <div
         @class([
-            'flex items-center justify-between gap-x-3',
-            'px-6' => $isContained,
-            'mt-6' => ! $isContained,
+            "flex items-center justify-between gap-x-3",
+            "px-6" => $isContained,
+            "mt-6" => ! $isContained,
         ])
     >
         <span

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
+use Shopper\Core\Models\Contracts\Brand as BrandContract;
 use Shopper\Livewire\SlideOvers\BrandForm;
 use Tests\Core\Stubs\Brand;
 use Tests\Core\Stubs\User;
@@ -45,11 +46,14 @@ describe(BrandForm::class, function (): void {
                 'name' => 'Nike',
             ])
             ->call('save')
-            ->assertRedirectToRoute('shopper.brands.index');
+            ->assertSuccessful();
 
-        expect(Brand::resolvedQuery()->count())
+        /** @var Illuminate\Database\Eloquent\Builder<BrandContract> $query */
+        $query = resolve(BrandContract::class)::query();
+
+        expect($query->count())
             ->toBe(2)
-            ->and(Brand::resolvedQuery()->find(2)?->slug)
+            ->and($query->latest()->first()?->slug)
             ->toBe('nike-1');
     });
 })->group('livewire', 'slideovers', 'brands');

@@ -12,7 +12,7 @@
 
 @php
     if (! $iconSize instanceof IconSize) {
-        $iconSize = filled($iconSize) ? (IconSize::tryFrom($iconSize) ?? $iconSize) : null;
+        $iconSize = filled($iconSize) ? IconSize::tryFrom($iconSize) ?? $iconSize : null;
     }
 
     $containerClass = \Illuminate\Support\Arr::toCssClasses([
@@ -69,7 +69,7 @@
 
 <div {{ $attributes->twMerge(['class' => $containerClass]) }}>
     <div class="flex gap-3">
-        @if($icon)
+        @if ($icon)
             <div class="shrink-0">
                 <x-filament::icon
                     :attributes="
@@ -85,7 +85,7 @@
         @endif
 
         <div>
-            @if($title)
+            @if ($title)
                 <h3 @class([$titleClasses])>{{ $title }}</h3>
             @endif
 

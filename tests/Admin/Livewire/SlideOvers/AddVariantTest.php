@@ -32,12 +32,12 @@ describe(AddVariant::class, function (): void {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        Livewire::test(AddVariant::class, ['productId' => $this->product->id])
+        Livewire::test(AddVariant::class, ['product' => $this->product])
             ->assertForbidden();
     });
 
     it('can create a simple variant without options', function (): void {
-        Livewire::test(AddVariant::class, ['productId' => $this->product->id])
+        Livewire::test(AddVariant::class, ['product' => $this->product])
             ->fillForm([
                 'name' => 'Variant Name',
                 'sku' => 'SKU-123',
@@ -60,7 +60,7 @@ describe(AddVariant::class, function (): void {
             'sku' => 'EXISTING-SKU',
         ]);
 
-        Livewire::test(AddVariant::class, ['productId' => $this->product->id])
+        Livewire::test(AddVariant::class, ['product' => $this->product])
             ->fillForm([
                 'name' => 'New Variant',
                 'sku' => 'EXISTING-SKU',
@@ -75,7 +75,7 @@ describe(AddVariant::class, function (): void {
             'barcode' => '1234567890',
         ]);
 
-        Livewire::test(AddVariant::class, ['productId' => $this->product->id])
+        Livewire::test(AddVariant::class, ['product' => $this->product])
             ->fillForm([
                 'name' => 'New Variant',
                 'barcode' => '1234567890',
@@ -87,7 +87,7 @@ describe(AddVariant::class, function (): void {
     it('can create variant with quantity and barcode', function (): void {
         Inventory::factory(['is_default' => true])->create();
 
-        Livewire::test(AddVariant::class, ['productId' => $this->product->id])
+        Livewire::test(AddVariant::class, ['product' => $this->product])
             ->fillForm([
                 'name' => 'Variant with Stock',
                 'sku' => 'SKU-STOCK',
@@ -114,7 +114,7 @@ describe(AddVariant::class, function (): void {
 
         $this->product->options()->attach([$colorAttribute->id, $sizeAttribute->id]);
 
-        Livewire::test(AddVariant::class, ['productId' => $this->product->id])
+        Livewire::test(AddVariant::class, ['product' => $this->product])
             ->fillForm([
                 'name' => 'Red Small Variant',
                 'sku' => 'RED-SMALL',
@@ -145,7 +145,7 @@ describe(AddVariant::class, function (): void {
         $existingVariant = ProductVariant::factory()->create(['product_id' => $this->product->id]);
         $existingVariant->values()->attach([$redValue->id, $smallValue->id]);
 
-        Livewire::test(AddVariant::class, ['productId' => $this->product->id])
+        Livewire::test(AddVariant::class, ['product' => $this->product])
             ->fillForm([
                 'name' => 'Duplicate Variant',
                 'sku' => 'DUP-VAR',
@@ -159,7 +159,7 @@ describe(AddVariant::class, function (): void {
     })->skip();
 
     it('redirects to variant page after creation', function (): void {
-        Livewire::test(AddVariant::class, ['productId' => $this->product->id])
+        Livewire::test(AddVariant::class, ['product' => $this->product])
             ->fillForm([
                 'name' => 'Test Variant',
                 'sku' => 'TEST-VAR',

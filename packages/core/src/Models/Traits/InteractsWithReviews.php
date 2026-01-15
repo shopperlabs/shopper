@@ -23,16 +23,16 @@ trait InteractsWithReviews
         $where = $onlyApproved ? [['approved', '1']] : [];
 
         if ($round) {
-            return $this->ratings()
+            return collect($this->ratings()
                 ->selectRaw('ROUND(AVG(rating), '.$round.') as averageReviewRateable')
                 ->where($where)
-                ->pluck('averageReviewRateable');
+                ->value('averageReviewRateable'));
         }
 
-        return $this->ratings()
+        return collect($this->ratings()
             ->selectRaw('AVG(rating) as averageReviewRateable')
             ->where($where)
-            ->pluck('averageReviewRateable');
+            ->value('averageReviewRateable'));
     }
 
     public function averageCustomerServiceRating($round = null, bool $onlyApproved = false): Collection
@@ -105,10 +105,7 @@ trait InteractsWithReviews
 
     public function countRating(): mixed
     {
-        return $this->ratings()
-            ->selectRaw('count(rating) as countReviewRateable')
-            ->pluck('countReviewRateable')
-            ->first();
+        return $this->ratings()->count();
     }
 
     public function countCustomerServiceRating(bool $onlyApproved = false): Collection

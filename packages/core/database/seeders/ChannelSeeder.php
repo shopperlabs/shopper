@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Shopper\Core\Models\Channel;
+use Shopper\Core\Models\Contracts\Channel as ChannelContract;
 
 final class ChannelSeeder extends Seeder
 {
     public function run(): void
     {
-        Channel::resolvedQuery()->create([
+        resolve(ChannelContract::class)::query()->create([
             'name' => $name = 'Web Store',
             'slug' => $name,
             'url' => config('app.url'),

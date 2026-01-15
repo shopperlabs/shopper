@@ -1,5 +1,6 @@
 includes:
-    - phpstan-baseline.neon
+    # - phpstan-baseline.neon
+    - vendor/larastan/larastan/extension.neon
 
 parameters:
     level: 5
@@ -13,5 +14,8 @@ parameters:
     ignoreErrors:
         - message: '#Method.*getLabel\(\) should return string but returns array\|string\|null#'
         - message: '#Call to an undefined method Spatie\\Image\\Drivers\\ImageDriver::keepOriginalImageFormat\(\)#'
+        -
+            message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+            identifier: larastan.noEnvCallsOutsideOfConfig
 
     reportUnmatchedIgnoredErrors: false

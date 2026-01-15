@@ -1,8 +1,8 @@
 @php
     $isContained = $isContained();
     $statePath = $getStatePath();
-    $previousAction = $getAction('previous');
-    $nextAction = $getAction('next');
+    $previousAction = $getAction("previous");
+    $nextAction = $getAction("next");
 @endphp
 
 <div
@@ -104,12 +104,15 @@
     x-on:next-wizard-step.window="if ($event.detail.statePath === '{{ $statePath }}') nextStep()"
     {{
         $attributes
-            ->merge([
-                'id' => $getId()
-            ], escape: false)
+            ->merge(
+                [
+                    "id" => $getId(),
+                ],
+                escape: false,
+            )
             ->merge($getExtraAttributes(), escape: false)
             ->merge($getExtraAlpineAttributes(), escape: false)
-            ->class(['fi-fo-wizard-slideover relative h-full flex-1 flex flex-col', 'fi-contained' => $isContained])
+            ->class(["fi-fo-wizard-slideover relative flex h-full flex-1 flex-col", "fi-contained" => $isContained])
     }}
 >
     <input
@@ -124,20 +127,22 @@
         x-ref="stepsData"
     />
 
-    <div class="sticky top-0 z-40 bg-gray-50/80 dark:bg-gray-950/75 border-b border-gray-100 dark:border-white/10 backdrop-blur-md px-4">
+    <div
+        class="sticky top-0 z-40 border-b border-gray-100 bg-gray-50/80 px-4 backdrop-blur-md dark:border-white/10 dark:bg-gray-950/75"
+    >
         <ol
             @if (filled($label = $getLabel()))
                 aria-label="{{ $label }}"
             @endif
             role="list"
             @class([
-                'fi-fo-wizard-header scrolling overflow-x-auto',
+                "fi-fo-wizard-header scrolling overflow-x-auto",
             ])
             x-ref="header"
         >
             @foreach ($getChildComponentContainer()->getComponents() as $step)
                 <li
-                    class="fi-fo-wizard-header-step relative inline-flex items-center gap-4 py-2 px-0.5 truncate"
+                    class="fi-fo-wizard-header-step relative inline-flex items-center gap-4 truncate px-0.5 py-2"
                     x-bind:class="{
                         'fi-active': getStepIndex(step) === {{ $loop->index }},
                         'fi-completed': getStepIndex(step) > {{ $loop->index }},
@@ -149,7 +154,7 @@
                         x-on:click="step = @js($step->getId())"
                         x-bind:disabled="! isStepAccessible(@js($step->getId()))"
                         role="step"
-                        class="fi-fo-wizard-header-step-button inline-flex items-center bg-white dark:bg-gray-900 hover:bg-gray-50/20 dark:hover:bg-gray-900/50 rounded-full ring-1 ring-gray-200 dark:ring-white/10 gap-2 py-1.5 pl-2 pr-4 text-start truncate"
+                        class="fi-fo-wizard-header-step-button inline-flex items-center gap-2 truncate rounded-full bg-white py-1.5 pl-2 pr-4 text-start ring-1 ring-gray-200 hover:bg-gray-50/20 dark:bg-gray-900 dark:ring-white/10 dark:hover:bg-gray-900/50"
                     >
                         <div
                             class="fi-fo-wizard-header-step-icon-ctn flex size-6 shrink-0 items-center justify-center rounded-full"
@@ -194,7 +199,7 @@
                                             getStepIndex(step) === {{ $loop->index }},
                                     }"
                                 >
-                                    {{ str_pad($loop->index + 1, 2, '0', STR_PAD_LEFT) }}
+                                    {{ str_pad($loop->index + 1, 2, "0", STR_PAD_LEFT) }}
                                 </span>
                             @endif
                         </div>
@@ -218,10 +223,7 @@
                     </button>
 
                     @if (! $loop->last)
-                        <div
-                            aria-hidden="true"
-                            class="fi-fo-wizard-header-step-separator"
-                        >
+                        <div aria-hidden="true" class="fi-fo-wizard-header-step-separator">
                             <x-untitledui-chevron-right
                                 class="size-5 text-gray-400 dark:text-gray-500 rtl:rotate-180"
                                 stroke-width="1.5"
@@ -234,13 +236,13 @@
         </ol>
     </div>
 
-    <div class="w-full h-0 flex-1 overflow-y-auto">
+    <div class="h-0 w-full flex-1 overflow-y-auto">
         @foreach ($getChildComponentContainer()->getComponents() as $step)
             {{ $step }}
         @endforeach
     </div>
 
-    <div class="flex shrink-0 justify-end gap-3 p-4 border-t border-gray-100 dark:border-white/10">
+    <div class="flex shrink-0 justify-end gap-3 border-t border-gray-100 p-4 dark:border-white/10">
         <span
             x-cloak
             @if (! $previousAction->isDisabled())

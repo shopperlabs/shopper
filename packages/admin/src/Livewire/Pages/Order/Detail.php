@@ -20,8 +20,8 @@ use Shopper\Core\Events\Orders\OrderCancel;
 use Shopper\Core\Events\Orders\OrderCompleted;
 use Shopper\Core\Events\Orders\OrderPaid;
 use Shopper\Core\Events\Orders\OrderRegistered;
-use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
+use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 /**

@@ -43,7 +43,7 @@ class InventoryHistory extends Model implements InventoryHistoryContract
     }
 
     /**
-     * @return BelongsTo<\Shopper\Core\Models\Contracts\ShopperUser, $this>
+     * @return BelongsTo<Contracts\ShopperUser, $this>
      */
     public function user(): BelongsTo
     {

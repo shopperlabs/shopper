@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use Shopper\Core\Events\Products\ProductDeleted;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Livewire\Pages\Product\Edit;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
@@ -69,7 +70,8 @@ describe(Edit::class, function (): void {
             ->assertNotified(__('shopper::notifications.delete', ['item' => __('shopper::pages/products.single')]));
 
         Event::assertDispatched(ProductDeleted::class);
-        expect(Product::resolvedQuery()->count())->toBe(0);
+
+        expect(resolve(ProductContract::class)::query()->count())->toBe(0);
     });
 
     it('delete action requires delete_products permission', function (): void {

@@ -7,7 +7,10 @@
         />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading class="pt-6" :title="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')])" />
+    <x-shopper::heading
+        class="pt-6"
+        :title="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')])"
+    />
 
     <form wire:submit="store" class="mt-10">
         {{ $this->form }}

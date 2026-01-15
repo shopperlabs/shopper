@@ -17,8 +17,8 @@ use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Computed;
 use Shopper\Components;
 use Shopper\Core\Models\AttributeValue;
-use Shopper\Core\Models\Product;
-use Shopper\Core\Models\ProductVariant;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 
@@ -31,19 +31,18 @@ class UpdateVariant extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    public ?ProductVariant $variant = null;
+    public ?ProductVariantContract $variant = null;
 
-    public ?Product $product = null;
+    public ?ProductContract $product = null;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public bool $alert = false;
 
-    public function mount(?Product $product = null, ?ProductVariant $variant = null): void
+    public function mount(): void
     {
-        $this->product = $product;
-        $this->variant = $variant?->load(['values', 'values.attribute']);
+        $this->variant?->load(['values', 'values.attribute']);
 
         $this->form->fill(array_merge(
             $this->variant?->toArray() ?? [],
@@ -144,7 +143,7 @@ class UpdateVariant extends SlideOverComponent implements HasForms
             ->send();
 
         $this->redirect(
-            route('shopper.products.variant', ['variantId' => $this->variant->id, 'productId' => $this->product->id]),
+            route('shopper.products.variant', ['product' => $this->product, 'variant' => $this->variant]),
             navigate: true
         );
     }
@@ -164,13 +163,13 @@ class UpdateVariant extends SlideOverComponent implements HasForms
     #[Computed]
     public function variantsOptions(): array
     {
-        return ProductVariant::resolvedQuery()
+        return resolve(ProductVariantContract::class)::query()
             ->with('values')
             ->select('product_id', 'id')
             ->where('product_id', $this->product?->id)
             ->get()
             ->map(
-                fn (ProductVariant $variant): array => $variant->values->pluck('id')->toArray() // @phpstan-ignore-line
+                fn (ProductVariantContract $variant): array => $variant->values->pluck('id')->toArray() // @phpstan-ignore-line
             )
             ->reject(fn ($value): bool => array_diff($value, $this->variant?->values->pluck('id')->toArray() ?? []) === [])
             ->values()

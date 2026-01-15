@@ -22,16 +22,18 @@
                 'inventory',
                 'seo',
                 'shipping',
-                'related'
+                'related',
             ],
-            activeTab: @entangle('activeTab')
+            activeTab: @entangle('activeTab'),
         }"
     >
-        <div @class([
-            'sticky z-30 bg-white/75 backdrop-blur-sm dark:bg-gray-900/80',
-            '-top-2' => $product->type,
-            'top-6' => ! $product->type
-        ])>
+        <div
+            @class([
+                'sticky z-30 bg-white/75 backdrop-blur-sm dark:bg-gray-900/80',
+                '-top-2' => $product->type,
+                'top-6' => ! $product->type,
+            ])
+        >
             <div class="space-y-4">
                 <x-shopper::container>
                     <x-shopper::heading>

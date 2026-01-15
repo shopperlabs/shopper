@@ -8,8 +8,8 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
-use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
+use Shopper\Core\Models\Contracts\ShopperUser;
 
 class Orders extends Component
 {

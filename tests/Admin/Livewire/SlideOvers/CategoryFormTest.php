@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
+use Shopper\Core\Models\Contracts\Category as CategoryContract;
 use Shopper\Livewire\SlideOvers\CategoryForm;
 use Tests\Core\Stubs\Category;
 use Tests\Core\Stubs\User;
@@ -36,7 +37,7 @@ describe(CategoryForm::class, function (): void {
             ->assertHasNoFormErrors()
             ->assertRedirectToRoute('shopper.categories.index');
 
-        expect(Category::resolvedQuery()->count())->toBe(1);
+        expect(resolve(CategoryContract::class)::query()->count())->toBe(1);
     });
 
     it('will generate a slug when category slug already exists', function (): void {
@@ -46,13 +47,14 @@ describe(CategoryForm::class, function (): void {
             ->assertFormExists()
             ->fillForm([
                 'name' => 'My first category',
+                'slug' => 'my-first-category',
             ])
             ->call('save')
             ->assertRedirectToRoute('shopper.categories.index');
 
-        expect(Category::resolvedQuery()->count())
+        expect(resolve(CategoryContract::class)::query()->count())
             ->toBe(2)
-            ->and(Category::resolvedQuery()->find(2)?->slug)
+            ->and(resolve(CategoryContract::class)::query()->latest()->first()?->slug)
             ->toBe('my-first-category-1');
     });
 
@@ -69,7 +71,7 @@ describe(CategoryForm::class, function (): void {
             ->assertHasNoFormErrors()
             ->assertRedirectToRoute('shopper.categories.index');
 
-        expect(Category::resolvedQuery()->count())->toBe(2);
+        expect(resolve(CategoryContract::class)::query()->count())->toBe(2);
     });
 
     it('has parent_id field null when parent category is deleted', function (): void {

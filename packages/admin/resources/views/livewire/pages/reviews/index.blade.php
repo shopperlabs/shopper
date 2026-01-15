@@ -1027,7 +1027,9 @@
                 </svg>
             </div>
             <div class="mt-5 w-full space-y-4 text-center sm:max-w-md">
-                <h3 class="font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white sm:text-lg sm:leading-7 lg:text-2xl">
+                <h3
+                    class="font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white sm:text-lg sm:leading-7 lg:text-2xl"
+                >
                     {{ __('shopper::pages/products.reviews.title') }}
                 </h3>
                 <p class="text-base leading-6 text-gray-500 dark:text-gray-400">

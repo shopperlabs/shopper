@@ -7,7 +7,6 @@ namespace Shopper\Livewire\SlideOvers;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
-use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\Product\SaveProductVariantsAction;
 use Shopper\Core\Macros\Arr;

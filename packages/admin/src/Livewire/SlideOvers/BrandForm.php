@@ -15,7 +15,6 @@ use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Contracts\Brand as BrandContract;
-use Shopper\Core\Models\Brand;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**

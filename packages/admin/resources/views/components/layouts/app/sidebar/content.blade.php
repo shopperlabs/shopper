@@ -1,5 +1,7 @@
 <div {{ $attributes }}>
-    <div class="h-1 rounded-tr-lg rounded-br-lg bg-gradient-to-br from-primary-600 to-primary-100 dark:to-primary-600/10"></div>
+    <div
+        class="h-1 rounded-br-lg rounded-tr-lg bg-gradient-to-br from-primary-600 to-primary-100 dark:to-primary-600/10"
+    ></div>
     <div class="flex h-full flex-col">
         <div class="px-4 py-5">
             <div
@@ -43,7 +45,11 @@
                     </x-shopper::link>
                 @endcan
 
-                <a href="https://laravelshopper.dev" target="_blank" class="sh-sidebar-item gap-2 sh-sidebar-item-inactive">
+                <a
+                    href="https://laravelshopper.dev"
+                    target="_blank"
+                    class="sh-sidebar-item sh-sidebar-item-inactive gap-2"
+                >
                     <x-untitledui-code-browser class="size-5 text-gray-400" stroke-width="1.5" aria-hidden="true" />
                     {{ __('shopper::pages/dashboard.cards.doc_title') }}
                 </a>

@@ -78,7 +78,9 @@
                     </div>
                 </x-shopper::card>
             @else
-                <div class="rounded-lg border-l-4 ring-1 ring-warning-100 border-warning-400 bg-warning-50 p-4 dark:ring-warning-800/50 dark:bg-warning-800/20">
+                <div
+                    class="rounded-lg border-l-4 border-warning-400 bg-warning-50 p-4 ring-1 ring-warning-100 dark:bg-warning-800/20 dark:ring-warning-800/50"
+                >
                     <div class="flex">
                         <div class="shrink-0">
                             <svg

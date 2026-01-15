@@ -32,7 +32,7 @@ describe(UsersRole::class, function (): void {
         $editorUser->assignRole($this->role->name);
 
         $otherUser = User::factory()->create();
-        $otherUser->assignRole('manager');
+        $otherUser->assignRole(config('shopper.core.roles.manager'));
 
         $component = Livewire::test(UsersRole::class, ['role' => $this->role]);
 

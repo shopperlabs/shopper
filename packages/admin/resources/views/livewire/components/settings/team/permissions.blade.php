@@ -8,7 +8,7 @@
         </p>
     </div>
     <div
-        class="mt-4 divide-y divide-gray-200 bg-white overflow-x-auto border-t border-gray-200 dark:bg-transparent dark:divide-white/10 dark:border-white/10"
+        class="mt-4 divide-y divide-gray-200 overflow-x-auto border-t border-gray-200 bg-white dark:divide-white/10 dark:border-white/10 dark:bg-transparent"
     >
         @foreach ($groupPermissions as $group => $permissions)
             <div>

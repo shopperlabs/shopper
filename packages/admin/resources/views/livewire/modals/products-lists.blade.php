@@ -15,7 +15,7 @@
                 wire:model.live.debounce.550ms="search"
             />
         </div>
-        <div class="h-80 -mx-2 my-2 divide-y divide-gray-200 overflow-auto dark:divide-white/10">
+        <div class="-mx-2 my-2 h-80 divide-y divide-gray-200 overflow-auto dark:divide-white/10">
             @foreach ($this->products as $product)
                 <x-shopper::forms.label-product :product="$product" wire:key="{{ $product->id }}" />
             @endforeach

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use Shopper\Core\Models\Category;
 
 /**
@@ -27,7 +26,6 @@ class CategoryFactory extends Factory
 
         return [
             'name' => $name,
-            'slug' => Str::slug($name),
             'description' => $this->faker->realText(),
             'is_enabled' => $this->faker->boolean(),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),

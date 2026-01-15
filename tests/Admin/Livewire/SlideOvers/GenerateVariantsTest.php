@@ -23,25 +23,19 @@ beforeEach(function (): void {
 
 describe(GenerateVariants::class, function (): void {
     it('can render generate variants slideover', function (): void {
-        Livewire::test(GenerateVariants::class, ['productId' => $this->product->id])
+        Livewire::test(GenerateVariants::class, ['product' => $this->product])
             ->assertOk();
     });
 
     it('loads product with options and values', function (): void {
-        $component = Livewire::test(GenerateVariants::class, ['productId' => $this->product->id]);
+        $component = Livewire::test(GenerateVariants::class, ['product' => $this->product]);
 
         expect($component->get('product'))->not->toBeNull()
-            ->and($component->get('product')->id)->toBe($this->product->id);
-    });
-
-    it('initializes variants array on mount', function (): void {
-        $component = Livewire::test(GenerateVariants::class, ['productId' => $this->product->id]);
-
-        expect($component->get('variants'))->toBeArray();
+            ->and($component->get('product'))->toBe($this->product);
     });
 
     it('can remove variant from list', function (): void {
-        $component = Livewire::test(GenerateVariants::class, ['productId' => $this->product->id]);
+        $component = Livewire::test(GenerateVariants::class, ['product' => $this->product]);
 
         $component->set('variants', [
             0 => [
@@ -71,7 +65,7 @@ describe(GenerateVariants::class, function (): void {
     });
 
     it('redirects to product variants tab after generating', function (): void {
-        $component = Livewire::test(GenerateVariants::class, ['productId' => $this->product->id]);
+        $component = Livewire::test(GenerateVariants::class, ['product' => $this->product]);
 
         $component->set('variants', [
             [
@@ -87,13 +81,13 @@ describe(GenerateVariants::class, function (): void {
 
         $component->call('generate')
             ->assertRedirect(route('shopper.products.edit', [
-                'product' => $this->product->id,
+                'product' => $this->product,
                 'tab' => 'variants',
             ]));
     });
 
     it('sends notification after generating variants', function (): void {
-        $component = Livewire::test(GenerateVariants::class, ['productId' => $this->product->id]);
+        $component = Livewire::test(GenerateVariants::class, ['product' => $this->product]);
 
         $component->set('variants', [
             [

@@ -18,16 +18,3 @@ updates:
     allow:
       - dependency-type: direct
     versioning-strategy: increase-if-necessary
-  - package-ecosystem: npm
-    directory: "/"
-    schedule:
-      interval: weekly
-      day: thursday
-    groups:
-      js-dependencies:
-        update-types:
-          - "minor"
-          - "patch"
-    allow:
-      - dependency-type: direct
-    versioning-strategy: increase-if-necessary

@@ -23,21 +23,15 @@ beforeEach(function (): void {
 
 describe(ChooseProductAttributes::class, function (): void {
     it('can render choose product attributes slideover', function (): void {
-        Livewire::test(ChooseProductAttributes::class, ['productId' => $this->product->id])
+        Livewire::test(ChooseProductAttributes::class, ['product' => $this->product])
             ->assertOk();
     });
 
     it('initializes with data containing attributes array', function (): void {
-        $component = Livewire::test(ChooseProductAttributes::class, ['productId' => $this->product->id]);
+        $component = Livewire::test(ChooseProductAttributes::class, ['product' => $this->product]);
 
         expect($component->get('data'))->toBeArray()
             ->and($component->get('data'))->toHaveKey('attributes');
-    });
-
-    it('has correct product id', function (): void {
-        $component = Livewire::test(ChooseProductAttributes::class, ['productId' => $this->product->id]);
-
-        expect($component->get('productId'))->toBe($this->product->id);
     });
 
     it('redirects to product edit page after storing', function (): void {
@@ -47,7 +41,7 @@ describe(ChooseProductAttributes::class, function (): void {
         ]);
         $value = AttributeValue::factory()->create(['attribute_id' => $attribute->id]);
 
-        Livewire::test(ChooseProductAttributes::class, ['productId' => $this->product->id])
+        Livewire::test(ChooseProductAttributes::class, ['product' => $this->product])
             ->set('data', [
                 'attributes' => [$attribute->id],
                 'values' => [
@@ -68,7 +62,7 @@ describe(ChooseProductAttributes::class, function (): void {
         ]);
         $value = AttributeValue::factory()->create(['attribute_id' => $attribute->id]);
 
-        Livewire::test(ChooseProductAttributes::class, ['productId' => $this->product->id])
+        Livewire::test(ChooseProductAttributes::class, ['product' => $this->product])
             ->set('data', [
                 'attributes' => [$attribute->id],
                 'values' => [

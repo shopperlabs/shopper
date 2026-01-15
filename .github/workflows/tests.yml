@@ -18,7 +18,7 @@ jobs:
       matrix:
         php: [8.4, 8.3]
         laravel: [12.*, 11.*]
-        db: [sqlite] #mysql, pgsql
+        db: [sqlite, mysql, pgsql]
         dependency-version: [prefer-stable]
         include:
           - laravel: 12.*

@@ -18,8 +18,8 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Components;
-use Shopper\Core\Models\InventoryHistory;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\InventoryHistory;
 
 /**
  * @property-read Form $form

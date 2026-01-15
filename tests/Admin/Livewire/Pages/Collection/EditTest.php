@@ -46,16 +46,17 @@ describe(Edit::class, function (): void {
 
     it('can edit a collection', function (): void {
         $collection = Collection::factory()->create();
+        $newName = 'My manual collection '.fake()->unique()->word();
 
         Livewire::test(Edit::class, ['collection' => $collection])
             ->fillForm([
-                'name' => 'My manual collection',
+                'name' => $newName,
             ])
             ->call('store')
             ->assertHasNoFormErrors()
             ->assertNotified(__('shopper::notifications.update', ['item' => __('shopper::pages/collections.single')]));
 
-        expect($collection->refresh()->name)->toBe('My manual collection');
+        expect($collection->refresh()->name)->toBe($newName);
     });
 
     it('cannot change type of collection on edit form', function (): void {

@@ -98,7 +98,7 @@ it('can save settings on wizard to access dashboard', function (): void {
     $wizard->assertSee('initialize-store-social-link');
 
     Livewire::test(StoreSocialLink::class)
-        ->fillForm([])
+        ->fillForm()
         ->call('save')
         ->assertHasNoFormErrors()
         ->assertRedirect($this->prefix.'/dashboard');

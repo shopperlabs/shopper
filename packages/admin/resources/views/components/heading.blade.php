@@ -1,7 +1,7 @@
 <div
     {{ $attributes->twMerge(['class' => 'space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0']) }}
 >
-    @if($title instanceof \Illuminate\View\ComponentSlot)
+    @if ($title instanceof \Illuminate\View\ComponentSlot)
         {{ $title }}
     @else
         <h2

@@ -1,4 +1,4 @@
-<x-shopper::container class="py-5 space-y-5">
+<x-shopper::container class="space-y-5 py-5">
     <x-shopper::breadcrumb :back="route('shopper.products.index')">
         <x-untitledui-chevron-left class="size-4 text-gray-300 dark:text-gray-600" aria-hidden="true" />
         <x-shopper::breadcrumb.link
@@ -12,7 +12,7 @@
         </span>
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading :title="$variant->name" class="border-b border-gray-200 dark:border-white/10 pb-5" />
+    <x-shopper::heading :title="$variant->name" class="border-b border-gray-200 pb-5 dark:border-white/10" />
 
     <div class="grid gap-x-6 gap-y-8 lg:grid-cols-3">
         <div class="space-y-8 *:space-y-4 lg:col-span-2">
@@ -21,19 +21,23 @@
                     {{ __('shopper::pages/products.variants.variant_information') }}
                 </x-filament::section.heading>
 
-                <x-shopper::card class="divide-y divide-gray-200 dark:divide-white/10 overflow-hidden">
-                    <div class="p-4 flex items-center justify-end">
-                        <x-shopper::buttons.default class="font-semibold text-gray-950" type="button" wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.update-variant', arguments: { variantId: {{ $variant->id }}, productId: {{ $product->id }} }})">
+                <x-shopper::card class="divide-y divide-gray-200 overflow-hidden dark:divide-white/10">
+                    <div class="flex items-center justify-end p-4">
+                        <x-shopper::buttons.default
+                            class="font-semibold text-gray-950"
+                            type="button"
+                            wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.update-variant', arguments: { variantId: {{ $variant->id }}, productId: {{ $product->id }} }})"
+                        >
                             {{ __('shopper::forms.actions.edit') }}
                         </x-shopper::buttons.default>
                     </div>
 
-                    <dl class="grid gap-4 grid-cols-1 p-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-6">
+                    <dl class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-6">
                         <div>
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::forms.label.name') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
+                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
                                 {{ $variant->name }}
                             </dd>
                         </div>
@@ -41,7 +45,7 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('Ean') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
+                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
                                 {{ $variant->ean ?? '-' }}
                             </dd>
                         </div>
@@ -49,7 +53,7 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('Upc') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
+                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
                                 {{ $variant->upc ?? '-' }}
                             </dd>
                         </div>
@@ -57,7 +61,7 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::forms.label.position') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
+                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
                                 {{ $variant->position }}
                             </dd>
                         </div>
@@ -65,7 +69,7 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::pages/products.allow_backorder') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
+                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
                                 <span
                                     @class([
                                         'relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent',
@@ -78,7 +82,7 @@
                                     <span
                                         aria-hidden="true"
                                         @class([
-                                            'pointer-events-none inline-block size-5 transform rounded-full bg-white dark:bg-gray-950 shadow ring-0',
+                                            'pointer-events-none inline-block size-5 transform rounded-full bg-white shadow ring-0 dark:bg-gray-950',
                                             'translate-x-0' => ! $variant->allow_backorder,
                                             'translate-x-5' => $variant->allow_backorder,
                                         ])
@@ -91,7 +95,9 @@
                     <x-filament-tables::table>
                         <x-slot name="header">
                             <x-filament-tables::header-cell class="lg:py-3">
-                                <span class="fi-ta-header-cell-label text-sm font-semibold text-gray-950 dark:text-white">
+                                <span
+                                    class="fi-ta-header-cell-label text-sm font-semibold text-gray-950 dark:text-white"
+                                >
                                     {{ __('shopper::pages/attributes.menu') }}
                                 </span>
                             </x-filament-tables::header-cell>
@@ -101,14 +107,16 @@
                         @foreach ($variant->values->loadMissing('attribute') as $value)
                             <x-filament-tables::row>
                                 <x-filament-tables::cell>
-                                    <div class="grid w-full gap-y-1 py-2 px-3">
-                                        <span class="fi-ta-text-item-label text-sm leading-6 text-gray-950 dark:text-white">
+                                    <div class="grid w-full gap-y-1 px-3 py-2">
+                                        <span
+                                            class="fi-ta-text-item-label text-sm leading-6 text-gray-950 dark:text-white"
+                                        >
                                             {{ $value->attribute->name }}
                                         </span>
                                     </div>
                                 </x-filament-tables::cell>
                                 <x-filament-tables::cell>
-                                    <div class="flex items-center flex-wrap gap-3 w-full gap-y-1 py-2 px-3">
+                                    <div class="flex w-full flex-wrap items-center gap-3 gap-y-1 px-3 py-2">
                                         <x-filament::badge color="gray">{{ $value->value }}</x-filament::badge>
                                     </div>
                                 </x-filament-tables::cell>
@@ -135,12 +143,12 @@
                 </x-filament::section.heading>
 
                 <x-shopper::card class="divide-y divide-gray-200 dark:divide-white/10">
-                    <dl class="grid gap-4 grid-cols-1 p-4 lg:grid-cols-3">
+                    <dl class="grid grid-cols-1 gap-4 p-4 lg:grid-cols-3">
                         <div>
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::forms.label.sku') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
+                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
                                 {{ $variant->sku ?? '--' }}
                             </dd>
                         </div>
@@ -149,7 +157,7 @@
                                 {{ __('shopper::forms.label.barcode') }}
                             </dt>
                             @if ($variant->barcode)
-                                <dd class="mt-2 space-y-1.5 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
+                                <dd class="mt-2 space-y-1.5 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
                                     {!! Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($variant->barcode, config('shopper.core.barcode_type')) !!}
                                 </dd>
                             @endif
@@ -166,13 +174,13 @@
         </div>
         <div class="space-y-6">
             <x-shopper::card class="divide-y divide-gray-200 dark:divide-white/10">
-                <div class="p-4 flex items-center justify-between gap-4">
+                <div class="flex items-center justify-between gap-4 p-4">
                     <x-filament::section.heading>
                         {{ __('shopper::words.media') }}
                     </x-filament::section.heading>
                     {{ $this->mediaAction }}
                 </div>
-                <div class="p-4 space-y-6">
+                <div class="space-y-6 p-4">
                     @if ($this->variant->media->isEmpty())
                         <div class="text-center text-sm leading-5">
                             <p class="text-sm/5 font-medium text-gray-700 dark:text-gray-300">
@@ -190,7 +198,7 @@
                                 {{ __('shopper::forms.label.thumbnail') }}
                             </p>
                             <img
-                                class="rounded-lg max-w-none object-cover object-center ring-white dark:ring-gray-900 size-[3.5rem]"
+                                class="size-[3.5rem] max-w-none rounded-lg object-cover object-center ring-white dark:ring-gray-900"
                                 src="{{ $this->variant->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
                                 alt="Thumbnail"
                             />
@@ -205,7 +213,7 @@
                             <div class="flex flex-wrap gap-4">
                                 @foreach ($this->variant->getMedia(config('shopper.media.storage.collection_name')) as $media)
                                     <img
-                                        class="rounded-lg max-w-none object-cover object-center ring-white dark:ring-gray-900 size-[3.5rem]"
+                                        class="size-[3.5rem] max-w-none rounded-lg object-cover object-center ring-white dark:ring-gray-900"
                                         src="{{ $media->getFullUrl() }}"
                                         alt="Thumbnail"
                                     />
@@ -224,7 +232,7 @@
                         {{ __('shopper::pages/products.shipping.package_dimension_description') }}
                     </x-filament::section.description>
                 </div>
-                <dl class="p-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <dl class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3">
                     <div>
                         <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                             {{ __('shopper::forms.label.width') }}

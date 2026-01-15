@@ -140,7 +140,9 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <ul class="bg-white divide-y divide-gray-200 ring-1 ring-gray-200 rounded-lg dark:ring-white/10 dark:bg-gray-900 dark:divide-white/10">
+                        <ul
+                            class="divide-y divide-gray-200 rounded-lg bg-white ring-1 ring-gray-200 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10"
+                        >
                             @foreach ($items as $item)
                                 <li class="flex-1 p-4">
                                     <div class="flex items-start">
@@ -269,7 +271,7 @@
                     <div class="mt-4">
                         @if ($order->shippingOption)
                             <dl
-                                class="bg-white divide-y divide-gray-200 overflow-hidden rounded-lg ring-1 ring-gray-200 dark:bg-gray-900 dark:divide-white/10 dark:bg-gray-800 dark:ring-white/10"
+                                class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white ring-1 ring-gray-200 dark:divide-white/10 dark:bg-gray-800 dark:bg-gray-900 dark:ring-white/10"
                             >
                                 <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4">
                                     <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -319,7 +321,7 @@
                                         <p class="text-sm text-yellow-700">
                                             {{ __('shopper::pages/orders.no_shipping_method') }}
                                             <a
-                                                href="https://laravelshopper.dev/docs/{{  shopper()->version() }}/shipping"
+                                                href="https://laravelshopper.dev/docs/{{ shopper()->version() }}/shipping"
                                                 target="_blank"
                                                 class="font-medium text-yellow-700 underline hover:text-yellow-600"
                                             >
@@ -395,7 +397,9 @@
                     </div>
                 </div>
             </div>
-            <div class="divide-y divide-gray-200 border-t border-gray-200 py-2 dark:divide-white/10 dark:border-white/10 sm:col-span-2 sm:border-l sm:border-t-0 sm:pl-8">
+            <div
+                class="divide-y divide-gray-200 border-t border-gray-200 py-2 dark:divide-white/10 dark:border-white/10 sm:col-span-2 sm:border-l sm:border-t-0 sm:pl-8"
+            >
                 <div class="py-4">
                     <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::words.customer') }}
@@ -472,7 +476,9 @@
 
                 @if ($shippingAddress)
                     <div class="py-4">
-                        <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
+                        <h3
+                            class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white"
+                        >
                             {{ __('shopper::pages/customers.addresses.shipping') }}
                         </h3>
                         <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
@@ -497,7 +503,9 @@
 
                     @if ($billingAddress)
                         <div class="space-y-3 py-4">
-                            <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
+                            <h3
+                                class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white"
+                            >
                                 {{ __('shopper::pages/customers.addresses.billing') }}
                             </h3>
 

@@ -4,7 +4,7 @@
     </main>
     <div class="hidden min-h-full p-1.5 lg:col-span-2 lg:flex">
         <div
-            class="relative flex flex-1 overflow-hidden rounded-2xl ring-1 ring-gray-950/10 bg-gray-50 pl-32 pt-32 dark:ring-white/20 dark:bg-gray-800"
+            class="relative flex flex-1 overflow-hidden rounded-2xl bg-gray-50 pl-32 pt-32 ring-1 ring-gray-950/10 dark:bg-gray-800 dark:ring-white/20"
         >
             <svg
                 class="absolute inset-0 z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] dark:stroke-gray-900"

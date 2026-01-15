@@ -36,7 +36,7 @@
     <x-shopper::container class="mt-8">
         @foreach ($legals as $key => $legal)
             <div x-cloak x-show="currentTab === '{{ $key }}'">
-                @livewire('shopper-settings.legal.'. $key, ['legal' => $legal], key($key))
+                @livewire('shopper-settings.legal.' . $key, ['legal' => $legal], key($key))
             </div>
         @endforeach
     </x-shopper::container>

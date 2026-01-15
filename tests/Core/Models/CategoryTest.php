@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Shopper\Core\Models\Category;
+use Shopper\Core\Models\Contracts\Category as CategoryContract;
 use Shopper\Core\Models\Product;
 
 uses(Tests\TestCase::class);
@@ -12,7 +13,10 @@ describe(Category::class, function (): void {
         Category::factory()->create(['is_enabled' => false, 'slug' => 'disabled-category']);
         $enabled = Category::factory()->create(['is_enabled' => true, 'slug' => 'enabled-category']);
 
-        $result = Category::resolvedQuery()->scopes('enabled')->where('id', $enabled->id)->first();
+        $result = resolve(CategoryContract::class)::query()
+            ->scopes('enabled')
+            ->where('id', $enabled->id)
+            ->first();
 
         expect($result->id)->toBe($enabled->id)
             ->and($result->is_enabled)->toBeTrue();

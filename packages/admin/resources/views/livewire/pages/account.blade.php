@@ -1,4 +1,4 @@
-<x-shopper::container class="py-5 space-y-5">
+<x-shopper::container class="space-y-5 py-5">
     <x-shopper::breadcrumb :back="route('shopper.dashboard')">
         <x-untitledui-chevron-left class="size-4 text-gray-300 dark:text-gray-600" aria-hidden="true" />
         <span class="truncate text-gray-500 dark:text-gray-400">
@@ -6,7 +6,10 @@
         </span>
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading :title="__('shopper::pages/auth.account.title')" class="border-b border-gray-200 dark:border-white/10 pb-5" />
+    <x-shopper::heading
+        :title="__('shopper::pages/auth.account.title')"
+        class="border-b border-gray-200 pb-5 dark:border-white/10"
+    />
 
     <div>
         <livewire:shopper-account.profile />

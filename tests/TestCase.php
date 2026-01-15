@@ -25,15 +25,14 @@ use PDOException;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Core\Database\Seeders\ShopperSeeder;
-use Shopper\Core\Models\Currency;
-use Shopper\Core\Models\Setting;
-use Tests\Core\Stubs\User;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
 use Spatie\LivewireWizard\WizardServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
+use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
 use TailwindMerge\Laravel\TailwindMergeServiceProvider;
+use Tests\Core\Stubs\User;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -48,7 +47,7 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $this->loadLaravelMigrations();
+        $this->app->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
         // Freeze time to avoid timestamp errors
         $this->freezeTime();
@@ -105,7 +104,7 @@ abstract class TestCase extends BaseTestCase
         // Paratest sets TEST_TOKEN for each worker (0, 1, 2, etc.)
         $testToken = env('TEST_TOKEN', '');
         $dbSuffix = $testToken !== '' ? "_{$testToken}" : '';
-        $dbName = env('DB_DATABASE', 'testing') . $dbSuffix;
+        $dbName = env('DB_DATABASE', 'testing').$dbSuffix;
 
         $app['config']->set('database.connections.sqlite', [
             'driver' => 'sqlite',
@@ -119,7 +118,7 @@ abstract class TestCase extends BaseTestCase
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('MYSQL_PORT', env('DB_PORT', '3306')),
             'database' => $dbName,
-            'username' => env('MYSQL_USERNAME', env('DB_USERNAME', 'valet')),
+            'username' => env('MYSQL_USERNAME', env('DB_USERNAME', 'root')),
             'password' => env('MYSQL_PASSWORD', env('DB_PASSWORD', '')),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
@@ -180,6 +179,7 @@ abstract class TestCase extends BaseTestCase
                     $config['options']
                 );
                 $result = $pdo->query("select 1 from pg_database where datname = '{$dbName}'");
+
                 if ($result->fetchColumn() === false) {
                     $pdo->exec("create database \"{$dbName}\"");
                 }

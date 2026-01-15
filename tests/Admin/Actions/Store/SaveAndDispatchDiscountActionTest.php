@@ -26,7 +26,7 @@ beforeEach(function (): void {
     $this->products = Product::factory()->count(3)->publish()->create();
     $this->users = User::factory()->count(3)->create();
     $this->formValues = [
-        'code' => 'SUMMER23',
+        'code' => fake()->unique()->word(),
         'is_active' => true,
         'type' => DiscountType::FixedAmount(),
         'value' => 1000,
@@ -50,7 +50,7 @@ describe(SaveAndDispatchDiscountAction::class, function (): void {
 
         expect($discount)->toBeInstanceOf(Discount::class)
             ->and($discount->code)
-            ->toBe('SUMMER23');
+            ->toBe($this->formValues['code']);
 
         Queue::assertCount(2);
     });

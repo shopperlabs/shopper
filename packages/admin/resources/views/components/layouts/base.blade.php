@@ -29,8 +29,6 @@
             rel="stylesheet"
         />
 
-        @stack('styles')
-
         @filamentStyles
         {{ \Shopper\Facades\Shopper::getThemeLink() }}
 

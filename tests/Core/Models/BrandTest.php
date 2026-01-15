@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Models\Brand;
+use Shopper\Core\Models\Contracts\Brand as BrandContract;
 use Shopper\Core\Models\Product;
 
 uses(Tests\TestCase::class);
@@ -29,7 +30,7 @@ describe(Brand::class, function (): void {
         Brand::factory()->count(3)->create(['is_enabled' => true]);
         Brand::factory()->count(2)->create(['is_enabled' => false]);
 
-        $enabledBrands = Brand::resolvedQuery()->scopes('enabled')->get();
+        $enabledBrands = resolve(BrandContract::class)::query()->scopes('enabled')->get();
 
         expect($enabledBrands)->toHaveCount(3);
     });

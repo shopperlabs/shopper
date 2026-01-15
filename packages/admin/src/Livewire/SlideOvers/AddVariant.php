@@ -187,7 +187,7 @@ class AddVariant extends SlideOverComponent implements HasForms
 
         /** @var ProductVariantContract $variant */
         $variant = app()->call(CreateNewVariant::class, [
-            'state' => array_merge($data, ['product_id' => $this->product->id]),
+            'data' => array_merge($data, ['product_id' => $this->product->id]),
         ]);
 
         $this->form->model($variant)->saveRelationships();

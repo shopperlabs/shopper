@@ -38,7 +38,7 @@ describe(CollectionProductsList::class, function (): void {
         Livewire::test(CollectionProductsList::class, ['collection' => $collection])
             ->set('selectedProducts', $products->pluck('id')->toArray())
             ->call('addSelectedProducts')
-            ->assertDispatched('onProductsAddInCollection');
+            ->assertDispatched('collection.add.product');
 
         $collection->refresh();
 

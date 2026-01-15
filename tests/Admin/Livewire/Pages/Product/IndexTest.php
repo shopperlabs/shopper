@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Livewire\Pages\Product\Index;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
@@ -29,6 +30,6 @@ describe(Index::class, function (): void {
         Product::factory()->count(3)->create();
 
         Livewire::test(Index::class)
-            ->assertCanSeeTableRecords(Product::resolvedQuery()->limit(3)->get());
+            ->assertCanSeeTableRecords(resolve(ProductContract::class)::query()->limit(3)->get());
     });
 })->group('livewire', 'products');

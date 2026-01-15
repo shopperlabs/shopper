@@ -292,6 +292,8 @@ describe(Product::class, function (): void {
             'approved' => true,
         ]);
 
+        $product->refresh();
+
         expect($product->countRating())->toBe(1);
     });
 

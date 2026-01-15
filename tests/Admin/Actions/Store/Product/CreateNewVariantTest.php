@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use Shopper\Actions\Store\Product\CreateNewVariant;
 use Shopper\Core\Enum\ProductType;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Inventory;
 use Tests\Core\Stubs\Product;
@@ -23,11 +25,12 @@ beforeEach(function (): void {
 describe(CreateNewVariant::class, function (): void {
     it('creates new variant with all data', function (): void {
         Inventory::factory()->create(['is_default' => true]);
-        /** @var Product $product */
+        /** @var ProductContract $product */
         $product = Product::factory()->create(['type' => ProductType::Variant]);
         $currency = Currency::query()->first();
 
-        $variant = app()->call(CreateNewVariant::class, ['state' => [
+        /** @var ProductVariantContract $variant */
+        $variant = app()->call(CreateNewVariant::class, ['data' => [
             'product_id' => $product->id,
             'name' => 'Test Variant',
             'sku' => 'VAR-001',
@@ -37,8 +40,7 @@ describe(CreateNewVariant::class, function (): void {
             ],
         ]]);
 
-        expect($variant)->toBeInstanceOf(ProductVariant::class)
-            ->and($variant->sku)->toBe('VAR-001')
+        expect($variant->sku)->toBe('VAR-001')
             ->and($variant->stock)->toBe(10)
             ->and($variant->prices()->count())->toBe(1);
     });

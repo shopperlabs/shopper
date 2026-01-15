@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Enum\CollectionType;
+use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Livewire\SlideOvers\AddCollectionForm;
 use Tests\Core\Stubs\Collection;
 use Tests\Core\Stubs\User;
@@ -22,7 +23,7 @@ describe(AddCollectionForm::class, function (): void {
     it('can validate required fields on add collection form', function (): void {
         Livewire::test(AddCollectionForm::class)
             ->assertFormExists()
-            ->fillForm([])
+            ->fillForm()
             ->call('store')
             ->assertHasFormErrors(['name' => 'required', 'type' => 'required']);
     });
@@ -39,10 +40,10 @@ describe(AddCollectionForm::class, function (): void {
             ->assertRedirectToRoute(
                 'shopper.collections.edit',
                 [
-                    'collection' => Collection::resolvedQuery()->find(1),
+                    'collection' => resolve(CollectionContract::class)::query()->first(),
                 ]
             );
 
-        expect(Collection::resolvedQuery()->count())->toBe(1);
+        expect(resolve(CollectionContract::class)::query()->count())->toBe(1);
     });
 })->group('livewire', 'slideovers', 'collections');

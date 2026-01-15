@@ -18,8 +18,8 @@ beforeEach(function (): void {
 
     $this->inventory = InventoryModel::factory()->create(['is_default' => true]);
     $this->product = Product::factory()->create([
-        'sku' => 'TEST-SKU',
-        'barcode' => '123456789',
+        'sku' => fake()->unique()->ean8(),
+        'barcode' => fake()->unique()->ean13(),
     ]);
 });
 
@@ -35,7 +35,7 @@ describe(Inventory::class, function (): void {
 
         expect($component->get('product'))->not->toBeNull()
             ->and($component->get('product')->id)->toBe($this->product->id)
-            ->and($component->get('data.sku'))->toBe('TEST-SKU');
+            ->and($component->get('data.sku'))->toBe($this->product->sku);
     });
 
     it('can update product inventory information', function (): void {
@@ -85,7 +85,7 @@ describe(Inventory::class, function (): void {
                 'quantity' => 10,
             ])
             ->assertHasNoTableActionErrors()
-            ->assertDispatched('updateInventory');
+            ->assertDispatched('inventory.updated');
 
         expect($this->product->getStock())->toBe(10);
     });
@@ -99,7 +99,7 @@ describe(Inventory::class, function (): void {
                 'quantity' => -5,
             ])
             ->assertHasNoTableActionErrors()
-            ->assertDispatched('updateInventory');
+            ->assertDispatched('inventory.updated');
 
         expect($this->product->getStock())->toBe(15);
     });

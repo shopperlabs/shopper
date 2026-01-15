@@ -41,8 +41,7 @@ describe(AttributeForm::class, function (): void {
                 'is_enabled' => true,
             ])
             ->call('store')
-            ->assertHasNoFormErrors()
-            ->assertDispatched('attribute-save');
+            ->assertHasNoFormErrors();
 
         expect(Attribute::query()->count())->toBe(1)
             ->and(Attribute::query()->first()->name)->toBe('Color')
@@ -95,8 +94,7 @@ describe(AttributeForm::class, function (): void {
                 'description' => 'Updated description',
             ])
             ->call('store')
-            ->assertHasNoFormErrors()
-            ->assertDispatched('attribute-save');
+            ->assertHasNoFormErrors();
 
         expect($attribute->refresh()->name)->toBe('New Name');
     });

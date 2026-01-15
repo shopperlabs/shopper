@@ -1,5 +1,8 @@
 <x-shopper::container>
-    <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('shopper::pages/settings/menu.staff')">
+    <x-shopper::breadcrumb
+        :back="route('shopper.settings.index')"
+        :current="__('shopper::pages/settings/menu.staff')"
+    >
         <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.settings.index')"
@@ -21,7 +24,7 @@
                         { component: 'shopper-modals.create-role' }
                     )"
                     type="button"
-                    class="ml-3 inline-flex items-center gap-2 rounded-md ring-1 ring-inset ring-primary-600/10 bg-primary-50 px-2 py-1 text-xs font-semibold text-primary-600 hover:bg-primary-100 dark:text-primary-400 dark:ring-primary-400/30 dark:bg-primary-400/20 dark:hover:bg-primary-400/10 focus:outline-none"
+                    class="ml-3 inline-flex items-center gap-2 rounded-md bg-primary-50 px-2 py-1 text-xs font-semibold text-primary-600 ring-1 ring-inset ring-primary-600/10 hover:bg-primary-100 focus:outline-none dark:bg-primary-400/20 dark:text-primary-400 dark:ring-primary-400/30 dark:hover:bg-primary-400/10"
                 >
                     <x-untitledui-plus class="size-5" aria-hidden="true" />
                     {{ __('shopper::pages/settings/staff.new_role') }}
@@ -34,7 +37,7 @@
                 @foreach ($roles as $role)
                     <x-shopper::link
                         :href="route('shopper.settings.users.role', $role)"
-                        class="group flex flex-col justify-between overflow-hidden rounded-lg p-4 shadow-sm bg-white ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10"
+                        class="group flex flex-col justify-between overflow-hidden rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10"
                     >
                         <div class="flex items-center justify-between">
                             <span

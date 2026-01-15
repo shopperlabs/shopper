@@ -1,4 +1,4 @@
-@if (! empty(config('shopper.admin.resources.stylesheets')))
+@if (filled(config('shopper.admin.resources.stylesheets')))
     <!-- Additional CSS -->
     @foreach (config('shopper.admin.resources.stylesheets') as $css)
         @if (\Illuminate\Support\Str::of($css)->startsWith(['http://', 'https://']))

@@ -1,6 +1,8 @@
 /.idea
 /.vscode
+/coverage
 /node_modules
+/build
 /node_modules.nosync
 yarn-error.log
 /**/vendor
@@ -9,5 +11,7 @@ composer.phar
 phpunit.xml
 .phpunit.result.cache
 .php-cs-fixer.cache
-build
+.env.testing
 Thumbs.db
+!phpunit.*.xml
+/tests/**/Screenshots

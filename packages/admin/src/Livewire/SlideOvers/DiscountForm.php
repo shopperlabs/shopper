@@ -20,8 +20,8 @@ use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Discount;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Zone;
 use Shopper\Livewire\Components\SlideOverComponent;
 
@@ -209,7 +209,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->live(),
                         Forms\Components\Select::make('products')
                             ->options(
-                                Product::resolvedQuery()
+                                resolve(ProductContract::class)::query()
                                     ->scopes('publish')
                                     ->get()
                                     ->pluck('name', 'id')

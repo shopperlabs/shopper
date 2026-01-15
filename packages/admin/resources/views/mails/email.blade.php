@@ -32,14 +32,14 @@
     {{-- Action Button --}}
     @isset($actionText)
         <?php
-            switch ($level ?? 'info') {
-                case 'success':
-                case 'error':
-                    $color = $level ?? 'info';
-                    break;
-                default:
-                    $color = 'primary';
-            }
+        switch ($level ?? 'info') {
+            case 'success':
+            case 'error':
+                $color = $level ?? 'info';
+                break;
+            default:
+                $color = 'primary';
+        }
         ?>
 
         @component('shopper::mails.html.button', ['url' => $actionUrl, 'color' => $color])
