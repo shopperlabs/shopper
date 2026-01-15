@@ -11,6 +11,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
 use Livewire\Component;
@@ -22,6 +23,7 @@ class RelatedProducts extends Component implements HasActions, HasForms
     use InteractsWithActions;
     use InteractsWithForms;
 
+    /** @var Model&ProductContract */
     public ProductContract $product;
 
     public function mount(): void

@@ -33,7 +33,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read int $user_id
  * @property-read int $country_id
  * @property-read Country $country
- * @property-read ShopperUser $user
+ * @property-read Model&ShopperUser $user
  */
 #[ObservedBy(AddressObserver::class)]
 class Address extends Model implements AddressContract
@@ -66,7 +66,7 @@ class Address extends Model implements AddressContract
     }
 
     /**
-     * @return BelongsTo<ShopperUser, $this>
+     * @return BelongsTo<Model&ShopperUser, $this>
      */
     public function user(): BelongsTo
     {

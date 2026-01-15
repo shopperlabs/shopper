@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Customers;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Contracts\Address as AddressContract;
 use Shopper\Core\Models\Contracts\ShopperUser;
 
@@ -16,7 +17,7 @@ class Addresses extends Component
     public ShopperUser $customer;
 
     /**
-     * @return Collection<int, AddressContract>
+     * @return Collection<int, Address>
      */
     #[Computed(persist: true)]
     public function addresses(): Collection

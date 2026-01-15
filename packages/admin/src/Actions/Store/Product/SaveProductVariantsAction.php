@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Actions\Store\Product;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Shopper\Actions\Store\InitialQuantityInventory;
@@ -15,6 +16,7 @@ final class SaveProductVariantsAction
 {
     /**
      * @param  array<string, mixed>  $variants
+     * @param  Model&Product  $product
      * @return array<string, mixed>
      *
      * @throws Throwable
@@ -66,9 +68,12 @@ final class SaveProductVariantsAction
 
         $variantIds = collect($variants)->pluck('variant_id');
 
-        /** @var Collection<int, ProductVariant> $variantsToDelete */
+        /** @var Collection<int, Model&ProductVariant> $variantsToDelete */
         $variantsToDelete = $product->variants()->whereNotIn('id', $variantIds)->get();
-        $variantsToDelete->each(fn (ProductVariant $variant) => $variant->delete());
+        $variantsToDelete->each(
+            /** @param Model&ProductVariant $variant */
+            fn (ProductVariant $variant) => $variant->delete()
+        );
 
         DB::commit();
 

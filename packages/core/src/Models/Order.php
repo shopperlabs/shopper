@@ -45,7 +45,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?Zone $zone
  * @property-read ?Channel $channel
  * @property-read ?static $parent
- * @property-read \Illuminate\Foundation\Auth\User|ShopperUser $customer
+ * @property-read Model&ShopperUser $customer
  * @property-read Collection<int, OrderItem> $items
  * @property-read Collection<int, Order> $children
  */
@@ -150,7 +150,7 @@ class Order extends Model implements OrderContract
     }
 
     /**
-     * @return BelongsTo<ShopperUser, $this>
+     * @return BelongsTo<Model&ShopperUser, $this>
      */
     public function customer(): BelongsTo
     {
@@ -159,7 +159,7 @@ class Order extends Model implements OrderContract
     }
 
     /**
-     * @return BelongsTo<Contracts\Channel, $this>
+     * @return BelongsTo<Channel, $this>
      */
     public function channel(): BelongsTo
     {

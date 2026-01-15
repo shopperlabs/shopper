@@ -26,7 +26,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read bool $is_default
  * @property-read bool $is_enabled
  * @property-read array<string, mixed>|null $metadata
- * @property-read Collection<int, Contracts\Product> $products
+ * @property-read Collection<int, Product> $products
  */
 #[ObservedBy(ChannelObserver::class)]
 class Channel extends Model implements ChannelContract

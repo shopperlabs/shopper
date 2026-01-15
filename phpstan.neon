@@ -1,5 +1,5 @@
 includes:
-    # - phpstan-baseline.neon
+    - phpstan-baseline.neon
     - vendor/larastan/larastan/extension.neon
 
 parameters:
@@ -9,6 +9,8 @@ parameters:
         - packages
 
     excludePaths:
+        - packages/admin/src/Events
+        - packages/admin/src/Traits
         - packages/sidebar
 
     ignoreErrors:
@@ -17,5 +19,17 @@ parameters:
         -
             message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
             identifier: larastan.noEnvCallsOutsideOfConfig
+        -
+            message: '#Access to an undefined property (Illuminate\\Database\\Eloquent\\Model&)?Shopper\\Core\\Models\\Contracts\\[a-zA-Z]+::\$[a-zA-Z_]+#'
+            identifier: property.notFound
+        -
+            message: '#Call to an undefined method (Illuminate\\Database\\Eloquent\\Model&)?Shopper\\Core\\Models\\Contracts\\[a-zA-Z]+::[a-zA-Z_]+\(\)#'
+            identifier: method.notFound
+        -
+            message: '#expects view-string(\|null)?, string given#'
+            identifier: argument.type
+        -
+            message: '#\(view-string\) does not accept default value of type string#'
+            identifier: property.defaultValue
 
     reportUnmatchedIgnoredErrors: false

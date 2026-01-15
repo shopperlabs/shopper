@@ -18,8 +18,8 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read int $order_id
  * @property-read array<array-key, mixed>|null $ip_api
  * @property-read array<array-key, mixed>|null $extreme_ip_lookup
- * @property-read \Illuminate\Foundation\Auth\User|ShopperUser $user
- * @property-read Contracts\Order $order
+ * @property-read Model&ShopperUser $user
+ * @property-read Order $order
  */
 class Geolocation extends Model implements GeolocationContract
 {
@@ -36,7 +36,7 @@ class Geolocation extends Model implements GeolocationContract
     }
 
     /**
-     * @return BelongsTo<ShopperUser, $this>
+     * @return BelongsTo<Model&ShopperUser, $this>
      */
     public function user(): BelongsTo
     {

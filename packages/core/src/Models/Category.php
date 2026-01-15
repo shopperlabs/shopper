@@ -27,7 +27,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
  * @property-read bool $is_enabled
  * @property-read ?int $parent_id
  * @property-read ?static $parent
- * @property-read Collection<int, Contracts\Product> $products
+ * @property-read Collection<int, Product> $products
  */
 #[ObservedBy(CategoryObserver::class)]
 class Category extends Model implements CategoryContract, SpatieHasMedia

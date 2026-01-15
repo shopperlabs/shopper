@@ -32,7 +32,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read ?string $seo_title
  * @property-read ?string $seo_description
  * @property-read EloquentCollection<int, CollectionRule> $rules
- * @property-read EloquentCollection<int, Contracts\Product> $products
+ * @property-read EloquentCollection<int, Product> $products
  */
 class Collection extends Model implements CollectionContract, SpatieHasMedia
 {

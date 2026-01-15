@@ -11,6 +11,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Shopper\Core\Events\Products\ProductDeleted;
@@ -22,6 +23,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
     use InteractsWithActions;
     use InteractsWithForms;
 
+    /** @var Model&ProductContract */
     public ProductContract $product;
 
     #[Url(as: 'tab')]

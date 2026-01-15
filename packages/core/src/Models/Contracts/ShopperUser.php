@@ -29,10 +29,6 @@ use Shopper\Core\Models\Order;
  * @property-read ?CarbonInterface $email_verified_at
  * @property-read ?CarbonInterface $birth_date
  * @property-read ?CarbonInterface $last_login_at
- *
- * @mixin \Illuminate\Database\Eloquent\Model
- * @mixin \Illuminate\Notifications\Notifiable
- * @mixin \Spatie\Permission\Traits\HasRoles
  */
 interface ShopperUser extends Authenticatable
 {

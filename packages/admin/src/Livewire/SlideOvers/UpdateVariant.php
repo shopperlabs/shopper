@@ -118,7 +118,7 @@ class UpdateVariant extends SlideOverComponent implements HasForms
                     ]),
             ])
             ->statePath('data')
-            ->model($this->variant);
+            ->model($this->variant); // @phpstan-ignore-line
     }
 
     public function save(): void

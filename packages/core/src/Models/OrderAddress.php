@@ -25,7 +25,7 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read ?string $company
  * @property-read ?string $phone
  * @property-read ?string $country_name
- * @property-read ShopperUser $customer
+ * @property-read Model&ShopperUser $customer
  */
 class OrderAddress extends Model implements OrderAddressContract
 {
@@ -48,7 +48,7 @@ class OrderAddress extends Model implements OrderAddressContract
     }
 
     /**
-     * @return BelongsTo<ShopperUser, $this>
+     * @return BelongsTo<Model&ShopperUser, $this>
      */
     public function customer(): BelongsTo
     {

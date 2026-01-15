@@ -29,10 +29,10 @@ use Shopper\Core\Models\Traits\HasSlug;
  * @property-read string $payments_name
  * @property-read string $currency_code
  * @property-read Currency $currency
- * @property-read Collection<int, Contracts\Carrier> $carriers
- * @property-read Collection<int, Contracts\CarrierOption> $shippingOptions
- * @property-read Collection<int, Contracts\PaymentMethod> $paymentMethods
- * @property-read Collection<int, Contracts\Country> $countries
+ * @property-read Collection<int, Carrier> $carriers
+ * @property-read Collection<int, CarrierOption> $shippingOptions
+ * @property-read Collection<int, PaymentMethod> $paymentMethods
+ * @property-read Collection<int, Country> $countries
  */
 class Zone extends Model implements ZoneContract
 {

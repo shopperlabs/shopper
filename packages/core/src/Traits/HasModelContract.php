@@ -122,6 +122,7 @@ trait HasModelContract
     {
         $modelClass = static::configuredClass();
 
+        /** @var static|null */
         return $modelClass::query()
             ->where($field ?? $this->getRouteKeyName(), $value)
             ->first();
@@ -131,9 +132,10 @@ trait HasModelContract
     {
         $modelClass = static::configuredClass();
 
-        return $modelClass::query()
+        /** @var static|null */
+        return $modelClass::query() // @phpstan-ignore-line
             ->where($field ?? $this->getRouteKeyName(), $value)
-            ->withTrashed() // @phpstan-ignore-line
+            ->withTrashed()
             ->first();
     }
 

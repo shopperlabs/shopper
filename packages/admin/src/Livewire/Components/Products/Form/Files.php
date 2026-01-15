@@ -10,6 +10,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 
@@ -20,6 +21,7 @@ class Files extends Component implements HasForms
 {
     use InteractsWithForms;
 
+    /** @var Model&ProductContract */
     public ProductContract $product;
 
     /** @var array<string, mixed>|null */

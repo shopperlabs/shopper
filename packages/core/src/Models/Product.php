@@ -62,12 +62,12 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read array<string, mixed>|null $metadata
  * @property-read int $stock
  * @property-read Brand $brand
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Contracts\Channel> $channels
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Contracts\Category> $categories
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Contracts\Attribute> $options
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Contracts\Collection> $collections
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Contracts\ProductVariant> $variants
- * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductContract> $relatedProducts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Channel> $channels
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $categories
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Attribute> $options
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Collection> $collections
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductVariant> $variants
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Product> $relatedProducts
  *
  * @implements Priceable<Product>
  */

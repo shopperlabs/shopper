@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Models\Discount;
 
 /**
- * @property-read Collection<int, \Shopper\Core\Models\Contracts\Discount> $discounts
+ * @property-read Collection<int, Discount> $discounts
  */
 trait HasDiscounts
 {

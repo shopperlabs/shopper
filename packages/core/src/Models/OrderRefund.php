@@ -21,8 +21,8 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read string $currency
  * @property-read int $order_id
  * @property-read ?int $user_id
- * @property-read Contracts\Order $order
- * @property-read ?ShopperUser $customer
+ * @property-read Order $order
+ * @property-read ?Model $customer
  */
 class OrderRefund extends Model implements OrderRefundContract
 {
@@ -60,7 +60,7 @@ class OrderRefund extends Model implements OrderRefundContract
     }
 
     /**
-     * @return BelongsTo<ShopperUser, $this>
+     * @return BelongsTo<Model&ShopperUser, $this>
      */
     public function customer(): BelongsTo
     {
