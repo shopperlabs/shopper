@@ -1,0 +1,9 @@
+.sh-section-aside {
+  .fi-section-content-ctn {
+    @apply bg-transparent! ring-0! shadow-none! lg:max-w-3xl;
+
+    & > .fi-section-content {
+      @apply p-0!;
+    }
+  }
+}
