@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\DeleteAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
@@ -14,10 +18,12 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Price;
 
-class Pricing extends Component implements HasForms, HasTable
+class Pricing extends Component implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -28,23 +34,24 @@ class Pricing extends Component implements HasForms, HasTable
         return $table
             ->relationship(fn () => $this->model->prices()) // @phpstan-ignore-line
             ->columns([
-                Tables\Columns\TextColumn::make('currency.name')
+                TextColumn::make('currency.name')
                     ->label(__('shopper::forms.label.currency'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('amount')
+                TextColumn::make('amount')
                     ->label(__('shopper::forms.label.price'))
                     ->money(fn ($record) => $record->currencyCode),
-                Tables\Columns\TextColumn::make('compare_amount')
+                TextColumn::make('compare_amount')
                     ->label(__('shopper::forms.label.compare_price'))
                     ->money(fn ($record) => $record->currencyCode),
-                Tables\Columns\TextColumn::make('cost_amount')
+                TextColumn::make('cost_amount')
                     ->label(__('shopper::forms.label.cost_per_item'))
                     ->money(fn ($record) => $record->currencyCode),
             ])
-            ->actions([
-                Tables\Actions\Action::make('edit')
+            ->recordActions([
+                Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->icon('untitledui-edit-04')
+                    ->icon(Untitledui::Edit03)
+                    ->iconButton()
                     ->action(
                         fn (Price $record) => $this->dispatch(
                             'openPanel',
@@ -56,12 +63,13 @@ class Pricing extends Component implements HasForms, HasTable
                             ]
                         )
                     ),
-                Tables\Actions\DeleteAction::make()
+                DeleteAction::make()
                     ->label(__('shopper::forms.actions.delete'))
-                    ->icon('untitledui-trash-03'),
+                    ->icon(Untitledui::Trash03)
+                    ->iconButton(),
             ])
             ->headerActions([
-                Tables\Actions\Action::make('add')
+                Action::make('add')
                     ->label(__('shopper::pages/products.pricing.add'))
                     ->color('gray')
                     ->action(

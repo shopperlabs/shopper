@@ -24,7 +24,7 @@ return [
     */
 
     'components' => [
-        'modals.archived-order' => Livewire\Modals\ArchiveOrder::class,
+        //
     ],
 
 ];

@@ -4,26 +4,27 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Form;
 
-use Filament\Forms;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
-use Shopper\Components;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Components\Form\ShippingField;
+use Shopper\Components\Section;
+use Shopper\Core\Models\Contracts\Product;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class Shipping extends Component implements HasForms
+class Shipping extends Component implements HasSchemas
 {
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
-    /** @var Model&ProductContract */
-    public ProductContract $product;
+    /** @var Model&Product */
+    public Product $product;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -33,17 +34,17 @@ class Shipping extends Component implements HasForms
         $this->form->fill($this->product->toArray());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Components\Section::make(__('shopper::pages/products.shipping.package_dimension'))
-                    ->description(__('shopper::pages/products.shipping.package_dimension_description'))
+        return $schema
+            ->components([
+                Section::make(__('shopper::pages/products.shipping.package_dimension'))
                     ->aside()
                     ->compact()
+                    ->extraAttributes(['class' => 'sh-section-aside'])
+                    ->description(__('shopper::pages/products.shipping.package_dimension_description'))
                     ->schema([
-                        Forms\Components\Grid::make()
-                            ->schema(Components\Form\ShippingField::make()),
+                        Grid::make()->schema(ShippingField::make()),
                     ]),
             ])
             ->statePath('data')

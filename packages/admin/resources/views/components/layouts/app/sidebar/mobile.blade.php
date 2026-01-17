@@ -23,7 +23,7 @@
             x-transition:leave-end="-translate-x-full"
             class="flex w-full max-w-xs flex-1 transform bg-white duration-200 ease-in-out dark:bg-gray-900"
         >
-            <div class="absolute right-0 top-0 -mr-14 p-1">
+            <div class="absolute top-0 right-0 -mr-14 p-1">
                 <button
                     x-show="sidebarOpen"
                     @click="sidebarOpen = false"

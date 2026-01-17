@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\Product\SavePricingAction;
@@ -20,11 +22,12 @@ use Shopper\Core\Models\Currency;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  * @property-read Collection<int, Currency> $currencies
  */
-class ManagePricing extends SlideOverComponent implements HasForms
+class ManagePricing extends SlideOverComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     /** @var (Model&Priceable<Model>) */
@@ -52,10 +55,10 @@ class ManagePricing extends SlideOverComponent implements HasForms
         $this->form->fill($this->getModelPrices());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema(CurrenciesField::make($this->currencies))
+        return $schema
+            ->components(CurrenciesField::make($this->currencies))
             ->statePath('data')
             ->model($this->model);
     }

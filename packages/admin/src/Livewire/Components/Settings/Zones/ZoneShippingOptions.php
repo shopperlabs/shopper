@@ -7,14 +7,15 @@ namespace Shopper\Livewire\Components\Settings\Zones;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Zone;
 
@@ -22,10 +23,10 @@ use Shopper\Core\Models\Zone;
  * @property-read Zone $zone
  */
 #[Lazy]
-class ZoneShippingOptions extends Component implements HasActions, HasForms
+class ZoneShippingOptions extends Component implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     public ?int $selectedZoneId = null;
 
@@ -45,7 +46,7 @@ class ZoneShippingOptions extends Component implements HasActions, HasForms
     {
         return Action::make('delete')
             ->requiresConfirmation()
-            ->icon('untitledui-trash-03')
+            ->icon(Untitledui::Trash03)
             ->color('danger')
             ->iconButton()
             ->action(function (array $arguments): void {
@@ -64,7 +65,7 @@ class ZoneShippingOptions extends Component implements HasActions, HasForms
     {
         return Action::make('edit')
             ->iconButton()
-            ->icon('untitledui-edit-03')
+            ->icon(Untitledui::Edit03)
             ->action(fn (array $arguments) => $this->dispatch(
                 'openPanel',
                 component: 'shopper-slide-overs.shipping-option-form',

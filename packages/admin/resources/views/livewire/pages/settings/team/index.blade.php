@@ -14,21 +14,12 @@
 
     <div class="mt-10 space-y-12 pb-10">
         <div>
-            <div class="flex items-center">
+            <div class="flex items-center gap-3">
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white">
                     {{ __('shopper::pages/settings/staff.role_available') }}
                 </h2>
-                <button
-                    wire:click="$dispatch(
-                        'openModal',
-                        { component: 'shopper-modals.create-role' }
-                    )"
-                    type="button"
-                    class="ml-3 inline-flex items-center gap-2 rounded-md bg-primary-50 px-2 py-1 text-xs font-semibold text-primary-600 ring-1 ring-inset ring-primary-600/10 hover:bg-primary-100 focus:outline-none dark:bg-primary-400/20 dark:text-primary-400 dark:ring-primary-400/30 dark:hover:bg-primary-400/10"
-                >
-                    <x-untitledui-plus class="size-5" aria-hidden="true" />
-                    {{ __('shopper::pages/settings/staff.new_role') }}
-                </button>
+
+                {{ $this->createRoleAction }}
             </div>
             <p class="mt-2 text-gray-500 dark:text-gray-400">
                 {{ __('shopper::pages/settings/staff.role_available_summary') }}
@@ -37,11 +28,11 @@
                 @foreach ($roles as $role)
                     <x-shopper::link
                         :href="route('shopper.settings.users.role', $role)"
-                        class="group flex flex-col justify-between overflow-hidden rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10"
+                        class="group flex flex-col justify-between overflow-hidden rounded-xl bg-white p-4 shadow ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10"
                     >
                         <div class="flex items-center justify-between">
                             <span
-                                class="text-xs font-semibold uppercase leading-4 tracking-wider text-gray-400 dark:text-gray-500"
+                                class="text-xs leading-4 font-semibold tracking-wider text-gray-400 uppercase dark:text-gray-500"
                             >
                                 {{ $role->users->count() }}
                                 {{ \Illuminate\Support\Str::plural(__('shopper::words.account'), $role->users->count()) }}
@@ -57,12 +48,12 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="mt-4 text-lg font-medium leading-6 text-gray-900 dark:text-white">
+                            <h3 class="mt-4 text-lg leading-6 font-medium text-gray-900 dark:text-white">
                                 {{ $role->display_name }}
                             </h3>
-                            <p class="mt-1 flex items-center text-sm text-primary-600 group-hover:text-primary-500">
+                            <p class="inline-flex itemps-center gap-2 mt-1.5 text-xs text-primary-600 group-hover:text-primary-500">
                                 {{ __('shopper::words.view_details') }}
-                                <x-untitledui-arrow-narrow-right class="ml-2 size-5" aria-hidden="true" />
+                                <x-untitledui-arrow-narrow-right class="size-4" aria-hidden="true" />
                             </p>
                         </div>
                     </x-shopper::link>
@@ -71,9 +62,9 @@
         </div>
         <div class="space-y-6">
             <div
-                class="space-y-3 border-b border-gray-200 pb-6 dark:border-white/10 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0"
+                class="space-y-3 border-b border-gray-200 pb-6 sm:flex sm:items-center sm:justify-between sm:space-y-0 sm:space-x-4 dark:border-white/10"
             >
-                <div class="min-w-0 max-w-2xl flex-1">
+                <div class="max-w-2xl min-w-0 flex-1">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::pages/settings/staff.admin_accounts') }}
                     </h2>
@@ -96,4 +87,6 @@
             {{ $this->table }}
         </div>
     </div>
+
+    <x-filament-actions::modals />
 </x-shopper::container>

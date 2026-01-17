@@ -17,19 +17,18 @@
     <div class="grid gap-x-6 gap-y-8 lg:grid-cols-3">
         <div class="space-y-8 *:space-y-4 lg:col-span-2">
             <div>
-                <x-filament::section.heading>
-                    {{ __('shopper::pages/products.variants.variant_information') }}
-                </x-filament::section.heading>
+                <x-shopper::section-heading :title="__('shopper::pages/products.variants.variant_information')" />
 
                 <x-shopper::card class="divide-y divide-gray-200 overflow-hidden dark:divide-white/10">
                     <div class="flex items-center justify-end p-4">
-                        <x-shopper::buttons.default
-                            class="font-semibold text-gray-950"
+                        <x-filament::button
                             type="button"
-                            wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.update-variant', arguments: { variantId: {{ $variant->id }}, productId: {{ $product->id }} }})"
+                            color="gray"
+                            size="sm"
+                            @click="Livewire.dispatch('openPanel', { component: 'shopper-slide-overs.update-variant', arguments: { variant: {{ $variant }}, product: {{ $product }} }})"
                         >
                             {{ __('shopper::forms.actions.edit') }}
-                        </x-shopper::buttons.default>
+                        </x-filament::buttons>
                     </div>
 
                     <dl class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-6">
@@ -37,7 +36,7 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::forms.label.name') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
+                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
                                 {{ $variant->name }}
                             </dd>
                         </div>
@@ -45,7 +44,7 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('Ean') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
+                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
                                 {{ $variant->ean ?? '-' }}
                             </dd>
                         </div>
@@ -53,7 +52,7 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('Upc') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
+                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
                                 {{ $variant->upc ?? '-' }}
                             </dd>
                         </div>
@@ -61,7 +60,7 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::forms.label.position') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
+                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
                                 {{ $variant->position }}
                             </dd>
                         </div>
@@ -69,7 +68,7 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::pages/products.allow_backorder') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
+                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
                                 <span
                                     @class([
                                         'relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent',
@@ -92,55 +91,50 @@
                         </div>
                     </dl>
 
-                    <x-filament-tables::table>
-                        <x-slot name="header">
-                            <x-filament-tables::header-cell class="lg:py-3">
-                                <span
-                                    class="fi-ta-header-cell-label text-sm font-semibold text-gray-950 dark:text-white"
-                                >
-                                    {{ __('shopper::pages/attributes.menu') }}
-                                </span>
-                            </x-filament-tables::header-cell>
-                            <x-filament-tables::header-cell class="lg:py-3" />
-                        </x-slot>
-
-                        @foreach ($variant->values->loadMissing('attribute') as $value)
-                            <x-filament-tables::row>
-                                <x-filament-tables::cell>
-                                    <div class="grid w-full gap-y-1 px-3 py-2">
-                                        <span
-                                            class="fi-ta-text-item-label text-sm leading-6 text-gray-950 dark:text-white"
-                                        >
-                                            {{ $value->attribute->name }}
-                                        </span>
-                                    </div>
-                                </x-filament-tables::cell>
-                                <x-filament-tables::cell>
-                                    <div class="flex w-full flex-wrap items-center gap-3 gap-y-1 px-3 py-2">
-                                        <x-filament::badge color="gray">{{ $value->value }}</x-filament::badge>
-                                    </div>
-                                </x-filament-tables::cell>
-                            </x-filament-tables::row>
-                        @endforeach
-                    </x-filament-tables::table>
+                    <table class="fi-ta-table w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5">
+                        <thead>
+                            <tr>
+                                <th class="fi-ta-header-cell px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
+                                    <span class="fi-ta-header-cell-label text-sm font-semibold text-gray-950 dark:text-white">
+                                        {{ __('shopper::pages/attributes.menu') }}
+                                    </span>
+                                </th>
+                                <th class="fi-ta-header-cell px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 whitespace-nowrap dark:divide-white/5">
+                            @foreach ($variant->values->loadMissing('attribute') as $value)
+                                <tr>
+                                    <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                                        <div class="grid w-full gap-y-1 px-3 py-2">
+                                            <span class="fi-ta-text-item-label text-sm leading-6 text-gray-950 dark:text-white">
+                                                {{ $value->attribute->name }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                                        <div class="flex w-full flex-wrap items-center gap-3 gap-y-1 px-3 py-2">
+                                            <x-filament::badge color="gray">
+                                                {{ $value->value }}
+                                            </x-filament::badge>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </x-shopper::card>
             </div>
             <div>
-                <div>
-                    <x-filament::section.heading>
-                        {{ __('shopper::pages/products.pricing.title') }}
-                    </x-filament::section.heading>
-                    <x-filament::section.description class="mt-1">
-                        {{ __('shopper::pages/products.pricing.description') }}
-                    </x-filament::section.description>
-                </div>
+                <x-shopper::section-heading
+                    :title="__('shopper::pages/products.pricing.title')"
+                    :description="__('shopper::pages/products.pricing.description')"
+                />
 
                 <livewire:shopper-products.pricing :model="$variant" />
             </div>
             <div>
-                <x-filament::section.heading>
-                    {{ __('shopper::pages/settings/menu.location') }}
-                </x-filament::section.heading>
+                <x-shopper::section-heading :title="__('shopper::pages/settings/menu.location')" />
 
                 <x-shopper::card class="divide-y divide-gray-200 dark:divide-white/10">
                     <dl class="grid grid-cols-1 gap-4 p-4 lg:grid-cols-3">
@@ -148,7 +142,7 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::forms.label.sku') }}
                             </dt>
-                            <dd class="mt-2 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
+                            <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
                                 {{ $variant->sku ?? '--' }}
                             </dd>
                         </div>
@@ -156,8 +150,9 @@
                             <dt class="text-sm/6 font-medium text-gray-700 dark:text-gray-300">
                                 {{ __('shopper::forms.label.barcode') }}
                             </dt>
+
                             @if ($variant->barcode)
-                                <dd class="mt-2 space-y-1.5 text-sm/5 text-gray-500 dark:text-gray-400 sm:mt-3">
+                                <dd class="mt-2 space-y-1.5 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
                                     {!! Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($variant->barcode, config('shopper.core.barcode_type')) !!}
                                 </dd>
                             @endif
@@ -178,17 +173,21 @@
                     <x-filament::section.heading>
                         {{ __('shopper::words.media') }}
                     </x-filament::section.heading>
+
                     {{ $this->mediaAction }}
                 </div>
                 <div class="space-y-6 p-4">
                     @if ($this->variant->media->isEmpty())
-                        <div class="text-center text-sm leading-5">
-                            <p class="text-sm/5 font-medium text-gray-700 dark:text-gray-300">
-                                {{ __('shopper::words.images') }}
-                            </p>
-                            <span class="text-sm leading-3 text-gray-500 dark:text-gray-400">
-                                {{ __('shopper::words.empty_space') }}
-                            </span>
+                        <div class="flex gap-3">
+                            <x-phosphor-image-duotone class="size-5 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {{ __('shopper::words.images') }}
+                                </p>
+                                <span class="text-sm leading-3 text-gray-500 dark:text-gray-400">
+                                    {{ __('shopper::words.empty_space') }}
+                                </span>
+                            </div>
                         </div>
                     @endif
 
@@ -198,7 +197,7 @@
                                 {{ __('shopper::forms.label.thumbnail') }}
                             </p>
                             <img
-                                class="size-[3.5rem] max-w-none rounded-lg object-cover object-center ring-white dark:ring-gray-900"
+                                class="size-14 max-w-none rounded-lg object-cover object-center ring-1 ring-gray-100 dark:ring-white/10"
                                 src="{{ $this->variant->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
                                 alt="Thumbnail"
                             />
@@ -213,7 +212,7 @@
                             <div class="flex flex-wrap gap-4">
                                 @foreach ($this->variant->getMedia(config('shopper.media.storage.collection_name')) as $media)
                                     <img
-                                        class="size-[3.5rem] max-w-none rounded-lg object-cover object-center ring-white dark:ring-gray-900"
+                                        class="size-14 max-w-none rounded-lg object-cover object-center ring-1 ring-gray-100 dark:ring-white/10"
                                         src="{{ $media->getFullUrl() }}"
                                         alt="Thumbnail"
                                     />
@@ -225,12 +224,10 @@
             </x-shopper::card>
             <x-shopper::card class="divide-y divide-gray-200 dark:divide-white/10">
                 <div class="p-4">
-                    <x-filament::section.heading>
-                        {{ __('shopper::pages/products.shipping.package_dimension') }}
-                    </x-filament::section.heading>
-                    <x-filament::section.description class="mt-1">
-                        {{ __('shopper::pages/products.shipping.package_dimension_description') }}
-                    </x-filament::section.description>
+                    <x-shopper::section-heading
+                        :title="__('shopper::pages/products.shipping.package_dimension')"
+                        :description="__('shopper::pages/products.shipping.package_dimension_description')"
+                    />
                 </div>
                 <dl class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3">
                     <div>
@@ -278,9 +275,5 @@
         </div>
     </div>
 
-    <div x-data>
-        <template x-teleport="body">
-            <x-filament-actions::modals />
-        </template>
-    </div>
+    <x-filament-actions::modals />
 </x-shopper::container>

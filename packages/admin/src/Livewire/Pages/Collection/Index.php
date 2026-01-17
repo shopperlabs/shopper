@@ -4,21 +4,28 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Collection;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Tables;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
-class Index extends AbstractPageComponent implements HasForms, HasTable
+class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -32,32 +39,32 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return $table
             ->query(resolve(CollectionContract::class)::query()->with('rules')->latest())
             ->columns([
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
+                SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->circular()
                     ->defaultImageUrl(shopper_fallback_url())
                     ->grow(false),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->label(__('shopper::forms.label.type'))
                     ->formatStateUsing(fn (CollectionContract $record): string => $record->isAutomatic() ? __('shopper::pages/collections.automatic') : __('shopper::pages/collections.manual'))
                     ->badge()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('id')
+                TextColumn::make('id')
                     ->label(__('shopper::pages/collections.product_conditions'))
                     ->formatStateUsing(
                         fn (CollectionContract $record): string => $record->rules->isNotEmpty() ? ucfirst($record->firstRule()) : 'N/A'
                     ),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
                     ->date(),
             ])
-            ->actions([
-                Tables\Actions\Action::make('edit')
+            ->recordActions([
+                Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->icon('untitledui-edit-03')
+                    ->icon(Untitledui::Edit03)
                     ->iconButton()
                     ->url(
                         fn (CollectionContract $record): string => route(
@@ -66,20 +73,20 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         ),
                     )
                     ->visible(Shopper::auth()->user()->can('edit_collections')),
-                Tables\Actions\Action::make('delete')
+                Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
-                    ->icon('untitledui-trash-03')
+                    ->icon(Untitledui::Trash03)
                     ->iconButton()
-                    ->modalIcon('untitledui-trash-03')
+                    ->modalIcon(Untitledui::Trash03)
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (CollectionContract $record) => $record->delete())
                     ->visible(Shopper::auth()->user()->can('delete_collections')),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make()
+                DeleteBulkAction::make()
                     ->label(__('shopper::forms.actions.delete'))
-                    ->icon('untitledui-trash-03')
+                    ->icon(Untitledui::Trash03)
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
                         $records->each->delete();

@@ -6,19 +6,21 @@ namespace Shopper\Livewire\Components\Customers;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
-use Shopper\Core\Models\Contracts\Order as OrderContract;
+use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\ShopperUser;
 
 class Orders extends Component
 {
+    /** @var Model&ShopperUser */
     public ShopperUser $customer;
 
-    #[Computed(persist: true)]
+    #[Computed]
     public function orders(): Paginator
     {
-        return resolve(OrderContract::class)::with([
+        return resolve(Order::class)::with([
             'items',
             'items.product',
             'items.product.media',
@@ -28,7 +30,7 @@ class Orders extends Component
         ])
             ->whereBelongsTo($this->customer, 'customer')
             ->latest()
-            ->simplePaginate(3);
+            ->simplePaginate(5);
     }
 
     public function render(): View

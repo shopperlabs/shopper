@@ -4,15 +4,21 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Form;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Lazy;
 use Livewire\Component;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Actions\Store\Product\DetachAttributesToProductAction;
 use Shopper\Components\Tables\IconColumn;
 use Shopper\Core\Models\Attribute;
@@ -20,8 +26,9 @@ use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 
 #[Lazy]
-class Attributes extends Component implements HasForms, HasTable
+class Attributes extends Component implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -42,24 +49,24 @@ class Attributes extends Component implements HasForms, HasTable
             ->columns([
                 IconColumn::make('attribute.icon')
                     ->label(__('shopper::forms.label.icon')),
-                Tables\Columns\TextColumn::make('attribute.name')
+                TextColumn::make('attribute.name')
                     ->label(__('shopper::forms.label.name')),
-                Tables\Columns\ViewColumn::make('attribute_value_id')
+                ViewColumn::make('attribute_value_id')
                     ->label(__('shopper::forms.label.value'))
                     ->view('shopper::livewire.tables.cells.products.attribute-value'),
-                Tables\Columns\TextColumn::make('attribute_custom_value')
+                TextColumn::make('attribute_custom_value')
                     ->label(__('shopper::forms.label.attribute_custom_value'))
                     ->html()
                     ->limit(150),
             ])
             ->groups([
-                Tables\Grouping\Group::make('attribute_id')
+                Group::make('attribute_id')
                     ->label(__('shopper::forms.label.attribute'))
                     ->getTitleFromRecordUsing(fn (AttributeProduct $record): string => $record->attribute->name),
             ])
             ->defaultGroup('attribute_id')
             ->headerActions([
-                Tables\Actions\Action::make('choose')
+                Action::make('choose')
                     ->label(__('shopper::pages/products.attributes.choose'))
                     ->action(
                         fn () => $this->dispatch(
@@ -70,10 +77,11 @@ class Attributes extends Component implements HasForms, HasTable
                     )
                     ->visible(Attribute::query()->count() > 0),
             ])
-            ->actions([
-                Tables\Actions\Action::make('delete')
-                    ->icon('untitledui-trash-03')
+            ->recordActions([
+                Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
+                    ->icon(Untitledui::Trash03)
+                    ->iconButton()
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(function (AttributeProduct $record): void {
@@ -90,7 +98,7 @@ class Attributes extends Component implements HasForms, HasTable
             ])
             ->emptyStateHeading(__('shopper::pages/products.attributes.empty_title'))
             ->emptyStateDescription(__('shopper::pages/products.attributes.empty_values'))
-            ->emptyStateIcon('untitledui-puzzle-piece');
+            ->emptyStateIcon(Untitledui::PuzzlePiece);
     }
 
     public function render(): View

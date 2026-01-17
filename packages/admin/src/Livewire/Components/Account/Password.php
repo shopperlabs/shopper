@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Account;
 
-use Filament\Forms\Components;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -17,10 +19,11 @@ use Shopper\Components\Section;
 use Shopper\Core\Models\Contracts\ShopperUser;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class Password extends Component implements HasForms
+class Password extends Component implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     /** @var array<string, mixed>|null */
@@ -31,29 +34,30 @@ class Password extends Component implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make(__('shopper::pages/auth.account.password_title'))
-                    ->description(__('shopper::pages/auth.account.password_description'))
                     ->aside()
                     ->compact()
+                    ->description(__('shopper::pages/auth.account.password_description'))
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
-                        Components\TextInput::make('current_password')
+                        TextInput::make('current_password')
                             ->label(__('shopper::forms.label.current_password'))
                             ->password()
                             ->currentPassword()
                             ->revealable()
                             ->required(),
-                        Components\TextInput::make('password')
+                        TextInput::make('password')
                             ->label(__('shopper::forms.label.new_password'))
                             ->helperText(__('shopper::pages/auth.account.password_helper_validation'))
                             ->password()
                             ->revealable()
                             ->required()
                             ->confirmed(),
-                        Components\TextInput::make('password_confirmation')
+                        TextInput::make('password_confirmation')
                             ->label(__('shopper::forms.label.confirm_password'))
                             ->password()
                             ->revealable()

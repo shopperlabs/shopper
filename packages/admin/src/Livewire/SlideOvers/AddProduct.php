@@ -5,11 +5,24 @@ declare(strict_types=1);
 namespace Shopper\Livewire\SlideOvers;
 
 use CodeWithDennis\FilamentSelectTree\SelectTree;
-use Filament\Forms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Livewire;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,19 +30,23 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use JaOcero\RadioDeck\Forms\Components\RadioDeck;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Actions\Store\Product\CreateProductAction;
-use Shopper\Components;
+use Shopper\Components\Separator;
+use Shopper\Components\SlideOverWizard;
+use Shopper\Components\Wizard\StepColumn;
 use Shopper\Core\Enum\ProductType;
-use Shopper\Core\Models\Contracts\Channel as ChannelContract;
+use Shopper\Core\Models\Contracts\Channel;
 use Shopper\Feature;
 use Shopper\Livewire\Components\Products\ProductTypeConfiguration;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class AddProduct extends SlideOverComponent implements HasForms
+class AddProduct extends SlideOverComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     /** @var array<string, mixed>|null */
@@ -53,7 +70,7 @@ class AddProduct extends SlideOverComponent implements HasForms
         $this->startStep = $this->currentProductType ? 2 : 1;
 
         $this->form->fill(array_merge([
-            'channels' => resolve(ChannelContract::class)::query()
+            'channels' => resolve(Channel::class)::query()
                 ->where('is_default', true)
                 ->pluck('id')
                 ->toArray(),
@@ -62,48 +79,48 @@ class AddProduct extends SlideOverComponent implements HasForms
         ], $this->currentProductType ? ['type' => $this->currentProductType] : []));
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Components\SlideOverWizard::make([
-                    Components\Wizard\StepColumn::make(__('shopper::forms.label.type'))
-                        ->icon('untitledui-dataflow-04')
+        return $schema
+            ->components([
+                SlideOverWizard::make([
+                    StepColumn::make(__('shopper::forms.label.type'))
+                        ->icon(Untitledui::Dataflow04)
                         ->schema([
                             RadioDeck::make('type')
                                 ->options(ProductType::class)
                                 ->descriptions(ProductType::class)
                                 ->icons(ProductType::class)
                                 ->alignment(Alignment::Start)
-                                ->color('primary')
+                                // ->color('primary')
                                 ->columns(3)
                                 ->live()
                                 ->required(),
-                            Forms\Components\Livewire::make(ProductTypeConfiguration::class, fn (Forms\Get $get): array => [
+                            Livewire::make(ProductTypeConfiguration::class, fn (Get $get): array => [
                                 'defaultProductType' => $get('type'),
                             ]),
                         ]),
 
-                    Components\Wizard\StepColumn::make(__('shopper::words.general'))
-                        ->icon('untitledui-file-02')
+                    StepColumn::make(__('shopper::words.general'))
+                        ->icon(Untitledui::File02)
                         ->extraAttributes([
                             'class' => 'w-full max-w-3xl mx-auto',
                         ])
                         ->schema([
-                            Components\Section::make()
+                            Grid::make()
                                 ->schema([
-                                    Forms\Components\TextInput::make('name')
+                                    TextInput::make('name')
                                         ->label(__('shopper::forms.label.name'))
                                         ->placeholder('Table set')
                                         ->required()
                                         ->maxLength(255)
                                         ->live(onBlur: true)
-                                        ->afterStateUpdated(function (?string $state, Forms\Set $set): void {
+                                        ->afterStateUpdated(function (?string $state, Set $set): void {
                                             if ($state) {
                                                 $set('slug', Str::slug($state));
                                             }
                                         }),
-                                    Forms\Components\TextInput::make('slug')
+                                    TextInput::make('slug')
                                         ->label(__('shopper::forms.label.slug'))
                                         ->placeholder('table-set')
                                         ->disabled()
@@ -111,23 +128,21 @@ class AddProduct extends SlideOverComponent implements HasForms
                                         ->required()
                                         ->maxLength(255)
                                         ->unique(config('shopper.models.product'), 'slug'),
-                                    Forms\Components\Textarea::make('summary')
+                                    Textarea::make('summary')
                                         ->label(__('shopper::forms.label.summary'))
                                         ->rows(4)
-                                        ->columnSpan('full'),
-                                    Forms\Components\RichEditor::make('description')
+                                        ->columnSpanFull(),
+                                    RichEditor::make('description')
                                         ->label(__('shopper::forms.label.description'))
-                                        ->columnSpan('full'),
-                                ])
-                                ->compact()
-                                ->columns(),
-                            Components\Separator::make(),
-                            Forms\Components\Grid::make()
+                                        ->columnSpanFull(),
+                                ]),
+                            Separator::make(),
+                            Grid::make()
                                 ->schema([
-                                    Forms\Components\Toggle::make('is_visible')
+                                    Toggle::make('is_visible')
                                         ->label(__('shopper::forms.label.visible'))
                                         ->helperText(__('shopper::pages/products.visible_help_text')),
-                                    Forms\Components\DateTimePicker::make('published_at')
+                                    DateTimePicker::make('published_at')
                                         ->label(__('shopper::forms.label.availability'))
                                         ->native(false)
                                         ->minDate(now()->subHour())
@@ -135,13 +150,13 @@ class AddProduct extends SlideOverComponent implements HasForms
                                         ->required(),
                                 ]),
                         ]),
-                    Components\Wizard\StepColumn::make(__('shopper::pages/products.product_associations'))
-                        ->icon('untitledui-git-branch')
+                    StepColumn::make(__('shopper::pages/products.product_associations'))
+                        ->icon(Untitledui::GitBranch)
                         ->extraAttributes([
                             'class' => 'w-full max-w-3xl mx-auto',
                         ])
                         ->schema([
-                            Forms\Components\Select::make('brand_id')
+                            Select::make('brand_id')
                                 ->label(__('shopper::forms.label.brand'))
                                 ->relationship(
                                     name: 'brand',
@@ -164,7 +179,7 @@ class AddProduct extends SlideOverComponent implements HasForms
                                 ->searchable()
                                 ->visible(Feature::enabled('category'))
                                 ->withCount(),
-                            Forms\Components\Select::make('channels')
+                            Select::make('channels')
                                 ->label(__('shopper::pages/settings/menu.sales'))
                                 ->relationship(
                                     name: 'channels',
@@ -174,7 +189,7 @@ class AddProduct extends SlideOverComponent implements HasForms
                                 ->searchable()
                                 ->preload()
                                 ->multiple(),
-                            Forms\Components\Select::make('collections')
+                            Select::make('collections')
                                 ->label(__('shopper::pages/collections.menu'))
                                 ->relationship('collections', 'name')
                                 ->searchable()
@@ -189,17 +204,17 @@ class AddProduct extends SlideOverComponent implements HasForms
                             || Feature::enabled('category')
                             || Feature::enabled('collection')
                         ),
-                    Components\Wizard\StepColumn::make(__('shopper::words.media'))
-                        ->icon('untitledui-image')
+                    StepColumn::make(__('shopper::words.media'))
+                        ->icon(Untitledui::Image)
                         ->schema([
-                            Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
+                            SpatieMediaLibraryFileUpload::make('thumbnail')
                                 ->collection(config('shopper.media.storage.thumbnail_collection'))
                                 ->label(__('shopper::forms.label.thumbnail'))
                                 ->helperText(__('shopper::pages/products.thumbnail_helpText'))
                                 ->image()
                                 ->maxSize(config('shopper.media.max_size.thumbnail'))
                                 ->columnSpan(['lg' => 2]),
-                            Forms\Components\SpatieMediaLibraryFileUpload::make('images')
+                            SpatieMediaLibraryFileUpload::make('images')
                                 ->collection(config('shopper.media.storage.collection_name'))
                                 ->label(__('shopper::words.images'))
                                 ->helperText(__('shopper::pages/products.images_helpText'))
@@ -209,31 +224,31 @@ class AddProduct extends SlideOverComponent implements HasForms
                                 ->columnSpanFull(),
                         ])
                         ->columns(5),
-                    Components\Wizard\StepColumn::make(__('shopper::pages/products.stock_inventory_heading'))
-                        ->icon('untitledui-package')
+                    StepColumn::make(__('shopper::pages/products.stock_inventory_heading'))
+                        ->icon(Untitledui::Package)
                         ->schema([
-                            Forms\Components\Placeholder::make('stock')
+                            TextEntry::make('stock')
                                 ->label(__('shopper::pages/products.stock_inventory_heading'))
-                                ->content(new HtmlString(Blade::render(<<<'BLADE'
+                                ->state(new HtmlString(Blade::render(<<<'BLADE'
                                     <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                                         {{ __('shopper::pages/products.stock_inventory_description', ['item' => __('shopper::pages/products.single')]) }}
                                     </p>
                                 BLADE))),
-                            Forms\Components\Grid::make()
+                            Grid::make()
                                 ->schema([
-                                    Forms\Components\TextInput::make('sku')
+                                    TextInput::make('sku')
                                         ->label(__('shopper::forms.label.sku'))
                                         ->unique(config('shopper.models.product'), 'sku')
                                         ->maxLength(255),
-                                    Forms\Components\TextInput::make('barcode')
+                                    TextInput::make('barcode')
                                         ->label(__('shopper::forms.label.barcode'))
                                         ->unique(config('shopper.models.product'), 'barcode')
                                         ->maxLength(255),
-                                    Forms\Components\TextInput::make('quantity')
+                                    TextInput::make('quantity')
                                         ->label(__('shopper::forms.label.quantity'))
                                         ->numeric()
                                         ->rules(['integer', 'min:0']),
-                                    Forms\Components\TextInput::make('security_stock')
+                                    TextInput::make('security_stock')
                                         ->label(__('shopper::forms.label.safety_stock'))
                                         ->helperText(__('shopper::pages/products.safety_security_help_text'))
                                         ->numeric()
@@ -245,10 +260,10 @@ class AddProduct extends SlideOverComponent implements HasForms
                 ])
                     ->startOnStep($this->startStep)
                     ->submitAction(new HtmlString(Blade::render(<<<'BLADE'
-                        <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
+                        <x-filament::button type="submit" wire:loading.attr="disabled">
                             <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                             {{ __('shopper::forms.actions.save') }}
-                        </x-shopper::buttons.primary>
+                        </x-filament::button>
                      BLADE)))
                     ->persistStepInQueryString(),
             ])

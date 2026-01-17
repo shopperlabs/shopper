@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Sidebar\Domain;
 
+use BackedEnum;
 use Illuminate\Contracts\Container\Container;
 use Serializable;
 use Shopper\Sidebar\Contracts\Builder\Append;
@@ -87,9 +88,9 @@ class DefaultAppend implements Append, Serializable
         return $this->icon;
     }
 
-    public function setIcon(string $icon, string $type = 'blade', string $iconClass = ''): Append
+    public function setIcon(string|BackedEnum $icon, string $type = 'blade', string $iconClass = ''): Append
     {
-        $this->icon = $icon;
+        $this->icon = $icon instanceof BackedEnum ? $icon->value : $icon;
         $this->type = $type;
         $this->iconClass = $iconClass;
 

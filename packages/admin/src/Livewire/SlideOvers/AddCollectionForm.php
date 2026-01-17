@@ -4,24 +4,34 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
-use Filament\Forms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Enum\CollectionType;
-use Shopper\Core\Models\Contracts\Collection as CollectionContract;
+use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class AddCollectionForm extends SlideOverComponent implements HasForms
+class AddCollectionForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     /** @var array<string, mixed>|null */
@@ -34,59 +44,55 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make(__('shopper::words.general'))
                     ->collapsible()
                     ->compact()
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->label(__('shopper::forms.label.name'))
                             ->placeholder('Summers Collections, Christmas promotions...')
                             ->required()
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (string $operation, ?string $state, Forms\Set $set): void {
+                            ->afterStateUpdated(function (string $operation, ?string $state, Set $set): void {
                                 if ($state) {
                                     $set('slug', Str::slug($state));
                                 }
                             }),
-                        Forms\Components\TextInput::make('slug')
+                        TextInput::make('slug')
                             ->label(__('shopper::forms.label.slug'))
                             ->disabled()
                             ->dehydrated()
                             ->required()
                             ->maxLength(255)
                             ->unique(table: config('shopper.models.collection'), column: 'slug'),
-                        Forms\Components\DateTimePicker::make('published_at')
+                        DateTimePicker::make('published_at')
                             ->label(__('shopper::forms.label.availability'))
                             ->native(false)
                             ->required()
                             ->default(now())
                             ->minDate(now()->subHour())
                             ->helperText(__('shopper::pages/collections.availability_description')),
-                        Forms\Components\Radio::make('type')
+                        Radio::make('type')
                             ->label(__('shopper::pages/collections.filter_type'))
                             ->required()
                             ->options(CollectionType::class),
-                        Forms\Components\RichEditor::make('description')
+                        RichEditor::make('description')
                             ->label(__('shopper::forms.label.description'))
                             ->toolbarButtons([
-                                'bold',
-                                'italic',
-                                'link',
-                                'redo',
-                                'strike',
-                                'underline',
-                                'undo',
+                                ['bold', 'italic', 'link', 'strike', 'underline'],
+                                ['bulletList', 'orderedList', 'table', 'attachFiles'],
+                                ['undo', 'redo'],
                             ]),
                     ]),
                 Section::make(__('shopper::words.media'))
                     ->collapsible()
                     ->compact()
                     ->schema([
-                        Forms\Components\SpatieMediaLibraryFileUpload::make('file')
+                        SpatieMediaLibraryFileUpload::make('file')
                             ->label(__('shopper::forms.label.image_preview'))
                             ->collection(config('shopper.media.storage.thumbnail_collection'))
                             ->image()
@@ -100,7 +106,7 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                     ->collapsed()
                     ->compact()
                     ->schema([
-                        Forms\Components\KeyValue::make('metadata')->reorderable(),
+                        KeyValue::make('metadata')->reorderable(),
                     ]),
             ])
             ->statePath('data')
@@ -109,8 +115,8 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
 
     public function store(): void
     {
-        /** @var CollectionContract $collection */
-        $collection = resolve(CollectionContract::class)::query()->create($this->form->getState());
+        /** @var Model&Collection $collection */
+        $collection = resolve(Collection::class)::query()->create($this->form->getState());
         $this->form->model($collection)->saveRelationships();
 
         Notification::make()

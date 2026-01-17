@@ -21,14 +21,14 @@ class AttachedDiscountToProducts implements ShouldQueue
     use SerializesModels;
 
     public function __construct(
-        public string $applyTo,
+        public DiscountApplyTo $applyTo,
         public array $productIds,
         public Discount $discount
     ) {}
 
     public function handle(): void
     {
-        if ($this->applyTo === DiscountApplyTo::Products()) {
+        if ($this->applyTo === DiscountApplyTo::Products) {
             // Remove all the products that's not been selected that already exist during creation of the discount
             $this->discount->items()
                 ->where('condition', 'apply_to')

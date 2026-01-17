@@ -5,7 +5,7 @@
         <div>
             <x-shopper::brand class="mx-auto h-12 w-auto" />
 
-            <h2 class="mt-6 text-center font-heading text-3xl font-bold leading-9 text-gray-900 dark:text-white">
+            <h2 class="font-heading mt-6 text-center text-3xl leading-9 font-bold text-gray-900 dark:text-white">
                 {{ __('shopper::pages/auth.reset.title') }}
             </h2>
             <p class="mt-3 text-center text-sm leading-5">
@@ -25,7 +25,7 @@
                     type="email"
                     wire:model="email"
                     autocomplete="off"
-                    class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 dark:border-white/10 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-offset-gray-900 sm:text-sm"
+                    class="focus:border-primary-500 focus:ring-primary-500 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:outline-none sm:text-sm dark:border-white/10 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-offset-gray-900"
                     placeholder="{{ __('shopper::forms.label.email') }}"
                     required
                     autofocus
@@ -37,7 +37,7 @@
                     name="password"
                     type="password"
                     wire:model="password"
-                    class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 dark:border-white/10 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-offset-gray-900 sm:text-sm"
+                    class="focus:border-primary-500 focus:ring-primary-500 relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:outline-none sm:text-sm dark:border-white/10 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-offset-gray-900"
                     placeholder="{{ __('shopper::forms.label.new_password') }}"
                     required
                 />

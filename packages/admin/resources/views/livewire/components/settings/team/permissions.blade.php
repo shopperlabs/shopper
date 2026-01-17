@@ -1,9 +1,9 @@
 <div class="overflow-hidden">
     <div class="flex flex-wrap items-baseline px-4 2xl:px-6">
-        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
             {{ __('shopper::pages/settings/staff.permissions') }}
         </h3>
-        <p class="ml-2 mt-1 truncate text-sm leading-5 text-gray-500">
+        <p class="mt-1 ml-2 truncate text-sm leading-5 text-gray-500">
             {{ __('shopper::pages/settings/staff.permissions_in_role', ['name' => $role->display_name]) }}
         </p>
     </div>
@@ -12,9 +12,9 @@
     >
         @foreach ($groupPermissions as $group => $permissions)
             <div>
-                <div class="w-full bg-gray-50 px-4 py-1.5 dark:bg-white/5 lg:px-6">
+                <div class="w-full bg-gray-50 px-4 py-1.5 lg:px-6 dark:bg-white/5">
                     <span
-                        class="font-heading text-xs font-semibold uppercase leading-5 tracking-wider text-gray-500 dark:text-gray-400"
+                        class="font-heading text-xs leading-5 font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400"
                     >
                         {{ ! empty($group) ? $group : __('shopper::pages/settings/staff.custom_permission') }}
                     </span>
@@ -27,7 +27,7 @@
                                     id="permission_{{ $permission->id }}"
                                     name="permissions"
                                     type="checkbox"
-                                    class="dark:focus:offset-gray-800 size-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
+                                    class="dark:focus:offset-gray-800 text-primary-600 focus:ring-primary-500 size-4 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                                     wire:key="{{ $permission->id }}"
                                     value="{{ $permission->id }}"
                                     aria-label="permission_{{ $permission->id }}"
@@ -63,7 +63,7 @@
                                         </div>
                                         @if ($permission->users->count() - 3 > 0)
                                             <span
-                                                class="shrink-0 text-xs font-medium leading-5 text-gray-500 dark:text-gray-400"
+                                                class="shrink-0 text-xs leading-5 font-medium text-gray-500 dark:text-gray-400"
                                             >
                                                 +{{ $permission->users->count() - 3 }}
                                             </span>
@@ -73,7 +73,7 @@
 
                                 <time
                                     datetime="{{ $permission->created_at->format('Y-m-d') }}"
-                                    class="text-xs font-medium capitalize leading-5 text-gray-400 dark:text-gray-500"
+                                    class="text-xs leading-5 font-medium text-gray-400 capitalize dark:text-gray-500"
                                 >
                                     {{ $permission->created_at->translatedFormat('j F') }}
                                 </time>

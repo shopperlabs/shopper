@@ -4,26 +4,32 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
-use Filament\Forms;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Support\Enums\MaxWidth;
-use Filament\Tables;
+use Filament\Support\Enums\Width;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\On;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Components\Form\CustomAttributeKeyInput;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Livewire\Components\SlideOverComponent;
 
-class AttributeValues extends SlideOverComponent implements HasForms, HasTable
+class AttributeValues extends SlideOverComponent implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -44,7 +50,7 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
     }
 
     /**
-     * @return array<array-key, Forms\Components\Component>
+     * @return array<array-key, \Filament\Schemas\Components\Component>
      */
     public function formSchema(): array
     {
@@ -54,7 +60,7 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                 ->helperText(__('shopper::modals.attributes.key_description'))
                 ->required()
                 ->unique(table: AttributeValue::class, column: 'key', ignoreRecord: true),
-            Forms\Components\TextInput::make('value')
+            TextInput::make('value')
                 ->label(__('shopper::forms.label.value'))
                 ->placeholder('My value')
                 ->maxLength(75)
@@ -70,30 +76,30 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                     ->where('attribute_id', $this->attribute->id)
             )
             ->columns([
-                Tables\Columns\TextColumn::make('key')
+                TextColumn::make('key')
                     ->label(__('shopper::forms.label.key')),
-                Tables\Columns\TextColumn::make('id')
+                TextColumn::make('id')
                     ->label('Hex')
                     ->formatStateUsing(fn (AttributeValue $record): View => view(
                         'shopper::components.filament.attribute-color-badge',
                         ['key' => $record->key]
                     ))
                     ->visible($this->attribute->type === FieldType::ColorPicker),
-                Tables\Columns\TextColumn::make('value')
+                TextColumn::make('value')
                     ->label(__('shopper::forms.label.value')),
             ])
-            ->actions([
-                Tables\Actions\Action::make('edit')
-                    ->icon('untitledui-edit-04')
+            ->recordActions([
+                Action::make('edit')
+                    ->icon(Untitledui::Edit03)
                     ->color('gray')
                     ->iconButton()
                     ->modalHeading(__('shopper::forms.actions.edit'))
-                    ->modalWidth(MaxWidth::ExtraLarge)
+                    ->modalWidth(Width::ExtraLarge)
                     ->fillForm(fn (AttributeValue $record): array => [
                         'key' => $record->key,
                         'value' => $record->value,
                     ])
-                    ->form($this->formSchema())
+                    ->schema($this->formSchema())
                     ->action(function (array $data, AttributeValue $record): void {
                         $record->update([
                             'key' => mb_strtolower($data['key']),
@@ -102,29 +108,29 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
 
                         $this->dispatch('$refresh');
                     }),
-                Tables\Actions\Action::make('delete')
-                    ->icon('untitledui-trash-03')
+                Action::make('delete')
+                    ->icon(Untitledui::Trash03)
                     ->color('danger')
                     ->iconButton()
                     ->requiresConfirmation()
                     ->action(fn (AttributeValue $record) => $record->delete()),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkAction::make('delete')
+            ->toolbarActions([
+                BulkAction::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
-                    ->icon('untitledui-trash-03')
+                    ->icon(Untitledui::Trash03)
                     ->color('danger')
                     ->badge()
                     ->requiresConfirmation()
                     ->action(fn (Collection $records) => $records->each->delete()),
             ])
             ->headerActions([
-                Tables\Actions\Action::make('add')
+                Action::make('add')
                     ->label(__('shopper::forms.actions.add_label', ['label' => __('shopper::forms.label.value')]))
                     ->badge()
                     ->modalHeading(__('shopper::modals.attributes.new_value', ['attribute' => $this->attribute->name]))
-                    ->modalWidth(MaxWidth::ExtraLarge)
-                    ->form($this->formSchema())
+                    ->modalWidth(Width::ExtraLarge)
+                    ->schema($this->formSchema())
                     ->action(function (array $data): void {
                         $this->attribute->values()->create([
                             'key' => mb_strtolower($data['key']),
@@ -134,7 +140,7 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                         $this->dispatch('$refresh');
                     }),
             ])
-            ->emptyStateIcon('untitledui-file-02')
+            ->emptyStateIcon(Untitledui::File02)
             ->emptyStateHeading(__('shopper::words.no_values'));
     }
 

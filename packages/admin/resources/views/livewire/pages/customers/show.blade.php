@@ -20,7 +20,7 @@
                         alt="{{ $customer->full_name }}"
                     />
                     <div class="ml-4">
-                        <h3 class="font-heading text-2xl font-bold leading-6 text-gray-900 dark:text-white sm:truncate">
+                        <h3 class="font-heading text-2xl leading-6 font-bold text-gray-900 sm:truncate dark:text-white">
                             {{ $customer->full_name }}
                         </h3>
                         <div class="mt-2 flex items-center sm:space-x-2">
@@ -28,7 +28,7 @@
                                 @if ($customer->email_verified_at)
                                     <x-untitledui-check-verified-02 class="size-5 text-green-500" aria-hidden="true" />
                                 @else
-                                    <x-untitledui-alert-circle class="size-5 text-danger-500" aria-hidden="true" />
+                                    <x-untitledui-alert-circle class="text-danger-500 size-5" aria-hidden="true" />
                                 @endif
                                 <span class="ml-1.5 text-sm leading-5 text-gray-500 dark:text-gray-400">
                                     {{ $customer->email }}
@@ -36,38 +36,20 @@
                             </div>
                             <svg
                                 viewBox="0 0 2 2"
-                                class="hidden h-0.5 w-0.5 flex-none fill-gray-300 dark:fill-gray-500 sm:block"
+                                class="hidden h-0.5 w-0.5 flex-none fill-gray-300 sm:block dark:fill-gray-500"
                                 aria-hidden="true"
                             >
                                 <circle cx="1" cy="1" r="1" />
                             </svg>
-                            <p class="hidden text-sm leading-5 text-gray-500 dark:text-gray-400 sm:block">
+                            <p class="hidden text-sm leading-5 text-gray-500 sm:block dark:text-gray-400">
                                 {{ __('shopper::pages/customers.period', ['period' => $customer->created_at->diffForHumans()]) }}
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="mt-4 hidden space-x-2 lg:ml-4 lg:mt-0 lg:flex">
-                <div>
-                    <x-filament-actions::group
-                        :actions="[
-                            $this->deleteAction,
-                        ]"
-                        :label="__('shopper::forms.actions.more_actions')"
-                        icon="heroicon-m-ellipsis-vertical"
-                        dropdown-width="sh-dropdown-width"
-                        color="gray"
-                        size="sm"
-                        :button="true"
-                    />
-
-                    <div x-data>
-                        <template x-teleport="body">
-                            <x-filament-actions::modals />
-                        </template>
-                    </div>
-                </div>
+            <div class="mt-4 hidden lg:mt-0 lg:ml-4 lg:flex">
+                {{ $this->anonymizeAction }}
             </div>
         </div>
     </x-shopper::container>
@@ -91,14 +73,16 @@
 
         <div class="mt-10">
             <div x-show="currentTab === 'profile'">
-                <livewire:shopper-customers.profile :$customer />
+                <livewire:shopper-customers.profile :$customer :key="'profile-'.$customer->id" />
             </div>
             <div x-cloak x-show="currentTab === 'address'">
-                <livewire:shopper-customers.addresses :$customer />
+                <livewire:shopper-customers.addresses :$customer :key="'addresses-'.$customer->id" />
             </div>
             <div x-cloak x-show="currentTab === 'orders'">
-                <livewire:shopper-customers.orders :$customer />
+                <livewire:shopper-customers.orders :$customer :key="'orders-'.$customer->id" />
             </div>
         </div>
     </div>
+
+    <x-filament-actions::modals />
 </div>

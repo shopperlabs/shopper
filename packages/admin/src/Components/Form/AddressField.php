@@ -19,7 +19,7 @@ final class AddressField
     }
 
     /**
-     * @return array<array-key, Components\Component>
+     * @return array<array-key, \Filament\Schemas\Components\Component>
      */
     public static function make(?string $prefix = null): array
     {

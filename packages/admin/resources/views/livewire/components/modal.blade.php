@@ -3,10 +3,10 @@
     x-on:close.stop="setShowPropertyTo(false)"
     x-on:keydown.escape.window="closeModalOnEscape()"
     x-show="show"
-    class="fixed inset-0 z-50 overflow-y-auto"
+    class="sh-modal fixed inset-0 z-50 overflow-y-auto"
     x-cloak
 >
-    <div class="flex min-h-screen items-end justify-center px-4 pb-10 pt-4 text-center sm:block sm:p-0">
+    <div class="flex min-h-screen items-end justify-center px-4 pt-4 pb-10 text-center sm:block sm:p-0">
         <div
             x-show="show"
             x-on:click="closeModalOnClickAway()"
@@ -16,10 +16,8 @@
             x-transition:leave="duration-200 ease-in"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
-            class="fixed inset-0 transform transition-all"
-        >
-            <div class="absolute inset-0 bg-gray-950/50 backdrop-blur-sm dark:bg-gray-950/75"></div>
-        </div>
+            class="sh-modal-backdrop fixed inset-0 bg-gray-950/50 dark:bg-gray-950/75"
+        ></div>
 
         <span class="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">&#8203;</span>
 
@@ -32,7 +30,7 @@
             x-transition:leave-start="translate-y-0 opacity-100 sm:scale-100"
             x-transition:leave-end="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
             x-bind:class="modalWidth"
-            class="inline-block w-full transform overflow-hidden rounded-xl bg-white text-left align-bottom shadow-xl ring-1 ring-gray-950/5 transition-all dark:bg-gray-900 dark:ring-white/10 sm:my-8 sm:w-full sm:align-middle"
+            class="inline-block w-full transform overflow-hidden rounded-xl bg-white text-left align-bottom shadow-xl ring-1 ring-gray-200 transition-all sm:my-8 sm:w-full sm:align-middle dark:bg-gray-900 dark:ring-white/10"
             id="modal-container"
             x-trap.noscroll.inert="show && showActiveComponent"
             aria-modal="true"
@@ -42,7 +40,7 @@
                     @livewire($component['name'], $component['arguments'], key($id))
                 </div>
             @empty
-                
+
             @endforelse
         </div>
     </div>

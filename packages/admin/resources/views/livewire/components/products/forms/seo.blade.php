@@ -1,12 +1,8 @@
 <x-shopper::container class="space-y-8">
-    <div>
-        <x-filament::section.heading>
-            {{ __('shopper::words.seo.title') }}
-        </x-filament::section.heading>
-        <x-filament::section.description class="mt-1 max-w-2xl">
-            {{ __('shopper::words.seo.description', ['name' => __('shopper::pages/products.single')]) }}
-        </x-filament::section.description>
-    </div>
+    <x-shopper::section-heading
+        :title="__('shopper::words.seo.title')"
+        :description="__('shopper::words.seo.description', ['name' => __('shopper::pages/products.single')])"
+    />
     <div class="grid gap-6 lg:grid-cols-2 lg:gap-x-10">
         <form wire:submit="store">
             {{ $this->form }}
@@ -30,15 +26,15 @@
             >
                 <div class="flex w-full items-center justify-between p-1.5">
                     <div class="flex items-center space-x-2">
-                        <div class="h-3 w-3 rounded-full border border-red-400 bg-red-500"></div>
-                        <div class="h-3 w-3 rounded-full border border-yellow-400 bg-yellow-500"></div>
-                        <div class="h-3 w-3 rounded-full border border-green-400 bg-green-500"></div>
+                        <div class="size-3 rounded-full bg-red-500"></div>
+                        <div class="size-3 rounded-full bg-yellow-500"></div>
+                        <div class="size-3 rounded-full bg-green-500"></div>
                     </div>
-                    <x-untitledui-google-chrome class="size-5 text-gray-500 dark:text-gray-300" />
+                    <x-untitledui-google-chrome class="size-5 text-gray-500 dark:text-gray-300" strike-width="1.5" aria-hidden="true" />
                 </div>
-                <div class="mt-2 h-full w-full overflow-auto rounded-lg bg-white p-4 dark:bg-gray-950 sm:p-6">
+                <div class="mt-1 rounded-lg p-4 bg-white ring-1 ring-gray-200 dark:bg-gray-950 dark:ring-white/20 size-full overflow-auto">
                     <div class="flex flex-col">
-                        <h3 class="font-medium leading-6 text-primary-600 dark:text-primary-500">
+                        <h3 class="text-primary-600 dark:text-primary-500 leading-6 font-medium">
                             {{ $data['seo_title'] }}
                         </h3>
                         <span class="mt-1 truncate text-sm leading-5 text-green-600 dark:text-green-400">

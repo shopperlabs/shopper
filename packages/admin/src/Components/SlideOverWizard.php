@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Components;
 
-use Filament\Forms\Components\Wizard;
+use Filament\Schemas\Components\Wizard;
 
 class SlideOverWizard extends Wizard
 {

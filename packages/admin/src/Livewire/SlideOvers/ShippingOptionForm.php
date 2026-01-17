@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
-use Filament\Forms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Schema;
 use Livewire\Attributes\Computed;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
@@ -18,11 +26,12 @@ use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
- * @property Zone $zone
- * @property Form $form
+ * @property-read Zone $zone
+ * @property-read Schema $form
  */
-class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOverForm
+class ShippingOptionForm extends SlideOverComponent implements HasActions, HasForms, SlideOverForm
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithSlideOverForm;
 
@@ -41,7 +50,7 @@ class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOv
 
     public function mount(?int $optionId = null): void
     {
-        $this->option = CarrierOption::query()
+        $this->option = CarrierOption::with('media')
             ->where('zone_id', $this->zoneId)
             ->find($optionId);
 
@@ -58,30 +67,37 @@ class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOv
         return Zone::with(['currency', 'carriers'])->find($this->zoneId);
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Group::make()
+        return $schema
+            ->components([
+                SpatieMediaLibraryFileUpload::make('media')
+                    ->label(__('shopper::forms.label.logo'))
+                    ->collection(config('shopper.media.storage.thumbnail_collection'))
+                    ->disk(config('shopper.media.storage.disk_name'))
+                    ->image()
+                    ->avatar()
+                    ->maxSize(1024),
+                Group::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->label(__('shopper::forms.label.name'))
                             ->placeholder('Standard option...')
                             ->required(),
-                        Forms\Components\TextInput::make('price') // @phpstan-ignore-line
+                        TextInput::make('price') // @phpstan-ignore-line
                             ->label(__('shopper::forms.label.price'))
                             ->numeric()
                             ->required()
                             ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                             ->suffix($this->zone->currency->code)
                             ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
-                        Forms\Components\Select::make('carrier_id')
+                        Select::make('carrier_id')
                             ->label(__('shopper::pages/settings/carriers.title'))
                             ->options($this->zone->carriers->pluck('name', 'id'))
                             ->required()
                             ->native(false)
                             ->columnSpan('full'),
-                        Forms\Components\Textarea::make('description')
+                        Textarea::make('description')
                             ->label(__('shopper::forms.label.description'))
                             ->hint(__('shopper::words.characters', ['number' => 200]))
                             ->rows(3)
@@ -89,12 +105,12 @@ class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOv
                             ->columnSpan('full'),
                     ])
                     ->columns(),
-                Forms\Components\Toggle::make('is_enabled')
+                Toggle::make('is_enabled')
                     ->label(__('shopper::forms.label.visibility'))
                     ->helperText(__('shopper::pages/settings/zones.shipping_options.option_visibility')),
                 Separator::make(),
-                Forms\Components\KeyValue::make('metadata')
-                    ->label('Metadata')
+                KeyValue::make('metadata')
+                    ->label(__('Metadata'))
                     ->reorderable(),
             ])
             ->statePath('data')
@@ -110,6 +126,8 @@ class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOv
         } else {
             $this->option = CarrierOption::query()->create($data);
         }
+
+        $this->form->model($this->option)->saveRelationships();
 
         Notification::make()
             ->title(__('shopper::notifications.save', ['item' => $this->option->name]))

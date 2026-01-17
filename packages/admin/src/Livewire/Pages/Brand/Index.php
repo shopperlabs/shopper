@@ -4,21 +4,31 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Brand;
 
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Brand as BrandContract;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
-class Index extends AbstractPageComponent implements HasForms, HasTable
+class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -32,33 +42,34 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return $table
             ->query(resolve(BrandContract::class)::query()->latest())
             ->columns([
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('Logo')
+                SpatieMediaLibraryImageColumn::make('Logo')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->circular()
                     ->grow(false),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('website')
+                TextColumn::make('website')
                     ->label(__('shopper::forms.label.website'))
-                    ->formatStateUsing(fn (string $state): View => view(
+                    ->placeholder('-')
+                    ->formatStateUsing(fn (?string $state): View => view(
                         'shopper::livewire.tables.cells.brands.site',
                         ['state' => $state],
                     )),
-                Tables\Columns\IconColumn::make('is_enabled')
+                IconColumn::make('is_enabled')
                     ->label(__('shopper::forms.label.visibility'))
                     ->boolean(),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
                     ->date()
                     ->sortable(),
             ])
             ->reorderable('position')
-            ->actions([
-                Tables\Actions\Action::make('edit')
+            ->recordActions([
+                Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->icon('untitledui-edit-03')
+                    ->icon(Untitledui::Edit03)
                     ->iconButton()
                     ->action(
                         fn (BrandContract $record) => $this->dispatch(
@@ -68,18 +79,18 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         )
                     )
                     ->visible(Shopper::auth()->user()->can('edit_brands')),
-                Tables\Actions\Action::make('delete')
+                Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
-                    ->icon('untitledui-trash-03')
+                    ->icon(Untitledui::Trash03)
                     ->iconButton()
-                    ->modalIcon('untitledui-trash-03')
+                    ->modalIcon(Untitledui::Trash03)
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (BrandContract $record) => $record->delete())
                     ->visible(Shopper::auth()->user()->can('delete_brands')),
             ])
             ->groupedBulkActions([
-                Tables\Actions\BulkAction::make('enabled')
+                BulkAction::make('enabled')
                     ->label(__('shopper::forms.actions.enable'))
                     ->icon('untitledui-check-verified')
                     ->action(function (Collection $records): void {
@@ -95,7 +106,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             ->send();
                     })
                     ->deselectRecordsAfterCompletion(),
-                Tables\Actions\BulkAction::make('disabled')
+                BulkAction::make('disabled')
                     ->label(__('shopper::forms.actions.disable'))
                     ->icon('untitledui-slash-circle-01')
                     ->action(function (Collection $records): void {
@@ -112,9 +123,9 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             ->send();
                     })
                     ->deselectRecordsAfterCompletion(),
-                Tables\Actions\DeleteBulkAction::make()
+                DeleteBulkAction::make()
                     ->label(__('shopper::forms.actions.delete'))
-                    ->icon('untitledui-trash-03')
+                    ->icon(Untitledui::Trash03)
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
                         $records->each->delete();
@@ -132,7 +143,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([
-                Tables\Filters\TernaryFilter::make('is_enabled'),
+                TernaryFilter::make('is_enabled'),
             ])
             ->persistFiltersInSession();
     }

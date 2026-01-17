@@ -4,39 +4,51 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
-use Filament\Forms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Filament\Support\Exceptions\Halt;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Actions\Store\Product\CreateNewVariant;
-use Shopper\Components;
 use Shopper\Components\Form\CurrenciesField;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
-use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
+use Shopper\Components\SlideOverWizard;
+use Shopper\Components\Wizard\StepColumn;
+use Shopper\Core\Models\Contracts\Product;
+use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Core\Models\Currency;
 use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  * @property-read Collection<int, Currency> $currencies
  * @property-read Collection<string, mixed> $options
  * @property-read array<array-key, mixed> $variantsOptions
  */
-class AddVariant extends SlideOverComponent implements HasForms
+class AddVariant extends SlideOverComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     #[Locked]
-    public ProductContract $product;
+    public Product $product;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -53,40 +65,40 @@ class AddVariant extends SlideOverComponent implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Components\SlideOverWizard::make()
+        return $schema
+            ->components([
+                SlideOverWizard::make()
                     ->schema([
-                        Components\Wizard\StepColumn::make(__('shopper::words.general'))
-                            ->icon('untitledui-file-02')
+                        StepColumn::make(__('shopper::words.general'))
+                            ->icon(Untitledui::File02)
                             ->schema([
-                                Forms\Components\TextInput::make('name')
+                                TextInput::make('name')
                                     ->label(__('shopper::forms.label.name'))
                                     ->placeholder('Model Y, Model S (Eg. for Tesla)')
                                     ->required()
                                     ->maxLength(255),
-                                Forms\Components\TextInput::make('sku')
+                                TextInput::make('sku')
                                     ->label(__('shopper::forms.label.sku'))
                                     ->unique(shopper_table('product_variants'), 'sku')
                                     ->maxLength(255),
-                                Forms\Components\Group::make()
+                                Group::make()
                                     ->visible(fn (): bool => count($this->variantsOptions) > 0)
                                     ->schema([
-                                        Forms\Components\Placeholder::make('options')
+                                        TextEntry::make('options')
                                             ->label(__('shopper::pages/products.modals.variants.options.title'))
-                                            ->content(
+                                            ->state(
                                                 new HtmlString(Blade::render(<<<'BLADE'
                                                     <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                                                         {{ __('shopper::pages/products.modals.variants.options.description') }}
                                                     </p>
                                                 BLADE))
                                             ),
-                                        Forms\Components\Group::make()
+                                        Group::make()
                                             ->schema(
                                                 $this->options->map(
-                                                    fn (array $option): Forms\Components\Select => Forms\Components\Select::make('values.'.$option['id'])
+                                                    fn (array $option): Select => Select::make('values.'.$option['id'])
                                                         ->label($option['name'])
                                                         ->key($option['key'])
                                                         ->required()
@@ -101,15 +113,17 @@ class AddVariant extends SlideOverComponent implements HasForms
                                                 )->toArray()
                                             )
                                             ->columns(3),
-                                        Forms\Components\Placeholder::make('alert')
-                                            ->visible(fn (Forms\Get $get): bool => $get('values') !== null && $this->variantAlreadyExist($get('values')))
+                                        TextEntry::make('alert')
+                                            ->visible(fn (Get $get): bool => $get('values') !== null && $this->variantAlreadyExist($get('values')))
                                             ->hiddenLabel()
-                                            ->content(
+                                            ->state(
                                                 new HtmlString(Blade::render(<<<'BLADE'
-                                                    <x-shopper::alert
-                                                        icon="phosphor-swatches-duotone"
-                                                        :message="__('shopper::pages/products.notifications.variant_already_exists')"
-                                                    />
+                                                    <div class="p-1 max-w-xl">
+                                                        <x-shopper::alert
+                                                            icon="phosphor-swatches-duotone"
+                                                            :message="__('shopper::pages/products.notifications.variant_already_exists')"
+                                                        />
+                                                    </div>
                                                 BLADE))
                                             )
                                             ->columnSpanFull(),
@@ -117,22 +131,22 @@ class AddVariant extends SlideOverComponent implements HasForms
                                     ->columnSpanFull(),
                             ])
                             ->columns(3)
-                            ->afterValidation(function (Forms\Get $get): void {
+                            ->afterValidation(function (Get $get): void {
                                 if ($get('values') !== null && $this->variantAlreadyExist($get('values'))) {
                                     throw new Halt;
                                 }
                             }),
-                        Components\Wizard\StepColumn::make(__('shopper::words.media'))
-                            ->icon('untitledui-image')
+                        StepColumn::make(__('shopper::words.media'))
+                            ->icon(Untitledui::Image)
                             ->schema([
-                                Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
+                                SpatieMediaLibraryFileUpload::make('thumbnail')
                                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                                     ->label(__('shopper::forms.label.thumbnail'))
                                     ->helperText(__('shopper::pages/products.thumbnail_helpText'))
                                     ->image()
                                     ->maxSize(config('shopper.media.max_size.thumbnail'))
                                     ->columnSpan(['lg' => 2]),
-                                Forms\Components\SpatieMediaLibraryFileUpload::make('images')
+                                SpatieMediaLibraryFileUpload::make('images')
                                     ->collection(config('shopper.media.storage.collection_name'))
                                     ->label(__('shopper::words.images'))
                                     ->helperText(__('shopper::pages/products.variant_images_helpText'))
@@ -142,27 +156,27 @@ class AddVariant extends SlideOverComponent implements HasForms
                                     ->columnSpanFull(),
                             ])
                             ->columns(5),
-                        Components\Wizard\StepColumn::make(__('shopper::words.pricing'))
-                            ->icon('untitledui-coins-stacked-02')
+                        StepColumn::make(__('shopper::words.pricing'))
+                            ->icon(Untitledui::CoinsStacked02)
                             ->schema(CurrenciesField::make($this->currencies))
                             ->statePath('prices'),
-                        Components\Wizard\StepColumn::make(__('shopper::pages/settings/menu.location'))
-                            ->icon('untitledui-package')
+                        StepColumn::make(__('shopper::pages/settings/menu.location'))
+                            ->icon(Untitledui::Package)
                             ->schema([
-                                Forms\Components\Placeholder::make('stock')
+                                TextEntry::make('stock')
                                     ->label(__('shopper::pages/products.stock_inventory_heading'))
-                                    ->content(new HtmlString(Blade::render(<<<'BLADE'
+                                    ->state(new HtmlString(Blade::render(<<<'BLADE'
                                         <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                                             {{ __('shopper::pages/products.stock_inventory_description', ['item' => __('shopper::pages/products.variants.single')]) }}
                                         </p>
                                     BLADE))),
-                                Forms\Components\Grid::make()
+                                Grid::make()
                                     ->schema([
-                                        Forms\Components\TextInput::make('barcode')
+                                        TextInput::make('barcode')
                                             ->label(__('shopper::forms.label.barcode'))
                                             ->unique(shopper_table('product_variants'), 'barcode')
                                             ->maxLength(255),
-                                        Forms\Components\TextInput::make('quantity')
+                                        TextInput::make('quantity')
                                             ->label(__('shopper::forms.label.quantity'))
                                             ->numeric()
                                             ->rules(['integer', 'min:0']),
@@ -171,10 +185,9 @@ class AddVariant extends SlideOverComponent implements HasForms
                             ]),
                     ])
                     ->submitAction(new HtmlString(Blade::render(<<<'BLADE'
-                        <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
-                            <x-shopper::loader wire:loading wire:target="save" class="text-white" />
+                        <x-filament::button type="submit">
                             {{ __('shopper::forms.actions.save') }}
-                        </x-shopper::buttons.primary>
+                        </x-filament::button>
                      BLADE))),
             ])
             ->statePath('data')
@@ -185,7 +198,7 @@ class AddVariant extends SlideOverComponent implements HasForms
     {
         $data = $this->form->getState();
 
-        /** @var ProductVariantContract $variant */
+        /** @var Model&ProductVariant $variant */
         $variant = app()->call(CreateNewVariant::class, [
             'data' => array_merge($data, ['product_id' => $this->product->id]),
         ]);
@@ -223,13 +236,13 @@ class AddVariant extends SlideOverComponent implements HasForms
     #[Computed]
     public function variantsOptions(): array
     {
-        return resolve(ProductVariantContract::class)::query()
+        return resolve(ProductVariant::class)::query()
             ->with('values')
             ->select('product_id', 'id')
             ->where('product_id', $this->product->id)
             ->get()
             ->map(
-                fn (ProductVariantContract $variant): array => $variant->values->pluck('id')->toArray() // @phpstan-ignore-line
+                fn (ProductVariant $variant): array => $variant->values->pluck('id')->toArray() // @phpstan-ignore-line
             )
             ->toArray();
     }

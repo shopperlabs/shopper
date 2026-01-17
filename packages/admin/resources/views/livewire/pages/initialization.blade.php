@@ -1,13 +1,13 @@
 <div class="min-h-screen lg:grid lg:grid-cols-5 lg:gap-x-20">
-    <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-20 lg:col-span-3 lg:max-w-xl">
+    <main class="mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:col-span-3 lg:max-w-xl">
         <livewire:shopper-initialize-wizard />
     </main>
     <div class="hidden min-h-full p-1.5 lg:col-span-2 lg:flex">
         <div
-            class="relative flex flex-1 overflow-hidden rounded-2xl bg-gray-50 pl-32 pt-32 ring-1 ring-gray-950/10 dark:bg-gray-800 dark:ring-white/20"
+            class="relative flex flex-1 overflow-hidden rounded-2xl bg-gray-50 pt-32 pl-32 ring-1 ring-gray-950/10 dark:bg-gray-800 dark:ring-white/20"
         >
             <svg
-                class="absolute inset-0 z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] dark:stroke-gray-900"
+                class="absolute inset-0 z-10 h-full w-full mask-[radial-gradient(64rem_64rem_at_top,white,transparent)] stroke-gray-200 dark:stroke-gray-900"
                 aria-hidden="true"
             >
                 <defs>
@@ -35,7 +35,7 @@
                 aria-hidden="true"
             >
                 <div
-                    class="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-primary-400 to-primary-600 opacity-20 dark:from-primary-200 dark:to-primary-500"
+                    class="from-primary-400 to-primary-600 dark:from-primary-200 dark:to-primary-500 aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r opacity-20"
                     style="
                         clip-path: polygon(
                             73.6% 51.7%,
@@ -81,7 +81,7 @@
                         </div>
                         <div>
                             <h5
-                                class="text-xs font-medium uppercase leading-5 tracking-wider text-gray-500 dark:text-gray-400"
+                                class="text-xs leading-5 font-medium tracking-wider text-gray-500 uppercase dark:text-gray-400"
                             >
                                 {{ __('shopper::layout.sidebar.catalog') }}
                             </h5>

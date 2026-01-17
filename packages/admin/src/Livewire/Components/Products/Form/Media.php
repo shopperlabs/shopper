@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Form;
 
-use Filament\Forms;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\Product;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class Media extends Component implements HasForms
+class Media extends Component implements HasSchemas
 {
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
-    /** @var Model&ProductContract */
-    public ProductContract $product;
+    /** @var Model&Product */
+    public Product $product;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -32,18 +32,18 @@ class Media extends Component implements HasForms
         $this->form->fill($this->product->toArray());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
+        return $schema
+            ->components([
+                SpatieMediaLibraryFileUpload::make('thumbnail')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->label(__('shopper::forms.label.thumbnail'))
                     ->helperText(__('shopper::pages/products.thumbnail_helpText'))
                     ->image()
                     ->maxSize(config('shopper.media.max_size.thumbnail'))
                     ->columnSpan(['lg' => 1]),
-                Forms\Components\SpatieMediaLibraryFileUpload::make('images')
+                SpatieMediaLibraryFileUpload::make('images')
                     ->collection(config('shopper.media.storage.collection_name'))
                     ->label(__('shopper::words.images'))
                     ->helperText(__('shopper::pages/products.images_helpText'))

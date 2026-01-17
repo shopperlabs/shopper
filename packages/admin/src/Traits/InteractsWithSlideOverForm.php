@@ -21,7 +21,7 @@ trait InteractsWithSlideOverForm
         return $this->evaluate($this->description);
     }
 
-    public function getAction(): ?string
+    public function getFormAction(): ?string
     {
         return $this->evaluate($this->action);
     }

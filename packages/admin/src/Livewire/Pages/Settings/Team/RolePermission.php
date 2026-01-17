@@ -8,26 +8,30 @@ use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\DeleteAction;
-use Filament\Forms\Components;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Forms\Set;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Core\Models\Permission;
 use Shopper\Core\Models\Role;
 
 /**
- * @property Form $form
+ * @property Schema $form
  */
 #[Layout('shopper::components.layouts.setting')]
-class RolePermission extends Component implements HasActions, HasForms
+class RolePermission extends Component implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     public Role $role;
 
@@ -39,21 +43,21 @@ class RolePermission extends Component implements HasActions, HasForms
         $this->form->fill($this->role->toArray());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                     ->label(__('shopper::modals.roles.labels.name'))
                     ->placeholder('manager')
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('display_name', Str::title($state)))
                     ->required(),
-                Components\TextInput::make('display_name')
+                TextInput::make('display_name')
                     ->label(__('shopper::forms.label.display_name'))
                     ->placeholder('Manager')
                     ->required(),
-                Components\Textarea::make('description')
+                Textarea::make('description')
                     ->label(__('shopper::forms.label.description'))
                     ->rows(4)
                     ->columnSpan('full'),
@@ -67,12 +71,57 @@ class RolePermission extends Component implements HasActions, HasForms
     {
         return DeleteAction::make('delete')
             ->label(__('shopper::forms.actions.delete'))
-            ->icon('untitledui-trash-03')
+            ->icon(Untitledui::Trash03)
             ->visible($this->role->can_be_removed)
             ->record($this->role)
             ->successNotificationTitle(__('shopper::notifications.users_roles.role_deleted'))
             ->after(fn () => $this->redirectRoute(name: 'shopper.settings.users', navigate: true));
+    }
 
+    public function createPermissionAction(): Action
+    {
+        return Action::make('createPermission')
+            ->label(__('shopper::pages/settings/staff.create_permission'))
+            ->icon(Untitledui::Lock04)
+            ->modalWidth('xl')
+            ->modalHeading(__('shopper::modals.permissions.new'))
+            ->modalDescription(__('shopper::modals.permissions.new_description'))
+            ->modalSubmitActionLabel(__('shopper::forms.actions.save'))
+            ->schema([
+                Select::make('group_name')
+                    ->label(__('shopper::forms.label.group_name'))
+                    ->options(Permission::groups())
+                    ->native(false)
+                    ->columnSpan('full'),
+                TextInput::make('name')
+                    ->label(__('shopper::modals.permissions.labels.name'))
+                    ->placeholder('create_post, manage_articles, etc')
+                    ->unique(table: Permission::class, column: 'name')
+                    ->maxLength(30)
+                    ->required(),
+                TextInput::make('display_name')
+                    ->label(__('shopper::forms.label.display_name'))
+                    ->placeholder('Create Blog posts')
+                    ->maxLength(75)
+                    ->required(),
+                Textarea::make('description')
+                    ->label(__('shopper::forms.label.description'))
+                    ->rows(3)
+                    ->columnSpan('full'),
+            ])
+            ->action(function (array $data): void {
+                /** @var Permission $permission */
+                $permission = Permission::query()->create($data);
+
+                $this->role->givePermissionTo($permission->name);
+
+                $this->dispatch('permissionAdded');
+
+                Notification::make()
+                    ->title(__('shopper::notifications.users_roles.permission_add'))
+                    ->success()
+                    ->send();
+            });
     }
 
     public function save(): void

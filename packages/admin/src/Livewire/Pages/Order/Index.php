@@ -4,18 +4,22 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Order;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
-use Shopper\Core\Models\Contracts\Order as OrderContract;
+use Shopper\Core\Models\Contracts\Order;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
-class Index extends AbstractPageComponent implements HasForms, HasTable
+class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -28,7 +32,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     {
         return $table
             ->query(
-                resolve(OrderContract::class)::query()
+                resolve(Order::class)::query()
                     ->with([
                         'customer',
                         'items',
@@ -39,51 +43,51 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->latest()
             )
             ->columns([
-                Tables\Columns\TextColumn::make('number')
+                TextColumn::make('number')
                     ->label('#')
                     ->searchable()
                     ->extraAttributes(['class' => 'uppercase'])
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label(__('shopper::words.date'))
                     ->date()
                     ->sortable()
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->label(__('shopper::forms.label.status'))
                     ->badge(),
-                Tables\Columns\TextColumn::make('customer.first_name')
+                TextColumn::make('customer.first_name')
                     ->label(__('shopper::words.customer'))
                     ->searchable()
                     ->sortable()
-                    ->formatStateUsing(fn (OrderContract $record): View => view(
+                    ->formatStateUsing(fn (Order $record): View => view(
                         'shopper::livewire.tables.cells.orders.customer',
                         ['order' => $record]
                     ))
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('id')
+                TextColumn::make('id')
                     ->label(__('shopper::words.purchased'))
-                    ->formatStateUsing(fn (OrderContract $record): View => view(
+                    ->formatStateUsing(fn (Order $record): View => view(
                         'shopper::livewire.tables.cells.orders.purchased',
                         ['order' => $record]
                     )),
-                Tables\Columns\TextColumn::make('currency_code')
+                TextColumn::make('currency_code')
                     ->label(__('shopper::forms.label.price_amount'))
                     ->formatStateUsing(
-                        fn (string $state, OrderContract $record): string => shopper_money_format(amount: $record->total(), currency: $state)
+                        fn (string $state, Order $record): string => shopper_money_format(amount: $record->total(), currency: $state)
                     ),
-                Tables\Columns\TextColumn::make('zone.name')
+                TextColumn::make('zone.name')
                     ->label(__('shopper::pages/settings/zones.single'))
                     ->searchable()
                     ->sortable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
             ])
-            ->actions([
-                Tables\Actions\Action::make('view')
+            ->recordActions([
+                Action::make('view')
                     ->label(__('shopper::words.details'))
                     ->url(
-                        fn (OrderContract $record): string => route(
+                        fn (Order $record): string => route(
                             name: 'shopper.orders.detail',
                             parameters: ['order' => $record]
                         ),

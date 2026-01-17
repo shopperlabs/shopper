@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
-use Filament\Forms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\IconSize;
 use Illuminate\Contracts\View\View;
@@ -16,25 +23,29 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use JaOcero\RadioDeck\Forms\Components\RadioDeck;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Actions\Store\Product\AttachedAttributesToProductAction;
-use Shopper\Components;
+use Shopper\Components\Separator;
+use Shopper\Components\SlideOverWizard;
+use Shopper\Components\Wizard\StepColumn;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\Product;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class ChooseProductAttributes extends SlideOverComponent implements HasForms
+class ChooseProductAttributes extends SlideOverComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
 
-    public ProductContract $product;
+    public Product $product;
 
     public static function panelMaxWidth(): string
     {
@@ -46,13 +57,13 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Components\SlideOverWizard::make([
-                    Components\Wizard\StepColumn::make(__('shopper::pages/attributes.menu'))
-                        ->icon('untitledui-puzzle-piece')
+        return $schema
+            ->components([
+                SlideOverWizard::make([
+                    StepColumn::make(__('shopper::pages/attributes.menu'))
+                        ->icon(Untitledui::PuzzlePiece)
                         ->schema([
                             RadioDeck::make('attributes')
                                 ->options(
@@ -81,21 +92,21 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
                                 ->columns(3)
                                 ->live()
                                 ->afterStateUpdated(
-                                    fn (RadioDeck $component): Forms\ComponentContainer => $component->getContainer()
+                                    fn (RadioDeck $component): Schema => $component->getContainer()
                                         ->getParentComponent()
                                         ->getContainer()
                                         ->getComponent('values')
-                                        ->getChildComponentContainer()
+                                        ->getChildSchema()
                                         ->fill()
                                 )
                                 ->multiple()
                                 ->required(),
                         ]),
-                    Components\Wizard\StepColumn::make(__('shopper::pages/attributes.values.slug'))
-                        ->icon('untitledui-dotpoints')
+                    StepColumn::make(__('shopper::pages/attributes.values.slug'))
+                        ->icon(Untitledui::Dotpoints)
                         ->schema([
-                            Forms\Components\Grid::make()
-                                ->schema(function (Forms\Get $get): array {
+                            Grid::make()
+                                ->schema(function (Get $get): array {
                                     $selectSchema = [];
                                     $textSchema = [];
 
@@ -115,7 +126,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
                                     foreach ($attributes as $attribute) {
                                         /** @var Attribute $attribute */
                                         if ($attribute->hasMultipleValues() || $attribute->hasSingleValue()) {
-                                            $selectSchema[] = Forms\Components\Select::make("values.{$attribute->id}")
+                                            $selectSchema[] = Select::make("values.{$attribute->id}")
                                                 ->key($attribute->slug)
                                                 ->label($attribute->name)
                                                 ->required()
@@ -134,17 +145,17 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
 
                                         if ($attribute->hasTextValue()) {
                                             $field = match ($attribute->type) {
-                                                FieldType::RichText => Forms\Components\RichEditor::make("values.custom_value.{$attribute->id}")
+                                                FieldType::RichText => RichEditor::make("values.custom_value.{$attribute->id}")
                                                     ->label($attribute->name)
                                                     ->key($attribute->slug)
                                                     ->disabled($selectedAttributes->get($attribute->id) !== null)
                                                     ->columnSpanFull(),
-                                                FieldType::DatePicker => Forms\Components\DatePicker::make("values.custom_value.{$attribute->id}")
+                                                FieldType::DatePicker => DatePicker::make("values.custom_value.{$attribute->id}")
                                                     ->label($attribute->name)
                                                     ->key($attribute->slug)
                                                     ->disabled($selectedAttributes->get($attribute->id) !== null)
                                                     ->native(false),
-                                                default => Forms\Components\TextInput::make("values.custom_value.{$attribute->id}")
+                                                default => TextInput::make("values.custom_value.{$attribute->id}")
                                                     ->key($attribute->slug)
                                                     ->disabled($selectedAttributes->get($attribute->id) !== null)
                                                     ->label($attribute->name),
@@ -156,7 +167,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
 
                                     return array_merge(
                                         $selectSchema,
-                                        count($textSchema) > 0 ? [Components\Separator::make()->columnSpanFull()] : [],
+                                        count($textSchema) > 0 ? [Separator::make()->columnSpanFull()] : [],
                                         $textSchema
                                     );
                                 })
@@ -164,10 +175,10 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
                         ]),
                 ])
                     ->submitAction(new HtmlString(Blade::render(<<<'BLADE'
-                        <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
+                        <x-filament::button type="submit" wire:loading.attr="disabled">
                             <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                             {{ __('shopper::forms.actions.save') }}
-                        </x-shopper::buttons.primary>
+                        </x-filament::button>
                      BLADE)))
                     ->persistStepInQueryString(),
             ])

@@ -19,7 +19,7 @@
         x-transition:leave="transition duration-300 ease-in"
         x-transition:leave-start="translate-x-0"
         x-transition:leave-end="-translate-x-full"
-        class="fixed left-0 top-0 z-30 h-dvh"
+        class="fixed top-0 left-0 z-30 h-dvh"
     >
         <div class="h-full max-h-full p-1 duration-300 ease-out">
             <div class="w-8 rounded-md bg-gray-950/90 pb-1 backdrop-blur-xl dark:bg-gray-50/90">
@@ -77,7 +77,7 @@
                         />
                     </span>
                     <span
-                        class="pointer-events-none absolute top-0 z-10 flex h-8 translate-x-6 items-center rounded-r bg-gray-800 object-right pl-2 pr-3 text-xs opacity-0 duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-x-7 group-hover:opacity-100 dark:bg-white"
+                        class="pointer-events-none absolute top-0 z-10 flex h-8 translate-x-6 items-center rounded-r bg-gray-800 object-right pr-3 pl-2 text-xs opacity-0 duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-x-7 group-hover:opacity-100 dark:bg-white"
                     >
                         {{ __('shopper::pages/dashboard.cards.doc_title') }}
                     </span>
@@ -104,7 +104,7 @@
                         />
                     </span>
                     <span
-                        class="pointer-events-none absolute top-0 z-10 flex h-8 translate-x-6 items-center rounded-r bg-gray-800 object-right pl-2 pr-3 text-xs opacity-0 duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-x-7 group-hover:opacity-100 dark:bg-white"
+                        class="pointer-events-none absolute top-0 z-10 flex h-8 translate-x-6 items-center rounded-r bg-gray-800 object-right pr-3 pl-2 text-xs opacity-0 duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-x-7 group-hover:opacity-100 dark:bg-white"
                     >
                         {{ __('shopper::pages/dashboard.menu') }}
                     </span>
@@ -128,7 +128,7 @@
                             />
                         </span>
                         <span
-                            class="pointer-events-none absolute top-0 z-10 flex h-8 shrink-0 translate-x-6 items-center rounded-r bg-gray-800 object-right pl-2 pr-3 text-xs opacity-0 duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-x-7 group-hover:opacity-100 dark:bg-white"
+                            class="pointer-events-none absolute top-0 z-10 flex h-8 shrink-0 translate-x-6 items-center rounded-r bg-gray-800 object-right pr-3 pl-2 text-xs opacity-0 duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-x-7 group-hover:opacity-100 dark:bg-white"
                         >
                             {{ __('shopper::words.log_out') }}
                         </span>

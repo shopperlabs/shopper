@@ -4,23 +4,32 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
-use Filament\Forms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
-use Shopper\Components;
+use Shopper\Components\Form\IconPicker;
+use Shopper\Components\Separator;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class AttributeForm extends SlideOverComponent implements HasForms
+class AttributeForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     public ?Attribute $attribute = null;
@@ -39,48 +48,48 @@ class AttributeForm extends SlideOverComponent implements HasForms
         $this->form->fill($this->attribute?->toArray());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->required()
                     ->live(onBlur: true)
                     ->maxLength(75)
-                    ->afterStateUpdated(function (string $operation, ?string $state, Forms\Set $set): void {
+                    ->afterStateUpdated(function (string $operation, ?string $state, Set $set): void {
                         if ($state) {
                             $set('slug', Str::slug($state));
                         }
                     }),
-                Forms\Components\TextInput::make('slug')
+                TextInput::make('slug')
                     ->label(__('shopper::forms.label.slug'))
                     ->disabled()
                     ->dehydrated()
                     ->required()
                     ->maxLength(255)
                     ->unique(table: Attribute::class, column: 'slug', ignoreRecord: true),
-                Forms\Components\Select::make('type')
+                Select::make('type')
                     ->label(__('shopper::forms.label.type'))
                     ->options(FieldType::class)
                     ->required()
                     ->native(false),
-                Components\Form\IconPicker::make('icon')
+                IconPicker::make('icon')
                     ->label(__('shopper::forms.label.icon')),
-                Forms\Components\Textarea::make('description')
+                Textarea::make('description')
                     ->label(__('shopper::forms.label.description'))
                     ->hint(__('shopper::words.characters', ['number' => 100]))
                     ->maxLength(100)
                     ->rows(3),
-                Forms\Components\Toggle::make('is_enabled')
+                Toggle::make('is_enabled')
                     ->label(__('shopper::forms.actions.enable'))
                     ->onColor('success')
                     ->helperText(__('shopper::pages/attributes.attribute_visibility')),
-                Components\Separator::make(),
-                Forms\Components\Checkbox::make('is_searchable')
+                Separator::make(),
+                Checkbox::make('is_searchable')
                     ->label(__('shopper::forms.label.is_searchable'))
                     ->helperText(__('shopper::pages/attributes.searchable_description')),
-                Forms\Components\Checkbox::make('is_filterable')
+                Checkbox::make('is_filterable')
                     ->label(__('shopper::forms.label.is_filterable'))
                     ->helperText(__('shopper::pages/attributes.filtrable_description')),
             ])

@@ -1,13 +1,10 @@
 <x-shopper::container>
     <div class="sm:flex sm:justify-between">
-        <div>
-            <x-filament::section.heading>
-                {{ __('shopper::pages/products.related.title') }}
-            </x-filament::section.heading>
-            <x-filament::section.description class="mt-1 max-w-2xl">
-                {{ __('shopper::pages/products.related.description') }}
-            </x-filament::section.description>
-        </div>
+        <x-shopper::section-heading
+            :title="__('shopper::pages/products.related.title')"
+            :description="__('shopper::pages/products.related.description')"
+        />
+
         @if ($relatedProducts->isNotEmpty())
             <div class="mt-6 lg:mt-0">
                 <x-shopper::buttons.primary
@@ -36,7 +33,7 @@
                                     class="h-40 w-full max-w-none rounded-lg object-cover object-center"
                                 />
                             </div>
-                            <div class="absolute right-4 top-4">
+                            <div class="absolute top-4 right-4">
                                 <x-filament-actions::group
                                     :actions="[
                                         ($this->removeAction)(['id' => $relatedProduct->id]),
@@ -47,11 +44,7 @@
                                     dropdown-placement="bottom-start"
                                 />
 
-                                <div x-data>
-                                    <template x-teleport="body">
-                                        <x-filament-actions::modals />
-                                    </template>
-                                </div>
+                                <x-filament-actions::modals />
                             </div>
                         </div>
                         <div class="mt-4 flex items-start justify-between">

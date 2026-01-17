@@ -24,14 +24,14 @@ class AttachedDiscountToCustomers implements ShouldQueue
      * @param  array<int>  $customersIds
      */
     public function __construct(
-        public string $eligibility,
+        public DiscountEligibility $eligibility,
         public array $customersIds,
         public Discount $discount
     ) {}
 
     public function handle(): void
     {
-        if ($this->eligibility === DiscountEligibility::Customers()) {
+        if ($this->eligibility === DiscountEligibility::Customers) {
             // Remove all the customers that's not been selected that already exist during creation of the discount
             $this->discount->items()
                 ->where('condition', 'eligibility')

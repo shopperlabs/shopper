@@ -20,7 +20,7 @@ class Dashboard
 
         abort_if(! $user->isAdmin() && ! $user->hasPermissionTo('access_dashboard'), 403, __('Unauthorized'));
 
-        if (is_null(shopper_setting('email')) || is_null(shopper_setting('street_address'))) {
+        if (blank(shopper_setting('email')) || blank(shopper_setting('street_address'))) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response(__('Unauthorized'), Response::HTTP_UNAUTHORIZED);
             }

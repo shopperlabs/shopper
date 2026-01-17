@@ -11,7 +11,7 @@
 <div {{ $attributes }}>
     @if ($label)
         <div class="flex items-center justify-between">
-            <label for="{{ $for }}" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">
+            <label for="{{ $for }}" class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">
                 {{ $label }}
                 @if ($isRequired)
                     <span class="text-danger-500">*</span>
@@ -25,15 +25,17 @@
         </div>
     @endif
 
-    <div @class([
-        'relative',
-        'mt-1' => $label,
-        'rounded-md shadow-sm' => ! $noShadow,
-    ])>
+    <div
+        @class([
+            'relative',
+            'mt-1' => $label,
+            'rounded-md shadow-sm' => ! $noShadow,
+        ])
+    >
         {{ $slot }}
     </div>
     @if ($error)
-        <p class="mt-1 text-sm text-danger-500">
+        <p class="text-danger-500 mt-1 text-sm">
             {{ $error }}
         </p>
     @endif

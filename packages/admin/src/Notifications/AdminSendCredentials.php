@@ -11,7 +11,9 @@ use Shopper\Core\Models\Contracts\ShopperUser;
 
 final class AdminSendCredentials extends Notification
 {
-    public function __construct(public string $password) {}
+    public function __construct(
+        public string $password
+    ) {}
 
     /**
      * @return array<string>
@@ -25,11 +27,11 @@ final class AdminSendCredentials extends Notification
     {
         return (new MailMessage)
             ->subject(__('Welcome to Shopper'))
-            ->greeting("Hello {$notifiable->full_name}")
-            ->line(__('An account has been created for you as Administrator on the website ').config('app.url'))
-            ->line("Email: {$notifiable->email} - Password: {$this->password}")
+            ->greeting(__('Hello :name', ['name' => $notifiable->full_name]))
+            ->line(__('An account has been created for you as Administrator on the website :website', ['website' => config('app.url')]))
+            ->line(__('Email: :email - Password: :password', ['email' => $notifiable->email, 'password' => $this->password]))
             ->line(__('You can use the following link to login:'))
-            ->action('Login', route('shopper.login'))
+            ->action(__('Login'), route('shopper.login'))
             ->line(__('After logging in you need to change your password by clicking on your name in the upper right corner of the admin area'));
     }
 }

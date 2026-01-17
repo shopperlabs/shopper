@@ -4,27 +4,35 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Settings\Locations;
 
-use Filament\Forms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Shopper\Components\Form\AddressField;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
-use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\Contracts\Inventory;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class InventoryForm extends Component implements HasForms
+class InventoryForm extends Component implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
-    public Inventory $inventory;
+    public Model&Inventory $inventory;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -34,37 +42,38 @@ class InventoryForm extends Component implements HasForms
         $this->form->fill($this->inventory->toArray());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make(__('shopper::pages/settings/global.location.detail'))
-                    ->description(__('shopper::pages/settings/global.location.detail_summary'))
                     ->aside()
                     ->compact()
+                    ->description(__('shopper::pages/settings/global.location.detail_summary'))
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->label(__('shopper::forms.label.name'))
                             ->placeholder('White House')
                             ->required()
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (string $operation, ?string $state, Forms\Set $set): void {
+                            ->afterStateUpdated(function (string $operation, ?string $state, Set $set): void {
                                 if ($state) {
                                     $set('code', Str::slug($state));
                                 }
                             }),
-                        Forms\Components\Hidden::make('code'),
-                        Forms\Components\TextInput::make('email')
+                        Hidden::make('code'),
+                        TextInput::make('email')
                             ->label(__('shopper::forms.label.email'))
                             ->autocomplete('email-address')
                             ->email()
                             ->unique(ignoreRecord: true)
                             ->required(),
-                        Forms\Components\Textarea::make('description')
+                        Textarea::make('description')
                             ->label(__('shopper::forms.label.description'))
                             ->rows(3)
                             ->columnSpan('full'),
-                        Forms\Components\Toggle::make('is_default')
+                        Toggle::make('is_default')
                             ->label(__('shopper::pages/settings/global.location.set_default'))
                             ->helperText(__('shopper::pages/settings/global.location.set_default_summary'))
                             ->columnSpan('full'),
@@ -72,9 +81,10 @@ class InventoryForm extends Component implements HasForms
                     ->columns(),
                 Separator::make(),
                 Section::make(__('shopper::pages/settings/global.location.address'))
-                    ->description(__('shopper::pages/settings/global.location.address_summary'))
                     ->aside()
                     ->compact()
+                    ->description(__('shopper::pages/settings/global.location.address_summary'))
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema(AddressField::make())
                     ->columns(),
             ])
@@ -87,7 +97,7 @@ class InventoryForm extends Component implements HasForms
         if ($this->inventory->id) {
             $this->inventory->update($this->form->getState());
         } else {
-            Inventory::query()->create($this->form->getState());
+            resolve(Inventory::class)::query()->create($this->form->getState());
         }
 
         Notification::make()

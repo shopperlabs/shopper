@@ -17,7 +17,8 @@
 
     @if ($order->items->count() > 1)
         <span class="font-medium text-gray-700 dark:text-gray-300">
-            {{ $firstItem->name }} + {{ __('shopper::words.number_more', ['number' => $order->items->count() - 1]) }}
+            {{ $firstItem->name }} +
+            {{ __('shopper::words.number_more', ['number' => $order->items->count() - 1]) }}
         </span>
     @endif
 </div>

@@ -18,7 +18,7 @@ describe(Payment::class, function (): void {
     it('can render payment settings component', function (): void {
         Livewire::test(Payment::class)
             ->assertOk()
-            ->assertViewIs('shopper::livewire.pages.settings.payment');
+            ->assertViewIs('shopper::livewire.pages.settings.payment-methods');
     });
 
     it('initializes tabs on mount', function (): void {

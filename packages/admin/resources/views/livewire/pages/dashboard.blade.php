@@ -1,7 +1,7 @@
 <x-shopper::container class="py-5">
     <div class="flex items-center">
         <h2
-            class="welcome font-heading text-3xl font-bold leading-8 text-gray-950 dark:text-white sm:truncate sm:leading-9"
+            class="welcome font-heading text-3xl leading-8 font-bold text-gray-950 sm:truncate sm:leading-9 dark:text-white"
         >
             {{ __('shopper::pages/dashboard.welcome_message') }}
         </h2>
@@ -18,16 +18,16 @@
         </div>
 
         <div
-            class="grid grid-cols-1 rounded-lg bg-gray-50 ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10 lg:grid-cols-2"
+            class="grid grid-cols-1 rounded-lg bg-gray-50 ring-1 ring-gray-200 lg:grid-cols-2 dark:bg-gray-900 dark:ring-white/10"
         >
             <div class="space-y-5 p-6">
                 <div class="flex items-center">
                     <div
-                        class="flex size-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
+                        class="bg-primary-100 dark:bg-primary-800/20 flex size-10 items-center justify-center rounded-lg"
                     >
-                        <x-untitledui-brackets class="size-5 text-primary-500" aria-hidden="true" />
+                        <x-untitledui-brackets class="text-primary-500 size-5" aria-hidden="true" />
                     </div>
-                    <h4 class="ml-4 font-heading text-lg font-semibold leading-6 text-gray-900 dark:text-white">
+                    <h4 class="font-heading ml-4 text-lg leading-6 font-semibold text-gray-900 dark:text-white">
                         {{ __('shopper::pages/dashboard.cards.doc_title') }}
                     </h4>
                 </div>
@@ -37,10 +37,12 @@
                     </div>
 
                     <a href="https://laravelshopper.dev" class="group" target="_blank">
-                        <div class="mt-5 flex items-center text-sm font-medium text-primary-500">
-                            <span>{{ __('shopper::pages/dashboard.cards.doc_link') }}</span>
+                        <div class="text-primary-500 mt-5 flex items-center text-sm font-medium">
+                            <span>
+                                {{ __('shopper::pages/dashboard.cards.doc_link') }}
+                            </span>
                             <span
-                                class="ml-1 translate-x-0 transform text-primary-500 transition duration-200 ease-in-out group-hover:translate-x-1"
+                                class="text-primary-500 ml-1 translate-x-0 transform transition duration-200 ease-in-out group-hover:translate-x-1"
                             >
                                 <x-untitledui-arrow-narrow-right class="size-5" aria-hidden="true" />
                             </span>
@@ -49,14 +51,14 @@
                 </div>
             </div>
 
-            <div class="space-y-5 border-t border-gray-200 p-6 dark:border-gray-600 sm:border-t-0">
+            <div class="space-y-5 border-t border-gray-200 p-6 sm:border-t-0 dark:border-gray-600">
                 <div class="flex items-center">
                     <div
-                        class="flex size-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
+                        class="bg-primary-100 dark:bg-primary-800/20 flex size-10 items-center justify-center rounded-lg"
                     >
-                        <x-untitledui-video-recorder class="size-5 text-primary-500" aria-hidden="true" />
+                        <x-untitledui-video-recorder class="text-primary-500 size-5" aria-hidden="true" />
                     </div>
-                    <h4 class="ml-4 font-heading text-lg font-semibold leading-6 text-gray-900 dark:text-white">
+                    <h4 class="font-heading ml-4 text-lg leading-6 font-semibold text-gray-900 dark:text-white">
                         {{ __('shopper::pages/dashboard.cards.screencast_title') }}
                     </h4>
                 </div>
@@ -66,10 +68,12 @@
                     </div>
 
                     <a href="https://www.youtube.com/channel/UCgxgoKJi3VA1eXxtjIs2tKw" target="_blank" class="group">
-                        <div class="mt-5 flex items-center text-sm font-medium text-primary-500">
-                            <span>{{ __('shopper::pages/dashboard.cards.screencast_link') }}</span>
+                        <div class="text-primary-500 mt-5 flex items-center text-sm font-medium">
+                            <span>
+                                {{ __('shopper::pages/dashboard.cards.screencast_link') }}
+                            </span>
                             <span
-                                class="ml-1 translate-x-0 transform text-primary-500 transition duration-200 ease-in-out group-hover:translate-x-1"
+                                class="text-primary-500 ml-1 translate-x-0 transform transition duration-200 ease-in-out group-hover:translate-x-1"
                             >
                                 <x-untitledui-arrow-narrow-right class="size-5" aria-hidden="true" />
                             </span>
@@ -81,15 +85,15 @@
             <div class="space-y-5 border-t border-gray-200 p-6 dark:border-gray-600">
                 <div class="flex items-center">
                     <div
-                        class="flex size-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
+                        class="bg-primary-100 dark:bg-primary-800/20 flex size-10 items-center justify-center rounded-lg"
                     >
-                        <x-untitledui-palette class="size-5 text-primary-500" aria-hidden="true" />
+                        <x-untitledui-palette class="text-primary-500 size-5" aria-hidden="true" />
                     </div>
-                    <h4 class="ml-4 font-heading text-lg font-semibold leading-6 text-gray-900 dark:text-white">
+                    <h4 class="font-heading ml-4 text-lg leading-6 font-semibold text-gray-900 dark:text-white">
                         {{ __('shopper::pages/dashboard.cards.theme_title') }}
                     </h4>
                     <span
-                        class="ml-2 inline-flex items-center rounded-full bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-800/20 dark:text-primary-500"
+                        class="bg-primary-100 text-primary-800 dark:bg-primary-800/20 dark:text-primary-500 ml-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
                     >
                         {{ __('shopper::words.soon') }}
                     </span>
@@ -104,11 +108,11 @@
             <div class="space-y-5 border-t border-gray-200 p-6 dark:border-gray-600">
                 <div class="flex items-center">
                     <div
-                        class="flex size-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
+                        class="bg-primary-100 dark:bg-primary-800/20 flex size-10 items-center justify-center rounded-lg"
                     >
-                        <x-untitledui-file-plus class="size-5 text-primary-500" aria-hidden="true" />
+                        <x-untitledui-file-plus class="text-primary-500 size-5" aria-hidden="true" />
                     </div>
-                    <h4 class="ml-4 font-heading text-lg font-semibold leading-6 text-gray-900 dark:text-white">
+                    <h4 class="font-heading ml-4 text-lg leading-6 font-semibold text-gray-900 dark:text-white">
                         {{ __('shopper::pages/dashboard.cards.product_title') }}
                     </h4>
                 </div>
@@ -119,10 +123,12 @@
 
                     @can('add_products')
                         <x-shopper::link :href="route('shopper.products.index')" class="group">
-                            <div class="mt-3 flex items-center text-sm font-medium text-primary-500">
-                                <span>{{ __('shopper::pages/dashboard.cards.product_link') }}</span>
+                            <div class="text-primary-500 mt-3 flex items-center text-sm font-medium">
+                                <span>
+                                    {{ __('shopper::pages/dashboard.cards.product_link') }}
+                                </span>
                                 <span
-                                    class="ml-1 translate-x-0 transform text-primary-500 transition duration-200 ease-in-out group-hover:translate-x-1"
+                                    class="text-primary-500 ml-1 translate-x-0 transform transition duration-200 ease-in-out group-hover:translate-x-1"
                                 >
                                     <x-untitledui-arrow-narrow-right class="size-5" aria-hidden="true" />
                                 </span>

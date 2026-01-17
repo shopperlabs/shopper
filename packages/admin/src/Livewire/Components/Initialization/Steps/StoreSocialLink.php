@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Initialization\Steps;
 
-use Filament\Forms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
@@ -18,13 +20,15 @@ use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 
 /**
- * @property Form $form
+ * @property Schema $form
  */
-final class StoreSocialLink extends StepComponent implements HasForms
+final class StoreSocialLink extends StepComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use SaveSettings;
 
+    /** @var array<string, mixed>|null */
     public ?array $data = [];
 
     public function mount(): void
@@ -32,11 +36,11 @@ final class StoreSocialLink extends StepComponent implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('facebook_link')
+        return $schema
+            ->components([
+                TextInput::make('facebook_link')
                     ->prefix(
                         fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                             <x-shopper::icons.facebook
@@ -45,10 +49,11 @@ final class StoreSocialLink extends StepComponent implements HasForms
                             />
                         Blade))
                     )
+                    ->inlinePrefix()
                     ->label(__('shopper::words.socials.facebook'))
                     ->placeholder('https://facebook.com/laravelshopper'),
 
-                Forms\Components\TextInput::make('instagram_link')
+                TextInput::make('instagram_link')
                     ->prefix(
                         fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                             <x-shopper::icons.instagram
@@ -57,10 +62,11 @@ final class StoreSocialLink extends StepComponent implements HasForms
                             />
                         Blade))
                     )
+                    ->inlinePrefix()
                     ->label(__('shopper::words.socials.instagram'))
                     ->placeholder('https://instagram.com/laravelshopper'),
 
-                Forms\Components\TextInput::make('twitter_link')
+                TextInput::make('twitter_link')
                     ->prefix(
                         fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                             <x-shopper::icons.twitter
@@ -69,6 +75,7 @@ final class StoreSocialLink extends StepComponent implements HasForms
                             />
                         Blade))
                     )
+                    ->inlinePrefix()
                     ->label(__('shopper::words.socials.twitter'))
                     ->placeholder('https://twitter.com/laravelshopper'),
             ])

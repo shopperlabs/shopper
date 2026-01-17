@@ -7,15 +7,17 @@ namespace Shopper\Livewire\Pages\Order;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\WithPagination;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Events\Orders\AddNoteToOrder;
+use Shopper\Core\Events\Orders\OrderArchived;
 use Shopper\Core\Events\Orders\OrderCancel;
 use Shopper\Core\Events\Orders\OrderCompleted;
 use Shopper\Core\Events\Orders\OrderPaid;
@@ -27,10 +29,10 @@ use Shopper\Livewire\Pages\AbstractPageComponent;
 /**
  * @property-read ShopperUser|null $customer
  */
-class Detail extends AbstractPageComponent implements HasActions, HasForms
+class Detail extends AbstractPageComponent implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use WithPagination;
 
     public OrderContract $order;
@@ -66,7 +68,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
             ->send();
     }
 
-    #[Computed(persist: true)]
+    #[Computed]
     public function customer(): ?ShopperUser
     {
         $userModel = config('auth.providers.users.model');
@@ -141,6 +143,33 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
                     ->body(__('shopper::pages/orders.notifications.completed'))
                     ->success()
                     ->send();
+            });
+    }
+
+    public function archiveAction(): Action
+    {
+        return Action::make('archive')
+            ->label(__('shopper::forms.actions.archive'))
+            ->color('danger')
+            ->icon(Untitledui::Archive)
+            ->visible(! $this->order->isCompleted() && ! $this->order->isPaid())
+            ->requiresConfirmation()
+            ->modalHeading(__('shopper::pages/orders.modals.archived_number', ['number' => $this->order->number]))
+            ->modalDescription(__('shopper::pages/orders.modals.archived_notice'))
+            ->modalSubmitActionLabel(__('shopper::forms.actions.confirm'))
+            ->action(function (): void {
+                event(new OrderArchived($this->order));
+
+                $this->order->update([
+                    'status' => OrderStatus::Register,
+                ]);
+
+                Notification::make()
+                    ->title(__('shopper::notifications.orders.archived'))
+                    ->success()
+                    ->send();
+
+                $this->redirectRoute('shopper.orders.index', navigate: true);
             });
     }
 

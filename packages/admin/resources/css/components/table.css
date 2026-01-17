@@ -1,0 +1,55 @@
+.fi-ta-ctn {
+  @apply flex flex-col p-0.5 gap-y-2 rounded-none divide-y-0 divide-transparent bg-transparent shadow-none ring-0 ring-transparent;
+
+  .fi-ta-main {
+    @apply flex flex-col gap-y-2;
+  }
+
+  .fi-ta-header-toolbar {
+    @apply border-0;
+  }
+
+  .fi-ta-selection-indicator, .fi-ta-filter-indicators, .fi-ta-reorder-indicator {
+    @apply rounded-lg ring-1 ring-gray-200 dark:ring-white/10 sm:px-4;
+  }
+
+  .fi-ta-header-ctn {
+    @apply divide-transparent;
+
+    .fi-ta-header {
+      @apply px-0;
+    }
+
+    .fi-ta-filters-dropdown {
+      @apply pr-3;
+    }
+  }
+
+  .fi-ta-content-ctn, .fi-ta-empty-state {
+    @apply rounded-lg ring-1 ring-gray-200 dark:ring-white/10;
+  }
+
+  .fi-ta-empty-state:not(.fi-ta-ctn-with-content-layout .fi-ta-empty-state) {
+    @apply border-t-0;
+  }
+
+  .fi-ta-header-toolbar {
+    @apply px-1;
+  }
+
+  .fi-ta-content {
+    @apply ring-1 ring-gray-200 rounded-xl dark:bg-gray-900 dark:ring-white/10;
+
+    .fi-ta-table > tbody {
+      @apply bg-white dark:bg-gray-900;
+    }
+  }
+}
+
+.fi-ta-filters-above-content-ctn.fi-open {
+  @apply bg-white dark:bg-gray-900 rounded-xl ring-1 ring-gray-200 dark:ring-white/10;
+}
+
+.fi-pagination {
+  @apply px-1 border-0;
+}

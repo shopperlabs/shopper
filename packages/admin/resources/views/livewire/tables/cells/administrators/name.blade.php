@@ -8,7 +8,7 @@
     </div>
     <div class="ml-4">
         <div class="flex items-center gap-2">
-            <span class="text-sm font-medium leading-5">
+            <span class="text-sm leading-5 font-medium">
                 {{ $user->full_name }}
             </span>
             @if ($user->id ===shopper()->auth()->id())

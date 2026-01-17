@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Shopper\Feature;
 
 Route::as('products.')->group(function (): void {
     Route::get('/', config('shopper.components.product.pages.product-index'))->name('index');
@@ -11,7 +12,7 @@ Route::as('products.')->group(function (): void {
         ->name('variant');
 });
 
-if (Shopper\Feature::enabled('attribute')) {
+if (Feature::enabled('attribute')) {
     Route::get('attributes', config('shopper.components.product.pages.attribute-index'))
         ->name('attributes.index');
 }

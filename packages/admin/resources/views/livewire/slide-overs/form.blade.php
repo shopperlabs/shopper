@@ -1,5 +1,5 @@
 <x-shopper::form-slider-over
-    :action="$this->getAction()"
+    :action="$this->getFormAction()"
     :title="$this->getTitle()"
     :description="$this->getDescription()"
 >

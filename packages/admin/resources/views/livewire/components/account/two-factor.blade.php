@@ -7,8 +7,8 @@
         />
         <div class="mt-5 lg:col-span-2 lg:mt-0 lg:max-w-3xl">
             <x-shopper::card>
-                <div class="border-b border-gray-200 p-4 dark:border-white/10 sm:px-6">
-                    <div class="flex items-center space-x-3">
+                <div class="border-b border-gray-200 p-4 sm:px-6 dark:border-white/10">
+                    <div class="flex items-center gap-x-3">
                         <div
                             @class([
                                 'size-2.5 shrink-0 rounded-full',
@@ -16,7 +16,7 @@
                                 'bg-gray-400 dark:bg-gray-500' => ! $this->enabled,
                             ])
                         ></div>
-                        <h3 class="text-base font-medium leading-6 text-gray-900 dark:text-white">
+                        <h3 class="text-base leading-6 font-medium text-gray-900 dark:text-white">
                             @if ($this->enabled)
                                 {{ __('shopper::pages/auth.account.two_factor_enabled') }}
                             @else
@@ -27,22 +27,23 @@
                 </div>
                 <div class="space-y-6 px-4 py-5 sm:p-6">
                     @if (! $this->enabled)
-                        <div class="rounded-md bg-primary-50 p-4 dark:bg-primary-800/20">
+                        <div class="bg-primary-50 dark:bg-primary-800/20 rounded-md p-4">
                             <div class="flex">
                                 <div class="shrink-0">
-                                    <x-heroicon-s-information-circle class="size-5 text-primary-400" aria-hidden="" />
+                                    <x-heroicon-s-information-circle class="text-primary-400 size-5" aria-hidden="true" />
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm leading-5 text-primary-500">
+                                    <p class="text-primary-500 text-sm leading-5">
                                         {{ __('shopper::pages/auth.account.two_factor_install_message') }}
                                     </p>
                                     <p class="mt-3 text-sm leading-5">
                                         <a
                                             href="https://support.google.com/accounts/answer/1066447"
                                             target="_blank"
-                                            class="whitespace-no-wrap font-medium text-primary-500 transition duration-150 ease-in-out hover:text-primary-600"
+                                            class="whitespace-no-wrap text-primary-500 hover:text-primary-600 font-medium transition duration-150 ease-in-out"
                                         >
-                                            {{ __('shopper::words.learn_more') }} &rarr;
+                                            {{ __('shopper::words.learn_more') }}
+                                            &rarr;
                                         </a>
                                     </p>
                                 </div>
@@ -53,7 +54,7 @@
                     <div class="flex items-start">
                         <div class="shrink-0">
                             <span class="block size-12">
-                                <x-heroicon-o-shield-check class="h-full w-full text-primary-600" aria-hidden="true" />
+                                <x-heroicon-o-shield-check class="text-primary-600 h-full w-full" aria-hidden="true" />
                             </span>
                         </div>
                         <div class="ml-4">
@@ -90,7 +91,9 @@
                                     class="mt-4 grid max-w-xl gap-1 rounded-lg bg-gray-50 p-4 text-sm dark:bg-gray-700"
                                 >
                                     @foreach (json_decode(decrypt($this->user->two_factor_recovery_codes), true) as $code)
-                                        <span class="leading-5 text-gray-700 dark:text-gray-300">{{ $code }}</span>
+                                        <span class="leading-5 text-gray-700 dark:text-gray-300">
+                                            {{ $code }}
+                                        </span>
                                     @endforeach
                                 </div>
                             </div>
@@ -99,39 +102,42 @@
                 </div>
                 <div class="flex justify-end px-4 py-4 sm:px-6">
                     @if (! $this->enabled)
-                        <x-shopper::buttons.primary
+                        <x-filament::button
                             wire:click="startConfirmingPassword('enableTwoFactorAuthentication')"
                             type="button"
                             wire:loading.attr="disabled"
                         >
                             <x-shopper::loader wire:loading wire:target="startConfirmingPassword" class="text-white" />
                             {{ __('shopper::forms.actions.enabled_two_factor') }}
-                        </x-shopper::buttons.primary>
+                        </x-filament::button>
                     @else
                         <div class="space-x-3 sm:flex sm:items-center">
-                            <x-shopper::buttons.danger
+                            <x-filament::button
                                 wire:click="startConfirmingPassword('disableTwoFactorAuthentication')"
                                 wire:loading.attr="disabled"
                                 type="button"
+                                color="danger"
                             >
                                 {{ __('shopper::forms.actions.disable') }}
-                            </x-shopper::buttons.danger>
+                            </x-filament::button>
+
                             @if ($showingRecoveryCodes)
-                                <x-shopper::buttons.primary
+                                <x-filament::button
                                     wire:click="startConfirmingPassword('regenerateRecoveryCodes')"
                                     wire:loading.attr="disabled"
                                     type="button"
                                 >
                                     {{ __('shopper::forms.actions.regenerate_code') }}
-                                </x-shopper::buttons.primary>
+                                </x-filament::button>
                             @else
-                                <x-shopper::buttons.default
+                                <x-filament::button
                                     wire:click="startConfirmingPassword('showRecoveryCodes')"
                                     wire:loading.attr="disabled"
                                     type="button"
+                                    color="gray"
                                 >
                                     {{ __('shopper::forms.actions.show_recovery_code') }}
-                                </x-shopper::buttons.default>
+                                </x-filament::button>
                             @endif
                         </div>
                     @endif
@@ -139,4 +145,6 @@
             </x-shopper::card>
         </div>
     </div>
+
+    <x-filament-actions::modals />
 </div>

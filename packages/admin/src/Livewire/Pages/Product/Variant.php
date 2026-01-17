@@ -7,24 +7,26 @@ namespace Shopper\Livewire\Pages\Product;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Support\Enums\MaxWidth;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Support\Enums\Size;
+use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
-use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
+use Shopper\Core\Models\Contracts\Product;
+use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
-class Variant extends AbstractPageComponent implements HasActions, HasForms
+class Variant extends AbstractPageComponent implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
-    public ?ProductContract $product = null;
+    public ?Product $product = null;
 
-    public ?ProductVariantContract $variant = null;
+    public ?ProductVariant $variant = null;
 
     public function mount(): void
     {
@@ -43,18 +45,18 @@ class Variant extends AbstractPageComponent implements HasActions, HasForms
         return Action::make('updateStock')
             ->label(__('shopper::forms.actions.edit'))
             ->color('gray')
-            ->modalWidth(MaxWidth::ExtraLarge)
+            ->modalWidth(Width::Large)
             ->fillForm([
                 'sku' => $this->variant->sku,
                 'barcode' => $this->variant->barcode,
             ])
-            ->record($this->variant)
-            ->form([
-                Forms\Components\TextInput::make('sku')
+            ->record($this->variant) // @phpstan-ignore-line
+            ->schema([
+                TextInput::make('sku')
                     ->label(__('shopper::forms.label.sku'))
                     ->unique(config('shopper.models.variant'), 'sku', ignoreRecord: true)
                     ->maxLength(255),
-                Forms\Components\TextInput::make('barcode')
+                TextInput::make('barcode')
                     ->label(__('shopper::forms.label.barcode'))
                     ->unique(config('shopper.models.variant'), 'barcode', ignoreRecord: true)
                     ->maxLength(255),
@@ -74,17 +76,18 @@ class Variant extends AbstractPageComponent implements HasActions, HasForms
         return Action::make('media')
             ->label(__('shopper::forms.actions.edit'))
             ->color('gray')
-            ->record($this->variant)
+            ->record($this->variant) // @phpstan-ignore-line
             ->fillForm($this->variant->toArray())
-            ->modalWidth(MaxWidth::ThreeExtraLarge)
-            ->form([
-                Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
+            ->modalWidth(Width::TwoExtraLarge)
+            ->size(Size::Small)
+            ->schema([
+                SpatieMediaLibraryFileUpload::make('thumbnail')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->label(__('shopper::forms.label.thumbnail'))
                     ->helperText(__('shopper::pages/products.thumbnail_helpText'))
                     ->image()
                     ->maxSize(config('shopper.media.max_size.thumbnail')),
-                Forms\Components\SpatieMediaLibraryFileUpload::make('images')
+                SpatieMediaLibraryFileUpload::make('images')
                     ->multiple()
                     ->label(__('shopper::words.images'))
                     ->panelLayout('grid')

@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace Shopper\Components\Form;
 
 use Closure;
-use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\HasComponents;
+use Filament\Schemas\Schema;
 use RuntimeException;
 
 class TextInputSelect extends TextInput
 {
-    use HasComponents;
-
     protected string $view = 'shopper::filament.form.text-input-select';
 
     protected ?Closure $selectComponentClosure = null;
@@ -23,19 +20,20 @@ class TextInputSelect extends TextInput
 
     protected string $position = 'suffix';
 
-    public function select(Closure|Select $closure): self
+    public function select(Closure|Select $closure): static
     {
         if ($closure instanceof Select) {
             $this->selectComponentClosure = fn (): Select => $closure;
 
             return $this;
         }
+
         $this->selectComponentClosure = $closure;
 
         return $this;
     }
 
-    public function position(string $position = 'suffix'): self
+    public function position(string $position = 'suffix'): static
     {
         $this->position = $position;
 
@@ -87,7 +85,7 @@ class TextInputSelect extends TextInput
         return $this->position;
     }
 
-    public function getSelectComponent(): ComponentContainer
+    public function getSelectComponent(): Schema
     {
         $evaluated = $this->evaluate($this->selectComponentClosure);
 
@@ -97,12 +95,13 @@ class TextInputSelect extends TextInput
 
         $this->selectComponent = $evaluated->hiddenLabel()
             ->extraAttributes(array_merge($evaluated->getExtraAttributes(), [
-                'style' => 'border: none !important; background: transparent;--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);',
+                'style' => 'border: none !important; background: transparent; --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color); --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color); box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);',
             ]));
+
         $path = explode('.', $this->getStatePath());
         unset($path[count($path) - 1]);
 
-        return ComponentContainer::make($this->getLivewire())
+        return Schema::make($this->getLivewire())
             ->statePath(implode('.', $path))
             ->components([$this->selectComponent]);
     }

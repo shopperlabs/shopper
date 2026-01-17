@@ -46,6 +46,6 @@ const defaultOptions = {
 compile({
   ...defaultOptions,
   platform: 'browser',
-  entryPoints: ['./packages/admin/resources/js/index.js'],
+  entryPoints: ['./packages/admin/resources/js/shopper.js'],
   outfile: './packages/admin/public/shopper.js',
 })

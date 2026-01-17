@@ -31,10 +31,10 @@
         :suffix-icon="$suffixIcon"
         :suffix-icon-color="$getSuffixIconColor()"
         :valid="! $errors->has($statePath)"
-        class="fi-fo-text-input"
+        class="fi-fo-text-input overflow-visible"
         :attributes="
             \Filament\Support\prepare_inherited_attributes($getExtraAttributeBag())
-                ->class([])
+                ->class(['overflow-visible'])
         "
     >
         <x-filament::input

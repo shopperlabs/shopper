@@ -25,7 +25,7 @@ class Dropdown extends Component
         $this->user = $this->getUser();
     }
 
-    #[On('updated-profile')]
+    #[On('profile.updated')]
     public function updatedProfile(): void
     {
         $this->user = $this->getUser();

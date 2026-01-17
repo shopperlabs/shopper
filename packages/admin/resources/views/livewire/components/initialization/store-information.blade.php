@@ -10,14 +10,14 @@
                         aria-hidden="true"
                         stroke-width="1"
                     />
-                    <span class="text-xs font-medium text-primary-600 dark:text-primary-500">
+                    <span class="text-primary-600 dark:text-primary-500 text-xs font-medium">
                         {{ __('shopper::pages/onboarding.step_1') }}
                     </span>
                 </div>
                 <h2 class="font-heading text-2xl font-medium text-gray-900 dark:text-white">
                     {{ __('shopper::pages/onboarding.tell_about') }}
                 </h2>
-                <p class="text-sm leading-6 text-gray-500 dark:text-gray-300 lg:max-w-2xl">
+                <p class="text-sm leading-6 text-gray-500 lg:max-w-2xl dark:text-gray-300">
                     {{ __('shopper::pages/onboarding.step_1_description') }}
                 </p>
             </div>

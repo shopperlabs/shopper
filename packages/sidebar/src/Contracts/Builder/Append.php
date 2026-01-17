@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Sidebar\Contracts\Builder;
 
+use BackedEnum;
 use Shopper\Sidebar\Contracts\Routeable;
 
 interface Append extends Authorizable, Routeable
@@ -18,7 +19,7 @@ interface Append extends Authorizable, Routeable
 
     public function getIcon(): string;
 
-    public function setIcon(string $icon, string $type = 'blade', string $iconClass = ''): self;
+    public function setIcon(string|BackedEnum $icon, string $type = 'blade', string $iconClass = ''): self;
 
     public function getIconClass(): string;
 

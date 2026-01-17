@@ -43,8 +43,32 @@
         ></script>
 
         @include('shopper::includes._additional-styles')
+
+        <style>
+            :root {
+            }
+        </style>
+
+        <script>
+            const loadDarkMode = () => {
+                window.theme = localStorage.getItem('theme')
+
+                if (
+                    window.theme === 'dark' ||
+                    (window.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+                ) {
+                    document.documentElement.classList.add('dark')
+                }
+            }
+
+            loadDarkMode()
+
+            document.addEventListener('livewire:navigated', loadDarkMode)
+        </script>
     </head>
-    <body {{ $attributes->twMerge(['class' => 'sh-body bg-gray-50 font-sans dark:bg-gray-950']) }}>
+    <body
+        {{ $attributes->twMerge(['class' => 'sh-body bg-gray-50 font-sans dark:bg-gray-950']) }}
+    >
         {{ $slot }}
 
         @livewire(\Filament\Notifications\Livewire\Notifications::class)

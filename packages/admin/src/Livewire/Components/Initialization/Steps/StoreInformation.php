@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Initialization\Steps;
 
-use Filament\Forms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
@@ -18,10 +25,11 @@ use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-final class StoreInformation extends StepComponent implements HasForms
+final class StoreInformation extends StepComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use SaveSettings;
 
@@ -49,26 +57,28 @@ final class StoreInformation extends StepComponent implements HasForms
         );
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Grid::make()
+        return $schema
+            ->components([
+                Grid::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->label(__('shopper::forms.label.store_name'))
-                            ->prefixIcon('untitledui-shop')
+                            ->prefixIcon(Untitledui::Shop)
+                            ->inlinePrefix()
                             ->maxLength(100)
                             ->required(),
-                        Forms\Components\TextInput::make('email')
+                        TextInput::make('email')
                             ->label(__('shopper::forms.label.email'))
-                            ->prefixIcon('untitledui-mail')
+                            ->prefixIcon(Untitledui::Mail)
+                            ->inlinePrefix()
                             ->autocomplete('email-address')
-                            ->placeholder('your@laravel.store')
+                            ->placeholder('your@shopper.store')
                             ->email()
                             ->required(),
                     ]),
-                Forms\Components\Select::make('country_id')
+                Select::make('country_id')
                     ->label(__('shopper::forms.label.country'))
                     ->options(
                         Country::query()
@@ -81,7 +91,7 @@ final class StoreInformation extends StepComponent implements HasForms
                     )
                     ->searchable()
                     ->native(false),
-                Forms\Components\Select::make('currencies')
+                Select::make('currencies')
                     ->label(__('shopper::forms.label.currencies'))
                     ->helperText(__('shopper::pages/onboarding.currencies_description'))
                     ->options(Currency::query()->orderBy('name')->pluck('name', 'id'))
@@ -91,19 +101,19 @@ final class StoreInformation extends StepComponent implements HasForms
                     ->required()
                     ->live()
                     ->native(false),
-                Forms\Components\Select::make('default_currency_id')
+                Select::make('default_currency_id')
                     ->label(__('shopper::forms.label.default_currency'))
                     ->helperText(__('shopper::pages/onboarding.currency_description'))
                     ->placeholder(__('shopper::forms.placeholder.select_currencies'))
                     ->options(
-                        fn (Forms\Get $get) => Currency::query()
+                        fn (Get $get) => Currency::query()
                             ->select('name', 'id')
                             ->whereIn('id', $get('currencies'))
                             ->pluck('name', 'id')
                     )
                     ->native(false)
                     ->required(),
-                Forms\Components\Textarea::make('about')
+                Textarea::make('about')
                     ->label(__('shopper::forms.label.about'))
                     ->helperText(__('shopper::pages/onboarding.about_description'))
                     ->rows(3),

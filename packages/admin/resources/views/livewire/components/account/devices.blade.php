@@ -9,24 +9,24 @@
         <div class="mt-5 lg:col-span-2 lg:mt-0 lg:max-w-3xl">
             @if (count($this->sessions) > 0)
                 <x-shopper::card class="px-4 py-5 sm:px-6">
-                    <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/auth.account.empty_device') }}
                     </p>
-                    <div class="mt-2 divide-y divide-gray-200 dark:divide-white/10">
+                    <div class="mt-2 divide-y divide-gray-200 dark:divide-white/20">
                         @foreach ($this->sessions as $session)
                             <div class="flex items-center justify-between py-4">
                                 <div class="flex items-center space-x-3">
                                     <div class="shrink-0 text-gray-500 dark:text-gray-400">
                                         @if ($session->agent->isDesktop())
-                                            <x-untitledui-monitor-02 class="size-8" aria-hidden="true" />
+                                            <x-untitledui-monitor-02 class="size-6" aria-hidden="true" />
                                         @else
-                                            <x-untitledui-phone class="size-8" aria-hidden="true" />
+                                            <x-untitledui-phone class="size-6" aria-hidden="true" />
                                         @endif
                                     </div>
                                     <div>
                                         <div class="flex items-center">
-                                            <h4 class="text-sm leading-5 text-gray-500 dark:text-gray-400">
-                                                <span class="text-green-500">
+                                            <h4 class="text-sm text-gray-500 dark:text-gray-400">
+                                                <span class="text-success-600 dark:text-success-400">
                                                     {{
                                                         __('shopper::words.browser_platform', [
                                                             'browser' => $session->agent->browser(),
@@ -38,7 +38,7 @@
                                             </h4>
                                             @if ($session->is_current_device)
                                                 <span
-                                                    class="ml-2 inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium leading-4 text-green-800"
+                                                    class="ml-2 inline-flex items-center rounded-md bg-success-100 px-2.5 py-0.5 text-xs leading-4 font-medium text-success-800"
                                                 >
                                                     {{ __('shopper::pages/auth.account.current_device') }}
                                                 </span>
@@ -60,17 +60,10 @@
                                         </p>
                                     </div>
                                 </div>
+
                                 @if (! $session->is_current_device)
                                     <div class="ml-4">
-                                        <span class="inline-flex rounded-md shadow-sm">
-                                            <x-shopper::buttons.primary
-                                                wire:click="$dispatch('openModal', 'shopper-modals.logout-others-browser')"
-                                                wire:loading.attr="disabled"
-                                                type="button"
-                                            >
-                                                {{ __('shopper::words.log_out') }}
-                                            </x-shopper::buttons.primary>
-                                        </span>
+                                        {{ $this->logoutOtherBrowsersAction }}
                                     </div>
                                 @endif
                             </div>
@@ -79,33 +72,22 @@
                 </x-shopper::card>
             @else
                 <div
-                    class="rounded-lg border-l-4 border-warning-400 bg-warning-50 p-4 ring-1 ring-warning-100 dark:bg-warning-800/20 dark:ring-warning-800/50"
+                    class="border-warning-400 bg-warning-50 ring-warning-100 dark:bg-warning-800/20 dark:ring-warning-800/50 rounded-lg border-l-4 p-4 ring-1"
                 >
                     <div class="flex">
                         <div class="shrink-0">
-                            <svg
-                                class="size-5 text-warning-400"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
+                            <x-untitledui-alert-triangle class="text-warning-400 size-5" aria-hidden="true" />
                         </div>
-                        <div class="ml-3 text-warning-500">
-                            <p class="text-sm leading-5">
+                        <div class="text-warning-500 ml-3">
+                            <p class="text-sm">
                                 {{ __('shopper::pages/auth.account.device_enabled_feature') }}
                                 <a
                                     href="https://laravel.com/docs/session"
                                     target="_blank"
-                                    class="font-medium underline transition duration-150 ease-in-out hover:text-warning-600"
+                                    class="hover:text-warning-600 font-medium underline transition duration-150 ease-in-out"
                                 >
-                                    {{ __('shopper::words.learn_more') }} &rarr;
+                                    {{ __('shopper::words.learn_more') }}
+                                    &rarr;
                                 </a>
                             </p>
                         </div>
@@ -114,4 +96,6 @@
             @endif
         </div>
     </div>
+
+    <x-filament-actions::modals />
 </div>

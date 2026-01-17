@@ -4,23 +4,36 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Product;
 
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Support\Enums\MaxWidth;
-use Filament\Tables;
+use Filament\Support\Enums\Width;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Events\Products\ProductDeleted;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\Product;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
-class Index extends AbstractPageComponent implements HasForms, HasTable
+class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -33,66 +46,66 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     {
         return $table
             ->query(
-                resolve(ProductContract::class)::query()
+                resolve(Product::class)::query()
                     ->with(['brand', 'variants'])
                     ->withCount(['variants'])
                     ->latest()
             )
             ->columns([
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
+                SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->label(__('shopper::forms.label.thumbnail'))
                     ->circular(),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->label(__('shopper::forms.label.type'))
                     ->badge(),
-                Tables\Columns\TextColumn::make('sku')
+                TextColumn::make('sku')
                     ->label(__('shopper::layout.tables.sku'))
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('brand.name')
+                TextColumn::make('brand.name')
                     ->label(__('shopper::forms.label.brand'))
                     ->searchable()
                     ->sortable()
                     ->toggleable()
                     ->hidden(! Feature::enabled('brand')),
-                Tables\Columns\ViewColumn::make('stock')
+                ViewColumn::make('stock')
                     ->label(__('shopper::layout.tables.stock'))
                     ->view('shopper::livewire.tables.cells.products.stock')
                     ->toggleable()
                     ->toggledHiddenByDefault(),
-                Tables\Columns\IconColumn::make('is_visible')
+                IconColumn::make('is_visible')
                     ->label(__('shopper::forms.label.visibility'))
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('published_at')
+                TextColumn::make('published_at')
                     ->label(__('shopper::forms.label.published_at'))
                     ->dateTime()
                     ->toggleable()
                     ->sortable(),
             ])
-            ->actions([
-                Tables\Actions\ActionGroup::make([
-                    Tables\Actions\Action::make('edit')
+            ->recordActions([
+                ActionGroup::make([
+                    Action::make('edit')
                         ->label(__('shopper::forms.actions.edit'))
-                        ->icon('untitledui-edit-04')
+                        ->icon(Untitledui::Edit03)
                         ->color('primary')
-                        ->action(fn (ProductContract $record) => $this->redirectRoute(
+                        ->action(fn (Product $record) => $this->redirectRoute(
                             name: 'shopper.products.edit',
                             parameters: ['product' => $record],
                             navigate: true
                         ))
                         ->visible(shopper()->auth()->user()->can('edit_products')),
-                    Tables\Actions\Action::make(__('shopper::forms.actions.delete'))
-                        ->icon('untitledui-trash-03')
-                        ->modalIcon('untitledui-trash-03')
+                    Action::make(__('shopper::forms.actions.delete'))
+                        ->icon(Untitledui::Trash03)
+                        ->modalIcon(Untitledui::Trash03)
                         ->color('danger')
                         ->requiresConfirmation()
-                        ->action(function (ProductContract $record): void {
+                        ->action(function (Product $record): void {
                             event(new ProductDeleted($record));
 
                             $record->delete();
@@ -104,18 +117,18 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->filters([
                 QueryBuilder::make()
                     ->constraints([
-                        QueryBuilder\Constraints\TextConstraint::make('name'),
-                        QueryBuilder\Constraints\SelectConstraint::make('type')
+                        TextConstraint::make('name'),
+                        SelectConstraint::make('type')
                             ->options(ProductType::class)
                             ->multiple(),
-                        QueryBuilder\Constraints\BooleanConstraint::make('is_visible')
+                        BooleanConstraint::make('is_visible')
                             ->label(__('shopper::forms.label.availability')),
-                        QueryBuilder\Constraints\DateConstraint::make('published_at'),
+                        DateConstraint::make('published_at'),
                     ])
                     ->constraintPickerColumns(),
             ])
             ->deferFilters()
-            ->filtersFormWidth(MaxWidth::Large);
+            ->filtersFormWidth(Width::Large);
     }
 
     public function render(): View

@@ -1,18 +1,14 @@
 <div>
     <div class="flex items-center justify-between">
-        <h4 class="text-sm font-medium leading-5 text-gray-900 dark:text-white">
+        <h4 class="text-sm leading-5 font-medium text-gray-900 dark:text-white">
             {{ __('shopper::pages/products.quantity_inventory') }}
         </h4>
         <div class="ml-4 flex items-center">
             {{ $this->stockAction }}
-
-            <div x-data>
-                <template x-teleport="body">
-                    <x-filament-actions::modals />
-                </template>
-            </div>
         </div>
     </div>
+
+    <x-filament-actions::modals />
 
     <div class="mt-5 overflow-hidden rounded-xl bg-white ring-1 ring-gray-950/10 dark:bg-gray-900 dark:ring-white/10">
         <table class="min-w-full divide-y divide-gray-200 dark:divide-white/10">

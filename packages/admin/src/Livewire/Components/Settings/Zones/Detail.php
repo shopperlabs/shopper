@@ -8,23 +8,24 @@ use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\DeleteAction;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Zone;
 
 /**
  * @property-read Zone $zone
  */
 #[Lazy]
-class Detail extends Component implements HasActions, HasForms
+class Detail extends Component implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     #[Reactive]
     public ?int $currentZoneId = null;
@@ -44,7 +45,7 @@ class Detail extends Component implements HasActions, HasForms
     {
         return DeleteAction::make('delete')
             ->record($this->zone)
-            ->icon('untitledui-trash-03')
+            ->icon(Untitledui::Trash03)
             ->iconButton()
             ->successNotificationTitle(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/zones.single')]))
             ->after(function (): void {
@@ -58,7 +59,7 @@ class Detail extends Component implements HasActions, HasForms
     {
         return Action::make('edit')
             ->iconButton()
-            ->icon('untitledui-edit-03')
+            ->icon(Untitledui::Edit03)
             ->action(fn (array $arguments) => $this->dispatch(
                 'openPanel',
                 component: 'shopper-slide-overs.zone-form',

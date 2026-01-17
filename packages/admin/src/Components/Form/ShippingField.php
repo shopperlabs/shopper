@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Components\Form;
 
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Component;
 use Shopper\Core\Enum\Dimension;
 
 final class ShippingField
 {
     /**
-     * @return array<array-key, Forms\Components\Field>
+     * @return array<array-key, Component>
      */
     public static function make(): array
     {
@@ -19,7 +20,7 @@ final class ShippingField
                 ->label(__('shopper::forms.label.width'))
                 ->numeric()
                 ->select(
-                    fn (): Forms\Components\Select => Forms\Components\Select::make('width_unit')
+                    fn (): Select => Select::make('width_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
                         ->options(Dimension\Length::class)
@@ -29,7 +30,7 @@ final class ShippingField
                 ->label(__('shopper::forms.label.height'))
                 ->numeric()
                 ->select(
-                    fn (): Forms\Components\Select => Forms\Components\Select::make('height_unit')
+                    fn (): Select => Select::make('height_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
                         ->options(Dimension\Length::class)
@@ -39,7 +40,7 @@ final class ShippingField
                 ->label(__('shopper::forms.label.weight'))
                 ->numeric()
                 ->select(
-                    fn (): Forms\Components\Select => Forms\Components\Select::make('weight_unit')
+                    fn (): Select => Select::make('weight_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
                         ->options(Dimension\Weight::class)
@@ -49,7 +50,7 @@ final class ShippingField
                 ->label(__('shopper::forms.label.volume'))
                 ->numeric()
                 ->select(
-                    fn (): Forms\Components\Select => Forms\Components\Select::make('volume_unit')
+                    fn (): Select => Select::make('volume_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
                         ->options(Dimension\Volume::class)
@@ -59,7 +60,7 @@ final class ShippingField
                 ->label(__('shopper::forms.label.depth'))
                 ->numeric()
                 ->select(
-                    fn (): Forms\Components\Select => Forms\Components\Select::make('depth_unit')
+                    fn (): Select => Select::make('depth_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
                         ->options(Dimension\Length::class)

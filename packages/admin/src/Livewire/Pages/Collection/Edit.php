@@ -4,28 +4,40 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Collection;
 
-use Filament\Forms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Livewire;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
-use Shopper\Core\Models\Contracts\Collection as CollectionContract;
+use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class Edit extends AbstractPageComponent implements HasForms
+class Edit extends AbstractPageComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
-    public ?CollectionContract $collection = null;
+    public ?Collection $collection = null;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -39,25 +51,25 @@ class Edit extends AbstractPageComponent implements HasForms
         $this->form->fill($this->collection?->toArray() ?? []);
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Group::make()
+        return $schema
+            ->components([
+                Group::make()
                     ->schema([
-                        Forms\Components\Grid::make()
+                        Grid::make()
                             ->schema([
-                                Forms\Components\TextInput::make('name')
+                                TextInput::make('name')
                                     ->label(__('shopper::forms.label.name'))
                                     ->placeholder('Summers Collections, Christmas promotions...')
                                     ->required()
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function (string $operation, ?string $state, Forms\Set $set): void {
+                                    ->afterStateUpdated(function (string $operation, ?string $state, Set $set): void {
                                         if ($state) {
                                             $set('slug', Str::slug($state));
                                         }
                                     }),
-                                Forms\Components\TextInput::make('slug')
+                                TextInput::make('slug')
                                     ->label(__('shopper::forms.label.slug'))
                                     ->disabled()
                                     ->dehydrated()
@@ -65,52 +77,47 @@ class Edit extends AbstractPageComponent implements HasForms
                                     ->maxLength(255)
                                     ->unique(config('shopper.models.collection'), 'slug', ignoreRecord: true),
                             ]),
-                        Forms\Components\RichEditor::make('description')
+                        RichEditor::make('description')
                             ->label(__('shopper::forms.label.description'))
                             ->toolbarButtons([
-                                'bold',
-                                'italic',
-                                'link',
-                                'redo',
-                                'strike',
-                                'underline',
-                                'undo',
+                                ['bold', 'italic', 'link', 'strike', 'underline'],
+                                ['bulletList', 'orderedList', 'table', 'attachFiles'],
+                                ['undo', 'redo'],
                             ]),
-                        Forms\Components\Livewire::make(CollectionProducts::class, ['collection' => $this->collection]),
+                        Livewire::make(CollectionProducts::class, ['collection' => $this->collection]),
                     ])
                     ->columnSpan(['lg' => 2]),
-                Forms\Components\Group::make()
+                Group::make()
                     ->schema([
-                        Forms\Components\SpatieMediaLibraryFileUpload::make('file')
+                        SpatieMediaLibraryFileUpload::make('file')
                             ->label(__('shopper::forms.label.image_preview'))
                             ->collection(config('shopper.media.storage.thumbnail_collection'))
                             ->image()
                             ->maxSize(config('shopper.media.max_size.thumbnail')),
-                        Forms\Components\DateTimePicker::make('published_at')
+                        DateTimePicker::make('published_at')
                             ->label(__('shopper::forms.label.availability'))
                             ->native(false)
                             ->required()
                             ->default(now())
                             ->helperText(__('shopper::pages/collections.availability_description')),
-                        Forms\Components\Group::make()
+                        Group::make()
                             ->schema([
-                                Forms\Components\Placeholder::make(__('shopper::words.seo.slug'))
+                                TextEntry::make(__('shopper::words.seo.slug'))
                                     ->label(__('shopper::words.seo.title'))
-                                    ->content(new HtmlString(Blade::render(<<<'BLADE'
+                                    ->state(new HtmlString(Blade::render(<<<'BLADE'
                                         <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                                             {{ __('shopper::words.seo.description', ['name' => __('shopper::pages/collections.single')]) }}
                                         </p>
                                     BLADE))),
-
                                 ...SeoField::make(),
                             ]),
-                        Forms\Components\KeyValue::make('metadata')->reorderable(),
+                        KeyValue::make('metadata')->reorderable(),
                     ])
                     ->columnSpan(['lg' => 1]),
             ])
             ->columns(3)
             ->statePath('data')
-            ->model($this->collection);
+            ->model($this->collection); // @phpstan-ignore-line
     }
 
     public function store(): void

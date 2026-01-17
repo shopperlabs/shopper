@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Initialization\Steps;
 
-use Filament\Forms;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Shopper\Core\Models\Setting;
@@ -16,10 +18,11 @@ use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-final class StoreAddress extends StepComponent implements HasForms
+final class StoreAddress extends StepComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use SaveSettings;
 
@@ -45,23 +48,23 @@ final class StoreAddress extends StepComponent implements HasForms
         );
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('street_address')
+        return $schema
+            ->components([
+                TextInput::make('street_address')
                     ->label(__('shopper::forms.label.street_address'))
                     ->placeholder('Akwa Avenue 34')
                     ->columnSpan(['lg' => 2])
                     ->required(),
-                Forms\Components\TextInput::make('postal_code')
+                TextInput::make('postal_code')
                     ->label(__('shopper::forms.label.postal_code'))
                     ->placeholder('00237')
                     ->required(),
-                Forms\Components\TextInput::make('city')
+                TextInput::make('city')
                     ->label(__('shopper::forms.label.city'))
                     ->required(),
-                Forms\Components\TextInput::make('phone_number')
+                TextInput::make('phone_number')
                     ->label(__('shopper::forms.label.phone_number'))
                     ->columnSpan(['lg' => 2]),
             ])

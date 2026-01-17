@@ -15,7 +15,7 @@
             <x-shopper::card-with-gray-heading class="max-w-lg space-y-6">
                 <x-slot:heading>
                     <div class="space-y-1">
-                        <h3 class="text-lg font-semibold leading-6 text-gray-900 dark:text-white">
+                        <h3 class="text-lg leading-6 font-semibold text-gray-900 dark:text-white">
                             {{ __('shopper::pages/settings/zones.title') }}
                         </h3>
                         <p class="text-sm text-gray-500 dark:text-gray-400">
@@ -61,6 +61,7 @@
                                         ])
                                     >
                                         {{ $zone->name }}
+
                                         @if ($zone->code)
                                             ({{ $zone->code }})
                                         @endif

@@ -4,7 +4,7 @@
 ])
 
 <div
-    class="flex flex-col rounded-xl bg-gray-100 p-1 ring-1 ring-inset ring-gray-100/50 dark:bg-white/10 dark:ring-white/10"
+    class="flex flex-col rounded-xl bg-gray-100 p-1 ring-1 ring-gray-100/50 ring-inset dark:bg-white/10 dark:ring-white/10"
 >
     <header class="flex items-center justify-between gap-2 px-2 py-2.5">
         <div class="flex items-center gap-2">
@@ -16,7 +16,7 @@
                 />
             @endif
 
-            <h5 class="text-sm font-medium leading-5 text-gray-950 dark:text-white">
+            <h5 class="text-sm leading-5 font-medium text-gray-950 dark:text-white">
                 {{ $attribute->name }}
             </h5>
             @if ($activated)

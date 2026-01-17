@@ -8,11 +8,11 @@
             <div
                 class="divide-y divide-gray-200 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm dark:divide-white/10 dark:border-white/10 dark:bg-gray-900"
             >
-                <div class="bg-gray-50 px-4 py-3 dark:bg-gray-800 sm:flex sm:items-center sm:justify-between">
+                <div class="bg-gray-50 px-4 py-3 sm:flex sm:items-center sm:justify-between dark:bg-gray-800">
                     <div class="flex-1 grow sm:grid sm:grid-cols-4 sm:gap-5">
                         <div>
                             <dt
-                                class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-500 dark:text-gray-400"
+                                class="text-xs leading-4 font-medium tracking-wider text-gray-500 uppercase dark:text-gray-400"
                             >
                                 {{ __('shopper::pages/customers.orders.placed') }}
                             </dt>
@@ -22,7 +22,7 @@
                         </div>
                         <div class="mt-5 sm:mt-0">
                             <dt
-                                class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-500 dark:text-gray-400"
+                                class="text-xs leading-4 font-medium tracking-wider text-gray-500 uppercase dark:text-gray-400"
                             >
                                 {{ __('shopper::pages/customers.orders.total') }}
                             </dt>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="mt-5 sm:col-span-2 sm:mt-0">
                             <dt
-                                class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-500 dark:text-gray-400"
+                                class="text-xs leading-4 font-medium tracking-wider text-gray-500 uppercase dark:text-gray-400"
                             >
                                 {{ __('shopper::pages/customers.orders.ship_to') }}
                             </dt>
@@ -50,11 +50,11 @@
                     </div>
                     <div class="mt-2 text-right sm:mt-0 sm:max-w-xs">
                         <dt
-                            class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-500 dark:text-gray-400"
+                            class="text-xs leading-4 font-medium tracking-wider text-gray-500 uppercase dark:text-gray-400"
                         >
                             {{ __('shopper::pages/customers.orders.details') }}
                         </dt>
-                        <dd class="mt-1 text-sm font-medium uppercase text-gray-700 dark:text-gray-300">
+                        <dd class="mt-1 text-sm font-medium text-gray-700 uppercase dark:text-gray-300">
                             {{ $order->number }}
                         </dd>
                     </div>
@@ -62,7 +62,7 @@
                 <div class="p-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-5 sm:py-6">
                     <div class="sm:col-span-2">
                         <div class="flex items-center space-x-3">
-                            <h4 class="font-medium leading-6 text-gray-900 dark:text-white">
+                            <h4 class="leading-6 font-medium text-gray-900 dark:text-white">
                                 {{ __('shopper::pages/customers.orders.items') }}
                             </h4>
                             <x-filament::badge
@@ -84,7 +84,7 @@
                                                 alt="{{ $item->name }}"
                                             />
                                         </div>
-                                        <p class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
+                                        <p class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                                             {{ $item->name }} -
                                             <span class="text-gray-700 dark:text-gray-200">
                                                 {{ $item->quantity }} x
@@ -97,7 +97,7 @@
                         </ul>
                     </div>
                     <div class="mt-4 space-y-2 sm:mt-0">
-                        <h5 class="text-base font-medium leading-6 text-gray-900 dark:text-white">
+                        <h5 class="text-base leading-6 font-medium text-gray-900 dark:text-white">
                             {{ __('shopper::words.payment_method') }}
                         </h5>
                         @if ($order->paymentMethod)
@@ -128,7 +128,7 @@
                         @endif
                     </div>
                     <div class="mt-4 sm:mt-0">
-                        <h5 class="text-base font-medium leading-6 text-gray-900 dark:text-white">
+                        <h5 class="text-base leading-6 font-medium text-gray-900 dark:text-white">
                             {{ __('shopper::words.shipping_method') }}
                         </h5>
                         <div class="mt-2">
@@ -155,15 +155,15 @@
                     </div>
                 </div>
                 <div class="flex items-center justify-between px-4 py-3">
-                    <p class="text-xs font-medium leading-4 text-gray-900 dark:text-white">
-                        <span class="mr-3 uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                    <p class="text-xs leading-4 font-medium text-gray-900 dark:text-white">
+                        <span class="mr-3 tracking-wider text-gray-500 uppercase dark:text-gray-400">
                             {{ __('shopper::pages/customers.orders.estimated') }}
                         </span>
                         {{ __('N/A') }}
                     </p>
                     <x-shopper::link
                         href="{{ route('shopper.orders.detail', $order) }}"
-                        class="inline-flex items-center text-sm leading-5 text-primary-600 underline hover:text-primary-500"
+                        class="text-primary-600 hover:text-primary-500 inline-flex items-center text-sm leading-5 underline"
                     >
                         {{ __('shopper::pages/customers.orders.view') }}
                         <x-untitledui-arrow-narrow-right class="ml-2 size-5" aria-hidden="true" />

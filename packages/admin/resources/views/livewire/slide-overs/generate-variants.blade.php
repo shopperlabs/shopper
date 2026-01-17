@@ -5,35 +5,40 @@
 >
     @if (count($availableOptions))
         <x-shopper::card class="overflow-hidden">
-            <x-filament-tables::table>
-                <x-slot name="header">
-                    <x-filament-tables::header-cell class="lg:py-3">
-                        <span class="fi-ta-header-cell-label text-sm font-semibold text-gray-950 dark:text-white">
-                            {{ __('shopper::pages/attributes.menu') }}
-                        </span>
-                    </x-filament-tables::header-cell>
-                    <x-filament-tables::header-cell class="lg:py-3" />
-                </x-slot>
-
-                @foreach (collect($availableOptions) as $attribute)
-                    <x-filament-tables::row>
-                        <x-filament-tables::cell>
-                            <div class="grid w-full gap-y-1 px-3 py-2">
-                                <span class="fi-ta-text-item-label text-sm leading-6 text-gray-950 dark:text-white">
-                                    {{ $attribute['name'] }}
-                                </span>
-                            </div>
-                        </x-filament-tables::cell>
-                        <x-filament-tables::cell>
-                            <div class="flex w-full flex-wrap items-center gap-3 gap-y-1 px-3 py-2">
-                                @foreach (collect($attribute['values']) as $option)
-                                    <x-filament::badge color="gray">{{ $option['value'] }}</x-filament::badge>
-                                @endforeach
-                            </div>
-                        </x-filament-tables::cell>
-                    </x-filament-tables::row>
-                @endforeach
-            </x-filament-tables::table>
+            <table class="fi-ta-table w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5">
+                <thead>
+                    <tr>
+                        <th class="fi-ta-header-cell p-2 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
+                            <span class="fi-ta-header-cell-label text-sm font-semibold text-gray-950 dark:text-white">
+                                {{ __('shopper::pages/attributes.menu') }}
+                            </span>
+                        </th>
+                        <th class="fi-ta-header-cell p-2 sm:first-of-type:ps-6 sm:last-of-type:pe-6"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 whitespace-nowrap dark:divide-white/10">
+                    @foreach (collect($availableOptions) as $attribute)
+                        <tr>
+                            <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                                <div class="grid w-full gap-y-1 p-2">
+                                    <span class="fi-ta-text-item-label text-sm leading-6 text-gray-950 dark:text-white">
+                                        {{ $attribute['name'] }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                                <div class="flex w-full flex-wrap items-center gap-3 gap-y-1 p-2">
+                                    @foreach (collect($attribute['values']) as $option)
+                                        <x-filament::badge color="gray">
+                                            {{ $option['value'] }}
+                                        </x-filament::badge>
+                                    @endforeach
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </x-shopper::card>
     @endif
 
@@ -71,7 +76,7 @@
                                     class="text-primary-500"
                                 />
                                 <button
-                                    class="inline-flex items-center text-sm text-danger-500 hover:text-danger-700 dark:hover:text-danger-400"
+                                    class="text-danger-500 hover:text-danger-700 dark:hover:text-danger-400 inline-flex items-center text-sm"
                                     type="button"
                                     wire:click="removeVariant('{{ $index }}')"
                                 >
@@ -88,33 +93,33 @@
                             <input type="hidden" wire:model="variants.{{ $index }}.values" />
                             <input type="hidden" wire:model="variants.{{ $index }}.variant_id" />
                             <div class="space-y-2">
-                                <x-filament-forms::field-wrapper.label :required="true">
+                                <x-shopper::label :isRequired="true">
                                     {{ __('shopper::forms.label.name') }}
-                                </x-filament-forms::field-wrapper.label>
+                                </x-shopper::label>
                                 <x-filament::input.wrapper>
                                     <x-filament::input type="text" wire:model="variants.{{ $index }}.name" required />
                                 </x-filament::input.wrapper>
                             </div>
                             <div class="space-y-2">
-                                <x-filament-forms::field-wrapper.label>
+                                <x-shopper::label>
                                     {{ __('shopper::forms.label.sku') }}
-                                </x-filament-forms::field-wrapper.label>
+                                </x-shopper::label>
                                 <x-filament::input.wrapper>
                                     <x-filament::input type="text" wire:model="variants.{{ $index }}.sku" />
                                 </x-filament::input.wrapper>
                             </div>
                             <div class="space-y-2">
-                                <x-filament-forms::field-wrapper.label>
+                                <x-shopper::label>
                                     {{ __('shopper::forms.label.price') }}
-                                </x-filament-forms::field-wrapper.label>
+                                </x-shopper::label>
                                 <x-filament::input.wrapper :suffix="shopper_currency()">
                                     <x-filament::input type="text" wire:model="variants.{{ $index }}.price" />
                                 </x-filament::input.wrapper>
                             </div>
                             <div class="space-y-2">
-                                <x-filament-forms::field-wrapper.label>
+                                <x-shopper::label>
                                     {{ __('shopper::forms.label.stock_number_value') }}
-                                </x-filament-forms::field-wrapper.label>
+                                </x-shopper::label>
                                 <x-filament::input.wrapper>
                                     <x-filament::input type="number" wire:model="variants.{{ $index }}.stock" />
                                 </x-filament::input.wrapper>

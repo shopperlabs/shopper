@@ -4,22 +4,27 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Account;
 
-use Filament\Forms\Components;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Components\Section;
 use Shopper\Traits\HasAuthenticated;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class Profile extends Component implements HasForms
+class Profile extends Component implements HasActions, HasForms
 {
     use HasAuthenticated;
+    use InteractsWithActions;
     use InteractsWithForms;
 
     /** @var array<string, mixed>|null */
@@ -30,30 +35,31 @@ class Profile extends Component implements HasForms
         $this->form->fill($this->getUser()->toArray());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make(__('shopper::pages/auth.account.profile_title'))
-                    ->description(__('shopper::pages/auth.account.profile_description'))
                     ->aside()
                     ->compact()
+                    ->description(__('shopper::pages/auth.account.profile_description'))
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
-                        Components\FileUpload::make('avatar_location')
+                        FileUpload::make('avatar_location')
                             ->label(__('shopper::forms.label.photo'))
                             ->avatar()
                             ->image()
                             ->maxSize(1024)
                             ->disk(config('shopper.media.storage.disk_name')),
-                        Components\Grid::make()
+                        Grid::make()
                             ->schema([
-                                Components\TextInput::make('first_name')
+                                TextInput::make('first_name')
                                     ->label(__('shopper::forms.label.first_name'))
                                     ->required(),
-                                Components\TextInput::make('last_name')
+                                TextInput::make('last_name')
                                     ->label(__('shopper::forms.label.last_name'))
                                     ->required(),
-                                Components\TextInput::make('email')
+                                TextInput::make('email')
                                     ->label(__('shopper::forms.label.email'))
                                     ->prefixIcon('untitledui-mail')
                                     ->autocomplete('email-address')
@@ -63,7 +69,7 @@ class Profile extends Component implements HasForms
                                         table: config('auth.providers.users.model'),
                                         ignorable: $this->getUser()
                                     ),
-                                Components\TextInput::make('phone_number')
+                                TextInput::make('phone_number')
                                     ->label(__('shopper::forms.label.phone_number'))
                                     ->tel(),
                             ]),
@@ -85,7 +91,7 @@ class Profile extends Component implements HasForms
                 )
             );
 
-        $this->dispatch('updated-profile');
+        $this->dispatch('profile.updated');
 
         Notification::make()
             ->title(__('shopper::notifications.users_roles.profile_update'))

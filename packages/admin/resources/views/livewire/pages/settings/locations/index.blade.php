@@ -15,9 +15,9 @@
             @can('add_inventories')
                 @if ($inventories->count() < (int) config('shopper.admin.inventory_limit') + 1)
                     <div class="flex">
-                        <x-shopper::buttons.primary :link="route('shopper.settings.locations.create')">
+                        <x-filament::button tag="a" :href="route('shopper.settings.locations.create')">
                             {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/settings/global.location.single')]) }}
-                        </x-shopper::buttons.primary>
+                        </x-filament::button>
                     </div>
                 @endif
             @endcan
@@ -27,13 +27,11 @@
     <div class="mt-10 lg:grid lg:grid-cols-3 lg:gap-x-12 lg:gap-y-6">
         <div class="lg:col-span-1">
             <div>
-                <x-filament::section.heading>
-                    {{ __('shopper::pages/settings/global.location.menu') }}
-                </x-filament::section.heading>
-                <x-filament::section.description class="mt-1">
-                    {{ __('shopper::pages/settings/global.location.description') }}
-                </x-filament::section.description>
-                <x-filament::section.description class="mt-3">
+                <x-shopper::section-heading
+                    :title="__('shopper::pages/settings/global.location.menu')"
+                    :description="__('shopper::pages/settings/global.location.description')"
+                />
+                <x-filament::section.description class="mt-4 text-sm text-gray-500 dark:text-gray-400">
                     {{ __('shopper::pages/settings/global.location.count', ['count' => $inventories->count(), 'total' => config('shopper.admin.inventory_limit')]) }}
                 </x-filament::section.description>
             </div>
@@ -47,7 +45,7 @@
                                 <div class="flex-1">
                                     <div class="flex items-center justify-between">
                                         <p
-                                            class="truncate text-sm font-medium leading-5 text-primary-600 dark:text-primary-500"
+                                            class="text-primary-600 dark:text-primary-500 truncate text-sm leading-5 font-medium"
                                         >
                                             {{ $inventory->name }}
                                         </p>
@@ -75,7 +73,7 @@
                                             @endif
 
                                             <div
-                                                class="mt-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
+                                                class="mt-2 flex items-center gap-2 text-sm text-gray-500 sm:mt-0 dark:text-gray-400"
                                             >
                                                 <x-untitledui-marker-pin-02
                                                     class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
@@ -84,7 +82,7 @@
                                                 {{ $inventory->city }}
                                             </div>
                                             <div
-                                                class="mt-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
+                                                class="mt-2 flex items-center gap-2 text-sm text-gray-500 sm:mt-0 dark:text-gray-400"
                                             >
                                                 <x-untitledui-phone
                                                     class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
@@ -94,7 +92,7 @@
                                             </div>
                                         </div>
                                         <div
-                                            class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
+                                            class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 dark:text-gray-400"
                                         >
                                             <x-untitledui-calendar
                                                 class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
@@ -118,7 +116,7 @@
                                         class="inline-flex size-10 items-center justify-center rounded-full hover:bg-gray-50 dark:hover:bg-gray-900/20"
                                     >
                                         <x-untitledui-edit-03
-                                            class="size-5 text-primary-600 dark:text-primary-500"
+                                            class="text-primary-600 dark:text-primary-500 size-5"
                                             aria-hidden="true"
                                         />
                                     </x-shopper::link>
@@ -134,11 +132,7 @@
         </div>
     </div>
 
-    <div x-data>
-        <template x-teleport="body">
-            <x-filament-actions::modals />
-        </template>
-    </div>
+    <x-filament-actions::modals />
 
     <x-shopper::learn-more :name="__('shopper::pages/settings/global.location.menu')" link="locations" />
 </x-shopper::container>

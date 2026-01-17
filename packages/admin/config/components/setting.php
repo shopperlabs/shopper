@@ -21,7 +21,7 @@ return [
         'location-create' => Pages\Settings\Locations\Create::class,
         'location-edit' => Pages\Settings\Locations\Edit::class,
         'legal' => Pages\Settings\LegalPage::class,
-        'payment' => Pages\Settings\Payment::class,
+        'payment-methods' => Pages\Settings\PaymentMethod::class,
         'team-index' => Pages\Settings\Team\Index::class,
         'team-roles' => Pages\Settings\Team\RolePermission::class,
         'zones' => Pages\Settings\Zones::class,
@@ -34,12 +34,6 @@ return [
     */
 
     'components' => [
-        'modals.create-permission' => Livewire\Modals\CreatePermission::class,
-        'modals.create-role' => Livewire\Modals\CreateRole::class,
-        'modals.confirm-password' => Livewire\Modals\ConfirmPassword::class,
-        'modals.logout-others-browser' => Livewire\Modals\LogoutOthersBrowser::class,
-        'modals.payment-method-form' => Livewire\Modals\PaymentMethodForm::class,
-
         'settings.locations.form' => Components\Settings\Locations\InventoryForm::class,
         'settings.legal.privacy' => Components\Settings\Legal\Privacy::class,
         'settings.legal.refund' => Components\Settings\Legal\Refund::class,

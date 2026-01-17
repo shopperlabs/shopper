@@ -30,9 +30,11 @@ return [
     */
 
     'accepts_mime_types' => [
-        'image/jpg',
         'image/jpeg',
         'image/png',
+        'image/webp',
+        'image/avif',
+        'image/svg+xml',
     ],
 
     /*

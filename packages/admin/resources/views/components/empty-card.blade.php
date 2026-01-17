@@ -5,7 +5,9 @@
     'action' => null,
 ])
 
-<div {{ $attributes->twMerge(['class' => 'flex flex-col items-center justify-center px-8 py-10 text-center']) }}>
+<div
+    {{ $attributes->twMerge(['class' => 'flex flex-col items-center justify-center px-8 py-10 text-center']) }}
+>
     @if ($icon)
         <div
             class="flex size-12 items-center justify-center rounded-full bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-white"

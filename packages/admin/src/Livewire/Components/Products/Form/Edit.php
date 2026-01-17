@@ -5,29 +5,39 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Products\Form;
 
 use CodeWithDennis\FilamentSelectTree\SelectTree;
-use Filament\Forms;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\IconSize;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Shopper\Actions\Store\Product\UpdateProductAction;
-use Shopper\Components;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Components\Separator;
+use Shopper\Core\Models\Contracts\Product;
 use Shopper\Feature;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class Edit extends Component implements HasForms
+class Edit extends Component implements HasSchemas
 {
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
-    public ProductContract $product;
+    public Model&Product $product;
 
     /**
      * @var array<string, mixed>|null
@@ -39,45 +49,44 @@ class Edit extends Component implements HasForms
         $this->form->fill($this->product->toArray());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Grid::make()
+        return $schema
+            ->components([
+                Grid::make()
                     ->schema([
-                        Forms\Components\Section::make(__('shopper::pages/products.general'))
+                        Section::make(__('shopper::pages/products.general'))
                             ->description($this->product->type?->getDescription())
                             ->icon($this->product->type?->getIcon())
                             ->iconSize(IconSize::Large)
                             ->schema([
-                                Forms\Components\TextInput::make('name')
+                                TextInput::make('name')
                                     ->label(__('shopper::forms.label.name'))
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function (?string $state, Forms\Set $set): void {
+                                    ->afterStateUpdated(function (?string $state, Set $set): void {
                                         if ($state) {
                                             $set('slug', Str::slug($state));
                                         }
                                     }),
-                                Forms\Components\TextInput::make('slug')
+                                TextInput::make('slug')
                                     ->label(__('shopper::forms.label.slug'))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
                                     ->maxLength(255)
                                     ->unique(config('shopper.models.product'), 'slug', ignoreRecord: true),
-                                Forms\Components\Textarea::make('summary')
+                                Textarea::make('summary')
                                     ->label(__('shopper::forms.label.summary'))
                                     ->columnSpan('full'),
-                                Forms\Components\RichEditor::make('description')
+                                RichEditor::make('description')
                                     ->label(__('shopper::forms.label.description'))
                                     ->columnSpan('full'),
-                                Forms\Components\Group::make()
+                                Group::make()
                                     ->schema([
-                                        Components\Separator::make()
-                                            ->columnSpanFull(),
-                                        Forms\Components\TextInput::make('external_id')
+                                        Separator::make()->columnSpanFull(),
+                                        TextInput::make('external_id')
                                             ->label(__('shopper::forms.label.external_id'))
                                             ->unique(config('shopper.models.product'), 'external_id', ignoreRecord: true)
                                             ->helperText(__('shopper::pages/products.external_id_description')),
@@ -86,27 +95,29 @@ class Edit extends Component implements HasForms
                                     ->columns()
                                     ->visible($this->product->isExternal()),
                             ])
-                            ->columns(),
+                            ->columns()
+                            ->columnSpanFull(),
                     ])
+                    ->columnSpanFull()
                     ->columnSpan(['lg' => 2]),
-                Forms\Components\Group::make()
+                Group::make()
                     ->schema([
-                        Forms\Components\Section::make(__('shopper::pages/products.status'))
+                        Section::make(__('shopper::pages/products.status'))
                             ->schema([
-                                Forms\Components\Toggle::make('is_visible')
+                                Toggle::make('is_visible')
                                     ->label(__('shopper::forms.label.visible'))
                                     ->helperText(__('shopper::pages/products.visible_help_text'))
                                     ->onColor('success')
                                     ->default(true),
-                                Forms\Components\DateTimePicker::make('published_at')
+                                DateTimePicker::make('published_at')
                                     ->label(__('shopper::forms.label.availability'))
                                     ->native(false)
                                     ->helperText(__('shopper::pages/products.availability_description'))
                                     ->required(),
                             ]),
-                        Forms\Components\Section::make(__('shopper::pages/products.product_associations'))
+                        Section::make(__('shopper::pages/products.product_associations'))
                             ->schema([
-                                Forms\Components\Select::make('brand_id')
+                                Select::make('brand_id')
                                     ->label(__('shopper::forms.label.brand'))
                                     ->relationship('brand', 'name', fn (Builder $query) => $query->where('is_enabled', true))
                                     ->searchable()
@@ -124,7 +135,7 @@ class Edit extends Component implements HasForms
                                     ->searchable()
                                     ->visible(Feature::enabled('category'))
                                     ->withCount(),
-                                Forms\Components\Select::make('channels')
+                                Select::make('channels')
                                     ->label(__('shopper::pages/settings/menu.sales'))
                                     ->relationship(
                                         name: 'channels',
@@ -134,7 +145,7 @@ class Edit extends Component implements HasForms
                                     ->searchable()
                                     ->preload()
                                     ->multiple(),
-                                Forms\Components\Select::make('collections')
+                                Select::make('collections')
                                     ->label(__('shopper::pages/collections.menu'))
                                     ->relationship('collections', 'name')
                                     ->searchable()

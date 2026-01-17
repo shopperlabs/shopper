@@ -1,7 +1,7 @@
 <x-shopper::layouts.app :title="$title ?? null">
     <x-slot name="subHeading">
         <div
-            class="sticky top-16 z-10 border-b border-t border-gray-200 bg-white/80 backdrop-blur-md backdrop-filter dark:border-white/10 dark:bg-gray-800/80 lg:top-[3.8rem] lg:border-t-0"
+            class="sticky top-16 z-10 border-t border-b border-gray-200 bg-white backdrop-blur-md backdrop-filter lg:top-[3.8rem] lg:border-t-0 dark:border-white/10 dark:bg-gray-900/80"
         >
             <div
                 x-data="{
@@ -44,7 +44,7 @@
                     x-transition:leave="transition duration-300 ease-in"
                     x-transition:leave-start="translate-x-0 opacity-100"
                     x-transition:leave-end="-translate-x-2 opacity-0"
-                    class="absolute top-0 flex h-full w-24 items-center bg-gradient-to-r from-white px-2.5 dark:from-gray-900"
+                    class="absolute top-0 flex h-full w-24 items-center bg-linear-to-r from-white px-2.5 dark:from-gray-900"
                 >
                     <button
                         @click="slideLeft()"
@@ -56,7 +56,7 @@
                 </div>
                 <nav
                     @scroll="onScroll()"
-                    class="hide-scroll -mb-px flex space-x-8 overflow-x-auto scroll-smooth pl-6 pr-10"
+                    class="hide-scroll -mb-px flex space-x-8 overflow-x-auto scroll-smooth pr-10 pl-6"
                     aria-label="Tabs"
                     id="setting-tabs"
                 >
@@ -72,7 +72,7 @@
                     x-transition:leave="transition duration-300 ease-in"
                     x-transition:leave-start="translate-x-0 opacity-100"
                     x-transition:leave-end="translate-x-2 opacity-0"
-                    class="absolute right-0 top-0 flex h-full w-24 items-center justify-end bg-gradient-to-l from-white px-2.5 dark:from-gray-900"
+                    class="absolute top-0 right-0 flex h-full w-24 items-center justify-end bg-linear-to-l from-white px-2.5 dark:from-gray-900"
                 >
                     <button
                         @click="slideRight()"

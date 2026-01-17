@@ -1,6 +1,6 @@
 <div class="relative isolate flex min-h-screen items-center justify-center">
     <svg
-        class="absolute inset-0 -z-10 hidden h-full w-full stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] dark:stroke-gray-900 sm:block"
+        class="absolute inset-0 -z-10 hidden h-full w-full [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] stroke-gray-200 sm:block dark:stroke-gray-900"
         aria-hidden="true"
     >
         <defs>
@@ -28,7 +28,7 @@
         aria-hidden="true"
     >
         <div
-            class="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-primary-400 to-primary-600 opacity-20 dark:from-primary-200 dark:to-primary-500"
+            class="from-primary-400 to-primary-600 dark:from-primary-200 dark:to-primary-500 aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r opacity-20"
             style="
                 clip-path: polygon(
                     73.6% 51.7%,

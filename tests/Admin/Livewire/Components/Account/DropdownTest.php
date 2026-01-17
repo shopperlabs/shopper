@@ -35,7 +35,7 @@ describe(Dropdown::class, function (): void {
 
         $this->user->update(['first_name' => 'Jane']);
 
-        $component->dispatch('updated-profile');
+        $component->dispatch('profile.updated');
 
         expect($component->get('user')->first_name)->toBe('Jane');
     });
@@ -45,7 +45,7 @@ describe(Dropdown::class, function (): void {
 
         $this->user->update(['last_name' => 'Smith']);
 
-        $component->dispatch('updated-profile');
+        $component->dispatch('profile.updated');
 
         $updatedUser = $component->get('user');
 

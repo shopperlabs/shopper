@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 return [
-
     'label' => [
         'email' => 'Adresse e-mail',
         'password' => 'Mot de passe',
@@ -84,6 +83,7 @@ return [
         'friendly_url' => 'Lien personnalisable',
         'quantity' => 'Quantité',
         'stock_number_value' => 'Valeur du numéro de stock',
+        'add_stock' => 'Ajouter un stock',
         'store_name' => 'Nom du magasin',
         'legal_name' => 'Nom légale de l\'entreprise',
         'logo' => 'Logo',
@@ -101,7 +101,7 @@ return [
         'parent' => 'Parent',
         'provider_logo' => 'Logo du fournisseur',
         'payment_method' => 'Moyen de paiement',
-        'payment_doc' => 'Documentation (dev)',
+        'payment_doc' => 'URL de Documentation (développement)',
         'payment_instruction' => 'Instructions du provider',
         'additional_details' => 'Informations supplémentaire',
         'group_name' => 'Nom du groupe',
@@ -164,7 +164,7 @@ return [
         'subscribe' => 'Souscrire',
         'remove' => 'Retirer',
         'remove_all' => 'Tout supprimer',
-        'enabled_two_factor' => 'Activer deux facteurs',
+        'enabled_two_factor' => 'Activer double authentification',
         'regenerate_code' => 'Régénérer les codes de récupération',
         'show_recovery_code' => 'Afficher les codes de récupération',
         'archive' => 'Archiver',
@@ -195,5 +195,4 @@ return [
     'validation' => [
         'integer' => 'Cette valeur doit être un nombre entier.',
     ],
-
 ];

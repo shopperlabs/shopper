@@ -67,7 +67,7 @@ trait ShopperUser
      */
     public function addresses(): HasMany
     {
-        return $this->hasMany(Address::class);
+        return $this->hasMany(config('shopper.models.address'));
     }
 
     /**
@@ -75,7 +75,7 @@ trait ShopperUser
      */
     public function orders(): HasMany
     {
-        return $this->hasMany(Order::class, 'customer_id');
+        return $this->hasMany(config('shopper.models.order'), 'customer_id');
     }
 
     /**

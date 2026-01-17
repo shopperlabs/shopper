@@ -5,9 +5,7 @@
   "require": {
     "ext-intl": "*",
     "php": "^8.3",
-    "filament/support": "^3.3",
     "laravel/prompts": "^0.3.5",
-    "mckenziearts/blade-untitledui-icons": "^1.4",
     "spatie/laravel-medialibrary": "^11.5",
     "spatie/laravel-permission": "^6.24",
     "staudenmeir/laravel-adjacency-list": "^1.0"

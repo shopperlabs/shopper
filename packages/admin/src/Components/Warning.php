@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Components;
 
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 
 class Warning extends Component
 {

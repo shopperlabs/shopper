@@ -7,19 +7,20 @@ namespace Shopper\Livewire\Pages\Settings\Locations;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Inventory;
 
 #[Layout('shopper::components.layouts.setting')]
-class Index extends Component implements HasActions, HasForms
+class Index extends Component implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     public function mount(): void
     {
@@ -30,7 +31,7 @@ class Index extends Component implements HasActions, HasForms
     {
         return Action::make('remove')
             ->iconButton()
-            ->icon('untitledui-trash-03')
+            ->icon(Untitledui::Trash03)
             ->color('danger')
             ->requiresConfirmation()
             ->action(function (array $arguments): void {

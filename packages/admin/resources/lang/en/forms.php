@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 return [
-
     'label' => [
         'email' => 'Email address',
         'password' => 'Password',
@@ -84,6 +83,7 @@ return [
         'friendly_url' => 'Friendly URL',
         'quantity' => 'Quantity',
         'stock_number_value' => 'Stock number value',
+        'add_stock' => 'Add stock',
         'store_name' => 'Store name',
         'legal_name' => 'Legal name of the company',
         'logo' => 'Logo',
@@ -101,7 +101,7 @@ return [
         'parent' => 'Parent',
         'provider_logo' => 'Provider logo',
         'payment_method' => 'Provider',
-        'payment_doc' => 'Provider Documentation (for dev)',
+        'payment_doc' => 'Provider Documentation URL',
         'payment_instruction' => 'Provider instructions',
         'additional_details' => 'Additional details',
         'group_name' => 'Group name',
@@ -195,5 +195,4 @@ return [
     'validation' => [
         'integer' => 'This value must be an integer.',
     ],
-
 ];

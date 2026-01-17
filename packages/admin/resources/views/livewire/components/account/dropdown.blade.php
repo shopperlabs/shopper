@@ -2,13 +2,13 @@
     <div class="group relative flex items-center rounded-xl transition duration-200 ease-in-out">
         <button
             @click="dropdownOpen = !dropdownOpen"
-            class="relative inline-flex w-full items-center rounded-full text-sm leading-5 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+            class="focus:ring-primary-500 relative inline-flex w-full items-center rounded-full text-sm leading-5 focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
             type="button"
         >
             <img class="size-8 rounded-full" src="{{ $user->picture }}" alt="{{ $user->email }}" />
             <span class="sr-only">{{ $user->full_name }}</span>
             <span
-                class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white dark:ring-white/10"
+                class="absolute right-0 bottom-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white dark:ring-white/10"
             ></span>
         </button>
         <div
@@ -21,7 +21,7 @@
             x-transition:leave-end="scale-95 transform opacity-0"
             @click.outside="dropdownOpen = false"
             x-cloak
-            class="absolute right-2.5 top-10 z-50 w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/5"
+            class="absolute top-10 right-2.5 z-50 w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/5"
             x-ref="items"
             role="menu"
             aria-orientation="vertical"

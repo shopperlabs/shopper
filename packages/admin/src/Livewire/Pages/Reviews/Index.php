@@ -4,19 +4,30 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Reviews;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\DeleteAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Support\Enums\FontWeight;
-use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Review;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
-class Index extends AbstractPageComponent implements HasForms, HasTable
+class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -27,17 +38,17 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Review::query()->with(['author', 'reviewrateable'])
             )
             ->columns([
-                Tables\Columns\Layout\Split::make([
-                    Tables\Columns\ImageColumn::make('author.picture')
+                Split::make([
+                    ImageColumn::make('author.picture')
                         ->circular()
                         ->grow(false),
-                    Tables\Columns\Layout\Stack::make([
-                        Tables\Columns\Layout\Split::make([
-                            Tables\Columns\TextColumn::make('author.full_name')
+                    Stack::make([
+                        Split::make([
+                            TextColumn::make('author.full_name')
                                 ->weight(FontWeight::Bold)
                                 ->searchable()
                                 ->grow(false),
-                            Tables\Columns\TextColumn::make('approved')
+                            TextColumn::make('approved')
                                 ->badge()
                                 ->formatStateUsing(
                                     fn (bool $state): string => $state
@@ -46,28 +57,28 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                                 )
                                 ->color(fn (bool $state): string => $state ? 'success' : 'warning'),
                         ]),
-                        Tables\Columns\TextColumn::make('created_at')
+                        TextColumn::make('created_at')
                             ->date()
                             ->color('gray')
                             ->sortable(),
-                        Tables\Columns\ViewColumn::make('rating')
+                        ViewColumn::make('rating')
                             ->view('shopper::livewire.tables.cells.reviews.rating'),
-                        Tables\Columns\TextColumn::make('content')
+                        TextColumn::make('content')
                             ->lineClamp(2)
                             ->color('gray'),
-                        Tables\Columns\ViewColumn::make('reviewrateable.name')
+                        ViewColumn::make('reviewrateable.name')
                             ->view('shopper::livewire.tables.cells.reviews.product'),
                     ]),
                 ])->extraAttributes([
                     'class' => '!items-start',
                 ]),
             ])
-            ->actions([
-                Tables\Actions\DeleteAction::make('delete')
+            ->recordActions([
+                DeleteAction::make('delete')
                     ->label(__('shopper::forms.actions.delete')),
-                Tables\Actions\Action::make('view')
+                Action::make('view')
                     ->label(__('shopper::forms.actions.view'))
-                    ->icon('untitledui-eye')
+                    ->icon(Untitledui::Eye)
                     ->action(
                         fn (Review $record) => $this->dispatch(
                             'openPanel',
@@ -77,9 +88,9 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ),
             ])
             ->filters([
-                Tables\Filters\TernaryFilter::make('approved')
+                TernaryFilter::make('approved')
                     ->label(__('shopper::pages/products.reviews.approved_status')),
-                Tables\Filters\TernaryFilter::make('is_recommended')
+                TernaryFilter::make('is_recommended')
                     ->label(__('shopper::pages/products.reviews.is_recommended')),
             ])
             ->contentGrid([

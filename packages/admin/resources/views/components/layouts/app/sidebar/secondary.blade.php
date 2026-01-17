@@ -1,3 +1,3 @@
-<div class="mt-5 overflow-y-auto px-4 pb-2">
+<div class="py-2 overflow-y-auto px-2">
     {!! $sidebar !!}
 </div>

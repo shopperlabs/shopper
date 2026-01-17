@@ -4,26 +4,27 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Form;
 
-use Filament\Forms;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use Filament\Forms\Components\KeyValue;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
-use Shopper\Components;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Components\Form\SeoField;
+use Shopper\Core\Models\Contracts\Product;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class Seo extends Component implements HasForms
+class Seo extends Component implements HasSchemas
 {
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
-    /** @var Model&ProductContract */
-    public ProductContract $product;
+    /** @var Model&Product */
+    public Product $product;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -33,13 +34,13 @@ class Seo extends Component implements HasForms
         $this->form->fill($this->product->toArray());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Group::make()
-                    ->schema(Components\Form\SeoField::make()),
-                Forms\Components\KeyValue::make('metadata')
+        return $schema
+            ->components([
+                Group::make()
+                    ->schema(SeoField::make()),
+                KeyValue::make('metadata')
                     ->reorderable(),
             ])
             ->statePath('data')

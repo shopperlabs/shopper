@@ -4,26 +4,37 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Discount;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HasAuthenticated;
 
-class Index extends AbstractPageComponent implements HasForms, HasTable
+class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
     use HasAuthenticated;
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -37,55 +48,58 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return $table
             ->query(Discount::with('zone', 'zone.currency')->latest())
             ->columns([
-                Tables\Columns\TextColumn::make('code')
+                TextColumn::make('code')
                     ->label(__('shopper::forms.label.code'))
                     ->badge()
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\ViewColumn::make('value')
+                TextColumn::make('type')
+                    ->label(__('shopper::forms.label.type'))
+                    ->searchable()
+                    ->sortable(),
+                ViewColumn::make('value')
                     ->label(__('shopper::words.amount'))
-                    ->toggleable()
                     ->view('shopper::livewire.tables.cells.discounts.amount'),
-                Tables\Columns\TextColumn::make('apply_to')
+                TextColumn::make('apply_to')
                     ->label(__('shopper::pages/discounts.applies_to'))
                     ->toggleable()
                     ->toggledHiddenByDefault()
                     ->color('gray')
                     ->badge(),
-                Tables\Columns\TextColumn::make('eligibility')
+                TextColumn::make('eligibility')
                     ->label(__('shopper::pages/discounts.customer_eligibility'))
                     ->toggleable()
                     ->toggledHiddenByDefault()
                     ->color('gray')
                     ->badge(),
-                Tables\Columns\IconColumn::make('is_active')
+                IconColumn::make('is_active')
                     ->label(__('shopper::forms.label.status'))
                     ->boolean()
                     ->sortable(),
-                Tables\Columns\ViewColumn::make('start_at')
+                ViewColumn::make('start_at')
                     ->label(__('shopper::words.date'))
                     ->toggleable()
                     ->view('shopper::livewire.tables.cells.discounts.date'),
-                Tables\Columns\TextColumn::make('usage_limit')
+                TextColumn::make('usage_limit')
                     ->label(__('shopper::pages/discounts.usage_limits'))
                     ->alignRight()
                     ->toggleable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('total_use')
+                TextColumn::make('total_use')
                     ->label(__('shopper::pages/discounts.total_use'))
                     ->alignRight()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('zone.name')
+                TextColumn::make('zone.name')
                     ->label(__('shopper::pages/settings/zones.single'))
                     ->searchable()
                     ->sortable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
             ])
-            ->actions([
-                Tables\Actions\Action::make('edit')
+            ->recordActions([
+                Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->icon('untitledui-edit-03')
+                    ->icon(Untitledui::Edit03)
                     ->iconButton()
                     ->action(
                         fn (Discount $record) => $this->dispatch(
@@ -95,20 +109,20 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         )
                     )
                     ->visible($this->getUser()->can('edit_discounts')),
-                Tables\Actions\Action::make('delete')
+                Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
-                    ->icon('untitledui-trash-03')
+                    ->icon(Untitledui::Trash03)
                     ->iconButton()
-                    ->modalIcon('untitledui-trash-03')
+                    ->modalIcon(Untitledui::Trash03)
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Discount $record) => $record->delete())
                     ->visible($this->getUser()->can('delete_discounts')),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make()
+                DeleteBulkAction::make()
                     ->label(__('shopper::forms.actions.delete'))
-                    ->icon('untitledui-trash-03')
+                    ->icon(Untitledui::Trash03)
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
                         $records->each->delete();
@@ -126,14 +140,14 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([
-                Tables\Filters\TernaryFilter::make('is_active'),
-                Tables\Filters\SelectFilter::make('apply_to')
+                TernaryFilter::make('is_active'),
+                SelectFilter::make('apply_to')
                     ->options(DiscountApplyTo::options()),
-                Tables\Filters\SelectFilter::make('eligibility')
+                SelectFilter::make('eligibility')
                     ->options(DiscountEligibility::options()),
-                Tables\Filters\Filter::make('start_at')
+                Filter::make('start_at')
                     ->label(__('shopper::pages/discounts.start_date'))
-                    ->form([
+                    ->schema([
                         DatePicker::make('start_at_from')
                             ->native(false),
                         DatePicker::make('start_at_until')

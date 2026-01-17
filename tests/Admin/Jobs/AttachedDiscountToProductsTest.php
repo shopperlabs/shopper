@@ -23,7 +23,7 @@ describe(AttachedDiscountToProducts::class, function (): void {
         $products = Product::factory()->count(3)->create();
 
         AttachedDiscountToProducts::dispatch(
-            DiscountApplyTo::Products(),
+            DiscountApplyTo::Products,
             $products->pluck('id')->toArray(),
             $discount
         );
@@ -36,7 +36,7 @@ describe(AttachedDiscountToProducts::class, function (): void {
         $products = Product::factory()->count(3)->create();
 
         $job = new AttachedDiscountToProducts(
-            applyTo: DiscountApplyTo::Products(),
+            applyTo: DiscountApplyTo::Products,
             productIds: $products->pluck('id')->toArray(),
             discount: $discount
         );
@@ -73,7 +73,7 @@ describe(AttachedDiscountToProducts::class, function (): void {
         $newProducts = Product::factory()->count(2)->create();
 
         $job = new AttachedDiscountToProducts(
-            applyTo: DiscountApplyTo::Products(),
+            applyTo: DiscountApplyTo::Products,
             productIds: $newProducts->pluck('id')->toArray(),
             discount: $discount
         );
@@ -110,7 +110,7 @@ describe(AttachedDiscountToProducts::class, function (): void {
         ]);
 
         $job = new AttachedDiscountToProducts(
-            applyTo: DiscountApplyTo::Order(),
+            applyTo: DiscountApplyTo::Order,
             productIds: [],
             discount: $discount
         );
@@ -137,7 +137,7 @@ describe(AttachedDiscountToProducts::class, function (): void {
             ->count();
 
         $job = new AttachedDiscountToProducts(
-            applyTo: DiscountApplyTo::Products(),
+            applyTo: DiscountApplyTo::Products,
             productIds: [$product->id],
             discount: $discount
         );

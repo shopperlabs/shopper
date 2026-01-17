@@ -1,4 +1,4 @@
-<div class="flex h-full flex-col divide-y divide-gray-200 dark:divide-white/10">
+<div class="flex h-full flex-col divide-y divide-gray-100 dark:divide-white/10">
     <div class="h-0 flex-1 overflow-y-auto py-6">
         <header class="px-4 sm:px-6">
             <div class="flex items-start justify-between">
@@ -12,7 +12,7 @@
                     <x-shopper::escape />
                     <button
                         type="button"
-                        class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:bg-gray-900 dark:text-gray-500 dark:ring-offset-gray-900 dark:hover:text-gray-300"
+                        class="focus:ring-primary-500 rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-offset-2 focus:outline-none dark:bg-gray-900 dark:text-gray-500 dark:ring-offset-gray-900 dark:hover:text-gray-300"
                         wire:click="$dispatch('closePanel')"
                     >
                         <span class="sr-only">Close panel</span>
@@ -44,7 +44,7 @@
                                 <div
                                     class="{{ $category->is_enabled ? 'bg-green-600' : 'bg-gray-400 dark:bg-gray-900' }} h-2 w-2 shrink-0 rounded-full"
                                 ></div>
-                                <span class="text-sm font-medium leading-5 text-gray-900 dark:text-white">
+                                <span class="text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                     {{ $category->name }}
                                 </span>
                             </div>

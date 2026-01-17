@@ -10,7 +10,7 @@
             <a
                 href="https://docs.laravelshopper.dev/v2/{{ $link }}"
                 target="_blank"
-                class="ml-1 inline-flex items-center text-primary-600 transition-colors duration-150 ease-in-out hover:text-primary-500"
+                class="text-primary-600 hover:text-primary-500 ml-1 inline-flex items-center transition-colors duration-150 ease-in-out"
             >
                 {{ $name }}
                 <x-untitledui-arrow-circle-broken-right

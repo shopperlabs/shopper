@@ -7,24 +7,25 @@ namespace Shopper\Livewire\Components\Products\Form;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
 use Livewire\Component;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Core\Models\Contracts\Product;
 
 #[Lazy]
-class RelatedProducts extends Component implements HasActions, HasForms
+class RelatedProducts extends Component implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
-    /** @var Model&ProductContract */
-    public ProductContract $product;
+    /** @var Model&Product */
+    public Product $product;
 
     public function mount(): void
     {
@@ -40,7 +41,7 @@ class RelatedProducts extends Component implements HasActions, HasForms
     {
         return Action::make('remove')
             ->label(__('shopper::forms.actions.remove'))
-            ->icon('untitledui-trash-03')
+            ->icon(Untitledui::Trash03)
             ->action(function (array $arguments): void {
                 $this->product->relatedProducts()->detach($arguments['id']);
 

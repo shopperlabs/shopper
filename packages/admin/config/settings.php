@@ -42,7 +42,7 @@ return [
             'name' => 'shopper::pages/settings/menu.payment',
             'description' => 'shopper::pages/settings/menu.payment_description',
             'icon' => 'untitledui-coins-hand',
-            'route' => 'shopper.settings.payments',
+            'route' => 'shopper.settings.payment-methods',
             'permission' => null,
         ],
         [

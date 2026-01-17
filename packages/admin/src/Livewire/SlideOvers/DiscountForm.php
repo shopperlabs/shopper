@@ -4,11 +4,24 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
-use Filament\Forms;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
@@ -20,16 +33,17 @@ use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Zone;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class DiscountForm extends SlideOverComponent implements HasForms
+class DiscountForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     public Discount $discount;
@@ -86,54 +100,54 @@ class DiscountForm extends SlideOverComponent implements HasForms
         ));
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Group::make()
+        return $schema
+            ->components([
+                Group::make()
                     ->schema([
-                        Forms\Components\Placeholder::make('general')
+                        TextEntry::make('general')
                             ->label(__('shopper::words.general')),
-                        Forms\Components\Select::make('zone_id')
+                        Select::make('zone_id')
                             ->label(__('shopper::pages/settings/zones.single'))
                             ->relationship('zone', 'name')
                             ->native(false)
                             ->hint(__('shopper::forms.label.optional'))
                             ->live(),
-                        Forms\Components\Radio::make('type')
+                        Radio::make('type')
                             ->label(__('shopper::forms.label.type'))
                             ->inline()
                             ->inlineLabel(false)
                             ->options(DiscountType::class)
                             ->required()
                             ->live(),
-                        Forms\Components\Grid::make()
+                        Grid::make()
                             ->schema([
-                                Forms\Components\TextInput::make('code')
+                                TextInput::make('code')
                                     ->label(__('shopper::forms.label.code'))
-                                    ->placeholder('CMRSUMMER900')
+                                    ->placeholder('CMR_SUMMER_900')
                                     ->helperText(__('shopper::pages/discounts.name_helptext'))
                                     ->hintAction(
-                                        Forms\Components\Actions\Action::make(__('shopper::words.generate'))
+                                        Action::make(__('shopper::words.generate'))
                                             ->color('info')
-                                            ->action(function (Forms\Set $set): void {
+                                            ->action(function (Set $set): void {
                                                 $set('code', mb_substr(mb_strtoupper(uniqid(Str::random(10))), 0, 10));
                                             }),
                                     )
                                     ->unique(table: Discount::class, column: 'code', ignoreRecord: true)
                                     ->required(),
-                                Forms\Components\TextInput::make('value')
+                                TextInput::make('value')
                                     ->label(
-                                        fn (Forms\Get $get): ?string => match ($get('type')) {
-                                            DiscountType::Percentage->value => __('shopper::pages/discounts.percentage'),
-                                            DiscountType::FixedAmount->value => __('shopper::pages/discounts.fixed_amount'),
+                                        fn (Get $get): ?string => match ($get('type')) {
+                                            DiscountType::Percentage => __('shopper::pages/discounts.percentage'),
+                                            DiscountType::FixedAmount => __('shopper::pages/discounts.fixed_amount'),
                                             default => null
                                         }
                                     )
                                     ->suffix(
-                                        fn (Forms\Get $get): ?string => match ($get('type')) {
-                                            DiscountType::Percentage->value => '%',
-                                            DiscountType::FixedAmount->value => $get('zone_id')
+                                        fn (Get $get): ?string => match ($get('type')) {
+                                            DiscountType::Percentage => '%',
+                                            DiscountType::FixedAmount => $get('zone_id')
                                                 ? Zone::query()->find($get('zone_id'))->currency_code
                                                 : shopper_currency(),
                                             default => null
@@ -142,74 +156,74 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                     ->numeric()
                                     ->required(),
                             ]),
-                        Forms\Components\Toggle::make('is_active')
+                        Toggle::make('is_active')
                             ->label(__('shopper::forms.label.visibility'))
                             ->helperText(__('shopper::words.set_visibility', ['name' => __('shopper::pages/discounts.single')])),
                     ]),
                 Separator::make(),
-                Forms\Components\Group::make()
+                Group::make()
                     ->schema([
-                        Forms\Components\Placeholder::make('configuration')
+                        TextEntry::make('configuration')
                             ->label(__('shopper::words.configuration'))
-                            ->content(new HtmlString(Blade::render(<<<'Blade'
-                                <p class="text-sm leading-6 text-gray-500 dark:text-gray-400">
+                            ->state(new HtmlString(Blade::render(<<<'Blade'
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::pages/discounts.configuration_description') }}
                                 </p>
                             Blade))),
-                        Forms\Components\Toggle::make('usage_number')
+                        Toggle::make('usage_number')
                             ->label(__('shopper::pages/discounts.usage_label'))
                             ->helperText(__('shopper::pages/discounts.usage_label_description'))
                             ->live(),
-                        Forms\Components\TextInput::make('usage_limit')
+                        TextInput::make('usage_limit')
                             ->label(__('shopper::pages/discounts.usage_value'))
                             ->placeholder('10')
                             ->integer()
                             ->numeric()
-                            ->required(fn (Forms\Get $get): bool => $get('usage_number'))
+                            ->required(fn (Get $get): bool => $get('usage_number'))
                             ->visible(
-                                fn (Forms\Get $get): bool => $get('usage_number') || $this->discount->usage_limit !== null
+                                fn (Get $get): bool => $get('usage_number') || $this->discount->usage_limit !== null
                             ),
-                        Forms\Components\Toggle::make('usage_limit_per_user')
+                        Toggle::make('usage_limit_per_user')
                             ->label(__('shopper::pages/discounts.limit_one_per_user')),
-                        Forms\Components\Placeholder::make('dates')
+                        TextEntry::make('dates')
                             ->label(__('shopper::pages/discounts.active_dates'))
-                            ->content(new HtmlString(Blade::render(<<<'Blade'
+                            ->state(new HtmlString(Blade::render(<<<'Blade'
                                 <p class="text-sm leading-6 text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::pages/discounts.active_dates_description') }}
                                 </p>
                             Blade))),
-                        Forms\Components\Grid::make()
+                        Grid::make()
                             ->schema([
-                                Forms\Components\DateTimePicker::make('start_at')
+                                DateTimePicker::make('start_at')
                                     ->label(__('shopper::pages/discounts.start_date'))
                                     ->required()
                                     ->minDate(now())
                                     ->native(false),
-                                Forms\Components\DateTimePicker::make('end_at')
+                                DateTimePicker::make('end_at')
                                     ->label(__('shopper::pages/discounts.end_date'))
                                     ->afterOrEqual('start_at')
                                     ->native(false),
                             ]),
                     ]),
                 Separator::make(),
-                Forms\Components\Group::make()
+                Group::make()
                     ->schema([
-                        Forms\Components\Placeholder::make('conditions')
+                        TextEntry::make('conditions')
                             ->label(__('shopper::words.conditions'))
-                            ->content(new HtmlString(Blade::render(<<<'Blade'
+                            ->state(new HtmlString(Blade::render(<<<'Blade'
                                 <p class="text-sm leading-6 text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::pages/discounts.condition_description') }}
                                 </p>
                             Blade))),
-                        Forms\Components\Radio::make('apply_to')
+                        Radio::make('apply_to')
                             ->label(__('shopper::pages/discounts.applies_to'))
                             ->options(DiscountApplyTo::class)
                             ->inline()
                             ->required()
                             ->live(),
-                        Forms\Components\Select::make('products')
+                        Select::make('products')
                             ->options(
-                                resolve(ProductContract::class)::query()
+                                resolve(Product::class)::query()
                                     ->scopes('publish')
                                     ->get()
                                     ->pluck('name', 'id')
@@ -220,18 +234,18 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->optionsLimit(10)
                             ->minItems(1)
                             ->required(
-                                fn (Forms\Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value
+                                fn (Get $get): bool => $get('apply_to') === DiscountApplyTo::Products
                             )
                             ->visible(
-                                fn (Forms\Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value
+                                fn (Get $get): bool => $get('apply_to') === DiscountApplyTo::Products
                             ),
-                        Forms\Components\Radio::make('eligibility')
+                        Radio::make('eligibility')
                             ->label(__('shopper::pages/discounts.customer_eligibility'))
                             ->inline()
                             ->options(DiscountEligibility::class)
                             ->required()
                             ->live(),
-                        Forms\Components\Select::make('customers')
+                        Select::make('customers')
                             ->options(
                                 config('auth.providers.users.model')::query()
                                     ->scopes('customers')
@@ -244,45 +258,44 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->optionsLimit(10)
                             ->minItems(1)
                             ->required(
-                                fn (Forms\Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value
+                                fn (Get $get): bool => $get('eligibility') === DiscountEligibility::Customers
                             )
                             ->visible(
-                                fn (Forms\Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value
+                                fn (Get $get): bool => $get('eligibility') === DiscountEligibility::Customers
                             ),
-                        Forms\Components\Radio::make('min_required')
+                        Radio::make('min_required')
                             ->label(__('shopper::pages/discounts.min_requirement'))
                             ->inline()
                             ->inlineLabel(false)
                             ->options(DiscountRequirement::class)
                             ->required()
                             ->live(),
-                        Forms\Components\TextInput::make('min_required_value')
+                        TextInput::make('min_required_value')
                             ->hiddenLabel()
                             ->numeric()
                             ->suffix(
-                                fn (Forms\Get $get): ?string => match ($get('min_required')) {
-                                    DiscountRequirement::Price->value => $get('zone_id')
+                                fn (Get $get): ?string => match ($get('min_required')) {
+                                    DiscountRequirement::Price => $get('zone_id')
                                         ? Zone::query()->find($get('zone_id'))->currency_code
                                         : shopper_currency(),
                                     default => null
                                 }
                             )
                             ->required(
-                                fn (Forms\Get $get): bool => $get('min_required') !== DiscountRequirement::None->value
+                                fn (Get $get): bool => $get('min_required') !== DiscountRequirement::None
                             )
-                            ->visible(function (Forms\Get $get): bool {
+                            ->visible(function (Get $get): bool {
                                 if ($get('min_required')) {
-                                    return $get('min_required') !== DiscountRequirement::None->value;
+                                    return $get('min_required') !== DiscountRequirement::None;
                                 }
 
                                 return false;
                             }),
                     ]),
                 Separator::make(),
-                Forms\Components\Group::make()
+                Group::make()
                     ->schema([
-                        Forms\Components\KeyValue::make('metadata')
-                            ->reorderable(),
+                        KeyValue::make('metadata')->reorderable(),
                     ]),
             ])
             ->statePath('data')

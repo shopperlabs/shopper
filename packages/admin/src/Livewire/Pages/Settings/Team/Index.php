@@ -4,24 +4,73 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Settings\Team;
 
+use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Tables;
+use Filament\Notifications\Notification;
+use Filament\Support\Enums\Size;
+use Filament\Support\Enums\Width;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\On;
 use Livewire\Component;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Core\Models\Role;
 
 #[Layout('shopper::components.layouts.setting')]
-class Index extends Component implements HasForms, HasTable
+class Index extends Component implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
+
+    public function createRoleAction(): Action
+    {
+        return Action::make('createRole')
+            ->label(__('shopper::pages/settings/staff.new_role'))
+            ->icon(Untitledui::Plus)
+            ->iconButton()
+            ->outlined()
+            ->size(Size::Small)
+            ->modalWidth(Width::Large)
+            ->modalHeading(__('shopper::modals.roles.new'))
+            ->modalDescription(__('shopper::modals.roles.new_description'))
+            ->modalSubmitActionLabel(__('shopper::forms.actions.save'))
+            ->schema([
+                TextInput::make('name')
+                    ->label(__('shopper::modals.roles.labels.name'))
+                    ->placeholder('manager')
+                    ->unique(table: Role::class, column: 'name')
+                    ->required(),
+                TextInput::make('display_name')
+                    ->label(__('shopper::forms.label.display_name'))
+                    ->placeholder('Manager'),
+                Textarea::make('description')
+                    ->label(__('shopper::forms.label.description'))
+                    ->rows(3)
+                    ->columnSpan('full'),
+            ])
+            ->action(function (array $data): void {
+                Role::create($data);
+
+                Notification::make()
+                    ->title(__('shopper::notifications.users_roles.role_added'))
+                    ->success()
+                    ->send();
+            });
+    }
 
     public function table(Table $table): Table
     {
@@ -30,23 +79,23 @@ class Index extends Component implements HasForms, HasTable
         return $table
             ->query($userModel::query()->with('roles')->scopes('administrators'))
             ->columns([
-                Tables\Columns\ViewColumn::make('full_name')
+                ViewColumn::make('full_name')
                     ->label(__('shopper::forms.label.full_name'))
                     ->view('shopper::livewire.tables.cells.administrators.name'),
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('email')
                     ->label(__('shopper::forms.label.email'))
-                    ->icon(function (ShopperUser $record): string {
-                        /** @var \Illuminate\Database\Eloquent\Model $record */
-                        return $record->email_verified_at ? 'untitledui-check-verified-02' : 'untitledui-alert-circle';
+                    ->icon(function (ShopperUser $record): BackedEnum {
+                        /** @var Model&ShopperUser $record */
+                        return $record->email_verified_at ? Untitledui::CheckVerified02 : Untitledui::AlertCircle;
                     })
                     ->iconColor(function (ShopperUser $record): string {
-                        /** @var \Illuminate\Database\Eloquent\Model $record */
+                        /** @var Model&ShopperUser $record */
                         return $record->email_verified_at ? 'success' : 'danger';
                     }),
-                Tables\Columns\TextColumn::make('roles_label')
+                TextColumn::make('roles_label')
                     ->label(__('shopper::forms.label.role'))
                     ->badge(),
-                Tables\Columns\TextColumn::make('id')
+                TextColumn::make('id')
                     ->label(__('shopper::forms.label.access'))
                     ->color('gray')
                     ->formatStateUsing(
@@ -55,15 +104,16 @@ class Index extends Component implements HasForms, HasTable
                         : __('shopper::words.limited')
                     ),
             ])
-            ->actions([
-                Tables\Actions\DeleteAction::make('delete')
+            ->recordActions([
+                DeleteAction::make('delete')
+                    ->icon(Untitledui::Trash03)
+                    ->iconButton()
                     ->label(__('shopper::forms.actions.delete'))
                     ->visible(fn (ShopperUser $record): bool => shopper()->auth()->user()->isAdmin() && ! $record->isAdmin()) // @phpstan-ignore-line
                     ->successNotificationTitle(__('shopper::notifications.users_roles.admin_deleted')),
             ]);
     }
 
-    #[On('teamUpdate')]
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.team.index', [

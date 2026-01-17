@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
+use Shopper\Core\Models\Permission;
 use Shopper\Core\Models\Role;
 use Shopper\Livewire\Pages\Settings\Team\RolePermission;
 use Tests\Core\Stubs\User;
@@ -117,5 +118,62 @@ describe(RolePermission::class, function (): void {
         Livewire::test(RolePermission::class, ['role' => $roleToDelete])
             ->callAction('delete')
             ->assertRedirect(route('shopper.settings.users'));
+    });
+
+    it('can create new permission and assign to role via action', function (): void {
+        $initialCount = Permission::query()->count();
+
+        Livewire::test(RolePermission::class, ['role' => $this->role])
+            ->callAction('createPermission', [
+                'name' => 'manage_orders',
+                'display_name' => 'Manage Orders',
+                'description' => 'Can view and manage orders',
+            ])
+            ->assertHasNoFormErrors()
+            ->assertDispatched('permissionAdded')
+            ->assertNotified(__('shopper::notifications.users_roles.permission_add'));
+
+        expect(Permission::query()->count())->toBe($initialCount + 1)
+            ->and(Permission::query()->where('name', 'manage_orders')->exists())->toBeTrue()
+            ->and($this->role->hasPermissionTo('manage_orders'))->toBeTrue();
+    });
+
+    it('validates required fields when creating permission', function (): void {
+        Livewire::test(RolePermission::class, ['role' => $this->role])
+            ->callAction('createPermission', [])
+            ->assertHasNoFormErrors(['name' => 'required', 'display_name' => 'required']);
+    });
+
+    it('validates unique permission name when creating permission', function (): void {
+        Permission::create(['name' => 'manage_products', 'display_name' => 'Manage Products']);
+
+        Livewire::test(RolePermission::class, ['role' => $this->role])
+            ->callAction('createPermission', [
+                'name' => 'manage_products',
+                'display_name' => 'Manage Products',
+            ])
+            ->assertHasNoFormErrors(['name' => 'unique']);
+    });
+
+    it('validates max length constraints when creating permission', function (): void {
+        Livewire::test(RolePermission::class, ['role' => $this->role])
+            ->callAction('createPermission', [
+                'name' => str_repeat('a', 31),
+                'display_name' => str_repeat('b', 76),
+            ])
+            ->assertHasNoFormErrors(['name' => 'max', 'display_name' => 'max']);
+    });
+
+    it('allows optional group_name and description when creating permission', function (): void {
+        $initialCount = Permission::query()->count();
+
+        Livewire::test(RolePermission::class, ['role' => $this->role])
+            ->callAction('createPermission', [
+                'name' => 'edit_blog',
+                'display_name' => 'Edit Blog',
+            ])
+            ->assertHasNoFormErrors();
+
+        expect(Permission::query()->count())->toBe($initialCount + 1);
     });
 })->group('livewire', 'settings', 'team');

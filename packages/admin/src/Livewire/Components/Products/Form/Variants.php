@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Form;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Tables;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
@@ -17,16 +23,18 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Lazy;
 use Livewire\Component;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
-use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Core\Models\Contracts\Product;
+use Shopper\Core\Models\Contracts\ProductVariant;
 
 #[Lazy]
-class Variants extends Component implements HasForms, HasTable
+class Variants extends Component implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
-    public ProductContract $product;
+    public Product $product;
 
     public function placeholder(): View
     {
@@ -37,30 +45,30 @@ class Variants extends Component implements HasForms, HasTable
     {
         return $table
             ->query(
-                resolve(ProductVariantContract::class)::query()
+                resolve(ProductVariant::class)::query()
                     ->where('product_id', $this->product->id)
                     ->latest()
             )
             ->columns([
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
+                SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->label(__('shopper::forms.label.thumbnail'))
                     ->circular(),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('sku')
+                TextColumn::make('sku')
                     ->label(__('shopper::layout.tables.sku'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('position')
+                TextColumn::make('position')
                     ->label(__('shopper::forms.label.position'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('stock')
+                TextColumn::make('stock')
                     ->label(__('shopper::layout.tables.current_stock'))
                     ->formatStateUsing(
-                        fn (ProductVariantContract $record): HtmlString => new HtmlString(Blade::render(<<<BLADE
+                        fn (ProductVariant $record): HtmlString => new HtmlString(Blade::render(<<<BLADE
                             <div class="flex items-center">
                                 <x-shopper::stock-badge :stock="{$record->stock}" />
                                 {{ __('shopper::words.in_stock') }}
@@ -69,7 +77,7 @@ class Variants extends Component implements HasForms, HasTable
                     ),
             ])
             ->headerActions([
-                Tables\Actions\Action::make('generate')
+                Action::make('generate')
                     ->icon($this->product->type->getIcon())
                     ->label(__('shopper::pages/products.variants.generate'))
                     ->color('gray')
@@ -81,7 +89,7 @@ class Variants extends Component implements HasForms, HasTable
                         )
                     )
                     ->visible($this->product->options->count() > 0),
-                Tables\Actions\Action::make('add')
+                Action::make('add')
                     ->label(__('shopper::pages/products.variants.add'))
                     ->action(
                         fn () => $this->dispatch(
@@ -91,25 +99,25 @@ class Variants extends Component implements HasForms, HasTable
                         )
                     ),
             ])
-            ->actions([
-                Tables\Actions\Action::make('edit')
+            ->recordActions([
+                Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
                     ->iconButton()
-                    ->icon('untitledui-edit-03')
+                    ->icon(Untitledui::Edit03)
                     ->action(
-                        fn (ProductVariantContract $record) => $this->redirectRoute(
+                        fn (ProductVariant $record) => $this->redirectRoute(
                             name: 'shopper.products.variant',
                             parameters: ['product' => $this->product, 'variant' => $record],
                         ),
                     ),
-                Tables\Actions\DeleteAction::make()
-                    ->icon('untitledui-trash-03')
+                DeleteAction::make()
+                    ->icon(Untitledui::Trash03)
                     ->iconButton()
-                    ->modalIcon('untitledui-trash-03')
+                    ->modalIcon(Untitledui::Trash03)
                     ->successNotificationTitle(__('shopper::pages/products.notifications.variation_delete')),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make()
+                DeleteBulkAction::make()
                     ->label(__('shopper::forms.actions.delete'))
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {

@@ -4,21 +4,30 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Attribute;
 
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Components\Tables\IconColumn;
 use Shopper\Core\Models\Attribute;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
-class Browse extends AbstractPageComponent implements HasForms, HasTable
+class Browse extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -34,10 +43,10 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
             ->columns([
                 IconColumn::make('icon')
                     ->label(__('shopper::forms.label.icon')),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->label(__('shopper::forms.label.type'))
                     ->formatStateUsing(fn (Attribute $record) => $record->type_formatted)
                     ->searchable(),
@@ -50,16 +59,16 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\IconColumn::make('is_filterable')
                     ->label(__('shopper::forms.label.is_filterable'))
                     ->boolean(),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
                     ->date()
                     ->sortable(),
             ])
-            ->actions([
-                Tables\Actions\Action::make('values')
+            ->recordActions([
+                Action::make('values')
                     ->label(__('shopper::pages/attributes.values.slug'))
                     ->color('gray')
-                    ->icon('untitledui-dotpoints')
+                    ->icon(Untitledui::Dotpoints)
                     ->action(
                         fn (Attribute $record) => $this->dispatch(
                             'openPanel',
@@ -68,9 +77,9 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                         )
                     )
                     ->visible(fn (Attribute $record): bool => in_array($record->type, Attribute::fieldsWithValues())),
-                Tables\Actions\Action::make('edit')
+                Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->icon('untitledui-edit-03')
+                    ->icon(Untitledui::Edit03)
                     ->iconButton()
                     ->action(
                         fn (Attribute $record) => $this->dispatch(
@@ -80,18 +89,18 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                         )
                     )
                     ->visible(shopper()->auth()->user()->can('edit_attributes')),
-                Tables\Actions\Action::make('delete')
+                Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
-                    ->icon('untitledui-trash-03')
+                    ->icon(Untitledui::Trash03)
                     ->iconButton()
-                    ->modalIcon('untitledui-trash-03')
+                    ->modalIcon(Untitledui::Trash03)
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Attribute $record) => $record->delete())
                     ->visible(shopper()->auth()->user()->can('delete_attributes')),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make()
+                DeleteBulkAction::make()
                     ->label(__('shopper::forms.actions.delete'))
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
@@ -107,7 +116,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                             ->send();
                     })
                     ->deselectRecordsAfterCompletion(),
-                Tables\Actions\BulkAction::make('enabled')
+                BulkAction::make('enabled')
                     ->label(__('shopper::forms.actions.enable'))
                     ->icon('untitledui-check-verified')
                     ->action(function (Collection $records): void {
@@ -123,7 +132,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                             ->send();
                     })
                     ->deselectRecordsAfterCompletion(),
-                Tables\Actions\BulkAction::make('disabled')
+                BulkAction::make('disabled')
                     ->label(__('shopper::forms.actions.disable'))
                     ->icon('untitledui-slash-circle-01')
                     ->action(function (Collection $records): void {
@@ -142,11 +151,11 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([
-                Tables\Filters\TernaryFilter::make('is_enabled')
+                TernaryFilter::make('is_enabled')
                     ->label(__('shopper::forms.actions.enable')),
-                Tables\Filters\TernaryFilter::make('is_searchable')
+                TernaryFilter::make('is_searchable')
                     ->label(__('shopper::forms.label.is_searchable')),
-                Tables\Filters\TernaryFilter::make('is_filterable')
+                TernaryFilter::make('is_filterable')
                     ->label(__('shopper::forms.label.is_filterable')),
             ]);
     }

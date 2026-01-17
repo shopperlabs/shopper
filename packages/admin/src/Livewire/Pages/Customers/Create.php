@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Customers;
 
-use Filament\Forms\Components;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -28,10 +33,11 @@ use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Notifications\CustomerSendCredentials;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class Create extends AbstractPageComponent implements HasForms
+class Create extends AbstractPageComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     /** @var array<string, mixed>|null */
@@ -44,30 +50,30 @@ class Create extends AbstractPageComponent implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make(__('shopper::pages/customers.overview'))
                     ->description(__('shopper::pages/customers.overview_description'))
                     ->compact()
                     ->aside()
                     ->columns()
                     ->schema([
-                        Components\TextInput::make('first_name')
+                        TextInput::make('first_name')
                             ->label(__('shopper::forms.label.first_name'))
                             ->required(),
-                        Components\TextInput::make('last_name')
+                        TextInput::make('last_name')
                             ->label(__('shopper::forms.label.last_name'))
                             ->required(),
-                        Components\TextInput::make('email')
+                        TextInput::make('email')
                             ->label(__('shopper::forms.label.email'))
                             ->prefixIcon('untitledui-mail')
                             ->autocomplete('email-address')
                             ->email()
                             ->unique()
                             ->required(),
-                        Components\TextInput::make('phone_number')
+                        TextInput::make('phone_number')
                             ->label(__('shopper::forms.label.phone_number'))
                             ->hint(__('shopper::forms.label.optional'))
                             ->tel(),
@@ -79,13 +85,13 @@ class Create extends AbstractPageComponent implements HasForms
                     ->compact()
                     ->aside()
                     ->schema([
-                        Components\TextInput::make('password')
+                        TextInput::make('password')
                             ->label(__('shopper::forms.label.password'))
                             ->password()
                             ->revealable()
                             ->required()
                             ->hintAction(
-                                Components\Actions\Action::make(__('shopper::words.generate'))
+                                Action::make(__('shopper::words.generate'))
                                     ->color('info')
                                     ->action(function (Set $set): void {
                                         $set('password', Str::password(12));
@@ -93,12 +99,12 @@ class Create extends AbstractPageComponent implements HasForms
                             )
                             ->confirmed()
                             ->dehydrateStateUsing(fn (string $state): string => Hash::make($state)),
-                        Components\TextInput::make('password_confirmation')
+                        TextInput::make('password_confirmation')
                             ->label(__('shopper::forms.label.confirm_password'))
                             ->password()
                             ->revealable()
                             ->required(),
-                        Components\Hidden::make('_password'),
+                        Hidden::make('_password'),
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/customers.address_title'))
@@ -113,10 +119,10 @@ class Create extends AbstractPageComponent implements HasForms
                     ->compact()
                     ->aside()
                     ->schema([
-                        Components\Checkbox::make('opt_in')
+                        Checkbox::make('opt_in')
                             ->label(__('shopper::pages/customers.marketing_email'))
                             ->helperText(__('shopper::pages/customers.marketing_description')),
-                        Components\Checkbox::make('send_mail')
+                        Checkbox::make('send_mail')
                             ->label(__('shopper::pages/customers.send_credentials'))
                             ->helperText(__('shopper::pages/customers.credential_description')),
                     ]),

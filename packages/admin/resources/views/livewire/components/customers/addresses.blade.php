@@ -24,7 +24,10 @@
                             <div
                                 class="mt-1 flex flex-col space-y-0.5 truncate text-sm text-gray-500 dark:text-gray-400"
                             >
-                                <span>{{ $address->postal_code }}, {{ $address->city }}</span>
+                                <span>
+                                    {{ $address->postal_code }},
+                                    {{ $address->city }}
+                                </span>
 
                                 @if ($address->country)
                                     <span class="inline-flex shrink-0 items-center gap-2">

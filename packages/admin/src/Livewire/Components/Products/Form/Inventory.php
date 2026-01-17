@@ -4,29 +4,39 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Form;
 
-use Filament\Forms;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
-use Filament\Support\Enums\MaxWidth;
-use Filament\Tables;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
+use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Shopper\Components;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Components\Section;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\InventoryHistory;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class Inventory extends Component implements HasForms, HasTable
+class Inventory extends Component implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -41,26 +51,27 @@ class Inventory extends Component implements HasForms, HasTable
         $this->form->fill($this->product->toArray());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Components\Section::make(__('shopper::pages/products.inventory.title'))
-                    ->description(__('shopper::pages/products.inventory.description'))
+        return $schema
+            ->components([
+                Section::make(__('shopper::pages/products.inventory.title'))
                     ->aside()
                     ->compact()
+                    ->description(__('shopper::pages/products.inventory.description'))
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
-                        Forms\Components\Grid::make()
+                        Grid::make()
                             ->schema([
-                                Forms\Components\TextInput::make('sku')
+                                TextInput::make('sku')
                                     ->label(__('shopper::forms.label.sku'))
                                     ->unique(config('shopper.models.product'), 'sku', ignoreRecord: true)
                                     ->maxLength(255),
-                                Forms\Components\TextInput::make('barcode')
+                                TextInput::make('barcode')
                                     ->label(__('shopper::forms.label.barcode'))
                                     ->unique(config('shopper.models.product'), 'barcode', ignoreRecord: true)
                                     ->maxLength(255),
-                                Forms\Components\TextInput::make('security_stock')
+                                TextInput::make('security_stock')
                                     ->label(__('shopper::forms.label.safety_stock'))
                                     ->helperText(__('shopper::pages/products.safety_security_help_text'))
                                     ->numeric()
@@ -83,15 +94,15 @@ class Inventory extends Component implements HasForms, HasTable
                     ->latest()
             )
             ->columns([
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label(__('shopper::words.date'))
                     ->since()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('event')
+                TextColumn::make('event')
                     ->label(__('shopper::words.event')),
-                Tables\Columns\TextColumn::make('inventory.name')
+                TextColumn::make('inventory.name')
                     ->label(__('shopper::pages/settings/menu.location')),
-                Tables\Columns\TextColumn::make('adjustment')
+                TextColumn::make('adjustment')
                     ->label(__('shopper::words.adjustment'))
                     ->color(function (InventoryHistory $record): string {
                         if ($record->old_quantity <= 0) {
@@ -101,12 +112,12 @@ class Inventory extends Component implements HasForms, HasTable
                         return 'success';
                     })
                     ->alignRight(),
-                Tables\Columns\TextColumn::make('quantity')
+                TextColumn::make('quantity')
                     ->label(__('shopper::pages/products.inventory.movement'))
                     ->color(fn (InventoryHistory $record): string => $record->quantity <= 0 ? 'danger' : 'gray')
                     ->alignRight()
                     ->summarize([
-                        Tables\Columns\Summarizers\Sum::make()
+                        Sum::make()
                             ->label(__('shopper::words.total'))
                             ->numeric(),
                     ]),
@@ -114,18 +125,18 @@ class Inventory extends Component implements HasForms, HasTable
             ->emptyStateIcon('untitledui-file-05')
             ->emptyStateDescription(__('shopper::pages/products.inventory.empty'))
             ->headerActions([
-                Tables\Actions\Action::make('stock')
-                    ->label('Add stock')
-                    ->icon('untitledui-package')
+                Action::make('stock')
+                    ->label(__('shopper::forms.label.add_stock'))
+                    ->icon(Untitledui::Package)
                     ->color('gray')
-                    ->modalWidth(MaxWidth::ExtraLarge)
-                    ->form([
-                        Forms\Components\Select::make('inventory')
+                    ->modalWidth(Width::ExtraLarge)
+                    ->schema([
+                        Select::make('inventory')
                             ->label(__('shopper::pages/products.inventory_name'))
                             ->relationship('inventory', 'name')
                             ->native(false)
                             ->required(),
-                        Forms\Components\TextInput::make('quantity')
+                        TextInput::make('quantity')
                             ->label(__('shopper::forms.label.quantity'))
                             ->placeholder('-10 or -5 or 50, etc')
                             ->numeric()
@@ -172,12 +183,12 @@ class Inventory extends Component implements HasForms, HasTable
                     }),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('inventory')
+                SelectFilter::make('inventory')
                     ->relationship('inventory', 'name')
                     ->searchable(),
             ])
             ->groups([
-                Tables\Grouping\Group::make('inventory.name')
+                Group::make('inventory.name')
                     ->label(__('shopper::pages/settings/menu.location'))
                     ->collapsible(),
             ]);

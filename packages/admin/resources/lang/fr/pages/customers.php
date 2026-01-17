@@ -61,4 +61,14 @@ return [
         'estimated' => 'Date de livraison',
     ],
 
+    'anonymize' => [
+        'action' => 'Anonymiser le client',
+        'title' => 'Anonymiser ce client',
+        'description' => 'Cette action anonymisera définitivement toutes les données personnelles de ce client (nom, email, téléphone, adresses). L\'historique des commandes sera conservé à des fins comptables. Cette action est irréversible.',
+        'confirm' => 'Oui, anonymiser',
+        'success' => 'Le client a été anonymisé avec succès.',
+        'first_name' => 'Client',
+        'last_name' => 'Supprimé',
+    ],
+
 ];

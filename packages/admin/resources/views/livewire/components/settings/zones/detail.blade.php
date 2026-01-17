@@ -8,7 +8,7 @@
             <div class="flex items-center justify-between p-4 lg:p-5">
                 <div class="flex items-center space-x-3">
                     <x-untitledui-globe-05 class="size-6 text-gray-400 dark:text-gray-500" aria-hidden="true" />
-                    <x-filament::section.heading>
+                    <x-filament::section.heading class="font-semibold font-heading text-gray-950 dark:text-white">
                         {{ $zone->name }}
                         @if ($zone->code)
                             <span>({{ $zone->code }})</span>
@@ -43,7 +43,7 @@
                         :content="$zone->carriers_name"
                     />
                     <div class="lg:col-span-2" wire:ignore>
-                        <x-shopper::description-list.item icon="untitledui-brackets" heading="Metadata">
+                        <x-shopper::description-list.item icon="untitledui-brackets" :heading="__('Metadata')">
                             <x-shopper::code-preview
                                 :code="$zone->metadata"
                                 lang="json"
@@ -67,9 +67,5 @@
         </x-shopper::card>
     @endif
 
-    <div x-data>
-        <template x-teleport="body">
-            <x-filament-actions::modals />
-        </template>
-    </div>
+    <x-filament-actions::modals />
 </div>

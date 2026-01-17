@@ -3,7 +3,7 @@
     x-on:close.stop="setShowPropertyTo(false)"
     x-on:keydown.escape.window="closePanelOnEscape()"
     x-show="open"
-    class="relative z-50"
+    class="sh-slideover relative z-50"
     x-ref="dialog"
     aria-modal="true"
     x-cloak
@@ -18,11 +18,11 @@
         x-transition:leave="duration-500 ease-in-out"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        class="fixed inset-0 bg-gray-950/50 backdrop-blur-sm transition-opacity dark:bg-gray-950/75"
+        class="sh-slideover-backdrop fixed inset-0 bg-gray-950/50 dark:bg-gray-950/75"
     ></div>
 
     <div class="fixed inset-0">
-        <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full py-2 pl-10 pr-2">
+        <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full py-2 pr-2 pl-10">
             <div
                 x-cloak
                 x-show="open && showActiveComponent"
@@ -39,7 +39,7 @@
                 aria-modal="true"
             >
                 <div
-                    class="h-full overflow-hidden rounded-xl bg-white shadow-xl ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10"
+                    class="si-slideover-content h-full overflow-hidden rounded-xl bg-white shadow-xl ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10"
                 >
                     @forelse ($components as $id => $component)
                         <div
@@ -51,7 +51,7 @@
                             @livewire($component['name'], $component['arguments'], key($id))
                         </div>
                     @empty
-                        
+
                     @endforelse
                 </div>
             </div>

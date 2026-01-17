@@ -22,7 +22,7 @@
                 <div class="space-y-3 lg:flex lg:items-center lg:justify-between lg:space-y-0">
                     <div class="flex min-w-0 flex-1 items-center space-x-4">
                         <h3
-                            class="font-heading text-2xl font-bold uppercase leading-6 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:leading-9"
+                            class="font-heading text-2xl leading-6 font-bold text-gray-900 uppercase sm:truncate sm:text-3xl sm:leading-9 dark:text-white"
                         >
                             {{ $order->number }}
                         </h3>
@@ -42,7 +42,7 @@
                                     stroke-width="1.5"
                                     aria-hidden="true"
                                 />
-                                <span class="text-sm font-medium leading-6 text-gray-500 dark:text-gray-400">
+                                <span class="text-sm leading-6 font-medium text-gray-500 dark:text-gray-400">
                                     <time class="capitalize" datetime="{{ $order->created_at->format('F j, Y h:m') }}">
                                         {{ $order->created_at->translatedFormat('j F Y H:i') }}
                                     </time>
@@ -52,21 +52,9 @@
                     </div>
                     <div class="flex space-x-3">
                         @if (! $order->isCompleted())
-                            @if (! $order->isPaid())
-                                <div class="hidden sm:block">
-                                    <x-shopper::buttons.danger
-                                        wire:click="$dispatch('openModal', { component: 'shopper-modals.archived-order', arguments: { order: {{ $order->id }} }})"
-                                        type="button"
-                                    >
-                                        <x-untitledui-trash-03
-                                            class="mr-2 size-5"
-                                            stroke-width="1.5"
-                                            aria-hidden="true"
-                                        />
-                                        {{ __('shopper::forms.actions.archive') }}
-                                    </x-shopper::buttons.danger>
-                                </div>
-                            @endif
+                            <div class="hidden sm:block">
+                                {{ $this->archiveAction }}
+                            </div>
 
                             <x-filament-actions::group
                                 :actions="[
@@ -89,7 +77,7 @@
                                 @if($prevOrder) wire:click="goToOrder({{ $prevOrder->id }})" @endif
                                 type="button"
                                 @class([
-                                    'focus:shadow-outline-primary relative inline-flex items-center rounded-l-lg border border-gray-300 px-2 py-2 text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:border-primary-300 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
+                                    'focus:shadow-outline-primary focus:border-primary-300 relative inline-flex items-center rounded-l-lg border border-gray-300 px-2 py-2 text-sm leading-5 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
                                     'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $prevOrder,
                                     'bg-white' => $prevOrder,
                                 ])
@@ -102,7 +90,7 @@
                                 @if($nextOrder) wire:click="goToOrder({{ $nextOrder->id }})" @endif
                                 type="button"
                                 @class([
-                                    'focus:shadow-outline-primary relative -ml-px inline-flex items-center rounded-r-lg border border-gray-300 px-2 py-2 text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:border-primary-300 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
+                                    'focus:shadow-outline-primary focus:border-primary-300 relative -ml-px inline-flex items-center rounded-r-lg border border-gray-300 px-2 py-2 text-sm leading-5 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
                                     'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $nextOrder,
                                     'bg-white' => $nextOrder,
                                 ])
@@ -118,14 +106,14 @@
         </div>
 
         <div class="grid sm:grid-cols-6">
-            <div class="divide-y divide-gray-200 py-2 dark:divide-white/10 sm:col-span-4">
+            <div class="divide-y divide-gray-200 py-2 sm:col-span-4 dark:divide-white/10">
                 <div class="py-4 sm:pr-8">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                             {{ __('shopper::pages/products.menu') }}
                         </h3>
                         <div class="flex items-center space-x-3">
-                            <span class="whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400">
+                            <span class="text-sm font-medium whitespace-nowrap text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::words.per_page') }}
                             </span>
                             <x-shopper::forms.select
@@ -157,14 +145,16 @@
                                             <div class="min-w-0 flex-1 px-4 lg:grid lg:grid-cols-4 lg:gap-4">
                                                 <div class="lg:col-span-2">
                                                     <div
-                                                        class="truncate text-sm font-medium leading-5 text-gray-900 dark:text-white"
+                                                        class="truncate text-sm leading-5 font-medium text-gray-900 dark:text-white"
                                                     >
                                                         {{ $item->name }}
                                                     </div>
                                                     <div
                                                         class="mt-1 flex items-center text-xs leading-4 text-gray-500 dark:text-gray-400"
                                                     >
-                                                        <span class="truncate">{{ $item->product->sku ?? '' }}</span>
+                                                        <span class="truncate">
+                                                            {{ $item->product->sku ?? '' }}
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div class="hidden lg:block">
@@ -176,7 +166,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">
+                                        <p class="text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">
                                             {{ shopper_money_format($item->total, $order->currency_code) }}
                                         </p>
                                     </div>
@@ -206,7 +196,7 @@
                     </div>
                 </div>
                 <div class="py-4 sm:pr-8">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::words.payment_method') }}
                     </h3>
                     @if ($order->paymentMethod)
@@ -229,7 +219,7 @@
                                     {{ $order->paymentMethod->title }}
                                 </p>
                                 <x-shopper::link
-                                    href="{{ route('shopper.settings.payments') }}"
+                                    :href="route('shopper.settings.payment-methods')"
                                     class="text-sm text-gray-500 underline hover:text-gray-400 dark:text-gray-400"
                                 >
                                     {{ __('shopper::words.available_methods') }}
@@ -254,7 +244,7 @@
                                         <a
                                             href="https://laravelshopper.dev/docs/2.x/payment-methods"
                                             target="_blank"
-                                            class="mt-1.5 inline-flex text-sm font-medium leading-5 text-yellow-700 underline hover:text-yellow-600"
+                                            class="mt-1.5 inline-flex text-sm leading-5 font-medium text-yellow-700 underline hover:text-yellow-600"
                                         >
                                             {{ __('shopper::pages/orders.read_about_payment') }}
                                         </a>
@@ -265,7 +255,7 @@
                     @endif
                 </div>
                 <div class="py-4 sm:pr-8">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::words.shipping') }}
                     </h3>
                     <div class="mt-4">
@@ -278,10 +268,10 @@
                                         {{ __('shopper::words.provider') }}
                                     </dt>
                                     <dd
-                                        class="mt-1 text-sm font-medium text-gray-900 dark:text-white sm:col-span-2 sm:mt-0"
+                                        class="mt-1 text-sm font-medium text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white"
                                     >
                                         {{ $order->shippingOption->name }}
-                                        <span class="italic text-gray-500 dark:text-gray-400">
+                                        <span class="text-gray-500 italic dark:text-gray-400">
                                             ({{ $order->shippingOption->carrier->name }})
                                         </span>
                                     </dd>
@@ -291,7 +281,7 @@
                                         {{ __('shopper::forms.label.price') }}
                                     </dt>
                                     <dd
-                                        class="mt-1 text-sm font-medium text-gray-900 dark:text-white sm:col-span-2 sm:mt-0"
+                                        class="mt-1 text-sm font-medium text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white"
                                     >
                                         {{ shopper_money_format($order->shippingOption->price, $order->currency_code) }}
                                     </dd>
@@ -301,7 +291,7 @@
                                         {{ __('shopper::forms.label.tax') }}
                                     </dt>
                                     <dd
-                                        class="mt-1 text-sm font-medium text-gray-900 dark:text-white sm:col-span-2 sm:mt-0"
+                                        class="mt-1 text-sm font-medium text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white"
                                     >
                                         {{ __('shopper::words.not_available') }}
                                     </dd>
@@ -336,7 +326,7 @@
                 </div>
                 <div class="py-4 sm:pr-8">
                     <div class="flex justify-end">
-                        <div class="w-full space-y-1 text-right text-gray-700 dark:text-gray-300 sm:max-w-xs">
+                        <div class="w-full space-y-1 text-right text-gray-700 sm:max-w-xs dark:text-gray-300">
                             <div
                                 class="inline-flex items-center justify-end gap-4 rounded-lg bg-gray-50 px-4 py-3 dark:bg-gray-800"
                             >
@@ -351,7 +341,7 @@
                     </div>
                 </div>
                 <div class="py-4 sm:pr-8">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::pages/orders.private_notes') }}
                     </h3>
                     <div class="mt-5 flex space-x-3">
@@ -379,7 +369,9 @@
                                         :value="$order->notes"
                                     />
                                     @error('notes')
-                                        <p class="mt-1 text-sm text-danger-500">{{ $message }}</p>
+                                        <p class="text-danger-500 mt-1 text-sm">
+                                            {{ $message }}
+                                        </p>
                                     @enderror
                                 </div>
                                 <div class="mt-6 flex items-center justify-end space-x-4">
@@ -398,10 +390,10 @@
                 </div>
             </div>
             <div
-                class="divide-y divide-gray-200 border-t border-gray-200 py-2 dark:divide-white/10 dark:border-white/10 sm:col-span-2 sm:border-l sm:border-t-0 sm:pl-8"
+                class="divide-y divide-gray-200 border-t border-gray-200 py-2 sm:col-span-2 sm:border-t-0 sm:border-l sm:pl-8 dark:divide-white/10 dark:border-white/10"
             >
                 <div class="py-4">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::words.customer') }}
                     </h3>
                     <div class="mt-4 space-y-4">
@@ -422,7 +414,7 @@
                                 <div>
                                     <x-shopper::link
                                         href="{{ route('shopper.customers.show', $customer) }}"
-                                        class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 dark:border-white/10 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                                        class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm leading-5 font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-white/10 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                                     >
                                         {{ __('shopper::words.view') }}
                                     </x-shopper::link>
@@ -449,7 +441,7 @@
                     </div>
                 </div>
                 <div class="space-y-3 py-4">
-                    <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
+                    <h3 class="text-xs leading-4 font-medium tracking-wider text-gray-900 uppercase dark:text-white">
                         {{ __('shopper::pages/orders.customer_infos') }}
                     </h3>
 
@@ -458,7 +450,7 @@
                             <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                                 <a
                                     href="mailto:{{ $customer->email }}"
-                                    class="text-primary-600 underline hover:text-primary-500"
+                                    class="text-primary-600 hover:text-primary-500 underline"
                                 >
                                     {{ $customer->email }}
                                 </a>
@@ -477,7 +469,7 @@
                 @if ($shippingAddress)
                     <div class="py-4">
                         <h3
-                            class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white"
+                            class="text-xs leading-4 font-medium tracking-wider text-gray-900 uppercase dark:text-white"
                         >
                             {{ __('shopper::pages/customers.addresses.shipping') }}
                         </h3>
@@ -491,12 +483,15 @@
 
                             {{ $order->shippingAddress->street_address }}
                             <br />
-                            {{ $order->shippingAddress->postal_code }}, {{ $order->shippingAddress->city }}
+                            {{ $order->shippingAddress->postal_code }},
+                            {{ $order->shippingAddress->city }}
                             <br />
                             {{ $order->shippingAddress->country_name }}
                             <br />
                             @if ($order->shippingAddress->phone)
-                                <span>{{ $order->shippingAddress->phone }}</span>
+                                <span>
+                                    {{ $order->shippingAddress->phone }}
+                                </span>
                             @endif
                         </p>
                     </div>
@@ -504,7 +499,7 @@
                     @if ($billingAddress)
                         <div class="space-y-3 py-4">
                             <h3
-                                class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white"
+                                class="text-xs leading-4 font-medium tracking-wider text-gray-900 uppercase dark:text-white"
                             >
                                 {{ __('shopper::pages/customers.addresses.billing') }}
                             </h3>
@@ -524,12 +519,15 @@
 
                                     {{ $billingAddress->street_address }}
                                     <br />
-                                    {{ $billingAddress->postal_code }}, {{ $billingAddress->city }}
+                                    {{ $billingAddress->postal_code }},
+                                    {{ $billingAddress->city }}
                                     <br />
                                     {{ $billingAddress->country_name }}
                                     <br />
                                     @if ($billingAddress->phone)
-                                        <span>{{ $billingAddress->phone }}</span>
+                                        <span>
+                                            {{ $billingAddress->phone }}
+                                        </span>
                                     @endif
                                 </p>
                             @endif
@@ -540,9 +538,5 @@
         </div>
     </x-shopper::container>
 
-    <div x-data>
-        <template x-teleport="body">
-            <x-filament-actions::modals />
-        </template>
-    </div>
+    <x-filament-actions::modals />
 </div>

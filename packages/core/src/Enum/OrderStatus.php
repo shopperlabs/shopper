@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
+use BackedEnum;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Traits\ArrayableEnum;
 use Shopper\Core\Traits\HasEnumStaticMethods;
 
@@ -24,6 +26,8 @@ enum OrderStatus: string implements HasColor, HasIcon, HasLabel
 {
     use ArrayableEnum;
     use HasEnumStaticMethods;
+
+    case Archived = 'archived';
 
     case New = 'new';
 
@@ -44,6 +48,7 @@ enum OrderStatus: string implements HasColor, HasIcon, HasLabel
     public function getColor(): string
     {
         return match ($this) {
+            self::Archived => 'gray',
             self::New => 'info',
             self::Cancelled => 'danger',
             self::Completed => 'teal',
@@ -55,15 +60,16 @@ enum OrderStatus: string implements HasColor, HasIcon, HasLabel
         };
     }
 
-    public function getIcon(): string
+    public function getIcon(): string|BackedEnum
     {
         return match ($this) {
-            self::New => 'untitledui-stars-02',
+            self::Archived => Untitledui::Archive,
+            self::New => Untitledui::Star,
             self::Shipped => 'heroicon-o-truck',
-            self::Delivered => 'untitledui-package-check',
-            self::Pending => 'untitledui-hourglass-03',
+            self::Delivered => Untitledui::PackageCheck,
+            self::Pending => Untitledui::Hourglass03,
             self::Paid => 'heroicon-o-banknotes',
-            self::Register => 'untitledui-file-check-02',
+            self::Register => Untitledui::FileCheck02,
             self::Completed => 'heroicon-o-check-badge',
             self::Cancelled => 'heroicon-o-minus-circle',
         };
@@ -72,6 +78,7 @@ enum OrderStatus: string implements HasColor, HasIcon, HasLabel
     public function getLabel(): string
     {
         return match ($this) {
+            self::Archived => __('shopper-core::status.archived'),
             self::New => __('shopper-core::status.new'),
             self::Completed => __('shopper-core::status.completed'),
             self::Cancelled => __('shopper-core::status.cancelled'),

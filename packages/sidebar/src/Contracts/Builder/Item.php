@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Sidebar\Contracts\Builder;
 
+use BackedEnum;
 use Illuminate\Support\Collection;
 use Shopper\Sidebar\Contracts\Routeable;
 
@@ -23,7 +24,7 @@ interface Item extends Authorizable, Itemable, Routeable
 
     public function useSpa(): self;
 
-    public function setIcon(string $icon, string $type = 'blade', string $iconClass = '', array $attributes = []): self;
+    public function setIcon(string|BackedEnum $icon, string $type = 'blade', string $iconClass = '', array $attributes = []): self;
 
     public function getIconClass(): string;
 

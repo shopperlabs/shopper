@@ -19,7 +19,7 @@ describe(AttachedDiscountToCustomers::class, function (): void {
         $customers = User::factory()->count(3)->create();
 
         AttachedDiscountToCustomers::dispatch(
-            DiscountEligibility::Customers(),
+            DiscountEligibility::Customers,
             $customers->pluck('id')->toArray(),
             $discount
         );
@@ -32,7 +32,7 @@ describe(AttachedDiscountToCustomers::class, function (): void {
         $customers = User::factory()->count(3)->create();
 
         $job = new AttachedDiscountToCustomers(
-            eligibility: DiscountEligibility::Customers(),
+            eligibility: DiscountEligibility::Customers,
             customersIds: $customers->pluck('id')->toArray(),
             discount: $discount
         );
@@ -69,7 +69,7 @@ describe(AttachedDiscountToCustomers::class, function (): void {
         $newCustomers = User::factory()->count(2)->create();
 
         $job = new AttachedDiscountToCustomers(
-            eligibility: DiscountEligibility::Customers(),
+            eligibility: DiscountEligibility::Customers,
             customersIds: $newCustomers->pluck('id')->toArray(),
             discount: $discount
         );
@@ -106,7 +106,7 @@ describe(AttachedDiscountToCustomers::class, function (): void {
         ]);
 
         $job = new AttachedDiscountToCustomers(
-            eligibility: DiscountEligibility::Everyone(),
+            eligibility: DiscountEligibility::Everyone,
             customersIds: [],
             discount: $discount
         );
@@ -133,7 +133,7 @@ describe(AttachedDiscountToCustomers::class, function (): void {
             ->count();
 
         $job = new AttachedDiscountToCustomers(
-            eligibility: DiscountEligibility::Customers(),
+            eligibility: DiscountEligibility::Customers,
             customersIds: [$customer->id],
             discount: $discount
         );

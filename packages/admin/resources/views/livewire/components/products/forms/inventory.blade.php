@@ -17,14 +17,11 @@
     <section
         class="fi-section fi-aside grid grid-cols-1 items-start gap-x-6 gap-y-4 lg:grid-cols-3 lg:gap-x-12 lg:gap-y-6"
     >
-        <div class="grid flex-1 gap-y-1">
-            <x-filament::section.heading>
-                {{ __('shopper::pages/products.inventory.stock_title') }}
-            </x-filament::section.heading>
-            <x-filament::section.description class="max-w-2xl">
-                {{ __('shopper::pages/products.inventory.stock_description') }}
-            </x-filament::section.description>
-        </div>
+        <x-shopper::section-heading
+            class="grid flex-1 gap-y-1"
+            :title="__('shopper::pages/products.inventory.stock_title')"
+            :description="__('shopper::pages/products.inventory.stock_description')"
+        />
         <div class="lg:col-span-2 lg:max-w-3xl">
             {{ $this->table }}
         </div>

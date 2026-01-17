@@ -10,7 +10,7 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Support\Enums\ActionSize;
+use Filament\Support\Enums\Size;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\Review;
 use Shopper\Livewire\Components\SlideOverComponent;
@@ -31,7 +31,7 @@ class ReviewDetail extends SlideOverComponent implements HasActions, HasForms
     {
         return Action::make('approved')
             ->label(__('shopper::forms.actions.update'))
-            ->size(ActionSize::Small)
+            ->size(Size::Small)
             ->action(function (): void {
                 $this->review->updatedApproved(! $this->review->approved);
 

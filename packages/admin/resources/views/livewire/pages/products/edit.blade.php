@@ -1,5 +1,5 @@
-<div>
-    <x-shopper::container class="bg-white/75 py-5 dark:bg-gray-900/80">
+<div class="bg-white dark:bg-gray-900">
+    <x-shopper::container class="pt-5">
         <x-shopper::breadcrumb :back="route('shopper.products.index')" :current="$product->name">
             <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
             <x-shopper::breadcrumb.link
@@ -10,7 +10,6 @@
     </x-shopper::container>
 
     <div
-        class="pb-10"
         x-data="{
             options: [
                 'detail',
@@ -27,13 +26,7 @@
             activeTab: @entangle('activeTab'),
         }"
     >
-        <div
-            @class([
-                'sticky z-30 bg-white/75 backdrop-blur-sm dark:bg-gray-900/80',
-                '-top-2' => $product->type,
-                'top-6' => ! $product->type,
-            ])
-        >
+        <div class="sticky z-10 bg-white pt-8 backdrop-blur-lg top-14 dark:bg-gray-900">
             <div class="space-y-4">
                 <x-shopper::container>
                     <x-shopper::heading>
@@ -50,7 +43,7 @@
                                 @endif
 
                                 <h2
-                                    class="font-heading text-2xl font-bold leading-6 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:leading-9"
+                                    class="font-heading text-2xl font-bold text-gray-950 sm:truncate sm:text-3xl sm:leading-9 dark:text-white"
                                 >
                                     {{ $product->name }}
                                 </h2>
@@ -156,7 +149,7 @@
             </div>
         </div>
 
-        <div class="mt-8">
+        <div class="z-0 py-8 bg-gray-50 dark:bg-gray-950">
             <div x-show="activeTab === 'detail'">
                 <livewire:shopper-products.form.edit :$product />
             </div>
@@ -167,14 +160,10 @@
             @if (! $product->isVariant())
                 <div x-cloak x-show="activeTab === 'price'">
                     <x-shopper::container class="space-y-8">
-                        <div>
-                            <x-filament::section.heading>
-                                {{ __('shopper::pages/products.pricing.title') }}
-                            </x-filament::section.heading>
-                            <x-filament::section.description class="mt-1 max-w-2xl">
-                                {{ __('shopper::pages/products.pricing.description') }}
-                            </x-filament::section.description>
-                        </div>
+                        <x-shopper::section-heading
+                            :title="__('shopper::pages/products.pricing.title')"
+                            :description="__('shopper::pages/products.pricing.description')"
+                        />
 
                         <livewire:shopper-products.pricing :model="$product" />
                     </x-shopper::container>
@@ -218,9 +207,5 @@
         </div>
     </div>
 
-    <div x-data>
-        <template x-teleport="body">
-            <x-filament-actions::modals />
-        </template>
-    </div>
+    <x-filament-actions::modals />
 </div>

@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace Shopper;
 
 use Closure;
+use Filament\Forms\Components\Field;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
 use Filament\Tables\Columns\Column;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
@@ -76,15 +81,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         $this->bootLivewireComponents();
-
-        FilamentColor::register([
-            'primary' => config('shopper.admin.filament_color'),
-            'teal' => Color::Teal,
-            'green' => Color::Green,
-            'sky' => Color::Sky,
-            'indigo' => Color::Indigo,
-            'info' => Color::Cyan,
-        ]);
+        $this->registerCustomFilamentItems();
 
         Shopper::serving(function (): void {
             Shopper::setServingStatus();
@@ -110,37 +107,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->app->scoped('shopper', fn (): ShopperPanel => new ShopperPanel);
 
         $this->loadViewsFrom($this->root.'/resources/views', 'shopper');
-    }
-
-    public function bootingPackage(): void
-    {
-        TextColumn::macro('currency', function (string|Closure|null $currency = null): TextColumn {
-            /*** @var TextColumn $this */
-            // @phpstan-ignore-next-line
-            $this->formatStateUsing(static function (Column $column, ?int $state) use ($currency): ?string {
-                if (blank($state)) {
-                    return null;
-                }
-
-                if (blank($currency)) {
-                    $currency = shopper_currency();
-                }
-
-                return shopper_money_format(
-                    amount: $state,
-                    currency: mb_strtoupper($column->evaluate($currency)),
-                );
-            });
-
-            return $this; // @phpstan-ignore-line
-        });
-
-        TextInput::macro('currencyMask', function ($thousandSeparator = ',', $decimalSeparator = '.', $precision = 2): TextInput {
-            $this->view = 'shopper::components.filament.forms.currency-mask'; // @phpstan-ignore-line
-            $this->viewData(compact('thousandSeparator', 'decimalSeparator', 'precision')); // @phpstan-ignore-line
-
-            return $this; // @phpstan-ignore-line
-        });
     }
 
     protected function bootLivewireComponents(): void
@@ -183,5 +149,67 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->app->singleton(TwoFactorDisabledResponseContract::class, TwoFactorDisabledResponse::class);
         $this->app->singleton(TwoFactorEnabledResponseContract::class, TwoFactorEnabledResponse::class);
         $this->app->singleton(TwoFactorLoginResponseContract::class, TwoFactorLoginResponse::class);
+    }
+
+    protected function registerCustomFilamentItems(): void
+    {
+        FilamentColor::register([
+            'primary' => config('shopper.admin.filament_color'),
+            'teal' => Color::Teal,
+            'green' => Color::Green,
+            'sky' => Color::Sky,
+            'indigo' => Color::Indigo,
+            'info' => Color::Cyan,
+        ]);
+
+        Field::configureUsing(
+            fn (Field $field): Field => $field
+                ->uniqueValidationIgnoresRecordByDefault(false)
+        );
+
+        TextColumn::macro('currency', function (string|Closure|null $currency = null): TextColumn {
+            /*** @var TextColumn $this */
+            // @phpstan-ignore-next-line
+            $this->formatStateUsing(static function (Column $column, ?int $state) use ($currency): ?string {
+                if (blank($state)) {
+                    return null;
+                }
+
+                if (blank($currency)) {
+                    $currency = shopper_currency();
+                }
+
+                return shopper_money_format(
+                    amount: $state,
+                    currency: mb_strtoupper($column->evaluate($currency)),
+                );
+            });
+
+            return $this; // @phpstan-ignore-line
+        });
+
+        TextInput::macro('currencyMask', function ($thousandSeparator = ',', $decimalSeparator = '.', $precision = 2): TextInput {
+            $this->view = 'shopper::components.filament.forms.currency-mask'; // @phpstan-ignore-line
+            $this->viewData(compact('thousandSeparator', 'decimalSeparator', 'precision')); // @phpstan-ignore-line
+
+            return $this; // @phpstan-ignore-line
+        });
+
+        SpatieMediaLibraryFileUpload::configureUsing(
+            fn (SpatieMediaLibraryFileUpload $spatieFileUpload): SpatieMediaLibraryFileUpload => $spatieFileUpload
+                ->visibility('public')
+        );
+
+        FileUpload::configureUsing(
+            fn (FileUpload $fileUpload): FileUpload => $fileUpload->visibility('public')
+        );
+
+        ImageColumn::configureUsing(
+            fn (ImageColumn $imageColumn): ImageColumn => $imageColumn->visibility('public')
+        );
+
+        ImageEntry::configureUsing(
+            fn (ImageEntry $imageEntry): ImageEntry => $imageEntry->visibility('public')
+        );
     }
 }

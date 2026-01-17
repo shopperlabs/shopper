@@ -54,7 +54,7 @@
         role="menu"
         @click="open = false"
     >
-        <div class="shadow-xs {{ $contentClasses }} rounded-md">
+        <div class="{{ $contentClasses }} rounded-md shadow-xs">
             {{ $content }}
         </div>
     </div>

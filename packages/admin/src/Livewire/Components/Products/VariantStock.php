@@ -7,21 +7,22 @@ namespace Shopper\Livewire\Components\Products;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Support\Enums\MaxWidth;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\On;
 use Livewire\Component;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\InventoryHistory;
 
-class VariantStock extends Component implements HasActions, HasForms
+class VariantStock extends Component implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     public $variant;
 
@@ -30,17 +31,16 @@ class VariantStock extends Component implements HasActions, HasForms
         return Action::make('stock')
             ->label(__('shopper::forms.actions.update'))
             ->color('gray')
-            ->icon('untitledui-package')
+            ->icon(Untitledui::Package)
             ->modalHeading(__('shopper::pages/products.modals.variants.title'))
-            ->modalWidth(MaxWidth::ExtraLarge)
-            ->form([
-                Forms\Components\Select::make('inventory')
+            ->modalWidth(Width::Large)
+            ->schema([
+                Select::make('inventory')
                     ->label(__('shopper::pages/products.inventory_name'))
                     ->options(Inventory::query()->pluck('name', 'id'))
                     ->native(false)
                     ->required(),
-
-                Forms\Components\TextInput::make('quantity')
+                TextInput::make('quantity')
                     ->label(__('shopper::forms.label.quantity'))
                     ->placeholder('-10 or -5 or 50, etc')
                     ->numeric()
@@ -53,7 +53,7 @@ class VariantStock extends Component implements HasActions, HasForms
                 $currentStock = InventoryHistory::query()
                     ->where('inventory_id', $inventoryId)
                     ->where('stockable_id', $this->variant->id)
-                    ->where('stockable_type', 'product')
+                    ->where('stockable_type', config('shopper.models.variant'))
                     ->get()
                     ->sum('quantity');
 
@@ -88,7 +88,6 @@ class VariantStock extends Component implements HasActions, HasForms
             });
     }
 
-    // #[On('updateVariantInventory')]
     public function render(): View
     {
         return view('shopper::livewire.components.products.variant-stock', [

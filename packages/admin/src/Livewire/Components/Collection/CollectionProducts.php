@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Collection;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Tables;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
@@ -16,18 +20,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Shopper\Core\Models\Contracts\Collection as CollectionContract;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Core\Models\Contracts\Collection;
+use Shopper\Core\Models\Contracts\Product;
 
 /**
  * @property-read array<int> $productsIds
  */
-class CollectionProducts extends Component implements HasForms, HasTable
+class CollectionProducts extends Component implements HasActions, HasForms, HasTable
 {
+    use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
-    public CollectionContract $collection;
+    public Collection $collection;
 
     /**
      * @return array<int>
@@ -44,22 +50,22 @@ class CollectionProducts extends Component implements HasForms, HasTable
             ->relationship(fn (): BelongsToMany => $this->collection->products())
             ->inverseRelationship('collections')
             ->columns([
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
+                SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->label(__('shopper::forms.label.thumbnail'))
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->circular()
                     ->defaultImageUrl(shopper_fallback_url()),
-                Tables\Columns\TextColumn::make('name'),
+                TextColumn::make('name'),
             ])
-            ->actions([
-                Tables\Actions\Action::make('delete')
+            ->recordActions([
+                Action::make('delete')
                     ->label(__('shopper::forms.label.delete'))
-                    ->icon('untitledui-trash-03')
+                    ->icon(Untitledui::Trash03)
                     ->iconButton()
-                    ->modalIcon('untitledui-trash-03')
+                    ->modalIcon(Untitledui::Trash03)
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->action(function (ProductContract $record): void {
+                    ->action(function (Product $record): void {
                         $this->collection->products()->detach([$record->id]);
 
                         $this->dispatch('collection.add.product');
@@ -71,9 +77,9 @@ class CollectionProducts extends Component implements HasForms, HasTable
                     }),
             ])
             ->headerActions([
-                Tables\Actions\Action::make('rules')
+                Action::make('rules')
                     ->label(__('shopper::pages/collections.conditions.title'))
-                    ->icon('untitledui-ruler')
+                    ->icon(Untitledui::Ruler)
                     ->button()
                     ->color('gray')
                     ->action(fn () => $this->dispatch(
@@ -82,9 +88,9 @@ class CollectionProducts extends Component implements HasForms, HasTable
                         arguments: ['collection' => $this->collection]
                     ))
                     ->visible($this->collection->isAutomatic()),
-                Tables\Actions\Action::make('products')
+                Action::make('products')
                     ->label(__('shopper::forms.label.browse'))
-                    ->icon('untitledui-book-open')
+                    ->icon(Untitledui::BookOpen)
                     ->button()
                     ->color('gray')
                     ->action(fn () => $this->dispatch(

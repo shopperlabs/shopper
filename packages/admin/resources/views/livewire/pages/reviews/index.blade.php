@@ -1028,7 +1028,7 @@
             </div>
             <div class="mt-5 w-full space-y-4 text-center sm:max-w-md">
                 <h3
-                    class="font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white sm:text-lg sm:leading-7 lg:text-2xl"
+                    class="font-heading text-lg leading-6 font-medium text-gray-900 sm:text-lg sm:leading-7 lg:text-2xl dark:text-white"
                 >
                     {{ __('shopper::pages/products.reviews.title') }}
                 </h3>

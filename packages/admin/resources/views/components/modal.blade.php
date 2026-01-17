@@ -12,19 +12,15 @@
 
     <div class="{{ $headerClasses }}">
         @if (isset($title))
-            <h3
-                class="flex items-center font-heading text-lg font-semibold leading-6 text-gray-900 dark:text-white lg:text-xl"
-            >
+            <h3 class="font-heading flex items-center text-lg font-semibold text-gray-900 lg:text-xl dark:text-white">
                 {{ $title }}
             </h3>
         @endif
 
         @if (isset($subtitle))
-            <div class="mt-2">
-                <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
-                    {{ $subtitle }}
-                </p>
-            </div>
+            <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                {{ $subtitle }}
+            </p>
         @endif
     </div>
 
@@ -37,6 +33,7 @@
     <div class="{{ $footerClasses }}">
         {{ $buttons ?? null }}
     </div>
+
     @if ($formAction)
         {{-- format-ignore-start --}}</form>{{-- format-ignore-end --}}
     @endif

@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
-use Filament\Forms\Components;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
@@ -19,10 +27,11 @@ use Shopper\Core\Models\Contracts\Category;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class CategoryForm extends SlideOverComponent implements HasForms
+class CategoryForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     public Category $category;
@@ -37,15 +46,15 @@ class CategoryForm extends SlideOverComponent implements HasForms
         $this->form->fill($this->category->toArray());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make(__('shopper::words.general'))
                     ->collapsible()
                     ->compact()
                     ->schema([
-                        Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->label(__('shopper::forms.label.name'))
                             ->placeholder('Women, Baby Shoes, MacBook...')
                             ->required()
@@ -55,8 +64,8 @@ class CategoryForm extends SlideOverComponent implements HasForms
                                     $set('slug', Str::slug($state));
                                 }
                             }),
-                        Components\Hidden::make('slug'),
-                        Components\Select::make('parent_id')
+                        Hidden::make('slug'),
+                        Select::make('parent_id')
                             ->label(__('shopper::forms.label.parent'))
                             ->relationship(
                                 name: 'parent',
@@ -68,26 +77,22 @@ class CategoryForm extends SlideOverComponent implements HasForms
                             ->searchable()
                             ->optionsLimit(20)
                             ->placeholder(__('shopper::pages/categories.empty_parent')),
-                        Components\Toggle::make('is_enabled')
+                        Toggle::make('is_enabled')
                             ->label(__('shopper::forms.label.visibility'))
                             ->helperText(__('shopper::words.set_visibility', ['name' => __('shopper::pages/categories.single')])),
-                        Components\RichEditor::make('description')
+                        RichEditor::make('description')
                             ->label(__('shopper::forms.label.description'))
                             ->toolbarButtons([
-                                'bold',
-                                'italic',
-                                'link',
-                                'redo',
-                                'strike',
-                                'underline',
-                                'undo',
+                                ['bold', 'italic', 'link', 'strike', 'underline'],
+                                ['bulletList', 'orderedList', 'table', 'attachFiles'],
+                                ['undo', 'redo'],
                             ]),
                     ]),
                 Section::make(__('shopper::words.media'))
                     ->collapsible()
                     ->compact()
                     ->schema([
-                        Components\SpatieMediaLibraryFileUpload::make('file')
+                        SpatieMediaLibraryFileUpload::make('file')
                             ->label(__('shopper::forms.label.image_preview'))
                             ->collection(config('shopper.media.storage.thumbnail_collection'))
                             ->image()
@@ -101,11 +106,11 @@ class CategoryForm extends SlideOverComponent implements HasForms
                     ->collapsible()
                     ->compact()
                     ->schema([
-                        Components\KeyValue::make('metadata')->reorderable(),
+                        KeyValue::make('metadata')->reorderable(),
                     ]),
             ])
             ->statePath('data')
-            ->model($this->category);
+            ->model($this->category); // @phpstan-ignore-line
     }
 
     public function save(): void

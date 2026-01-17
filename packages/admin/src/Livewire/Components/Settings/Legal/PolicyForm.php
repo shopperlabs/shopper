@@ -4,20 +4,25 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Settings\Legal;
 
-use Filament\Forms\Components;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Core\Models\Legal;
 
 /**
- * @property Form $form
+ * @property Schema $form
  */
-class PolicyForm extends Component implements HasForms
+class PolicyForm extends Component implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     public Legal $legal;
@@ -32,16 +37,16 @@ class PolicyForm extends Component implements HasForms
         $this->form->fill($this->legal->toArray());
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Components\Hidden::make('title')
+        return $schema
+            ->components([
+                Hidden::make('title')
                     ->unique(ignoreRecord: true),
-                Components\Toggle::make('is_enabled')
+                Toggle::make('is_enabled')
                     ->label(__('shopper::words.is_enabled'))
                     ->onColor('success'),
-                Components\RichEditor::make('content')
+                RichEditor::make('content')
                     ->label(__('shopper::forms.label.content'))
                     ->id($this->legal->slug)
                     ->required(),

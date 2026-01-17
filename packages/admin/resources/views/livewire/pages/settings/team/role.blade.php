@@ -16,19 +16,7 @@
                 <div class="flex space-x-3">
                     {{ $this->deleteAction }}
 
-                    <x-shopper::buttons.primary
-                        wire:click="$dispatch(
-                            'openModal',
-                            {
-                                component: 'shopper-modals.create-permission',
-                                arguments: { 'id': {{  $role->id }} }
-                             }
-                        )"
-                        type="button"
-                    >
-                        <x-untitledui-lock-04 class="mr-2 size-5" aria-hidden="true" />
-                        {{ __('shopper::pages/settings/staff.create_permission') }}
-                    </x-shopper::buttons.primary>
+                    {{ $this->createPermissionAction }}
                 </div>
             </x-slot>
         </x-shopper::heading>
@@ -53,22 +41,23 @@
             <x-shopper::container>
                 <div class="w-full space-y-6 lg:max-w-4xl">
                     @if (config('shopper.core.roles.admin') === $role->name)
-                        <div class="rounded-md bg-info-500 bg-opacity-10 p-4">
+                        <div class="bg-info-100 rounded-md ring-1 ring-info-200 p-4 dark:bg-info-800/20 dark:ring-info-400/20">
                             <div class="flex">
                                 <div class="shrink-0">
-                                    <x-untitledui-alert-circle class="size-5 text-info-400" aria-hidden="true" />
+                                    <x-untitledui-alert-circle class="text-info-400 size-5" aria-hidden="true" />
                                 </div>
                                 <div class="ml-3 flex-1 lg:flex lg:justify-between">
-                                    <p class="text-sm leading-5 text-info-700">
+                                    <p class="text-info-700 text-sm dark:text-info-400">
                                         {{ __('shopper::pages/settings/staff.role_alert_msg') }}
                                     </p>
-                                    <p class="mt-3 text-sm leading-5 lg:ml-6 lg:mt-0">
+                                    <p class="mt-3 text-sm leading-5 lg:mt-0 lg:ml-6">
                                         <a
-                                            href="https://laravelshopper.dev/roles-permissions"
+                                            href="https://docs.laravelshopper.dev/v2/acl"
                                             target="_blank"
-                                            class="whitespace-no-wrap font-medium text-info-700 transition duration-150 ease-in-out hover:text-info-600"
+                                            class="whitespace-no-wrap text-info-700 hover:text-info-600 font-medium transition duration-150 ease-in-out"
                                         >
-                                            {{ __('shopper::words.learn_more') }} &rarr;
+                                            {{ __('shopper::words.learn_more') }}
+                                            &rarr;
                                         </a>
                                     </p>
                                 </div>
@@ -97,9 +86,5 @@
         </div>
     </div>
 
-    <div x-data>
-        <template x-teleport="body">
-            <x-filament-actions::modals />
-        </template>
-    </div>
+    <x-filament-actions::modals />
 </div>

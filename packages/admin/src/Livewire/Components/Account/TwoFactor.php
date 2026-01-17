@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Account;
 
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
@@ -18,9 +22,11 @@ use Shopper\Traits\ConfirmsPasswords;
 /**
  * @property-read ShopperUser $user
  */
-class TwoFactor extends Component
+class TwoFactor extends Component implements HasActions, HasForms
 {
     use ConfirmsPasswords;
+    use InteractsWithActions;
+    use InteractsWithForms;
 
     public bool $showingQrCode = false;
 
@@ -80,8 +86,11 @@ class TwoFactor extends Component
 
         $disable($this->user);
 
+        $this->showingQrCode = false;
+        $this->showingRecoveryCodes = false;
+
         Notification::make()
-            ->body(__('shopper::notifications.users_roles.two_factor_disabled'))
+            ->title(__('shopper::notifications.users_roles.two_factor_disabled'))
             ->success()
             ->send();
     }
@@ -89,10 +98,8 @@ class TwoFactor extends Component
     #[Computed]
     public function user(): ShopperUser
     {
-        /** @var ShopperUser $user */
-        $user = shopper()->auth()->user();
-
-        return $user;
+        /** @var ShopperUser */
+        return shopper()->auth()->user();
     }
 
     #[Computed]

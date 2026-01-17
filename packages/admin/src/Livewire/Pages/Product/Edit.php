@@ -7,21 +7,22 @@ namespace Shopper\Livewire\Pages\Product;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Events\Products\ProductDeleted;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
-class Edit extends AbstractPageComponent implements HasActions, HasForms
+class Edit extends AbstractPageComponent implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     /** @var Model&ProductContract */
     public ProductContract $product;
@@ -40,8 +41,8 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
     {
         return Action::make('delete')
             ->label(__('shopper::forms.actions.delete'))
-            ->icon('untitledui-trash-03')
-            ->modalIcon('untitledui-trash-03')
+            ->icon(Untitledui::Trash03)
+            ->modalIcon(Untitledui::Trash03)
             ->requiresConfirmation()
             ->authorize('delete_products', $this->product)
             ->visible(shopper()->auth()->user()->can('delete_products'))

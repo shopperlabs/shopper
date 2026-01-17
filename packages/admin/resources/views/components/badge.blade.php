@@ -13,6 +13,6 @@
     };
 @endphp
 
-<span class="{{ $style }} inline-flex rounded-full px-2 py-0.5 text-xs font-medium leading-5">
+<span class="{{ $style }} inline-flex rounded-full px-2 py-0.5 text-xs leading-5 font-medium">
     {{ $value }}
 </span>

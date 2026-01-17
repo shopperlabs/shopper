@@ -4,13 +4,19 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
-use Filament\Forms\Components;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\GenderField;
@@ -21,10 +27,11 @@ use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Notifications\AdminSendCredentials;
 
 /**
- * @property-read Form $form
+ * @property-read Schema $form
  */
-class CreateTeamMember extends SlideOverComponent implements HasForms
+class CreateTeamMember extends SlideOverComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     /** @var array<string, mixed>|null */
@@ -35,51 +42,51 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make(__('shopper::pages/settings/staff.login_information'))
                     ->description(__('shopper::pages/settings/staff.login_information_summary'))
                     ->schema([
-                        Components\TextInput::make('email')
+                        TextInput::make('email')
                             ->label(__('shopper::forms.label.email'))
                             ->email()
                             ->required(),
-                        Components\TextInput::make('password')
+                        TextInput::make('password')
                             ->label(__('shopper::forms.label.password'))
                             ->password()
                             ->revealable()
                             ->required()
                             ->hintAction(
-                                Components\Actions\Action::make(__('shopper::words.generate'))
+                                Action::make(__('shopper::words.generate'))
                                     ->color('info')
                                     ->action(function (Set $set): void {
                                         $set('password', Str::password(16));
                                     }),
                             ),
-                        Components\Toggle::make('send_mail')
+                        Toggle::make('send_mail')
                             ->label(__('shopper::pages/settings/staff.send_invite'))
                             ->helperText(__('shopper::pages/settings/staff.send_invite_summary')),
                     ]),
                 Section::make(__('shopper::pages/settings/staff.personal_information'))
                     ->description(__('shopper::pages/settings/staff.personal_information_summary'))
                     ->schema([
-                        Components\TextInput::make('first_name')
+                        TextInput::make('first_name')
                             ->label(__('shopper::forms.label.first_name'))
                             ->required(),
-                        Components\TextInput::make('last_name')
+                        TextInput::make('last_name')
                             ->label(__('shopper::forms.label.last_name'))
                             ->required(),
                         GenderField::make(),
-                        Components\TextInput::make('phone_number')
+                        TextInput::make('phone_number')
                             ->label(__('shopper::forms.label.phone_number'))
                             ->tel(),
                     ]),
                 Section::make(__('shopper::pages/settings/staff.role_information'))
                     ->description(__('shopper::pages/settings/staff.role_information_summary'))
                     ->schema([
-                        Components\Radio::make('role_id')
+                        Radio::make('role_id')
                             ->label(__('shopper::pages/settings/staff.choose_role'))
                             ->options(
                                 Role::query()
@@ -121,7 +128,7 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
             $user->notify(new AdminSendCredentials($data['password']));
         }
 
-        /** @var \Illuminate\Database\Eloquent\Model $user */
+        /** @var Model $user */
         Notification::make()
             ->body(__('shopper::notifications.create', ['item' => $user->full_name]))
             ->success()

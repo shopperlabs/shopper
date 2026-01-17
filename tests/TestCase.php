@@ -9,8 +9,11 @@ use BladeUI\Icons\BladeIconsServiceProvider;
 use Codeat3\BladePhosphorIcons\BladePhosphorIconsServiceProvider;
 use CodeWithDennis\FilamentSelectTree\FilamentSelectTreeServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
+use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
+use Filament\Infolists\InfolistsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
+use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -64,11 +67,14 @@ abstract class TestCase extends BaseTestCase
             BladePhosphorIconsServiceProvider::class,
             BladeIconsServiceProvider::class,
             CoreServiceProvider::class,
+            FilamentServiceProvider::class,
             PermissionServiceProvider::class,
             LivewireServiceProvider::class,
             ShopperServiceProvider::class,
             SidebarServiceProvider::class,
             FormsServiceProvider::class,
+            InfolistsServiceProvider::class,
+            SchemasServiceProvider::class,
             SupportServiceProvider::class,
             NotificationsServiceProvider::class,
             TablesServiceProvider::class,
