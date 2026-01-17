@@ -10,12 +10,10 @@ use Shopper\Livewire\Pages\Auth\ResetPassword;
 
 Route::redirect('/', shopper()->prefix().'/login', 301);
 
-// Authentication...
 Route::get('/login', Login::class)->name('login');
 Route::get('/password/reset', ForgotPassword::class)->name('password.request');
 Route::get('/password/reset/{token}', ResetPassword::class)->name('password.reset');
 
-// Two-Factor Authentication...
 if (config('shopper.auth.2fa_enabled')) {
     Route::get('/two-factor-login', [TwoFactorAuthenticatedController::class, 'create'])
         ->name('two-factor.login');

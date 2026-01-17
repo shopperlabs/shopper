@@ -133,6 +133,8 @@ describe(RolePermission::class, function (): void {
             ->assertDispatched('permissionAdded')
             ->assertNotified(__('shopper::notifications.users_roles.permission_add'));
 
+        $this->role->refresh();
+
         expect(Permission::query()->count())->toBe($initialCount + 1)
             ->and(Permission::query()->where('name', 'manage_orders')->exists())->toBeTrue()
             ->and($this->role->hasPermissionTo('manage_orders'))->toBeTrue();
@@ -141,7 +143,7 @@ describe(RolePermission::class, function (): void {
     it('validates required fields when creating permission', function (): void {
         Livewire::test(RolePermission::class, ['role' => $this->role])
             ->callAction('createPermission', [])
-            ->assertHasNoFormErrors(['name' => 'required', 'display_name' => 'required']);
+            ->assertHasFormErrors(['name' => 'required', 'display_name' => 'required']);
     });
 
     it('validates unique permission name when creating permission', function (): void {
@@ -152,7 +154,7 @@ describe(RolePermission::class, function (): void {
                 'name' => 'manage_products',
                 'display_name' => 'Manage Products',
             ])
-            ->assertHasNoFormErrors(['name' => 'unique']);
+            ->assertHasFormErrors(['name' => 'unique']);
     });
 
     it('validates max length constraints when creating permission', function (): void {
@@ -161,7 +163,7 @@ describe(RolePermission::class, function (): void {
                 'name' => str_repeat('a', 31),
                 'display_name' => str_repeat('b', 76),
             ])
-            ->assertHasNoFormErrors(['name' => 'max', 'display_name' => 'max']);
+            ->assertHasFormErrors(['name' => 'max', 'display_name' => 'max']);
     });
 
     it('allows optional group_name and description when creating permission', function (): void {

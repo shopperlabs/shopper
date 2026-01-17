@@ -179,4 +179,58 @@ describe(Detail::class, function (): void {
 
         expect($order->status)->toBe(OrderStatus::Completed);
     });
+
+    it('can archive order via action', function (): void {
+        Event::fake();
+
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::Pending,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->callAction('archive')
+            ->assertRedirect(route('shopper.orders.index'));
+
+        Event::assertDispatched(Orders\OrderArchived::class, fn ($event): bool => $event->order->id === $order->id);
+    });
+
+    it('updates order status to register after archiving', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::Pending,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->callAction('archive');
+
+        $order->refresh();
+
+        expect($order->status)->toBe(OrderStatus::Register);
+    });
+
+    it('archive action is hidden for completed orders', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::Completed,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->assertActionHidden('archive');
+    });
+
+    it('archive action is hidden for paid orders', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::Paid,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->assertActionHidden('archive');
+    });
+
+    it('archive action is visible for pending orders', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::Pending,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->assertActionVisible('archive');
+    });
 })->group('livewire', 'orders');

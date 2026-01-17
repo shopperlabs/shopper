@@ -28,11 +28,11 @@ beforeEach(function (): void {
     $this->formValues = [
         'code' => fake()->unique()->word(),
         'is_active' => true,
-        'type' => DiscountType::FixedAmount(),
+        'type' => DiscountType::FixedAmount,
         'value' => 1000,
-        'apply_to' => DiscountApplyTo::Products(),
-        'min_required' => DiscountRequirement::None(),
-        'eligibility' => DiscountEligibility::Everyone(),
+        'apply_to' => DiscountApplyTo::Products,
+        'min_required' => DiscountRequirement::None,
+        'eligibility' => DiscountEligibility::Everyone,
         'start_at' => now(),
     ];
 
@@ -75,10 +75,10 @@ describe(SaveAndDispatchDiscountAction::class, function (): void {
         app()->call(SaveAndDispatchDiscountAction::class, [
             'values' => array_merge($this->formValues, [
                 'code' => $code = 'LAURE_MONNEY_2025',
-                'apply_to' => DiscountApplyTo::Products(),
+                'apply_to' => DiscountApplyTo::Products,
                 'value' => 5000,
-                'min_required' => DiscountRequirement::Price(),
-                'eligibility' => DiscountEligibility::Customers(),
+                'min_required' => DiscountRequirement::Price,
+                'eligibility' => DiscountEligibility::Customers,
             ]),
             'productsIds' => [$this->products->first()->id],
             'discountId' => $discount->id,

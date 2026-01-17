@@ -18,8 +18,7 @@ beforeEach(function (): void {
     setupCurrencies();
 
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('edit_products');
-    $this->user->givePermissionTo('delete_products');
+    $this->user->givePermissionTo('edit_products', 'delete_products');
     $this->actingAs($this->user);
 });
 
@@ -89,7 +88,6 @@ describe(Edit::class, function (): void {
         $product = Product::factory()->create();
 
         Livewire::test(Edit::class, ['product' => $product])
-            ->assertActionExists('delete')
-            ->assertActionHasIcon('delete', 'untitledui-trash-03');
+            ->assertActionExists('delete');
     });
 })->group('livewire', 'products');

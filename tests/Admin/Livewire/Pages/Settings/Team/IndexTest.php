@@ -57,7 +57,7 @@ describe(Index::class, function (): void {
             ->callAction('createRole', [
                 'display_name' => 'Manager',
             ])
-            ->assertHasNoFormErrors(['name' => 'required']);
+            ->assertHasFormErrors(['name' => 'required']);
     });
 
     it('validates unique role name when creating role', function (): void {
@@ -67,7 +67,7 @@ describe(Index::class, function (): void {
             ->callAction('createRole', [
                 'name' => $existingRole->name,
             ])
-            ->assertHasNoFormErrors(['name' => 'unique']);
+            ->assertHasFormErrors(['name' => 'unique']);
     });
 
     it('allows optional display_name and description when creating role', function (): void {

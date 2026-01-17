@@ -62,9 +62,9 @@ describe(Inventory::class, function (): void {
         Livewire::test(Inventory::class, ['product' => $this->product])
             ->fillForm([
                 'sku' => 'EXISTING-SKU',
-            ])
+            ], 'form')
             ->call('store')
-            ->assertHasFormErrors(['sku' => 'unique']);
+            ->assertHasFormErrors(['sku' => 'unique'], 'form');
     });
 
     it('validates unique barcode', function (): void {
@@ -73,9 +73,9 @@ describe(Inventory::class, function (): void {
         Livewire::test(Inventory::class, ['product' => $this->product])
             ->fillForm([
                 'barcode' => '111222333',
-            ])
+            ], 'form')
             ->call('store')
-            ->assertHasFormErrors(['barcode' => 'unique']);
+            ->assertHasFormErrors(['barcode' => 'unique'], 'form');
     });
 
     it('can add stock to product', function (): void {

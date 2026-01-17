@@ -25,7 +25,9 @@ beforeEach(function (): void {
     $this->actingAs($this->user);
 
     $this->products = Product::factory()->count(3)->publish()->create();
-    $this->users = User::factory()->count(3)->create();
+    $this->customers = User::factory()->count(3)->create()->each(function ($user): void {
+        $user->assignRole(config('shopper.core.roles.user'));
+    });
 
     Queue::fake();
 });
@@ -36,12 +38,12 @@ describe(DiscountForm::class, function (): void {
             ->fillForm([
                 'code' => 'SUMMER23',
                 'is_active' => true,
-                'type' => DiscountType::FixedAmount(),
+                'type' => DiscountType::FixedAmount,
                 'value' => 1000,
-                'apply_to' => DiscountApplyTo::Products(),
+                'apply_to' => DiscountApplyTo::Products,
                 'products' => $this->products->pluck('id')->toArray(),
-                'min_required' => DiscountRequirement::None(),
-                'eligibility' => DiscountEligibility::Everyone(),
+                'min_required' => DiscountRequirement::None,
+                'eligibility' => DiscountEligibility::Everyone,
                 'start_at' => now(),
             ])
             ->call('store')
@@ -60,11 +62,11 @@ describe(DiscountForm::class, function (): void {
             ->fillForm([
                 'code' => 'SUMMER23',
                 'is_active' => false,
-                'type' => DiscountType::Percentage(),
+                'type' => DiscountType::Percentage,
                 'value' => 10,
-                'apply_to' => DiscountApplyTo::Order(),
-                'min_required' => DiscountRequirement::None(),
-                'eligibility' => DiscountEligibility::Everyone(),
+                'apply_to' => DiscountApplyTo::Order,
+                'min_required' => DiscountRequirement::None,
+                'eligibility' => DiscountEligibility::Everyone,
                 'start_at' => now()->subDays(10),
             ])
             ->call('store')
@@ -77,10 +79,10 @@ describe(DiscountForm::class, function (): void {
         Livewire::test(DiscountForm::class, ['discountId' => $discount->id])
             ->fillForm([
                 'code' => $code = 'LAURE_MONNEY_2025',
-                'apply_to' => DiscountApplyTo::Order(),
-                'min_required' => DiscountRequirement::None(),
-                'eligibility' => DiscountEligibility::Customers(),
-                'customers' => $this->users->pluck('id')->toArray(),
+                'apply_to' => DiscountApplyTo::Order,
+                'min_required' => DiscountRequirement::None,
+                'eligibility' => DiscountEligibility::Customers,
+                'customers' => $this->customers->pluck('id')->toArray(),
             ])
             ->call('store')
             ->assertHasNoFormErrors();

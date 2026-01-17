@@ -52,8 +52,18 @@ abstract class TestCase extends BaseTestCase
 
         $this->app->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
+        $this->fixFilamentDataStoreBinding();
+
         // Freeze time to avoid timestamp errors
         $this->freezeTime();
+    }
+
+    protected function fixFilamentDataStoreBinding(): void
+    {
+        $this->app->singleton(
+            \Livewire\Mechanisms\DataStore::class,
+            \Filament\Support\Livewire\Partials\DataStoreOverride::class
+        );
     }
 
     protected function getPackageProviders($app): array
