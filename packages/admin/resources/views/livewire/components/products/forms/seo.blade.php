@@ -28,7 +28,7 @@
                     <div class="flex items-center space-x-2">
                         <div class="size-3 rounded-full bg-red-500"></div>
                         <div class="size-3 rounded-full bg-yellow-500"></div>
-                        <div class="size-3 rounded-full bg-green-500"></div>
+                        <div class="size-3 rounded-full bg-success-500"></div>
                     </div>
                     <x-untitledui-google-chrome class="size-5 text-gray-500 dark:text-gray-300" strike-width="1.5" aria-hidden="true" />
                 </div>
@@ -37,7 +37,7 @@
                         <h3 class="text-primary-600 dark:text-primary-500 leading-6 font-medium">
                             {{ $data['seo_title'] }}
                         </h3>
-                        <span class="mt-1 truncate text-sm leading-5 text-green-600 dark:text-green-400">
+                        <span class="mt-1 truncate text-sm leading-5 text-success-600 dark:text-success-400">
                             {{ config('app.url') }}/{your-custom-prefix}/{{ $data['slug'] }}
                         </span>
                         <p class="text-whitespace-no-wrap mt-1 text-sm leading-5 text-gray-500 dark:text-gray-400">

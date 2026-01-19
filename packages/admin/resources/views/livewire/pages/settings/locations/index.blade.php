@@ -37,10 +37,10 @@
             </div>
         </div>
         <div class="mt-5 lg:col-span-2 lg:mt-0">
-            <x-shopper::card class="overflow-hidden">
+            <x-shopper::card class="[&>div:first-of-type]:p-0">
                 <ul class="divide-y divide-gray-200 dark:divide-white/10">
                     @foreach ($inventories as $inventory)
-                        <li class="p-4 sm:p-6">
+                        <li class="p-4">
                             <div class="flex items-end gap-6">
                                 <div class="flex-1">
                                     <div class="flex items-center justify-between">

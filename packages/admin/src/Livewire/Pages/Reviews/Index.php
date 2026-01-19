@@ -7,21 +7,21 @@ namespace Shopper\Livewire\Pages\Reviews;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Support\Enums\FontWeight;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\Layout\Split;
-use Filament\Tables\Columns\Layout\Stack;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Review;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -38,47 +38,46 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                 Review::query()->with(['author', 'reviewrateable'])
             )
             ->columns([
-                Split::make([
-                    ImageColumn::make('author.picture')
-                        ->circular()
-                        ->grow(false),
-                    Stack::make([
-                        Split::make([
-                            TextColumn::make('author.full_name')
-                                ->weight(FontWeight::Bold)
-                                ->searchable()
-                                ->grow(false),
-                            TextColumn::make('approved')
-                                ->badge()
-                                ->formatStateUsing(
-                                    fn (bool $state): string => $state
-                                        ? __('shopper::pages/products.reviews.published')
-                                        : __('shopper::pages/products.reviews.pending')
-                                )
-                                ->color(fn (bool $state): string => $state ? 'success' : 'warning'),
-                        ]),
-                        TextColumn::make('created_at')
-                            ->date()
-                            ->color('gray')
-                            ->sortable(),
-                        ViewColumn::make('rating')
-                            ->view('shopper::livewire.tables.cells.reviews.rating'),
-                        TextColumn::make('content')
-                            ->lineClamp(2)
-                            ->color('gray'),
-                        ViewColumn::make('reviewrateable.name')
-                            ->view('shopper::livewire.tables.cells.reviews.product'),
-                    ]),
-                ])->extraAttributes([
-                    'class' => '!items-start',
-                ]),
+                TextColumn::make('author.full_name')
+                    ->label(__('shopper::words.customer'))
+                    ->searchable()
+                    ->sortable()
+                    ->formatStateUsing(fn (Review $record): View => view(
+                        'shopper::components.user-avatar',
+                        ['user' => $record->author]
+                    )),
+                TextColumn::make('reviewrateable.name')
+                    ->label(__('shopper::words.product'))
+                    ->searchable()
+                    ->sortable(),
+                ViewColumn::make('rating')
+                    ->label(__('shopper::pages/products.reviews.rating'))
+                    ->view('shopper::livewire.tables.cells.reviews.rating'),
+                TextColumn::make('content')
+                    ->label(__('shopper::pages/products.reviews.review'))
+                    ->limit(50)
+                    ->tooltip(fn (Review $record): string => $record->content)
+                    ->toggleable(),
+                TextColumn::make('approved')
+                    ->label(__('shopper::forms.label.status'))
+                    ->badge()
+                    ->formatStateUsing(
+                        fn (bool $state): string => $state
+                            ? __('shopper::pages/products.reviews.published')
+                            : __('shopper::pages/products.reviews.pending')
+                    )
+                    ->color(fn (bool $state): string => $state ? 'success' : 'warning'),
+                TextColumn::make('created_at')
+                    ->label(__('shopper::words.date'))
+                    ->date()
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->recordActions([
-                DeleteAction::make('delete')
-                    ->label(__('shopper::forms.actions.delete')),
                 Action::make('view')
                     ->label(__('shopper::forms.actions.view'))
                     ->icon(Untitledui::Eye)
+                    ->iconButton()
                     ->action(
                         fn (Review $record) => $this->dispatch(
                             'openPanel',
@@ -86,17 +85,70 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             arguments: ['review' => $record]
                         )
                     ),
+                Action::make('delete')
+                    ->label(__('shopper::forms.actions.delete'))
+                    ->icon(Untitledui::Trash03)
+                    ->iconButton()
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->action(fn (Review $record) => $record->delete())
+                    ->visible(shopper()->auth()->user()->can('delete_reviews')),
+            ])
+            ->groupedBulkActions([
+                DeleteBulkAction::make()
+                    ->label(__('shopper::forms.actions.delete'))
+                    ->icon(Untitledui::Trash03)
+                    ->requiresConfirmation()
+                    ->action(function (Collection $records): void {
+                        $records->each->delete();
+
+                        Notification::make()
+                            ->title(__('shopper::notifications.delete', ['item' => __('shopper::pages/products.reviews.single')]))
+                            ->success()
+                            ->send();
+                    })
+                    ->visible(shopper()->auth()->user()->can('delete_reviews'))
+                    ->deselectRecordsAfterCompletion(),
             ])
             ->filters([
+                SelectFilter::make('rating')
+                    ->label(__('shopper::pages/products.reviews.rating'))
+                    ->options([
+                        1 => '1 '.__('shopper::pages/products.reviews.star'),
+                        2 => '2 '.__('shopper::pages/products.reviews.stars'),
+                        3 => '3 '.__('shopper::pages/products.reviews.stars'),
+                        4 => '4 '.__('shopper::pages/products.reviews.stars'),
+                        5 => '5 '.__('shopper::pages/products.reviews.stars'),
+                    ]),
+                SelectFilter::make('reviewrateable_id')
+                    ->label(__('shopper::words.product'))
+                    ->options(
+                        fn (): array => resolve(Product::class)::query()
+                            ->whereHas('ratings')
+                            ->pluck('name', 'id')
+                            ->all()
+                    )
+                    ->multiple()
+                    ->searchable()
+                    ->preload(),
+                SelectFilter::make('author_id')
+                    ->label(__('shopper::words.customer'))
+                    ->options(
+                        fn (): array => Review::query()
+                            ->with('author')
+                            ->get()
+                            ->pluck('author.full_name', 'author_id')
+                            ->unique()
+                            ->all()
+                    )
+                    ->searchable()
+                    ->preload(),
                 TernaryFilter::make('approved')
                     ->label(__('shopper::pages/products.reviews.approved_status')),
                 TernaryFilter::make('is_recommended')
                     ->label(__('shopper::pages/products.reviews.is_recommended')),
             ])
-            ->contentGrid([
-                'md' => 2,
-                'xl' => 3,
-            ]);
+            ->emptyState(view('shopper::livewire.tables.empty-states.reviews'));
     }
 
     public function render(): View

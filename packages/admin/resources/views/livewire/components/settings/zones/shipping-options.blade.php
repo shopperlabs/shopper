@@ -3,31 +3,34 @@
 @endphp
 
 <div>
-    <x-shopper::card class="divide-y divide-gray-200 dark:divide-white/10">
-        <div class="flex items-center justify-between p-4 lg:p-5">
-            <div class="flex items-start space-x-3">
-                <x-phosphor-truck-trailer class="size-6 text-gray-400 dark:text-gray-500" aria-hidden="true" />
-                <x-shopper::section-heading
-                    class="space-y-1"
-                    :title="__('shopper::pages/settings/zones.shipping_options.title')"
-                    :description="__('shopper::pages/settings/zones.shipping_options.description')"
-                />
+    <x-shopper::card class="p-1 bg-gray-50">
+        <x-slot name="title">
+            <div class="flex items-center justify-between gap-2">
+                <div class="flex items-start gap-3">
+                    <x-phosphor-truck-trailer class="size-6 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                    <x-shopper::section-heading
+                        class="space-y-1"
+                        :title="__('shopper::pages/settings/zones.shipping_options.title')"
+                        :description="__('shopper::pages/settings/zones.shipping_options.description')"
+                    />
+                </div>
+                <div class="flex items-center gap-3 pl-4">
+                    <x-filament::button
+                        wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.shipping-option-form', arguments: { zoneId: {{ $zone->id }} } })"
+                        size="sm"
+                        color="gray"
+                        icon="untitledui-plus"
+                    >
+                        {{ __('shopper::pages/settings/zones.shipping_options.add') }}
+                    </x-filament::button>
+                </div>
             </div>
-            <div class="flex items-center space-x-3 pl-4">
-                <x-filament::button
-                    wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.shipping-option-form', arguments: { zoneId: {{ $zone->id }} } })"
-                    size="sm"
-                    color="gray"
-                    icon="untitledui-plus"
-                >
-                    {{ __('shopper::pages/settings/zones.shipping_options.add') }}
-                </x-filament::button>
-            </div>
-        </div>
-        <div class="p-4 lg:grid lg:grid-cols-2 lg:gap-6 lg:p-5">
+        </x-slot>
+
+        <div class="lg:grid lg:grid-cols-2 lg:gap-6">
             @forelse ($zone->shippingOptions as $shippingOption)
                 <div
-                    class="relative flex items-start justify-between rounded-lg border border-gray-200 bg-white p-4 dark:border-white/10 dark:bg-white/5"
+                    class="relative flex items-start justify-between rounded-lg border border-gray-200 bg-white p-3 dark:border-white/10 dark:bg-white/5"
                 >
                     <div class="flex items-start gap-2 flex-1">
                         <img

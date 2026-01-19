@@ -75,6 +75,7 @@ return [
     ],
 
     'reviews' => [
+        'single' => 'avis',
         'title' => 'Avis des clients',
         'description' => 'C\'est là que vous verrez les avis de vos clients et les notes attribuées à vos produits.',
         'view' => 'Avis pour :product',
@@ -91,6 +92,8 @@ return [
         'review_content' => 'Contenu',
         'status' => 'Status',
         'rating' => 'Note',
+        'star' => 'étoile',
+        'stars' => 'étoiles',
 
         'modal' => [
             'title' => 'Supprimer cet avis',

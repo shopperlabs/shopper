@@ -75,6 +75,7 @@ return [
     ],
 
     'reviews' => [
+        'single' => 'review',
         'title' => 'Customers reviews',
         'description' => 'This is where you will see the reviews of your customers and the ratings given to your products.',
         'view' => 'Reviews for :product',
@@ -91,6 +92,8 @@ return [
         'review_content' => 'Content',
         'status' => 'Status',
         'rating' => 'Rating',
+        'star' => 'star',
+        'stars' => 'stars',
 
         'modal' => [
             'title' => 'Delete Review',

@@ -26,10 +26,9 @@ return [
     'components' => [
         'collections.products' => Livewire\Components\Collection\CollectionProducts::class,
 
-        'modals.products-list' => Livewire\Modals\CollectionProductsList::class,
-
         'slide-overs.collection-rules' => Livewire\SlideOvers\CollectionRules::class,
         'slide-overs.add-collection-form' => Livewire\SlideOvers\AddCollectionForm::class,
+        'slide-overs.collection-products-list' => Livewire\SlideOvers\CollectionProductsList::class,
     ],
 
 ];

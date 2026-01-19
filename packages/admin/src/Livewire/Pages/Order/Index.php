@@ -21,6 +21,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Currency;
@@ -70,8 +71,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->searchable()
                     ->sortable()
                     ->formatStateUsing(fn (Order $record): View => view(
-                        'shopper::livewire.tables.cells.orders.customer',
-                        ['order' => $record]
+                        'shopper::components.user-avatar',
+                        ['user' => $record->customer]
                     ))
                     ->toggleable(),
                 TextColumn::make('id')
@@ -104,13 +105,13 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
             ->recordActions([
                 Action::make('view')
                     ->label(__('shopper::words.details'))
-                    ->action(
-                        fn (Order $record): string => $this->redirectRoute(
-                            name: 'shopper.orders.detail',
-                            parameters: ['order' => $record],
-                            navigate: true
-                        ),
-                    ),
+                    ->icon(Untitledui::Eye)
+                    ->iconButton()
+                    ->action(fn (Order $record) => $this->redirectRoute(
+                        name: 'shopper.orders.detail',
+                        parameters: ['order' => $record],
+                        navigate: true
+                    )),
             ])
             ->filters([
                 Filter::make('number')

@@ -1,10 +1,9 @@
 <x-shopper::container>
     <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
         @forelse ($this->addresses as $address)
-            <x-shopper::card class="relative flex items-center px-6 py-5">
+            <x-shopper::card>
                 <div class="min-w-0 flex-1">
                     <div class="focus:outline-none">
-                        <span class="absolute inset-0" aria-hidden="true"></span>
                         <div class="flex items-center justify-between space-x-2">
                             <span class="inline-flex text-xs leading-4 text-gray-500 dark:text-gray-400">
                                 {{
@@ -17,7 +16,7 @@
                         <h4 class="mt-1 block text-sm font-medium text-gray-900 dark:text-white">
                             {{ $address->full_name }}
                         </h4>
-                        <div class="mt-1 text-sm leading-5">
+                        <div class="mt-1 text-sm">
                             <p class="text-gray-500 dark:text-gray-400">
                                 {{ $address->street_address }}
                             </p>

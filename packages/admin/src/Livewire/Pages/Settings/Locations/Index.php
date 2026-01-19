@@ -14,7 +14,7 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
-use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\Contracts\Inventory;
 
 #[Layout('shopper::components.layouts.setting')]
 class Index extends Component implements HasActions, HasSchemas
@@ -35,7 +35,7 @@ class Index extends Component implements HasActions, HasSchemas
             ->color('danger')
             ->requiresConfirmation()
             ->action(function (array $arguments): void {
-                Inventory::query()->find($arguments['id'])->delete();
+                resolve(Inventory::class)::query()->find($arguments['id'])->delete();
 
                 Notification::make()
                     ->title(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/global.location.single')]))
@@ -44,18 +44,13 @@ class Index extends Component implements HasActions, HasSchemas
 
                 $this->dispatch('$refresh');
             })
-            ->visible(
-                shopper()
-                    ->auth()
-                    ->user()
-                    ->can('delete_inventories')
-            );
+            ->visible(shopper()->auth()->user()->can('delete_inventories'));
     }
 
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.locations.index', [
-            'inventories' => Inventory::query()
+            'inventories' => resolve(Inventory::class)::query()
                 ->with('country')
                 ->limit(config('shopper.admin.inventory_limit'))
                 ->get(),

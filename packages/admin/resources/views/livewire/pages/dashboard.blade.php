@@ -36,7 +36,7 @@
                         {{ __('shopper::pages/dashboard.cards.doc_description') }}
                     </div>
 
-                    <a href="https://laravelshopper.dev" class="group" target="_blank">
+                    <a href="https://docs.laravelshopper.dev" class="group" target="_blank">
                         <div class="text-primary-500 mt-5 flex items-center text-sm font-medium">
                             <span>
                                 {{ __('shopper::pages/dashboard.cards.doc_link') }}

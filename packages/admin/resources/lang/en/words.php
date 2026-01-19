@@ -18,6 +18,7 @@ return [
     'available' => 'Available',
     'stock' => 'Stock',
     'customer' => 'Customer',
+    'product' => 'Product',
 
     'payment_method' => 'Payment Method',
     'shipping_method' => 'Shipping method',

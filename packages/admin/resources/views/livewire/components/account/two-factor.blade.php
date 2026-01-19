@@ -7,12 +7,12 @@
         />
         <div class="mt-5 lg:col-span-2 lg:mt-0 lg:max-w-3xl">
             <x-shopper::card>
-                <div class="border-b border-gray-200 p-4 sm:px-6 dark:border-white/10">
+                <x-slot name="title">
                     <div class="flex items-center gap-x-3">
                         <div
                             @class([
                                 'size-2.5 shrink-0 rounded-full',
-                                'bg-green-400' => $this->enabled,
+                                'bg-success-400' => $this->enabled,
                                 'bg-gray-400 dark:bg-gray-500' => ! $this->enabled,
                             ])
                         ></div>
@@ -24,8 +24,9 @@
                             @endif
                         </h3>
                     </div>
-                </div>
-                <div class="space-y-6 px-4 py-5 sm:p-6">
+                </x-slot>
+
+                <div class="space-y-6 py-2">
                     @if (! $this->enabled)
                         <div class="bg-primary-50 dark:bg-primary-800/20 rounded-md p-4">
                             <div class="flex">
@@ -68,6 +69,7 @@
                             @endif
                         </div>
                     </div>
+
                     @if ($this->enabled)
                         @if ($showingQrCode)
                             <div class="border-t border-gray-200 pt-5 dark:border-white/10">
@@ -100,7 +102,7 @@
                         @endif
                     @endif
                 </div>
-                <div class="flex justify-end px-4 py-4 sm:px-6">
+                <div class="flex justify-end py-2">
                     @if (! $this->enabled)
                         <x-filament::button
                             wire:click="startConfirmingPassword('enableTwoFactorAuthentication')"

@@ -42,6 +42,8 @@ class RelatedProducts extends Component implements HasActions, HasSchemas
         return Action::make('remove')
             ->label(__('shopper::forms.actions.remove'))
             ->icon(Untitledui::Trash03)
+            ->color('danger')
+            ->requiresConfirmation()
             ->action(function (array $arguments): void {
                 $this->product->relatedProducts()->detach($arguments['id']);
 

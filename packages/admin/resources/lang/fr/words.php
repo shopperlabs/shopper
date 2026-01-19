@@ -18,6 +18,7 @@ return [
     'available' => 'Disponible',
     'stock' => 'Stock',
     'customer' => 'Client',
+    'product' => 'Produit',
 
     'payment_method' => 'Moyen de paiement',
     'shipping_method' => 'Mode de livraison',

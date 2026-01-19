@@ -7,6 +7,7 @@ namespace Shopper\Livewire\Components\Collection;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
@@ -16,6 +17,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
@@ -59,10 +61,9 @@ class CollectionProducts extends Component implements HasActions, HasForms, HasT
             ])
             ->recordActions([
                 Action::make('delete')
-                    ->label(__('shopper::forms.label.delete'))
+                    ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
                     ->iconButton()
-                    ->modalIcon(Untitledui::Trash03)
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(function (Product $record): void {
@@ -75,6 +76,23 @@ class CollectionProducts extends Component implements HasActions, HasForms, HasT
                             ->success()
                             ->send();
                     }),
+            ])
+            ->groupedBulkActions([
+                DeleteBulkAction::make()
+                    ->label(__('shopper::forms.actions.delete'))
+                    ->icon(Untitledui::Trash03)
+                    ->requiresConfirmation()
+                    ->action(function (EloquentCollection $records): void {
+                        $this->collection->products()->detach($records->pluck('id')->toArray());
+
+                        $this->dispatch('collection.add.product');
+
+                        Notification::make()
+                            ->title(__('shopper::pages/collections.remove_product'))
+                            ->success()
+                            ->send();
+                    })
+                    ->deselectRecordsAfterCompletion(),
             ])
             ->headerActions([
                 Action::make('rules')
@@ -94,8 +112,8 @@ class CollectionProducts extends Component implements HasActions, HasForms, HasT
                     ->button()
                     ->color('gray')
                     ->action(fn () => $this->dispatch(
-                        'openModal',
-                        component: 'shopper-modals.products-list',
+                        'openPanel',
+                        component: 'shopper-slide-overs.collection-products-list',
                         arguments: [
                             'collection' => $this->collection,
                             'exceptProductIds' => $this->productsIds,

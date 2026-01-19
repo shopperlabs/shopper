@@ -9,9 +9,9 @@
             <div class="mt-6 lg:mt-0">
                 <x-filament::button
                     type="button"
-                    wire:click="$dispatch('openModal', {
-                        component: 'shopper-modals.related-products-list',
-                        arguments: { product: {{ $product }}, ids: {{ json_encode($this->productsIds) }} },
+                    wire:click="$dispatch('openPanel', {
+                        component: 'shopper-slide-overs.related-products-list',
+                        arguments: { product: {{ $product->id }}, ids: {{ json_encode($this->productsIds) }} },
                     })"
                 >
                     {{ __('shopper::layout.account_dropdown.add_product') }}
@@ -20,9 +20,9 @@
         @endif
     </div>
 
-    <x-shopper::card class="mt-10 p-5">
+    <x-shopper::card class="mt-10">
         @if ($relatedProducts->isNotEmpty())
-            <div role="list" class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-8">
+            <div role="list" class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
                 @foreach ($relatedProducts as $relatedProduct)
                     <div wire:key="{{ $relatedProduct->slug }}" class="group relative">
                         <div class="relative">
@@ -43,8 +43,6 @@
                                     size="md"
                                     dropdown-placement="bottom-start"
                                 />
-
-                                <x-filament-actions::modals />
                             </div>
                         </div>
                         <div class="mt-4 flex items-start justify-between">
@@ -61,7 +59,7 @@
                             <div class="flex shrink-0 items-center">
                                 <div
                                     @class([
-                                        'h-1.5 w-1.5 self-center rounded-full',
+                                        'size-1.5 self-center rounded-full',
                                         'bg-success-500' => $relatedProduct->is_visible,
                                         'bg-rose-500' => ! $relatedProduct->is_visible,
                                     ])
@@ -80,9 +78,9 @@
                 <x-slot:action>
                     <x-filament::button
                         type="button"
-                        wire:click="$dispatch('openModal', {
-                            component: 'shopper-modals.related-products-list',
-                            arguments: { product: {{ $product }}, ids: {{ json_encode($this->productsIds) }} },
+                        wire:click="$dispatch('openPanel', {
+                            component: 'shopper-slide-overs.related-products-list',
+                            arguments: { product: {{ $product->id }}, ids: {{ json_encode($this->productsIds) }} },
                         })"
                     >
                         <x-untitledui-plus class="mr-2 size-5" stroke-width="1.5" aria-hidden="true" />
@@ -92,4 +90,6 @@
             </x-shopper::empty-card>
         @endif
     </x-shopper::card>
+
+    <x-filament-actions::modals />
 </x-shopper::container>

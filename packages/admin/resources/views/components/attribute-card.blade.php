@@ -19,6 +19,7 @@
             <h5 class="text-sm leading-5 font-medium text-gray-950 dark:text-white">
                 {{ $attribute->name }}
             </h5>
+
             @if ($activated)
                 <x-filament::badge size="sm" color="success" icon="untitledui-check-verified">
                     {{ __('shopper::forms.actions.enable') }}

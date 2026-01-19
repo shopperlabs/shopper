@@ -8,13 +8,16 @@
         </div>
         <div class="mt-5 lg:col-span-2 lg:mt-0 lg:max-w-3xl">
             @if (count($this->sessions) > 0)
-                <x-shopper::card class="px-4 py-5 sm:px-6">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                        {{ __('shopper::pages/auth.account.empty_device') }}
-                    </p>
-                    <div class="mt-2 divide-y divide-gray-200 dark:divide-white/20">
+                <x-shopper::card>
+                    <x-slot name="title">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            {{ __('shopper::pages/auth.account.empty_device') }}
+                        </p>
+                    </x-slot>
+
+                    <div class="divide-y divide-gray-200 dark:divide-white/20">
                         @foreach ($this->sessions as $session)
-                            <div class="flex items-center justify-between py-4">
+                            <div class="flex items-center justify-between py-2">
                                 <div class="flex items-center space-x-3">
                                     <div class="shrink-0 text-gray-500 dark:text-gray-400">
                                         @if ($session->agent->isDesktop())

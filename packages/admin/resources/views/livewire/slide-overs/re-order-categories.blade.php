@@ -42,7 +42,7 @@
                             />
                             <div class="flex items-center space-x-4">
                                 <div
-                                    class="{{ $category->is_enabled ? 'bg-green-600' : 'bg-gray-400 dark:bg-gray-900' }} h-2 w-2 shrink-0 rounded-full"
+                                    class="{{ $category->is_enabled ? 'bg-success-600' : 'bg-gray-400 dark:bg-gray-900' }} h-2 w-2 shrink-0 rounded-full"
                                 ></div>
                                 <span class="text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                     {{ $category->name }}
@@ -69,7 +69,7 @@
                                         wire:sortable-group.handle
                                     >
                                         <div
-                                            class="{{ $child->is_enabled ? 'bg-green-600' : 'bg-gray-400' }} h-2 w-2 shrink-0 rounded-full"
+                                            class="{{ $child->is_enabled ? 'bg-success-600' : 'bg-gray-400' }} h-2 w-2 shrink-0 rounded-full"
                                         ></div>
                                         <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                                             {{ $child->name }}

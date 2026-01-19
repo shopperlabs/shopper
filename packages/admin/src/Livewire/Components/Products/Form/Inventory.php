@@ -28,7 +28,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Components\Section;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\InventoryHistory;
 
 /**
@@ -40,8 +40,8 @@ class Inventory extends Component implements HasActions, HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
-    /** @var Model&ProductContract */
-    public ProductContract $product;
+    /** @var Model&Product */
+    public Product $product;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -122,14 +122,12 @@ class Inventory extends Component implements HasActions, HasForms, HasTable
                             ->numeric(),
                     ]),
             ])
-            ->emptyStateIcon('untitledui-file-05')
-            ->emptyStateDescription(__('shopper::pages/products.inventory.empty'))
             ->headerActions([
                 Action::make('stock')
                     ->label(__('shopper::forms.label.add_stock'))
                     ->icon(Untitledui::Package)
                     ->color('gray')
-                    ->modalWidth(Width::ExtraLarge)
+                    ->modalWidth(Width::Large)
                     ->schema([
                         Select::make('inventory')
                             ->label(__('shopper::pages/products.inventory_name'))
@@ -191,7 +189,9 @@ class Inventory extends Component implements HasActions, HasForms, HasTable
                 Group::make('inventory.name')
                     ->label(__('shopper::pages/settings/menu.location'))
                     ->collapsible(),
-            ]);
+            ])
+            ->emptyStateIcon(Untitledui::File05)
+            ->emptyStateDescription(__('shopper::pages/products.inventory.empty'));
     }
 
     public function store(): void

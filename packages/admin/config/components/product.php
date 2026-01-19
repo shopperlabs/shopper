@@ -41,8 +41,6 @@ return [
         'products.type-configuration' => Components\Products\ProductTypeConfiguration::class,
         'products.pricing' => Components\Products\Pricing::class,
 
-        'modals.related-products-list' => Livewire\Modals\RelatedProductsList::class,
-
         'slide-overs.add-product' => Livewire\SlideOvers\AddProduct::class,
         'slide-overs.add-variant' => Livewire\SlideOvers\AddVariant::class,
         'slide-overs.update-variant' => Livewire\SlideOvers\UpdateVariant::class,
@@ -51,6 +49,7 @@ return [
         'slide-overs.choose-product-attributes' => Livewire\SlideOvers\ChooseProductAttributes::class,
         'slide-overs.attribute-values' => Livewire\SlideOvers\AttributeValues::class,
         'slide-overs.manage-pricing' => Livewire\SlideOvers\ManagePricing::class,
+        'slide-overs.related-products-list' => Livewire\SlideOvers\RelatedProductsList::class,
     ],
 
 ];
