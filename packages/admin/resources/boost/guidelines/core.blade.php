@@ -596,7 +596,6 @@ Use these Shopper Blade components in your custom pages:
 - `<x-filament::button>` - Primary button
 - `<x-filament::button color="gray">` - Gray/default button
 - `<x-shopper::empty-card>` - Empty state card
-- `<x-shopper::badge>` - Status badge
 - `<x-shopper::separator>` - Section separator
 @endverbatim
 

@@ -11,14 +11,14 @@
 <div {{ $attributes }}>
     @if ($label)
         <div class="flex items-center justify-between">
-            <label for="{{ $for }}" class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">
+            <label for="{{ $for }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 {{ $label }}
                 @if ($isRequired)
                     <span class="text-danger-500">*</span>
                 @endif
             </label>
             @if ($optional)
-                <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                <span class="text-sm text-gray-500 dark:text-gray-400">
                     {{ __('shopper::forms.label.optional') }}
                 </span>
             @endif

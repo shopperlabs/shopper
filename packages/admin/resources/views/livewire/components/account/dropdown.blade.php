@@ -29,7 +29,7 @@
             tabindex="-1"
         >
             <div class="divide-y divide-gray-100 dark:divide-white/10">
-                <p class="truncate px-3.5 py-3">
+                <p class="truncate p-3">
                     <span class="block text-xs text-gray-500 dark:text-gray-400" role="none">
                         {{ __('shopper::words.sign_in_as') }}
                     </span>
@@ -55,10 +55,10 @@
                         @csrf
                         <button
                             type="submit"
-                            class="group flex w-full items-center rounded-lg px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-white/5"
+                            class="group flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-white/5"
                         >
                             <x-untitledui-log-out
-                                class="mr-2 size-5 text-gray-400 dark:group-hover:text-gray-500"
+                                class="size-5 text-gray-400 dark:group-hover:text-gray-500"
                                 aria-hidden="true"
                             />
                             {{ __('shopper::layout.account_dropdown.sign_out') }}

@@ -102,7 +102,7 @@ class CategoryForm extends SlideOverComponent implements HasActions, HasForms
                     ->collapsible()
                     ->compact()
                     ->schema(SeoField::make()),
-                Section::make('Metadata')
+                Section::make(__('Metadata'))
                     ->collapsible()
                     ->compact()
                     ->schema([

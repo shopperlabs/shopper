@@ -5,7 +5,7 @@
         {{ $title }}
     @else
         <h2
-            class="font-heading text-2xl leading-6 font-bold text-gray-900 sm:truncate sm:text-3xl sm:leading-9 dark:text-white"
+            class="font-heading text-2xl font-bold text-gray-900 sm:truncate sm:text-3xl dark:text-white"
         >
             {{ $title }}
         </h2>
