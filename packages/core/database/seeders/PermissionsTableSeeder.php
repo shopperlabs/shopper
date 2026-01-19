@@ -70,6 +70,8 @@ final class PermissionsTableSeeder extends Seeder
         Permission::generate('orders');
         Permission::generate('inventories', 'products');
         Permission::generate('attributes', 'products');
+        Permission::generate('reviews', 'products');
+        Permission::generate('product_variants', 'products');
         Permission::generate('products');
 
         Schema::enableForeignKeyConstraints();
