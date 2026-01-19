@@ -56,9 +56,9 @@ class DefaultItem implements Item, Serializable
 
     protected string $toggleActiveIcon = 'untitledui-chevron-up';
 
-    protected string $toggleIconClass = 'h-5 w-5';
+    protected string $toggleIconClass = 'size-5';
 
-    protected string $toggleActiveIconClass = 'h-5 w-5';
+    protected string $toggleActiveIconClass = 'size-5';
 
     protected bool $activeWhen = false;
 

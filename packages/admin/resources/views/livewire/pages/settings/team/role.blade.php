@@ -69,10 +69,10 @@
                         {{ $this->form }}
 
                         <div class="mt-5 text-right">
-                            <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
+                            <x-filament::button type="submit" wire:loading.attr="disabled">
                                 <x-shopper::loader wire:loading wire:target="save" class="text-white" />
                                 {{ __('shopper::forms.actions.update') }}
-                            </x-shopper::buttons.primary>
+                            </x-filament::button>
                         </div>
                     </form>
                 </div>

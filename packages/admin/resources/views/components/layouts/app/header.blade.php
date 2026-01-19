@@ -3,7 +3,7 @@
 >
     <button
         @click.stop="sidebarOpen = true"
-        class="border-r border-gray-200 px-4 text-gray-500 focus:bg-gray-100 focus:text-gray-600 focus:outline-none lg:hidden dark:border-white/10 dark:focus:bg-gray-800 dark:focus:text-gray-500"
+        class="border-r border-gray-200 px-4 text-gray-500 lg:hidden dark:border-white/10"
         aria-label="Open sidebar"
     >
         <x-untitledui-menu-03 class="size-6" aria-hidden="true" />

@@ -30,13 +30,13 @@
         </div>
         <div class="mt-8 border-t border-dashed border-gray-200 pt-10 dark:border-white/10">
             <div class="flex items-center justify-between space-x-4">
-                <x-shopper::buttons.default type="button" wire:click="previousStep">
+                <x-filament::button color="gray" type="button" wire:click="previousStep">
                     {{ __('shopper::forms.actions.back') }}
-                </x-shopper::buttons.default>
-                <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
+                </x-filament::button>
+                <x-filament::button type="submit" wire:loading.attr="disabled">
                     <x-shopper::loader wire:loading wire:target="save" class="text-white" aria-hidden="true" />
                     {{ __('shopper::pages/onboarding.action') }}
-                </x-shopper::buttons.primary>
+                </x-filament::button>
             </div>
         </div>
     </form>

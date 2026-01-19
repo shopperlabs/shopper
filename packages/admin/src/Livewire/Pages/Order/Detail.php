@@ -22,7 +22,7 @@ use Shopper\Core\Events\Orders\OrderCancel;
 use Shopper\Core\Events\Orders\OrderCompleted;
 use Shopper\Core\Events\Orders\OrderPaid;
 use Shopper\Core\Events\Orders\OrderRegistered;
-use Shopper\Core\Models\Contracts\Order as OrderContract;
+use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -35,7 +35,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
     use InteractsWithSchemas;
     use WithPagination;
 
-    public OrderContract $order;
+    public Order $order;
 
     public int $perPage = 3;
 
@@ -180,11 +180,11 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
                 ->items()
                 ->with('product', 'product.media', 'product.prices')
                 ->simplePaginate($this->perPage),
-            'nextOrder' => resolve(OrderContract::class)::query()
+            'nextOrder' => resolve(Order::class)::query()
                 ->where('id', '>', $this->order->id)
                 ->oldest('id')
                 ->first(),
-            'prevOrder' => resolve(OrderContract::class)::query()
+            'prevOrder' => resolve(Order::class)::query()
                 ->where('id', '<', $this->order->id)
                 ->latest('id')
                 ->first(),

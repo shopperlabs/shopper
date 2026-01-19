@@ -87,9 +87,9 @@
                                 {{ __('shopper::pages/auth.two_factor.use_authentication_code') }}
                             </button>
                         </p>
-                        <x-shopper::buttons.primary type="submit">
+                        <x-filament::button type="submit">
                             {{ __('shopper::pages/auth.two_factor.action') }}
-                        </x-shopper::buttons.primary>
+                        </x-filament::button>
                     </div>
                 </form>
             </div>

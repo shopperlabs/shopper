@@ -147,6 +147,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->deselectRecordsAfterCompletion(),
             ])
             ->persistFiltersInSession()
+            ->emptyState(view('shopper::livewire.tables.empty-states.categories'))
             ->headerActions([
                 Action::make('reorder')
                     ->label(__('shopper::words.reorder'))

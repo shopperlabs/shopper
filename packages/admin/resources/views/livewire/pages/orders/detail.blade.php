@@ -72,12 +72,12 @@
                             />
                         @endif
 
-                        <span class="relative z-0 inline-flex shadow-sm">
+                        <span class="relative z-0 inline-flex">
                             <button
                                 @if($prevOrder) wire:click="goToOrder({{ $prevOrder->id }})" @endif
                                 type="button"
                                 @class([
-                                    'focus:shadow-outline-primary focus:border-primary-300 relative inline-flex items-center rounded-l-lg border border-gray-300 px-2 py-2 text-sm leading-5 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
+                                    'focus:shadow-outline-primary focus:border-primary-300 relative inline-flex items-center rounded-l-lg border border-gray-300 px-2 py-2 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
                                     'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $prevOrder,
                                     'bg-white' => $prevOrder,
                                 ])
@@ -90,7 +90,7 @@
                                 @if($nextOrder) wire:click="goToOrder({{ $nextOrder->id }})" @endif
                                 type="button"
                                 @class([
-                                    'focus:shadow-outline-primary focus:border-primary-300 relative -ml-px inline-flex items-center rounded-r-lg border border-gray-300 px-2 py-2 text-sm leading-5 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
+                                    'focus:shadow-outline-primary focus:border-primary-300 relative -ml-px inline-flex items-center rounded-r-lg border border-gray-300 px-2 py-2 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
                                     'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $nextOrder,
                                     'bg-white' => $nextOrder,
                                 ])
@@ -116,15 +116,13 @@
                             <span class="text-sm font-medium whitespace-nowrap text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::words.per_page') }}
                             </span>
-                            <x-shopper::forms.select
-                                wire:model="perPage"
-                                class="!w-20"
-                                aria-label="{{ __('shopper::words.per_page_items') }}"
-                            >
-                                <option value="3">3</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                            </x-shopper::forms.select>
+                            <x-filament::input.wrapper aria-label="{{ __('shopper::words.per_page_items') }}">
+                                <x-filament::input.select wire:model.live="perPage">
+                                    <option value="3">3</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                </x-filament::input.select>
+                            </x-filament::input.wrapper>
                         </div>
                     </div>
                     <div class="mt-4">
@@ -145,7 +143,7 @@
                                             <div class="min-w-0 flex-1 px-4 lg:grid lg:grid-cols-4 lg:gap-4">
                                                 <div class="lg:col-span-2">
                                                     <div
-                                                        class="truncate text-sm leading-5 font-medium text-gray-900 dark:text-white"
+                                                        class="truncate text-sm font-medium text-gray-900 dark:text-white"
                                                     >
                                                         {{ $item->name }}
                                                     </div>
@@ -158,7 +156,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="hidden lg:block">
-                                                    <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                                                    <span class="text-sm text-gray-500 dark:text-gray-400">
                                                         {{ shopper_money_format($item->unit_price_amount, $order->currency_code) }}
                                                         x
                                                         {{ $item->quantity }}
@@ -166,7 +164,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">
+                                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
                                             {{ shopper_money_format($item->total, $order->currency_code) }}
                                         </p>
                                     </div>
@@ -189,7 +187,7 @@
                                     {{ shopper_money_format($order->total(), $order->currency_code) }}
                                 </span>
                             </div>
-                            <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/orders.total_price_description') }}
                             </p>
                         </div>
@@ -199,6 +197,7 @@
                     <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::words.payment_method') }}
                     </h3>
+
                     @if ($order->paymentMethod)
                         <div class="flex py-4">
                             @if ($order->paymentMethod->logo)
@@ -242,9 +241,9 @@
                                             {{ __('shopper::pages/orders.no_payment_method') }}
                                         </p>
                                         <a
-                                            href="https://laravelshopper.dev/docs/2.x/payment-methods"
+                                            href="https://docs.laravelshopper.dev/{{ shopper()->version() }}/payment-methods"
                                             target="_blank"
-                                            class="mt-1.5 inline-flex text-sm leading-5 font-medium text-yellow-700 underline hover:text-yellow-600"
+                                            class="mt-1.5 inline-flex text-sm font-medium text-yellow-700 underline hover:text-yellow-600"
                                         >
                                             {{ __('shopper::pages/orders.read_about_payment') }}
                                         </a>
@@ -261,7 +260,7 @@
                     <div class="mt-4">
                         @if ($order->shippingOption)
                             <dl
-                                class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white ring-1 ring-gray-200 dark:divide-white/10 dark:bg-gray-800 dark:bg-gray-900 dark:ring-white/10"
+                                class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white ring-1 ring-gray-200 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10"
                             >
                                 <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4">
                                     <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -311,7 +310,7 @@
                                         <p class="text-sm text-yellow-700">
                                             {{ __('shopper::pages/orders.no_shipping_method') }}
                                             <a
-                                                href="https://laravelshopper.dev/docs/{{ shopper()->version() }}/shipping"
+                                                href="https://docs.laravelshopper.dev/{{ shopper()->version() }}/shipping"
                                                 target="_blank"
                                                 class="font-medium text-yellow-700 underline hover:text-yellow-600"
                                             >
@@ -354,7 +353,7 @@
                         </div>
                         <div class="min-w-0 flex-1">
                             @if ($order->notes)
-                                <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
                                     {{ $order->notes }}
                                 </p>
                             @else
@@ -375,14 +374,14 @@
                                     @enderror
                                 </div>
                                 <div class="mt-6 flex items-center justify-end space-x-4">
-                                    <x-shopper::buttons.primary
+                                    <x-filament::button
                                         wire:click="leaveNotes"
                                         wire:loading.attr="disabled"
                                         type="button"
                                     >
                                         <x-shopper::loader wire:loading wire:target="leaveNotes" />
                                         {{ __('shopper::forms.actions.send') }}
-                                    </x-shopper::buttons.primary>
+                                    </x-filament::button>
                                 </div>
                             @endif
                         </div>
@@ -414,13 +413,13 @@
                                 <div>
                                     <x-shopper::link
                                         href="{{ route('shopper.customers.show', $customer) }}"
-                                        class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm leading-5 font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-white/10 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                                        class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-white/10 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                                     >
                                         {{ __('shopper::words.view') }}
                                     </x-shopper::link>
                                 </div>
                             </div>
-                            <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/orders.customer_date', ['date' => $customer->created_at->diffForHumans()]) }},
                                 {{ __('shopper::pages/orders.customer_orders', ['number' => $customer->orders_count]) }}
                             </p>
@@ -447,7 +446,7 @@
 
                     @if ($customer)
                         <div class="space-y-1">
-                            <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
                                 <a
                                     href="mailto:{{ $customer->email }}"
                                     class="text-primary-600 hover:text-primary-500 underline"
@@ -455,7 +454,7 @@
                                     {{ $customer->email }}
                                 </a>
                             </p>
-                            <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
                                 {{ $customer->phone_number ?? __('shopper::words.no_phone_number') }}
                             </p>
                         </div>

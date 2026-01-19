@@ -7,7 +7,7 @@
 
         @if ($relatedProducts->isNotEmpty())
             <div class="mt-6 lg:mt-0">
-                <x-shopper::buttons.primary
+                <x-filament::button
                     type="button"
                     wire:click="$dispatch('openModal', {
                         component: 'shopper-modals.related-products-list',
@@ -15,7 +15,7 @@
                     })"
                 >
                     {{ __('shopper::layout.account_dropdown.add_product') }}
-                </x-shopper::buttons.primary>
+                </x-filament::button>
             </div>
         @endif
     </div>
@@ -78,7 +78,7 @@
                 :description="__('shopper::pages/products.related.add_content')"
             >
                 <x-slot:action>
-                    <x-shopper::buttons.primary
+                    <x-filament::button
                         type="button"
                         wire:click="$dispatch('openModal', {
                             component: 'shopper-modals.related-products-list',
@@ -87,7 +87,7 @@
                     >
                         <x-untitledui-plus class="mr-2 size-5" stroke-width="1.5" aria-hidden="true" />
                         {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/products.single')]) }}
-                    </x-shopper::buttons.primary>
+                    </x-filament::button>
                 </x-slot>
             </x-shopper::empty-card>
         @endif

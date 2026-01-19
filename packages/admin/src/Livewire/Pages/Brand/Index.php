@@ -145,7 +145,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
             ->filters([
                 TernaryFilter::make('is_enabled'),
             ])
-            ->persistFiltersInSession();
+            ->persistFiltersInSession()
+            ->emptyState(view('shopper::livewire.tables.empty-states.brands'));
     }
 
     public function render(): View

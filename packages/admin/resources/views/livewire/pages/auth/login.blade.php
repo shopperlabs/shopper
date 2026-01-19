@@ -74,7 +74,7 @@
         </div>
 
         <div class="mt-6">
-            <x-shopper::buttons.primary type="submit" class="group relative w-full justify-center">
+            <x-filament::button type="submit" class="group relative w-full justify-center">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3" wire:target="authenticate">
                     <x-untitledui-lock-04
                         class="text-primary-500 group-hover:text-primary-400 size-5"
@@ -84,7 +84,7 @@
                     <x-shopper::loader wire:loading wire:target="authenticate" class="text-white" aria-hidden="true" />
                 </span>
                 {{ __('shopper::pages/auth.login.action') }}
-            </x-shopper::buttons.primary>
+            </x-filament::button>
         </div>
     </form>
 

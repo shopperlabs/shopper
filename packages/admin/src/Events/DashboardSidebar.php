@@ -25,8 +25,8 @@ final class DashboardSidebar extends AbstractAdminSidebar
                 $item->useSpa();
                 $item->route('shopper.dashboard');
                 $item->setIcon(
-                    icon: 'untitledui-home-line',
-                    iconClass: 'mr-3 h-5 w-5 '.($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                    icon: 'phosphor-monitor',
+                    iconClass: 'size-5 '.($item->isActive() ? 'text-primary-500' : 'text-gray-400 dark:text-gray-500'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ]

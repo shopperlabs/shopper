@@ -3,9 +3,9 @@
         class="from-primary-600 to-primary-100 dark:to-primary-600/10 h-1 bg-linear-to-br"
     ></div>
     <div class="flex h-full flex-col">
-        <div class="px-4 py-5">
+        <div class="px-3 py-4">
             <div
-                class="relative flex items-start rounded-lg bg-white px-3 py-2.5 shadow-sm ring-1 ring-gray-200 dark:bg-white/5 dark:ring-gray-800"
+                class="relative flex items-start rounded-lg bg-white px-3 py-2.5 shadow ring-1 ring-gray-200 dark:bg-white/5 dark:ring-gray-800"
             >
                 <x-shopper::link class="shrink-0" :href="route('shopper.dashboard')">
                     <x-shopper::brand class="size-8" aria-hidden="true" />
@@ -36,9 +36,8 @@
                             'sh-sidebar-item-inactive' => ! request()->routeIs('shopper.settings*'),
                         ])
                     >
-                        <x-untitledui-sliders
+                        <x-phosphor-faders
                             @class(['size-5', 'text-gray-400' => ! request()->routeIs('shopper.settings*')])
-                            stroke-width="1.5"
                             aria-hidden="true"
                         />
                         {{ __('shopper::pages/settings/global.menu') }}
@@ -51,7 +50,7 @@
                         target="_blank"
                         class="sh-sidebar-item sh-sidebar-item-inactive gap-2"
                     >
-                        <x-untitledui-code-browser class="size-5 text-gray-400 dark:text-gray-500" stroke-width="1.5" aria-hidden="true" />
+                        <x-phosphor-brackets-curly class="size-5 text-gray-400 dark:text-gray-500" aria-hidden="true" />
                         {{ __('shopper::pages/dashboard.cards.doc_title') }}
                     </a>
                 @endif

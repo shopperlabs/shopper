@@ -37,7 +37,7 @@
 
     <x-slot name="buttons">
         @if ($this->products->isNotEmpty())
-            <x-shopper::buttons.primary
+            <x-filament::button
                 wire:click="addSelectedProducts"
                 wire.loading.attr="disabled"
                 :disabled="count($selectedProducts) <= 0"
@@ -46,15 +46,16 @@
             >
                 <x-shopper::loader wire:loading wire:target="addSelectedProducts" class="text-white" />
                 {{ __('shopper::pages/collections.modal.action') }}
-            </x-shopper::buttons.primary>
+            </x-filament::button>
         @endif
 
-        <x-shopper::buttons.default
+        <x-filament::button
+            color="gray"
             wire:click="$dispatch('closeModal')"
             type="button"
             class="mt-3 w-full sm:mt-0 sm:w-auto"
         >
             {{ __('shopper::forms.actions.cancel') }}
-        </x-shopper::buttons.default>
+        </x-filament::button>
     </x-slot>
 </x-shopper::modal>

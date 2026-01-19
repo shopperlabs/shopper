@@ -85,8 +85,8 @@
     </div>
 
     <div class="flex shrink-0 justify-end space-x-4 p-4">
-        <x-shopper::buttons.default wire:click="$dispatch('closePanel')" type="button">
+        <x-filament::button color="gray" wire:click="$dispatch('closePanel')" type="button">
             {{ __('shopper::forms.actions.close') }}
-        </x-shopper::buttons.default>
+        </x-filament::button>
     </div>
 </div>

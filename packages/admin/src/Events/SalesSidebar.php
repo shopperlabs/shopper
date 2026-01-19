@@ -16,7 +16,7 @@ final class SalesSidebar extends AbstractAdminSidebar
 {
     public function extendWith(Menu $menu): Menu
     {
-        $count = Order::query()->where('status', OrderStatus::Pending())->count();
+        $count = Order::query()->where('status', OrderStatus::Pending)->count();
 
         $menu->group(__('shopper::layout.sidebar.sales'), function (Group $group) use ($count): void {
             $group->weight(3);
@@ -38,8 +38,8 @@ final class SalesSidebar extends AbstractAdminSidebar
                 $item->useSpa();
                 $item->route('shopper.orders.index');
                 $item->setIcon(
-                    icon: 'untitledui-shopping-bag',
-                    iconClass: 'size-5 '.($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
+                    icon: 'phosphor-shopping-bag',
+                    iconClass: 'size-5 '.($item->isActive() ? 'text-primary-500' : 'text-gray-400 dark:text-gray-500'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ],
@@ -56,8 +56,8 @@ final class SalesSidebar extends AbstractAdminSidebar
                     $item->useSpa();
                     $item->route('shopper.discounts.index');
                     $item->setIcon(
-                        icon: 'untitledui-sale-03',
-                        iconClass: 'size-5 '.($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
+                        icon: 'phosphor-seal-percent',
+                        iconClass: 'size-5 '.($item->isActive() ? 'text-primary-500' : 'text-gray-400 dark:text-gray-500'),
                         attributes: [
                             'stroke-width' => '1.5',
                         ],

@@ -73,14 +73,14 @@
                     </p>
                 </div>
                 <div>
-                    <x-shopper::buttons.primary
+                    <x-filament::button
                         wire:click="$dispatch('openPanel', {
                             component: 'shopper-slide-overs.create-team-member'
                         })"
                     >
                         <x-untitledui-user-plus class="mr-2 size-5" aria-hidden="true" />
                         {{ __('shopper::pages/settings/staff.add_admin') }}
-                    </x-shopper::buttons.primary>
+                    </x-filament::button>
                 </div>
             </div>
 

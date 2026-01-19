@@ -163,8 +163,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             fn (Builder $query, mixed $date): Builder => $query->whereDate('start_at', '<=', $date),
                         )),
             ])
-            ->emptyStateIcon('heroicon-o-gift')
-            ->emptyStateHeading(__('shopper::pages/discounts.empty_message'));
+            ->emptyState(view('shopper::livewire.tables.empty-states.discounts'));
     }
 
     public function render(): View

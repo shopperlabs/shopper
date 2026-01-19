@@ -3,7 +3,7 @@
 }
 
 .sh-heading {
-  @apply mb-2 ml-3 text-xs leading-5 font-medium tracking-wider text-gray-500 dark:text-gray-400;
+  @apply mb-2 ml-3 text-xs uppercase leading-5 font-semibold tracking-wider text-gray-600 dark:text-gray-400;
 }
 
 .sh-sidebar-item {
@@ -11,7 +11,7 @@
 }
 
 .sh-sidebar-item-active {
-  @apply text-primary-600 dark:text-primary-500 bg-white shadow ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-white/10;
+  @apply text-primary-600 dark:text-primary-500 bg-white shadow ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/10;
 }
 
 .sh-sidebar-item-inactive {
@@ -35,7 +35,7 @@
 }
 
 .submenu {
-  @apply my-3 ml-5 hidden space-y-2 border-l border-gray-200 py-2.5 lg:space-y-3 dark:border-white/20;
+  @apply ml-5 hidden space-y-2 border-l border-gray-200 py-2.5 lg:space-y-3 dark:border-white/20;
 }
 
 .current-group .submenu {

@@ -530,7 +530,7 @@ public function mount(): void
 
 // In Blade
 @can('add_products')
-    <x-shopper::buttons.primary>Add Product</x-shopper::buttons.primary>
+    <x-filament::button>Add Product</x-filament::button>
 @endcan
 </code-snippet>
 @endverbatim
@@ -593,8 +593,8 @@ Use these Shopper Blade components in your custom pages:
 - `<x-shopper::card>` - Card wrapper
 - `<x-shopper::heading :title="$title">` - Page heading with optional action slot
 - `<x-shopper::breadcrumb>` - Breadcrumb navigation
-- `<x-shopper::buttons.primary>` - Primary button
-- `<x-shopper::buttons.default>` - Default button
+- `<x-filament::button>` - Primary button
+- `<x-filament::button color="gray">` - Gray/default button
 - `<x-shopper::empty-card>` - Empty state card
 - `<x-shopper::badge>` - Status badge
 - `<x-shopper::separator>` - Section separator

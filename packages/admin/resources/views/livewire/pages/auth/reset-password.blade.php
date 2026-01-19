@@ -45,10 +45,10 @@
         </div>
 
         <div class="mt-5">
-            <x-shopper::buttons.primary type="submit" class="w-full justify-center">
+            <x-filament::button type="submit" class="w-full justify-center">
                 <x-shopper::loader wire:loading wire:target="resetPassword" class="text-white" />
                 {{ __('shopper::pages/auth.reset.action') }}
-            </x-shopper::buttons.primary>
+            </x-filament::button>
         </div>
     </form>
 </x-shopper::auth-card>

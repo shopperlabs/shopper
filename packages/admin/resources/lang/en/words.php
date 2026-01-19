@@ -32,8 +32,10 @@ return [
     'same_address' => 'Same as shipping address',
 
     'showing' => 'Showing',
+    'from' => 'From',
     'to' => 'to',
     'of' => 'of',
+    'number' => 'Number',
     'results' => 'results',
     'media' => 'Media',
     'hide' => 'Hide',

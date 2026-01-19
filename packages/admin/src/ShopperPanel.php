@@ -77,6 +77,6 @@ final class ShopperPanel
 
     public function version(): string
     {
-        return '2.x';
+        return 'v2';
     }
 }

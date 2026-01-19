@@ -128,7 +128,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->constraintPickerColumns(),
             ])
             ->deferFilters()
-            ->filtersFormWidth(Width::Large);
+            ->filtersFormWidth(Width::Large)
+            ->emptyState(view('shopper::livewire.tables.empty-states.products'));
     }
 
     public function render(): View

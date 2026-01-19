@@ -47,10 +47,10 @@
         @enderror
 
         <div class="mt-5">
-            <x-shopper::buttons.primary type="submit" class="w-full justify-center">
+            <x-filament::button type="submit" class="w-full justify-center">
                 <x-shopper::loader wire:loading wire:target="sendResetPasswordLink" class="text-white" />
                 {{ __('shopper::pages/auth.email.action') }}
-            </x-shopper::buttons.primary>
+            </x-filament::button>
         </div>
         <p class="mt-5 text-center text-sm">
             <x-shopper::link

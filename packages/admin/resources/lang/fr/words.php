@@ -32,8 +32,10 @@ return [
     'same_address' => 'Identique à l\'adresse de livraison',
 
     'showing' => 'Affichage',
+    'from' => 'Du',
     'to' => 'à',
     'of' => 'de',
+    'number' => 'Numéro',
     'results' => 'résultats',
     'media' => 'Média',
     'hide' => 'Masquer',

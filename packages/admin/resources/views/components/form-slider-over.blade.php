@@ -35,12 +35,12 @@
         {{ $slot }}
     </div>
     <div class="flex shrink-0 justify-end gap-3 p-4">
-        <x-shopper::buttons.default wire:click="$dispatch('closePanel')" type="button" class="mt-3 sm:mt-0 sm:w-auto">
+        <x-filament::button color="gray" wire:click="$dispatch('closePanel')" type="button" class="mt-3 sm:mt-0 sm:w-auto">
             {{ __('shopper::forms.actions.cancel') }}
-        </x-shopper::buttons.default>
-        <x-shopper::buttons.primary type="submit" wire.loading.attr="disabled">
+        </x-filament::button>
+        <x-filament::button type="submit" wire.loading.attr="disabled">
             <x-shopper::loader wire:loading wire:target="{{ $action }}" class="text-white" />
             {{ __('shopper::forms.actions.save') }}
-        </x-shopper::buttons.primary>
+        </x-filament::button>
     </div>
 </form>

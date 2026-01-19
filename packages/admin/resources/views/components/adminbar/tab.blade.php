@@ -5,7 +5,7 @@
 >
     <svg
         :class="{ 'translate-x-full ml-4 opacity-0' : barOpen }"
-        class="absolute size-5 flex-shrink-0 -translate-x-px scale-100 opacity-60 duration-300 ease-out group-hover:opacity-100"
+        class="absolute size-5 shrink-0 -translate-x-px scale-100 opacity-60 duration-300 ease-out group-hover:opacity-100"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"

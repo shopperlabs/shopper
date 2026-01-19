@@ -1,6 +1,6 @@
 <div class="relative isolate flex min-h-screen items-center justify-center">
     <svg
-        class="absolute inset-0 -z-10 hidden h-full w-full [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] stroke-gray-200 sm:block dark:stroke-gray-900"
+        class="absolute inset-0 -z-10 hidden size-full mask-[radial-gradient(64rem_64rem_at_top,white,transparent)] stroke-gray-200 sm:block dark:stroke-gray-900"
         aria-hidden="true"
     >
         <defs>
@@ -28,7 +28,7 @@
         aria-hidden="true"
     >
         <div
-            class="from-primary-400 to-primary-600 dark:from-primary-200 dark:to-primary-500 aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r opacity-20"
+            class="from-primary-400 to-primary-600 dark:from-primary-200 dark:to-primary-500 aspect-1108/632 w-277 flex-none bg-linear-to-r opacity-20"
             style="
                 clip-path: polygon(
                     73.6% 51.7%,
@@ -53,10 +53,10 @@
     </div>
     <div class="relative w-full max-w-md">
         <div
-            class="absolute inset-x-0 -top-6 max-w-md scale-90 transform rounded-xl bg-gradient-to-b from-gray-50/70 px-6 py-10 ring-1 ring-gray-200 backdrop-blur-sm dark:from-gray-800/60 dark:ring-gray-700/50"
+            class="absolute inset-x-0 -top-6 max-w-md scale-90 transform rounded-xl bg-linear-to-b from-gray-50/70 px-6 py-10 ring-1 ring-gray-200 backdrop-blur-sm dark:from-gray-800/60 dark:ring-gray-700/50"
         ></div>
         <div
-            class="absolute inset-x-0 -top-3.5 max-w-md scale-95 transform rounded-xl bg-gradient-to-b from-gray-50/70 px-6 py-10 ring-1 ring-gray-200 backdrop-blur-sm dark:from-gray-800/60 dark:ring-gray-700/50"
+            class="absolute inset-x-0 -top-3.5 max-w-md scale-95 transform rounded-xl bg-linear-to-b from-gray-50/70 px-6 py-10 ring-1 ring-gray-200 backdrop-blur-sm dark:from-gray-800/60 dark:ring-gray-700/50"
         ></div>
         <div
             {{ $attributes->twMerge(['class' => 'relative w-full max-w-md overflow-hidden border-t border-gray-200 dark:border-gray-700/50 px-6 py-10 rounded-xl backdrop-blur-sm bg-gradient-to-b from-gray-50/70 dark:from-gray-800/60']) }}

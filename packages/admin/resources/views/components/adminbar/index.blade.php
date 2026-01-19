@@ -24,7 +24,7 @@
     <x-shopper::adminbar.tab />
 
     <div x-show="iframeOpen" class="relative z-20 flex h-dvh w-dvw items-center justify-center">
-        <div :class="{ 'pl-[42px] py-1 pr-5': barOpen }" class="absolute size-full">
+        <div :class="{ 'pl-10.5 py-1 pr-5': barOpen }" class="absolute size-full">
             <div
                 class="h-full rounded-md bg-gray-900/5 p-2 ring-1 ring-gray-900/20 ring-inset lg:rounded-xl lg:p-2.5 dark:bg-gray-100/30 dark:ring-gray-100/10"
             >

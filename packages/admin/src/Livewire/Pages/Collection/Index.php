@@ -102,7 +102,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     })
                     ->visible(Shopper::auth()->user()->can('delete_collections'))
                     ->deselectRecordsAfterCompletion(),
-            ]);
+            ])
+            ->emptyState(view('shopper::livewire.tables.empty-states.collections'));
     }
 
     public function render(): View

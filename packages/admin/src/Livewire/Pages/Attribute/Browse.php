@@ -157,7 +157,8 @@ class Browse extends AbstractPageComponent implements HasActions, HasForms, HasT
                     ->label(__('shopper::forms.label.is_searchable')),
                 TernaryFilter::make('is_filterable')
                     ->label(__('shopper::forms.label.is_filterable')),
-            ]);
+            ])
+            ->emptyState(view('shopper::livewire.tables.empty-states.attributes'));
     }
 
     public function render(): View
