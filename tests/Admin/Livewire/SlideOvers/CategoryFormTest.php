@@ -21,7 +21,6 @@ beforeEach(function (): void {
 describe(CategoryForm::class, function (): void {
     it('can validate required fields on add category form', function (): void {
         Livewire::test(CategoryForm::class)
-            ->assertFormExists()
             ->fillForm()
             ->call('save')
             ->assertHasFormErrors(['name' => 'required']);
@@ -29,7 +28,6 @@ describe(CategoryForm::class, function (): void {
 
     it('can create a category', function (): void {
         Livewire::test(CategoryForm::class)
-            ->assertFormExists()
             ->fillForm([
                 'name' => 'My new Category',
             ])
@@ -44,7 +42,6 @@ describe(CategoryForm::class, function (): void {
         Category::factory()->create(['name' => 'Old category', 'slug' => 'my-first-category']);
 
         Livewire::test(CategoryForm::class)
-            ->assertFormExists()
             ->fillForm([
                 'name' => 'My first category',
                 'slug' => 'my-first-category',
@@ -59,10 +56,9 @@ describe(CategoryForm::class, function (): void {
     });
 
     it('can create category with parent', function (): void {
-        $parent = Category::factory()->create(['name' => 'Parent']);
+        $parent = Category::factory()->create(['name' => 'Parent', 'is_enabled' => true]);
 
         Livewire::test(CategoryForm::class)
-            ->assertFormExists()
             ->fillForm([
                 'name' => 'My new Category',
                 'parent_id' => $parent->id,

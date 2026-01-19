@@ -162,13 +162,17 @@ class GenerateVariants extends SlideOverComponent
 
                 if ($existing) {
                     $variantId = null;
-                    $sku = \Illuminate\Support\Arr::join([
-                        $this->product->sku,
-                        mb_strtoupper(Str::slug(Arr::performPermutationIntoWord($permutation, 'value', '-'))),
-                    ], '-');
+                    $sku = null;
                     $price = 0;
                     $stock = 0;
                 }
+            }
+
+            if ($sku === null) {
+                $variantSlug = mb_strtoupper(Str::slug(Arr::performPermutationIntoWord($permutation, 'value', '-')));
+                $sku = $this->product->sku
+                    ? "{$this->product->sku}-{$variantSlug}"
+                    : $variantSlug;
             }
 
             $variantPermutations[] = [

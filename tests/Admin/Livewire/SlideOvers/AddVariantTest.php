@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
+use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
@@ -104,25 +105,33 @@ describe(AddVariant::class, function (): void {
     });
 
     it('can create variant with attribute values', function (): void {
-        $colorAttribute = Attribute::factory()->create(['name' => 'Color']);
+        $colorAttribute = Attribute::factory()->create([
+            'name' => 'Color',
+            'type' => FieldType::Select,
+        ]);
         $redValue = AttributeValue::factory()->create(['attribute_id' => $colorAttribute->id, 'value' => 'Red']);
-        AttributeValue::factory()->create(['attribute_id' => $colorAttribute->id, 'value' => 'Blue']);
+        $blueValue = AttributeValue::factory()->create(['attribute_id' => $colorAttribute->id, 'value' => 'Blue']);
 
-        $sizeAttribute = Attribute::factory()->create(['name' => 'Size']);
+        $sizeAttribute = Attribute::factory()->create([
+            'name' => 'Size',
+            'type' => FieldType::Select,
+        ]);
         $smallValue = AttributeValue::factory()->create(['attribute_id' => $sizeAttribute->id, 'value' => 'Small']);
-        AttributeValue::factory()->create(['attribute_id' => $sizeAttribute->id, 'value' => 'Large']);
+        $largeValue = AttributeValue::factory()->create(['attribute_id' => $sizeAttribute->id, 'value' => 'Large']);
 
-        $this->product->options()->attach([$colorAttribute->id, $sizeAttribute->id]);
+        // Attach attribute values to the product (not just attributes)
+        $this->product->options()->attach($colorAttribute->id, ['attribute_value_id' => $redValue->id]);
+        $this->product->options()->attach($colorAttribute->id, ['attribute_value_id' => $blueValue->id]);
+        $this->product->options()->attach($sizeAttribute->id, ['attribute_value_id' => $smallValue->id]);
+        $this->product->options()->attach($sizeAttribute->id, ['attribute_value_id' => $largeValue->id]);
 
-        Livewire::test(AddVariant::class, ['product' => $this->product])
-            ->fillForm([
-                'name' => 'Red Small Variant',
-                'sku' => 'RED-SMALL',
-                'values' => [
-                    $colorAttribute->id => $redValue->id,
-                    $sizeAttribute->id => $smallValue->id,
-                ],
-            ])
+        $product = Product::query()->find($this->product->id);
+
+        Livewire::test(AddVariant::class, ['product' => $product])
+            ->set('data.name', 'Red Small Variant')
+            ->set('data.sku', 'RED-SMALL')
+            ->set('data.values.'.$colorAttribute->id, $redValue->id)
+            ->set('data.values.'.$sizeAttribute->id, $smallValue->id)
             ->call('save')
             ->assertHasNoFormErrors();
 
@@ -131,32 +140,42 @@ describe(AddVariant::class, function (): void {
         expect($variant->values->count())->toBe(2)
             ->and($variant->values->pluck('id')->toArray())
             ->toContain($redValue->id, $smallValue->id);
-    })->skip();
+    });
 
     it('prevents duplicate variant with same attribute values', function (): void {
-        $colorAttribute = Attribute::factory()->create(['name' => 'Color']);
+        $colorAttribute = Attribute::factory()->create([
+            'name' => 'Color',
+            'type' => FieldType::Select,
+        ]);
         $redValue = AttributeValue::factory()->create(['attribute_id' => $colorAttribute->id, 'value' => 'Red']);
 
-        $sizeAttribute = Attribute::factory()->create(['name' => 'Size']);
+        $sizeAttribute = Attribute::factory()->create([
+            'name' => 'Size',
+            'type' => FieldType::Select,
+        ]);
         $smallValue = AttributeValue::factory()->create(['attribute_id' => $sizeAttribute->id, 'value' => 'Small']);
 
-        $this->product->options()->attach([$colorAttribute->id, $sizeAttribute->id]);
+        // Attach attribute values to the product
+        $this->product->options()->attach($colorAttribute->id, ['attribute_value_id' => $redValue->id]);
+        $this->product->options()->attach($sizeAttribute->id, ['attribute_value_id' => $smallValue->id]);
 
+        // Create an existing variant with the same attribute values
         $existingVariant = ProductVariant::factory()->create(['product_id' => $this->product->id]);
         $existingVariant->values()->attach([$redValue->id, $smallValue->id]);
 
-        Livewire::test(AddVariant::class, ['product' => $this->product])
-            ->fillForm([
-                'name' => 'Duplicate Variant',
-                'sku' => 'DUP-VAR',
-                'values' => [
-                    $colorAttribute->id => $redValue->id,
-                    $sizeAttribute->id => $smallValue->id,
-                ],
-            ])
+        $product = Product::query()->find($this->product->id);
+
+        Livewire::test(AddVariant::class, ['product' => $product])
+            ->set('data.name', 'Duplicate Variant')
+            ->set('data.sku', 'DUP-VAR')
+            ->set('data.values.'.$colorAttribute->id, $redValue->id)
+            ->set('data.values.'.$sizeAttribute->id, $smallValue->id)
             ->call('save')
-            ->assertHasFormErrors();
-    })->skip();
+            ->assertNoRedirect();
+
+        // The save should have been halted, so only the existing variant should exist
+        expect(ProductVariant::query()->count())->toBe(1);
+    });
 
     it('redirects to variant page after creation', function (): void {
         Livewire::test(AddVariant::class, ['product' => $this->product])

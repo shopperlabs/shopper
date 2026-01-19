@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
+use Illuminate\Validation\Rules\Unique;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
@@ -81,10 +82,14 @@ class AddVariant extends SlideOverComponent implements HasActions, HasForms
                                     ->maxLength(255),
                                 TextInput::make('sku')
                                     ->label(__('shopper::forms.label.sku'))
-                                    ->unique(shopper_table('product_variants'), 'sku')
+                                    ->unique(
+                                        table: shopper_table('product_variants'),
+                                        column: 'sku',
+                                        modifyRuleUsing: fn (Unique $rule): Unique => $rule->where('product_id', $this->product->id)
+                                    )
                                     ->maxLength(255),
                                 Group::make()
-                                    ->visible(fn (): bool => count($this->variantsOptions) > 0)
+                                    ->visible(fn (): bool => $this->options->isNotEmpty())
                                     ->schema([
                                         TextEntry::make('options')
                                             ->label(__('shopper::pages/products.modals.variants.options.title'))
@@ -197,6 +202,15 @@ class AddVariant extends SlideOverComponent implements HasActions, HasForms
     public function save(): void
     {
         $data = $this->form->getState();
+
+        if (isset($data['values']) && $this->variantAlreadyExist($data['values'])) {
+            Notification::make()
+                ->title(__('shopper::pages/products.notifications.variant_already_exists'))
+                ->warning()
+                ->send();
+
+            return;
+        }
 
         /** @var Model&ProductVariant $variant */
         $variant = app()->call(CreateNewVariant::class, [

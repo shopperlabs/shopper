@@ -15,6 +15,7 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Size;
 use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
+use Illuminate\Validation\Rules\Unique;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -54,7 +55,12 @@ class Variant extends AbstractPageComponent implements HasActions, HasSchemas
             ->schema([
                 TextInput::make('sku')
                     ->label(__('shopper::forms.label.sku'))
-                    ->unique(config('shopper.models.variant'), 'sku', ignoreRecord: true)
+                    ->unique(
+                        table: config('shopper.models.variant'),
+                        column: 'sku',
+                        ignoreRecord: true,
+                        modifyRuleUsing: fn (Unique $rule): Unique => $rule->where('product_id', $this->variant->product_id)
+                    )
                     ->maxLength(255),
                 TextInput::make('barcode')
                     ->label(__('shopper::forms.label.barcode'))

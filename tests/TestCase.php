@@ -69,6 +69,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app): array
     {
         return [
+            LivewireServiceProvider::class,
             ActionsServiceProvider::class,
             BarcodeServiceProvider::class,
             BladeCaptureDirectiveServiceProvider::class,
@@ -79,7 +80,6 @@ abstract class TestCase extends BaseTestCase
             CoreServiceProvider::class,
             FilamentServiceProvider::class,
             PermissionServiceProvider::class,
-            LivewireServiceProvider::class,
             ShopperServiceProvider::class,
             SidebarServiceProvider::class,
             FormsServiceProvider::class,

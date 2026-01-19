@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Actions\Store\Product;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -25,58 +26,74 @@ final class SaveProductVariantsAction
     {
         DB::beginTransaction();
 
-        foreach ($variants as $variantState) {
-            /** @var ProductVariant $variant */
-            $variant = $variantState['variant_id']
-                ? resolve(ProductVariant::class)::query()->findOrFail($variantState['variant_id'])
-                : resolve(ProductVariant::class)::query()->create([
-                    'name' => $variantState['name'],
-                    'product_id' => $product->id,
-                    'sku' => $variantState['sku'],
-                ]);
+        try {
+            // Delete variants that are no longer in the list
+            $existingVariantIds = collect($variants)
+                ->pluck('variant_id')
+                ->filter()
+                ->values();
 
-            $price = (float) $variantState['price'];
+            /** @var Collection<int, Model&ProductVariant> $variantsToDelete */
+            $variantsToDelete = $product->variants()
+                ->when($existingVariantIds->isNotEmpty(), fn ($query): mixed => $query->whereNotIn('id', $existingVariantIds))
+                ->when($existingVariantIds->isEmpty(), fn ($query): mixed => $query)
+                ->get();
 
-            if ($price > 0) {
-                /** @var int $defaultCurrencyId */
-                $defaultCurrencyId = shopper_setting('default_currency_id');
+            $variantsToDelete->each(
+                /** @param Model&ProductVariant $variant */
+                fn (ProductVariant $variant) => $variant->delete()
+            );
 
-                $variant->prices()
-                    ->where('currency_id', $defaultCurrencyId)
-                    ->delete();
+            foreach ($variants as $key => $variantState) {
+                /** @var ProductVariant $variant */
+                $variant = $variantState['variant_id']
+                    ? resolve(ProductVariant::class)::query()->findOrFail($variantState['variant_id'])
+                    : resolve(ProductVariant::class)::query()->create([
+                        'name' => $variantState['name'],
+                        'product_id' => $product->id,
+                        'sku' => $variantState['sku'],
+                    ]);
 
-                $variant->prices()->create([
-                    'amount' => $price,
-                    'currency_id' => $defaultCurrencyId,
-                ]);
+                $variants[$key]['variant_id'] = $variant->id;
+
+                $price = (float) $variantState['price'];
+
+                if ($price > 0) {
+                    /** @var int $defaultCurrencyId */
+                    $defaultCurrencyId = shopper_setting('default_currency_id');
+
+                    $variant->prices()
+                        ->where('currency_id', $defaultCurrencyId)
+                        ->delete();
+
+                    $variant->prices()->create([
+                        'amount' => $price,
+                        'currency_id' => $defaultCurrencyId,
+                    ]);
+                }
+
+                /** @var int $stock */
+                $stock = data_get($variantState, 'stock');
+
+                if ($stock > 0) {
+                    $variant->clearStock();
+
+                    app()->call(InitialQuantityInventory::class, [
+                        'quantity' => $stock,
+                        'product' => $variant,
+                    ]);
+                }
+
+                $variant->values()->sync($variantState['values']);
             }
 
-            /** @var int $stock */
-            $stock = data_get($variantState, 'stock');
+            DB::commit();
 
-            if ($stock > 0) {
-                $variant->clearStock();
+            return $variants;
+        } catch (Throwable $e) {
+            DB::rollBack();
 
-                app()->call(InitialQuantityInventory::class, [
-                    'quantity' => $stock,
-                    'product' => $variant,
-                ]);
-            }
-
-            $variant->values()->sync($variantState['values']);
+            throw $e;
         }
-
-        $variantIds = collect($variants)->pluck('variant_id');
-
-        /** @var Collection<int, Model&ProductVariant> $variantsToDelete */
-        $variantsToDelete = $product->variants()->whereNotIn('id', $variantIds)->get();
-        $variantsToDelete->each(
-            /** @param Model&ProductVariant $variant */
-            fn (ProductVariant $variant) => $variant->delete()
-        );
-
-        DB::commit();
-
-        return $variants;
     }
 }
