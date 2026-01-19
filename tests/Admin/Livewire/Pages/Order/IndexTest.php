@@ -29,6 +29,7 @@ describe(Index::class, function (): void {
             ->create();
 
         Livewire::test(Index::class)
+            ->loadTable()
             ->assertCanSeeTableRecords($orders);
     });
 })->group('livewire', 'orders');

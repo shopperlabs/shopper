@@ -36,6 +36,7 @@ describe(Index::class, function (): void {
         ]);
 
         Livewire::test(Index::class)
+            ->loadTable()
             ->assertCanSeeTableRecords(Review::limit(3)->get());
     });
 

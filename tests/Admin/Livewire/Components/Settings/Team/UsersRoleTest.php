@@ -36,7 +36,8 @@ describe(UsersRole::class, function (): void {
 
         $component = Livewire::test(UsersRole::class, ['role' => $this->role]);
 
-        $component->assertCanSeeTableRecords([$editorUser])
+        $component->loadTable()
+            ->assertCanSeeTableRecords([$editorUser])
             ->assertCanNotSeeTableRecords([$otherUser]);
     });
 
@@ -48,6 +49,7 @@ describe(UsersRole::class, function (): void {
         $user->assignRole($this->role->name);
 
         Livewire::test(UsersRole::class, ['role' => $this->role])
+            ->loadTable()
             ->assertCanSeeTableRecords([$user]);
     });
 
@@ -65,6 +67,7 @@ describe(UsersRole::class, function (): void {
         $unverifiedUser->assignRole($this->role->name);
 
         Livewire::test(UsersRole::class, ['role' => $this->role])
+            ->loadTable()
             ->assertCanSeeTableRecords([$verifiedUser, $unverifiedUser]);
     });
 
@@ -73,6 +76,7 @@ describe(UsersRole::class, function (): void {
         $user->assignRole($this->role->name);
 
         Livewire::test(UsersRole::class, ['role' => $this->role])
+            ->loadTable()
             ->assertCanSeeTableRecords([$user]);
     });
 
@@ -81,6 +85,7 @@ describe(UsersRole::class, function (): void {
         $adminUser->assignRole(config('shopper.core.roles.admin'));
 
         Livewire::test(UsersRole::class, ['role' => Role::query()->where('name', config('shopper.core.roles.admin'))->first()])
+            ->loadTable()
             ->assertCanSeeTableRecords([$adminUser]);
     });
 
@@ -89,6 +94,7 @@ describe(UsersRole::class, function (): void {
         $limitedUser->assignRole($this->role->name);
 
         Livewire::test(UsersRole::class, ['role' => $this->role])
+            ->loadTable()
             ->assertCanSeeTableRecords([$limitedUser]);
     });
 
@@ -157,6 +163,7 @@ describe(UsersRole::class, function (): void {
         $supervisor->assignRole($supervisorRole->name);
 
         Livewire::test(UsersRole::class, ['role' => $this->role])
+            ->loadTable()
             ->assertCanSeeTableRecords([$editor1, $editor2])
             ->assertCanNotSeeTableRecords([$supervisor]);
     });

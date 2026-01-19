@@ -29,6 +29,7 @@ describe(Index::class, function (): void {
         Brand::factory()->count(3)->create();
 
         Livewire::test(Index::class)
+            ->loadTable()
             ->assertCanSeeTableRecords(Brand::limit(3)->get());
     });
 

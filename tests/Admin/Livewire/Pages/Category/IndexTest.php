@@ -27,6 +27,7 @@ describe(Index::class, function (): void {
         Category::factory()->count(3)->create();
 
         Livewire::test(Index::class)
+            ->loadTable()
             ->assertCanSeeTableRecords(Category::limit(3)->get());
     });
 

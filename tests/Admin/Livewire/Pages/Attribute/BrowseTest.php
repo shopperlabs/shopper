@@ -26,6 +26,7 @@ describe(Browse::class, function (): void {
         Attribute::factory()->count(3)->create();
 
         Livewire::test(Browse::class)
+            ->loadTable()
             ->assertCanSeeTableRecords(Attribute::limit(3)->get());
     });
 })->group('livewire', 'attributes');

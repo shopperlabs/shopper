@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Actions\Store\Product;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;

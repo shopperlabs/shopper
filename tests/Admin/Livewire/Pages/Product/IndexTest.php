@@ -30,6 +30,7 @@ describe(Index::class, function (): void {
         Product::factory()->count(3)->create();
 
         Livewire::test(Index::class)
+            ->loadTable()
             ->assertCanSeeTableRecords(resolve(ProductContract::class)::query()->limit(3)->get());
     });
 })->group('livewire', 'products');

@@ -104,10 +104,11 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
             ->recordActions([
                 Action::make('view')
                     ->label(__('shopper::words.details'))
-                    ->url(
-                        fn (Order $record): string => route(
+                    ->action(
+                        fn (Order $record): string => $this->redirectRoute(
                             name: 'shopper.orders.detail',
-                            parameters: ['order' => $record]
+                            parameters: ['order' => $record],
+                            navigate: true
                         ),
                     ),
             ])

@@ -27,6 +27,7 @@ describe(Index::class, function (): void {
         Collection::factory()->count(3)->create();
 
         Livewire::test(Index::class)
+            ->loadTable()
             ->assertCanSeeTableRecords(Collection::limit(3)->get());
     });
 
@@ -36,6 +37,7 @@ describe(Index::class, function (): void {
         $name = $collections->first()->name;
 
         Livewire::test(Index::class)
+            ->loadTable()
             ->searchTable($name)
             ->assertCanSeeTableRecords($collections->where('name', $name))
             ->assertCanNotSeeTableRecords($collections->where('name', '!=', $name));

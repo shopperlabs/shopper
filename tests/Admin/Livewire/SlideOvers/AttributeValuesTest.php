@@ -50,6 +50,7 @@ describe(AttributeValues::class, function (): void {
         ]);
 
         Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
+            ->loadTable()
             ->assertCanSeeTableRecords(
                 AttributeValue::query()->where('attribute_id', $this->attribute->id)->get()
             );
@@ -187,6 +188,7 @@ describe(AttributeValues::class, function (): void {
         ]);
 
         Livewire::test(AttributeValues::class, ['attributeId' => $colorAttribute->id])
+            ->loadTable()
             ->assertCanSeeTableRecords(
                 AttributeValue::query()->where('attribute_id', $colorAttribute->id)->get()
             );

@@ -32,6 +32,7 @@ describe(PaymentMethod::class, function (): void {
         PaymentMethodModel::factory()->count(3)->create();
 
         Livewire::test(PaymentMethod::class)
+            ->loadTable()
             ->assertCanSeeTableRecords(PaymentMethodModel::limit(3)->get());
     });
 
