@@ -15,7 +15,6 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Enum\Operator;
 use Shopper\Core\Enum\Rule;
 use Shopper\Core\Models\Contracts\Collection;
