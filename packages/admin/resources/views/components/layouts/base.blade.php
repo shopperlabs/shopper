@@ -1,11 +1,12 @@
-@props(['title' => config('app.name')])
+@props([
+    'title' => config('app.name')
+])
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="sh min-h-screen scroll-smooth antialiased">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="X-DNS-Prefetch-Control" content="on" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="locale" content="{{ str_replace('_', '-', app()->getLocale()) }}" />
         <meta name="base-url" content="{{ config('app.url') }}" />
@@ -46,6 +47,8 @@
 
         <style>
             :root {
+                --sidebar-width: {{ \Shopper\Sidebar\sidebar_width() }};
+                --sidebar-collapsed-width: {{ \Shopper\Sidebar\sidebar_collapsed_width() }};
             }
         </style>
 
@@ -68,12 +71,13 @@
     </head>
     <body
         {{ $attributes->twMerge(['class' => 'sh-body bg-gray-50 font-sans dark:bg-gray-950']) }}
+        data-sidebar-breakpoint="{{ \Shopper\Sidebar\sidebar_breakpoint() }}"
+        data-sidebar-collapsible="{{ \Shopper\Sidebar\sidebar_is_collapsible() ? 'true' : 'false' }}"
     >
         {{ $slot }}
 
         @livewire(\Filament\Notifications\Livewire\Notifications::class)
         @livewire(\Shopper\Livewire\Components\SlideOverPanel::class)
-        @livewire(\Shopper\Livewire\Components\Modal::class)
 
         @filamentScripts
 

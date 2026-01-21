@@ -12,7 +12,7 @@
     type="button"
     x-on:click="(theme = @js($theme)) && close()"
     x-tooltip="{
-        content: @js($label),
+        content: {{ Js::from($label) }},
         theme: $store.theme,
     }"
     class="fi-theme-switcher-btn flex justify-center rounded-md p-2 transition duration-75 outline-none hover:bg-gray-50 focus-visible:bg-gray-50 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"

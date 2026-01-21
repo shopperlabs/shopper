@@ -1,7 +1,7 @@
 <x-shopper::layouts.app :title="$title ?? null">
     <x-slot name="subHeading">
         <div
-            class="sticky top-16 z-10 border-t border-b border-gray-200 bg-white backdrop-blur-md backdrop-filter lg:top-[3.8rem] lg:border-t-0 dark:border-white/10 dark:bg-gray-900/80"
+            class="sticky top-12 z-10 border-y border-gray-200 bg-white backdrop-blur-xs lg:border-t-0 dark:border-white/10 dark:bg-gray-950"
         >
             <div
                 x-data="{
@@ -44,7 +44,7 @@
                     x-transition:leave="transition duration-300 ease-in"
                     x-transition:leave-start="translate-x-0 opacity-100"
                     x-transition:leave-end="-translate-x-2 opacity-0"
-                    class="absolute top-0 flex h-full w-24 items-center bg-linear-to-r from-white px-2.5 dark:from-gray-900"
+                    class="absolute top-0 flex h-full w-24 items-center bg-linear-to-r from-white px-3 dark:from-gray-950"
                 >
                     <button
                         @click="slideLeft()"
@@ -72,7 +72,7 @@
                     x-transition:leave="transition duration-300 ease-in"
                     x-transition:leave-start="translate-x-0 opacity-100"
                     x-transition:leave-end="translate-x-2 opacity-0"
-                    class="absolute top-0 right-0 flex h-full w-24 items-center justify-end bg-linear-to-l from-white px-2.5 dark:from-gray-900"
+                    class="absolute top-0 right-0 flex h-full w-24 items-center justify-end bg-linear-to-l from-white px-3 dark:from-gray-950"
                 >
                     <button
                         @click="slideRight()"

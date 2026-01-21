@@ -4,7 +4,7 @@
     :description="__('shopper::pages/products.variants.generate_description')"
 >
     @if (count($availableOptions))
-        <x-shopper::card class="overflow-hidden">
+        <x-shopper::card class="overflow-hidden [&>div:first-of-type]:p-0">
             <table class="fi-ta-table w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5">
                 <thead>
                     <tr>
@@ -54,7 +54,7 @@
                         x-data="{ expanded: true }"
                         wire:key="variant_{{ $variant['key'] }}"
                     >
-                        <div class="flex items-center justify-between gap-4 px-3 py-2">
+                        <div class="flex items-center justify-between gap-4 py-2">
                             <button
                                 @click="expanded = ! expanded"
                                 type="button"
@@ -86,7 +86,7 @@
                         </div>
 
                         <div
-                            class="grid grid-cols-2 gap-5 px-4 py-3 lg:grid-cols-4 lg:gap-6"
+                            class="grid grid-cols-2 gap-5 py-2 lg:grid-cols-4 lg:gap-6"
                             x-show="expanded"
                             x-collapse
                         >

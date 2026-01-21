@@ -43,9 +43,16 @@ const defaultOptions = {
   }],
 }
 
-compile({
-  ...defaultOptions,
-  platform: 'browser',
-  entryPoints: ['./packages/admin/resources/js/shopper.js'],
-  outfile: './packages/admin/public/shopper.js',
+const packages = [
+  { name: 'admin', entry: 'shopper.js', outDir: 'dist', outFile: 'shopper.js' },
+  { name: 'sidebar', entry: 'index.js', outDir: 'dist', outFile: 'sidebar.js' },
+]
+
+packages.forEach(pkg => {
+  compile({
+    ...defaultOptions,
+    platform: 'browser',
+    entryPoints: [`./packages/${pkg.name}/resources/js/${pkg.entry}`],
+    outfile: `./packages/${pkg.name}/${pkg.outDir}/${pkg.outFile}`,
+  })
 })

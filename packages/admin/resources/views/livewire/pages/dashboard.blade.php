@@ -7,20 +7,20 @@
         </h2>
     </div>
 
-    <div class="my-8 overflow-hidden rounded-xl bg-white p-1 ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-white/10">
-        <div class="p-6">
-            <div class="text-xl font-medium text-gray-900 dark:text-white">
+    <div class="my-8 overflow-hidden rounded-xl bg-gray-50 p-1 ring-1 ring-gray-200 dark:bg-gray-950 dark:ring-white/10">
+        <div class="p-5">
+            <div class="text-lg font-medium text-gray-900 dark:text-white">
                 {{ __('shopper::pages/dashboard.header') }}
             </div>
-            <p class="welcome-description mt-4 text-gray-500 dark:text-gray-400">
+            <p class="welcome-description mt-2 text-gray-500 dark:text-gray-400">
                 {{ __('shopper::pages/dashboard.description') }}
             </p>
         </div>
 
         <div
-            class="grid grid-cols-1 rounded-lg bg-gray-50 ring-1 ring-gray-200 lg:grid-cols-2 dark:bg-gray-900 dark:ring-white/10"
+            class="grid grid-cols-1 rounded-lg bg-white ring-1 ring-gray-200 lg:grid-cols-2 dark:bg-gray-900 dark:ring-white/10"
         >
-            <div class="space-y-5 p-6">
+            <div class="space-y-5 p-5">
                 <div class="flex items-center">
                     <div
                         class="bg-primary-100 dark:bg-primary-800/20 flex size-10 items-center justify-center rounded-lg"
@@ -38,9 +38,7 @@
 
                     <a href="https://docs.laravelshopper.dev" class="group" target="_blank">
                         <div class="text-primary-500 mt-5 flex items-center text-sm font-medium">
-                            <span>
-                                {{ __('shopper::pages/dashboard.cards.doc_link') }}
-                            </span>
+                            <span>{{ __('shopper::pages/dashboard.cards.doc_link') }}</span>
                             <span
                                 class="text-primary-500 ml-1 translate-x-0 transform transition duration-200 ease-in-out group-hover:translate-x-1"
                             >
@@ -50,8 +48,7 @@
                     </a>
                 </div>
             </div>
-
-            <div class="space-y-5 border-t border-gray-200 p-6 sm:border-t-0 dark:border-gray-600">
+            <div class="space-y-5 border-t border-gray-200 p-5 sm:border-t-0 dark:border-white/10">
                 <div class="flex items-center">
                     <div
                         class="bg-primary-100 dark:bg-primary-800/20 flex size-10 items-center justify-center rounded-lg"
@@ -81,8 +78,7 @@
                     </a>
                 </div>
             </div>
-
-            <div class="space-y-5 border-t border-gray-200 p-6 dark:border-gray-600">
+            <div class="space-y-5 border-t border-gray-200 p-5 dark:border-white/10">
                 <div class="flex items-center">
                     <div
                         class="bg-primary-100 dark:bg-primary-800/20 flex size-10 items-center justify-center rounded-lg"
@@ -104,8 +100,7 @@
                     </p>
                 </div>
             </div>
-
-            <div class="space-y-5 border-t border-gray-200 p-6 dark:border-gray-600">
+            <div class="space-y-5 border-t border-gray-200 p-5 dark:border-white/10">
                 <div class="flex items-center">
                     <div
                         class="bg-primary-100 dark:bg-primary-800/20 flex size-10 items-center justify-center rounded-lg"

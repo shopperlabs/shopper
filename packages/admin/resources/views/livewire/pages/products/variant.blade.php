@@ -93,7 +93,7 @@
                             </div>
                         </dl>
 
-                        <table class="fi-ta-table border-t border-gray-200 dark:border-white/10 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5">
+                        <table class="fi-ta-table ring-1 ring-gray-200 dark:ring-white/20 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5">
                             <thead>
                             <tr>
                                 <th class="fi-ta-header-cell px-3 py-2 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
@@ -128,14 +128,9 @@
                     </div>
                 </x-shopper::card>
             </div>
-            <div>
-                <x-shopper::section-heading
-                    :title="__('shopper::pages/products.pricing.title')"
-                    :description="__('shopper::pages/products.pricing.description')"
-                />
 
-                <livewire:shopper-products.pricing :model="$variant" />
-            </div>
+            <livewire:shopper-products.pricing :model="$variant" />
+
             <div>
                 <x-shopper::section-heading :title="__('shopper::pages/settings/menu.location')" />
 

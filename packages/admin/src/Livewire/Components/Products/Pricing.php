@@ -32,6 +32,8 @@ class Pricing extends Component implements HasActions, HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
+            ->heading(__('shopper::pages/products.pricing.title'))
+            ->description(__('shopper::pages/products.pricing.description'))
             ->relationship(fn () => $this->model->prices()) // @phpstan-ignore-line
             ->columns([
                 TextColumn::make('currency.name')
@@ -85,7 +87,7 @@ class Pricing extends Component implements HasActions, HasForms, HasTable
                     ->visible($this->model->prices->count() !== count(shopper_setting('currencies'))), // @phpstan-ignore-line
             ])
             ->emptyStateHeading(__('shopper::pages/products.pricing.empty'))
-            ->emptyStateIcon('untitledui-coins-stacked-02');
+            ->emptyStateIcon(Untitledui::CoinsStacked02);
     }
 
     #[On('product.pricing.manage')]

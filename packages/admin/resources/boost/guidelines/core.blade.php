@@ -215,32 +215,20 @@ class CustomSidebar extends AbstractAdminSidebar
         $menu->group(__('Logistics'), function (Group $group): void {
             $group->weight(5); // After CustomerSidebar (weight 4)
             $group->setAuthorized();
-            $group->setGroupItemsClass('space-y-1');
-            $group->setHeadingClass('sh-heading');
 
             $group->item(__('Shipping'), function (Item $item): void {
                 $item->weight(1);
                 $item->setAuthorized($this->user->hasPermissionTo('browse_shipping'));
-                $item->setItemClass('sh-sidebar-item group');
-                $item->setActiveClass('sh-sidebar-item-active');
                 $item->useSpa();
                 $item->route('shopper.shipping.index');
-                $item->setIcon(
-                    icon: 'untitledui-truck-01',
-                    iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
-                );
+                $item->setIcon('untitledui-truck-01');
             });
 
             $group->item(__('Carriers'), function (Item $item): void {
                 $item->weight(2);
-                $item->setItemClass('sh-sidebar-item group');
-                $item->setActiveClass('sh-sidebar-item-active');
                 $item->useSpa();
                 $item->route('shopper.carriers.index');
-                $item->setIcon(
-                    icon: 'untitledui-plane',
-                    iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
-                );
+                $item->setIcon('untitledui-plane');
             });
         });
 

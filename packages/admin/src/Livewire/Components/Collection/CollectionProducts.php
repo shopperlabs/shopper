@@ -49,6 +49,8 @@ class CollectionProducts extends Component implements HasActions, HasForms, HasT
     public function table(Table $table): Table
     {
         return $table
+            ->heading(__('shopper::pages/products.menu'))
+            ->description($this->collection->isAutomatic() ? __('shopper::pages/collections.automatic_description') : __('shopper::pages/collections.manual_description'))
             ->relationship(fn (): BelongsToMany => $this->collection->products())
             ->inverseRelationship('collections')
             ->columns([
@@ -57,7 +59,13 @@ class CollectionProducts extends Component implements HasActions, HasForms, HasT
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->circular()
                     ->defaultImageUrl(shopper_fallback_url()),
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                    ->searchable(),
+                TextColumn::make('type')
+                    ->label(__('shopper::forms.label.type'))
+                    ->badge(),
+                TextColumn::make('sku')
+                    ->label(__('shopper::forms.label.sku')),
             ])
             ->recordActions([
                 Action::make('delete')
@@ -121,7 +129,7 @@ class CollectionProducts extends Component implements HasActions, HasForms, HasT
                     ))
                     ->visible($this->collection->isManual()),
             ])
-            ->emptyStateIcon('untitledui-book-open')
+            ->emptyStateIcon(Untitledui::BookOpen)
             ->emptyStateDescription(__('shopper::pages/collections.empty_collections'));
     }
 

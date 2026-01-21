@@ -22,7 +22,7 @@
                 <div class="space-y-3 lg:flex lg:items-center lg:justify-between lg:space-y-0">
                     <div class="flex min-w-0 flex-1 items-center space-x-4">
                         <h3
-                            class="font-heading text-2xl leading-6 font-bold text-gray-900 uppercase sm:truncate sm:text-3xl sm:leading-9 dark:text-white"
+                            class="font-heading text-2xl font-bold text-gray-900 uppercase sm:truncate sm:text-3xl dark:text-white"
                         >
                             {{ $order->number }}
                         </h3>
@@ -227,23 +227,23 @@
                         </div>
                     @else
                         <div class="py-4">
-                            <div class="border-l-4 border-yellow-400 bg-yellow-50 p-4">
+                            <div class="border-l-4 border-warning-400 bg-warning-50 rounded-lg dark:bg-warning-400/10 p-4">
                                 <div class="flex">
                                     <div class="shrink-0">
                                         <x-untitledui-alert-triangle
-                                            class="size-5 text-yellow-400"
+                                            class="size-5 text-warning-400"
                                             stroke-width="1.5"
                                             aria-hidden="true"
                                         />
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm text-yellow-700">
+                                        <p class="text-sm text-warning-700 dark:text-warning-300">
                                             {{ __('shopper::pages/orders.no_payment_method') }}
                                         </p>
                                         <a
                                             href="https://docs.laravelshopper.dev/{{ shopper()->version() }}/payment-methods"
                                             target="_blank"
-                                            class="mt-1.5 inline-flex text-sm font-medium text-yellow-700 underline hover:text-yellow-600"
+                                            class="mt-1.5 font-medium hover:underline"
                                         >
                                             {{ __('shopper::pages/orders.read_about_payment') }}
                                         </a>
@@ -297,22 +297,22 @@
                                 </div>
                             </dl>
                         @else
-                            <div class="border-l-4 border-yellow-400 bg-yellow-50 p-4">
+                            <div class="border-l-4 border-warning-400 bg-warning-50 rounded-lg dark:bg-warning-400/10 p-4">
                                 <div class="flex">
                                     <div class="shrink-0">
                                         <x-untitledui-alert-triangle
-                                            class="size-5 text-yellow-400"
+                                            class="size-5 text-warning-400"
                                             stroke-width="1.5"
                                             aria-hidden="true"
                                         />
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm text-yellow-700">
+                                        <p class="text-sm text-warning-700 dark:text-warning-300">
                                             {{ __('shopper::pages/orders.no_shipping_method') }}
                                             <a
                                                 href="https://docs.laravelshopper.dev/{{ shopper()->version() }}/shipping"
                                                 target="_blank"
-                                                class="font-medium text-yellow-700 underline hover:text-yellow-600"
+                                                class="font-medium hover:underline"
                                             >
                                                 {{ __('shopper::pages/orders.read_about_shipping') }}
                                             </a>

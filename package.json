@@ -3,10 +3,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev:css": "npx @tailwindcss/cli -i ./packages/admin/resources/css/shopper.css -o ./packages/admin/public/shopper.css --watch",
+    "dev:css": "npx @tailwindcss/cli -i ./packages/admin/resources/css/shopper.css -o ./packages/admin/dist/shopper.css --watch",
     "dev:js": "node scripts/build.js --dev",
     "dev": "npm-run-all --parallel dev:*",
-    "build:css": "npx @tailwindcss/cli -i ./packages/admin/resources/css/shopper.css -o ./packages/admin/public/shopper.css --minify",
+    "build:css": "npx @tailwindcss/cli -i ./packages/admin/resources/css/shopper.css -o ./packages/admin/dist/shopper.css --minify",
     "build:js": "node scripts/build.js",
     "build": "npm-run-all build:*",
     "prettier": "npx prettier --write ./packages/admin/resources"

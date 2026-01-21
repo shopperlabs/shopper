@@ -20,7 +20,7 @@
         @endif
     </div>
 
-    <x-shopper::card class="mt-10">
+    <x-shopper::card class="mt-8">
         @if ($relatedProducts->isNotEmpty())
             <div role="list" class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
                 @foreach ($relatedProducts as $relatedProduct)

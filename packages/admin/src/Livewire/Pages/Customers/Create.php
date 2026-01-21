@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Components\Form\AddressField;
 use Shopper\Components\Form\GenderField;
 use Shopper\Components\Section;
@@ -55,10 +56,11 @@ class Create extends AbstractPageComponent implements HasActions, HasForms
         return $schema
             ->components([
                 Section::make(__('shopper::pages/customers.overview'))
-                    ->description(__('shopper::pages/customers.overview_description'))
-                    ->compact()
                     ->aside()
+                    ->compact()
                     ->columns()
+                    ->description(__('shopper::pages/customers.overview_description'))
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
                         TextInput::make('first_name')
                             ->label(__('shopper::forms.label.first_name'))
@@ -68,7 +70,7 @@ class Create extends AbstractPageComponent implements HasActions, HasForms
                             ->required(),
                         TextInput::make('email')
                             ->label(__('shopper::forms.label.email'))
-                            ->prefixIcon('untitledui-mail')
+                            ->prefixIcon(Untitledui::Mail)
                             ->autocomplete('email-address')
                             ->email()
                             ->unique()
@@ -81,9 +83,10 @@ class Create extends AbstractPageComponent implements HasActions, HasForms
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/customers.security_title'))
-                    ->description(__('shopper::pages/customers.security_description'))
-                    ->compact()
                     ->aside()
+                    ->compact()
+                    ->description(__('shopper::pages/customers.security_description'))
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
                         TextInput::make('password')
                             ->label(__('shopper::forms.label.password'))
@@ -108,16 +111,19 @@ class Create extends AbstractPageComponent implements HasActions, HasForms
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/customers.address_title'))
-                    ->description(__('shopper::pages/customers.address_description'))
-                    ->compact()
                     ->aside()
+                    ->compact()
                     ->columns()
+                    ->description(__('shopper::pages/customers.address_description'))
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema(AddressField::make('address')),
                 Separator::make(),
                 Section::make(__('shopper::pages/customers.notification_title'))
-                    ->description(__('shopper::pages/customers.notification_description'))
-                    ->compact()
                     ->aside()
+                    ->compact()
+                    ->columns()
+                    ->description(__('shopper::pages/customers.notification_description'))
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
                         Checkbox::make('opt_in')
                             ->label(__('shopper::pages/customers.marketing_email'))

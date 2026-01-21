@@ -22,7 +22,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
-use Shopper\Core\Models\Contracts\Category as CategoryContract;
+use Shopper\Core\Models\Contracts\Category;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HasAuthenticated;
 
@@ -41,7 +41,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
     public function table(Table $table): Table
     {
         return $table
-            ->query(resolve(CategoryContract::class)::query()->with('parent')->latest())
+            ->query(resolve(Category::class)::query()->with('parent')->latest())
             ->columns([
                 SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
@@ -50,7 +50,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                 TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->formatStateUsing(
-                        fn (CategoryContract $record): View => view('shopper::livewire.tables.cells.categories.name', [
+                        fn (Category $record): View => view('shopper::livewire.tables.cells.categories.name', [
                             'category' => $record,
                         ])
                     )
@@ -77,7 +77,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->icon(Untitledui::Edit03)
                     ->iconButton()
                     ->action(
-                        fn (CategoryContract $record) => $this->dispatch(
+                        fn (Category $record) => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.category-form',
                             arguments: ['category' => $record]
@@ -91,13 +91,13 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->modalIcon(Untitledui::Trash03)
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->action(fn (CategoryContract $record) => $record->delete())
+                    ->action(fn (Category $record) => $record->delete())
                     ->visible($this->getUser()->can('delete_categories')),
             ])
             ->groupedBulkActions([
                 BulkAction::make('enabled')
                     ->label(__('shopper::forms.actions.enable'))
-                    ->icon('untitledui-check-verified')
+                    ->icon(Untitledui::CheckVerified)
                     ->action(function (Collection $records): void {
                         $records->each->updateStatus(); // @phpstan-ignore-line
 
@@ -113,7 +113,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->deselectRecordsAfterCompletion(),
                 BulkAction::make('disabled')
                     ->label(__('shopper::forms.actions.disable'))
-                    ->icon('untitledui-slash-circle-01')
+                    ->icon(Untitledui::SlashCircle01)
                     ->action(function (Collection $records): void {
                         $records->each->updateStatus(false); // @phpstan-ignore-line
 
@@ -151,7 +151,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
             ->headerActions([
                 Action::make('reorder')
                     ->label(__('shopper::words.reorder'))
-                    ->icon('untitledui-switch-vertical')
+                    ->icon(Untitledui::SwitchVertical)
                     ->color('gray')
                     ->action(
                         fn () => $this->dispatch(

@@ -23,7 +23,7 @@ use Shopper\Actions\Store\Product\DetachAttributesToProductAction;
 use Shopper\Components\Tables\IconColumn;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\Product;
 
 #[Lazy]
 class Attributes extends Component implements HasActions, HasForms, HasTable
@@ -32,7 +32,7 @@ class Attributes extends Component implements HasActions, HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
-    public ProductContract $product;
+    public Product $product;
 
     public function placeholder(): View
     {
@@ -42,6 +42,8 @@ class Attributes extends Component implements HasActions, HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
+            ->heading(__('shopper::pages/attributes.menu'))
+            ->description(__('shopper::pages/attributes.description'))
             ->query(
                 AttributeProduct::with(['attribute', 'value', 'value.attribute'])
                     ->where('product_id', $this->product->id)

@@ -1,5 +1,5 @@
 .fi-ta-ctn {
-  @apply flex flex-col p-0.5 gap-y-2 rounded-none divide-y-0 divide-transparent bg-transparent shadow-none ring-0 ring-transparent;
+  @apply flex flex-col p-px gap-y-2 rounded-none divide-y-0 divide-transparent bg-transparent shadow-none ring-0 ring-transparent;
 
   .fi-ta-main {
     @apply flex flex-col gap-y-2;
@@ -10,7 +10,7 @@
   }
 
   .fi-ta-selection-indicator, .fi-ta-filter-indicators, .fi-ta-reorder-indicator {
-    @apply rounded-lg ring-1 ring-gray-200 dark:ring-white/10 sm:px-4;
+    @apply rounded-lg border-b-0 ring-1 ring-gray-200 dark:ring-white/10 sm:px-4;
   }
 
   .fi-ta-header-ctn {
@@ -48,6 +48,30 @@
 
 .fi-ta-filters-above-content-ctn.fi-open {
   @apply bg-white dark:bg-gray-900 rounded-xl ring-1 ring-gray-200 dark:ring-white/10;
+}
+
+.fi-ta-table {
+  @apply rounded-lg overflow-hidden;
+
+  & thead > tr {
+    @apply bg-gray-50 dark:bg-gray-950;
+  }
+
+  & tbody {
+    @apply bg-white dark:bg-gray-900 rounded-xl overflow-hidden;
+  }
+}
+
+.fi-ta-header-cell {
+  @apply py-3;
+}
+
+.fi-ta-cell {
+  &:has(.fi-ta-actions),
+  &:has(.fi-ta-record-checkbox),
+  &.fi-ta-selection-cell {
+    @apply py-3.5;
+  }
 }
 
 .fi-pagination {

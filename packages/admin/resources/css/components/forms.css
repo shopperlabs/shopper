@@ -1,5 +1,5 @@
 .fi-sc-component {
   .sh-separator {
-    @apply py-4! lg:py-4!;
+    @apply py-4 lg:py-4;
   }
 }

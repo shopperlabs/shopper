@@ -1,10 +1,8 @@
-.sh-section-aside {
-  .fi-section-content-ctn {
-    @apply bg-transparent! ring-0! shadow-none! lg:max-w-3xl;
+.sh-section-aside .fi-section.fi-aside > .fi-section-content-ctn {
+  @apply bg-transparent ring-0 shadow-none lg:max-w-3xl;
 
-    & > .fi-section-content {
-      @apply p-0!;
-    }
+  & > .fi-section-content {
+    @apply p-0;
   }
 }
 
@@ -13,14 +11,14 @@
 }
 
 .fi-section:not(.sh-section-aside *) {
-  @apply p-1 rounded-xl bg-gray-50! ring-1 ring-gray-200! dark:bg-gray-900! dark:ring-white/10!;
+  @apply p-1.5 rounded-xl bg-gray-50 ring-1 ring-gray-200 dark:bg-gray-950 dark:ring-white/10;
 
   .fi-section-content {
     @apply p-1;
   }
 
   .fi-section-header {
-    @apply px-2! py-3!;
+    @apply px-2 py-3;
   }
 
   &.fi-collapsed .fi-section-header {
@@ -28,7 +26,7 @@
   }
 
   .fi-section-content-ctn {
-    @apply border-t-0! ring-1 rounded-lg  bg-white dark:bg-gray-950 ring-gray-200 dark:ring-white/10;
+    @apply border-t-0 ring-1 rounded-lg p-4  bg-white dark:bg-gray-900 ring-gray-200 dark:ring-white/10;
   }
 
   &:not(.fi-section-has-header) {

@@ -1,5 +1,6 @@
 /.idea
 /.vscode
+/.claude
 /coverage
 /node_modules
 /build

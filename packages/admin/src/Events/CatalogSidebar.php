@@ -17,7 +17,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
         $menu->group(__('shopper::layout.sidebar.catalog'), function (Group $group): void {
             $group->weight(2);
             $group->setAuthorized();
-            // $group->collapsible();
+            $group->collapsible();
 
             $group->item(__('shopper::pages/products.menu'), function (Item $item): void {
                 $item->weight(1);

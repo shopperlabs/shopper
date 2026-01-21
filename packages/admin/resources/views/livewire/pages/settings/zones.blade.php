@@ -39,7 +39,7 @@
                         <label
                             wire:key="{{ $zone->slug }}"
                             for="{{ $zone->slug }}"
-                            class="relative flex cursor-pointer bg-white p-4 focus:outline-none dark:bg-gray-950"
+                            class="relative flex cursor-pointer bg-white p-4 focus:outline-none dark:bg-gray-900"
                         >
                             <x-filament::input.radio
                                 name="zone"

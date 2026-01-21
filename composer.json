@@ -54,7 +54,8 @@
   "autoload": {
     "files": [
       "packages/admin/src/helpers.php",
-      "packages/core/src/helpers.php"
+      "packages/core/src/helpers.php",
+      "packages/sidebar/src/helpers.php"
     ],
     "psr-4": {
       "Shopper\\": [

@@ -44,6 +44,8 @@ class Variants extends Component implements HasActions, HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
+            ->heading(__('shopper::pages/products.variants.title'))
+            ->description(__('shopper::pages/products.variants.description'))
             ->query(
                 resolve(ProductVariant::class)::query()
                     ->where('product_id', $this->product->id)
@@ -136,7 +138,7 @@ class Variants extends Component implements HasActions, HasForms, HasTable
                     ->deselectRecordsAfterCompletion(),
             ])
             ->emptyStateHeading(__('shopper::pages/products.variants.empty'))
-            ->emptyStateIcon('untitledui-book-open');
+            ->emptyStateIcon(Untitledui::BookOpen);
     }
 
     public function render(): View

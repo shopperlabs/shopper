@@ -1,4 +1,4 @@
-<div class="bg-white dark:bg-gray-900">
+<div>
     <x-shopper::container class="pt-5">
         <x-shopper::breadcrumb :back="route('shopper.products.index')" :current="$product->name">
             <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
@@ -26,7 +26,7 @@
             activeTab: @entangle('activeTab'),
         }"
     >
-        <div class="sticky z-10 bg-white pt-8 backdrop-blur-lg top-14 dark:bg-gray-900">
+        <div class="sticky z-10 bg-white pt-8 backdrop-blur-lg top-12 dark:bg-gray-900">
             <div class="space-y-4">
                 <x-shopper::container>
                     <x-shopper::heading>
@@ -149,7 +149,7 @@
             </div>
         </div>
 
-        <div class="z-0 py-8 bg-gray-50 dark:bg-gray-950">
+        <div class="z-0 py-8 sh-product-edit-page">
             <div x-show="activeTab === 'detail'">
                 <livewire:shopper-products.form.edit :$product />
             </div>
@@ -158,16 +158,9 @@
             </div>
 
             @if (! $product->isVariant())
-                <div x-cloak x-show="activeTab === 'price'">
-                    <x-shopper::container class="space-y-8">
-                        <x-shopper::section-heading
-                            :title="__('shopper::pages/products.pricing.title')"
-                            :description="__('shopper::pages/products.pricing.description')"
-                        />
-
-                        <livewire:shopper-products.pricing :model="$product" />
-                    </x-shopper::container>
-                </div>
+                <x-shopper::container x-cloak x-show="activeTab === 'price'">
+                    <livewire:shopper-products.pricing :model="$product" />
+                </x-shopper::container>
             @endif
 
             @if ($product->isVirtual())

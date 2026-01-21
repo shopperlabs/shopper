@@ -12,13 +12,13 @@ final class AssetController
     {
         switch ($file) {
             case 'shopper.css':
-                return $this->pretendResponseIsFile(__DIR__.'/../../../public/shopper.css', 'text/css; charset=utf-8');
+                return $this->pretendResponseIsFile(__DIR__.'/../../../dist/shopper.css', 'text/css; charset=utf-8');
             case 'shopper.css.map':
-                return $this->pretendResponseIsFile(__DIR__.'/../../../public/shopper.css.map', 'text/css; charset=utf-8');
+                return $this->pretendResponseIsFile(__DIR__.'/../../../dist/shopper.css.map', 'text/css; charset=utf-8');
             case 'shopper.js':
-                return $this->pretendResponseIsFile(__DIR__.'/../../../public/shopper.js', 'application/javascript; charset=utf-8');
+                return $this->pretendResponseIsFile(__DIR__.'/../../../dist/shopper.js', 'application/javascript; charset=utf-8');
             case 'shopper.js.map':
-                return $this->pretendResponseIsFile(__DIR__.'/../../../public/shopper.js.map', 'application/json; charset=utf-8');
+                return $this->pretendResponseIsFile(__DIR__.'/../../../dist/shopper.js.map', 'application/json; charset=utf-8');
         }
 
         abort(404);

@@ -1,0 +1,9 @@
+.sh-product-edit-page {
+  .fi-ta-ctn {
+    & .fi-ta-header-ctn {
+      & .fi-ta-header {
+        @apply pt-0!;
+      }
+    }
+  }
+}

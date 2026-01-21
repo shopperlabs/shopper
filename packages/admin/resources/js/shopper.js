@@ -1,11 +1,10 @@
 import SlideOverPanel from './components/panel'
-import Modal from './components/modal'
 import CodePreview from './components/code-preview'
 import './components/sortable'
+import sidebarStore from '../../../sidebar/resources/js/stores/sidebar'
 
 window.SlideOverPanel = SlideOverPanel
 window.codePreview = CodePreview
-window.modal = Modal
 
 document.addEventListener('alpine:init', () => {
   const theme = localStorage.getItem('theme') ?? 'system'
@@ -16,6 +15,10 @@ document.addEventListener('alpine:init', () => {
       ? 'dark'
       : 'light',
   )
+
+  // Sidebar store
+  window.Alpine.store('sidebar', sidebarStore())
+  window.Alpine.store('sidebar').init()
 
   window.addEventListener('theme-changed', (event) => {
     let theme = event.detail

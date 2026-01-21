@@ -90,11 +90,13 @@ class BrandForm extends SlideOverComponent implements HasActions, HasForms
                     ->collapsible()
                     ->compact()
                     ->schema(SeoField::make()),
-                Section::make('Metadata')
+                Section::make(__('Metadata'))
                     ->collapsible()
                     ->compact()
                     ->schema([
-                        KeyValue::make('metadata')->reorderable(),
+                        KeyValue::make('metadata')
+                            ->hiddenLabel()
+                            ->reorderable(),
                     ]),
             ])
             ->statePath('data')

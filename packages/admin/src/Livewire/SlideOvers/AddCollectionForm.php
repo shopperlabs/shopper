@@ -99,14 +99,16 @@ class AddCollectionForm extends SlideOverComponent implements HasActions, HasFor
                             ->maxSize(config('shopper.media.max_size.thumbnail')),
                     ]),
                 Section::make(__('shopper::words.seo.slug'))
-                    ->collapsed()
+                    ->collapsible()
                     ->compact()
                     ->schema(SeoField::make()),
                 Section::make('Metadata')
-                    ->collapsed()
+                    ->collapsible()
                     ->compact()
                     ->schema([
-                        KeyValue::make('metadata')->reorderable(),
+                        KeyValue::make('metadata')
+                            ->hiddenLabel()
+                            ->reorderable(),
                     ]),
             ])
             ->statePath('data')
