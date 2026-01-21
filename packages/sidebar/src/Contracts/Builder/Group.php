@@ -20,6 +20,10 @@ interface Group extends Authorizable, Itemable
 
     public function shouldShowHeading(): bool;
 
+    public function collapsible(bool $collapsible = true): self;
+
+    public function isCollapsible(): bool;
+
     public function getClass(): ?string;
 
     public function setClass(string $class): self;

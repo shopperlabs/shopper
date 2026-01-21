@@ -50,8 +50,13 @@ class DefaultMenu implements Menu, Serializable
         $this->groups = $data['groups'];
     }
 
-    public function group(string $name, ?Closure $callback = null): Group
+    public function group(string|Closure $name = '', ?Closure $callback = null): Group
     {
+        if ($name instanceof Closure) {
+            $callback = $name;
+            $name = '';
+        }
+
         if ($this->groups->has($name)) {
             $group = $this->groups->get($name);
         } else {

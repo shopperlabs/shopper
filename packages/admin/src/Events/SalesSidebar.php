@@ -21,47 +21,28 @@ final class SalesSidebar extends AbstractAdminSidebar
         $menu->group(__('shopper::layout.sidebar.sales'), function (Group $group) use ($count): void {
             $group->weight(3);
             $group->setAuthorized();
-            $group->setGroupItemsClass('space-y-1');
-            $group->setHeadingClass('sh-heading');
+            $group->collapsible();
 
             $group->item(__('shopper::pages/orders.menu'), function (Item $item) use ($count): void {
                 $item->weight(1);
                 $item->setAuthorized($this->user->hasPermissionTo('browse_orders'));
-                $item->setItemClass('sh-sidebar-item group');
-                $item->setActiveClass('sh-sidebar-item-active');
-                $item->setInactiveClass('sh-sidebar-item-inactive');
 
                 if ($count > 0) {
-                    $item->badge($count, 'sh-badge');
+                    $item->badge($count)->color('warning');
                 }
 
                 $item->useSpa();
                 $item->route('shopper.orders.index');
-                $item->setIcon(
-                    icon: 'phosphor-shopping-bag',
-                    iconClass: 'size-5 '.($item->isActive() ? 'text-primary-500' : 'text-gray-400 dark:text-gray-500'),
-                    attributes: [
-                        'stroke-width' => '1.5',
-                    ],
-                );
+                $item->setIcon('phosphor-shopping-bag');
             });
 
             if (Feature::enabled('discount')) {
                 $group->item(__('shopper::pages/discounts.menu'), function (Item $item): void {
                     $item->weight(2);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_discounts'));
-                    $item->setItemClass('sh-sidebar-item group');
-                    $item->setActiveClass('sh-sidebar-item-active');
-                    $item->setInactiveClass('sh-sidebar-item-inactive');
                     $item->useSpa();
                     $item->route('shopper.discounts.index');
-                    $item->setIcon(
-                        icon: 'phosphor-seal-percent',
-                        iconClass: 'size-5 '.($item->isActive() ? 'text-primary-500' : 'text-gray-400 dark:text-gray-500'),
-                        attributes: [
-                            'stroke-width' => '1.5',
-                        ],
-                    );
+                    $item->setIcon('phosphor-seal-percent');
                 });
             }
         });

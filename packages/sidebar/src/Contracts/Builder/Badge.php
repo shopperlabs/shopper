@@ -13,4 +13,8 @@ interface Badge extends Authorizable
     public function getClass(): string;
 
     public function setClass(string $class): self;
+
+    public function getColor(): ?string;
+
+    public function color(string $color): self;
 }

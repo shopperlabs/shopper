@@ -127,10 +127,12 @@ Route::get('shipping', Shipping::class)->name('shopper.shipping.index');
 
 Shopper uses a sidebar system with 4 default groups. Each group is a class extending `AbstractAdminSidebar`:
 
-- `DashboardSidebar` - Dashboard menu (weight: 1)
+- `DashboardSidebar` - Dashboard menu (weight: 1, no heading)
 - `CatalogSidebar` - Products, Categories, Collections, Brands (weight: 2)
 - `SalesSidebar` - Orders, Discounts (weight: 3)
 - `CustomerSidebar` - Customers, Reviews (weight: 4)
+
+Groups with the same name are automatically merged. Groups without a name (empty string or omitted) are merged with the Dashboard group.
 
 To add items to an existing sidebar group or create a new one, create a sidebar extender class:
 
@@ -156,7 +158,6 @@ class ShippingSidebar extends AbstractAdminSidebar
                 $item->weight(5); // Position after other items
                 $item->setItemClass('sh-sidebar-item group');
                 $item->setActiveClass('sh-sidebar-item-active');
-                $item->setInactiveClass('sh-sidebar-item-inactive');
                 $item->useSpa(); // Enable SPA navigation
                 $item->route('shopper.shipping.index');
                 $item->setIcon(
@@ -222,7 +223,6 @@ class CustomSidebar extends AbstractAdminSidebar
                 $item->setAuthorized($this->user->hasPermissionTo('browse_shipping'));
                 $item->setItemClass('sh-sidebar-item group');
                 $item->setActiveClass('sh-sidebar-item-active');
-                $item->setInactiveClass('sh-sidebar-item-inactive');
                 $item->useSpa();
                 $item->route('shopper.shipping.index');
                 $item->setIcon(
@@ -235,7 +235,6 @@ class CustomSidebar extends AbstractAdminSidebar
                 $item->weight(2);
                 $item->setItemClass('sh-sidebar-item group');
                 $item->setActiveClass('sh-sidebar-item-active');
-                $item->setInactiveClass('sh-sidebar-item-inactive');
                 $item->useSpa();
                 $item->route('shopper.carriers.index');
                 $item->setIcon(
@@ -251,6 +250,29 @@ class CustomSidebar extends AbstractAdminSidebar
 </code-snippet>
 @endverbatim
 
+### Adding Items to the Dashboard Group (No Heading)
+
+To add items alongside the Dashboard (without a group heading), omit the group name:
+
+@verbatim
+<code-snippet name="Add item to dashboard group" lang="php">
+$menu->group(function (Group $group): void {
+    $group->weight(1);
+    $group->setAuthorized();
+
+    $group->item(__('Analytics'), function (Item $item): void {
+        $item->weight(2); // After Dashboard (weight 1)
+        $item->useSpa();
+        $item->route('shopper.analytics.index');
+        $item->setIcon(
+            icon: 'phosphor-chart-line',
+            iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-500' : 'text-gray-400 dark:text-gray-500'),
+        );
+    });
+});
+</code-snippet>
+@endverbatim
+
 ### Sidebar Item Options
 
 When configuring sidebar items, use these methods:
@@ -260,7 +282,7 @@ When configuring sidebar items, use these methods:
 - `$item->useSpa()` - Enable SPA navigation with `wire:navigate`
 - `$item->route('route.name')` - Set the route
 - `$item->setIcon(icon, iconClass, attributes)` - Configure icon (use Untitled UI icons: `untitledui-*`)
-- `$item->setItemClass()`, `$item->setActiveClass()`, `$item->setInactiveClass()` - CSS classes
+- `$item->setItemClass()`, `$item->setActiveClass()` - CSS classes
 - `$item->item()` - Add nested sub-items
 
 ### Model Architecture
@@ -434,7 +456,6 @@ public function boot(): void
                     $item->weight(1);
                     $item->setItemClass('sh-sidebar-item group');
                     $item->setActiveClass('sh-sidebar-item-active');
-                    $item->setInactiveClass('sh-sidebar-item-inactive');
                     $item->useSpa();
                     $item->route('shopper.custom.index');
                     $item->setIcon(

@@ -56,9 +56,9 @@ class DefaultItem implements Item, Serializable
 
     protected string $toggleActiveIcon = 'untitledui-chevron-up';
 
-    protected string $toggleIconClass = 'size-5';
+    protected string $toggleIconClass = 'size-4';
 
-    protected string $toggleActiveIconClass = 'size-5';
+    protected string $toggleActiveIconClass = 'size-4';
 
     protected bool $activeWhen = false;
 
@@ -68,9 +68,7 @@ class DefaultItem implements Item, Serializable
 
     protected string $itemClass = '';
 
-    protected string $activeClass = '';
-
-    protected string $inactiveClass = '';
+    protected string $activeClass = 'sh-active';
 
     protected string $parentItemClass = '';
 
@@ -374,18 +372,6 @@ class DefaultItem implements Item, Serializable
     public function setActiveClass(string $class): self
     {
         $this->activeClass = $class;
-
-        return $this;
-    }
-
-    public function getInactiveClass(): string
-    {
-        return $this->inactiveClass;
-    }
-
-    public function setInactiveClass(string $class): self
-    {
-        $this->inactiveClass = $class;
 
         return $this;
     }

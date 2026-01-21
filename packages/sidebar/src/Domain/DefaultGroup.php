@@ -26,6 +26,8 @@ class DefaultGroup implements Group, Serializable
 
     protected bool $heading = true;
 
+    protected bool $collapsible = false;
+
     protected ?string $class = null;
 
     protected ?string $itemClass = null;
@@ -38,6 +40,7 @@ class DefaultGroup implements Group, Serializable
         'items',
         'weight',
         'heading',
+        'collapsible',
     ];
 
     public function __construct(protected Container $container)
@@ -52,6 +55,7 @@ class DefaultGroup implements Group, Serializable
             'items' => $this->items,
             'weight' => $this->weight,
             'heading' => $this->heading,
+            'collapsible' => $this->collapsible,
         ];
     }
 
@@ -64,11 +68,12 @@ class DefaultGroup implements Group, Serializable
         $this->items = $data['items'];
         $this->weight = $data['weight'];
         $this->heading = $data['heading'];
+        $this->collapsible = $data['collapsible'] ?? false;
     }
 
     public function getName(): string
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function setName(string $name): Group
@@ -99,7 +104,19 @@ class DefaultGroup implements Group, Serializable
 
     public function shouldShowHeading(): bool
     {
-        return $this->heading;
+        return $this->heading && filled($this->name);
+    }
+
+    public function collapsible(bool $collapsible = true): Group
+    {
+        $this->collapsible = $collapsible;
+
+        return $this;
+    }
+
+    public function isCollapsible(): bool
+    {
+        return $this->collapsible;
     }
 
     public function getClass(): ?string

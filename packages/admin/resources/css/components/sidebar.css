@@ -1,43 +1,151 @@
-.sidebar {
+.sh-sidebar {
+  * {
+    @apply transition duration-150 ease-in;
+  }
+
   @apply space-y-5;
+
+  .sh-sidebar-group {
+    .sh-sidebar-group-label {
+      @apply flex items-center px-2 pb-4 justify-between text-sm/4 text-gray-700 dark:text-gray-300;
+    }
+
+    .sh-sidebar-group-items {
+      @apply space-y-1;
+
+      .sh-sidebar-item-icon, .sh-sidebar-item-icon svg {
+        @apply size-5 shrink-0 fill-current;
+      }
+
+      .sh-sidebar-item-label {
+        @apply flex-1 font-medium;
+      }
+
+      .sh-sidebar-item-nav {
+        @apply ml-auto flex items-center justify-end gap-2;
+      }
+
+      .sh-sidebar-item {
+        @apply text-sm rounded-lg;
+
+        .sh-sidebar-item-dot {
+          @apply size-2 rounded-full bg-gray-300 dark:bg-white/30;
+        }
+
+        .sh-sidebar-item-link {
+          @apply flex items-center gap-3 p-2;
+        }
+      }
+
+      > .sh-sidebar-item {
+        &:not(.sh-sidebar-item-active) {
+          @apply text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5;
+
+          .sh-sidebar-item-icon, .sh-sidebar-item-icon svg {
+            @apply fill-gray-400 dark:fill-gray-500;
+          }
+
+          &:hover .sh-sidebar-item-label {
+            @apply text-gray-900 dark:text-white;
+          }
+        }
+
+        &:not(.sh-items-has-child).sh-sidebar-item-active {
+          @apply text-primary-600 dark:text-primary-500 ring-1 ring-gray-200 dark:ring-white/10 bg-white shadow-xs dark:bg-white/5;
+        }
+
+        &.sh-items-has-child {
+          > .sh-sidebar-item-link.sh-active {
+            @apply rounded-lg text-primary-600 dark:text-primary-500 ring-1 ring-gray-200 dark:ring-white/10 bg-white shadow-xs dark:bg-white/5;
+
+            .sh-sidebar-item-icon, .sh-sidebar-item-icon svg {
+              @apply fill-primary-500;
+            }
+          }
+        }
+
+        .sh-submenu {
+          @apply hidden ml-5 space-y-1 border-l border-gray-200 dark:border-white/20;
+
+          .sh-sidebar-item {
+            @apply rounded-none;
+
+            .sh-sidebar-item-link {
+              @apply relative py-2.5 pl-5;
+
+              &::before {
+                content: '';
+                @apply absolute -left-0.75 top-1/2 -translate-y-1/2 size-4 transition-all duration-150;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'/%3E%3Cpolyline points='176 104 224 152 176 200' fill='none' stroke='%23e5e7eb' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3Cpath d='M32,56a96,96,0,0,0,96,96h96' fill='none' stroke='%23e5e7eb' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-size: contain;
+              }
+            }
+
+            .sh-sidebar-item-dot {
+              @apply hidden absolute -left-1.5 top-1/2 -translate-y-1/2;
+            }
+
+            &:not(.sh-sidebar-item-active) {
+              @apply text-gray-500 dark:text-gray-400;
+
+              &:hover {
+                @apply text-gray-700 dark:text-gray-300;
+
+                .sh-sidebar-item-link::before {
+                  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'/%3E%3Cpolyline points='176 104 224 152 176 200' fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3Cpath d='M32,56a96,96,0,0,0,96,96h96' fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3C/svg%3E");
+                }
+              }
+            }
+
+            &.sh-sidebar-item-active {
+              @apply text-gray-950 dark:text-white bg-transparent ring-0 shadow-none;
+            }
+          }
+        }
+
+        &.sh-sidebar-item-active .sh-submenu {
+          @apply block;
+        }
+      }
+    }
+  }
 }
 
-.sh-heading {
-  @apply mb-2 ml-3 text-xs uppercase leading-5 font-semibold tracking-wider text-gray-600 dark:text-gray-400;
+.sh-si-collapsed .sh-sidebar {
+  .sh-sidebar-group {
+    @apply pt-4 border-t border-gray-200 dark:border-white/20;
+
+    &:first-child {
+      @apply pt-0 border-t-0;
+    }
+
+    .sh-sidebar-group-items > .sh-sidebar-item .sh-submenu {
+      @apply ml-0 border-l-0 mt-1;
+
+      .sh-sidebar-item {
+        .sh-sidebar-item-link {
+          @apply p-3 justify-center;
+
+          &::before {
+            @apply hidden;
+          }
+        }
+
+        .sh-sidebar-item-dot {
+          @apply block relative left-auto top-auto translate-y-0 size-2.5 shrink-0;
+        }
+      }
+    }
+  }
 }
 
-.sh-sidebar-item {
-  @apply flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium;
-}
+.dark .sh-sidebar .sh-submenu .sh-sidebar-item {
+  .sh-sidebar-item-link::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'/%3E%3Cpolyline points='176 104 224 152 176 200' fill='none' stroke='%23374151' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3Cpath d='M32,56a96,96,0,0,0,96,96h96' fill='none' stroke='%23374151' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3C/svg%3E");
+  }
 
-.sh-sidebar-item-active {
-  @apply text-primary-600 dark:text-primary-500 bg-white shadow ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/10;
-}
-
-.sh-sidebar-item-inactive {
-  @apply text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white;
-}
-
-.sh-sidebar-item-submenu {
-  @apply -ml-px flex items-center border-l-2 py-1 pl-5 text-sm font-medium;
-}
-
-.sh-sidebar-item-submenu-active {
-  @apply border-primary-500 text-gray-700 dark:text-white;
-}
-
-.sh-sidebar-item-submenu-inactive {
-  @apply border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-800 dark:hover:text-gray-300;
-}
-
-.item-name {
-  @apply flex-1 truncate;
-}
-
-.submenu {
-  @apply ml-5 hidden space-y-2 border-l border-gray-200 py-2.5 lg:space-y-3 dark:border-white/20;
-}
-
-.current-group .submenu {
-  @apply block;
+  &:hover .sh-sidebar-item-link::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'/%3E%3Cpolyline points='176 104 224 152 176 200' fill='none' stroke='%234b5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3Cpath d='M32,56a96,96,0,0,0,96,96h96' fill='none' stroke='%234b5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3C/svg%3E");
+  }
 }

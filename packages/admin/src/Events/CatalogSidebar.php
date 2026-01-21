@@ -17,32 +17,19 @@ final class CatalogSidebar extends AbstractAdminSidebar
         $menu->group(__('shopper::layout.sidebar.catalog'), function (Group $group): void {
             $group->weight(2);
             $group->setAuthorized();
-            $group->setGroupItemsClass('space-y-1');
-            $group->setHeadingClass('sh-heading');
+            // $group->collapsible();
 
             $group->item(__('shopper::pages/products.menu'), function (Item $item): void {
                 $item->weight(1);
                 $item->setAuthorized($this->user->hasPermissionTo('browse_products'));
-                $item->setItemClass('sh-sidebar-item group');
-                $item->setActiveClass('sh-sidebar-item-active');
-                $item->setInactiveClass('sh-sidebar-item-inactive');
                 $item->useSpa();
                 $item->route('shopper.products.index');
-                $item->setIcon(
-                    icon: 'phosphor-book-open-text',
-                    iconClass: 'size-5 '.($item->isActive() ? 'text-primary-500' : 'text-gray-400 dark:text-gray-500'),
-                    attributes: [
-                        'stroke-width' => '1.5',
-                    ],
-                );
+                $item->setIcon('phosphor-book-open-text');
 
                 if (Feature::enabled('attribute')) {
                     $item->item(__('shopper::pages/attributes.menu'), function (Item $item): void {
                         $item->weight(1);
                         $item->setAuthorized($this->user->hasPermissionTo('browse_products') || $this->user->hasPermissionTo('browse_attributes'));
-                        $item->setItemClass('sh-sidebar-item-submenu group');
-                        $item->setActiveClass('sh-sidebar-item-submenu-active');
-                        $item->setInactiveClass('sh-sidebar-item-submenu-inactive');
                         $item->useSpa();
                         $item->route('shopper.attributes.index');
                     });
@@ -53,18 +40,9 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 $group->item(__('shopper::pages/categories.menu'), function (Item $item): void {
                     $item->weight(2);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_categories'));
-                    $item->setItemClass('sh-sidebar-item group');
-                    $item->setActiveClass('sh-sidebar-item-active');
-                    $item->setInactiveClass('sh-sidebar-item-inactive');
                     $item->useSpa();
                     $item->route('shopper.categories.index');
-                    $item->setIcon(
-                        icon: 'phosphor-tag',
-                        iconClass: 'size-5 '.($item->isActive() ? 'text-primary-500' : 'text-gray-400 dark:text-gray-500'),
-                        attributes: [
-                            'stroke-width' => '1.5',
-                        ],
-                    );
+                    $item->setIcon('phosphor-tag');
                 });
             }
 
@@ -72,18 +50,9 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 $group->item(__('shopper::pages/collections.menu'), function (Item $item): void {
                     $item->weight(3);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_collections'));
-                    $item->setItemClass('sh-sidebar-item group');
-                    $item->setActiveClass('sh-sidebar-item-active');
-                    $item->setInactiveClass('sh-sidebar-item-inactive');
                     $item->useSpa();
                     $item->route('shopper.collections.index');
-                    $item->setIcon(
-                        icon: 'phosphor-stack',
-                        iconClass: 'size-5 '.($item->isActive() ? 'text-primary-500' : 'text-gray-400 dark:text-gray-500'),
-                        attributes: [
-                            'stroke-width' => '1.5',
-                        ],
-                    );
+                    $item->setIcon('phosphor-stack');
                 });
             }
 
@@ -91,18 +60,9 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 $group->item(__('shopper::pages/brands.menu'), function (Item $item): void {
                     $item->weight(4);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_brands'));
-                    $item->setItemClass('sh-sidebar-item group');
-                    $item->setActiveClass('sh-sidebar-item-active');
-                    $item->setInactiveClass('sh-sidebar-item-inactive');
                     $item->useSpa();
                     $item->route('shopper.brands.index');
-                    $item->setIcon(
-                        icon: 'phosphor-bookmarks',
-                        iconClass: 'size-5 '.($item->isActive() ? 'text-primary-500' : 'text-gray-400 dark:text-gray-500'),
-                        attributes: [
-                            'stroke-width' => '1.5',
-                        ],
-                    );
+                    $item->setIcon('phosphor-bookmarks');
                 });
             }
         });
