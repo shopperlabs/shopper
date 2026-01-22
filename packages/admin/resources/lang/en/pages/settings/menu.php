@@ -16,6 +16,8 @@ return [
     'payment_description' => 'Add different payment methods for your customers.',
     'legal' => 'Legal',
     'legal_description' => "Manage your store's legal pages such as privacy, terms.",
+    'carrier' => 'Carriers',
+    'carrier_description' => 'Manage shipping carriers and delivery providers.',
     'zone' => 'Zones',
     'zone_description' => 'Manage shipping, payment, and fulfillment across zones',
     'tax' => 'Taxes',

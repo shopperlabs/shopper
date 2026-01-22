@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\InventoryFactory;
 use Shopper\Core\Models\Contracts\Inventory as InventoryContract;
-use Shopper\Core\Observers\InventoryObserver;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
@@ -22,6 +20,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read string $code
  * @property-read string $email
  * @property-read string $city
+ * @property-read ?string $state
  * @property-read ?string $description
  * @property-read ?string $street_address
  * @property-read ?string $street_address_plus
@@ -29,7 +28,6 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?string $phone_number
  * @property-read bool $is_default
  */
-#[ObservedBy(InventoryObserver::class)]
 class Inventory extends Model implements InventoryContract
 {
     /** @use HasFactory<InventoryFactory> */

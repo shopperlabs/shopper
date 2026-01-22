@@ -1,5 +1,5 @@
 <div
-    class="sh-header sticky top-0 z-20 flex h-16 shrink-0 border-b border-gray-200 bg-gray-50 lg:h-auto lg:py-2 dark:border-white/10 dark:bg-gray-950"
+    class="sh-header sticky top-0 z-20 flex h-16 shrink-0 border-b border-gray-200 bg-gray-50 lg:h-auto lg:py-2 dark:border-white/10 dark:bg-gray-950 lg:rounded-tl-xl"
 >
     <button
         @click.stop="$store.sidebar.open()"

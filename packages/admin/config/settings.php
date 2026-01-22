@@ -2,63 +2,31 @@
 
 declare(strict_types=1);
 
+use Shopper\Settings\Items;
+
 return [
 
     /*
     |--------------------------------------------------------------------------
-    | Setting Menu
+    | Settings Menu
     |--------------------------------------------------------------------------
     |
-    | The menu for the generation of the settings page.
-    | UntitledUI is the icon used. See https://blade-ui-kit.com/blade-icons?set=74
+    | Register setting pages that appear in the admin settings menu.
+    | Each setting class must implement \Shopper\Contracts\SettingItem.
     |
-    | 'icon' => 'name_of_the_set_icon'
+    | To create a custom setting, create a class extending \Shopper\Settings\Setting
+    | and add it here with true to enable or false to disable.
     |
     */
 
     'items' => [
-        [
-            'name' => 'shopper::pages/settings/menu.general',
-            'description' => 'shopper::pages/settings/menu.general_description',
-            'icon' => 'untitledui-sliders',
-            'route' => 'shopper.settings.shop',
-            'permission' => null,
-        ],
-        [
-            'name' => 'shopper::pages/settings/menu.staff',
-            'description' => 'shopper::pages/settings/menu.staff_description',
-            'icon' => 'untitledui-shield-separator',
-            'route' => 'shopper.settings.users',
-            'permission' => null,
-        ],
-        [
-            'name' => 'shopper::pages/settings/menu.location',
-            'description' => 'shopper::pages/settings/menu.location_description',
-            'icon' => 'untitledui-marker-pin-flag',
-            'route' => 'shopper.settings.locations',
-            'permission' => null,
-        ],
-        [
-            'name' => 'shopper::pages/settings/menu.payment',
-            'description' => 'shopper::pages/settings/menu.payment_description',
-            'icon' => 'untitledui-coins-hand',
-            'route' => 'shopper.settings.payment-methods',
-            'permission' => null,
-        ],
-        [
-            'name' => 'shopper::pages/settings/menu.legal',
-            'description' => 'shopper::pages/settings/menu.legal_description',
-            'icon' => 'untitledui-file-lock-02',
-            'route' => 'shopper.settings.legal',
-            'permission' => null,
-        ],
-        [
-            'name' => 'shopper::pages/settings/menu.zone',
-            'description' => 'shopper::pages/settings/menu.zone_description',
-            'icon' => 'untitledui-globe-05',
-            'route' => 'shopper.settings.zones',
-            'permission' => null,
-        ],
+        Items\GeneralSetting::class => true,
+        Items\StaffSetting::class => true,
+        Items\LocationSetting::class => true,
+        Items\PaymentSetting::class => true,
+        Items\CarrierSetting::class => true,
+        Items\LegalSetting::class => true,
+        Items\ZoneSetting::class => true,
     ],
 
 ];

@@ -16,6 +16,8 @@ return [
     'payment_description' => 'Ajoutez différents moyen de paiement pour vos clients.',
     'legal' => 'Légal',
     'legal_description' => "Gérez les pages légales de votre boutique telles que la confidentialité, les conditions d'utilisation, etc.",
+    'carrier' => 'Transporteurs',
+    'carrier_description' => 'Gérez les transporteurs et les fournisseurs de livraison.',
     'zone' => 'Zones',
     'zone_description' => "Gérer l'expédition, le paiement et l'exécution dans toutes les zones",
     'tax' => 'Tax',

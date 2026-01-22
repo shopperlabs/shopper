@@ -56,6 +56,11 @@ return [
         'update' => 'Your payment method have been correctly updated',
     ],
 
+    'carrier' => [
+        'add' => 'The carrier has been successfully added!',
+        'update' => 'The carrier has been successfully updated.',
+    ],
+
     'products' => [
         'remove' => 'The :item has been correctly removed.',
     ],

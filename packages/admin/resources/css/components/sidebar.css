@@ -6,6 +6,8 @@
   @apply space-y-5;
 
   .sh-sidebar-group {
+    @apply border-t border-transparent;
+
     .sh-sidebar-group-label {
       @apply flex items-center px-2 pb-4 justify-between text-sm/4 text-gray-700 dark:text-gray-300;
     }
@@ -114,7 +116,7 @@
 
 .sh-si-collapsed .sh-sidebar {
   .sh-sidebar-group {
-    @apply pt-4 border-t border-gray-200 dark:border-white/20;
+    @apply pt-4 border-gray-200 dark:border-white/20;
 
     &:first-child {
       @apply pt-0 border-t-0;

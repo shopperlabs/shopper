@@ -62,6 +62,11 @@ return [
         'update' => 'Votre mode de paiement a été correctement mis à jour',
     ],
 
+    'carrier' => [
+        'add' => 'Le transporteur a été ajouté avec succès !',
+        'update' => 'Le transporteur a été mis à jour avec succès.',
+    ],
+
     'products' => [
         'remove' => ':item a été correctement supprimé',
     ],

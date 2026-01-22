@@ -22,6 +22,7 @@ return [
         'location-edit' => Pages\Settings\Locations\Edit::class,
         'legal' => Pages\Settings\LegalPage::class,
         'payment-methods' => Pages\Settings\PaymentMethod::class,
+        'carriers' => Pages\Settings\Carriers::class,
         'team-index' => Pages\Settings\Team\Index::class,
         'team-roles' => Pages\Settings\Team\RolePermission::class,
         'zones' => Pages\Settings\Zones::class,

@@ -11,26 +11,31 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\CarrierFactory;
 use Shopper\Core\Models\Contracts\Carrier as CarrierContract;
+use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasZones;
+use Shopper\Shipping\Contracts\ShippingDriver;
+use Shopper\Shipping\Facades\Shipping;
+use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
  * @property-read string $name
  * @property-read bool $is_enabled
  * @property-read ?string $slug
- * @property-read ?string $logo
+ * @property-read ?string $driver
  * @property-read ?string $link_url
  * @property-read ?string $description
  * @property-read ?int $shipping_amount
  * @property-read array<string, mixed>|null $metadata
  * @property-read Collection<int, CarrierOption> $options
  */
-class Carrier extends Model implements CarrierContract
+class Carrier extends Model implements CarrierContract, SpatieHasMedia
 {
     /** @use HasFactory<CarrierFactory> */
     use HasFactory;
 
+    use HasMedia;
     use HasSlug;
     use HasZones;
 
@@ -56,6 +61,36 @@ class Carrier extends Model implements CarrierContract
     public function options(): HasMany
     {
         return $this->hasMany(CarrierOption::class);
+    }
+
+    public function getShippingDriver(): ?ShippingDriver
+    {
+        if (! $this->usesApiDriver()) {
+            return null;
+        }
+
+        return Shipping::driver($this->driver);
+    }
+
+    public function usesApiDriver(): bool
+    {
+        return filled($this->driver) && $this->driver !== 'manual';
+    }
+
+    public function isDriverConfigured(): bool
+    {
+        return $this->getShippingDriver()?->isConfigured() ?? false;
+    }
+
+    public function logoUrl(): ?string
+    {
+        $media = $this->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection'));
+
+        if ($media && $media !== shopper_fallback_url()) {
+            return $media;
+        }
+
+        return $this->getShippingDriver()?->logo();
     }
 
     protected static function newFactory(): CarrierFactory

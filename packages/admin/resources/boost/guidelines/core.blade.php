@@ -156,15 +156,9 @@ class ShippingSidebar extends AbstractAdminSidebar
 
             $group->item(__('Shipping Methods'), function (Item $item): void {
                 $item->weight(5); // Position after other items
-                $item->setItemClass('sh-sidebar-item group');
-                $item->setActiveClass('sh-sidebar-item-active');
                 $item->useSpa(); // Enable SPA navigation
                 $item->route('shopper.shipping.index');
-                $item->setIcon(
-                    icon: 'untitledui-truck-01',
-                    iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
-                    attributes: ['stroke-width' => '1.5'],
-                );
+                $item->setIcon('untitledui-truck-01');
             });
         });
 
@@ -252,10 +246,7 @@ $menu->group(function (Group $group): void {
         $item->weight(2); // After Dashboard (weight 1)
         $item->useSpa();
         $item->route('shopper.analytics.index');
-        $item->setIcon(
-            icon: 'phosphor-chart-line',
-            iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-500' : 'text-gray-400 dark:text-gray-500'),
-        );
+        $item->setIcon('phosphor-chart-line');
     });
 });
 </code-snippet>
@@ -341,8 +332,8 @@ Products and variants use the `HasStock` trait. Shopper supports multi-location 
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Inventory;
 
-$product = Product::find($id);
-$inventory = Inventory::where('is_default', true)->first();
+$product = Product::query()->find($id);
+$inventory = Inventory::query()->where('is_default', true)->first();
 
 $product->setStock(100, $inventory->id);
 $product->decreaseStock($inventory->id, 5);
@@ -437,19 +428,12 @@ public function boot(): void
             $sidebar->getMenu()->group('Custom Section', function (Group $group) {
                 $group->weight(50);
                 $group->setAuthorized();
-                $group->setGroupItemsClass('space-y-1');
-                $group->setHeadingClass('sh-heading');
 
                 $group->item('My Custom Page', function (Item $item) {
                     $item->weight(1);
-                    $item->setItemClass('sh-sidebar-item group');
-                    $item->setActiveClass('sh-sidebar-item-active');
                     $item->useSpa();
                     $item->route('shopper.custom.index');
-                    $item->setIcon(
-                        icon: 'heroicon-o-star',
-                        iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
-                    );
+                    $item->setIcon('heroicon-o-star');
                 });
             })
         );

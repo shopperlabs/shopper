@@ -156,5 +156,8 @@ return [
     'learn_more' => 'En savoir plus',
     'characters' => ':number caractères',
     'number_more' => ':number autre(s)',
+    'manual' => 'Manuel',
+    'configured' => 'Configuré',
+    'not_configured' => 'Non configuré',
 
 ];

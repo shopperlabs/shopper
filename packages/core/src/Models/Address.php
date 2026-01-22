@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +12,6 @@ use Shopper\Core\Database\Factories\AddressFactory;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Contracts\Address as AddressContract;
 use Shopper\Core\Models\Contracts\ShopperUser;
-use Shopper\Core\Observers\AddressObserver;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
@@ -26,6 +24,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?string $street_address_plus
  * @property-read string $postal_code
  * @property-read string $city
+ * @property-read ?string $state
  * @property-read AddressType $type
  * @property-read ?string $phone_number
  * @property-read bool $shipping_default
@@ -35,7 +34,6 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read Country $country
  * @property-read Model&ShopperUser $user
  */
-#[ObservedBy(AddressObserver::class)]
 class Address extends Model implements AddressContract
 {
     /** @use HasFactory<AddressFactory> */

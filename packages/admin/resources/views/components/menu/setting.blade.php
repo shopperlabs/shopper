@@ -1,28 +1,26 @@
 @props([
-    'menu',
+    'setting',
 ])
 
 <x-shopper::link
-    :href="$menu['route'] ? route($menu['route']) : '#'"
+    :href="$setting->url() ?? '#'"
     class="flex items-start space-x-4 rounded-lg p-2 hover:bg-gray-50 dark:hover:bg-white/5"
 >
-    <div class="bg-primary-600 flex size-12 shrink-0 items-center justify-center rounded-xl text-white">
-        {{ svg($menu['icon'], 'size-6') }}
+    <div class="bg-primary-600 flex size-10 shrink-0 items-center justify-center rounded-lg text-white">
+        <x-filament::icon :icon="$setting->icon()" />
     </div>
     <div class="space-y-1">
-        <p class="inline-flex items-center font-medium text-gray-900 dark:text-white">
-            {{ __($menu['name']) }}
+        <h5 class="inline-flex items-center gap-3 font-medium text-gray-900 dark:text-white">
+            {{ $setting->name() }}
 
-            @if (! $menu['route'])
-                <span
-                    class="bg-primary-100 text-primary-800 ml-2.5 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs leading-4 font-medium"
-                >
+            @if (! $setting->url())
+                <x-filament::badge size="sm" color="primary">
                     {{ __('shopper::words.soon') }}
-                </span>
+                </x-filament::badge>
             @endif
-        </p>
-        <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
-            {{ __($menu['description']) }}
+        </h5>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+            {{ $setting->description() }}
         </p>
     </div>
 </x-shopper::link>

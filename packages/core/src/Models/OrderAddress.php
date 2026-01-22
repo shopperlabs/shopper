@@ -22,6 +22,7 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read ?string $street_address_plus
  * @property-read string $postal_code
  * @property-read string $city
+ * @property-read ?string $state
  * @property-read ?string $company
  * @property-read ?string $phone
  * @property-read ?string $country_name
