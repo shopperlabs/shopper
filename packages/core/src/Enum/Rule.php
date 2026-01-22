@@ -44,4 +44,27 @@ enum Rule: string implements HasLabel
             self::InventoryStock => __('shopper-core::enum/collection.rules.inventory_stock'),
         };
     }
+
+    /**
+     * @return array<int, Operator>
+     */
+    public function allowedOperators(): array
+    {
+        return match ($this) {
+            self::ProductTitle, self::ProductBrand, self::ProductCategory => [
+                Operator::Contains,
+                Operator::NotContains,
+                Operator::StartsWith,
+                Operator::EndsWith,
+                Operator::EqualsTo,
+                Operator::NotEqualTo,
+            ],
+            self::ProductPrice, self::CompareAtPrice, self::InventoryStock => [
+                Operator::EqualsTo,
+                Operator::NotEqualTo,
+                Operator::LessThan,
+                Operator::GreaterThan,
+            ],
+        };
+    }
 }

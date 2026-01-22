@@ -16,6 +16,7 @@ use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
+use Shopper\Core\Queries\CollectionProductsQuery;
 use Shopper\Core\Traits\HasModelContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
@@ -63,6 +64,29 @@ class Collection extends Model implements CollectionContract, SpatieHasMedia
     public function isManual(): bool
     {
         return ! $this->isAutomatic();
+    }
+
+    /**
+     * Get all products for this collection.
+     * For manual collections, returns the attached products.
+     * For automatic collections, evaluates rules and returns matching products.
+     *
+     * @return EloquentCollection<int, Contracts\Product>
+     */
+    public function getProducts(): EloquentCollection
+    {
+        return (new CollectionProductsQuery)->get($this);
+    }
+
+    /**
+     * Get the query builder for this collection's products.
+     * Useful for pagination or further filtering.
+     *
+     * @return Builder<Contracts\Product>
+     */
+    public function productsQuery(): Builder
+    {
+        return (new CollectionProductsQuery)->query($this);
     }
 
     public function firstRule(): ?string

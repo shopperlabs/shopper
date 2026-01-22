@@ -13,10 +13,12 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Enum\Operator;
 use Shopper\Core\Enum\Rule;
+use Shopper\Core\Jobs\SyncCollectionProductsJob;
 use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Livewire\Components\SlideOverComponent;
 
@@ -62,10 +64,20 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
                         Select::make('rule')
                             ->label(__('shopper::pages/collections.conditions.choose_rule'))
                             ->options(Rule::class)
+                            ->live()
+                            ->afterStateUpdated(
+                                fn (Select $component) => $component
+                                    ->getContainer()
+                                    ->getComponent('operator')
+                                    ?->state(null)
+                            )
                             ->required(),
                         Select::make('operator')
+                            ->key('operator')
                             ->label(__('shopper::pages/collections.conditions.select_operator'))
-                            ->options(Operator::class)
+                            ->options(fn (Get $get): array => collect($get('rule')?->allowedOperators() ?? [])
+                                ->mapWithKeys(fn (Operator $op) => [$op->value => $op->getLabel()])
+                                ->all())
                             ->required(),
                         TextInput::make('value')
                             ->label(__('shopper::forms.label.value'))
@@ -81,6 +93,11 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
     public function store(): void
     {
         $this->collection->update($this->form->getState());
+        $this->form->model($this->collection)->saveRelationships(); // @phpstan-ignore-line
+
+        if ($this->collection->isAutomatic()) {
+            SyncCollectionProductsJob::dispatch($this->collection);
+        }
 
         $this->closePanel();
 
