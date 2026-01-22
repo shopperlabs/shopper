@@ -1,15 +1,15 @@
-<x-shopper::container class="py-5 space-y-8">
+<x-shopper::container class="space-y-8 py-5">
     <x-shopper::heading :title="__('shopper::pages/settings/global.menu')" />
 
     <x-shopper::card>
         <div class="grid gap-4 sm:grid-cols-3">
-            @foreach (config('shopper.settings.items', []) as $menu)
-                @if (isset($menu['permission']))
-                    @can($menu['permission'])
-                        <x-shopper::menu.setting :$menu />
+            @foreach (resolve(\Shopper\Settings\SettingManager::class)->all() as $setting)
+                @if ($setting->permission())
+                    @can($setting->permission())
+                        <x-shopper::menu.setting :$setting />
                     @endcan
                 @else
-                    <x-shopper::menu.setting :$menu />
+                    <x-shopper::menu.setting :$setting />
                 @endif
             @endforeach
         </div>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aeab39839e23507882ea2041d8a5df4d",
+    "content-hash": "6e97c65928f4d553c41f14d3467805e0",
     "packages": [],
     "packages-dev": [
         {
@@ -3141,6 +3141,79 @@
             "time": "2025-03-17T16:59:46+00:00"
         },
         {
+            "name": "ivanmitrikeski/laravel-shipping",
+            "version": "v1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ivanmitrikeski/laravel-shipping.git",
+                "reference": "0376305cf1af468dea7d9dc2008d188ff45bedb7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ivanmitrikeski/laravel-shipping/zipball/0376305cf1af468dea7d9dc2008d188ff45bedb7",
+                "reference": "0376305cf1af468dea7d9dc2008d188ff45bedb7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-soap": "*",
+                "guzzlehttp/guzzle": "^7.6",
+                "illuminate/collections": "^10.0|^11.0|^12.0",
+                "openlss/lib-array2xml": "^1.0",
+                "php": ">=8.2",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
+                "illuminate/database": "^11.0|^12.0",
+                "illuminate/support": "^11.0|^12.0",
+                "illuminate/testing": "^11.0|^12.0",
+                "orchestra/testbench": "^10.6",
+                "phpoption/phpoption": "^1.9",
+                "phpunit/phpunit": "^9.5|^10.5.35|^11.5.3|^12.0.1",
+                "vlucas/phpdotenv": "^5.5"
+            },
+            "type": "laravel-package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mitrik\\Shipping\\ShippingServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mitrik\\Shipping\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Mitrikeski",
+                    "email": "ivan@mitrik.ca"
+                }
+            ],
+            "description": "Shipping package for Laravel. Supported providers: CanadaPost, USPS, UPS, FedEx and Purolator.",
+            "keywords": [
+                "FedEx",
+                "Rate",
+                "Rating",
+                "canadapost",
+                "laravel",
+                "purolator",
+                "rest",
+                "shipping",
+                "ups",
+                "usps"
+            ],
+            "support": {
+                "issues": "https://github.com/ivanmitrikeski/laravel-shipping/issues",
+                "source": "https://github.com/ivanmitrikeski/laravel-shipping/tree/v1.0.8"
+            },
+            "time": "2025-12-23T01:12:56+00:00"
+        },
+        {
             "name": "jaocero/radio-deck",
             "version": "v2.0",
             "source": {
@@ -4853,16 +4926,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v3.7.4",
+            "version": "v3.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "5a8dffd4c0ab357ff7ed5b39e7c2453d962a68e0"
+                "reference": "b48b1e5ecb6c4740f49e18b1c2bc14ed33f8ebff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/5a8dffd4c0ab357ff7ed5b39e7c2453d962a68e0",
-                "reference": "5a8dffd4c0ab357ff7ed5b39e7c2453d962a68e0",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/b48b1e5ecb6c4740f49e18b1c2bc14ed33f8ebff",
+                "reference": "b48b1e5ecb6c4740f49e18b1c2bc14ed33f8ebff",
                 "shasum": ""
             },
             "require": {
@@ -4917,7 +4990,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v3.7.4"
+                "source": "https://github.com/livewire/livewire/tree/v3.7.5"
             },
             "funding": [
                 {
@@ -4925,7 +4998,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-13T09:37:21+00:00"
+            "time": "2026-01-21T08:08:00+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -6341,6 +6414,59 @@
                 }
             ],
             "time": "2025-11-20T02:34:59+00:00"
+        },
+        {
+            "name": "openlss/lib-array2xml",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nullivex/lib-array2xml.git",
+                "reference": "a91f18a8dfc69ffabe5f9b068bc39bb202c81d90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nullivex/lib-array2xml/zipball/a91f18a8dfc69ffabe5f9b068bc39bb202c81d90",
+                "reference": "a91f18a8dfc69ffabe5f9b068bc39bb202c81d90",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "LSS": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Bryan Tong",
+                    "email": "bryan@nullivex.com",
+                    "homepage": "https://www.nullivex.com"
+                },
+                {
+                    "name": "Tony Butler",
+                    "email": "spudz76@gmail.com",
+                    "homepage": "https://www.nullivex.com"
+                }
+            ],
+            "description": "Array2XML conversion library credit to lalit.org",
+            "homepage": "https://www.nullivex.com",
+            "keywords": [
+                "array",
+                "array conversion",
+                "xml",
+                "xml conversion"
+            ],
+            "support": {
+                "issues": "https://github.com/nullivex/lib-array2xml/issues",
+                "source": "https://github.com/nullivex/lib-array2xml/tree/master"
+            },
+            "time": "2019-03-29T20:06:56+00:00"
         },
         {
             "name": "openspout/openspout",

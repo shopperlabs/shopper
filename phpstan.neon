@@ -31,5 +31,7 @@ parameters:
         -
             message: '#\(view-string\) does not accept default value of type string#'
             identifier: property.defaultValue
+        -
+            identifier: generics.notSubtype
 
     reportUnmatchedIgnoredErrors: false

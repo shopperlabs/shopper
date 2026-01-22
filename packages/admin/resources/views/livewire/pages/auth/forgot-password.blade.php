@@ -1,9 +1,9 @@
 <x-shopper::auth-card>
     @if (session()->has('success'))
-        <div class="rounded-lg bg-success-100 p-4">
+        <div class="bg-success-100 rounded-lg p-4">
             <div class="flex">
                 <div class="shrink-0">
-                    <svg class="size-5 text-success-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <svg class="text-success-400 size-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                         <path
                             fill-rule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -12,7 +12,7 @@
                     </svg>
                 </div>
                 <div class="ml-3 flex-1 lg:flex lg:justify-between">
-                    <p class="text-sm leading-5 text-success-700">
+                    <p class="text-success-700 text-sm leading-5">
                         {{ session()->get('success') }}
                     </p>
                 </div>

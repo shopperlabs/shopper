@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +19,6 @@ use Shopper\Core\Models\Traits\HasDimensions;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasPrices;
 use Shopper\Core\Models\Traits\HasStock;
-use Shopper\Core\Observers\ProductVariantObserver;
 use Shopper\Core\Traits\HasModelContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
@@ -51,7 +49,6 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  *
  * @implements Priceable<ProductVariant>
  */
-#[ObservedBy(ProductVariantObserver::class)]
 class ProductVariant extends Model implements Priceable, ProductVariantContract, SpatieHasMedia
 {
     use HasDimensions;

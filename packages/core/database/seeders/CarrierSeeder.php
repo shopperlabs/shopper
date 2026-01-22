@@ -15,6 +15,7 @@ final class CarrierSeeder extends Seeder
             'name' => 'Manual',
             'slug' => 'manual',
             'is_enabled' => true,
+            'driver' => 'manual',
         ]);
     }
 }

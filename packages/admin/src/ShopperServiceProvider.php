@@ -37,6 +37,7 @@ use Shopper\Livewire\Components;
 use Shopper\Livewire\Pages;
 use Shopper\Providers\FeatureServiceProvider;
 use Shopper\Providers\SidebarServiceProvider;
+use Shopper\Settings\SettingManager;
 use Shopper\Traits\LoadComponents;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -100,11 +101,12 @@ final class ShopperServiceProvider extends PackageServiceProvider
         );
 
         $this->app->bind(LoginResponseContract::class, LoginResponse::class);
-
         $this->app->register(SidebarServiceProvider::class);
         $this->app->register(FeatureServiceProvider::class);
-
         $this->app->scoped('shopper', fn (): ShopperPanel => new ShopperPanel);
+        $this->app->singleton(SettingManager::class, fn (): SettingManager => (new SettingManager)->register(
+            config('shopper.settings.items', [])
+        ));
 
         $this->loadViewsFrom($this->root.'/resources/views', 'shopper');
     }

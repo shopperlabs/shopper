@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,7 +29,6 @@ use Shopper\Core\Models\Traits\HasPrices;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasStock;
 use Shopper\Core\Models\Traits\InteractsWithReviews;
-use Shopper\Core\Observers\ProductObserver;
 use Shopper\Core\Traits\HasModelContract;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
@@ -71,7 +69,6 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  *
  * @implements Priceable<Product>
  */
-#[ObservedBy(ProductObserver::class)]
 class Product extends Model implements HasReviews, Priceable, ProductContract, SpatieHasMedia
 {
     use HasDimensions;

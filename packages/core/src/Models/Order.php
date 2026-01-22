@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +18,6 @@ use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Helpers\Price;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Contracts\ShopperUser;
-use Shopper\Core\Observers\OrderObserver;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
@@ -49,7 +47,6 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read Collection<int, OrderItem> $items
  * @property-read Collection<int, Order> $children
  */
-#[ObservedBy(OrderObserver::class)]
 class Order extends Model implements OrderContract
 {
     /** @use HasFactory<OrderFactory> */

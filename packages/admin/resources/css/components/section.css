@@ -1,5 +1,5 @@
 .sh-section-aside .fi-section.fi-aside > .fi-section-content-ctn {
-  @apply bg-transparent ring-0 shadow-none lg:max-w-3xl;
+  @apply bg-transparent shadow-none ring-0 lg:max-w-3xl;
 
   & > .fi-section-content {
     @apply p-0;
@@ -11,7 +11,7 @@
 }
 
 .fi-section:not(.sh-section-aside *) {
-  @apply p-1.5 rounded-xl bg-gray-50 ring-1 ring-gray-200 dark:bg-gray-950 dark:ring-white/10;
+  @apply rounded-xl bg-gray-50 p-1.5 ring-1 ring-gray-200 dark:bg-gray-950 dark:ring-white/10;
 
   .fi-section-content {
     @apply p-1;
@@ -26,14 +26,25 @@
   }
 
   .fi-section-content-ctn {
-    @apply border-t-0 ring-1 rounded-lg p-4  bg-white dark:bg-gray-900 ring-gray-200 dark:ring-white/10;
+    @apply rounded-lg border-t-0 bg-white p-4 ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10;
   }
 
   &:not(.fi-section-has-header) {
     @apply rounded-none bg-transparent shadow-none ring-0 ring-transparent dark:bg-transparent;
 
     .fi-section-content-ctn {
-      @apply p-0 ring-0 shadow-none;
+      @apply p-0 shadow-none ring-0;
     }
+  }
+}
+
+.fi-fo-repeater-item.fi-fo-repeater-item-has-header {
+  @apply bg-gray-50 p-1.5 ring-1 ring-gray-200 dark:bg-gray-950 dark:ring-white/10;
+
+  > .fi-fo-repeater-item-header {
+  }
+
+  > .fi-fo-repeater-item-content {
+    @apply rounded-lg border-t-0 bg-white ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10;
   }
 }

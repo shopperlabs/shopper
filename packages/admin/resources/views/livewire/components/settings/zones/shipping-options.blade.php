@@ -3,7 +3,7 @@
 @endphp
 
 <div>
-    <x-shopper::card class="p-1 bg-gray-50">
+    <x-shopper::card class="bg-gray-50 p-1">
         <x-slot name="title">
             <div class="flex items-center justify-between gap-2">
                 <div class="flex items-start gap-3">
@@ -32,7 +32,7 @@
                 <div
                     class="relative flex items-start justify-between rounded-lg border border-gray-200 bg-white p-3 dark:border-white/10 dark:bg-white/5"
                 >
-                    <div class="flex items-start gap-2 flex-1">
+                    <div class="flex flex-1 items-start gap-2">
                         <img
                             class="size-6 rounded-full object-cover"
                             src="{{ $shippingOption->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"

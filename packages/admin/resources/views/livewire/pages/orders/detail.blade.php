@@ -227,17 +227,19 @@
                         </div>
                     @else
                         <div class="py-4">
-                            <div class="border-l-4 border-warning-400 bg-warning-50 rounded-lg dark:bg-warning-400/10 p-4">
+                            <div
+                                class="border-warning-400 bg-warning-50 dark:bg-warning-400/10 rounded-lg border-l-4 p-4"
+                            >
                                 <div class="flex">
                                     <div class="shrink-0">
                                         <x-untitledui-alert-triangle
-                                            class="size-5 text-warning-400"
+                                            class="text-warning-400 size-5"
                                             stroke-width="1.5"
                                             aria-hidden="true"
                                         />
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm text-warning-700 dark:text-warning-300">
+                                        <p class="text-warning-700 dark:text-warning-300 text-sm">
                                             {{ __('shopper::pages/orders.no_payment_method') }}
                                         </p>
                                         <a
@@ -297,17 +299,19 @@
                                 </div>
                             </dl>
                         @else
-                            <div class="border-l-4 border-warning-400 bg-warning-50 rounded-lg dark:bg-warning-400/10 p-4">
+                            <div
+                                class="border-warning-400 bg-warning-50 dark:bg-warning-400/10 rounded-lg border-l-4 p-4"
+                            >
                                 <div class="flex">
                                     <div class="shrink-0">
                                         <x-untitledui-alert-triangle
-                                            class="size-5 text-warning-400"
+                                            class="text-warning-400 size-5"
                                             stroke-width="1.5"
                                             aria-hidden="true"
                                         />
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm text-warning-700 dark:text-warning-300">
+                                        <p class="text-warning-700 dark:text-warning-300 text-sm">
                                             {{ __('shopper::pages/orders.no_shipping_method') }}
                                             <a
                                                 href="https://docs.laravelshopper.dev/{{ shopper()->version() }}/shipping"

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\ChannelFactory;
 use Shopper\Core\Models\Contracts\Channel as ChannelContract;
 use Shopper\Core\Models\Traits\HasSlug;
-use Shopper\Core\Observers\ChannelObserver;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
@@ -28,7 +26,6 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read array<string, mixed>|null $metadata
  * @property-read Collection<int, Product> $products
  */
-#[ObservedBy(ChannelObserver::class)]
 class Channel extends Model implements ChannelContract
 {
     /** @use HasFactory<ChannelFactory> */

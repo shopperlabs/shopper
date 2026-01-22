@@ -74,7 +74,7 @@ final class UspsDriver extends Driver
                 $this->toBoxCollection($packages),
             );
 
-            return collect($rates)->map(fn ($rate) => new ShippingRate(
+            return collect($rates)->map(fn ($rate): ShippingRate => new ShippingRate(
                 serviceCode: $rate->getServiceCode(),
                 serviceName: $rate->getServiceName(),
                 amount: (int) ($rate->getPrice() * 100),
@@ -123,7 +123,7 @@ final class UspsDriver extends Driver
     private function toBoxCollection(array $packages): BoxCollection
     {
         $boxes = array_map(
-            fn (Package $p) => new BoxImperial($p->length, $p->width, $p->height, $p->weight),
+            fn (Package $p): BoxImperial => new BoxImperial($p->length, $p->width, $p->height, $p->weight),
             $packages
         );
 

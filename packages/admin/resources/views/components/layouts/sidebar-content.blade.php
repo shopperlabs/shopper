@@ -1,21 +1,25 @@
 <!-- Navigation -->
-<div class="flex flex-1 flex-col justify-between min-h-0">
-    <div class="relative flex-1 min-h-0">
+<div class="flex min-h-0 flex-1 flex-col justify-between">
+    <div class="relative min-h-0 flex-1">
         <!-- Top fade gradient -->
-        <div class="pointer-events-none absolute left-0 right-0.5 top-0 z-10 h-6 bg-linear-to-b from-gray-50 to-transparent dark:from-gray-950"></div>
+        <div
+            class="pointer-events-none absolute top-0 right-0.5 left-0 z-10 h-6 bg-linear-to-b from-gray-50 to-transparent dark:from-gray-950"
+        ></div>
 
         <div class="h-full overflow-y-auto">
-            <nav class="sh-si-nav py-4 px-4">
+            <nav class="sh-si-nav px-4 py-4">
                 {!! $renderedSidebar !!}
             </nav>
         </div>
 
         <!-- Bottom fade gradient -->
-        <div class="pointer-events-none absolute left-0 right-0.5 bottom-0 z-10 h-6 bg-linear-to-t from-gray-50 to-transparent dark:from-gray-950"></div>
+        <div
+            class="pointer-events-none absolute right-0.5 bottom-0 left-0 z-10 h-6 bg-linear-to-t from-gray-50 to-transparent dark:from-gray-950"
+        ></div>
     </div>
 
     <!-- Footer -->
-    <div class="sh-sidebar border-t border-gray-200 pt-4 pb-10 px-4 dark:border-white/20">
+    <div class="sh-sidebar border-t border-gray-200 px-4 pt-4 pb-10 dark:border-white/20">
         <div class="sh-sidebar-group">
             <ul role="list" class="sh-sidebar-group-items space-y-1">
                 @can('access_setting')

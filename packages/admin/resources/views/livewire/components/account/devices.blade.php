@@ -41,7 +41,7 @@
                                             </h4>
                                             @if ($session->is_current_device)
                                                 <span
-                                                    class="ml-2 inline-flex items-center rounded-md bg-success-100 px-2.5 py-0.5 text-xs leading-4 font-medium text-success-800"
+                                                    class="bg-success-100 text-success-800 ml-2 inline-flex items-center rounded-md px-2.5 py-0.5 text-xs leading-4 font-medium"
                                                 >
                                                     {{ __('shopper::pages/auth.account.current_device') }}
                                                 </span>

@@ -14,7 +14,7 @@
         <aside class="lg:sticky lg:top-4">
             <x-shopper::card class="max-w-lg [&>div:first-of-type]:p-0">
                 <x-slot name="title">
-                    <div class="flex items-start justify-between px-2 gap-2">
+                    <div class="flex items-start justify-between gap-2 px-2">
                         <x-shopper::section-heading
                             :title="__('shopper::pages/settings/zones.title')"
                             :description="__('shopper::pages/settings/zones.description')"

@@ -26,7 +26,7 @@
             activeTab: @entangle('activeTab'),
         }"
     >
-        <div class="sticky z-10 bg-white pt-8 backdrop-blur-lg top-12 dark:bg-gray-900">
+        <div class="sticky top-12 z-10 bg-white pt-8 backdrop-blur-lg dark:bg-gray-900">
             <div class="space-y-4">
                 <x-shopper::container>
                     <x-shopper::heading>
@@ -149,7 +149,7 @@
             </div>
         </div>
 
-        <div class="z-0 py-8 sh-product-edit-page">
+        <div class="sh-product-edit-page z-0 py-8">
             <div x-show="activeTab === 'detail'">
                 <livewire:shopper-products.form.edit :$product />
             </div>

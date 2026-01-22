@@ -9,7 +9,7 @@
     </x-filament::section.heading>
 
     @if ($description)
-        <x-filament::section.description class="mt-1 text-sm text-gray-500 dark:text-gray-400 max-w-2xl">
+        <x-filament::section.description class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
             {{ $description }}
         </x-filament::section.description>
     @endif

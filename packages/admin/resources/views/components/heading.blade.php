@@ -4,9 +4,7 @@
     @if ($title instanceof \Illuminate\View\ComponentSlot)
         {{ $title }}
     @else
-        <h2
-            class="font-heading text-2xl font-bold text-gray-900 sm:truncate sm:text-3xl dark:text-white"
-        >
+        <h2 class="font-heading text-2xl font-bold text-gray-900 sm:truncate sm:text-3xl dark:text-white">
             {{ $title }}
         </h2>
     @endif

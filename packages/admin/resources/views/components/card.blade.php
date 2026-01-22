@@ -16,7 +16,9 @@
         </header>
     @endif
 
-    <div class="sh-card-content bg-white dark:bg-gray-900 ring-1 ring-gray-200 rounded-lg dark:ring-white/10 p-4 overflow-hidden">
+    <div
+        class="sh-card-content overflow-hidden rounded-lg bg-white p-4 ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10"
+    >
         {{ $slot }}
     </div>
 </div>

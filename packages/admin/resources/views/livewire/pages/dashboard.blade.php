@@ -7,7 +7,9 @@
         </h2>
     </div>
 
-    <div class="my-8 overflow-hidden rounded-xl bg-gray-50 p-1 ring-1 ring-gray-200 dark:bg-gray-950 dark:ring-white/10">
+    <div
+        class="my-8 overflow-hidden rounded-xl bg-gray-50 p-1 ring-1 ring-gray-200 dark:bg-gray-950 dark:ring-white/10"
+    >
         <div class="p-5">
             <div class="text-lg font-medium text-gray-900 dark:text-white">
                 {{ __('shopper::pages/dashboard.header') }}

@@ -51,7 +51,7 @@
                             @livewire($component['name'], $component['arguments'], key($id))
                         </div>
                     @empty
-
+                        
                     @endforelse
                 </div>
             </div>

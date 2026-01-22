@@ -9,7 +9,7 @@
                 <div class="flex items-center justify-between gap-2">
                     <div class="flex items-center gap-3">
                         <x-untitledui-globe-05 class="size-6 text-gray-400 dark:text-gray-500" aria-hidden="true" />
-                        <x-filament::section.heading class="font-semibold font-heading text-gray-950 dark:text-white">
+                        <x-filament::section.heading class="font-heading font-semibold text-gray-950 dark:text-white">
                             {{ $zone->name }}
                             @if ($zone->code)
                                 <span>({{ $zone->code }})</span>
@@ -50,9 +50,9 @@
                             :code="$zone->metadata"
                             lang="json"
                             :themes="[
-                                    'light' => 'github-light',
-                                    'dark' => 'github-dark-default',
-                                ]"
+                                'light' => 'github-light',
+                                'dark' => 'github-dark-default',
+                            ]"
                         />
                     </x-shopper::description-list.item>
                 </div>

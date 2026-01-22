@@ -60,7 +60,7 @@
                     aria-label="Tabs"
                     id="setting-tabs"
                 >
-                    @foreach (config('shopper.settings.items', []) as $menu)
+                    @foreach (resolve(\Shopper\Settings\SettingManager::class)->all() as $menu)
                         <x-shopper::menu.nav-setting :menu="$menu" />
                     @endforeach
                 </nav>

@@ -51,7 +51,9 @@
                             <h3 class="mt-4 text-lg leading-6 font-medium text-gray-900 dark:text-white">
                                 {{ $role->display_name }}
                             </h3>
-                            <p class="inline-flex itemps-center gap-2 mt-1.5 text-xs text-primary-600 dark:text-primary-400 group-hover:text-primary-500">
+                            <p
+                                class="itemps-center text-primary-600 dark:text-primary-400 group-hover:text-primary-500 mt-1.5 inline-flex gap-2 text-xs"
+                            >
                                 {{ __('shopper::words.view_details') }}
                                 <x-untitledui-arrow-narrow-right class="size-4" aria-hidden="true" />
                             </p>

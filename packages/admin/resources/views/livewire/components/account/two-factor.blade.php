@@ -31,7 +31,10 @@
                         <div class="bg-primary-50 dark:bg-primary-800/20 rounded-md p-4">
                             <div class="flex">
                                 <div class="shrink-0">
-                                    <x-heroicon-s-information-circle class="text-primary-400 size-5" aria-hidden="true" />
+                                    <x-heroicon-s-information-circle
+                                        class="text-primary-400 size-5"
+                                        aria-hidden="true"
+                                    />
                                 </div>
                                 <div class="ml-3">
                                     <p class="text-primary-500 text-sm leading-5">

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +14,6 @@ use Shopper\Core\Database\Factories\AttributeFactory;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Contracts\Attribute as AttributeContract;
 use Shopper\Core\Models\Traits\HasSlug;
-use Shopper\Core\Observers\AttributeObserver;
 
 /**
  * @property-read int $id
@@ -30,7 +28,6 @@ use Shopper\Core\Observers\AttributeObserver;
  * @property-read string $type_formatted
  * @property-read \Illuminate\Database\Eloquent\Collection<int, AttributeValue> $values
  */
-#[ObservedBy([AttributeObserver::class])]
 class Attribute extends Model implements AttributeContract
 {
     /** @use HasFactory<AttributeFactory> */

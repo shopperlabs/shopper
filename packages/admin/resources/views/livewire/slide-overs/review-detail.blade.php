@@ -18,15 +18,11 @@
                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/products.single') }}
                             </dt>
-                            <dd
-                                class="flex flex-col text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white"
-                            >
+                            <dd class="flex flex-col text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white">
                                 <span class="grow">
                                     {{ $review->reviewrateable->name }}
                                 </span>
-                                <p
-                                    class="mt-1 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400"
-                                >
+                                <p class="mt-1 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
                                     @if ($review->reviewrateable->sku)
                                         <span>
                                             {{ $review->reviewrateable->sku }}
@@ -40,9 +36,7 @@
                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/products.reviews.rating') }}
                             </dt>
-                            <dd
-                                class="flex space-x-4 text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white"
-                            >
+                            <dd class="flex space-x-4 text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white">
                                 <div class="grow">
                                     <span class="flex items-center gap-1">
                                         @foreach ([1, 2, 3, 4, 5] as $star)
@@ -65,9 +59,7 @@
                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/products.reviews.review_content') }}
                             </dt>
-                            <dd
-                                class="flex space-x-4 text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white"
-                            >
+                            <dd class="flex space-x-4 text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white">
                                 <div class="grow">
                                     <p class="text-sm font-medium text-gray-900 dark:text-white">
                                         {{ $review->title }}
@@ -82,9 +74,7 @@
                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/products.reviews.reviewer') }}
                             </dt>
-                            <dd
-                                class="flex space-x-4 text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white"
-                            >
+                            <dd class="flex space-x-4 text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white">
                                 <div class="grow">
                                     <div class="flex items-center">
                                         <div class="shrink-0">

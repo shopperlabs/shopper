@@ -2,7 +2,7 @@
     <x-shopper::card
         :title="__('shopper::pages/customers.profile.title')"
         :description="__('shopper::pages/customers.profile.description')"
-        class="lg:col-span-2 max-w-4xl [&>div:first-of-type]:p-0"
+        class="max-w-4xl lg:col-span-2 [&>div:first-of-type]:p-0"
     >
         <dl class="divide-y divide-gray-200 dark:divide-white/10">
             <div class="space-y-1 p-4 sm:grid sm:grid-cols-3 sm:gap-4">

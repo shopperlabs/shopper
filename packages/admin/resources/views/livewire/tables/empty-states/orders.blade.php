@@ -6,7 +6,67 @@
     <div class="shrink-0">
         <svg class="h-64 w-auto lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290.5 230">
             <style>
-                .st0{fill:#22264d}.st1{fill:#3b82f6}.st2{fill:#ebe6e6}.st3{fill:#60a5fa}.st4{fill:snow}.st5{fill:#93c5fd}.st6{fill:#bd9a7b}.st7{fill:#ebc9aa}.st8{fill:#d6b392}.st10{fill:#fff}.st14{fill:#a0c4fa}.st16{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-linecap:round}.st18{}.st19{font-size:4px}.st20{fill:none;stroke:#d9e6ff;stroke-miterlimit:10}.st21{fill:#d9e6ff}.st22{fill:#80bd82}.st25{fill:#fcc1ab}.st27{fill:#3f83f8}
+                .st0 {
+                    fill: #22264d;
+                }
+                .st1 {
+                    fill: #3b82f6;
+                }
+                .st2 {
+                    fill: #ebe6e6;
+                }
+                .st3 {
+                    fill: #60a5fa;
+                }
+                .st4 {
+                    fill: snow;
+                }
+                .st5 {
+                    fill: #93c5fd;
+                }
+                .st6 {
+                    fill: #bd9a7b;
+                }
+                .st7 {
+                    fill: #ebc9aa;
+                }
+                .st8 {
+                    fill: #d6b392;
+                }
+                .st10 {
+                    fill: #fff;
+                }
+                .st14 {
+                    fill: #a0c4fa;
+                }
+                .st16 {
+                    fill: none;
+                    stroke: #fff;
+                    stroke-miterlimit: 10;
+                    stroke-linecap: round;
+                }
+                .st18 {
+                }
+                .st19 {
+                    font-size: 4px;
+                }
+                .st20 {
+                    fill: none;
+                    stroke: #d9e6ff;
+                    stroke-miterlimit: 10;
+                }
+                .st21 {
+                    fill: #d9e6ff;
+                }
+                .st22 {
+                    fill: #80bd82;
+                }
+                .st25 {
+                    fill: #fcc1ab;
+                }
+                .st27 {
+                    fill: #3f83f8;
+                }
             </style>
             <g id="OBJECTS">
                 <path class="st0" d="M171.7 185.5v30.1h41.2v-30.1h-41.2zm25.3 28.4h-9.5v-14.8h9.5v14.8z" />
@@ -57,10 +117,7 @@
                     class="st10"
                     d="M201.3 138.7H65.6c-3 0-5.5-2.5-5.5-5.5V36.8c0-3 2.5-5.5 5.5-5.5h135.8c3 0 5.5 2.5 5.5 5.5v96.4c-.1 3-2.5 5.5-5.6 5.5z"
                 />
-                <path
-                    class="st1"
-                    d="M201.7 31.3H65.2c-2.8 0-5.1 2.3-5.1 5.1v5.4h146.8v-5.4c-.1-2.8-2.4-5.1-5.2-5.1z"
-                />
+                <path class="st1" d="M201.7 31.3H65.2c-2.8 0-5.1 2.3-5.1 5.1v5.4h146.8v-5.4c-.1-2.8-2.4-5.1-5.2-5.1z" />
                 <path d="M193.2 36.3c0 .5-.4.9-.9.9s-.9-.4-.9-.9.4-.9.9-.9.9.4.9.9z" fill="#f8b4b4" />
                 <path d="M197.6 36.3c0 .5-.4.9-.9.9s-.9-.4-.9-.9.4-.9.9-.9.9.4.9.9z" fill="#faca15" />
                 <path d="M202 36.3c0 .5-.4.9-.9.9s-.9-.4-.9-.9.4-.9.9-.9.9.4.9.9z" fill="#84e1bc" />
@@ -194,10 +251,7 @@
                     d="M104.8 82.6s-4.8 2.7-4.8 14.7c0 11.7-2.9 13-3.2 20.2-.3 7.3 13.5 9.6 16 .7 3.2-11.1-1.5-15.7-1.5-23.5l-3.9-.8-.8-12.3m-.5 44.3s3.9 2.4 15.5-1.2l11.8 32.7s-11.8 15.8-34.2 5.7c-.1 0-3.3-20.8 6.9-37.2z"
                 />
                 <path class="st27" d="M119.6 108.8s5.3 5.5.5 9.7c-3.9 3.4-.5-9.7-.5-9.7z" />
-                <path
-                    class="st3"
-                    d="M157 83.4c0 2-1.6 3.7-3.7 3.7s-3.7-1.6-3.7-3.7 1.6-3.7 3.7-3.7 3.7 1.6 3.7 3.7z"
-                />
+                <path class="st3" d="M157 83.4c0 2-1.6 3.7-3.7 3.7s-3.7-1.6-3.7-3.7 1.6-3.7 3.7-3.7 3.7 1.6 3.7 3.7z" />
                 <text transform="translate(152.107 84.686)" class="st10 st18 st19">$</text>
                 <path class="st3" d="M134.5 76.4l-4.2.7 3.4.6 4.3-.8z" />
                 <path class="st1" d="M133.7 81.5v-3.8l-3.4-.6v3.6z" />

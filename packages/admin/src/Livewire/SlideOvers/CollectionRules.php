@@ -66,7 +66,7 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
                             ->options(Rule::class)
                             ->live()
                             ->afterStateUpdated(
-                                fn (Select $component) => $component
+                                fn (Select $component): ?\Filament\Schemas\Components\Component => $component
                                     ->getContainer()
                                     ->getComponent('operator')
                                     ?->state(null)
@@ -76,7 +76,7 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
                             ->key('operator')
                             ->label(__('shopper::pages/collections.conditions.select_operator'))
                             ->options(fn (Get $get): array => collect($get('rule')?->allowedOperators() ?? [])
-                                ->mapWithKeys(fn (Operator $op) => [$op->value => $op->getLabel()])
+                                ->mapWithKeys(fn (Operator $op): array => [$op->value => $op->getLabel()])
                                 ->all())
                             ->required(),
                         TextInput::make('value')

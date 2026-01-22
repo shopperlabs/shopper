@@ -1,5 +1,5 @@
 @props([
-    'title' => config('app.name')
+    'title' => config('app.name'),
 ])
 
 <!DOCTYPE html>

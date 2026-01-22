@@ -6,7 +6,7 @@
     $alpineSubmitHandler = $hasFormWrapper() ? $wizard->getAlpineSubmitHandler() : null;
 @endphp
 
-<{{ filled($alpineSubmitHandler) ? 'form' : 'div' }}
+<{{ filled($alpineSubmitHandler) ? "form" : "div" }}
     x-bind:tabindex="$el.querySelector('[autofocus]') ? '-1' : '0'"
     x-bind:class="{
         'fi-active': step === @js($key),
@@ -25,13 +25,16 @@
     x-ref="step-{{ $key }}"
     {{
         $attributes
-            ->merge([
-                'aria-labelledby' => $id,
-                'id' => $id,
-                'role' => 'tabpanel',
-            ], escape: false)
+            ->merge(
+                [
+                    "aria-labelledby" => $id,
+                    "id" => $id,
+                    "role" => "tabpanel",
+                ],
+                escape: false,
+            )
             ->merge($getExtraAttributes(), escape: false)
-            ->class(['fi-sc-wizard-step'])
+            ->class(["fi-sc-wizard-step"])
     }}
 >
     {{ $getChildSchema() }}
@@ -40,4 +43,4 @@
         {{-- This is a hack to allow the form to submit when the user presses the enter key, even if there is no other submit button in the form. --}}
         <input type="submit" hidden />
     @endif
-</{{ filled($alpineSubmitHandler) ? 'form' : 'div' }}>
+</{{ filled($alpineSubmitHandler) ? "form" : "div" }}>

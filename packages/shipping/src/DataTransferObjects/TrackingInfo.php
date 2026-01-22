@@ -36,7 +36,7 @@ final readonly class TrackingInfo
             'status_description' => $this->statusDescription,
             'estimated_delivery' => $this->estimatedDelivery?->format('Y-m-d H:i:s'),
             'delivered_at' => $this->deliveredAt?->format('Y-m-d H:i:s'),
-            'events' => array_map(fn (TrackingEvent $event) => $event->toArray(), $this->events),
+            'events' => array_map(fn (TrackingEvent $event): array => $event->toArray(), $this->events),
         ];
     }
 }

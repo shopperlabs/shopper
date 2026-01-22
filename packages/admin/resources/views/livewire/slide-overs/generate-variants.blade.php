@@ -19,14 +19,18 @@
                 <tbody class="divide-y divide-gray-200 whitespace-nowrap dark:divide-white/10">
                     @foreach (collect($availableOptions) as $attribute)
                         <tr>
-                            <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                            <td
+                                class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3"
+                            >
                                 <div class="grid w-full gap-y-1 p-2">
                                     <span class="fi-ta-text-item-label text-sm leading-6 text-gray-950 dark:text-white">
                                         {{ $attribute['name'] }}
                                     </span>
                                 </div>
                             </td>
-                            <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                            <td
+                                class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3"
+                            >
                                 <div class="flex w-full flex-wrap items-center gap-3 gap-y-1 p-2">
                                     @foreach (collect($attribute['values']) as $option)
                                         <x-filament::badge color="gray">

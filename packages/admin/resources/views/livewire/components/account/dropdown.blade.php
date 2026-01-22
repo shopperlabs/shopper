@@ -8,7 +8,7 @@
             <img class="size-8 rounded-full" src="{{ $user->picture }}" alt="{{ $user->email }}" />
             <span class="sr-only">{{ $user->full_name }}</span>
             <span
-                class="absolute right-0 bottom-0 block h-2.5 w-2.5 rounded-full bg-success-400 ring-2 ring-white dark:ring-white/10"
+                class="bg-success-400 absolute right-0 bottom-0 block h-2.5 w-2.5 rounded-full ring-2 ring-white dark:ring-white/10"
             ></span>
         </button>
         <div

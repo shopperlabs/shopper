@@ -67,7 +67,7 @@ final class FedExDriver extends Driver
                 $this->toBoxCollection($packages),
             );
 
-            return collect($rates)->map(fn ($rate) => new ShippingRate(
+            return collect($rates)->map(fn ($rate): ShippingRate => new ShippingRate(
                 serviceCode: $rate->getServiceCode(),
                 serviceName: $rate->getServiceName(),
                 amount: (int) ($rate->getPrice() * 100),
@@ -139,7 +139,7 @@ final class FedExDriver extends Driver
     private function toBoxCollection(array $packages): BoxCollection
     {
         $boxes = array_map(
-            fn (Package $p) => new BoxMetric($p->length, $p->width, $p->height, $p->weight),
+            fn (Package $p): BoxMetric => new BoxMetric($p->length, $p->width, $p->height, $p->weight),
             $packages
         );
 

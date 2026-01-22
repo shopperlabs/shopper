@@ -8,7 +8,7 @@
 @endphp
 
 <a
-    href="{{ $url ?? '#' }}"
+    href="{{ $url ?? "#" }}"
     @class([
         "border-b-[3px] px-1 py-4 text-sm font-medium whitespace-nowrap select-none",
         "current border-primary-500 text-primary-600 dark:text-primary-500" => $isCurrent,

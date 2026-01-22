@@ -35,7 +35,12 @@
         {{ $slot }}
     </div>
     <div class="flex shrink-0 justify-end gap-3 p-4">
-        <x-filament::button color="gray" wire:click="$dispatch('closePanel')" type="button" class="mt-3 sm:mt-0 sm:w-auto">
+        <x-filament::button
+            color="gray"
+            wire:click="$dispatch('closePanel')"
+            type="button"
+            class="mt-3 sm:mt-0 sm:w-auto"
+        >
             {{ __('shopper::forms.actions.cancel') }}
         </x-filament::button>
         <x-filament::button type="submit" wire.loading.attr="disabled">

@@ -20,7 +20,9 @@
                 <x-shopper::card class="[&>div:first-of-type]:p-0">
                     <x-slot name="title">
                         <div class="flex items-center justify-between">
-                            <x-shopper::section-heading :title="__('shopper::pages/products.variants.variant_information')" />
+                            <x-shopper::section-heading
+                                :title="__('shopper::pages/products.variants.variant_information')"
+                            />
                             <x-filament::button
                                 type="button"
                                 color="gray"
@@ -71,50 +73,62 @@
                                     {{ __('shopper::pages/products.allow_backorder') }}
                                 </dt>
                                 <dd class="mt-2 text-sm/5 text-gray-500 sm:mt-3 dark:text-gray-400">
-                                <span
-                                    @class([
-                                        'relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent',
-                                        'bg-gray-200 dark:bg-gray-800' => ! $variant->allow_backorder,
-                                        'bg-primary-600' => $variant->allow_backorder,
-                                    ])
-                                    role="switch"
-                                    aria-checked="{{ $variant->allow_backorder }}"
-                                >
                                     <span
-                                        aria-hidden="true"
                                         @class([
-                                            'pointer-events-none inline-block size-5 transform rounded-full bg-white shadow ring-0 dark:bg-gray-950',
-                                            'translate-x-0' => ! $variant->allow_backorder,
-                                            'translate-x-5' => $variant->allow_backorder,
+                                            'relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent',
+                                            'bg-gray-200 dark:bg-gray-800' => ! $variant->allow_backorder,
+                                            'bg-primary-600' => $variant->allow_backorder,
                                         ])
-                                    ></span>
-                                </span>
+                                        role="switch"
+                                        aria-checked="{{ $variant->allow_backorder }}"
+                                    >
+                                        <span
+                                            aria-hidden="true"
+                                            @class([
+                                                'pointer-events-none inline-block size-5 transform rounded-full bg-white shadow ring-0 dark:bg-gray-950',
+                                                'translate-x-0' => ! $variant->allow_backorder,
+                                                'translate-x-5' => $variant->allow_backorder,
+                                            ])
+                                        ></span>
+                                    </span>
                                 </dd>
                             </div>
                         </dl>
 
-                        <table class="fi-ta-table ring-1 ring-gray-200 dark:ring-white/20 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5">
+                        <table
+                            class="fi-ta-table w-full table-auto divide-y divide-gray-200 text-start ring-1 ring-gray-200 dark:divide-white/5 dark:ring-white/20"
+                        >
                             <thead>
-                            <tr>
-                                <th class="fi-ta-header-cell px-3 py-2 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
-                                    <span class="fi-ta-header-cell-label text-sm font-semibold text-gray-950 dark:text-white">
-                                        {{ __('shopper::pages/attributes.menu') }}
-                                    </span>
-                                </th>
-                                <th class="fi-ta-header-cell px-3 py-2 sm:first-of-type:ps-6 sm:last-of-type:pe-6"></th>
-                            </tr>
+                                <tr>
+                                    <th class="fi-ta-header-cell px-3 py-2 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
+                                        <span
+                                            class="fi-ta-header-cell-label text-sm font-semibold text-gray-950 dark:text-white"
+                                        >
+                                            {{ __('shopper::pages/attributes.menu') }}
+                                        </span>
+                                    </th>
+                                    <th
+                                        class="fi-ta-header-cell px-3 py-2 sm:first-of-type:ps-6 sm:last-of-type:pe-6"
+                                    ></th>
+                                </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 whitespace-nowrap dark:divide-white/5">
                                 @foreach ($variant->values->loadMissing('attribute') as $value)
                                     <tr>
-                                        <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                                        <td
+                                            class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3"
+                                        >
                                             <div class="grid w-full gap-y-1 px-3 py-2">
-                                                <span class="fi-ta-text-item-label text-sm leading-6 text-gray-950 dark:text-white">
+                                                <span
+                                                    class="fi-ta-text-item-label text-sm leading-6 text-gray-950 dark:text-white"
+                                                >
                                                     {{ $value->attribute->name }}
                                                 </span>
                                             </div>
                                         </td>
-                                        <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                                        <td
+                                            class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3"
+                                        >
                                             <div class="flex w-full flex-wrap items-center gap-3 gap-y-1 px-3 py-2">
                                                 <x-filament::badge color="gray">
                                                     {{ $value->value }}
@@ -178,7 +192,10 @@
                 <div class="space-y-6">
                     @if ($this->variant->media->isEmpty())
                         <div class="flex gap-3">
-                            <x-phosphor-image-duotone class="size-5 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                            <x-phosphor-image-duotone
+                                class="size-5 text-gray-400 dark:text-gray-500"
+                                aria-hidden="true"
+                            />
                             <div>
                                 <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('shopper::words.images') }}

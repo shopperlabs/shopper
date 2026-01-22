@@ -1,6 +1,6 @@
 <div class="flex items-center space-x-2">
     @if ($getRecord()->email_verified_at)
-        <x-untitledui-check-verified-02 class="size-5 text-success-500" aria-hidden="true" />
+        <x-untitledui-check-verified-02 class="text-success-500 size-5" aria-hidden="true" />
     @else
         <x-untitledui-alert-circle class="text-danger-500 size-5" aria-hidden="true" />
     @endif

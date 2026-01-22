@@ -1,14 +1,14 @@
 @php
     $isContained = $isContained();
     $key = $getKey();
-    $previousAction = $getAction('previous');
-    $nextAction = $getAction('next');
+    $previousAction = $getAction("previous");
+    $nextAction = $getAction("next");
     $steps = $getChildSchema()->getComponents();
 @endphp
 
 <div
     x-load
-    x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('wizard', 'filament/schemas') }}"
+    x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc("wizard", "filament/schemas") }}"
     x-data="wizardSchemaComponent({
                 isSkippable: @js($isSkippable()),
                 isStepPersistedInQueryString: @js($isStepPersistedInQueryString()),
@@ -20,14 +20,17 @@
     wire:ignore.self
     {{
         $attributes
-            ->merge([
-                'id' => $getId(),
-            ], escape: false)
+            ->merge(
+                [
+                    "id" => $getId(),
+                ],
+                escape: false,
+            )
             ->merge($getExtraAttributes(), escape: false)
             ->merge($getExtraAlpineAttributes(), escape: false)
             ->class([
-                'fi-sc-wizard fi-sc-wizard-slideover relative flex h-full flex-1 flex-col',
-                'fi-contained' => $isContained,
+                "fi-sc-wizard fi-sc-wizard-slideover relative flex h-full flex-1 flex-col",
+                "fi-contained" => $isContained,
             ])
     }}
 >
@@ -43,15 +46,13 @@
         x-ref="stepsData"
     />
 
-    <div
-        class="sticky top-0 z-40 bg-gray-50 backdrop-blur-lg dark:bg-gray-950/75"
-    >
+    <div class="sticky top-0 z-40 bg-gray-50 backdrop-blur-lg dark:bg-gray-950/75">
         <ol
             @if (filled($label = $getLabel()))
                 aria-label="{{ $label }}"
             @endif
             role="list"
-            class="fi-sc-wizard-header flex gap-3 scrolling overflow-x-auto px-4"
+            class="fi-sc-wizard-header scrolling flex gap-3 overflow-x-auto px-4"
             x-cloak
             x-ref="header"
         >
@@ -92,9 +93,9 @@
                                     $completedIcon ?? \Filament\Support\Icons\Heroicon::OutlinedCheck,
                                     alias: filled($completedIcon) ? null : \Filament\Schemas\View\SchemaIconAlias::COMPONENTS_WIZARD_COMPLETED_STEP,
                                     attributes: new \Illuminate\View\ComponentAttributeBag([
-                                        'x-cloak' => 'x-cloak',
-                                        'x-show' => "getStepIndex(step) > {$loop->index}",
-                                        'class' => 'fi-sc-wizard-header-step-icon size-4 text-white',
+                                        "x-cloak" => "x-cloak",
+                                        "x-show" => "getStepIndex(step) > {$loop->index}",
+                                        "class" => "fi-sc-wizard-header-step-icon size-4 text-white",
                                     ]),
                                     size: \Filament\Support\Enums\IconSize::Small,
                                 )
@@ -105,13 +106,13 @@
                                     \Filament\Support\generate_icon_html(
                                         $icon,
                                         attributes: new \Illuminate\View\ComponentAttributeBag([
-                                            'x-cloak' => 'x-cloak',
-                                            'x-show' => "getStepIndex(step) <= {$loop->index}",
-                                            'x-bind:class' => "{
-                                                'text-gray-500 dark:text-gray-400': getStepIndex(step) !== {$loop->index},
-                                                'text-primary-600 dark:text-primary-500': getStepIndex(step) === {$loop->index},
-                                            }",
-                                            'class' => 'fi-sc-wizard-header-step-icon size-4',
+                                            "x-cloak" => "x-cloak",
+                                            "x-show" => "getStepIndex(step) <= {$loop->index}",
+                                            "x-bind:class" => "{
+                                                                                    'text-gray-500 dark:text-gray-400': getStepIndex(step) !== {$loop->index},
+                                                                                    'text-primary-600 dark:text-primary-500': getStepIndex(step) === {$loop->index},
+                                                                                }",
+                                            "class" => "fi-sc-wizard-header-step-icon size-4",
                                         ]),
                                         size: \Filament\Support\Enums\IconSize::Small,
                                     )
@@ -127,7 +128,7 @@
                                             getStepIndex(step) === {{ $loop->index }},
                                     }"
                                 >
-                                    {{ str_pad($loop->index + 1, 2, '0', STR_PAD_LEFT) }}
+                                    {{ str_pad($loop->index + 1, 2, "0", STR_PAD_LEFT) }}
                                 </span>
                             @endif
                         </div>
