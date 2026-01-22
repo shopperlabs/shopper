@@ -11,7 +11,7 @@ class ProductObserver
 {
     public function saved(Product $product): void
     {
-        SyncProductWithCollectionsJob::dispatch($product);
+        SyncProductWithCollectionsJob::dispatch($product)->afterCommit();
     }
 
     public function deleting(Product $product): void
