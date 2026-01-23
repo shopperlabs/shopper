@@ -16,6 +16,7 @@ jobs:
           - admin
           - core
           - sidebar
+          - shipping
     steps:
       - uses: actions/checkout@v6
       - id: previous-tag
