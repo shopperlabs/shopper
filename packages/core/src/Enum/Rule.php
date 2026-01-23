@@ -15,6 +15,10 @@ use Shopper\Core\Traits\HasEnumStaticMethods;
  * @method static string ProductPrice()
  * @method static string CompareAtPrice()
  * @method static string InventoryStock()
+ * @method static string ProductCreatedAt()
+ * @method static string ProductFeatured()
+ * @method static string ProductRating()
+ * @method static string ProductSalesCount()
  */
 enum Rule: string implements HasLabel
 {
@@ -33,6 +37,14 @@ enum Rule: string implements HasLabel
 
     case InventoryStock = 'inventory_stock';
 
+    case ProductCreatedAt = 'product_created_at';
+
+    case ProductFeatured = 'product_featured';
+
+    case ProductRating = 'product_rating';
+
+    case ProductSalesCount = 'product_sales_count';
+
     public function getLabel(): string
     {
         return match ($this) {
@@ -42,6 +54,10 @@ enum Rule: string implements HasLabel
             self::ProductPrice => __('shopper-core::enum/collection.rules.product_price'),
             self::CompareAtPrice => __('shopper-core::enum/collection.rules.compare_at_price'),
             self::InventoryStock => __('shopper-core::enum/collection.rules.inventory_stock'),
+            self::ProductCreatedAt => __('shopper-core::enum/collection.rules.product_created_at'),
+            self::ProductFeatured => __('shopper-core::enum/collection.rules.product_featured'),
+            self::ProductRating => __('shopper-core::enum/collection.rules.product_rating'),
+            self::ProductSalesCount => __('shopper-core::enum/collection.rules.product_sales_count'),
         };
     }
 
@@ -59,12 +75,46 @@ enum Rule: string implements HasLabel
                 Operator::EqualsTo,
                 Operator::NotEqualTo,
             ],
-            self::ProductPrice, self::CompareAtPrice, self::InventoryStock => [
+            self::ProductPrice, self::CompareAtPrice, self::InventoryStock, self::ProductRating, self::ProductSalesCount => [
                 Operator::EqualsTo,
                 Operator::NotEqualTo,
                 Operator::LessThan,
                 Operator::GreaterThan,
             ],
+            self::ProductCreatedAt => [
+                Operator::EqualsTo,
+                Operator::LessThan,
+                Operator::GreaterThan,
+            ],
+            self::ProductFeatured => [
+                Operator::EqualsTo,
+            ],
         };
+    }
+
+    public function isPrice(): bool
+    {
+        return in_array($this, [self::ProductPrice, self::CompareAtPrice], true);
+    }
+
+    public function isNumeric(): bool
+    {
+        return in_array($this, [
+            self::ProductPrice,
+            self::CompareAtPrice,
+            self::InventoryStock,
+            self::ProductRating,
+            self::ProductSalesCount,
+        ], true);
+    }
+
+    public function isDate(): bool
+    {
+        return $this === self::ProductCreatedAt;
+    }
+
+    public function isBoolean(): bool
+    {
+        return $this === self::ProductFeatured;
     }
 }

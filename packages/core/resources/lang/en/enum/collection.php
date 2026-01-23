@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 return [
-
     'automatic' => 'Automatic',
     'automatic_description' => 'Products that match the conditions you set will automatically be added to collection.',
     'manual' => 'Manual',
@@ -16,6 +15,10 @@ return [
         'product_price' => 'Product price',
         'compare_at_price' => 'Compare at price',
         'inventory_stock' => 'Inventory stock',
+        'product_created_at' => 'Product created date',
+        'product_featured' => 'Product featured',
+        'product_rating' => 'Product rating',
+        'product_sales_count' => 'Product sales count',
     ],
 
     'operator' => [
@@ -28,5 +31,4 @@ return [
         'contains' => 'Contains',
         'not_contains' => 'Not contains',
     ],
-
 ];

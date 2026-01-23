@@ -6,6 +6,7 @@ namespace Shopper\Livewire\SlideOvers;
 
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -60,17 +61,17 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
                     ->relationship()
                     ->label(__('shopper::pages/collections.conditions.title'))
                     ->addActionLabel(__('shopper::pages/collections.conditions.add'))
+                    ->mutateRelationshipDataBeforeCreateUsing(fn (array $data): array => $this->mutateRuleData($data))
+                    ->mutateRelationshipDataBeforeSaveUsing(fn (array $data): array => $this->mutateRuleData($data))
                     ->schema([
                         Select::make('rule')
                             ->label(__('shopper::pages/collections.conditions.choose_rule'))
                             ->options(Rule::class)
                             ->live()
-                            ->afterStateUpdated(
-                                fn (Select $component): ?\Filament\Schemas\Components\Component => $component
-                                    ->getContainer()
-                                    ->getComponent('operator')
-                                    ?->state(null)
-                            )
+                            ->afterStateUpdated(function (Select $component): void {
+                                $component->getContainer()->getComponent('operator')?->state(null);
+                                $component->getContainer()->getComponent('value')?->state(null);
+                            })
                             ->required(),
                         Select::make('operator')
                             ->key('operator')
@@ -79,8 +80,25 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
                                 ->mapWithKeys(fn (Operator $op): array => [$op->value => $op->getLabel()])
                                 ->all())
                             ->required(),
+                        DatePicker::make('date_value')
+                            ->statePath('value')
+                            ->label(__('shopper::forms.label.value'))
+                            ->visible(fn (Get $get): bool => $get('rule')?->isDate() ?? false)
+                            ->native(false)
+                            ->required(),
+                        Select::make('boolean_value')
+                            ->statePath('value')
+                            ->label(__('shopper::forms.label.value'))
+                            ->options([
+                                '1' => __('shopper::forms.label.yes'),
+                                '0' => __('shopper::forms.label.no'),
+                            ])
+                            ->visible(fn (Get $get): bool => $get('rule')?->isBoolean() ?? false)
+                            ->required(),
                         TextInput::make('value')
                             ->label(__('shopper::forms.label.value'))
+                            ->numeric(fn (Get $get): bool => $get('rule')?->isNumeric() ?? false)
+                            ->visible(fn (Get $get): bool => ! ($get('rule')?->isDate() ?? false) && ! ($get('rule')?->isBoolean() ?? false))
                             ->required(),
                     ])
                     ->columns(3)
@@ -110,5 +128,18 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
     public function render(): View
     {
         return view('shopper::livewire.slide-overs.collection-rules');
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    private function mutateRuleData(array $data): array
+    {
+        if (isset($data['rule']) && Rule::tryFrom($data['rule'])?->isPrice()) {
+            $data['value'] = (string) ((int) ((float) $data['value'] * 100));
+        }
+
+        return $data;
     }
 }

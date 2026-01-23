@@ -7,6 +7,7 @@ namespace Shopper\Core\Queries;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Shopper\Core\Enum\Operator;
+use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\Rule;
 use Shopper\Core\Models\CollectionRule;
 use Shopper\Core\Models\Contracts\Collection;
@@ -107,6 +108,10 @@ final class CollectionProductsQuery
             Rule::InventoryStock => $this->applyStockRule($query, $rule),
             Rule::ProductBrand => $this->applyBrandRule($query, $rule),
             Rule::ProductCategory => $this->applyCategoryRule($query, $rule),
+            Rule::ProductCreatedAt => $this->applyDateRule($query, 'created_at', $rule),
+            Rule::ProductFeatured => $query->where('featured', (bool) $rule->value),
+            Rule::ProductRating => $this->applyRatingRule($query, $rule),
+            Rule::ProductSalesCount => $this->applySalesCountRule($query, $rule),
         };
     }
 
@@ -185,5 +190,78 @@ final class CollectionProductsQuery
         $query->{$method}('categories', function (Builder $q) use ($rule): void {
             $this->applyStringRule($q, 'name', $rule);
         });
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    private function applyDateRule(Builder $query, string $column, CollectionRule $rule): void
+    {
+        $operator = match ($rule->operator) {
+            Operator::GreaterThan => '>',
+            Operator::LessThan => '<',
+            default => '=',
+        };
+
+        $query->whereDate($column, $operator, $rule->value);
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    private function applyRatingRule(Builder $query, CollectionRule $rule): void
+    {
+        $operator = match ($rule->operator) {
+            Operator::NotEqualTo => '!=',
+            Operator::GreaterThan => '>',
+            Operator::LessThan => '<',
+            default => '=',
+        };
+
+        $query->whereHas('ratings', function (Builder $subQuery) use ($operator, $rule): void {
+            $subQuery->where('approved', true)
+                ->groupBy('reviewrateable_id')
+                ->havingRaw('AVG(rating) '.$operator.' ?', [(float) $rule->value]);
+        });
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    private function applySalesCountRule(Builder $query, CollectionRule $rule): void
+    {
+        $operator = match ($rule->operator) {
+            Operator::NotEqualTo => '!=',
+            Operator::GreaterThan => '>',
+            Operator::LessThan => '<',
+            default => '=',
+        };
+
+        /** @var class-string<Product> $productModel */
+        $productModel = config('shopper.models.product');
+
+        $validStatuses = [
+            OrderStatus::Paid->value,
+            OrderStatus::Shipped->value,
+            OrderStatus::Delivered->value,
+            OrderStatus::Completed->value,
+        ];
+
+        $query->whereIn(
+            $query->getModel()->getQualifiedKeyName(),
+            fn (Builder $subQuery) => $subQuery // @phpstan-ignore-line
+                ->select('product_id')
+                ->from(shopper_table('order_items'))
+                ->join(
+                    shopper_table('orders'),
+                    shopper_table('orders').'.id',
+                    '=',
+                    shopper_table('order_items').'.order_id'
+                )
+                ->where('product_type', (new $productModel)->getMorphClass())
+                ->whereIn(shopper_table('orders').'.status', $validStatuses)
+                ->groupBy('product_id')
+                ->havingRaw('SUM(quantity) '.$operator.' ?', [(int) $rule->value])
+        );
     }
 }
