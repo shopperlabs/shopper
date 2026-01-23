@@ -26,6 +26,6 @@ return [
     |
     */
 
-    '2fa_enabled' => env('SHOPPER_ENABLED_TWO_FACTOR', true),
+    '2fa_enabled' => env('SHOPPER_ENABLED_TWO_FACTOR', false),
 
 ];

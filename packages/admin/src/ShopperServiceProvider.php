@@ -18,21 +18,13 @@ use Filament\Tables\Columns\TextColumn;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
 use Shopper\Concerns\TwoFactorAuthenticationProvider;
-use Shopper\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
 use Shopper\Contracts\LoginResponse as LoginResponseContract;
 use Shopper\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
-use Shopper\Contracts\TwoFactorDisabledResponse as TwoFactorDisabledResponseContract;
-use Shopper\Contracts\TwoFactorEnabledResponse as TwoFactorEnabledResponseContract;
-use Shopper\Contracts\TwoFactorLoginResponse as TwoFactorLoginResponseContract;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Shopper\Facades\Shopper;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Middleware\DispatchShopper;
-use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
 use Shopper\Http\Responses\LoginResponse;
-use Shopper\Http\Responses\TwoFactorDisabledResponse;
-use Shopper\Http\Responses\TwoFactorEnabledResponse;
-use Shopper\Http\Responses\TwoFactorLoginResponse;
 use Shopper\Livewire\Components;
 use Shopper\Livewire\Pages;
 use Shopper\Providers\FeatureServiceProvider;
@@ -93,7 +85,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
     {
         $this->registerConfigFiles();
         $this->registerComponentsConfigFiles();
-        $this->registerResponseBindings();
 
         $this->app->singleton(
             TwoFactorAuthenticationProviderContract::class,
@@ -143,14 +134,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'initialize-store-address' => Components\Initialization\Steps\StoreAddress::class,
             'initialize-store-social-link' => Components\Initialization\Steps\StoreSocialLink::class,
         ];
-    }
-
-    protected function registerResponseBindings(): void
-    {
-        $this->app->singleton(FailedTwoFactorLoginResponseContract::class, FailedTwoFactorLoginResponse::class);
-        $this->app->singleton(TwoFactorDisabledResponseContract::class, TwoFactorDisabledResponse::class);
-        $this->app->singleton(TwoFactorEnabledResponseContract::class, TwoFactorEnabledResponse::class);
-        $this->app->singleton(TwoFactorLoginResponseContract::class, TwoFactorLoginResponse::class);
     }
 
     protected function registerCustomFilamentItems(): void

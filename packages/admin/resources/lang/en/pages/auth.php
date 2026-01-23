@@ -12,6 +12,7 @@ return [
         'action' => 'Login',
         'failed' => 'These credentials do not match our records.',
         'throttled' => 'Too many login attempts. Please try again in :seconds seconds.',
+        'return_login' => 'Back to login',
     ],
 
     'reset' => [
