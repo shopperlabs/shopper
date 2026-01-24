@@ -27,7 +27,7 @@
                                 type="button"
                                 color="gray"
                                 size="sm"
-                                @click="Livewire.dispatch('openPanel', { component: 'shopper-slide-overs.update-variant', arguments: { variant: {{ $variant }}, product: {{ $product }} }})"
+                                @click="Livewire.dispatch('openPanel', { component: 'shopper-slide-overs.update-variant', arguments: { variant: {{ $variant->id }}, product: {{ $product->id }} }})"
                             >
                                 {{ __('shopper::forms.actions.edit') }}
                             </x-filament::button>
