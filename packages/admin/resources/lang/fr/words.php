@@ -135,6 +135,7 @@ return [
     'icon_no_result' => 'Aucun résultat pour cette recherche.',
     'selection' => 'Séléction',
     'sign_in_as' => 'Connecté avec',
+    'description' => 'Description',
     'general' => 'Général',
     'configuration' => 'Configuration',
     'conditions' => 'Conditions',

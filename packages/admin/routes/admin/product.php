@@ -16,3 +16,8 @@ if (Feature::enabled('attribute')) {
     Route::get('attributes', config('shopper.components.product.pages.attribute-index'))
         ->name('attributes.index');
 }
+
+if (Feature::enabled('supplier')) {
+    Route::get('suppliers', config('shopper.components.product.pages.supplier-index'))
+        ->name('suppliers.index');
+}

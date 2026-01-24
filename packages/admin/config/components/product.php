@@ -18,6 +18,7 @@ return [
         'product-edit' => Livewire\Pages\Product\Edit::class,
         'variant-edit' => Livewire\Pages\Product\Variant::class,
         'attribute-index' => Livewire\Pages\Attribute\Browse::class,
+        'supplier-index' => Livewire\Pages\Supplier\Index::class,
     ],
 
     /*
@@ -50,6 +51,7 @@ return [
         'slide-overs.attribute-values' => Livewire\SlideOvers\AttributeValues::class,
         'slide-overs.manage-pricing' => Livewire\SlideOvers\ManagePricing::class,
         'slide-overs.related-products-list' => Livewire\SlideOvers\RelatedProductsList::class,
+        'slide-overs.supplier-form' => Livewire\SlideOvers\SupplierForm::class,
     ],
 
 ];

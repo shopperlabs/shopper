@@ -123,4 +123,17 @@ return [
 
     'order' => Models\Order::class,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Supplier Model
+    |--------------------------------------------------------------------------
+    |
+    | Eloquent model should be used to interact with your suppliers.
+    | If you want to use a custom model, your model needs to extends the
+    | \Shopper\Core\Models\Supplier Model.
+    |
+    */
+
+    'supplier' => Models\Supplier::class,
+
 ];

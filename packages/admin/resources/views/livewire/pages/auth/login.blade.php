@@ -11,22 +11,22 @@
                 </h2>
                 <p class="mt-3 max-w-sm text-center text-sm text-gray-500 dark:text-gray-400">
                     {{ __('shopper::pages/auth.login.or') }}
-                    <a
-                        href="{{ url('/') }}"
-                        class="text-primary-600 hover:text-primary-500 font-medium"
-                    >
+                    <a href="{{ url('/') }}" class="text-primary-600 hover:text-primary-500 font-medium">
                         {{ __('shopper::pages/auth.login.return_landing') }}
                     </a>
                 </p>
             @else
-                <h2 class="font-heading mt-6 inline-flex w-full items-center justify-center text-center text-xl font-medium leading-9 text-gray-900 dark:text-white">
+                <h2
+                    class="font-heading mt-6 inline-flex w-full items-center justify-center text-center text-xl leading-9 font-medium text-gray-900 dark:text-white"
+                >
                     <x-heroicon-o-shield-check class="text-primary-600 mr-2 -ml-1 size-10" aria-hidden="true" />
                     {{ __('shopper::pages/auth.two_factor.subtitle') }}
                 </h2>
                 <p class="mt-1 text-center text-sm leading-5 text-gray-500 dark:text-gray-400">
-                    {{ $useRecoveryCode
-                        ? __('shopper::pages/auth.two_factor.recovery_code')
-                        : __('shopper::pages/auth.two_factor.authentication_code')
+                    {{
+                        $useRecoveryCode
+                            ? __('shopper::pages/auth.two_factor.recovery_code')
+                            : __('shopper::pages/auth.two_factor.authentication_code')
                     }}
                 </p>
             @endif
@@ -95,7 +95,12 @@
                             aria-hidden="true"
                             wire:loading.remove
                         />
-                        <x-shopper::loader wire:loading wire:target="authenticate" class="text-white" aria-hidden="true" />
+                        <x-shopper::loader
+                            wire:loading
+                            wire:target="authenticate"
+                            class="text-white"
+                            aria-hidden="true"
+                        />
                     </span>
                     {{ __('shopper::pages/auth.login.action') }}
                 </x-filament::button>

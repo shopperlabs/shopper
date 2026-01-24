@@ -95,6 +95,7 @@ final class CoreServiceProvider extends PackageServiceProvider
             'channel' => Models\Contracts\Channel::class,
             'order' => Models\Contracts\Order::class,
             'inventory' => Models\Contracts\Inventory::class,
+            'supplier' => Models\Contracts\Supplier::class,
         ];
 
         foreach ($models as $configKey => $contract) {
@@ -114,6 +115,7 @@ final class CoreServiceProvider extends PackageServiceProvider
             'channel' => config('shopper.models.channel'),
             'order' => config('shopper.models.order'),
             'inventory' => config('shopper.models.inventory'),
+            'supplier' => config('shopper.models.supplier'),
         ]);
     }
 }

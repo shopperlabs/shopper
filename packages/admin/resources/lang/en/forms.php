@@ -125,6 +125,8 @@ return [
         'thumbnail' => 'Thumbnail',
         'attribute' => 'Attribute',
         'attribute_custom_value' => 'Custom value (for text input field)',
+        'notes' => 'Notes',
+        'supplier' => 'Supplier',
         'driver' => 'Driver',
         'carrier_name' => 'Carrier name',
     ],

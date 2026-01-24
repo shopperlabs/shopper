@@ -135,6 +135,7 @@ return [
     'icon_no_result' => 'No matching icons found',
     'selection' => 'Selection',
     'sign_in_as' => 'Signed in as',
+    'description' => 'Description',
     'general' => 'General',
     'configuration' => 'Configuration',
     'conditions' => 'Conditions',

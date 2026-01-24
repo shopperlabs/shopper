@@ -70,13 +70,13 @@
         }
 
         .sh-submenu {
-          @apply ml-5 hidden space-y-1 border-l border-gray-200 dark:border-white/20;
+          @apply ml-5 hidden rounded-b-lg border-l border-gray-200 py-1.5 dark:border-white/20;
 
           .sh-sidebar-item {
             @apply rounded-none;
 
             .sh-sidebar-item-link {
-              @apply relative py-2.5 pl-5;
+              @apply relative py-2 pl-5;
 
               &::before {
                 content: '';

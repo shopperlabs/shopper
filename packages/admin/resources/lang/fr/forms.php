@@ -125,6 +125,8 @@ return [
         'thumbnail' => 'Miniature',
         'attribute' => 'Attribut',
         'attribute_custom_value' => 'Valeur personnalisée (pour les champs texte)',
+        'notes' => 'Notes',
+        'supplier' => 'Fournisseur',
         'driver' => 'Driver',
         'carrier_name' => 'Nom du transporteur',
     ],

@@ -19,4 +19,13 @@ return [
     'refunded' => 'Refunded',
     'rejected' => 'Rejected',
     'shipped' => 'Shipped',
+
+    'fulfillment' => [
+        'pending' => 'Pending',
+        'forwarded' => 'Forwarded to Supplier',
+        'processing' => 'Processing',
+        'shipped' => 'Shipped',
+        'delivered' => 'Delivered',
+        'cancelled' => 'Cancelled',
+    ],
 ];

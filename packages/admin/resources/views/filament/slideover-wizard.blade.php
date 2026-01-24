@@ -109,9 +109,9 @@
                                             "x-cloak" => "x-cloak",
                                             "x-show" => "getStepIndex(step) <= {$loop->index}",
                                             "x-bind:class" => "{
-                                                                                    'text-gray-500 dark:text-gray-400': getStepIndex(step) !== {$loop->index},
-                                                                                    'text-primary-600 dark:text-primary-500': getStepIndex(step) === {$loop->index},
-                                                                                }",
+                                                                                                                        'text-gray-500 dark:text-gray-400': getStepIndex(step) !== {$loop->index},
+                                                                                                                        'text-primary-600 dark:text-primary-500': getStepIndex(step) === {$loop->index},
+                                                                                                                    }",
                                             "class" => "fi-sc-wizard-header-step-icon size-4",
                                         ]),
                                         size: \Filament\Support\Enums\IconSize::Small,

@@ -19,4 +19,13 @@ return [
     'refunded' => 'Remboursé(e)',
     'rejected' => 'Rejeté(e)',
     'shipped' => 'Expédié(e)',
+
+    'fulfillment' => [
+        'pending' => 'En attente',
+        'forwarded' => 'Transmis au fournisseur',
+        'processing' => 'En préparation',
+        'shipped' => 'Expédié',
+        'delivered' => 'Livré',
+        'cancelled' => 'Annulé',
+    ],
 ];

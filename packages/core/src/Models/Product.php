@@ -59,6 +59,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read ?CarbonInterface $published_at
  * @property-read array<string, mixed>|null $metadata
  * @property-read int $stock
+ * @property-read ?Supplier $supplier
  * @property-read Brand $brand
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Channel> $channels
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $categories
@@ -219,6 +220,15 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
     {
         // @phpstan-ignore-next-line
         return $this->morphedByMany(config('shopper.models.collection'), 'productable', shopper_table('product_has_relations'));
+    }
+
+    /**
+     * @return BelongsTo<Supplier, $this>
+     */
+    public function supplier(): BelongsTo
+    {
+        // @phpstan-ignore-next-line
+        return $this->belongsTo(config('shopper.models.supplier'), 'supplier_id');
     }
 
     /**

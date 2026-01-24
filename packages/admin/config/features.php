@@ -25,5 +25,6 @@ return [
     'collection' => FeatureState::Enabled,
     'discount' => FeatureState::Enabled,
     'review' => FeatureState::Enabled,
+    'supplier' => FeatureState::Disabled,
 
 ];

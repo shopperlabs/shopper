@@ -41,7 +41,8 @@
                                     alt="Logo {{ $shippingOption->carrier->name }}"
                                 />
                             @endif
-                            <p class="flex text-sm items-center gap-2">
+
+                            <p class="flex items-center gap-2 text-sm">
                                 <span class="font-medium text-gray-900 dark:text-white">
                                     {{ $shippingOption->name }}
                                 </span>

@@ -88,8 +88,16 @@ class Edit extends Component implements HasSchemas
                                         Separator::make()->columnSpanFull(),
                                         TextInput::make('external_id')
                                             ->label(__('shopper::forms.label.external_id'))
+                                            ->required()
                                             ->unique(config('shopper.models.product'), 'external_id', ignoreRecord: true)
                                             ->helperText(__('shopper::pages/products.external_id_description')),
+                                        Select::make('supplier_id')
+                                            ->label(__('shopper::forms.label.supplier'))
+                                            ->required()
+                                            ->relationship('supplier', 'name', fn (Builder $query) => $query->where('is_enabled', true))
+                                            ->searchable()
+                                            ->preload()
+                                            ->visible(Feature::enabled('supplier')),
                                     ])
                                     ->columnSpanFull()
                                     ->columns()

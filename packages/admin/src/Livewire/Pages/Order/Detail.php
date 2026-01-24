@@ -7,6 +7,8 @@ namespace Shopper\Livewire\Pages\Order;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
@@ -15,6 +17,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\WithPagination;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Core\Enum\FulfillmentStatus;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Events\Orders\AddNoteToOrder;
 use Shopper\Core\Events\Orders\OrderArchived;
@@ -24,6 +27,8 @@ use Shopper\Core\Events\Orders\OrderPaid;
 use Shopper\Core\Events\Orders\OrderRegistered;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Core\Models\OrderItem;
+use Shopper\Core\Models\OrderShipping;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 /**
@@ -174,6 +179,45 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
                     ->send();
 
                 $this->redirectRoute('shopper.orders.index', navigate: true);
+            });
+    }
+
+    public function updateFulfillmentAction(): Action
+    {
+        return Action::make('updateFulfillment')
+            ->label(__('shopper-core::status.fulfillment.pending'))
+            ->icon(Untitledui::Send03)
+            ->schema([
+                Select::make('fulfillment_status')
+                    ->label(__('shopper::forms.label.status'))
+                    ->options(FulfillmentStatus::class)
+                    ->required(),
+                TextInput::make('tracking_number')
+                    ->label(__('shopper::forms.label.tracking_number')),
+                TextInput::make('tracking_url')
+                    ->label(__('shopper::forms.label.tracking_url'))
+                    ->url(),
+            ])
+            ->action(function (array $data, array $arguments): void {
+                $orderItem = OrderItem::query()->find($arguments['orderItemId']);
+                $orderItem->update(['fulfillment_status' => $data['fulfillment_status']]);
+
+                if (filled($data['tracking_number'] ?? null)) {
+                    OrderShipping::query()->updateOrCreate(
+                        ['order_id' => $this->order->id],
+                        [
+                            'tracking_number' => $data['tracking_number'],
+                            'tracking_url' => $data['tracking_url'] ?? null,
+                            'shipped_at' => $data['fulfillment_status'] === FulfillmentStatus::Shipped->value ? now() : null,
+                            'received_at' => $data['fulfillment_status'] === FulfillmentStatus::Delivered->value ? now() : null,
+                        ]
+                    );
+                }
+
+                Notification::make()
+                    ->title(__('shopper::notifications.update', ['item' => __('shopper-core::status.fulfillment.pending')]))
+                    ->success()
+                    ->send();
             });
     }
 

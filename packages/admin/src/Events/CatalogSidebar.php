@@ -34,6 +34,15 @@ final class CatalogSidebar extends AbstractAdminSidebar
                         $item->route('shopper.attributes.index');
                     });
                 }
+
+                if (Feature::enabled('supplier')) {
+                    $item->item(__('shopper::pages/suppliers.menu'), function (Item $item): void {
+                        $item->weight(2);
+                        $item->setAuthorized($this->user->hasPermissionTo('browse_suppliers'));
+                        $item->useSpa();
+                        $item->route('shopper.suppliers.index');
+                    });
+                }
             });
 
             if (Feature::enabled('category')) {
@@ -65,6 +74,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                     $item->setIcon('phosphor-bookmarks');
                 });
             }
+
         });
 
         return $menu;

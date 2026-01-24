@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use Shopper\Core\Events\Products\ProductUpdated;
+use Shopper\Core\Models\Supplier;
 use Shopper\Livewire\Components\Products\Form\Edit;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
@@ -48,11 +49,13 @@ describe(Edit::class, function (): void {
     });
 
     it('can view the external id field on external product editing', function (): void {
+        $supplier = Supplier::factory()->create(['is_enabled' => true]);
         $product = Product::factory()->external()->create();
 
         Livewire::test(Edit::class, ['product' => $product])
             ->fillForm([
                 'external_id' => $uuid = fake()->uuid,
+                'supplier_id' => $supplier->id,
             ])
             ->assertFormFieldIsVisible('external_id')
             ->call('store')
@@ -62,6 +65,7 @@ describe(Edit::class, function (): void {
 
         Event::assertDispatched(ProductUpdated::class);
 
-        expect($product->external_id)->toBe($uuid);
+        expect($product->external_id)->toBe($uuid)
+            ->and($product->supplier_id)->toBe($supplier->id);
     });
 })->group('livewire', 'components', 'products');
