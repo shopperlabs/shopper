@@ -17,8 +17,8 @@ use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
  * @property-read int $id
  * @property-read string $name
  * @property-read int $quantity
- * @property-read int $unit_price_amount
- * @property-read int $total
+ * @property-read float|int|null $unit_price_amount
+ * @property-read float|int $total
  * @property-read string $sku
  * @property-read int $product_id
  * @property-read string $product_type
@@ -77,10 +77,18 @@ class OrderItem extends Model implements OrderItemContract
         ];
     }
 
+    protected function unitPriceAmount(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?int $value): float|int|null => $value ? $value / 100 : null,
+            set: fn (int|float|null $value): ?int => $value ? (int) round($value * 100) : null,
+        );
+    }
+
     protected function total(): Attribute
     {
         return Attribute::make(
-            get: fn (): int => $this->unit_price_amount * $this->quantity
+            get: fn (): int|float => $this->unit_price_amount * $this->quantity
         );
     }
 }

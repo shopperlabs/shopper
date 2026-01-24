@@ -107,7 +107,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
     {
         return Action::make('register')
             ->label(__('shopper-core::status.registered'))
-            ->visible($this->order->isPending())
+            ->visible($this->order->isPending() || $this->order->isNew())
             ->action(function (): void {
                 $this->order->update(['status' => OrderStatus::Register]);
 

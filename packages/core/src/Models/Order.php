@@ -92,7 +92,7 @@ class Order extends Model implements OrderContract
         return shopper_table('orders');
     }
 
-    public function total(): int
+    public function total(): float|int
     {
         return $this->items->sum('total');
     }
@@ -105,6 +105,11 @@ class Order extends Model implements OrderContract
     public function isNotCancelled(): bool
     {
         return $this->status !== OrderStatus::Cancelled;
+    }
+
+    public function isNew(): bool
+    {
+        return $this->status === OrderStatus::New;
     }
 
     public function isPending(): bool

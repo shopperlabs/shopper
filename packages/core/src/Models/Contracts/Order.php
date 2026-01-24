@@ -12,13 +12,15 @@ interface Order
 {
     public function setDefaultOrderStatus(): void;
 
-    public function total(): int;
+    public function total(): float|int;
 
     public function canBeCancelled(): bool;
 
     public function isNotCancelled(): bool;
 
     public function isPending(): bool;
+
+    public function isNew(): bool;
 
     public function isRegister(): bool;
 
