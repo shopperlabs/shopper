@@ -93,7 +93,7 @@ class Price extends Model implements PriceContract
     {
         return Attribute::make(
             get: fn (?int $value): float|int|null => $value ? $value / 100 : null,
-            set: fn (?int $value): ?int => $value ? $value * 100 : null,
+            set: fn (int|float|null $value): ?int => $value ? (int) round($value * 100) : null,
         );
     }
 
@@ -101,7 +101,7 @@ class Price extends Model implements PriceContract
     {
         return Attribute::make(
             get: fn (?int $value): float|int|null => $value ? $value / 100 : null,
-            set: fn (?int $value): ?int => $value ? $value * 100 : null,
+            set: fn (int|float|null $value): ?int => $value ? (int) round($value * 100) : null,
         );
     }
 
@@ -109,7 +109,7 @@ class Price extends Model implements PriceContract
     {
         return Attribute::make(
             get: fn (?int $value): float|int|null => $value ? $value / 100 : null,
-            set: fn (?int $value): ?int => $value ? $value * 100 : null,
+            set: fn (int|float|null $value): ?int => $value ? (int) round($value * 100) : null,
         );
     }
 }
