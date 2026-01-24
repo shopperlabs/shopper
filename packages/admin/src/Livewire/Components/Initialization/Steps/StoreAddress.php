@@ -35,6 +35,7 @@ final class StoreAddress extends StepComponent implements HasActions, HasForms
         $settings = Setting::query()->whereIn('key', [
             'street_address',
             'city',
+            'state',
             'postal_code',
             'phone_number',
         ])
@@ -61,6 +62,10 @@ final class StoreAddress extends StepComponent implements HasActions, HasForms
                     ->label(__('shopper::forms.label.postal_code'))
                     ->placeholder('00237')
                     ->required(),
+                TextInput::make('state')
+                    ->label(__('shopper::forms.label.state'))
+                    ->placeholder('Littoral')
+                    ->columnSpan(['lg' => 2]),
                 TextInput::make('city')
                     ->label(__('shopper::forms.label.city'))
                     ->required(),

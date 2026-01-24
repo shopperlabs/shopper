@@ -27,14 +27,16 @@ final class AddressField
             Components\TextInput::make(self::getPrefix($prefix).'street_address')
                 ->label(__('shopper::forms.label.street_address'))
                 ->placeholder('Akwa Avenue 34...')
-                ->columnSpan('full')
+                ->columnSpanFull()
                 ->required(),
             Components\TextInput::make(self::getPrefix($prefix).'street_address_plus')
                 ->label(__('shopper::forms.label.street_address_plus'))
-                ->columnSpan('full'),
+                ->columnSpanFull(),
             Components\TextInput::make(self::getPrefix($prefix).'city')
                 ->label(__('shopper::forms.label.city'))
                 ->required(),
+            Components\TextInput::make(self::getPrefix($prefix).'state')
+                ->label(__('shopper::forms.label.state')),
             Components\TextInput::make(self::getPrefix($prefix).'postal_code')
                 ->label(__('shopper::forms.label.postal_code'))
                 ->required(),
@@ -42,12 +44,10 @@ final class AddressField
                 ->label(__('shopper::forms.label.country'))
                 ->options(Country::query()->pluck('name', 'id'))
                 ->searchable()
-                ->required()
-                ->columnSpan('full'),
+                ->required(),
             Components\TextInput::make(self::getPrefix($prefix).'phone_number')
                 ->label(__('shopper::forms.label.phone_number'))
-                ->tel()
-                ->columnSpan('full'),
+                ->tel(),
         ];
     }
 }

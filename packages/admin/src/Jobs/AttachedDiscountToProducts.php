@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Shopper\Core\Enum\DiscountApplyTo;
+use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\DiscountDetail;
 
@@ -31,7 +32,7 @@ class AttachedDiscountToProducts implements ShouldQueue
         if ($this->applyTo === DiscountApplyTo::Products) {
             // Remove all the products that's not been selected that already exist during creation of the discount
             $this->discount->items()
-                ->where('condition', 'apply_to')
+                ->where('condition', DiscountCondition::ApplyTo)
                 ->whereNotIn('discountable_id', $this->productIds)
                 ->delete();
 
@@ -43,12 +44,12 @@ class AttachedDiscountToProducts implements ShouldQueue
                         'discountable_id' => $productId,
                         'discountable_type' => config('shopper.models.product'),
                     ],
-                    values: ['condition' => 'apply_to']
+                    values: ['condition' => DiscountCondition::ApplyTo]
                 );
             }
         } else {
             $this->discount->items()
-                ->where('condition', 'apply_to')
+                ->where('condition', DiscountCondition::ApplyTo)
                 ->delete();
         }
     }

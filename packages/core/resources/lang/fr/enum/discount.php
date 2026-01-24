@@ -9,6 +9,11 @@ return [
         'specific_products' => 'Produits spécifiques',
     ],
 
+    'condition' => [
+        'apply_to' => 'Appliquer à',
+        'eligibility' => 'Éligibilité',
+    ],
+
     'eligibility' => [
         'everyone' => 'Tout le monde',
         'specific_customers' => 'Clients spécifiques',

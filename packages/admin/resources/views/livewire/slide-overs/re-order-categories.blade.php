@@ -12,7 +12,7 @@
                     <x-shopper::escape />
                     <button
                         type="button"
-                        class="focus:ring-primary-500 rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-offset-2 focus:outline-none dark:bg-gray-900 dark:text-gray-500 dark:ring-offset-gray-900 dark:hover:text-gray-300"
+                        class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none dark:bg-gray-900 dark:text-gray-500 dark:hover:text-gray-300"
                         wire:click="$dispatch('closePanel')"
                     >
                         <span class="sr-only">Close panel</span>

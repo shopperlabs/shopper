@@ -84,7 +84,10 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->label(__('shopper::forms.actions.cancel_order'))
             ->visible($this->order->canBeCancelled())
             ->action(function (): void {
-                $this->order->update(['status' => OrderStatus::Cancelled]);
+                $this->order->update([
+                    'status' => OrderStatus::Cancelled,
+                    'canceled_at' => now(),
+                ]);
 
                 event(new OrderCancel($this->order));
 
@@ -158,11 +161,12 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->modalDescription(__('shopper::pages/orders.modals.archived_notice'))
             ->modalSubmitActionLabel(__('shopper::forms.actions.confirm'))
             ->action(function (): void {
-                event(new OrderArchived($this->order));
-
                 $this->order->update([
-                    'status' => OrderStatus::Register,
+                    'status' => OrderStatus::Archived,
+                    'archived_at' => now(),
                 ]);
+
+                event(new OrderArchived($this->order));
 
                 Notification::make()
                     ->title(__('shopper::notifications.orders.archived'))

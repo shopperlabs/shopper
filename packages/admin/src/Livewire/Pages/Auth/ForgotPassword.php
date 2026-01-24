@@ -11,7 +11,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 #[Layout('shopper::components.layouts.base')]
-class ForgotPassword extends Component
+final class ForgotPassword extends Component
 {
     public string $email = '';
 

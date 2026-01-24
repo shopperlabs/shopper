@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Database\Factories\DiscountDetailFactory;
+use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Models\Contracts\DiscountDetail as DiscountDetailContract;
 
 /**
  * @property-read int $id
- * @property-read string $condition
+ * @property-read DiscountCondition $condition
  * @property-read string $discountable_type
  * @property-read int $discountable_id
  * @property-read int $discount_id
@@ -52,5 +53,12 @@ class DiscountDetail extends Model implements DiscountDetailContract
     protected static function newFactory(): DiscountDetailFactory
     {
         return DiscountDetailFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'condition' => DiscountCondition::class,
+        ];
     }
 }

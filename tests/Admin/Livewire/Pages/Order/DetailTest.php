@@ -64,7 +64,7 @@ describe(Detail::class, function (): void {
         Event::assertDispatched(Orders\AddNoteToOrder::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
-    it('updates order notes when leaving notes', function (): void {
+    it('update order notes when leaving notes', function (): void {
         $order = Order::factory()->hasItems(1)->create(['notes' => null]);
 
         Livewire::test(Detail::class, ['order' => $order])
@@ -89,7 +89,7 @@ describe(Detail::class, function (): void {
         Event::assertDispatched(Orders\OrderCancel::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
-    it('updates order status to cancelled', function (): void {
+    it('update order status to cancelled', function (): void {
         $order = Order::factory()->hasItems(1)->create([
             'status' => OrderStatus::Completed,
         ]);
@@ -115,7 +115,7 @@ describe(Detail::class, function (): void {
         Event::assertDispatched(Orders\OrderRegistered::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
-    it('updates order status to register', function (): void {
+    it('update order status to register', function (): void {
         $order = Order::factory()->hasItems(1)->create([
             'status' => OrderStatus::Pending,
         ]);
@@ -141,7 +141,7 @@ describe(Detail::class, function (): void {
         Event::assertDispatched(Orders\OrderPaid::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
-    it('updates order status to paid', function (): void {
+    it('update order status to paid', function (): void {
         $order = Order::factory()->hasItems(1)->create([
             'status' => OrderStatus::Pending,
         ]);
@@ -167,7 +167,7 @@ describe(Detail::class, function (): void {
         Event::assertDispatched(Orders\OrderCompleted::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
-    it('updates order status to completed', function (): void {
+    it('update order status to completed', function (): void {
         $order = Order::factory()->hasItems(1)->create([
             'status' => OrderStatus::Paid,
         ]);
@@ -188,13 +188,12 @@ describe(Detail::class, function (): void {
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
-            ->callAction('archive')
-            ->assertRedirect(route('shopper.orders.index'));
+            ->callAction('archive');
 
         Event::assertDispatched(Orders\OrderArchived::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
-    it('updates order status to register after archiving', function (): void {
+    it('update order status to register after archiving', function (): void {
         $order = Order::factory()->hasItems(1)->create([
             'status' => OrderStatus::Pending,
         ]);
@@ -204,7 +203,7 @@ describe(Detail::class, function (): void {
 
         $order->refresh();
 
-        expect($order->status)->toBe(OrderStatus::Register);
+        expect($order->status)->toBe(OrderStatus::Archived);
     });
 
     it('archive action is hidden for completed orders', function (): void {

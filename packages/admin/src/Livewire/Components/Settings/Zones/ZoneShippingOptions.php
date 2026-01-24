@@ -39,7 +39,7 @@ class ZoneShippingOptions extends Component implements HasActions, HasSchemas
     #[Computed]
     public function zone(): ?Zone
     {
-        return Zone::with(['shippingOptions'])->find($this->selectedZoneId);
+        return Zone::with(['shippingOptions', 'shippingOptions.carrier'])->find($this->selectedZoneId);
     }
 
     public function deleteAction(): Action

@@ -15,7 +15,7 @@ use Livewire\Component;
 use Shopper\Facades\Shopper;
 
 #[Layout('shopper::components.layouts.base')]
-class ResetPassword extends Component
+final class ResetPassword extends Component
 {
     #[Locked]
     public ?string $token = null;

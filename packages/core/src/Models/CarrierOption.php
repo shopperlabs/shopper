@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\CarrierOptionFactory;
 use Shopper\Core\Models\Contracts\CarrierOption as CarrierOptionContract;
-use Shopper\Core\Models\Traits\HasMedia;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
@@ -25,12 +23,10 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read Carrier $carrier
  * @property-read array<string, mixed>|null $metadata
  */
-class CarrierOption extends Model implements CarrierOptionContract, SpatieHasMedia
+class CarrierOption extends Model implements CarrierOptionContract
 {
     /** @use HasFactory<CarrierOptionFactory> */
     use HasFactory;
-
-    use HasMedia;
 
     protected $guarded = [];
 

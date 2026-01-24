@@ -30,6 +30,7 @@ use Illuminate\Support\Str;
 use Shopper\Actions\Store\SaveAndDispatchDiscountAction;
 use Shopper\Components\Separator;
 use Shopper\Core\Enum\DiscountApplyTo;
+use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
@@ -70,10 +71,10 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasForms
         $customers = collect();
 
         if ($discountId) {
-            if ($this->discount->items()->where('condition', 'eligibility')->exists()) {
+            if ($this->discount->items()->where('condition', DiscountCondition::Eligibility)->exists()) {
                 $customerConditions = $this->discount->items()
                     ->with('discountable')
-                    ->where('condition', 'eligibility')
+                    ->where('condition', DiscountCondition::Eligibility)
                     ->get();
 
                 foreach ($customerConditions as $customerCondition) {
@@ -81,10 +82,10 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasForms
                 }
             }
 
-            if ($this->discount->items()->where('condition', 'apply_to')->exists()) {
+            if ($this->discount->items()->where('condition', DiscountCondition::ApplyTo)->exists()) {
                 $productConditions = $this->discount->items()
                     ->with('discountable')
-                    ->where('condition', 'apply_to')
+                    ->where('condition', DiscountCondition::ApplyTo)
                     ->get();
 
                 foreach ($productConditions as $productCondition) {
@@ -95,6 +96,7 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasForms
 
         $this->form->fill(array_merge(
             $this->discount->toArray(),
+            ['usage_number' => $this->discount->usage_limit !== null],
             ['customers' => $customers->pluck('id')->all()],
             ['products' => $products->pluck('id')->all()],
         ));

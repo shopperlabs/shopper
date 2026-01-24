@@ -32,14 +32,16 @@
                 <div
                     class="relative flex items-start justify-between rounded-lg border border-gray-200 bg-white p-3 dark:border-white/10 dark:bg-white/5"
                 >
-                    <div class="flex flex-1 items-start gap-2">
-                        <img
-                            class="size-6 rounded-full object-cover"
-                            src="{{ $shippingOption->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
-                            alt="Logo {{ $shippingOption->name }}"
-                        />
-                        <div>
-                            <p class="flex items-center gap-2">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            @if ($shippingOption->carrier->logoUrl())
+                                <img
+                                    class="size-6 rounded-full object-cover"
+                                    src="{{ $shippingOption->carrier->logoUrl() }}"
+                                    alt="Logo {{ $shippingOption->carrier->name }}"
+                                />
+                            @endif
+                            <p class="flex text-sm items-center gap-2">
                                 <span class="font-medium text-gray-900 dark:text-white">
                                     {{ $shippingOption->name }}
                                 </span>
@@ -47,9 +49,10 @@
                                     {{ $shippingOption->isEnabled() ? __('shopper::words.is_enabled') : __('shopper::words.is_disabled') }}
                                 </x-filament::badge>
                             </p>
-
+                        </div>
+                        <div class="mt-2 space-y-0.5">
                             @if ($shippingOption->description)
-                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
                                     {{ $shippingOption->description }}
                                 </p>
                             @endif

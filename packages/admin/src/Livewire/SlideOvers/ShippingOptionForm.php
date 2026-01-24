@@ -8,7 +8,6 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -50,7 +49,7 @@ class ShippingOptionForm extends SlideOverComponent implements HasActions, HasFo
 
     public function mount(?int $optionId = null): void
     {
-        $this->option = CarrierOption::with('media')
+        $this->option = CarrierOption::query()
             ->where('zone_id', $this->zoneId)
             ->find($optionId);
 
@@ -71,13 +70,6 @@ class ShippingOptionForm extends SlideOverComponent implements HasActions, HasFo
     {
         return $schema
             ->components([
-                SpatieMediaLibraryFileUpload::make('media')
-                    ->label(__('shopper::forms.label.logo'))
-                    ->collection(config('shopper.media.storage.thumbnail_collection'))
-                    ->disk(config('shopper.media.storage.disk_name'))
-                    ->image()
-                    ->avatar()
-                    ->maxSize(1024),
                 Group::make()
                     ->schema([
                         TextInput::make('name')
@@ -96,13 +88,13 @@ class ShippingOptionForm extends SlideOverComponent implements HasActions, HasFo
                             ->options($this->zone->carriers->pluck('name', 'id'))
                             ->required()
                             ->native(false)
-                            ->columnSpan('full'),
+                            ->columnSpanFull(),
                         Textarea::make('description')
                             ->label(__('shopper::forms.label.description'))
                             ->hint(__('shopper::words.characters', ['number' => 200]))
                             ->rows(3)
                             ->maxLength(200)
-                            ->columnSpan('full'),
+                            ->columnSpanFull(),
                     ])
                     ->columns(),
                 Toggle::make('is_enabled')

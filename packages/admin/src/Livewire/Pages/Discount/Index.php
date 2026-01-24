@@ -145,6 +145,10 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->options(DiscountApplyTo::options()),
                 SelectFilter::make('eligibility')
                     ->options(DiscountEligibility::options()),
+                SelectFilter::make('zone_id')
+                    ->label(__('shopper::pages/settings/zones.single'))
+                    ->relationship('zone', 'name')
+                    ->multiple(),
                 Filter::make('start_at')
                     ->label(__('shopper::pages/discounts.start_date'))
                     ->schema([
@@ -163,6 +167,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             fn (Builder $query, mixed $date): Builder => $query->whereDate('start_at', '<=', $date),
                         )),
             ])
+            ->filtersFormColumns(2)
             ->emptyState(view('shopper::livewire.tables.empty-states.discounts'));
     }
 

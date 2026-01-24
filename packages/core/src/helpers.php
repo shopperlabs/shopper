@@ -22,11 +22,22 @@ if (! function_exists('generate_number')) {
         $last = $lastOrder ? $lastOrder->id : 0;
         $next = $generator['start_sequence_from'] + $last;
 
-        return sprintf(
-            '%s%s',
-            $generator['prefix'],
-            mb_str_pad((string) $next, $generator['pad_length'], $generator['pad_string'], \STR_PAD_LEFT)
-        );
+        $separator = $generator['separator'];
+        $sequence = mb_str_pad((string) $next, $generator['pad_length'], $generator['pad_string'], \STR_PAD_LEFT);
+
+        $parts = [];
+
+        if ($generator['prefix']) {
+            $parts[] = $generator['prefix'];
+        }
+
+        if ($generator['date_format']) {
+            $parts[] = date($generator['date_format']);
+        }
+
+        $parts[] = $sequence;
+
+        return implode($separator, $parts);
     }
 }
 

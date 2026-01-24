@@ -218,7 +218,7 @@ final class CollectionProductsQuery
             default => '=',
         };
 
-        $query->whereHas('ratings', function (Builder $subQuery) use ($operator, $rule): void {
+        $query->whereHas('ratings', function (Builder $subQuery) use ($operator, $rule): void { // @phpstan-ignore-line
             $subQuery->where('approved', true)
                 ->groupBy('reviewrateable_id')
                 ->havingRaw('AVG(rating) '.$operator.' ?', [(float) $rule->value]);

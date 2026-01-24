@@ -59,7 +59,12 @@ class AttributeValues extends SlideOverComponent implements HasActions, HasForms
                 ->label(__('shopper::forms.label.key'))
                 ->helperText(__('shopper::modals.attributes.key_description'))
                 ->required()
-                ->unique(table: AttributeValue::class, column: 'key', ignoreRecord: true),
+                ->unique(
+                    table: AttributeValue::class,
+                    column: 'key',
+                    ignoreRecord: true,
+                    modifyRuleUsing: fn ($rule) => $rule->where('attribute_id', $this->attribute->id),
+                ),
             TextInput::make('value')
                 ->label(__('shopper::forms.label.value'))
                 ->placeholder('My value')
@@ -91,7 +96,6 @@ class AttributeValues extends SlideOverComponent implements HasActions, HasForms
             ->recordActions([
                 Action::make('edit')
                     ->icon(Untitledui::Edit03)
-                    ->color('gray')
                     ->iconButton()
                     ->modalHeading(__('shopper::forms.actions.edit'))
                     ->modalWidth(Width::ExtraLarge)

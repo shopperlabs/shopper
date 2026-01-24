@@ -49,6 +49,7 @@ return [
         'country' => 'Country',
         'countries' => 'Countries',
         'city' => 'City',
+        'state' => 'State',
         'postal_code' => 'Postal / Zip code',
         'photo' => 'Picture',
         'birth_date' => 'Birth Date',

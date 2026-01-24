@@ -12,7 +12,7 @@ final class CarrierSeeder extends Seeder
     public function run(): void
     {
         Carrier::query()->create([
-            'name' => 'Manual',
+            'name' => 'Local',
             'slug' => 'manual',
             'is_enabled' => true,
             'driver' => 'manual',

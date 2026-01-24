@@ -17,6 +17,7 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
+use Illuminate\Validation\ValidationException;
 use Shopper\Core\Enum\Operator;
 use Shopper\Core\Enum\Rule;
 use Shopper\Core\Jobs\SyncCollectionProductsJob;
@@ -61,6 +62,19 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
                     ->relationship()
                     ->label(__('shopper::pages/collections.conditions.title'))
                     ->addActionLabel(__('shopper::pages/collections.conditions.add'))
+                    ->mutateRelationshipDataBeforeFillUsing(function (array $data): array {
+                        $rule = Rule::tryFrom($data['rule'] ?? '');
+
+                        if ($rule?->isPrice() && isset($data['value'])) {
+                            $data['value'] = (string) ((int) $data['value'] / 100);
+                        } elseif ($rule?->isBoolean() && isset($data['value'])) {
+                            $data['boolean_value'] = $data['value'];
+                        } elseif ($rule?->isDate() && isset($data['value'])) {
+                            $data['date_value'] = $data['value'];
+                        }
+
+                        return $data;
+                    })
                     ->mutateRelationshipDataBeforeCreateUsing(fn (array $data): array => $this->mutateRuleData($data))
                     ->mutateRelationshipDataBeforeSaveUsing(fn (array $data): array => $this->mutateRuleData($data))
                     ->schema([
@@ -81,25 +95,20 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
                                 ->all())
                             ->required(),
                         DatePicker::make('date_value')
-                            ->statePath('value')
                             ->label(__('shopper::forms.label.value'))
                             ->visible(fn (Get $get): bool => $get('rule')?->isDate() ?? false)
-                            ->native(false)
-                            ->required(),
+                            ->native(false),
                         Select::make('boolean_value')
-                            ->statePath('value')
                             ->label(__('shopper::forms.label.value'))
                             ->options([
                                 '1' => __('shopper::forms.label.yes'),
                                 '0' => __('shopper::forms.label.no'),
                             ])
-                            ->visible(fn (Get $get): bool => $get('rule')?->isBoolean() ?? false)
-                            ->required(),
+                            ->visible(fn (Get $get): bool => $get('rule')?->isBoolean() ?? false),
                         TextInput::make('value')
                             ->label(__('shopper::forms.label.value'))
                             ->numeric(fn (Get $get): bool => $get('rule')?->isNumeric() ?? false)
-                            ->visible(fn (Get $get): bool => ! ($get('rule')?->isDate() ?? false) && ! ($get('rule')?->isBoolean() ?? false))
-                            ->required(),
+                            ->visible(fn (Get $get): bool => ! ($get('rule')?->isDate() ?? false) && ! ($get('rule')?->isBoolean() ?? false)),
                     ])
                     ->columns(3)
                     ->defaultItems(1),
@@ -136,7 +145,25 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
      */
     private function mutateRuleData(array $data): array
     {
-        if (isset($data['rule']) && Rule::tryFrom($data['rule'])?->isPrice()) {
+        $rule = $data['rule'] instanceof Rule
+            ? $data['rule']
+            : Rule::tryFrom((string) ($data['rule'] ?? ''));
+
+        if ($rule?->isDate()) {
+            $data['value'] = $data['date_value'] ?? null;
+        } elseif ($rule?->isBoolean()) {
+            $data['value'] = $data['boolean_value'] ?? null;
+        }
+
+        unset($data['date_value'], $data['boolean_value']);
+
+        if (! isset($data['value']) || $data['value'] === '') {
+            throw ValidationException::withMessages([
+                'value' => __('validation.required', ['attribute' => __('shopper::forms.label.value')]),
+            ]);
+        }
+
+        if ($rule?->isPrice()) {
             $data['value'] = (string) ((int) ((float) $data['value'] * 100));
         }
 
