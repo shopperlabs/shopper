@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use Shopper\Core\Events\Products\ProductUpdated;
 use Shopper\Core\Models\Supplier;
+use Shopper\Enum\FeatureState;
 use Shopper\Livewire\Components\Products\Form\Edit;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
@@ -49,6 +50,8 @@ describe(Edit::class, function (): void {
     });
 
     it('can view the external id field on external product editing', function (): void {
+        config()->set('shopper.features.supplier', FeatureState::Enabled);
+
         $supplier = Supplier::factory()->create(['is_enabled' => true]);
         $product = Product::factory()->external()->create();
 
