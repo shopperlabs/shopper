@@ -9,6 +9,3 @@
 @source '../../../../../vendor/filament/**/resources/views';
 @source '../../../../../vendor/codewithdennis/filament-select-tree/resources/views';
 @source '../../../../../vendor/jaocero/radio-deck/resources/views';
-
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';

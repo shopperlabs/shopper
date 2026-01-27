@@ -25,7 +25,7 @@ beforeEach(function (): void {
 
 describe(Edit::class, function (): void {
     it('can update product information', function (): void {
-        $product = Product::factory()->create();
+        $product = Product::factory()->standard()->create();
 
         Livewire::test(Edit::class, ['product' => $product])
             ->fillForm([
