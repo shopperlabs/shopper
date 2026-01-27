@@ -11,16 +11,6 @@ html {
   color-scheme: dark;
 }
 
-input[type='number']::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
-input[type='number'] {
-  -moz-appearance: textfield;
-  appearance: textfield;
-  margin: 0;
-}
-
 *::-webkit-scrollbar-track {
   background-color: transparent;
 }
@@ -45,6 +35,73 @@ input[type='number'] {
   @apply bg-gray-900;
 }
 
+@variant dark (&:where(.dark, .dark *));
+
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@theme inline {
+  --color-gray-50: oklch(0.985 0 0);
+  --color-gray-100: oklch(0.967 0.001 286.375);
+  --color-gray-200: oklch(0.92 0.004 286.32);
+  --color-gray-300: oklch(0.871 0.006 286.286);
+  --color-gray-400: oklch(0.705 0.015 286.067);
+  --color-gray-500: oklch(0.552 0.016 285.938);
+  --color-gray-600: oklch(0.442 0.017 285.786);
+  --color-gray-700: oklch(0.37 0.013 285.805);
+  --color-gray-800: oklch(0.274 0.006 286.033);
+  --color-gray-900: oklch(0.21 0.006 285.885);
+  --color-gray-950: oklch(0.141 0.005 285.823);
+
+  --color-primary-50: var(--primary-50);
+  --color-primary-100: var(--primary-100);
+  --color-primary-200: var(--primary-200);
+  --color-primary-300: var(--primary-300);
+  --color-primary-400: var(--primary-400);
+  --color-primary-500: var(--primary-500);
+  --color-primary-600: var(--primary-600);
+  --color-primary-700: var(--primary-700);
+  --color-primary-800: var(--primary-800);
+  --color-primary-900: var(--primary-900);
+  --color-primary-950: var(--primary-950);
+
+  --color-danger-50: oklch(0.971 0.013 17.38);
+  --color-danger-100: oklch(0.936 0.032 17.717);
+  --color-danger-200: oklch(0.885 0.062 18.334);
+  --color-danger-300: oklch(0.808 0.114 19.571);
+  --color-danger-400: oklch(0.704 0.191 22.216);
+  --color-danger-500: oklch(0.637 0.237 25.331);
+  --color-danger-600: oklch(0.577 0.245 27.325);
+  --color-danger-700: oklch(0.505 0.213 27.518);
+  --color-danger-800: oklch(0.444 0.177 26.899);
+  --color-danger-900: oklch(0.396 0.141 25.723);
+  --color-danger-950: oklch(0.258 0.092 26.042);
+
+  --color-warning-50: oklch(0.987 0.022 95.277);
+  --color-warning-100: oklch(0.962 0.059 95.617);
+  --color-warning-200: oklch(0.924 0.12 95.746);
+  --color-warning-300: oklch(0.879 0.169 91.605);
+  --color-warning-400: oklch(0.828 0.189 84.429);
+  --color-warning-500: oklch(0.769 0.188 70.08);
+  --color-warning-600: oklch(0.666 0.179 58.318);
+  --color-warning-700: oklch(0.555 0.163 48.998);
+  --color-warning-800: oklch(0.473 0.137 46.201);
+  --color-warning-900: oklch(0.414 0.112 45.904);
+  --color-warning-950: oklch(0.279 0.077 45.635);
+
+  --color-success-50: oklch(0.979 0.021 166.113);
+  --color-success-100: oklch(0.95 0.052 163.051);
+  --color-success-200: oklch(0.905 0.093 164.15);
+  --color-success-300: oklch(0.845 0.143 164.978);
+  --color-success-400: oklch(0.765 0.177 163.223);
+  --color-success-500: oklch(0.696 0.17 162.48);
+  --color-success-600: oklch(0.596 0.145 163.225);
+  --color-success-700: oklch(0.508 0.118 165.612);
+  --color-success-800: oklch(0.432 0.095 166.913);
+  --color-success-900: oklch(0.378 0.077 168.94);
+  --color-success-950: oklch(0.262 0.051 172.552);
+}
+
 .hide-scroll::-webkit-scrollbar {
   display: none;
 }
@@ -53,22 +110,12 @@ input[type='number'] {
   display: none !important;
 }
 
-.primary-menu .active {
-  @apply bg-primary-900;
-}
-.primary-menu .active:hover,
-.primary-menu .active:focus {
-  @apply bg-primary-900;
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
-.ui-modal > div > div.fixed {
-  @apply z-50 backdrop-blur-sm transition-opacity;
-}
-
-.shopper-product-wizard > div {
-  @apply h-full flex-1;
-}
-
-.sh-dropdown-width {
-  @apply max-w-58;
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
 }
