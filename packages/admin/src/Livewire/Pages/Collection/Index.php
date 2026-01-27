@@ -15,10 +15,12 @@ use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -57,9 +59,25 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->formatStateUsing(
                         fn (CollectionContract $record): string => $record->rules->isNotEmpty() ? ucfirst($record->firstRule()) : 'N/A'
                     ),
+                TextColumn::make('zones.name')
+                    ->label(__('shopper::pages/settings/zones.title'))
+                    ->badge()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
                     ->date(),
+            ])
+            ->filters([
+                SelectFilter::make('type')
+                    ->label(__('shopper::pages/collections.filter_type'))
+                    ->options(CollectionType::class),
+                SelectFilter::make('zones')
+                    ->label(__('shopper::pages/settings/zones.title'))
+                    ->relationship('zones', 'name')
+                    ->multiple()
+                    ->searchable()
+                    ->preload()
+                    ->optionsLimit(5),
             ])
             ->recordActions([
                 Action::make('edit')

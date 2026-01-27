@@ -7,9 +7,11 @@ namespace Shopper\Livewire\SlideOvers;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -62,13 +64,8 @@ class AddCollectionForm extends SlideOverComponent implements HasActions, HasFor
                                     $set('slug', Str::slug($state));
                                 }
                             }),
-                        TextInput::make('slug')
-                            ->label(__('shopper::forms.label.slug'))
-                            ->disabled()
-                            ->dehydrated()
-                            ->required()
-                            ->maxLength(255)
-                            ->unique(table: config('shopper.models.collection'), column: 'slug'),
+                        Hidden::make('slug')
+                            ->label(__('shopper::forms.label.slug')),
                         DateTimePicker::make('published_at')
                             ->label(__('shopper::forms.label.availability'))
                             ->native(false)
@@ -80,6 +77,14 @@ class AddCollectionForm extends SlideOverComponent implements HasActions, HasFor
                             ->label(__('shopper::pages/collections.filter_type'))
                             ->required()
                             ->options(CollectionType::class),
+                        Select::make('zones')
+                            ->label(__('shopper::pages/settings/zones.title'))
+                            ->relationship('zones', 'name')
+                            ->multiple()
+                            ->native(false)
+                            ->searchable()
+                            ->preload()
+                            ->helperText(__('shopper::pages/collections.zone_description')),
                         RichEditor::make('description')
                             ->label(__('shopper::forms.label.description'))
                             ->toolbarButtons([

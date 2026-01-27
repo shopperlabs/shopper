@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Enum\CollectionType;
+use Shopper\Core\Models\Zone;
 use Shopper\Livewire\Pages\Collection\Edit;
 use Tests\Core\Stubs\Collection;
 use Tests\Core\Stubs\User;
@@ -71,5 +72,19 @@ describe(Edit::class, function (): void {
             ->assertHasNoFormErrors();
 
         expect($collection->refresh()->type)->toBe(CollectionType::Manual);
+    });
+
+    it('can update a collection with zones', function (): void {
+        $collection = Collection::factory()->create();
+        $zones = Zone::factory()->count(2)->create();
+
+        Livewire::test(Edit::class, ['collection' => $collection])
+            ->fillForm([
+                'zones' => $zones->pluck('id')->toArray(),
+            ])
+            ->call('store')
+            ->assertHasNoFormErrors();
+
+        expect($collection->refresh()->zones)->toHaveCount(2);
     });
 })->group('livewire', 'collections');

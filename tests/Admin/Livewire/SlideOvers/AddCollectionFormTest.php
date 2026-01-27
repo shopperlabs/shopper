@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Livewire\Livewire;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Contracts\Collection as CollectionContract;
+use Shopper\Core\Models\Zone;
 use Shopper\Livewire\SlideOvers\AddCollectionForm;
 use Tests\Core\Stubs\Collection;
 use Tests\Core\Stubs\User;
@@ -22,7 +23,6 @@ beforeEach(function (): void {
 describe(AddCollectionForm::class, function (): void {
     it('can validate required fields on add collection form', function (): void {
         Livewire::test(AddCollectionForm::class)
-            ->assertFormExists()
             ->fillForm()
             ->call('store')
             ->assertHasFormErrors(['name' => 'required', 'type' => 'required']);
@@ -30,7 +30,6 @@ describe(AddCollectionForm::class, function (): void {
 
     it('can create a collection', function (): void {
         Livewire::test(AddCollectionForm::class)
-            ->assertFormExists()
             ->fillForm([
                 'name' => 'My manual collection',
                 'type' => CollectionType::Manual(),
@@ -45,5 +44,23 @@ describe(AddCollectionForm::class, function (): void {
             );
 
         expect(resolve(CollectionContract::class)::query()->count())->toBe(1);
+    });
+
+    it('can create a collection with zones', function (): void {
+        $zones = Zone::factory()->count(2)->create();
+
+        Livewire::test(AddCollectionForm::class)
+            ->fillForm([
+                'name' => 'Zoned collection',
+                'type' => CollectionType::Manual(),
+                'zones' => $zones->pluck('id')->toArray(),
+            ])
+            ->call('store')
+            ->assertHasNoFormErrors();
+
+        $collection = resolve(CollectionContract::class)::query()->first();
+
+        expect($collection)->not->toBeNull()
+            ->and($collection->zones)->toHaveCount(2);
     });
 })->group('livewire', 'slideovers', 'collections');

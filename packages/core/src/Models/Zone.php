@@ -6,7 +6,7 @@ namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,10 +29,11 @@ use Shopper\Core\Models\Traits\HasSlug;
  * @property-read string $payments_name
  * @property-read string $currency_code
  * @property-read Currency $currency
- * @property-read Collection<int, Carrier> $carriers
- * @property-read Collection<int, CarrierOption> $shippingOptions
- * @property-read Collection<int, PaymentMethod> $paymentMethods
- * @property-read Collection<int, Country> $countries
+ * @property-read EloquentCollection<int, Carrier> $carriers
+ * @property-read EloquentCollection<int, CarrierOption> $shippingOptions
+ * @property-read EloquentCollection<int, PaymentMethod> $paymentMethods
+ * @property-read EloquentCollection<int, Country> $countries
+ * @property-read EloquentCollection<int, Contracts\Collection> $collections
  */
 class Zone extends Model implements ZoneContract
 {
@@ -130,6 +131,15 @@ class Zone extends Model implements ZoneContract
     public function carriers(): MorphToMany
     {
         return $this->morphedByMany(Carrier::class, 'zonable', shopper_table('zone_has_relations'));
+    }
+
+    /**
+     * @return MorphToMany<Collection, $this>
+     */
+    public function collections(): MorphToMany
+    {
+        // @phpstan-ignore-next-line
+        return $this->morphedByMany(config('shopper.models.collection'), 'zonable', shopper_table('zone_has_relations'));
     }
 
     /**

@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
+use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Collection;
+use Shopper\Core\Models\Zone;
 use Shopper\Livewire\Pages\Collection\Index;
 use Tests\Core\Stubs\User;
 
@@ -28,7 +31,7 @@ describe(Index::class, function (): void {
 
         Livewire::test(Index::class)
             ->loadTable()
-            ->assertCanSeeTableRecords(Collection::limit(3)->get());
+            ->assertCanSeeTableRecords(Collection::query()->limit(3)->get());
     });
 
     it('can search collection by name', function (): void {
@@ -48,7 +51,32 @@ describe(Index::class, function (): void {
         $collection = $collections->first();
 
         Livewire::test(Index::class)
-            ->assertTableActionExists('edit')
-            ->callTableAction('edit', $collection);
+            ->assertActionExists(TestAction::make('edit')->table($collection))
+            ->callAction(TestAction::make('edit')->table($collection));
+    });
+
+    it('can filter collections by type', function (): void {
+        Collection::factory()->create(['type' => CollectionType::Manual]);
+        Collection::factory()->create(['type' => CollectionType::Auto]);
+
+        Livewire::test(Index::class)
+            ->loadTable()
+            ->filterTable('type', CollectionType::Manual->value)
+            ->assertCanSeeTableRecords(Collection::query()->where('type', CollectionType::Manual)->get())
+            ->assertCanNotSeeTableRecords(Collection::query()->where('type', CollectionType::Auto)->get());
+    });
+
+    it('can filter collections by zones', function (): void {
+        $zone = Zone::factory()->create();
+        $collectionWithZone = Collection::factory()->create();
+        $collectionWithoutZone = Collection::factory()->create();
+
+        $collectionWithZone->zones()->attach($zone);
+
+        Livewire::test(Index::class)
+            ->loadTable()
+            ->filterTable('zones', [$zone->id])
+            ->assertCanSeeTableRecords([$collectionWithZone])
+            ->assertCanNotSeeTableRecords([$collectionWithoutZone]);
     });
 })->group('livewire', 'collections');

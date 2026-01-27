@@ -30,4 +30,6 @@ interface Collection
     public function products(): MorphToMany;
 
     public function rules(): HasMany;
+
+    public function zones(): MorphToMany;
 }

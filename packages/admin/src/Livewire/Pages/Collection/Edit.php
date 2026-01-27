@@ -9,6 +9,7 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -100,6 +101,14 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
                             ->required()
                             ->default(now())
                             ->helperText(__('shopper::pages/collections.availability_description')),
+                        Select::make('zones')
+                            ->label(__('shopper::pages/settings/zones.title'))
+                            ->relationship('zones', 'name')
+                            ->multiple()
+                            ->native(false)
+                            ->searchable()
+                            ->preload()
+                            ->helperText(__('shopper::pages/collections.zone_description')),
                         Group::make()
                             ->schema([
                                 TextEntry::make(__('shopper::words.seo.slug'))

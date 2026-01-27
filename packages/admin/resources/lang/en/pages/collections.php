@@ -15,6 +15,7 @@ return [
     'filter_type' => 'Collection Type',
     'product_conditions' => 'Product conditions',
     'availability_description' => 'Specify a publication date so that your collections are scheduled on your store.',
+    'zone_description' => 'Limit this collection only to the selected zones.',
     'empty_collections' => 'There are no products in this collection. Add or change conditions to dynamically add products.',
     'remove_product' => 'The product have been correctly remove to this collection.',
 

@@ -3,12 +3,14 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Enum\Operator;
 use Shopper\Core\Enum\Rule;
 use Shopper\Core\Models\Collection;
 use Shopper\Core\Models\CollectionRule;
 use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Zone;
 
 uses(Tests\TestCase::class);
 
@@ -105,6 +107,34 @@ describe(Collection::class, function (): void {
 
         expect($collection->metadata)->toBeArray()
             ->and($collection->metadata)->toBe($metadata);
+    });
+
+    it('has zones relationship', function (): void {
+        $collection = Collection::factory()->create();
+
+        expect($collection->zones())->toBeInstanceOf(MorphToMany::class);
+    });
+
+    it('can attach zones to a collection', function (): void {
+        $collection = Collection::factory()->create();
+        $zones = Zone::factory()->count(2)->create();
+
+        $collection->zones()->attach($zones);
+
+        expect($collection->zones)->toHaveCount(2);
+    });
+
+    it('can detach zones from a collection', function (): void {
+        $collection = Collection::factory()->create();
+        $zone = Zone::factory()->create();
+
+        $collection->zones()->attach($zone);
+
+        expect($collection->zones)->toHaveCount(1);
+
+        $collection->zones()->detach($zone);
+
+        expect($collection->refresh()->zones)->toHaveCount(0);
     });
 
     it('can register media collections from HasMedia trait', function (): void {

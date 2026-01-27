@@ -33,6 +33,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read ?string $seo_title
  * @property-read ?string $seo_description
  * @property-read EloquentCollection<int, CollectionRule> $rules
+ * @property-read EloquentCollection<int, Zone> $zones
  * @property-read EloquentCollection<int, Product> $products
  */
 class Collection extends Model implements CollectionContract, SpatieHasMedia
@@ -129,6 +130,14 @@ class Collection extends Model implements CollectionContract, SpatieHasMedia
     {
         // @phpstan-ignore-next-line
         return $this->morphToMany(config('shopper.models.product'), 'productable', shopper_table('product_has_relations'));
+    }
+
+    /**
+     * @return MorphToMany<Zone, $this>
+     */
+    public function zones(): MorphToMany
+    {
+        return $this->morphToMany(Zone::class, 'zonable', shopper_table('zone_has_relations'));
     }
 
     /**
