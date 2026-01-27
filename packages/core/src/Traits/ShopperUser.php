@@ -6,6 +6,7 @@ namespace Shopper\Core\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Enum\GenderType;
 use Shopper\Core\Models\Address;
@@ -18,8 +19,8 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * @property-read string|null $two_factor_recovery_codes
  * @property-read string|null $two_factor_secret
- * @property-read \Illuminate\Support\Collection<int, Order> $orders
- * @property-read \Illuminate\Support\Collection<int, Address> $addresses
+ * @property-read Collection<int, Order> $orders
+ * @property-read Collection<int, Address> $addresses
  */
 trait ShopperUser
 {
