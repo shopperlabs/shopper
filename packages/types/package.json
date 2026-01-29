@@ -1,5 +1,5 @@
 {
-  "name": "@shopper/types",
+  "name": "@shopperlabs/shopper-types",
   "version": "1.0.0",
   "description": "TypeScript types for Laravel Shopper",
   "author": "Arthur Monney <monneylobe@gmail.com> (https://arthurmonney.me)",
