@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          ref: develop
+          ref: 2.x
 
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
@@ -26,6 +26,6 @@ jobs:
       - name: Commit updated CHANGELOG
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          branch: develop
+          branch: 2.x
           commit_message: "chore: update CHANGELOG for ${{ github.event.release.name }}"
           file_pattern: CHANGELOG.md
