@@ -1,0 +1,31 @@
+{
+  "name": "@shopper/types",
+  "version": "1.0.0",
+  "description": "TypeScript types for Laravel Shopper",
+  "author": "Arthur Monney <monneylobe@gmail.com> (https://arthurmonney.me)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shopperlabs/shopper-types.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shopperlabs/shopper-types/issues"
+  },
+  "homepage": "https://github.com/shopperlabs/shopper-types#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}

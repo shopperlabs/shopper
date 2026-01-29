@@ -17,6 +17,18 @@ jobs:
           - core
           - sidebar
           - shipping
+          - types
+        include:
+          - package: admin
+            repository: admin
+          - package: core
+            repository: core
+          - package: sidebar
+            repository: sidebar
+          - package: shipping
+            repository: shipping
+          - package: types
+            repository: shopper-types
     steps:
       - uses: actions/checkout@v6
       - id: previous-tag
@@ -28,7 +40,7 @@ jobs:
         with:
           package_directory: 'packages/${{ matrix.package }}'
           repository_organization: 'shopperlabs'
-          repository_name: '${{ matrix.package }}'
+          repository_name: '${{ matrix.repository }}'
           branch: 2.x
           tag: ${{ steps.previous-tag.outputs.tag }}
           user_name: 'Arthur Monney'
