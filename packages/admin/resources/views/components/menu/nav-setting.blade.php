@@ -4,7 +4,7 @@
 
 @php
     $url = $menu->url();
-    $isCurrent = $url && str_starts_with(request()->url(), $url);
+    $isCurrent = $url && request()->is(trim(parse_url($url, PHP_URL_PATH), '/') . '*');
 @endphp
 
 <a

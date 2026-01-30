@@ -34,7 +34,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?int $customer_id
  * @property-read ?int $channel_id
  * @property-read ?int $parent_order_id
- * @property-read ?CarbonInterface $canceled_at
+ * @property-read ?CarbonInterface $cancelled_at
  * @property-read ?CarbonInterface $archived_at
  * @property-read OrderStatus $status
  * @property-read CarrierOption $shippingOption
@@ -253,7 +253,7 @@ class Order extends Model implements OrderContract
     {
         return [
             'status' => OrderStatus::class,
-            'canceled_at' => 'datetime',
+            'cancelled_at' => 'datetime',
             'archived_at' => 'datetime',
         ];
     }

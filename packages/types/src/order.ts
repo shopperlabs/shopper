@@ -48,7 +48,7 @@ export interface Order extends Entity {
   /** The order status. */
   status: OrderStatus
   /** The date the order was cancelled. */
-  canceled_at: DateEntity | null
+  cancelled_at: DateEntity | null
   /** The date the order was archived. */
   archived_at: DateEntity | null
   /** The zone ID. */

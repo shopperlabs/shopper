@@ -91,7 +91,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->action(function (): void {
                 $this->order->update([
                     'status' => OrderStatus::Cancelled,
-                    'canceled_at' => now(),
+                    'cancelled_at' => now(),
                 ]);
 
                 event(new OrderCancel($this->order));

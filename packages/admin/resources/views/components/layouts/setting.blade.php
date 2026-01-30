@@ -61,7 +61,7 @@
                     id="setting-tabs"
                 >
                     @foreach (resolve(\Shopper\Settings\SettingManager::class)->all() as $menu)
-                        <x-shopper::menu.nav-setting :menu="$menu" />
+                        <x-shopper::menu.nav-setting :$menu />
                     @endforeach
                 </nav>
                 <div
