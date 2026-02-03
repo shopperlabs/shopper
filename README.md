@@ -20,9 +20,6 @@
     </a>
 </p>
 
-> [!IMPORTANT]
-> The project is in active development. If you want to use it in production, please make sure that the components match your needs, or replace them.
-
 ## Introduction
 
 [Shopper](https://laravelshopper.dev) is a Headless e-commerce Admin Panel build for Laravel 10.0+ which includes all the necessary for your online store application.
@@ -72,15 +69,15 @@ A beta release for version 2 is now available, and here's a roadmap of upcoming 
 - [x] Generate Variant based on product attributes
 - [x] Support multi currencies for product / variant
 - [x] Feature & Unit Tests
+- [x] Dynamic product association based on collections configuration 
 - [ ] Support taxes
-- [ ] Dynamic product association based on collections configuration 
 
 ## Contact
 
 You can communicate with us using the following mediums:
 
 - [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
-- [Join us on Discord](https://laravelshopper.dev/discord) to chat with us.
+- [Join us on Discord](https://discord.gg/YMFynwHZ) to chat with us.
 
 ## Contributing
 
@@ -95,7 +92,6 @@ If you discover any security related issues, please email contact@shopperlabs.co
 -   [Arthur Monney](https://github.com/mckenziearts)
 -   [Jean-Vincent QUILICHINI](https://github.com/sense)
 -   [FilamentPHP](https://filamentphp.com)
--   [Wire Elements](https://wire-elements.dev)
 -   [All Contributors](../../contributors)
 
 And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
