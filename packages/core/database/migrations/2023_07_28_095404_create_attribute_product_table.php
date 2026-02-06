@@ -15,9 +15,11 @@ return new class extends Migration
             $this->addForeignKey($table, 'attribute_id', $this->getTableName('attributes'), false);
             $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
             $table->unsignedBigInteger('attribute_value_id')->index()->nullable();
-            $table->foreign('attribute_value_id')->references('id')
+            $table->foreign('attribute_value_id')
+                ->references('id')
                 ->on($this->getTableName('attribute_values'))
-                ->onDelete('CASCADE');
+                ->cascadeOnDelete();
+
             $table->longText('attribute_custom_value')->nullable();
         });
     }

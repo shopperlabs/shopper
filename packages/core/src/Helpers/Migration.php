@@ -61,10 +61,16 @@ abstract class Migration extends BaseMigration
     {
         if ($nullable) {
             $table->unsignedBigInteger($column)->index()->nullable();
-            $table->foreign($column)->references('id')->on($tableName)->onDelete('set null');
+            $table->foreign($column)
+                ->references('id')
+                ->on($tableName)
+                ->nullOnDelete();
         } else {
             $table->unsignedBigInteger($column)->index();
-            $table->foreign($column)->references('id')->on($tableName)->onDelete('CASCADE');
+            $table->foreign($column)
+                ->references('id')
+                ->on($tableName)
+                ->cascadeOnDelete();
         }
     }
 
