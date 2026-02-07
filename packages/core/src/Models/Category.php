@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,8 +23,15 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
  * @property-read int $id
  * @property-read string $name
  * @property-read string $slug
+ * @property-read ?string $description
  * @property-read bool $is_enabled
+ * @property-read int $position
+ * @property-read ?string $seo_title
+ * @property-read ?string $seo_description
  * @property-read ?int $parent_id
+ * @property-read array<string, mixed>|null $metadata
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read ?static $parent
  * @property-read Collection<int, Product> $products
  */

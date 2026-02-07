@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -42,7 +43,9 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read bool $allow_backorder
  * @property-read int $position
  * @property-read int $product_id
- * @property-read array<array-key, mixed>|null $metadata
+ * @property-read array<string, mixed>|null $metadata
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read int $stock
  * @property-read Contracts\Product $product
  * @property-read Collection<int, AttributeValue> $values

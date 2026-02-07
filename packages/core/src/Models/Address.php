@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,12 +28,15 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?string $state
  * @property-read AddressType $type
  * @property-read ?string $phone_number
+ * @property-read array<string, mixed>|null $metadata
  * @property-read bool $shipping_default
  * @property-read bool $billing_default
  * @property-read int $user_id
  * @property-read int $country_id
  * @property-read Country $country
  * @property-read Model&ShopperUser $user
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  */
 class Address extends Model implements AddressContract
 {

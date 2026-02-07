@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +27,8 @@ use Shopper\Core\Models\Traits\HasSlug;
  * @property-read bool $is_filterable
  * @property-read ?string $icon
  * @property-read string $type_formatted
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, AttributeValue> $values
  */
 class Attribute extends Model implements AttributeContract

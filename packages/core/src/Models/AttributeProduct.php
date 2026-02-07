@@ -17,7 +17,7 @@ use Shopper\Core\Models\Contracts\AttributeProduct as AttributeProductContract;
  * @property-read int $product_id
  * @property-read ?string $attribute_custom_value
  * @property-read ?int $attribute_value_id
- * @property-read ?Contracts\AttributeValue $value
+ * @property-read ?AttributeValue $value
  * @property-read string $real_value
  * @property-read Product $product
  * @property-read Attribute $attribute

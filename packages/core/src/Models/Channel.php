@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,6 +25,8 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read bool $is_default
  * @property-read bool $is_enabled
  * @property-read array<string, mixed>|null $metadata
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read Collection<int, Product> $products
  */
 class Channel extends Model implements ChannelContract

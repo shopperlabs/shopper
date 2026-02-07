@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,13 +16,17 @@ use Shopper\Core\Models\Traits\HasZones;
 
 /**
  * @property-read int $id
- * @property string $title
- * @property string $slug
- * @property ?string $logo
- * @property ?string $logo_url
- * @property ?string $description
- * @property ?string $link_url
- * @property ?string $instructions
+ * @property-read string $title
+ * @property-read string $slug
+ * @property-read ?string $logo
+ * @property-read ?string $logo_url
+ * @property-read bool $is_enabled
+ * @property-read ?string $description
+ * @property-read ?string $link_url
+ * @property-read ?string $instructions
+ * @property-read array<string, mixed>|null $metadata
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  */
 class PaymentMethod extends Model implements PaymentMethodContract
 {

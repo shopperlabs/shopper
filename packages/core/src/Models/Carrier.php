@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,6 +29,8 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read ?string $description
  * @property-read ?int $shipping_amount
  * @property-read array<string, mixed>|null $metadata
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read Collection<int, CarrierOption> $options
  */
 class Carrier extends Model implements CarrierContract, SpatieHasMedia

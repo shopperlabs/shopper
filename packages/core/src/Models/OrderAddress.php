@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read string $first_name
  * @property-read string $full_name
  * @property-read string $street_address
+ * @property-read ?int $customer_id
  * @property-read ?string $street_address_plus
  * @property-read string $postal_code
  * @property-read string $city
@@ -26,6 +28,8 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read ?string $company
  * @property-read ?string $phone
  * @property-read ?string $country_name
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read Model&ShopperUser $customer
  */
 class OrderAddress extends Model implements OrderAddressContract

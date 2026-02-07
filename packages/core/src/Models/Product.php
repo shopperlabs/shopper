@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Shopper\Core\Contracts\HasReviews;
 use Shopper\Core\Contracts\Priceable;
@@ -37,6 +38,9 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read string $name
  * @property-read string $slug
  * @property-read ?string $sku
+ * @property-read ?string $description
+ * @property-read ?string $summary
+ * @property-read ?int $brand_id
  * @property-read ?string $barcode
  * @property-read ?ProductType $type
  * @property-read bool $is_visible
@@ -56,8 +60,11 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read ?string $seo_title
  * @property-read ?string $seo_description
  * @property-read ?string $external_id
- * @property-read ?CarbonInterface $published_at
  * @property-read array<string, mixed>|null $metadata
+ * @property-read ?CarbonInterface $published_at
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
+ * @property-read ?CarbonInterface $deleted_at
  * @property-read int $stock
  * @property-read ?Supplier $supplier
  * @property-read Brand $brand
@@ -84,6 +91,7 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
     use HasSlug;
     use HasStock;
     use InteractsWithReviews;
+    use SoftDeletes;
 
     protected $guarded = [];
 

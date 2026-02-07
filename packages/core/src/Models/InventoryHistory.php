@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,14 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read int $user_id
  * @property-read int $inventory_id
  * @property-read string|int $adjustment
+ * @property-read string $stockable_type
+ * @property-read int $stockable_id
+ * @property-read string $reference_type
+ * @property-read int $reference_id
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
+ * @property-read Inventory $inventory
+ * @property-read Model&ShopperUser $suer
  */
 class InventoryHistory extends Model implements InventoryHistoryContract
 {

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('phone_number')->nullable();
             $table->integer('priority')->default(0);
-            $table->decimal('latitude', 10, 5)->nullable();
+            $table->decimal('latitude', 11, 5)->nullable();
             $table->decimal('longitude', 10, 5)->nullable();
             $table->boolean('is_default')->default(false);
 

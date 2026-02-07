@@ -21,16 +21,20 @@ use Shopper\Core\Models\Contracts\Discount as DiscountContract;
  * @property-read DiscountType $type
  * @property-read int $value
  * @property-read string $apply_to
+ * @property-read string $min_required
+ * @property-read ?string $min_required_value
  * @property-read string $eligibility
- * @property-read ?int $usage_limit
  * @property-read int $total_use
- * @property-read ?int $zone_id
+ * @property-read ?int $usage_limit
  * @property-read bool $usage_limit_per_user
  * @property-read bool $is_active
+ * @property-read ?int $zone_id
  * @property-read array<string, mixed>|null $metadata
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read CarbonInterface $start_at
  * @property-read ?CarbonInterface $end_at
- * @property-read Zone $zone
+ * @property-read ?Zone $zone
  * @property-read Collection<array-key, DiscountDetail> $items
  */
 class Discount extends Model implements DiscountContract

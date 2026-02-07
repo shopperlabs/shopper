@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,13 +19,15 @@ use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
  * @property-read string $name
  * @property-read int $quantity
  * @property-read float|int|null $unit_price_amount
- * @property-read float|int $total
+ * @property-read float|int|null $total
  * @property-read string $sku
  * @property-read int $product_id
  * @property-read string $product_type
  * @property-read int $order_id
  * @property-read ?int $order_shipping_id
  * @property-read ?FulfillmentStatus $fulfillment_status
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read Contracts\Order $order
  * @property-read ?OrderShipping $shipment
  */
@@ -80,8 +83,8 @@ class OrderItem extends Model implements OrderItemContract
     protected function unitPriceAmount(): Attribute
     {
         return Attribute::make(
-            get: fn (?int $value): float|int|null => $value ? $value / 100 : null,
-            set: fn (int|float|null $value): ?int => $value ? (int) round($value * 100) : null,
+            get: fn (float|int $value): float|int => $value / 100,
+            set: fn (float|int $value): int => (int) round($value * 100),
         );
     }
 

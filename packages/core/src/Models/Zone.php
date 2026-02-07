@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -23,7 +24,9 @@ use Shopper\Core\Models\Traits\HasSlug;
  * @property-read ?string $code
  * @property-read bool $is_enabled
  * @property-read ?int $currency_id
- * @property-read array<array-key, mixed>|null $metadata
+ * @property-read array<string, mixed>|null $metadata
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read string $carriers_name
  * @property-read string $countries_name
  * @property-read string $payments_name

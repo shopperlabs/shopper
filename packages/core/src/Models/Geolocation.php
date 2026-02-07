@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,8 +17,10 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read int $id
  * @property-read int $user_id
  * @property-read int $order_id
- * @property-read array<array-key, mixed>|null $ip_api
- * @property-read array<array-key, mixed>|null $extreme_ip_lookup
+ * @property-read array<string, mixed>|null $ip_api
+ * @property-read array<string, mixed>|null $extreme_ip_lookup
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read Model&ShopperUser $user
  * @property-read Order $order
  */

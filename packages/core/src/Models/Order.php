@@ -29,14 +29,19 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read int $total_amount
  * @property-read ?int $zone_id
  * @property-read ?int $shipping_address_id
+ * @property-read ?int $shipping_option_id
  * @property-read ?int $payment_method_id
  * @property-read ?int $billing_address_id
  * @property-read ?int $customer_id
  * @property-read ?int $channel_id
  * @property-read ?int $parent_order_id
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
+ * @property-read ?CarbonInterface $deleted_at
  * @property-read ?CarbonInterface $cancelled_at
  * @property-read ?CarbonInterface $archived_at
  * @property-read OrderStatus $status
+ * @property-read array<string, mixed>|null $metadata
  * @property-read CarrierOption $shippingOption
  * @property-read ?OrderAddress $shippingAddress
  * @property-read ?OrderAddress $billingAddress

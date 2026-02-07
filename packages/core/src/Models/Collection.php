@@ -28,6 +28,8 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read ?string $description
  * @property-read ?string $match_conditions
  * @property-read ?string $sort
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read CarbonInterface $published_at
  * @property-read array<string, mixed>|null $metadata
  * @property-read ?string $seo_title

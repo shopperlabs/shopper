@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,8 @@ use Shopper\Core\Models\Contracts\Price as PriceContract;
  * @property-read int $currency_id
  * @property-read int $priceable_id
  * @property-read string $priceable_type
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  * @property-read Currency $currency
  */
 class Price extends Model implements PriceContract

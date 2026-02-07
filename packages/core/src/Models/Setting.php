@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -15,6 +16,8 @@ use Shopper\Core\Models\Contracts\Setting as SettingContract;
  * @property-read string $key
  * @property-read string $display_name
  * @property-read mixed $value
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  */
 class Setting extends Model implements SettingContract
 {

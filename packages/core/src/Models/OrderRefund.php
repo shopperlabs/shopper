@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,7 +23,10 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read int $order_id
  * @property-read ?int $user_id
  * @property-read Order $order
- * @property-read ?Model $customer
+ * @property-read array<string, mixed>|null $metadata
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
+ * @property-read Model|null $customer
  */
 class OrderRefund extends Model implements OrderRefundContract
 {
@@ -48,7 +52,7 @@ class OrderRefund extends Model implements OrderRefundContract
         $this->setRawAttributes(
             array_merge(
                 $this->attributes,
-                ['status' => OrderRefundStatus::Pending->value]
+                ['status' => OrderRefundStatus::Pending]
             ),
             true
         );

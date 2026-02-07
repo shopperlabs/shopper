@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +28,13 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read string $postal_code
  * @property-read ?string $phone_number
  * @property-read bool $is_default
+ * @property-read int $priority
+ * @property-read float $latitude
+ * @property-read float $longitude
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
+ * @property-read Country $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, InventoryHistory> $histories
  */
 class Inventory extends Model implements InventoryContract
 {
