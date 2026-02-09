@@ -108,8 +108,8 @@ class Collection extends Model implements CollectionContract, SpatieHasMedia
     }
 
     /**
-     * @param  Builder<Collection>  $query
-     * @return Builder<Collection>
+     * @param  Builder<static>  $query
+     * @return Builder<static>
      */
     public function scopeManual(Builder $query): Builder
     {
@@ -117,12 +117,22 @@ class Collection extends Model implements CollectionContract, SpatieHasMedia
     }
 
     /**
-     * @param  Builder<Collection>  $query
-     * @return Builder<Collection>
+     * @param  Builder<static>  $query
+     * @return Builder<static>
      */
     public function scopeAutomatic(Builder $query): Builder
     {
         return $query->where('type', CollectionType::Auto);
+    }
+
+    /**
+     * @param  Builder<static>  $query
+     * @return Builder<static>
+     */
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
     }
 
     /**
