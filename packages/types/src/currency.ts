@@ -1,3 +1,5 @@
+import type { Zone } from './zone'
+
 /**
  * Currency model.
  */
@@ -15,4 +17,6 @@ export interface Currency {
   exchange_rate: number
   /** Whether the currency is enabled. */
   is_enabled: boolean
+  /** The zone using this currency. */
+  zone?: Zone
 }

@@ -12,6 +12,7 @@ import type {
   ShippingFields,
 } from './common'
 import type { Media } from './media'
+import type { ProductTag } from './product_tag'
 import type { ProductVariant } from './product_variant'
 import type { Review } from './review'
 import type { Supplier } from './supplier'
@@ -35,6 +36,8 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   sku?: string | null
   /** The barcode of the product. */
   barcode: string | null
+  /** The summary of the product. */
+  summary: string | null
   /** The description of the product. */
   description: string | null
   /** The security stock of the product. */
@@ -71,6 +74,8 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   options?: Attribute[]
   /** The collections of the product. */
   collections?: Collection[]
+  /** The tags of the product. */
+  tags?: ProductTag[]
   /** The variants of the product. */
   variants?: ProductVariant[]
   /** The related products. */

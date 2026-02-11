@@ -1,4 +1,5 @@
 import type { Entity, Metadata } from './common'
+import type { Product } from './product'
 
 /**
  * Channel model.
@@ -20,4 +21,6 @@ export interface Channel extends Entity {
   is_enabled: boolean
   /** The metadata of the channel. */
   metadata: Metadata
+  /** The products of the channel. */
+  products?: Product[]
 }

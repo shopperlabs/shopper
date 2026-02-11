@@ -33,6 +33,10 @@ export interface Discount extends Entity {
   value: number
   /** What the discount applies to. */
   apply_to: DiscountApplyTo
+  /** The minimum required type. */
+  min_required: string
+  /** The minimum required value. */
+  min_required_value: string | null
   /** Who is eligible for this discount. */
   eligibility: DiscountEligibility
   /** The usage limit for the discount. */

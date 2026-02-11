@@ -1,4 +1,4 @@
-import type { Entity } from './common'
+import type { Entity, Metadata } from './common'
 import type { Country } from './country'
 
 export enum AddressType {
@@ -32,6 +32,8 @@ export interface Address extends Entity {
   phone_number?: string | null
   /** The type of the customer address. */
   type: AddressType
+  /** The metadata of the address. */
+  metadata: Metadata
   /** Whether this is the default shipping address. */
   shipping_default: boolean
   /** Whether this is the default billing address. */

@@ -1,17 +1,19 @@
 import type { CarrierOption } from './carrier'
 import type { Channel } from './channel'
-import type { DateEntity, Entity } from './common'
+import type { DateEntity, Entity, Metadata } from './common'
 import type { Customer } from './customer'
 import type { PaymentMethod } from './payment_method'
 import type { Zone } from './zone'
 
 export enum OrderStatus {
-  PENDING = 'pending',
+  ARCHIVED = 'archived',
   NEW = 'new',
-  REGISTER = 'register',
-  PAID = 'paid',
-  COMPLETED = 'completed',
   SHIPPED = 'shipped',
+  DELIVERED = 'delivered',
+  PENDING = 'pending',
+  PAID = 'paid',
+  REGISTER = 'registered',
+  COMPLETED = 'completed',
   CANCELLED = 'cancelled',
 }
 
@@ -65,6 +67,8 @@ export interface Order extends Entity {
   channel_id: number | null
   /** The parent order ID (for split orders). */
   parent_order_id: number | null
+  /** The metadata of the order. */
+  metadata: Metadata
   /** The shipping option ID. */
   shipping_option_id?: number | null
   /** The shipping option. */
@@ -201,6 +205,8 @@ export interface OrderRefund extends Entity {
   order_id: number
   /** The user ID who processed the refund. */
   user_id: number | null
+  /** The metadata of the refund. */
+  metadata: Metadata
   /** The order. */
   order?: Order
 }

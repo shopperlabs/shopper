@@ -1,10 +1,11 @@
-import type { Entity, Metadata } from './common'
+import type { Entity, Metadata, SEOFields } from './common'
 import type { Media } from './media'
+import type { Product } from './product'
 
 /**
  * Category model.
  */
-export interface Category extends Entity {
+export interface Category extends Entity, SEOFields {
   /** The name of the category. */
   name: string
   /** The slug of the category. */
@@ -13,6 +14,8 @@ export interface Category extends Entity {
   description: string | null
   /** Whether the category is enabled. */
   is_enabled: boolean
+  /** The position of the category. */
+  position: number
   /** The id of the parent category. */
   parent_id: number | null
   /** The metadata of the category. */
@@ -23,6 +26,8 @@ export interface Category extends Entity {
   parent?: Category
   /** The children categories. */
   children?: Category[]
+  /** The products of the category. */
+  products?: Product[]
   /** The slug path of the category. */
   slug_path?: string
 }

@@ -1,4 +1,4 @@
-import type { Entity } from './common'
+import type { Entity, Metadata } from './common'
 import type { Zone } from './zone'
 
 /**
@@ -21,6 +21,8 @@ export interface PaymentMethod extends Entity {
   instructions: string | null
   /** Whether the payment method is enabled. */
   is_enabled: boolean
+  /** The metadata of the payment method. */
+  metadata: Metadata
   /** The zones this payment method belongs to. */
   zones?: Zone[]
 }

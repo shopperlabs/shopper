@@ -32,7 +32,7 @@ export interface Customer extends Entity {
   gender: GenderType | null
   /** The phone number of the customer. */
   phone_number: string | null
-  /** The birth date of the customer. */
+  /** The birthdate of the customer. */
   birth_date: Date | null
   /** The date the email was verified. */
   email_verified_at: Date | null

@@ -40,8 +40,8 @@ export interface Entity {
  */
 export interface DateEntity {
   /** The date format of the entity. */
-  date: Date
-  /** The human readable date. Eg: 2 hours ago. */
+  date: string
+  /** The human-readable date. Eg: 2 hours ago. */
   human: string
 }
 
@@ -60,7 +60,7 @@ export interface Price {
   /** The currency_code for the entity. */
   currency_code: string
   /** The currency for the entity. */
-  currency?: Currency
+  currency: Currency
 }
 
 /**

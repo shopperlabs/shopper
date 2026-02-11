@@ -27,6 +27,12 @@ export interface Inventory extends Entity {
   phone_number: string | null
   /** Whether this is the default inventory location. */
   is_default: boolean
+  /** The priority of the inventory location. */
+  priority: number
+  /** The latitude of the inventory location. */
+  latitude: number
+  /** The longitude of the inventory location. */
+  longitude: number
   /** The country ID of the inventory location. */
   country_id: number
   /** The country of the inventory location. */

@@ -1,6 +1,8 @@
 export interface Media {
   id: string | number
   url: string
-  created_at: string
-  updated_at: string
+  name?: string | null
+  extension?: string | null
+  created_at?: string
+  updated_at?: string
 }

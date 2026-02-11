@@ -1,5 +1,6 @@
 import type { DateEntity, Entity, Metadata, SEOFields } from './common'
 import type { Media } from './media'
+import type { Product } from './product'
 import type { Zone } from './zone'
 
 export enum CollectionType {
@@ -14,16 +15,20 @@ export enum CollectionCondition {
 
 export enum CollectionRuleType {
   PRODUCT_TITLE = 'product_title',
+  PRODUCT_BRAND = 'product_brand',
+  PRODUCT_CATEGORY = 'product_category',
   PRODUCT_PRICE = 'product_price',
   COMPARE_AT_PRICE = 'compare_at_price',
   INVENTORY_STOCK = 'inventory_stock',
-  PRODUCT_CATEGORY = 'product_category',
-  PRODUCT_BRAND = 'product_brand',
+  PRODUCT_CREATED_AT = 'product_created_at',
+  PRODUCT_FEATURED = 'product_featured',
+  PRODUCT_RATING = 'product_rating',
+  PRODUCT_SALES_COUNT = 'product_sales_count',
 }
 
 export enum CollectionOperator {
-  EQUALS = 'equals',
-  NOT_EQUALS = 'not_equals',
+  EQUALS_TO = 'equals_to',
+  NOT_EQUAL_TO = 'not_equal_to',
   LESS_THAN = 'less_than',
   GREATER_THAN = 'greater_than',
   STARTS_WITH = 'starts_with',
@@ -58,6 +63,8 @@ export interface Collection extends Entity, SEOFields {
   rules?: CollectionRule[]
   /** The zones this collection belongs to. */
   zones?: Zone[]
+  /** The products of the collection. */
+  products?: Product[]
 }
 
 /**

@@ -36,6 +36,8 @@ export interface Carrier extends Entity {
 export interface CarrierOption extends Entity {
   /** The name of the carrier option. */
   name: string
+  /** The description of the carrier option. */
+  description: string | null
   /** The price of the carrier option (in cents). */
   price: number
   /** Whether the carrier option is enabled. */
