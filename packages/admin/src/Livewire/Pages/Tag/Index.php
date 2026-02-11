@@ -14,6 +14,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -55,6 +56,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->iconButton()
                     ->fillForm(fn (ProductTag $record): array => $record->toArray())
                     ->schema($this->tagForm(...))
+                    ->modalWidth(Width::Medium)
                     ->action(function (ProductTag $record, array $data): void {
                         $record->update($data);
 
@@ -120,6 +122,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
         return Action::make('create')
             ->label(__('shopper::forms.actions.create'))
             ->schema($this->tagForm(...))
+            ->modalWidth(Width::Medium)
+            ->modalHeading(__('shopper::pages/tags.create'))
             ->action(function (array $data): void {
                 ProductTag::query()->create($data);
 
