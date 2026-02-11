@@ -60,6 +60,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read ?string $seo_title
  * @property-read ?string $seo_description
  * @property-read ?string $external_id
+ * @property-read ?int $supplier_id
  * @property-read array<string, mixed>|null $metadata
  * @property-read ?CarbonInterface $published_at
  * @property-read CarbonInterface $created_at

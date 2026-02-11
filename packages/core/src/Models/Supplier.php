@@ -28,6 +28,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read array<string, mixed>|null $metadata
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Product> $products
  */
 class Supplier extends Model implements SupplierContract
 {
