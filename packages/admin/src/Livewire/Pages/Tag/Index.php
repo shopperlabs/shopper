@@ -31,7 +31,6 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
     use InteractsWithForms;
     use InteractsWithTable;
 
-
     public function table(Table $table): Table
     {
         return $table
