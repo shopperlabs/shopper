@@ -37,6 +37,8 @@ interface Product extends Stockable
 
     public function collections(): MorphToMany;
 
+    public function tags(): MorphToMany;
+
     public function brand(): BelongsTo;
 
     public function options(): BelongsToMany;

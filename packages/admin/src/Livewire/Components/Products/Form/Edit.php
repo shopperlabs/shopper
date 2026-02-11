@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Products\Form;
 
 use CodeWithDennis\FilamentSelectTree\SelectTree;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
@@ -16,6 +17,8 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
@@ -28,13 +31,15 @@ use Livewire\Component;
 use Shopper\Actions\Store\Product\UpdateProductAction;
 use Shopper\Components\Separator;
 use Shopper\Core\Models\Contracts\Product;
+use Shopper\Core\Models\ProductTag;
 use Shopper\Feature;
 
 /**
  * @property-read Schema $form
  */
-class Edit extends Component implements HasSchemas
+class Edit extends Component implements HasActions, HasSchemas
 {
+    use InteractsWithActions;
     use InteractsWithSchemas;
 
     public Model&Product $product;
@@ -160,11 +165,34 @@ class Edit extends Component implements HasSchemas
                                     ->preload()
                                     ->multiple()
                                     ->visible(Feature::enabled('collection')),
+                                Select::make('tags')
+                                    ->label(__('shopper::pages/tags.menu'))
+                                    ->relationship('tags', 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->multiple()
+                                    ->createOptionForm([
+                                        TextInput::make('name')
+                                            ->label(__('shopper::forms.label.name'))
+                                            ->required()
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(fn (?string $state, Set $set) => $set('slug', Str::slug($state ?? ''))),
+                                        TextInput::make('slug')
+                                            ->label(__('shopper::forms.label.slug'))
+                                            ->disabled()
+                                            ->dehydrated()
+                                            ->required()
+                                            ->unique(ProductTag::class, 'slug'),
+                                    ])
+                                    ->createOptionModalHeading(__('shopper::pages/tags.create'))
+                                    ->createOptionAction(fn (Action $action) => $action->modalWidth('md'))
+                                    ->visible(Feature::enabled('tag')),
                             ])
                             ->visible(
                                 Feature::enabled('brand')
                                 || Feature::enabled('category')
                                 || Feature::enabled('collection')
+                                || Feature::enabled('tag')
                             ),
                     ])
                     ->columnSpan(['lg' => 1]),

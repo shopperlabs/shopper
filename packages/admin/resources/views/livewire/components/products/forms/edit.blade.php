@@ -11,4 +11,6 @@
             </div>
         </div>
     </form>
+
+    <x-filament-actions::modals />
 </x-shopper::container>

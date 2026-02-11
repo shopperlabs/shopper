@@ -43,6 +43,15 @@ final class CatalogSidebar extends AbstractAdminSidebar
                         $item->route('shopper.suppliers.index');
                     });
                 }
+
+                if (Feature::enabled('tag')) {
+                    $item->item(__('shopper::pages/tags.menu'), function (Item $item): void {
+                        $item->weight(3);
+                        $item->setAuthorized($this->user->hasPermissionTo('browse_products') || $this->user->hasPermissionTo('browse_tags'));
+                        $item->useSpa();
+                        $item->route('shopper.tags.index');
+                    });
+                }
             });
 
             if (Feature::enabled('category')) {

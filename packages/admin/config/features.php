@@ -26,5 +26,6 @@ return [
     'discount' => FeatureState::Enabled,
     'review' => FeatureState::Enabled,
     'supplier' => FeatureState::Disabled,
+    'tag' => FeatureState::Enabled,
 
 ];

@@ -19,6 +19,7 @@ return [
         'variant-edit' => Livewire\Pages\Product\Variant::class,
         'attribute-index' => Livewire\Pages\Attribute\Browse::class,
         'supplier-index' => Livewire\Pages\Supplier\Index::class,
+        'tag-index' => Livewire\Pages\Tag\Index::class,
     ],
 
     /*

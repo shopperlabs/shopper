@@ -74,6 +74,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Collection> $collections
  * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductVariant> $variants
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Product> $relatedProducts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductTag> $tags
  *
  * @implements Priceable<Product>
  */
@@ -228,6 +229,14 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
     {
         // @phpstan-ignore-next-line
         return $this->morphedByMany(config('shopper.models.collection'), 'productable', shopper_table('product_has_relations'));
+    }
+
+    /**
+     * @return MorphToMany<ProductTag, $this>
+     */
+    public function tags(): MorphToMany
+    {
+        return $this->morphedByMany(ProductTag::class, 'productable', shopper_table('product_has_relations'));
     }
 
     /**

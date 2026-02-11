@@ -21,3 +21,8 @@ if (Feature::enabled('supplier')) {
     Route::get('suppliers', config('shopper.components.product.pages.supplier-index'))
         ->name('suppliers.index');
 }
+
+if (Feature::enabled('tag')) {
+    Route::get('tags', config('shopper.components.product.pages.tag-index'))
+        ->name('tags.index');
+}

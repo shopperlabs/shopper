@@ -116,6 +116,7 @@ final class CoreServiceProvider extends PackageServiceProvider
             'order' => config('shopper.models.order'),
             'inventory' => config('shopper.models.inventory'),
             'supplier' => config('shopper.models.supplier'),
+            'product_tag' => Models\ProductTag::class,
         ]);
     }
 }
