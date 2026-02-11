@@ -176,7 +176,7 @@ class Edit extends Component implements HasActions, HasSchemas
                                             ->label(__('shopper::forms.label.name'))
                                             ->required()
                                             ->live(onBlur: true)
-                                            ->afterStateUpdated(fn (?string $state, Set $set) => $set('slug', Str::slug($state ?? ''))),
+                                            ->afterStateUpdated(fn (?string $state, Set $set): mixed => $set('slug', Str::slug($state ?? ''))),
                                         TextInput::make('slug')
                                             ->label(__('shopper::forms.label.slug'))
                                             ->disabled()
@@ -185,7 +185,7 @@ class Edit extends Component implements HasActions, HasSchemas
                                             ->unique(ProductTag::class, 'slug'),
                                     ])
                                     ->createOptionModalHeading(__('shopper::pages/tags.create'))
-                                    ->createOptionAction(fn (Action $action) => $action->modalWidth('md'))
+                                    ->createOptionAction(fn (Action $action): Action => $action->modalWidth('md'))
                                     ->visible(Feature::enabled('tag')),
                             ])
                             ->visible(

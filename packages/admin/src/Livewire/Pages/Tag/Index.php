@@ -105,7 +105,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                 ->label(__('shopper::forms.label.name'))
                 ->required()
                 ->live(onBlur: true)
-                ->afterStateUpdated(fn (?string $state, Set $set) => $set('slug', Str::slug($state ?? ''))),
+                ->afterStateUpdated(fn (?string $state, Set $set): mixed => $set('slug', Str::slug($state ?? ''))),
             TextInput::make('slug')
                 ->label(__('shopper::forms.label.slug'))
                 ->disabled()
