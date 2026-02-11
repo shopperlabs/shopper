@@ -32,7 +32,7 @@
         @apply rounded-lg text-sm;
 
         .sh-sidebar-item-dot {
-          @apply size-2 rounded-full bg-gray-300 dark:bg-white/30;
+          @apply size-2 rounded-full bg-gray-300 dark:bg-gray-600;
         }
 
         .sh-sidebar-item-link {
@@ -125,8 +125,21 @@
       @apply border-t-0 pt-0;
     }
 
+    .sh-sidebar-group-items > .sh-sidebar-item > .sh-sidebar-item-link {
+      @apply justify-center;
+
+      .sh-sidebar-item-nav {
+        @apply hidden;
+      }
+    }
+
     .sh-sidebar-group-items > .sh-sidebar-item .sh-submenu {
-      @apply mt-1 ml-0 border-l-0;
+      @apply relative mt-1 ml-0 border-l-0;
+
+      &::before {
+        content: '';
+        @apply absolute top-0 bottom-0 left-1/2 -z-1 w-px -translate-x-1/2 bg-gray-200 dark:bg-white/10;
+      }
 
       .sh-sidebar-item {
         .sh-sidebar-item-link {
@@ -137,8 +150,16 @@
           }
         }
 
+        .sh-sidebar-item-nav {
+          @apply hidden;
+        }
+
         .sh-sidebar-item-dot {
           @apply relative top-auto left-auto block size-2.5 shrink-0 translate-y-0;
+        }
+
+        &.sh-sidebar-item-active .sh-sidebar-item-dot {
+          @apply bg-gray-700 dark:bg-gray-300;
         }
       }
     }
