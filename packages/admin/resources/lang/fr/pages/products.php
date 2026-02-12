@@ -24,6 +24,7 @@ return [
     'product_shipped_help_text' => 'Renseignez les informations concernant l\'expédition du produit.',
     'general' => 'Information générale du produit',
     'status' => 'Disponibilité du produit',
+    'featured_help_text' => 'Ce produit sera marqué comme étant en vedette.',
     'visible_help_text' => 'Ce produit sera caché de tous les canaux de vente.',
     'availability_description' => 'Spécifiez une date de publication pour que vos produits soient programmés sur votre boutique.',
     'type' => 'Type de product',

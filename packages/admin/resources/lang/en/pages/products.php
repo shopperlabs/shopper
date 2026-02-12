@@ -24,6 +24,7 @@ return [
     'product_shipped_help_text' => 'Reassure to fill in the information concerning the shipment of the product.',
     'general' => 'Product information',
     'status' => 'Product availability',
+    'featured_help_text' => 'This product will be marked as featured.',
     'visible_help_text' => 'This product will be hidden from all sales channels.',
     'availability_description' => 'Specify a publication date so that your product are scheduled on your store.',
     'type' => 'Product type',

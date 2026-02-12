@@ -85,6 +85,11 @@ class Edit extends Component implements HasActions, HasSchemas
                                 Textarea::make('summary')
                                     ->label(__('shopper::forms.label.summary'))
                                     ->columnSpan('full'),
+                                Toggle::make('featured')
+                                    ->label(__('shopper::forms.label.featured'))
+                                    ->helperText(__('shopper::pages/products.featured_help_text'))
+                                    ->onColor('success')
+                                    ->default(true),
                                 RichEditor::make('description')
                                     ->label(__('shopper::forms.label.description'))
                                     ->columnSpan('full'),

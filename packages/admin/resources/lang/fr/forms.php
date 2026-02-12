@@ -13,6 +13,7 @@ return [
         'change' => 'Changer',
         'optional' => 'Optionnel',
         'summary' => 'Résumé',
+        'featured' => 'En vedette',
         'description' => 'Description',
         'title' => 'Titre',
         'confirm' => 'Confirmer',
