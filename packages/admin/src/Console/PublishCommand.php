@@ -22,7 +22,12 @@ final class PublishCommand extends Command
         ]);
 
         $this->call('vendor:publish', [
-            '--tag' => 'shopper-lang',
+            '--tag' => 'shopper-translations',
+            '--force' => $this->option('force'),
+        ]);
+
+        $this->call('vendor:publish', [
+            '--tag' => 'shopper-core-translations',
             '--force' => $this->option('force'),
         ]);
     }
