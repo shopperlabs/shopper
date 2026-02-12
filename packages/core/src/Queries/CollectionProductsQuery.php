@@ -249,7 +249,7 @@ final class CollectionProductsQuery
 
         $query->whereIn(
             $query->getModel()->getQualifiedKeyName(),
-            fn (Builder $subQuery) => $subQuery // @phpstan-ignore-line
+            fn (\Illuminate\Database\Query\Builder $subQuery) => $subQuery // @phpstan-ignore-line
                 ->select('product_id')
                 ->from(shopper_table('order_items'))
                 ->join(
