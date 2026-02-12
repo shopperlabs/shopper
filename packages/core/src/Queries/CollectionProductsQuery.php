@@ -103,8 +103,8 @@ final class CollectionProductsQuery
     {
         match ($rule->rule) {
             Rule::ProductTitle => $this->applyStringRule($query, 'name', $rule),
-            Rule::ProductPrice => $this->applyNumericRule($query, 'price_amount', $rule),
-            Rule::CompareAtPrice => $this->applyNumericRule($query, 'old_price_amount', $rule),
+            Rule::ProductPrice => $this->applyPriceRule($query, 'amount', $rule),
+            Rule::CompareAtPrice => $this->applyPriceRule($query, 'compare_amount', $rule),
             Rule::InventoryStock => $this->applyStockRule($query, $rule),
             Rule::ProductBrand => $this->applyBrandRule($query, $rule),
             Rule::ProductCategory => $this->applyCategoryRule($query, $rule),
@@ -134,7 +134,7 @@ final class CollectionProductsQuery
     /**
      * @param  Builder<Product>  $query
      */
-    private function applyNumericRule(Builder $query, string $column, CollectionRule $rule): void
+    private function applyPriceRule(Builder $query, string $column, CollectionRule $rule): void
     {
         $operator = match ($rule->operator) {
             Operator::NotEqualTo => '!=',
@@ -143,7 +143,9 @@ final class CollectionProductsQuery
             default => '=',
         };
 
-        $query->where($column, $operator, (int) $rule->value);
+        $query->whereHas('prices', function (Builder $subQuery) use ($column, $operator, $rule): void {
+            $subQuery->where($column, $operator, (int) $rule->value);
+        });
     }
 
     /**
