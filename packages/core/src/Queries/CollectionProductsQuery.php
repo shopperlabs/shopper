@@ -162,7 +162,8 @@ final class CollectionProductsQuery
         $productModel = config('shopper.models.product');
 
         $query->whereHas('inventoryHistories', function (Builder $subQuery) use ($rule, $operator, $productModel): void {
-            $subQuery->where('stockable_type', (new $productModel)->getMorphClass())
+            $subQuery->select('stockable_id')
+                ->where('stockable_type', (new $productModel)->getMorphClass())
                 ->groupBy('stockable_id')
                 ->havingRaw('SUM(quantity) '.$operator.' ?', [(int) $rule->value]);
         });
@@ -219,7 +220,8 @@ final class CollectionProductsQuery
         };
 
         $query->whereHas('ratings', function (Builder $subQuery) use ($operator, $rule): void { // @phpstan-ignore-line
-            $subQuery->where('approved', true)
+            $subQuery->select('reviewrateable_id')
+                ->where('approved', true)
                 ->groupBy('reviewrateable_id')
                 ->havingRaw('AVG(rating) '.$operator.' ?', [(float) $rule->value]);
         });
