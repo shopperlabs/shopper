@@ -21,6 +21,9 @@ final class ShopperPanel
 
     private string|Htmlable|null $theme = null;
 
+    /** @var array{path: string|array<string, mixed>, buildDirectory: string|null}|null */
+    private ?array $viteTheme = null;
+
     /** @var string|Closure(): (Htmlable|string)|null */
     private string|Closure|null $brandLogo = null;
 
@@ -53,18 +56,20 @@ final class ShopperPanel
 
     /**
      * @param  string|array<string, mixed>  $theme
-     *
-     * @throws Exception
      */
     public function registerViteTheme(string|array $theme, ?string $buildDirectory = null): self
     {
-        $this->theme = app(Vite::class)($theme, $buildDirectory);
+        $this->viteTheme = ['path' => $theme, 'buildDirectory' => $buildDirectory];
 
         return $this;
     }
 
     public function getThemeLink(): Htmlable
     {
+        if ($this->viteTheme !== null) {
+            return app(Vite::class)($this->viteTheme['path'], $this->viteTheme['buildDirectory']);
+        }
+
         if (Str::of($this->theme)->contains('<link')) {
             return $this->theme instanceof Htmlable ? $this->theme : new HtmlString($this->theme);
         }
