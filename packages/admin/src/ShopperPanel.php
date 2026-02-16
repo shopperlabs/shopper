@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper;
 
 use Closure;
-use Exception;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Foundation\Vite;
