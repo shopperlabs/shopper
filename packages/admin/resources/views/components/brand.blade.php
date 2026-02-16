@@ -1,5 +1,7 @@
-@if (filled($brand = config('shopper.admin.brand')))
-    <img {{ $attributes }} src="{{ asset($brand) }}" alt="{{ config('app.name') }}" />
+@if ($brandLogo = shopper()->getBrandLogo())
+    {!! $brandLogo !!}
+@elseif (filled($brandPath = config('shopper.admin.brand')))
+    <img {{ $attributes }} src="{{ asset($brandPath) }}" alt="{{ config('app.name') }}" />
 @else
     <img
         {{ $attributes }}

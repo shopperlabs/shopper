@@ -1,6 +1,6 @@
-@if (filled(config('shopper.admin.resources.scripts')))
+@if (filled(shopper()->getScripts()))
     <!-- Additional Javascript -->
-    @foreach (config('shopper.admin.resources.scripts') as $js)
+    @foreach (shopper()->getScripts() as $js)
         @if (\Illuminate\Support\Str::of($js)->startsWith(['http://', 'https://']))
             <script type="text/javascript" src="{!! $js !!}"></script>
         @else

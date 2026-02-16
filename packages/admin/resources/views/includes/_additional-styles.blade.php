@@ -1,6 +1,6 @@
-@if (filled(config('shopper.admin.resources.stylesheets')))
+@if (filled(shopper()->getStyles()))
     <!-- Additional CSS -->
-    @foreach (config('shopper.admin.resources.stylesheets') as $css)
+    @foreach (shopper()->getStyles() as $css)
         @if (\Illuminate\Support\Str::of($css)->startsWith(['http://', 'https://']))
             <link rel="stylesheet" type="text/css" href="{!! $css !!}" />
         @else

@@ -30,6 +30,8 @@
             rel="stylesheet"
         />
 
+        {{ shopper()->getRenderHook(\Shopper\Enum\RenderHook::HeadStart) }}
+
         @filamentStyles
         {{ \Shopper\Facades\Shopper::getThemeLink() }}
 
@@ -44,6 +46,8 @@
         ></script>
 
         @include('shopper::includes._additional-styles')
+
+        {{ shopper()->getRenderHook(\Shopper\Enum\RenderHook::HeadEnd) }}
 
         <style>
             :root {
@@ -74,6 +78,8 @@
         data-sidebar-breakpoint="{{ \Shopper\Sidebar\sidebar_breakpoint() }}"
         data-sidebar-collapsible="{{ \Shopper\Sidebar\sidebar_is_collapsible() ? 'true' : 'false' }}"
     >
+        {{ shopper()->getRenderHook(\Shopper\Enum\RenderHook::BodyStart) }}
+
         {{ $slot }}
 
         @livewire(\Filament\Notifications\Livewire\Notifications::class)
@@ -82,5 +88,7 @@
         @filamentScripts
 
         @include('shopper::includes._additional-scripts')
+
+        {{ shopper()->getRenderHook(\Shopper\Enum\RenderHook::BodyEnd) }}
     </body>
 </html>
