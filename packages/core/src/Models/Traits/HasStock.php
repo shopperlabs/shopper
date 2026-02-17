@@ -96,8 +96,6 @@ trait HasStock
      */
     public function createStockMutation(int $quantity, int $inventoryId, array $arguments = []): InventoryHistory
     {
-        /** @var int $authId */
-        $authId = Auth::id();
         $reference = Arr::get($arguments, 'reference');
 
         $createArguments = collect([
@@ -106,7 +104,7 @@ trait HasStock
             'description' => Arr::get($arguments, 'description'),
             'event' => Arr::get($arguments, 'event'),
             'inventory_id' => $inventoryId,
-            'user_id' => $authId,
+            'user_id' => Arr::get($arguments, 'user_id', Auth::id()),
         ])->when($reference, fn ($collection) => $collection
             ->put('reference_type', $reference->getMorphClass())
             ->put('reference_id', $reference->getKey()))
