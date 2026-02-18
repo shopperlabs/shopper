@@ -6,14 +6,78 @@ namespace Shopper\Core\Models\Traits;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Shopper\Core\Exceptions\LazyStockLoadingException;
 use Shopper\Core\Models\InventoryHistory;
 
 trait HasStock
 {
+    protected static bool $preventLazyStockLoading = false;
+
+    public static function preventLazyStockLoading(bool $prevent = true): void
+    {
+        static::$preventLazyStockLoading = $prevent;
+    }
+
+    /**
+     * Batch-load current stock for a collection of stockable models in a single query,
+     * avoiding N+1 when iterating over products or variants.
+     *
+     * @param  Collection<int, Model>  $models
+     */
+    public static function loadCurrentStock(Collection $models): void
+    {
+        if ($models->isEmpty()) {
+            return;
+        }
+
+        $first = $models->first();
+
+        $stocks = InventoryHistory::query()
+            ->selectRaw('stockable_id, SUM(quantity) as aggregate')
+            ->where('stockable_type', $first->getMorphClass())
+            ->whereIn('stockable_id', $models->pluck($first->getKeyName()))
+            ->where('created_at', '<=', Carbon::now())
+            ->groupBy('stockable_id')
+            ->pluck('aggregate', 'stockable_id');
+
+        $models->each(function (Model $model) use ($stocks): void {
+            $model->setAttribute('real_stock', (int) ($stocks[$model->getKey()] ?? 0));
+        });
+    }
+
+    /**
+     * Batch-load stock for a specific inventory location.
+     *
+     * @param  Collection<int, Model>  $models
+     */
+    public static function loadStockForInventory(Collection $models, int $inventoryId): void
+    {
+        if ($models->isEmpty()) {
+            return;
+        }
+
+        $first = $models->first();
+
+        $stocks = InventoryHistory::query()
+            ->selectRaw('stockable_id, SUM(quantity) as aggregate')
+            ->where('stockable_type', $first->getMorphClass())
+            ->whereIn('stockable_id', $models->pluck($first->getKeyName()))
+            ->where('inventory_id', $inventoryId)
+            ->where('created_at', '<=', Carbon::now())
+            ->groupBy('stockable_id')
+            ->pluck('aggregate', 'stockable_id');
+
+        $models->each(function (Model $model) use ($stocks): void {
+            $model->setAttribute('real_stock', (int) ($stocks[$model->getKey()] ?? 0));
+        });
+    }
+
     public function inStock(int $quantity = 1): bool
     {
         return $this->stock > 0 && $this->stock >= $quantity;
@@ -124,7 +188,17 @@ trait HasStock
     protected function stock(): Attribute
     {
         return Attribute::make(
-            get: fn (): int => $this->getStock(),
+            get: function (): int {
+                if (array_key_exists('real_stock', $this->attributes)) {
+                    return (int) $this->attributes['real_stock'];
+                }
+
+                if (static::$preventLazyStockLoading) {
+                    throw new LazyStockLoadingException(static::class);
+                }
+
+                return $this->getStock();
+            },
         );
     }
 }
