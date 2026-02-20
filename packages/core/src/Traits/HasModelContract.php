@@ -168,15 +168,11 @@ trait HasModelContract
     protected static function validateModelConfiguration(): void
     {
         $configuredClass = static::configuredClass();
-        $baseClass = static::class;
+        $currentClass = static::class;
 
-        if ($configuredClass === $baseClass) {
-            return;
-        }
-
-        if (! is_subclass_of($configuredClass, $baseClass)) {
+        if (! is_a($currentClass, $configuredClass, true)) {
             throw new InvalidModelConfigurationException(
-                "[{$configuredClass}] must extend [{$baseClass}]"
+                "[{$currentClass}] must extend [{$configuredClass}]"
             );
         }
     }
