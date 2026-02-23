@@ -6,7 +6,7 @@ namespace Shopper\Payment\Services;
 
 use Illuminate\Support\Collection;
 use Shopper\Core\Enum\PaymentStatus;
-use Shopper\Core\Models\Order;
+use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Zone;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
