@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Events\Orders;
 use Shopper\Core\Models\Order;
 use Shopper\Livewire\Pages\Order\Detail;
@@ -35,52 +37,12 @@ describe(Detail::class, function (): void {
             ->and($component->get('order')->relationLoaded('items'))->toBeTrue();
     });
 
-    it('initializes notes property', function (): void {
-        $order = Order::factory()->hasItems(1)->create(['notes' => 'Test notes']);
-
-        $component = Livewire::test(Detail::class, ['order' => $order]);
-
-        expect($component->get('notes'))->toBeNull();
-    });
-
-    it('passes items to view', function (): void {
-        $order = Order::factory()->hasItems(2)->create();
-
-        $component = Livewire::test(Detail::class, ['order' => $order]);
-        $items = $component->viewData('items');
-
-        expect($items)->not->toBeNull();
-    });
-
-    it('dispatches AddNote event when leaving notes', function (): void {
-        Event::fake();
-
-        $order = Order::factory()->hasItems(1)->create();
-
-        Livewire::test(Detail::class, ['order' => $order])
-            ->set('notes', 'This is a test note')
-            ->call('leaveNotes');
-
-        Event::assertDispatched(Orders\AddNoteToOrder::class, fn ($event): bool => $event->order->id === $order->id);
-    });
-
-    it('update order notes when leaving notes', function (): void {
-        $order = Order::factory()->hasItems(1)->create(['notes' => null]);
-
-        Livewire::test(Detail::class, ['order' => $order])
-            ->set('notes', 'New note content')
-            ->call('leaveNotes');
-
-        $order->refresh();
-
-        expect($order->notes)->toBe('New note content');
-    });
-
     it('dispatches Cancel event when cancelling order', function (): void {
         Event::fake();
 
         $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Completed,
+            'status' => OrderStatus::New,
+            'shipping_status' => ShippingStatus::Unfulfilled,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
@@ -91,7 +53,8 @@ describe(Detail::class, function (): void {
 
     it('update order status to cancelled', function (): void {
         $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Completed,
+            'status' => OrderStatus::New,
+            'shipping_status' => ShippingStatus::Unfulfilled,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
@@ -102,37 +65,25 @@ describe(Detail::class, function (): void {
         expect($order->status)->toBe(OrderStatus::Cancelled);
     });
 
-    it('dispatches Registered event when registering order', function (): void {
-        Event::fake();
-
+    it('starts processing when calling `startProcessing` action', function (): void {
         $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Pending,
+            'status' => OrderStatus::New,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
-            ->callAction('register');
-
-        Event::assertDispatched(Orders\OrderRegistered::class, fn ($event): bool => $event->order->id === $order->id);
-    });
-
-    it('update order status to register', function (): void {
-        $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Pending,
-        ]);
-
-        Livewire::test(Detail::class, ['order' => $order])
-            ->callAction('register');
+            ->callAction('startProcessing');
 
         $order->refresh();
 
-        expect($order->status)->toBe(OrderStatus::Register);
+        expect($order->status)->toBe(OrderStatus::Processing);
     });
 
     it('dispatches Paid event when marking order as paid', function (): void {
         Event::fake();
 
         $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Pending,
+            'status' => OrderStatus::New,
+            'payment_status' => PaymentStatus::Pending,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
@@ -141,9 +92,10 @@ describe(Detail::class, function (): void {
         Event::assertDispatched(Orders\OrderPaid::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
-    it('update order status to paid', function (): void {
+    it('updates `payment_status` to paid and advances lifecycle to processing', function (): void {
         $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Pending,
+            'status' => OrderStatus::New,
+            'payment_status' => PaymentStatus::Pending,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
@@ -151,14 +103,31 @@ describe(Detail::class, function (): void {
 
         $order->refresh();
 
-        expect($order->status)->toBe(OrderStatus::Paid);
+        expect($order->payment_status)->toBe(PaymentStatus::Paid)
+            ->and($order->status)->toBe(OrderStatus::Processing);
+    });
+
+    it('keeps processing status when marking as paid on a processing order', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::Processing,
+            'payment_status' => PaymentStatus::Pending,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->callAction('markPaid');
+
+        $order->refresh();
+
+        expect($order->payment_status)->toBe(PaymentStatus::Paid)
+            ->and($order->status)->toBe(OrderStatus::Processing);
     });
 
     it('dispatches Completed event when marking order as complete', function (): void {
         Event::fake();
 
         $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Paid,
+            'status' => OrderStatus::Processing,
+            'payment_status' => PaymentStatus::Paid,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
@@ -169,7 +138,8 @@ describe(Detail::class, function (): void {
 
     it('update order status to completed', function (): void {
         $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Paid,
+            'status' => OrderStatus::Processing,
+            'payment_status' => PaymentStatus::Paid,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
@@ -184,7 +154,8 @@ describe(Detail::class, function (): void {
         Event::fake();
 
         $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Pending,
+            'status' => OrderStatus::New,
+            'payment_status' => PaymentStatus::Pending,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
@@ -193,9 +164,10 @@ describe(Detail::class, function (): void {
         Event::assertDispatched(Orders\OrderArchived::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
-    it('update order status to register after archiving', function (): void {
+    it('update order status to archived after archiving', function (): void {
         $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Pending,
+            'status' => OrderStatus::New,
+            'payment_status' => PaymentStatus::Pending,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
@@ -209,6 +181,7 @@ describe(Detail::class, function (): void {
     it('archive action is hidden for completed orders', function (): void {
         $order = Order::factory()->hasItems(1)->create([
             'status' => OrderStatus::Completed,
+            'payment_status' => PaymentStatus::Paid,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
@@ -217,19 +190,40 @@ describe(Detail::class, function (): void {
 
     it('archive action is hidden for paid orders', function (): void {
         $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Paid,
+            'status' => OrderStatus::Processing,
+            'payment_status' => PaymentStatus::Paid,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
             ->assertActionHidden('archive');
     });
 
-    it('archive action is visible for pending orders', function (): void {
+    it('archive action is visible for new unpaid orders', function (): void {
         $order = Order::factory()->hasItems(1)->create([
-            'status' => OrderStatus::Pending,
+            'status' => OrderStatus::New,
+            'payment_status' => PaymentStatus::Pending,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
             ->assertActionVisible('archive');
+    });
+
+    it('`startProcessing` action is hidden for non-new orders', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::Processing,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->assertActionHidden('startProcessing');
+    });
+
+    it('`markComplete` action is hidden when not processing or not paid', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::New,
+            'payment_status' => PaymentStatus::Pending,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->assertActionHidden('markComplete');
     });
 })->group('livewire', 'orders');

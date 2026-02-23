@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Order;
@@ -28,17 +30,63 @@ describe(Order::class, function (): void {
         expect($order->total())->toBe(6000);
     });
 
-    it('checks order status methods', function (): void {
-        $pending = Order::factory()->create(['status' => OrderStatus::Pending]);
+    it('checks order lifecycle status methods', function (): void {
+        $new = Order::factory()->create(['status' => OrderStatus::New]);
+        $processing = Order::factory()->create(['status' => OrderStatus::Processing]);
         $completed = Order::factory()->create(['status' => OrderStatus::Completed]);
         $cancelled = Order::factory()->create(['status' => OrderStatus::Cancelled]);
-        $new = Order::factory()->create(['status' => OrderStatus::New]);
+        $archived = Order::factory()->create(['status' => OrderStatus::Archived]);
 
-        expect($pending->isPending())->toBeTrue()
-            ->and($completed->canBeCancelled())->toBeTrue()
-            ->and($new->canBeCancelled())->toBeTrue()
+        expect($new->isNew())->toBeTrue()
+            ->and($processing->isProcessing())->toBeTrue()
+            ->and($completed->isCompleted())->toBeTrue()
             ->and($cancelled->isNotCancelled())->toBeFalse()
-            ->and($completed->isNotCancelled())->toBeTrue();
+            ->and($completed->isNotCancelled())->toBeTrue()
+            ->and($archived->isArchived())->toBeTrue();
+    });
+
+    it('checks payment status methods', function (): void {
+        $pending = Order::factory()->create(['payment_status' => PaymentStatus::Pending]);
+        $authorized = Order::factory()->create(['payment_status' => PaymentStatus::Authorized]);
+        $paid = Order::factory()->create(['payment_status' => PaymentStatus::Paid]);
+        $refunded = Order::factory()->create(['payment_status' => PaymentStatus::Refunded]);
+
+        expect($pending->isPaymentPending())->toBeTrue()
+            ->and($authorized->isPaymentAuthorized())->toBeTrue()
+            ->and($paid->isPaid())->toBeTrue()
+            ->and($refunded->isRefunded())->toBeTrue();
+    });
+
+    it('checks shipping status methods', function (): void {
+        $pending = Order::factory()->create(['shipping_status' => ShippingStatus::Unfulfilled]);
+        $shipped = Order::factory()->create(['shipping_status' => ShippingStatus::Shipped]);
+
+        expect($pending->isShippingPending())->toBeTrue()
+            ->and($shipped->isShipped())->toBeTrue();
+    });
+
+    it('checks `canBeCancelled()` requires pending shipping and non-terminal status', function (): void {
+        $canCancel = Order::factory()->create([
+            'status' => OrderStatus::Processing,
+            'shipping_status' => ShippingStatus::Unfulfilled,
+        ]);
+        $cannotCancelShipped = Order::factory()->create([
+            'status' => OrderStatus::Processing,
+            'shipping_status' => ShippingStatus::Shipped,
+        ]);
+        $alreadyCancelled = Order::factory()->create([
+            'status' => OrderStatus::Cancelled,
+            'shipping_status' => ShippingStatus::Unfulfilled,
+        ]);
+        $archived = Order::factory()->create([
+            'status' => OrderStatus::Archived,
+            'shipping_status' => ShippingStatus::Unfulfilled,
+        ]);
+
+        expect($canCancel->canBeCancelled())->toBeTrue()
+            ->and($cannotCancelShipped->canBeCancelled())->toBeFalse()
+            ->and($alreadyCancelled->canBeCancelled())->toBeFalse()
+            ->and($archived->canBeCancelled())->toBeFalse();
     });
 
     it('has customer relationship', function (): void {
@@ -54,18 +102,6 @@ describe(Order::class, function (): void {
         OrderItem::factory()->count(5)->create(['order_id' => $order->id]);
 
         expect($order->items()->count())->toBe(5);
-    });
-
-    it('checks additional status methods', function (): void {
-        $register = Order::factory()->create(['status' => OrderStatus::Register]);
-        $shipped = Order::factory()->create(['status' => OrderStatus::Shipped]);
-        $completed = Order::factory()->create(['status' => OrderStatus::Completed]);
-        $paid = Order::factory()->create(['status' => OrderStatus::Paid]);
-
-        expect($register->isRegister())->toBeTrue()
-            ->and($shipped->isShipped())->toBeTrue()
-            ->and($completed->isCompleted())->toBeTrue()
-            ->and($paid->isPaid())->toBeTrue();
     });
 
     it('has shipping address relationship', function (): void {
@@ -151,9 +187,11 @@ describe(Order::class, function (): void {
         expect($order->totalAmount)->toBeInstanceOf(Shopper\Core\Helpers\Price::class);
     });
 
-    it('sets default status on creation', function (): void {
+    it('sets default statuses on creation', function (): void {
         $order = new Order;
 
-        expect($order->status)->toBe(OrderStatus::Pending);
+        expect($order->status)->toBe(OrderStatus::New)
+            ->and($order->payment_status)->toBe(PaymentStatus::Pending)
+            ->and($order->shipping_status)->toBe(ShippingStatus::Unfulfilled);
     });
 })->group('order', 'models');

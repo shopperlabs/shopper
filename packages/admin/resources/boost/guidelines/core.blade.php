@@ -323,23 +323,26 @@ multi-location inventory:
     </code-snippet>
 @endverbatim
 
-### Orders Orders track purchases with statuses. Use the `OrderStatus` enum: - `OrderStatus::Pending`,
-`OrderStatus::Register`, `OrderStatus::Paid` - `OrderStatus::Shipped`, `OrderStatus::Completed`,
-`OrderStatus::Cancelled`
+### Orders Orders use a 3-axis status system:
+- **Lifecycle** (`status`): `OrderStatus::New`, `OrderStatus::Processing`, `OrderStatus::Completed`, `OrderStatus::Cancelled`, `OrderStatus::Archived`
+- **Payment** (`payment_status`): `PaymentStatus::Pending`, `PaymentStatus::Authorized`, `PaymentStatus::Paid`, `PaymentStatus::PartiallyRefunded`, `PaymentStatus::Refunded`, `PaymentStatus::Voided`
+- **Shipping** (`shipping_status`): `ShippingStatus::Unfulfilled`, `ShippingStatus::PartiallyShipped`, `ShippingStatus::Shipped`, `ShippingStatus::PartiallyDelivered`, `ShippingStatus::Delivered`, `ShippingStatus::PartiallyReturned`, `ShippingStatus::Returned`
 
 @verbatim
     <code-snippet name="Query orders with relationships" lang="php">
     use Shopper\Core\Models\Order;
     use Shopper\Core\Enum\OrderStatus;
+    use Shopper\Core\Enum\PaymentStatus;
 
     $orders = Order::with(['items', 'customer', 'shippingAddress', 'zone'])
-        ->where('status', OrderStatus::Pending)
+        ->where('status', OrderStatus::Processing)
+        ->where('payment_status', PaymentStatus::Paid)
         ->get();
     </code-snippet>
 @endverbatim
 
 ### Events Shopper dispatches events for major actions. Listen to these for custom logic: - Products: `ProductCreated`,
-`ProductUpdated`, `ProductDeleted` - Orders: `OrderCreated`, `OrderCompleted`, `OrderPaid`, `OrderCancel`,
+`ProductUpdated`, `ProductDeleted` - Orders: `OrderCreated`, `OrderCompleted`, `OrderPaid`, `OrderShipped`, `OrderCancel`,
 `OrderArchived`
 
 @verbatim
