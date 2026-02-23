@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Shopper\Core\Enum\Operator;
 use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\Rule;
 use Shopper\Core\Models\CollectionRule;
 use Shopper\Core\Models\Contracts\Collection;
@@ -245,9 +246,7 @@ final class CollectionProductsQuery
         $productModel = config('shopper.models.product');
 
         $validStatuses = [
-            OrderStatus::Paid->value,
-            OrderStatus::Shipped->value,
-            OrderStatus::Delivered->value,
+            OrderStatus::Processing->value,
             OrderStatus::Completed->value,
         ];
 
@@ -264,6 +263,7 @@ final class CollectionProductsQuery
                 )
                 ->where('product_type', (new $productModel)->getMorphClass())
                 ->whereIn(shopper_table('orders').'.status', $validStatuses)
+                ->where(shopper_table('orders').'.payment_status', PaymentStatus::Paid->value)
                 ->groupBy('product_id')
                 ->havingRaw('SUM(quantity) '.$operator.' ?', [(int) $rule->value])
         );
