@@ -48,6 +48,8 @@ return [
     'modals' => [
         'archived_number' => 'Archived order :number',
         'archived_notice' => 'Are you sure you want to archived this order? This action will change the income you have earned so far in your store.',
+        'capture_heading' => 'Capture payment for order :number',
+        'capture_notice' => 'This will charge the customer for the authorized amount. This action cannot be undone.',
     ],
 
     'shipment' => [
@@ -70,6 +72,9 @@ return [
         'note_added' => 'Your note has been added to this order.',
         'processing' => 'The order is now being processed!',
         'paid' => 'The order is marked as paid!',
+        'captured' => 'The payment has been captured successfully!',
+        'capture_failed' => 'Failed to capture the payment.',
+        'capture_no_reference' => 'No payment reference found for this order.',
         'completed' => 'The order is marked as completed!',
         'shipment_created' => 'The shipment has been created successfully!',
         'shipment_delivered' => 'The shipment has been marked as delivered!',

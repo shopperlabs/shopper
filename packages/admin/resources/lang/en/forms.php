@@ -183,6 +183,7 @@ return [
         'more_actions' => 'More actions',
         'start_processing' => 'Start processing',
         'mark_paid' => 'Mark as paid',
+        'capture_payment' => 'Capture payment',
         'mark_complete' => 'Mark complete',
         'cancel_order' => 'Cancel Order',
         'mark_delivered' => 'Mark as delivered',

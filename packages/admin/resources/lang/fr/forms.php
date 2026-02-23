@@ -183,6 +183,7 @@ return [
         'more_actions' => 'Autres actions',
         'start_processing' => 'Commencer le traitement',
         'mark_paid' => 'Marqué comme payé',
+        'capture_payment' => 'Capturer le paiement',
         'mark_complete' => 'Marqué complète',
         'cancel_order' => 'Annuler',
         'mark_delivered' => 'Marquer comme livré',

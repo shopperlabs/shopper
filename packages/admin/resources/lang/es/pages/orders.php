@@ -48,6 +48,8 @@ return [
     'modals' => [
         'archived_number' => 'Pedido archivado :number',
         'archived_notice' => '¿Estás seguro de que deseas archivar este pedido? Esta acción cambiará los ingresos que has obtenido hasta ahora en tu tienda.',
+        'capture_heading' => 'Capturar pago del pedido :number',
+        'capture_notice' => 'Se cobrará al cliente el monto autorizado. Esta acción no se puede deshacer.',
     ],
 
     'shipment' => [
@@ -70,6 +72,9 @@ return [
         'note_added' => 'Tu nota se ha añadido a este pedido.',
         'processing' => '¡El pedido está siendo procesado!',
         'paid' => '¡El pedido está marcado como pagado!',
+        'captured' => '¡El pago se ha capturado exitosamente!',
+        'capture_failed' => 'Error al capturar el pago.',
+        'capture_no_reference' => 'No se encontró referencia de pago para este pedido.',
         'completed' => '¡El pedido está marcado como completado!',
         'shipment_created' => '¡El envío se ha creado exitosamente!',
         'shipment_delivered' => '¡El envío ha sido marcado como entregado!',

@@ -14,66 +14,68 @@
     </x-shopper::container>
 
     <div class="sticky top-12 z-10 bg-white pt-6 backdrop-blur-lg dark:bg-gray-900">
-        <x-shopper::container class="border-b border-gray-200 dark:border-white/10">
-            <div class="space-y-2 pb-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex min-w-0 items-center gap-3">
-                        <h3
-                            class="font-heading text-2xl font-bold text-gray-900 uppercase sm:truncate sm:text-3xl dark:text-white"
+        <x-shopper::container class="border-b space-y-2 pb-4 border-gray-200 dark:border-white/10">
+            <div class="space-y-3 lg:flex lg:items-center justify-between lg:space-y-0">
+                <div class="sm:flex min-w-0 sm:items-center gap-3">
+                    <h3
+                        class="font-heading text-2xl font-bold text-gray-900 uppercase sm:truncate sm:text-3xl dark:text-white"
+                    >
+                        {{ $order->number }}
+                    </h3>
+                    <div class="mt-3 flex items-center gap-2 sm:mt-0">
+                        <x-filament::badge
+                            size="md"
+                            :color="$order->status->getColor()"
+                            :icon="$order->status->getIcon()"
                         >
-                            {{ $order->number }}
-                        </h3>
-                        <div class="flex items-center gap-2">
-                            <x-filament::badge
-                                size="md"
-                                :color="$order->status->getColor()"
-                                :icon="$order->status->getIcon()"
-                            >
-                                {{ $order->status->getLabel() }}
-                            </x-filament::badge>
-                            <x-filament::badge
-                                size="md"
-                                :color="$order->payment_status->getColor()"
-                                :icon="$order->payment_status->getIcon()"
-                            >
-                                {{ $order->payment_status->getLabel() }}
-                            </x-filament::badge>
-                            <x-filament::badge
-                                size="md"
-                                :color="$order->shipping_status->getColor()"
-                                :icon="$order->shipping_status->getIcon()"
-                            >
-                                {{ $order->shipping_status->getLabel() }}
-                            </x-filament::badge>
-                        </div>
+                            {{ $order->status->getLabel() }}
+                        </x-filament::badge>
+                        <x-filament::badge
+                            size="md"
+                            :color="$order->payment_status->getColor()"
+                            :icon="$order->payment_status->getIcon()"
+                        >
+                            {{ $order->payment_status->getLabel() }}
+                        </x-filament::badge>
+                        <x-filament::badge
+                            size="md"
+                            :color="$order->shipping_status->getColor()"
+                            :icon="$order->shipping_status->getIcon()"
+                        >
+                            {{ $order->shipping_status->getLabel() }}
+                        </x-filament::badge>
                     </div>
-                    <div class="flex items-center gap-3">
-                        @if (! $order->isCompleted())
-                            <div class="hidden sm:block">
-                                {{ $this->archiveAction }}
-                            </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    @if (! $order->isCompleted())
+                        <div class="hidden sm:flex sm:items-center sm:gap-3">
+                            @if ($order->isPaymentAuthorized())
+                                {{ $this->capturePaymentAction }}
+                            @endif
+                            {{ $this->archiveAction }}
+                        </div>
 
-                            <x-filament-actions::group
-                                :actions="[
+                        <x-filament-actions::group
+                            :actions="[
                                     $this->startProcessingAction,
                                     $this->markPaidAction,
                                     $this->markCompleteAction,
                                     $this->cancelOrderAction,
                                 ]"
-                                :label="__('shopper::forms.actions.more_actions')"
-                                icon="untitledui-chevron-selector-vertical"
-                                color="gray"
-                                size="md"
-                                dropdown-width="sh-dropdown-width"
-                                dropdown-placement="bottom-start"
-                                :button="true"
-                            />
-                        @endif
+                            :label="__('shopper::forms.actions.more_actions')"
+                            icon="untitledui-chevron-selector-vertical"
+                            color="gray"
+                            size="md"
+                            dropdown-width="sh-dropdown-width"
+                            dropdown-placement="bottom-start"
+                            :button="true"
+                        />
+                    @endif
 
-                        <span class="relative z-0 inline-flex">
+                    <span class="relative z-0 inline-flex">
                             <button
                                 @if($prevOrder) wire:click="goToOrder({{ $prevOrder->id }})" @endif
-                                type="button"
+                            type="button"
                                 @class([
                                     'focus:shadow-outline-primary focus:border-primary-300 relative inline-flex items-center rounded-l-lg border border-gray-300 px-2 py-2 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
                                     'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $prevOrder,
@@ -86,7 +88,7 @@
                             </button>
                             <button
                                 @if($nextOrder) wire:click="goToOrder({{ $nextOrder->id }})" @endif
-                                type="button"
+                            type="button"
                                 @class([
                                     'focus:shadow-outline-primary focus:border-primary-300 relative -ml-px inline-flex items-center rounded-r-lg border border-gray-300 px-2 py-2 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
                                     'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $nextOrder,
@@ -98,34 +100,34 @@
                                 <x-untitledui-chevron-right class="size-5" stroke-width="1.5" aria-hidden="true" />
                             </button>
                         </span>
-                    </div>
                 </div>
-                <p class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                    <time datetime="{{ $order->created_at->format('Y-m-d') }}">
-                        {{ __('shopper::pages/orders.order_date', ['date' => $order->created_at->translatedFormat('M j, Y')]) }}
-                    </time>
-                    @if ($customer)
-                        <span class="text-gray-300 dark:text-gray-600">&middot;</span>
-                        <span>
-                            {{ __('shopper::pages/orders.order_from', ['name' => '']) }}
-                            <x-shopper::link
-                                :href="route('shopper.customers.show', $customer)"
-                                class="font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-                            >
-                                {{ $customer->full_name }}
-                            </x-shopper::link>
-                        </span>
-                    @endif
-                    @if ($order->channel)
-                        <span class="text-gray-300 dark:text-gray-600">&middot;</span>
-                        <span class="inline-flex items-center gap-2">
-                            {{ __('shopper::pages/orders.purchased_via') }}
-                            <x-filament::badge color="gray" icon="phosphor-storefront-duotone">
-                                {{ $order->channel->name }}
-                            </x-filament::badge>
-                        </span>
-                    @endif
-                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                <time datetime="{{ $order->created_at->format('Y-m-d') }}">
+                    {{ __('shopper::pages/orders.order_date', ['date' => '']) }}
+                    <span class="font-medium text-gray-700 dark:text-gray-300">{{ $order->created_at->translatedFormat('M j, Y') }}</span>
+                </time>
+                @if ($customer)
+                    <span class="max-sm:hidden text-gray-300 dark:text-gray-600">&middot;</span>
+                    <span>
+                        {{ __('shopper::pages/orders.order_from', ['name' => '']) }}
+                        <x-shopper::link
+                            :href="route('shopper.customers.show', $customer)"
+                            class="font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                        >
+                            {{ $customer->full_name }}
+                        </x-shopper::link>
+                    </span>
+                @endif
+                @if ($order->channel)
+                    <span class="max-sm:hidden text-gray-300 dark:text-gray-600">&middot;</span>
+                    <span class="inline-flex items-center gap-2">
+                        {{ __('shopper::pages/orders.purchased_via') }}
+                        <x-filament::badge color="gray" icon="phosphor-storefront-duotone">
+                            {{ $order->channel->name }}
+                        </x-filament::badge>
+                    </span>
+                @endif
             </div>
         </x-shopper::container>
     </div>

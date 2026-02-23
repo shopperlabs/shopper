@@ -221,6 +221,12 @@ final class StripeDriver extends Driver
         $object = $event->data->object; // @phpstan-ignore property.notFound
 
         return match ($event->type) {
+            'payment_intent.amount_capturable_updated' => new WebhookResult(
+                action: 'authorized',
+                reference: $object->id,
+                amount: $object->amount_capturable ?? $object->amount,
+                data: ['stripe_event' => $event->type],
+            ),
             'payment_intent.succeeded' => new WebhookResult(
                 action: 'captured',
                 reference: $object->id,

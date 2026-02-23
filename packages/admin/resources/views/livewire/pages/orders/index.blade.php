@@ -7,7 +7,7 @@
         @endphp
 
         @if (count($tabs))
-            <nav class="flex items-center gap-x-1 border-b border-gray-200 dark:border-white/10">
+            <nav class="flex items-center gap-x-1 overflow-x-auto border-b border-gray-200 dark:border-white/10">
                 @foreach ($tabs as $tabKey => $tab)
                     @php
                         $isActive = $this->activeTab === (string) $tabKey;

@@ -22,6 +22,7 @@ use Shopper\Core\Events\Orders\OrderCompleted;
 use Shopper\Core\Events\Orders\OrderPaid;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Payment\Services\PaymentProcessingService;
 
 class Detail extends AbstractPageComponent implements HasActions, HasSchemas
 {
@@ -137,6 +138,51 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
 
                 Notification::make()
                     ->title(__('shopper::pages/orders.notifications.completed'))
+                    ->success()
+                    ->send();
+            });
+    }
+
+    public function capturePaymentAction(): Action
+    {
+        return Action::make('capturePayment')
+            ->label(__('shopper::forms.actions.capture_payment'))
+            ->icon(Untitledui::CreditCardDown)
+            ->visible($this->order->isPaymentAuthorized())
+            ->requiresConfirmation()
+            ->modalIcon(Untitledui::CreditCardDown)
+            ->modalHeading(__('shopper::pages/orders.modals.capture_heading', ['number' => $this->order->number]))
+            ->modalDescription(__('shopper::pages/orders.modals.capture_notice'))
+            ->modalSubmitActionLabel(__('shopper::forms.actions.confirm'))
+            ->action(function (): void {
+                $service = resolve(PaymentProcessingService::class);
+                $reference = $service->getLatestReference($this->order);
+
+                if (! $reference) {
+                    Notification::make()
+                        ->title(__('shopper::pages/orders.notifications.capture_no_reference'))
+                        ->danger()
+                        ->send();
+
+                    return;
+                }
+
+                $result = $service->capture($this->order, $reference);
+
+                if (! $result->success) {
+                    Notification::make()
+                        ->title($result->message ?? __('shopper::pages/orders.notifications.capture_failed'))
+                        ->danger()
+                        ->send();
+
+                    return;
+                }
+
+                $this->order->refresh();
+                $this->dispatch('order.updated');
+
+                Notification::make()
+                    ->title(__('shopper::pages/orders.notifications.captured'))
                     ->success()
                     ->send();
             });

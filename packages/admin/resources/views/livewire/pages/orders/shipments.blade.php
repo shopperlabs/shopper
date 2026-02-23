@@ -15,7 +15,7 @@
         @endphp
 
         @if (count($tabs))
-            <nav class="flex items-center gap-x-1 border-b border-gray-200 dark:border-white/10">
+            <nav class="flex items-center gap-x-1 overflow-x-auto border-b border-gray-200 dark:border-white/10">
                 @foreach ($tabs as $tabKey => $tab)
                     @php
                         $isActive = $this->activeTab === (string) $tabKey;
@@ -28,7 +28,7 @@
                         type="button"
                         wire:click="$set('activeTab', '{{ $tabKey }}')"
                         @class([
-                            'group relative flex items-center gap-x-2 px-3 pb-3 pt-1 text-sm font-medium outline-none transition',
+                            'group relative flex items-center gap-x-2 whitespace-nowrap px-3 pb-3 pt-1 text-sm font-medium outline-none transition',
                             'text-primary-600 dark:text-primary-400' => $isActive,
                             'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200' => ! $isActive,
                         ])

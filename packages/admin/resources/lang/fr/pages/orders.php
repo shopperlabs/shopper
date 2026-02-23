@@ -48,6 +48,8 @@ return [
     'modals' => [
         'archived_number' => 'Archivé la commande :number',
         'archived_notice' => 'Êtes-vous sûr de vouloir archiver cette commande ? Cette action modifiera le revenu que vous avez gagné jusqu\'à présent dans votre magasin.',
+        'capture_heading' => 'Capturer le paiement de la commande :number',
+        'capture_notice' => 'Le montant autorisé sera débité du client. Cette action est irréversible.',
     ],
 
     'shipment' => [
@@ -70,6 +72,9 @@ return [
         'note_added' => 'Votre note a été ajoutée à cette commande.',
         'processing' => 'La commande est maintenant en cours de traitement !',
         'paid' => 'La commande est marquée comme payée !',
+        'captured' => 'Le paiement a été capturé avec succès !',
+        'capture_failed' => 'Échec de la capture du paiement.',
+        'capture_no_reference' => 'Aucune référence de paiement trouvée pour cette commande.',
         'completed' => 'La commande est marquée comme complète !',
         'shipment_created' => "L'expédition a été créée avec succès !",
         'shipment_delivered' => "L'expédition a été marquée comme livrée !",
