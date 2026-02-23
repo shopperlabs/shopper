@@ -18,17 +18,25 @@ interface Order
 
     public function isNotCancelled(): bool;
 
-    public function isPending(): bool;
-
     public function isNew(): bool;
 
-    public function isRegister(): bool;
-
-    public function isShipped(): bool;
+    public function isProcessing(): bool;
 
     public function isCompleted(): bool;
 
+    public function isArchived(): bool;
+
     public function isPaid(): bool;
+
+    public function isPaymentPending(): bool;
+
+    public function isPaymentAuthorized(): bool;
+
+    public function isRefunded(): bool;
+
+    public function isShipped(): bool;
+
+    public function isShippingPending(): bool;
 
     public function shippingAddress(): BelongsTo;
 

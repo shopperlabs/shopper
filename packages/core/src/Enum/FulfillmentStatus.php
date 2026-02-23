@@ -42,7 +42,7 @@ enum FulfillmentStatus: string implements HasColor, HasIcon, HasLabel
             self::ForwardedToSupplier => 'info',
             self::Processing => 'primary',
             self::Shipped => 'indigo',
-            self::Delivered => 'green',
+            self::Delivered => 'success',
             self::Cancelled => 'danger',
         };
     }

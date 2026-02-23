@@ -6,6 +6,8 @@ namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Order;
 
 /**
@@ -26,6 +28,8 @@ class OrderFactory extends Factory
             'number' => '#SH'.$this->faker->unique()->randomNumber(6),
             'currency_code' => shopper_currency(),
             'status' => $this->faker->randomElement(OrderStatus::values()),
+            'payment_status' => $this->faker->randomElement(PaymentStatus::values()),
+            'shipping_status' => $this->faker->randomElement(ShippingStatus::values()),
             'notes' => $this->faker->realText(100),
             'created_at' => $this->faker->dateTimeBetween('-1 year'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month'),

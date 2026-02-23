@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Core\Database\Factories\OrderFactory;
 use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Helpers\Price;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Contracts\ShopperUser;
@@ -41,8 +43,10 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?CarbonInterface $cancelled_at
  * @property-read ?CarbonInterface $archived_at
  * @property-read OrderStatus $status
+ * @property-read PaymentStatus $payment_status
+ * @property-read ShippingStatus $shipping_status
  * @property-read array<string, mixed>|null $metadata
- * @property-read CarrierOption $shippingOption
+ * @property-read ?CarrierOption $shippingOption
  * @property-read ?OrderAddress $shippingAddress
  * @property-read ?OrderAddress $billingAddress
  * @property-read ?PaymentMethod $paymentMethod
@@ -86,7 +90,11 @@ class Order extends Model implements OrderContract
         $this->setRawAttributes(
             array_merge(
                 $this->attributes,
-                ['status' => OrderStatus::Pending]
+                [
+                    'status' => OrderStatus::New,
+                    'payment_status' => PaymentStatus::Pending,
+                    'shipping_status' => ShippingStatus::Unfulfilled,
+                ]
             ),
             true
         );
@@ -104,7 +112,11 @@ class Order extends Model implements OrderContract
 
     public function canBeCancelled(): bool
     {
-        return $this->status === OrderStatus::Completed || $this->status === OrderStatus::New;
+        return ! in_array($this->status, [
+            OrderStatus::Cancelled,
+            OrderStatus::Archived,
+        ], true)
+            && $this->shipping_status === ShippingStatus::Unfulfilled;
     }
 
     public function isNotCancelled(): bool
@@ -117,19 +129,9 @@ class Order extends Model implements OrderContract
         return $this->status === OrderStatus::New;
     }
 
-    public function isPending(): bool
+    public function isProcessing(): bool
     {
-        return $this->status === OrderStatus::Pending;
-    }
-
-    public function isRegister(): bool
-    {
-        return $this->status === OrderStatus::Register;
-    }
-
-    public function isShipped(): bool
-    {
-        return $this->status === OrderStatus::Shipped;
+        return $this->status === OrderStatus::Processing;
     }
 
     public function isCompleted(): bool
@@ -137,9 +139,39 @@ class Order extends Model implements OrderContract
         return $this->status === OrderStatus::Completed;
     }
 
+    public function isArchived(): bool
+    {
+        return $this->status === OrderStatus::Archived;
+    }
+
     public function isPaid(): bool
     {
-        return $this->status === OrderStatus::Paid;
+        return $this->payment_status === PaymentStatus::Paid;
+    }
+
+    public function isPaymentPending(): bool
+    {
+        return $this->payment_status === PaymentStatus::Pending;
+    }
+
+    public function isPaymentAuthorized(): bool
+    {
+        return $this->payment_status === PaymentStatus::Authorized;
+    }
+
+    public function isRefunded(): bool
+    {
+        return $this->payment_status === PaymentStatus::Refunded;
+    }
+
+    public function isShipped(): bool
+    {
+        return $this->shipping_status === ShippingStatus::Shipped;
+    }
+
+    public function isShippingPending(): bool
+    {
+        return $this->shipping_status === ShippingStatus::Unfulfilled;
     }
 
     /**
@@ -258,6 +290,8 @@ class Order extends Model implements OrderContract
     {
         return [
             'status' => OrderStatus::class,
+            'payment_status' => PaymentStatus::class,
+            'shipping_status' => ShippingStatus::class,
             'cancelled_at' => 'datetime',
             'archived_at' => 'datetime',
         ];

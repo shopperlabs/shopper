@@ -10,10 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\OrderShippingFactory;
+use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Models\Contracts\OrderShipping as OrderShippingContract;
+use Shopper\Core\Traits\HasFulfillmentTransitions;
 
 /**
  * @property-read int $id
+ * @property-read ?ShipmentStatus $status
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read CarbonInterface $shipped_at
@@ -27,11 +30,14 @@ use Shopper\Core\Models\Contracts\OrderShipping as OrderShippingContract;
  * @property-read Order $order
  * @property-read ?Carrier $carrier
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OrderItem> $items
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, OrderShippingEvent> $events
  */
 class OrderShipping extends Model implements OrderShippingContract
 {
     /** @use HasFactory<OrderShippingFactory> */
     use HasFactory;
+
+    use HasFulfillmentTransitions;
 
     protected $guarded = [];
 
@@ -65,6 +71,14 @@ class OrderShipping extends Model implements OrderShippingContract
         return $this->hasMany(OrderItem::class, 'order_shipping_id');
     }
 
+    /**
+     * @return HasMany<OrderShippingEvent, $this>
+     */
+    public function events(): HasMany
+    {
+        return $this->hasMany(OrderShippingEvent::class, 'order_shipping_id');
+    }
+
     protected static function newFactory(): OrderShippingFactory
     {
         return OrderShippingFactory::new();
@@ -73,6 +87,7 @@ class OrderShipping extends Model implements OrderShippingContract
     protected function casts(): array
     {
         return [
+            'status' => ShipmentStatus::class,
             'shipped_at' => 'datetime',
             'received_at' => 'datetime',
             'returned_at' => 'datetime',

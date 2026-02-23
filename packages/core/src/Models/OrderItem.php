@@ -38,6 +38,23 @@ class OrderItem extends Model implements OrderItemContract
 
     protected $guarded = [];
 
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        if (! isset($attributes['fulfillment_status'])) {
+            $this->setRawAttributes(
+                array_merge($this->attributes, [
+                    'fulfillment_status' => FulfillmentStatus::Pending,
+                ]),
+                true
+            );
+        }
+
+        parent::__construct($attributes);
+    }
+
     public function getTable(): string
     {
         return shopper_table('order_items');
