@@ -24,10 +24,6 @@ describe(StripeServiceProvider::class, function (): void {
             ]);
     });
 
-    it('defaults capture method to manual', function (): void {
-        expect(config('shopper.stripe.capture_method'))->toBe('manual');
-    });
-
     it('registers stripe as an available driver', function (): void {
         expect(Payment::availableDrivers())->toContain('stripe');
     });

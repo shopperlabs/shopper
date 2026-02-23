@@ -33,6 +33,6 @@ return [
     |
     */
 
-    'capture_method' => env('STRIPE_CAPTURE_METHOD', 'automatic'),
+    'capture_method' => env('STRIPE_CAPTURE_METHOD', 'manual'),
 
 ];
