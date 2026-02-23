@@ -86,6 +86,7 @@ return [
     'images' => 'Imágenes',
     'step' => 'Paso :number',
     'environment' => 'Entorno',
+    'item_count' => '{1} :count artículo|[2,*] :count artículos',
     'discount_use' => '{1} Límite de 1 uso|[2,*] Límite de :count usos',
 
     'no_group' => 'Sin grupo',
@@ -95,6 +96,8 @@ return [
     'logout_session_confirm' => 'Por favor ingresa tu contraseña para confirmar que deseas cerrar sesión en tus otras sesiones de navegador en todos tus dispositivos.',
     'reorder' => 'Reordenar',
     'all' => 'Todo',
+    'open' => 'Abiertas',
+    'fulfilled' => 'Enviadas',
     'actions' => 'Acciones',
 
     'socials' => [
@@ -153,6 +156,7 @@ return [
     'feature' => 'Característica',
     'feature_enabled' => 'Debes habilitar :feature para activar esta sección.',
     'amount' => 'Monto',
+    'qty' => 'Cant',
     'soon' => 'Pronto',
     'learn_more' => 'Aprender más sobre',
     'characters' => ':number caracteres',

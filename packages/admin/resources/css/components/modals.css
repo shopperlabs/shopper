@@ -1,0 +1,14 @@
+.fi-modal.fi-modal-slide-over {
+  & .fi-modal-window-ctn {
+    padding: var(--modal-padding);
+  }
+
+  & .fi-modal-window {
+    height: calc(100dvh - (2 * var(--modal-padding)));
+    @apply rounded-lg shadow-lg;
+
+    .fi-modal-footer-actions {
+      @apply flex-row-reverse;
+    }
+  }
+}

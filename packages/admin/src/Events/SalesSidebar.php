@@ -16,7 +16,7 @@ final class SalesSidebar extends AbstractAdminSidebar
 {
     public function extendWith(Menu $menu): Menu
     {
-        $count = Order::query()->where('status', OrderStatus::Pending)->count();
+        $count = Order::query()->where('status', OrderStatus::New)->count();
 
         $menu->group(__('shopper::layout.sidebar.sales'), function (Group $group) use ($count): void {
             $group->weight(3);
@@ -34,6 +34,13 @@ final class SalesSidebar extends AbstractAdminSidebar
                 $item->useSpa();
                 $item->route('shopper.orders.index');
                 $item->setIcon('phosphor-shopping-bag');
+
+                $item->item(__('shopper::pages/orders.shipments'), function (Item $item): void {
+                    $item->weight(1);
+                    $item->setAuthorized($this->user->hasPermissionTo('browse_orders'));
+                    $item->useSpa();
+                    $item->route('shopper.orders.shipments');
+                });
             });
 
             if (Feature::enabled('discount')) {

@@ -21,6 +21,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -61,16 +62,15 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->label(__('shopper::forms.label.country'))
                     ->getStateUsing(
                         fn (ShopperUser $record): ?string => $record->addresses->first()?->country?->name // @phpstan-ignore-line
-                    )
-                    ->sortable(),
+                    ),
                 TextColumn::make('orders_count')
                     ->counts([
-                        'orders' => fn (Builder $query) => $query->whereIn('status', [
-                            OrderStatus::Paid,
-                            OrderStatus::Shipped,
-                            OrderStatus::Delivered,
-                            OrderStatus::Completed,
-                        ]),
+                        'orders' => fn (Builder $query) => $query
+                            ->whereIn('status', [
+                                OrderStatus::Processing,
+                                OrderStatus::Completed,
+                            ])
+                            ->where('payment_status', PaymentStatus::Paid),
                     ])
                     ->label(__('shopper::pages/customers.orders.placed')),
                 TextColumn::make('created_at')

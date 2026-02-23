@@ -11,7 +11,10 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Resources\Concerns\HasTabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Enums\FiltersLayout;
@@ -22,12 +25,15 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Currency;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HasTabs;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
@@ -35,6 +41,84 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
     public function mount(): void
     {
         $this->authorize('browse_orders');
+
+        $this->loadDefaultActiveTab();
+    }
+
+    /**
+     * @return array<string, Tab>
+     */
+    public function getTabs(): array
+    {
+        $orderModel = resolve(Order::class);
+
+        return [
+            'all' => Tab::make(__('shopper::words.all'))
+                ->icon(Untitledui::LayersThree)
+                ->badge(fn (): int => $orderModel::query()->count()),
+            'open' => Tab::make(__('shopper::words.open'))
+                ->icon(OrderStatus::New->getIcon())
+                ->badge(
+                    fn (): int => $orderModel::query()
+                        ->whereIn('status', [OrderStatus::New, OrderStatus::Processing])
+                        ->where('shipping_status', ShippingStatus::Unfulfilled)
+                        ->count()
+                )
+                ->badgeColor('success')
+                ->query(
+                    fn (Builder $query): Builder => $query
+                        ->whereIn('status', [OrderStatus::New, OrderStatus::Processing])
+                        ->where('shipping_status', ShippingStatus::Unfulfilled)
+                ),
+            'paid' => Tab::make(PaymentStatus::Paid->getLabel())
+                ->icon(PaymentStatus::Paid->getIcon())
+                ->badge(
+                    fn (): int => $orderModel::query()
+                        ->where('payment_status', PaymentStatus::Paid)
+                        ->count()
+                )
+                ->badgeColor('success')
+                ->query(
+                    fn (Builder $query): Builder => $query
+                        ->where('payment_status', PaymentStatus::Paid)
+                ),
+            'fulfilled' => Tab::make(__('shopper::words.fulfilled'))
+                ->icon(ShippingStatus::Shipped->getIcon())
+                ->badge(
+                    fn (): int => $orderModel::query()
+                        ->whereIn('shipping_status', [ShippingStatus::Shipped, ShippingStatus::PartiallyShipped])
+                        ->count()
+                )
+                ->badgeColor('info')
+                ->query(
+                    fn (Builder $query): Builder => $query
+                        ->whereIn('shipping_status', [ShippingStatus::Shipped, ShippingStatus::PartiallyShipped])
+                ),
+            'cancelled' => Tab::make(OrderStatus::Cancelled->getLabel())
+                ->icon(OrderStatus::Cancelled->getIcon())
+                ->badge(
+                    fn (): int => $orderModel::query()
+                        ->where('status', OrderStatus::Cancelled)
+                        ->count()
+                )
+                ->badgeColor('danger')
+                ->query(
+                    fn (Builder $query): Builder => $query
+                        ->where('status', OrderStatus::Cancelled)
+                ),
+            'archived' => Tab::make(OrderStatus::Archived->getLabel())
+                ->icon(OrderStatus::Archived->getIcon())
+                ->badge(
+                    fn (): int => $orderModel::query()
+                        ->where('status', OrderStatus::Archived)
+                        ->count()
+                )
+                ->badgeColor('gray')
+                ->query(
+                    fn (Builder $query): Builder => $query
+                        ->where('status', OrderStatus::Archived)
+                ),
+        ];
     }
 
     public function table(Table $table): Table
@@ -46,11 +130,13 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                         'customer',
                         'items',
                         'zone',
+                        'channel',
                         'items.product',
                         'items.product.media',
                     ])
                     ->latest()
             )
+            ->modifyQueryUsing($this->modifyQueryWithActiveTab(...))
             ->columns([
                 TextColumn::make('number')
                     ->label('#')
@@ -62,9 +148,22 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->date()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('status')
+                ViewColumn::make('status')
                     ->label(__('shopper::forms.label.status'))
-                    ->badge(),
+                    ->view('shopper::livewire.tables.cells.orders.status')
+                    ->extraCellAttributes(['class' => 'whitespace-nowrap']),
+                TextColumn::make('total')
+                    ->label(__('shopper::forms.label.price_amount'))
+                    ->state(fn (Order $record): string => shopper_money_format(
+                        amount: $record->total(),
+                        currency: $record->currency_code
+                    )),
+                TextColumn::make('id')
+                    ->label(__('shopper::words.purchased'))
+                    ->formatStateUsing(fn (Order $record): View => view(
+                        'shopper::livewire.tables.cells.orders.purchased',
+                        ['order' => $record]
+                    )),
                 TextColumn::make('customer.first_name')
                     ->label(__('shopper::words.customer'))
                     ->searchable()
@@ -74,18 +173,6 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                         ['user' => $record->customer]
                     ))
                     ->toggleable(),
-                TextColumn::make('id')
-                    ->label(__('shopper::words.purchased'))
-                    ->formatStateUsing(fn (Order $record): View => view(
-                        'shopper::livewire.tables.cells.orders.purchased',
-                        ['order' => $record]
-                    )),
-                TextColumn::make('total')
-                    ->label(__('shopper::forms.label.price_amount'))
-                    ->state(fn (Order $record): string => shopper_money_format(
-                        amount: $record->total(),
-                        currency: $record->currency_code
-                    )),
                 TextColumn::make('currency_code')
                     ->label(__('shopper::forms.label.currency'))
                     ->badge()
@@ -96,6 +183,12 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->toggledHiddenByDefault(),
                 TextColumn::make('zone.name')
                     ->label(__('shopper::pages/settings/zones.single'))
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                TextColumn::make('channel.name')
+                    ->label(__('shopper::pages/settings/channels.single'))
                     ->searchable()
                     ->sortable()
                     ->toggleable()
@@ -134,6 +227,14 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->label(__('shopper::forms.label.status'))
                     ->options(OrderStatus::class)
                     ->multiple(),
+                SelectFilter::make('payment_status')
+                    ->label(__('shopper::forms.label.payment_status'))
+                    ->options(PaymentStatus::class)
+                    ->multiple(),
+                SelectFilter::make('shipping_status')
+                    ->label(__('shopper::forms.label.shipping_status'))
+                    ->options(ShippingStatus::class)
+                    ->multiple(),
                 Filter::make('created_at')
                     ->label(__('shopper::words.date'))
                     ->schema([
@@ -154,6 +255,16 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             $data['created_until'],
                             fn (Builder $query, mixed $date): Builder => $query->whereDate('created_at', '<=', $date),
                         )),
+                SelectFilter::make('zone_id')
+                    ->label(__('shopper::pages/settings/zones.single'))
+                    ->relationship('zone', 'name')
+                    ->searchable()
+                    ->preload(),
+                SelectFilter::make('channel_id')
+                    ->label(__('shopper::pages/settings/channels.single'))
+                    ->relationship('channel', 'name')
+                    ->searchable()
+                    ->preload(),
                 SelectFilter::make('currency_code')
                     ->label(__('shopper::forms.label.currency'))
                     ->options(fn (): array => Currency::query()
@@ -161,8 +272,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                         ->pluck('code', 'code')
                         ->all()),
             ])
-            ->filtersLayout(FiltersLayout::AboveContentCollapsible)
-            ->filtersFormColumns(4)
+            ->filtersLayout(FiltersLayout::Modal)
+            ->filtersFormColumns(2)
             ->emptyState(view('shopper::livewire.tables.empty-states.orders'));
     }
 

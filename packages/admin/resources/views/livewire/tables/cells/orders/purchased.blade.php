@@ -1,5 +1,9 @@
 @php
     $firstItem = $order->items->first();
+    $label = $order->items->count() > 1
+        ? $firstItem->name . ' + ' . __('shopper::words.number_more', ['number' => $order->items->count() - 1])
+        : $firstItem->name;
+    $isTruncated = mb_strlen($label) > 50;
 @endphp
 
 <div class="flex items-center gap-2">
@@ -9,16 +13,10 @@
         alt="Avatar {{ $firstItem->product->name }}"
     />
 
-    @if ($order->items->count() === 1)
-        <span class="font-medium text-gray-700 dark:text-gray-300">
-            {{ $firstItem->name }}
-        </span>
-    @endif
-
-    @if ($order->items->count() > 1)
-        <span class="font-medium text-gray-700 dark:text-gray-300">
-            {{ $firstItem->name }} +
-            {{ __('shopper::words.number_more', ['number' => $order->items->count() - 1]) }}
-        </span>
-    @endif
+    <span
+        @if ($isTruncated) x-data x-tooltip.raw="{{ $label }}" @endif
+        class="max-w-[50ch] truncate font-medium text-gray-700 dark:text-gray-300"
+    >
+        {{ $label }}
+    </span>
 </div>
