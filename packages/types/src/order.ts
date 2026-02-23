@@ -6,31 +6,60 @@ import type { PaymentMethod } from './payment_method'
 import type { Zone } from './zone'
 
 export enum OrderStatus {
-  ARCHIVED = 'archived',
   NEW = 'new',
-  SHIPPED = 'shipped',
-  DELIVERED = 'delivered',
-  PENDING = 'pending',
-  PAID = 'paid',
-  REGISTER = 'registered',
+  PROCESSING = 'processing',
   COMPLETED = 'completed',
   CANCELLED = 'cancelled',
+  ARCHIVED = 'archived',
+}
+
+export enum PaymentStatus {
+  PENDING = 'pending',
+  AUTHORIZED = 'authorized',
+  PAID = 'paid',
+  PARTIALLY_REFUNDED = 'partially_refunded',
+  REFUNDED = 'refunded',
+  VOIDED = 'voided',
+}
+
+export enum ShippingStatus {
+  UNFULFILLED = 'unfulfilled',
+  PARTIALLY_SHIPPED = 'partially_shipped',
+  SHIPPED = 'shipped',
+  PARTIALLY_DELIVERED = 'partially_delivered',
+  DELIVERED = 'delivered',
+  PARTIALLY_RETURNED = 'partially_returned',
+  RETURNED = 'returned',
+}
+
+export enum ShipmentStatus {
+  PENDING = 'pending',
+  PICKED_UP = 'picked_up',
+  IN_TRANSIT = 'in_transit',
+  AT_SORTING_CENTER = 'at_sorting_center',
+  OUT_FOR_DELIVERY = 'out_for_delivery',
+  DELIVERED = 'delivered',
+  DELIVERY_FAILED = 'delivery_failed',
+  RETURNED = 'returned',
 }
 
 export enum FulfillmentStatus {
-  UNFULFILLED = 'unfulfilled',
-  PARTIALLY_FULFILLED = 'partially_fulfilled',
-  FULFILLED = 'fulfilled',
+  PENDING = 'pending',
+  FORWARDED_TO_SUPPLIER = 'forwarded_to_supplier',
+  PROCESSING = 'processing',
+  SHIPPED = 'shipped',
+  DELIVERED = 'delivered',
   CANCELLED = 'cancelled',
 }
 
 export enum OrderRefundStatus {
+  AWAITING = 'awaiting',
   PENDING = 'pending',
   TREATMENT = 'treatment',
-  PARTIAL_REFUND = 'partial-refund',
+  PARTIAL_REFUND = 'partial_refund',
   REFUNDED = 'refunded',
-  CANCELLED = 'cancelled',
   REJECTED = 'rejected',
+  CANCELLED = 'cancelled',
 }
 
 /**
@@ -49,6 +78,10 @@ export interface Order extends Entity {
   total_amount?: number
   /** The order status. */
   status: OrderStatus
+  /** The payment status. */
+  payment_status: PaymentStatus
+  /** The shipping status. */
+  shipping_status: ShippingStatus
   /** The date the order was cancelled. */
   cancelled_at: DateEntity | null
   /** The date the order was archived. */
@@ -163,6 +196,8 @@ export interface OrderAddress extends Entity {
  * OrderShipping model.
  */
 export interface OrderShipping extends Entity {
+  /** The shipment status. */
+  status: ShipmentStatus | null
   /** The date the order was shipped. */
   shipped_at: DateEntity
   /** The date the order was received. */
@@ -185,6 +220,35 @@ export interface OrderShipping extends Entity {
   carrier?: import('./carrier').Carrier
   /** The items in this shipment. */
   items?: OrderItem[]
+  /** The shipment tracking events. */
+  events?: OrderShippingEvent[]
+}
+
+/**
+ * OrderShippingEvent model.
+ */
+export interface OrderShippingEvent {
+  id: number
+  /** The event status. */
+  status: ShipmentStatus
+  /** The description of the event. */
+  description: string | null
+  /** The location of the event. */
+  location: string | null
+  /** The latitude of the event. */
+  latitude: number | null
+  /** The longitude of the event. */
+  longitude: number | null
+  /** The metadata of the event. */
+  metadata: Metadata
+  /** The date the event occurred. */
+  occurred_at: DateEntity
+  /** The creation date. */
+  created_at?: DateEntity
+  /** The order shipping ID. */
+  order_shipping_id: number
+  /** The shipment this event belongs to. */
+  shipment?: OrderShipping
 }
 
 /**

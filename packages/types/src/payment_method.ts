@@ -1,4 +1,5 @@
 import type { Entity, Metadata } from './common'
+import type { Media } from './media'
 import type { Zone } from './zone'
 
 /**
@@ -9,10 +10,6 @@ export interface PaymentMethod extends Entity {
   title: string
   /** The slug of the payment method. */
   slug: string
-  /** The logo path of the payment method. */
-  logo: string | null
-  /** The computed logo URL. */
-  logo_url: string | null
   /** The link URL of the payment method. */
   link_url: string | null
   /** The description of the payment method. */
@@ -21,8 +18,12 @@ export interface PaymentMethod extends Entity {
   instructions: string | null
   /** Whether the payment method is enabled. */
   is_enabled: boolean
+  /** The payment driver identifier. */
+  driver: string | null
   /** The metadata of the payment method. */
   metadata: Metadata
+  /** The logo of the payment method. */
+  logo?: Media | null
   /** The zones this payment method belongs to. */
   zones?: Zone[]
 }

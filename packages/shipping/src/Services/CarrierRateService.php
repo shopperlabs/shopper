@@ -66,7 +66,9 @@ final class CarrierRateService
      */
     public function getLogoUrl(Carrier $carrier): ?string
     {
-        return $carrier->logoUrl() ?? $this->resolveDriver($carrier)?->logo();
+        return $carrier->logoUrl()
+            ?? $this->resolveDriver($carrier)?->logo()
+            ?? Shipping::driver('manual')->logo();
     }
 
     public function getLogoHtml(Carrier $carrier): string

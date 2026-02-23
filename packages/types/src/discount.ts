@@ -8,12 +8,18 @@ export enum DiscountType {
 
 export enum DiscountApplyTo {
   ORDER = 'order',
-  SPECIFIC = 'specific',
+  PRODUCTS = 'products',
 }
 
 export enum DiscountEligibility {
   EVERYONE = 'everyone',
-  CUSTOMERS = 'specific_customers',
+  CUSTOMERS = 'customers',
+}
+
+export enum DiscountRequirement {
+  NONE = 'none',
+  PRICE = 'price',
+  QUANTITY = 'quantity',
 }
 
 export enum DiscountCondition {

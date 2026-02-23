@@ -28,7 +28,7 @@
                         <div class="flex items-center gap-2">
                             @if ($paymentLogoUrl)
                                 <img
-                                    class="h-4 w-auto rounded object-contain"
+                                    class="h-6 w-auto rounded object-contain"
                                     src="{{ $paymentLogoUrl }}"
                                     alt="{{ $order->paymentMethod->title }}"
                                 />
@@ -63,7 +63,7 @@
                         <div class="flex items-center gap-2">
                             @if ($carrierLogoUrl)
                                 <img
-                                    class="h-4 w-auto rounded object-contain"
+                                    class="h-6 w-auto rounded object-contain"
                                     src="{{ $carrierLogoUrl }}"
                                     alt="{{ $shippingOption->carrier?->name }}"
                                 />

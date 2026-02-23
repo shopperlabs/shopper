@@ -23,6 +23,11 @@ final class ManualDriver extends Driver
         return 'Manual';
     }
 
+    public function logo(): string
+    {
+        return shopper_panel_assets('/images/carriers/local.png');
+    }
+
     public function isConfigured(): bool
     {
         return true;
