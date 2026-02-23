@@ -12,6 +12,12 @@
     "shop"
   ],
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Shopper",
+      "homepage": "https://laravelshopper.dev/"
+    }
+  ],
   "support": {
     "issues": "https://github.com/shopperlabs/framework/issues",
     "source": "https://github.com/shopperlabs/framework"
@@ -43,6 +49,7 @@
     "shopper/core": "self.version",
     "shopper/sidebar": "self.version",
     "shopper/shipping": "self.version",
+    "shopper/payment": "self.version",
     "spatie/laravel-livewire-wizard": "^2.4",
     "spatie/laravel-package-tools": "^1.15",
     "stevebauman/location": "^7.2"

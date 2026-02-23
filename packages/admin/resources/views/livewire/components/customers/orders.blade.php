@@ -102,10 +102,10 @@
                         </h5>
                         @if ($order->paymentMethod)
                             <div class="flex items-center">
-                                @if ($order->paymentMethod->logo)
+                                @if ($order->paymentMethod->logoUrl())
                                     <img
                                         class="size-6 rounded-md object-cover"
-                                        src="{{ $order->paymentMethod->logo_url }}"
+                                        src="{{ $order->paymentMethod->logoUrl() }}"
                                         alt="payment icon"
                                     />
                                 @else

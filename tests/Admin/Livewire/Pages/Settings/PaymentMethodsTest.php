@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\PaymentMethod as PaymentMethodModel;
-use Shopper\Livewire\Pages\Settings\PaymentMethod;
+use Shopper\Core\Models\PaymentMethod;
+use Shopper\Livewire\Pages\Settings\PaymentMethods;
 use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
@@ -14,32 +14,32 @@ beforeEach(function (): void {
     $this->actingAs($this->user);
 });
 
-describe(PaymentMethod::class, function (): void {
+describe(PaymentMethods::class, function (): void {
     it('can render payment settings component', function (): void {
-        Livewire::test(PaymentMethod::class)
+        Livewire::test(PaymentMethods::class)
             ->assertOk()
-            ->assertViewIs('shopper::livewire.pages.settings.payment-method');
+            ->assertViewIs('shopper::livewire.pages.settings.payment-methods');
     });
 
     it('initializes tabs on mount', function (): void {
-        $component = Livewire::test(PaymentMethod::class);
+        $component = Livewire::test(PaymentMethods::class);
 
         expect($component->get('tabs'))->toBeArray()
             ->and($component->get('tabs'))->toContain('general');
     });
 
     it('can list payment methods in table', function (): void {
-        PaymentMethodModel::factory()->count(3)->create();
+        PaymentMethod::factory()->count(3)->create();
 
-        Livewire::test(PaymentMethod::class)
+        Livewire::test(PaymentMethods::class)
             ->loadTable()
-            ->assertCanSeeTableRecords(PaymentMethodModel::limit(3)->get());
+            ->assertCanSeeTableRecords(PaymentMethod::limit(3)->get());
     });
 
     it('can create new payment method via action', function (): void {
-        $initialCount = PaymentMethodModel::query()->count();
+        $initialCount = PaymentMethod::query()->count();
 
-        Livewire::test(PaymentMethod::class)
+        Livewire::test(PaymentMethods::class)
             ->callAction('createPayment', [
                 'title' => 'Stripe',
                 'link_url' => 'https://stripe.com',
@@ -49,12 +49,12 @@ describe(PaymentMethod::class, function (): void {
             ->assertHasNoActionErrors()
             ->assertNotified(__('shopper::notifications.payment.add'));
 
-        expect(PaymentMethodModel::query()->count())->toBe($initialCount + 1)
-            ->and(PaymentMethodModel::query()->where('title', 'Stripe')->exists())->toBeTrue();
+        expect(PaymentMethod::query()->count())->toBe($initialCount + 1)
+            ->and(PaymentMethod::query()->where('title', 'Stripe')->exists())->toBeTrue();
     });
 
     it('validates required title when creating payment method', function (): void {
-        Livewire::test(PaymentMethod::class)
+        Livewire::test(PaymentMethods::class)
             ->callAction('createPayment', [
                 'title' => '',
             ])
@@ -62,7 +62,7 @@ describe(PaymentMethod::class, function (): void {
     });
 
     it('validates url format for link_url when creating payment method', function (): void {
-        Livewire::test(PaymentMethod::class)
+        Livewire::test(PaymentMethods::class)
             ->callAction('createPayment', [
                 'title' => 'Test Payment',
                 'link_url' => 'not-a-valid-url',
@@ -71,13 +71,14 @@ describe(PaymentMethod::class, function (): void {
     });
 
     it('can edit payment method via table action', function (): void {
-        $payment = PaymentMethodModel::factory()->create([
+        $payment = PaymentMethod::factory()->create([
             'title' => 'Old Title',
         ]);
 
-        Livewire::test(PaymentMethod::class)
+        Livewire::test(PaymentMethods::class)
             ->callTableAction('edit', $payment, [
                 'title' => 'New Title',
+                'driver' => 'manual',
                 'link_url' => 'https://example.com',
             ])
             ->assertHasNoTableActionErrors();
@@ -88,11 +89,11 @@ describe(PaymentMethod::class, function (): void {
     });
 
     it('can delete payment method via table action', function (): void {
-        $payment = PaymentMethodModel::factory()->create();
+        $payment = PaymentMethod::factory()->create();
 
-        Livewire::test(PaymentMethod::class)
+        Livewire::test(PaymentMethods::class)
             ->callTableAction('delete', $payment);
 
-        expect(PaymentMethodModel::query()->find($payment->id))->toBeNull();
+        expect(PaymentMethod::query()->find($payment->id))->toBeNull();
     });
 })->group('livewire', 'settings', 'payment');

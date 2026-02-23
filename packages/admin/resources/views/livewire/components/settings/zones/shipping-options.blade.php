@@ -29,15 +29,20 @@
 
         <div class="lg:grid lg:grid-cols-2 lg:gap-6">
             @forelse ($zone->shippingOptions as $shippingOption)
+                @php
+                    $carrierLogoUrl = $shippingOption->carrier->logoUrl()
+                        ?? \Shopper\Shipping\Facades\Shipping::driver($shippingOption->carrier->driver ?? 'manual')->logo();
+                @endphp
+
                 <div
                     class="relative flex items-start justify-between rounded-lg border border-gray-200 bg-white p-3 dark:border-white/10 dark:bg-white/5"
                 >
                     <div>
                         <div class="flex items-center gap-2">
-                            @if ($shippingOption->carrier->logoUrl())
+                            @if ($carrierLogoUrl)
                                 <img
                                     class="size-6 rounded-full object-cover"
-                                    src="{{ $shippingOption->carrier->logoUrl() }}"
+                                    src="{{ $carrierLogoUrl }}"
                                     alt="Logo {{ $shippingOption->carrier->name }}"
                                 />
                             @endif

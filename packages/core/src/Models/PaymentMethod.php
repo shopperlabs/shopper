@@ -6,20 +6,19 @@ namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Database\Factories\PaymentMethodFactory;
 use Shopper\Core\Models\Contracts\PaymentMethod as PaymentMethodContract;
+use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasZones;
+use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
  * @property-read string $title
  * @property-read string $slug
- * @property-read ?string $logo
- * @property-read ?string $logo_url
  * @property-read bool $is_enabled
  * @property-read ?string $description
  * @property-read ?string $link_url
@@ -28,11 +27,12 @@ use Shopper\Core\Models\Traits\HasZones;
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
-class PaymentMethod extends Model implements PaymentMethodContract
+class PaymentMethod extends Model implements PaymentMethodContract, SpatieHasMedia
 {
     /** @use HasFactory<PaymentMethodFactory> */
     use HasFactory;
 
+    use HasMedia;
     use HasSlug;
     use HasZones;
 
@@ -52,6 +52,17 @@ class PaymentMethod extends Model implements PaymentMethodContract
         return $query->where('is_enabled', true);
     }
 
+    public function logoUrl(): ?string
+    {
+        $media = $this->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection'));
+
+        if ($media && $media !== shopper_fallback_url()) {
+            return $media;
+        }
+
+        return null;
+    }
+
     protected static function newFactory(): PaymentMethodFactory
     {
         return PaymentMethodFactory::new();
@@ -62,12 +73,5 @@ class PaymentMethod extends Model implements PaymentMethodContract
         return [
             'is_enabled' => 'boolean',
         ];
-    }
-
-    protected function LogoUrl(): Attribute
-    {
-        return Attribute::make(
-            get: fn (): ?string => $this->logo ? shopper_asset($this->logo) : null,
-        );
     }
 }

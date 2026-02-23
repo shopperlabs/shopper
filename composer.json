@@ -1,6 +1,6 @@
 {
-  "name": "shopper/framework",
-  "description": "An e-commerce administration built with Laravel for create and manage online shop.",
+  "name": "shopper/shopper",
+  "description": "Laravel Shopper Monorepo",
   "license": "MIT",
   "keywords": [
     "e-commerce",
@@ -17,26 +17,35 @@
   ],
   "require": {
     "php": "^8.3",
-    "composer-runtime-api": "^2.1",
-    "ext-intl": "*"
-  },
-  "require-dev": {
     "bacon/bacon-qr-code": "^2.0|^3.0",
     "blade-ui-kit/blade-heroicons": "^2.6",
     "codeat3/blade-phosphor-icons": "^2.3",
     "codewithdennis/filament-select-tree": "^4.0",
+    "composer-runtime-api": "^2.1",
     "danharrin/livewire-rate-limiting": "^1.0|^2.0",
+    "ext-intl": "*",
     "filament/filament": "^4.7",
     "filament/spatie-laravel-media-library-plugin": "^4.7",
     "gehrisandro/tailwind-merge-laravel": "^1.3",
     "ivanmitrikeski/laravel-shipping": "^1.0",
     "jaocero/radio-deck": "^3.0",
     "jenssegers/agent": "^2.6",
-    "larastan/larastan": "^3.8",
     "laravel/framework": "^11.0|^12.0",
-    "laravel/pint": "^1.16",
     "mckenziearts/filament-untitledui-icons": "^1.1",
     "milon/barcode": "^11.0|^12.0",
+    "pragmarx/google2fa": "^8.0|^9.0",
+    "shopper/core": "self.version",
+    "spatie/laravel-livewire-wizard": "^2.4",
+    "spatie/laravel-medialibrary": "^11.5",
+    "spatie/laravel-package-tools": "^1.15",
+    "spatie/laravel-permission": "^6.24",
+    "staudenmeir/laravel-adjacency-list": "^1.0",
+    "stevebauman/location": "^7.2",
+    "stripe/stripe-php": "^16.0"
+  },
+  "require-dev": {
+    "larastan/larastan": "^3.8",
+    "laravel/pint": "^1.16",
     "mockery/mockery": "^1.4",
     "nunomaduro/collision": "^7.10.0|^8.1.1",
     "orchestra/testbench": "^8.20|^9.0|^10.0",
@@ -44,12 +53,7 @@
     "pestphp/pest-plugin-laravel": "^3.0|^4.0",
     "pestphp/pest-plugin-livewire": "^3.0|^4.0",
     "pestphp/pest-plugin-type-coverage": "^3.6|^4.0",
-    "pragmarx/google2fa": "^8.0|^9.0",
     "rector/rector": "^2.3",
-    "shopper/core": "*",
-    "spatie/laravel-livewire-wizard": "^2.4",
-    "spatie/laravel-package-tools": "^1.15",
-    "stevebauman/location": "^7.2",
     "symplify/monorepo-builder": "^11.0"
   },
   "autoload": {
@@ -63,11 +67,16 @@
         "packages/admin/src",
         "packages/core/src",
         "packages/sidebar/src",
-        "packages/shipping/src"
+        "packages/shipping/src",
+        "packages/payment/src"
       ],
       "Shopper\\Core\\": "packages/core/src",
+      "Shopper\\Core\\Database\\Factories\\": "packages/core/database/factories",
+      "Shopper\\Core\\Database\\Seeders\\": "packages/core/database/seeders",
+      "Shopper\\Payment\\": "packages/payment/src",
       "Shopper\\Shipping\\": "packages/shipping/src",
-      "Shopper\\Sidebar\\": "packages/sidebar/src"
+      "Shopper\\Sidebar\\": "packages/sidebar/src",
+      "Shopper\\Stripe\\": "packages/stripe/src"
     }
   },
   "autoload-dev": {
@@ -75,13 +84,23 @@
       "Tests\\": "tests"
     }
   },
+  "replace": {
+    "shopper/core": "self.version",
+    "shopper/framework": "self.version",
+    "shopper/payment": "self.version",
+    "shopper/shipping": "self.version",
+    "shopper/sidebar": "self.version",
+    "shopper/stripe": "self.version"
+  },
   "extra": {
     "laravel": {
       "providers": [
         "Shopper\\ShopperServiceProvider",
         "Shopper\\Core\\CoreServiceProvider",
+        "Shopper\\Payment\\PaymentServiceProvider",
         "Shopper\\Shipping\\ShippingServiceProvider",
-        "Shopper\\Sidebar\\SidebarServiceProvider"
+        "Shopper\\Sidebar\\SidebarServiceProvider",
+        "Shopper\\Stripe\\StripeServiceProvider"
       ]
     }
   },
@@ -120,12 +139,6 @@
       "phpstan/extension-installer": true
     }
   },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "packages/core"
-    }
-  ],
   "minimum-stability": "dev",
   "prefer-stable": true
 }

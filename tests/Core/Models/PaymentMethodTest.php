@@ -32,16 +32,10 @@ describe(PaymentMethod::class, function (): void {
         expect($payment->slug)->toBe('credit-card-payment');
     });
 
-    it('has logo url accessor', function (): void {
-        $payment = PaymentMethod::factory()->create(['logo' => 'images/payment.png']);
+    it('returns null for `logoUrl()` when no media is attached', function (): void {
+        $payment = PaymentMethod::factory()->create();
 
-        expect($payment->logo_url)->toContain('images/payment.png');
-    });
-
-    it('returns null for logo url when logo is null', function (): void {
-        $payment = PaymentMethod::factory()->create(['logo' => null]);
-
-        expect($payment->logo_url)->toBeNull();
+        expect($payment->logoUrl())->toBeNull();
     });
 
     // HasZones trait tests

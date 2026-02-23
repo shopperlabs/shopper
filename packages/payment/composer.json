@@ -1,0 +1,26 @@
+{
+  "name": "shopper/payment",
+  "description": "Laravel Shopper payment providers integration",
+  "license": "MIT",
+  "require": {
+    "php": "^8.3",
+    "shopper/core": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shopper\\Payment\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shopper\\Payment\\PaymentServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

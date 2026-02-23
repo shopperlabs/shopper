@@ -8,9 +8,11 @@ use Illuminate\Support\Collection;
 use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Zone;
+use Shopper\Shipping\Contracts\ShippingDriver;
 use Shopper\Shipping\DataTransferObjects\Address;
 use Shopper\Shipping\DataTransferObjects\Package;
 use Shopper\Shipping\DataTransferObjects\ShippingRate;
+use Shopper\Shipping\Facades\Shipping;
 
 final class CarrierRateService
 {
@@ -30,11 +32,68 @@ final class CarrierRateService
         array $packages,
         ?Zone $zone = null
     ): Collection {
-        if ($carrier->usesApiDriver() && $carrier->isDriverConfigured()) {
-            return $this->getApiRates($carrier, $from, $to, $packages);
+        $driver = $this->resolveDriver($carrier);
+
+        if ($driver?->isConfigured()) {
+            return $this->getApiRates($driver, $from, $to, $packages);
         }
 
         return $this->getManualRates($carrier, $zone);
+    }
+
+    /**
+     * Resolve the shipping driver for a carrier.
+     */
+    public function resolveDriver(Carrier $carrier): ?ShippingDriver
+    {
+        if (! filled($carrier->driver) || $carrier->driver === 'manual') {
+            return null;
+        }
+
+        return Shipping::driver($carrier->driver);
+    }
+
+    /**
+     * Check if a carrier uses an API driver and is properly configured.
+     */
+    public function isDriverConfigured(Carrier $carrier): bool
+    {
+        return $this->resolveDriver($carrier)?->isConfigured() ?? false;
+    }
+
+    /**
+     * Get the logo URL for a carrier, with driver logo as fallback.
+     */
+    public function getLogoUrl(Carrier $carrier): ?string
+    {
+        return $carrier->logoUrl() ?? $this->resolveDriver($carrier)?->logo();
+    }
+
+    public function getLogoHtml(Carrier $carrier): string
+    {
+        $logo = $this->getLogoUrl($carrier);
+
+        return $logo
+            ? '<img src="'.e($logo).'" alt="'.e($carrier->name).'" class="size-5 rounded object-contain" />'
+            : '<span class="size-5 rounded bg-gray-200 dark:bg-white/30"></span>';
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getCarrierSelectOptions(): array
+    {
+        return Carrier::query()
+            ->enabled()
+            ->with('media')
+            ->get()
+            ->mapWithKeys(fn (Carrier $carrier): array => [
+                $carrier->id => '<div class="flex items-center gap-2">'
+                    .$this->getLogoHtml($carrier)
+                    .'<span>'.e($carrier->name).'</span>'
+                    .'</div>',
+            ])
+            ->all();
     }
 
     /**
@@ -68,17 +127,11 @@ final class CarrierRateService
      * @return Collection<int, ShippingRate>
      */
     private function getApiRates(
-        Carrier $carrier,
+        ShippingDriver $driver,
         Address $from,
         Address $to,
         array $packages
     ): Collection {
-        $driver = $carrier->getShippingDriver();
-
-        if (! $driver) {
-            return collect();
-        }
-
         return $driver->calculateRates($from, $to, $packages);
     }
 

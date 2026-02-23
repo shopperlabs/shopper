@@ -15,8 +15,6 @@ use Shopper\Core\Models\Contracts\Carrier as CarrierContract;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasZones;
-use Shopper\Shipping\Contracts\ShippingDriver;
-use Shopper\Shipping\Facades\Shipping;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -66,25 +64,6 @@ class Carrier extends Model implements CarrierContract, SpatieHasMedia
         return $this->hasMany(CarrierOption::class);
     }
 
-    public function getShippingDriver(): ?ShippingDriver
-    {
-        if (! $this->usesApiDriver()) {
-            return null;
-        }
-
-        return Shipping::driver($this->driver);
-    }
-
-    public function usesApiDriver(): bool
-    {
-        return filled($this->driver) && $this->driver !== 'manual';
-    }
-
-    public function isDriverConfigured(): bool
-    {
-        return $this->getShippingDriver()?->isConfigured() ?? false;
-    }
-
     public function logoUrl(): ?string
     {
         $media = $this->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection'));
@@ -93,7 +72,7 @@ class Carrier extends Model implements CarrierContract, SpatieHasMedia
             return $media;
         }
 
-        return $this->getShippingDriver()?->logo();
+        return null;
     }
 
     protected static function newFactory(): CarrierFactory

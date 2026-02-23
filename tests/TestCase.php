@@ -28,8 +28,11 @@ use PDOException;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Core\Database\Seeders\ShopperSeeder;
+use Shopper\Payment\PaymentServiceProvider;
 use Shopper\ShopperServiceProvider;
+use Shopper\Shipping\ShippingServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
+use Shopper\Stripe\StripeServiceProvider;
 use Spatie\LivewireWizard\WizardServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\Permission\PermissionRegistrar;
@@ -79,9 +82,12 @@ abstract class TestCase extends BaseTestCase
             BladeIconsServiceProvider::class,
             CoreServiceProvider::class,
             FilamentServiceProvider::class,
+            PaymentServiceProvider::class,
             PermissionServiceProvider::class,
+            ShippingServiceProvider::class,
             ShopperServiceProvider::class,
             SidebarServiceProvider::class,
+            StripeServiceProvider::class,
             FormsServiceProvider::class,
             InfolistsServiceProvider::class,
             SchemasServiceProvider::class,

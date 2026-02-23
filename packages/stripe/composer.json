@@ -1,0 +1,27 @@
+{
+  "name": "shopper/stripe",
+  "description": "Stripe payment driver for Laravel Shopper",
+  "license": "MIT",
+  "require": {
+    "php": "^8.3",
+    "shopper/payment": "*",
+    "stripe/stripe-php": "^16.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shopper\\Stripe\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shopper\\Stripe\\StripeServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
