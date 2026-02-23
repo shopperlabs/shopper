@@ -15,18 +15,24 @@ jobs:
         package:
           - admin
           - core
+          - payment
           - sidebar
           - shipping
+          - stripe
           - types
         include:
           - package: admin
             repository: admin
           - package: core
             repository: core
+          - package: payment
+            repository: payment
           - package: sidebar
             repository: sidebar
           - package: shipping
             repository: shipping
+          - package: stripe
+            repository: stripe
           - package: types
             repository: shopper-types
     steps:

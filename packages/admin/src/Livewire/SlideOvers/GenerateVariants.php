@@ -85,7 +85,7 @@ class GenerateVariants extends SlideOverComponent
             ->map(fn (ProductVariantContract $variant): array => [ // @phpstan-ignore-line
                 'id' => $variant->id,
                 'sku' => $variant->sku,
-                'price' => $variant->prices()->first()?->amount ?: 0,
+                'price' => $variant->prices()->first()?->amount ?: 0, // @phpstan-ignore property.notFound
                 'stock' => $variant->stock,
                 'values' => $variant->values->mapWithKeys(
                     fn (AttributeValue $value): array => [

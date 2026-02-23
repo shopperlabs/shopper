@@ -26,6 +26,9 @@ parameters:
             message: '#Call to an undefined method (Illuminate\\Database\\Eloquent\\Model&)?Shopper\\Core\\Models\\Contracts\\[a-zA-Z]+::[a-zA-Z_]+\(\)#'
             identifier: method.notFound
         -
+            message: '#Call to an undefined static method Shopper\\Core\\Models\\Contracts\\[a-zA-Z]+::[a-zA-Z_]+\(\)#'
+            identifier: staticMethod.notFound
+        -
             message: '#expects view-string(\|null)?, string given#'
             identifier: argument.type
         -
