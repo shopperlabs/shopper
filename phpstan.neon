@@ -36,5 +36,14 @@ parameters:
             identifier: property.defaultValue
         -
             identifier: generics.notSubtype
+        -
+            message: '#Call to an undefined method Filament\\Forms\\Components\\TextInput::currencyMask\(\)#'
+            identifier: method.notFound
+        -
+            message: '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder<.*>::withTrashed\(\)#'
+            identifier: method.notFound
+        -
+            message: '#Call to an undefined method Staudenmeir\\LaravelAdjacencyList\\Eloquent\\Builder<.*>::withTrashed\(\)#'
+            identifier: method.notFound
 
     reportUnmatchedIgnoredErrors: false
