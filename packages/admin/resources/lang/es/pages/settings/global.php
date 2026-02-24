@@ -38,6 +38,7 @@ return [
         'address_summary' => 'La información completa de tu ubicación. Por favor pon información válida para que sea accesible para tus clientes.',
         'set_default' => 'Establecer como ubicación por defecto',
         'set_default_summary' => 'El inventario en esta ubicación está disponible para la venta en línea y se usará como predeterminado',
+        'priority_summary' => 'Los valores más bajos se procesan primero al asignar stock entre múltiples ubicaciones.',
         'is_default' => 'Esta es tu ubicación por defecto. Para cambiar si cumples pedidos en línea desde esta ubicación, selecciona otra ubicación por defecto primero.',
     ],
 

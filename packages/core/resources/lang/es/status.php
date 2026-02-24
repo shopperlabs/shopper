@@ -55,4 +55,9 @@ return [
         'delivery_failed' => 'Entrega fallida',
         'returned' => 'Devuelto',
     ],
+
+    'stock' => [
+        'reserved' => 'Reservado para pedido',
+        'cancelled' => 'Liberado por cancelación de pedido',
+    ],
 ];

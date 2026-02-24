@@ -55,4 +55,9 @@ return [
         'delivery_failed' => 'Delivery failed',
         'returned' => 'Returned',
     ],
+
+    'stock' => [
+        'reserved' => 'Reserved for order',
+        'cancelled' => 'Released from cancelled order',
+    ],
 ];

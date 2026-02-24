@@ -8,13 +8,13 @@ use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Shopper\Core\Models\Contracts\Order;
+use Shopper\Core\Models\OrderItem;
 
-final class OrderPaid implements ShouldQueueAfterCommit
+final class OrderItemCreated implements ShouldQueueAfterCommit
 {
     use Dispatchable, InteractsWithQueue, SerializesModels;
 
     public function __construct(
-        public Order $order
+        public OrderItem $orderItem
     ) {}
 }

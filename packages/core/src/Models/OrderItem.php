@@ -30,6 +30,7 @@ use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
  * @property-read CarbonInterface $updated_at
  * @property-read Contracts\Order $order
  * @property-read ?OrderShipping $shipment
+ * @property-read Model $product
  */
 class OrderItem extends Model implements OrderItemContract
 {

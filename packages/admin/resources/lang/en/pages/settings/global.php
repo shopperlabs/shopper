@@ -38,6 +38,7 @@ return [
         'address_summary' => "Your location's complete information. Please put valide informations this can be accessible for your customers.",
         'set_default' => 'Set as default location',
         'set_default_summary' => 'Inventory at this location is available for sale online and will use as default',
+        'priority_summary' => 'Lower values are fulfilled first when allocating stock across multiple locations.',
         'is_default' => 'This is your default location. To change whether you fulfill online orders from this location, select another default location first.',
     ],
 

@@ -32,6 +32,7 @@ return [
         'registered_at' => 'Registrado el',
         'visibility' => 'Visibilidad',
         'position' => 'Posición',
+        'priority' => 'Prioridad',
         'image_preview' => 'Vista previa de la imagen',
         'any' => 'Cualquiera',
         'no' => 'No',

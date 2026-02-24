@@ -38,6 +38,7 @@ return [
         'address_summary' => 'Les informations complètes de votre emplacement. Veuillez mettre des informations valables qui peuvent être accessibles à vos clients.',
         'set_default' => 'Définir comme emplacement par défaut',
         'set_default_summary' => "L'emplacement de ce site est disponible à la vente en ligne et sera utilisé par défaut.",
+        'priority_summary' => "Les valeurs les plus basses sont traitées en premier lors de l'allocation du stock sur plusieurs emplacements.",
         'is_default' => "Il s'agit de votre emplacement par défaut. Pour déterminer si vous remplissez les commandes en ligne à partir de cet emplacement, sélectionnez d'abord un autre emplacement par défaut.",
     ],
 

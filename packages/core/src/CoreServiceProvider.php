@@ -8,12 +8,15 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Shopper\Core\Console\InstallCommand;
 use Shopper\Core\Console\SyncCollectionsCommand;
+use Shopper\Core\Contracts\InventoryResolver;
+use Shopper\Core\Contracts\StockAllocator;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Observers\AddressObserver;
@@ -21,9 +24,12 @@ use Shopper\Core\Observers\AttributeObserver;
 use Shopper\Core\Observers\CategoryObserver;
 use Shopper\Core\Observers\ChannelObserver;
 use Shopper\Core\Observers\InventoryObserver;
+use Shopper\Core\Observers\OrderItemObserver;
 use Shopper\Core\Observers\OrderObserver;
 use Shopper\Core\Observers\ProductObserver;
 use Shopper\Core\Observers\ProductVariantObserver;
+use Shopper\Core\Stock\DefaultInventoryResolver;
+use Shopper\Core\Stock\PriorityStockAllocator;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -68,6 +74,7 @@ final class CoreServiceProvider extends PackageServiceProvider
         $this->registerConfigFiles();
         $this->registerDatabase();
         $this->registerModelBindings();
+        $this->registerStockAllocator();
     }
 
     protected function registerObservers(): void
@@ -81,6 +88,7 @@ final class CoreServiceProvider extends PackageServiceProvider
         ProductVariant::observeUsingConfiguredClass(ProductVariantObserver::class);
 
         Attribute::observe(AttributeObserver::class);
+        OrderItem::observe(OrderItemObserver::class);
     }
 
     protected function registerModelBindings(): void
@@ -101,6 +109,12 @@ final class CoreServiceProvider extends PackageServiceProvider
         foreach ($models as $configKey => $contract) {
             $this->app->bind($contract, config("shopper.models.{$configKey}"));
         }
+    }
+
+    protected function registerStockAllocator(): void
+    {
+        $this->app->bind(InventoryResolver::class, DefaultInventoryResolver::class);
+        $this->app->bind(StockAllocator::class, PriorityStockAllocator::class);
     }
 
     protected function bootModelRelationName(): void

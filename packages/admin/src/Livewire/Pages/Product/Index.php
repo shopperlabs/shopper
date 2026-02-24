@@ -23,11 +23,16 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Pagination\CursorPaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Events\Products\ProductDeleted;
 use Shopper\Core\Models\Contracts\Product;
+use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -35,7 +40,46 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
 {
     use InteractsWithActions;
     use InteractsWithForms;
-    use InteractsWithTable;
+    use InteractsWithTable {
+        InteractsWithTable::getTableRecords as private baseGetTableRecords;
+    }
+
+    private bool $stockBatchLoaded = false;
+
+    public function getTableRecords(): Collection|Paginator|CursorPaginator
+    {
+        $records = $this->baseGetTableRecords();
+
+        if (! $this->stockBatchLoaded) {
+            /** @var EloquentCollection<int, Product> $items */
+            $items = method_exists($records, 'getCollection')
+                ? $records->getCollection()
+                : $records;
+
+            if ($items->isNotEmpty()) {
+                $items->first()::loadCurrentStock($items); // @phpstan-ignore-line
+
+                /** @var EloquentCollection<int, ProductVariant> $variants */
+                $variants = new EloquentCollection(); // @phpstan-ignore-line
+
+                foreach ($items as $product) {
+                    if ($product->variants_count > 0) { // @phpstan-ignore-line
+                        foreach ($product->variants as $variant) {
+                            $variants->push($variant);
+                        }
+                    }
+                }
+
+                if ($variants->isNotEmpty()) {
+                    $variants->first()::loadCurrentStock($variants); // @phpstan-ignore-line
+                }
+            }
+
+            $this->stockBatchLoaded = true;
+        }
+
+        return $records;
+    }
 
     public function mount(): void
     {
@@ -77,8 +121,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                 ViewColumn::make('stock')
                     ->label(__('shopper::layout.tables.stock'))
                     ->view('shopper::livewire.tables.cells.products.stock')
-                    ->toggleable()
-                    ->toggledHiddenByDefault(),
+                    ->toggleable(),
                 IconColumn::make('is_visible')
                     ->label(__('shopper::forms.label.visibility'))
                     ->toggleable(),

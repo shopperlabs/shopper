@@ -75,8 +75,14 @@ class InventoryForm extends Component implements HasActions, HasForms
                             ->columnSpan('full'),
                         Toggle::make('is_default')
                             ->label(__('shopper::pages/settings/global.location.set_default'))
-                            ->helperText(__('shopper::pages/settings/global.location.set_default_summary'))
-                            ->columnSpan('full'),
+                            ->helperText(__('shopper::pages/settings/global.location.set_default_summary')),
+                        TextInput::make('priority')
+                            ->label(__('shopper::forms.label.priority'))
+                            ->helperText(__('shopper::pages/settings/global.location.priority_summary'))
+                            ->numeric()
+                            ->default(0)
+                            ->minValue(0)
+                            ->required(),
                     ])
                     ->columns(),
                 Separator::make(),
