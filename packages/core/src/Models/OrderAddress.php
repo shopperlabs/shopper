@@ -57,7 +57,6 @@ class OrderAddress extends Model implements OrderAddressContract
      */
     public function customer(): BelongsTo
     {
-        // @phpstan-ignore-next-line
         return $this->belongsTo(config('auth.providers.users.model'), 'customer_id');
     }
 

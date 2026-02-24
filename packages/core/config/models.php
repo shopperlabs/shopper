@@ -136,4 +136,30 @@ return [
 
     'supplier' => Models\Supplier::class,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Tax Zone Model
+    |--------------------------------------------------------------------------
+    |
+    | Eloquent model should be used to interact with your tax zones.
+    | If you want to use a custom model, your model needs to extends the
+    | \Shopper\Core\Models\TaxZone Model.
+    |
+    */
+
+    'tax_zone' => Models\TaxZone::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tax Rate Model
+    |--------------------------------------------------------------------------
+    |
+    | Eloquent model should be used to interact with your tax rates.
+    | If you want to use a custom model, your model needs to extends the
+    | \Shopper\Core\Models\TaxRate Model.
+    |
+    */
+
+    'tax_rate' => Models\TaxRate::class,
+
 ];

@@ -56,7 +56,6 @@ class AttributeValue extends Model implements AttributeValueContract
      */
     public function variants(): BelongsToMany
     {
-        // @phpstan-ignore-next-line
         return $this->belongsToMany(
             config('shopper.models.variant'),
             shopper_table('attribute_value_product_variant'),

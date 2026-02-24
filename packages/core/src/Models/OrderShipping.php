@@ -51,7 +51,6 @@ class OrderShipping extends Model implements OrderShippingContract
      */
     public function order(): BelongsTo
     {
-        // @phpstan-ignore-next-line
         return $this->belongsTo(config('shopper.models.order'), 'order_id');
     }
 

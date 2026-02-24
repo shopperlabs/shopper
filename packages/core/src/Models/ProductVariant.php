@@ -81,7 +81,6 @@ class ProductVariant extends Model implements Priceable, ProductVariantContract,
      */
     public function product(): BelongsTo
     {
-        // @phpstan-ignore-next-line
         return $this->belongsTo(config('shopper.models.product'), 'product_id');
     }
 

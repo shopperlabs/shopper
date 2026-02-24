@@ -74,7 +74,6 @@ class OrderItem extends Model implements OrderItemContract
      */
     public function order(): BelongsTo
     {
-        // @phpstan-ignore-next-line
         return $this->belongsTo(config('shopper.models.order'), 'order_id');
     }
 

@@ -196,7 +196,6 @@ class Order extends Model implements OrderContract
      */
     public function customer(): BelongsTo
     {
-        // @phpstan-ignore-next-line
         return $this->belongsTo(config('auth.providers.users.model'), 'customer_id');
     }
 
@@ -205,7 +204,6 @@ class Order extends Model implements OrderContract
      */
     public function channel(): BelongsTo
     {
-        // @phpstan-ignore-next-line
         return $this->belongsTo(config('shopper.models.channel'), 'channel_id');
     }
 
@@ -222,7 +220,6 @@ class Order extends Model implements OrderContract
      */
     public function parent(): BelongsTo
     {
-        // @phpstan-ignore-next-line
         return $this->belongsTo(static::class, 'parent_order_id');
     }
 
@@ -231,7 +228,6 @@ class Order extends Model implements OrderContract
      */
     public function children(): HasMany
     {
-        // @phpstan-ignore-next-line
         return $this->hasMany(static::class, 'parent_order_id');
     }
 
