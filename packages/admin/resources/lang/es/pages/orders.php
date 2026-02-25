@@ -36,6 +36,7 @@ return [
     'shipping_type' => 'Tipo de envío',
     'shipping_fee' => 'Tarifa de envío',
     'shipping_tax' => 'Impuesto de envío',
+    'tax' => 'Impuesto',
     'payment_actions' => 'Acciones de pago',
     'send_invoice' => 'Enviar factura',
     'private_notes' => 'Notas privadas',

@@ -36,6 +36,7 @@ return [
     'shipping_type' => "Type d'expédition",
     'shipping_fee' => "Frais d'expédition",
     'shipping_tax' => "Taxe d'expédition",
+    'tax' => 'Taxe',
     'payment_actions' => 'Actions de paiement',
     'send_invoice' => 'Envoyer la facture',
     'private_notes' => 'Notes privées',

@@ -86,11 +86,17 @@
 
                 <div class="flex items-center justify-between text-sm">
                     <span class="text-gray-500 dark:text-gray-400">
-                        {{ __('shopper::pages/orders.shipping_tax') }}
+                        {{ __('shopper::pages/orders.tax') }}
                     </span>
-                    <x-filament::badge color="gray">
-                        {{ __('shopper::words.not_available') }}
-                    </x-filament::badge>
+                    @if ($taxAmount > 0)
+                        <span class="text-gray-900 dark:text-white">
+                            {{ shopper_money_format($taxAmount, $order->currency_code) }}
+                        </span>
+                    @else
+                        <x-filament::badge color="gray">
+                            {{ __('shopper::words.not_available') }}
+                        </x-filament::badge>
+                    @endif
                 </div>
             </div>
         </div>
