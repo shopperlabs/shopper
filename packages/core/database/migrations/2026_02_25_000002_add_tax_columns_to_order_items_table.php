@@ -10,9 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table($this->getTableName('order_items'), function (Blueprint $table): void {
-            $this->addForeignKey($table, 'tax_rate_id', $this->getTableName('tax_rates'));
-
+        Schema::table($this->getTableName('order_items'), static function (Blueprint $table): void {
             $table->integer('tax_amount')
                 ->unsigned()
                 ->default(0)
@@ -22,9 +20,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table($this->getTableName('order_items'), function (Blueprint $table): void {
-            $this->removeForeignKeyAndColumn($table, 'tax_rate_id');
-
+        Schema::table($this->getTableName('order_items'), static function (Blueprint $table): void {
             $table->dropColumn('tax_amount');
         });
     }

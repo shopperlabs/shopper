@@ -3,7 +3,7 @@ import type { Channel } from './channel'
 import type { DateEntity, Entity, Metadata } from './common'
 import type { Customer } from './customer'
 import type { PaymentMethod } from './payment_method'
-import type { TaxRate } from './tax'
+import type { OrderTaxLine } from './tax'
 import type { Zone } from './zone'
 
 export enum OrderStatus {
@@ -143,8 +143,6 @@ export interface OrderItem extends Entity {
   unit_price_amount: number | null
   /** The tax amount (in cents). */
   tax_amount: number
-  /** The tax rate ID. */
-  tax_rate_id: number | null
   /** The computed total (unit_price_amount * quantity). */
   total: number
   /** The SKU of the order item. */
@@ -161,8 +159,8 @@ export interface OrderItem extends Entity {
   fulfillment_status: FulfillmentStatus | null
   /** The order. */
   order?: Order
-  /** The tax rate. */
-  taxRate?: TaxRate | null
+  /** The tax lines. */
+  taxLines?: OrderTaxLine[]
   /** The shipment. */
   shipment?: OrderShipping
 }
@@ -229,6 +227,8 @@ export interface OrderShipping extends Entity {
   items?: OrderItem[]
   /** The shipment tracking events. */
   events?: OrderShippingEvent[]
+  /** The tax lines. */
+  taxLines?: OrderTaxLine[]
 }
 
 /**

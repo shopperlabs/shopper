@@ -82,3 +82,25 @@ export interface TaxRateRule extends Entity {
   /** The tax rate. */
   taxRate?: TaxRate
 }
+
+/**
+ * OrderTaxLine model — snapshotted tax applied to an order item or shipping.
+ */
+export interface OrderTaxLine extends Entity {
+  /** The morph type (OrderItem or OrderShipping). */
+  taxable_type: string
+  /** The morph ID. */
+  taxable_id: number
+  /** The snapshotted tax code (e.g., "VAT", "GST"). */
+  code: string
+  /** The snapshotted tax name (e.g., "TVA 20%"). */
+  name: string
+  /** The snapshotted tax rate percentage. */
+  rate: number
+  /** The calculated tax amount (in cents). */
+  amount: number
+  /** Optional reference to the source tax rate. */
+  tax_rate_id: number | null
+  /** The source tax rate (if still exists). */
+  taxRate?: TaxRate | null
+}

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Database\Factories\OrderItemFactory;
 use Shopper\Core\Enum\FulfillmentStatus;
@@ -24,7 +25,6 @@ use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
  * @property-read int $product_id
  * @property-read string $product_type
  * @property-read int $tax_amount
- * @property-read ?int $tax_rate_id
  * @property-read int $order_id
  * @property-read ?int $order_shipping_id
  * @property-read ?FulfillmentStatus $fulfillment_status
@@ -32,7 +32,7 @@ use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
  * @property-read CarbonInterface $updated_at
  * @property-read Contracts\Order $order
  * @property-read ?OrderShipping $shipment
- * @property-read ?TaxRate $taxRate
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, OrderTaxLine> $taxLines
  * @property-read Model $product
  */
 class OrderItem extends Model implements OrderItemContract
@@ -81,11 +81,11 @@ class OrderItem extends Model implements OrderItemContract
     }
 
     /**
-     * @return BelongsTo<TaxRate, $this>
+     * @return MorphMany<OrderTaxLine, $this>
      */
-    public function taxRate(): BelongsTo
+    public function taxLines(): MorphMany
     {
-        return $this->belongsTo(TaxRate::class, 'tax_rate_id');
+        return $this->morphMany(OrderTaxLine::class, 'taxable');
     }
 
     /**

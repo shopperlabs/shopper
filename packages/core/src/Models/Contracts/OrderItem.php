@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 interface OrderItem
@@ -13,5 +14,5 @@ interface OrderItem
 
     public function order(): BelongsTo;
 
-    public function taxRate(): BelongsTo;
+    public function taxLines(): MorphMany;
 }

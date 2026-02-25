@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Shopper\Core\Database\Factories\OrderShippingFactory;
 use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Models\Contracts\OrderShipping as OrderShippingContract;
@@ -31,6 +32,7 @@ use Shopper\Core\Traits\HasFulfillmentTransitions;
  * @property-read ?Carrier $carrier
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OrderItem> $items
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OrderShippingEvent> $events
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, OrderTaxLine> $taxLines
  */
 class OrderShipping extends Model implements OrderShippingContract
 {
@@ -76,6 +78,14 @@ class OrderShipping extends Model implements OrderShippingContract
     public function events(): HasMany
     {
         return $this->hasMany(OrderShippingEvent::class, 'order_shipping_id');
+    }
+
+    /**
+     * @return MorphMany<OrderTaxLine, $this>
+     */
+    public function taxLines(): MorphMany
+    {
+        return $this->morphMany(OrderTaxLine::class, 'taxable');
     }
 
     protected static function newFactory(): OrderShippingFactory
