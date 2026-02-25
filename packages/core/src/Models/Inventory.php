@@ -45,9 +45,9 @@ class Inventory extends Model implements InventoryContract
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'inventory';
+        return config('shopper.models.inventory', static::class);
     }
 
     public function getTable(): string

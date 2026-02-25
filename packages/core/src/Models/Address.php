@@ -47,9 +47,9 @@ class Address extends Model implements AddressContract
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'address';
+        return config('shopper.models.address', static::class);
     }
 
     public function getTable(): string

@@ -47,9 +47,9 @@ class Category extends Model implements CategoryContract, SpatieHasMedia
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'category';
+        return config('shopper.models.category', static::class);
     }
 
     public function getTable(): string

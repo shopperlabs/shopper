@@ -49,9 +49,9 @@ class Collection extends Model implements CollectionContract, SpatieHasMedia
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'collection';
+        return config('shopper.models.collection', static::class);
     }
 
     public function getTable(): string

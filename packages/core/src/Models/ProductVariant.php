@@ -66,9 +66,9 @@ class ProductVariant extends Model implements Priceable, ProductVariantContract,
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'variant';
+        return config('shopper.models.variant', static::class);
     }
 
     public function getTable(): string

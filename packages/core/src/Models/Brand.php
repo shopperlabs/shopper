@@ -42,9 +42,9 @@ class Brand extends Model implements BrandContract, SpatieHasMedia
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'brand';
+        return config('shopper.models.brand', static::class);
     }
 
     public function getTable(): string

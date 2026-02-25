@@ -80,9 +80,9 @@ class Order extends Model implements OrderContract
         parent::__construct($attributes);
     }
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'order';
+        return config('shopper.models.order', static::class);
     }
 
     public function setDefaultOrderStatus(): void

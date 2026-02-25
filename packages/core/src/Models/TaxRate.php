@@ -37,9 +37,9 @@ class TaxRate extends Model implements TaxRateContract
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'tax_rate';
+        return config('shopper.models.tax_rate', static::class);
     }
 
     public function getTable(): string

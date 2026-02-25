@@ -31,20 +31,19 @@ trait HasModelContract
         return (new static)->$method(...$parameters); // @phpstan-ignore new.static
     }
 
-    abstract public static function configKey(): string;
+    /**
+     * Return the configured model class for this model.
+     *
+     * Each model defines its own config resolution, allowing models from
+     * any package to participate in the swappable model system.
+     *
+     * @return class-string<static>
+     */
+    abstract public static function configuredClass(): string;
 
     public static function bootHasModelContract(): void
     {
         static::validateModelConfiguration();
-    }
-
-    /**
-     * @return class-string<static>
-     */
-    public static function configuredClass(): string
-    {
-        /** @var class-string<static> */
-        return config('shopper.models.'.static::configKey(), static::class);
     }
 
     /**
@@ -186,7 +185,7 @@ trait HasModelContract
         $class = static::class;
 
         while ($parent = get_parent_class($class)) {
-            if (str_starts_with($parent, 'Shopper\\Core\\Models\\')) {
+            if (preg_match('/^Shopper\\\\[A-Za-z]+\\\\Models\\\\/', $parent)) {
                 return $parent;
             }
 

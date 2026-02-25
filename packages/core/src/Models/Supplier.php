@@ -40,9 +40,9 @@ class Supplier extends Model implements SupplierContract
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'supplier';
+        return config('shopper.models.supplier', static::class);
     }
 
     public function getTable(): string

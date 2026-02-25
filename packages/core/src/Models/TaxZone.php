@@ -42,9 +42,9 @@ class TaxZone extends Model implements TaxZoneContract
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'tax_zone';
+        return config('shopper.models.tax_zone', static::class);
     }
 
     public function getTable(): string

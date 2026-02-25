@@ -39,9 +39,9 @@ class Channel extends Model implements ChannelContract
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'channel';
+        return config('shopper.models.channel', static::class);
     }
 
     public function getTable(): string
