@@ -1,6 +1,16 @@
 import type { Zone } from './zone'
 
 /**
+ * Check if a currency code does not use subunits (e.g., JPY, KRW).
+ */
+export function isNoDivisionCurrency(currency: string): boolean {
+  return [
+    'BIF', 'CLP', 'DJF', 'GNF', 'HTG', 'JPY', 'KMF', 'KRW', 'MGA',
+    'PYG', 'RWF', 'VND', 'VUV', 'XAF', 'XAG', 'XAU', 'XDR', 'XOF', 'XPF',
+  ].includes(currency)
+}
+
+/**
  * Currency model.
  */
 export interface Currency {
