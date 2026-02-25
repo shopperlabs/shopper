@@ -47,6 +47,11 @@
                 <div class="flex items-center justify-between text-sm">
                     <span class="text-gray-500 dark:text-gray-400">
                         {{ __('shopper::words.subtotal') }}
+                        <span class="text-xs">
+                            ({{ $isTaxInclusive
+                                ? __('shopper::pages/settings/taxes.inclusive')
+                                : __('shopper::pages/settings/taxes.exclusive') }})
+                        </span>
                     </span>
                     <span class="text-gray-900 dark:text-white">
                         {{ trans_choice('shopper::words.item_count', $itemsCount, ['count' => $itemsCount]) }}
