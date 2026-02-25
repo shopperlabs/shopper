@@ -52,7 +52,7 @@ class Discount extends Model implements DiscountContract
     public function hasReachedLimit(): bool
     {
         if ($this->usage_limit !== null) {
-            return $this->total_use === $this->usage_limit;
+            return $this->total_use >= $this->usage_limit;
         }
 
         return false;

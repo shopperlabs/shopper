@@ -11,10 +11,10 @@ use Shopper\Core\Taxes\OrderItemTaxAdapter;
 use Shopper\Core\Taxes\TaxCalculationContext;
 use Shopper\Core\Taxes\TaxCalculator;
 
-final class CreateOrderTaxLinesAction
+final readonly class CreateOrderTaxLinesAction
 {
     public function __construct(
-        private readonly TaxCalculator $calculator,
+        private TaxCalculator $calculator,
     ) {}
 
     public function execute(Order $order): void

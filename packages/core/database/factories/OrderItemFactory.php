@@ -28,6 +28,8 @@ class OrderItemFactory extends Factory
             'product_id' => Product::factory(),
             'quantity' => $this->faker->numberBetween(1, 10),
             'unit_price_amount' => $this->faker->numberBetween(1000, 50000),
+            'tax_amount' => 0,
+            'discount_amount' => 0,
             'order_id' => Order::factory(),
         ];
     }

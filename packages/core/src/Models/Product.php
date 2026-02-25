@@ -40,6 +40,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read ?string $sku
  * @property-read ?string $description
  * @property-read ?string $summary
+ * @property-read bool $allow_backorder
  * @property-read ?int $brand_id
  * @property-read ?string $barcode
  * @property-read ?ProductType $type
@@ -97,9 +98,9 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'product';
+        return config('shopper.models.product', static::class);
     }
 
     public function getTable(): string
@@ -287,6 +288,7 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
     protected function casts(): array
     {
         return [
+            'allow_backorder' => 'boolean',
             'featured' => 'boolean',
             'is_visible' => 'boolean',
             'published_at' => 'datetime',

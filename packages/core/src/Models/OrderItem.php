@@ -25,6 +25,7 @@ use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
  * @property-read int $product_id
  * @property-read string $product_type
  * @property-read int $tax_amount
+ * @property-read int $discount_amount
  * @property-read int $order_id
  * @property-read ?int $order_shipping_id
  * @property-read ?FulfillmentStatus $fulfillment_status
@@ -124,10 +125,18 @@ class OrderItem extends Model implements OrderItemContract
         );
     }
 
+    protected function discountAmount(): Attribute
+    {
+        return Attribute::make(
+            get: fn (float|int $value): float|int => $value / 100,
+            set: fn (float|int $value): int => (int) round($value * 100),
+        );
+    }
+
     protected function total(): Attribute
     {
         return Attribute::make(
-            get: fn (): int|float => $this->unit_price_amount * $this->quantity
+            get: fn (): int|float => ($this->unit_price_amount * $this->quantity) - $this->discount_amount
         );
     }
 }

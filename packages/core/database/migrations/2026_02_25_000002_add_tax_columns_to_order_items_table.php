@@ -15,13 +15,16 @@ return new class extends Migration
                 ->unsigned()
                 ->default(0)
                 ->after('unit_price_amount');
+            $table->integer('discount_amount')
+                ->unsigned()
+                ->default(0);
         });
     }
 
     public function down(): void
     {
         Schema::table($this->getTableName('order_items'), static function (Blueprint $table): void {
-            $table->dropColumn('tax_amount');
+            $table->dropColumn(['tax_amount', 'discount_amount']);
         });
     }
 };
