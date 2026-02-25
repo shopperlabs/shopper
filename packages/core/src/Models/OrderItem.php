@@ -23,6 +23,8 @@ use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
  * @property-read string $sku
  * @property-read int $product_id
  * @property-read string $product_type
+ * @property-read int $tax_amount
+ * @property-read ?int $tax_rate_id
  * @property-read int $order_id
  * @property-read ?int $order_shipping_id
  * @property-read ?FulfillmentStatus $fulfillment_status
@@ -30,6 +32,7 @@ use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
  * @property-read CarbonInterface $updated_at
  * @property-read Contracts\Order $order
  * @property-read ?OrderShipping $shipment
+ * @property-read ?TaxRate $taxRate
  * @property-read Model $product
  */
 class OrderItem extends Model implements OrderItemContract
@@ -78,6 +81,14 @@ class OrderItem extends Model implements OrderItemContract
     }
 
     /**
+     * @return BelongsTo<TaxRate, $this>
+     */
+    public function taxRate(): BelongsTo
+    {
+        return $this->belongsTo(TaxRate::class, 'tax_rate_id');
+    }
+
+    /**
      * @return BelongsTo<OrderShipping, $this>
      */
     public function shipment(): BelongsTo
@@ -98,6 +109,14 @@ class OrderItem extends Model implements OrderItemContract
     }
 
     protected function unitPriceAmount(): Attribute
+    {
+        return Attribute::make(
+            get: fn (float|int $value): float|int => $value / 100,
+            set: fn (float|int $value): int => (int) round($value * 100),
+        );
+    }
+
+    protected function taxAmount(): Attribute
     {
         return Attribute::make(
             get: fn (float|int $value): float|int => $value / 100,

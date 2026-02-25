@@ -12,4 +12,6 @@ interface OrderItem
     public function product(): MorphTo;
 
     public function order(): BelongsTo;
+
+    public function taxRate(): BelongsTo;
 }

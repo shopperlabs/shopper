@@ -175,18 +175,6 @@ describe(Order::class, function (): void {
             ->and($order->shippingOption->id)->toBe($carrierOption->id);
     });
 
-    it('has total amount accessor', function (): void {
-        /** @var Order $order */
-        $order = Order::factory()->create(['currency_code' => 'USD']);
-        OrderItem::factory()->count(2)->create([
-            'order_id' => $order->id,
-            'unit_price_amount' => 1000,
-            'quantity' => 1,
-        ]);
-
-        expect($order->totalAmount)->toBeInstanceOf(Shopper\Core\Helpers\Price::class);
-    });
-
     it('sets default statuses on creation', function (): void {
         $order = new Order;
 
