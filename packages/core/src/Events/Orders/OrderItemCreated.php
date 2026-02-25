@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Events\Orders;
 
-use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Events\ShouldDispatchAfterCommit;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Shopper\Core\Models\OrderItem;
 
-final class OrderItemCreated implements ShouldQueueAfterCommit
+final class OrderItemCreated implements ShouldDispatchAfterCommit
 {
-    use Dispatchable, InteractsWithQueue, SerializesModels;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public function __construct(
         public OrderItem $orderItem

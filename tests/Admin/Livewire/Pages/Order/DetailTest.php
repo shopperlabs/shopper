@@ -48,7 +48,7 @@ describe(Detail::class, function (): void {
         Livewire::test(Detail::class, ['order' => $order])
             ->callAction('cancelOrder');
 
-        Event::assertDispatched(Orders\OrderCancel::class, fn ($event): bool => $event->order->id === $order->id);
+        Event::assertDispatched(Orders\OrderCancelled::class, fn ($event): bool => $event->order->id === $order->id);
     });
 
     it('update order status to cancelled', function (): void {

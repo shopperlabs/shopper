@@ -342,8 +342,8 @@ multi-location inventory:
 @endverbatim
 
 ### Events Shopper dispatches events for major actions. Listen to these for custom logic: - Products: `ProductCreated`,
-`ProductUpdated`, `ProductDeleted` - Orders: `OrderCreated`, `OrderCompleted`, `OrderPaid`, `OrderShipped`, `OrderCancel`,
-`OrderArchived`
+`ProductUpdated`, `ProductDeleted` - Orders: `OrderCreated`, `OrderCompleted`, `OrderPaid`, `OrderShipped`, `OrderCancelled`,
+`OrderArchived`, `OrderNoteAdded`, `OrderShipmentCreated`, `OrderShipmentDelivered`, `OrderItemCreated`
 
 @verbatim
     <code-snippet name="Listen to Shopper events" lang="php">

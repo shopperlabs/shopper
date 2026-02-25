@@ -8,7 +8,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Shopper\Core\Events\Orders\AddNoteToOrder;
+use Shopper\Core\Events\Orders\OrderNoteAdded;
 use Shopper\Core\Models\Contracts\Order;
 
 class OrderNotes extends Component
@@ -24,7 +24,7 @@ class OrderNotes extends Component
 
         $this->order->update(['notes' => $this->notes]);
 
-        event(new AddNoteToOrder($this->order));
+        event(new OrderNoteAdded($this->order));
 
         Notification::make()
             ->title(__('shopper::pages/orders.notifications.note_added'))
