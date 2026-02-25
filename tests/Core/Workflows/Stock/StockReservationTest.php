@@ -17,7 +17,10 @@ use Tests\Core\Stubs\User;
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
-    $this->actingAs(User::factory()->create());
+    $this->user = User::factory()->create();
+    $this->actingAs($this->user);
+
+    Event::fake([OrderItemCreated::class]);
 
     $this->inventory = Inventory::factory()->create([
         'is_default' => true,
@@ -31,6 +34,7 @@ beforeEach(function (): void {
     ]);
 
     $this->order = Order::factory()->create([
+        'customer_id' => $this->user->id,
         'status' => OrderStatus::New,
         'payment_status' => PaymentStatus::Pending,
         'shipping_status' => ShippingStatus::Unfulfilled,
@@ -71,7 +75,8 @@ describe('StockReservationTest', function (): void {
 
         expect($history)->not->toBeNull()
             ->and($history->quantity)->toBe(-5)
-            ->and($history->inventory_id)->toBe($this->inventory->id);
+            ->and($history->inventory_id)->toBe($this->inventory->id)
+            ->and($history->user_id)->toBe($this->user->id);
     });
 
     it('reserves stock independently for each item in an order', function (): void {

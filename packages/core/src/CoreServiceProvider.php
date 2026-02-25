@@ -74,6 +74,8 @@ final class CoreServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
+        $this->app->register(EventServiceProvider::class);
+
         $this->registerConfigFiles();
         $this->registerDatabase();
         $this->registerModelBindings();
@@ -125,8 +127,8 @@ final class CoreServiceProvider extends PackageServiceProvider
 
     protected function registerTaxCalculator(): void
     {
-        $this->app->bind(TaxCalculationProvider::class, SystemTaxProvider::class);
-        $this->app->bind(TaxCalculator::class);
+        $this->app->singleton(TaxCalculationProvider::class, SystemTaxProvider::class);
+        $this->app->singleton(TaxCalculator::class);
     }
 
     protected function bootModelRelationName(): void

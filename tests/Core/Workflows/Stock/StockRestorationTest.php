@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
-use Shopper\Core\Events\Orders\OrderCancel;
+use Shopper\Core\Events\Orders\OrderCancelled;
 use Shopper\Core\Events\Orders\OrderItemCreated;
 use Shopper\Core\Listeners\Orders\ReserveOrderItemStockListener;
 use Shopper\Core\Listeners\Orders\RestoreOrderStockListener;
@@ -18,7 +18,10 @@ use Tests\Core\Stubs\User;
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
-    $this->actingAs(User::factory()->create());
+    $this->user = User::factory()->create();
+    $this->actingAs($this->user);
+
+    Event::fake([OrderItemCreated::class]);
 
     $this->inventory = Inventory::factory()->create([
         'is_default' => true,
@@ -32,6 +35,7 @@ beforeEach(function (): void {
     ]);
 
     $this->order = Order::factory()->create([
+        'customer_id' => $this->user->id,
         'status' => OrderStatus::New,
         'payment_status' => PaymentStatus::Pending,
         'shipping_status' => ShippingStatus::Unfulfilled,
@@ -55,7 +59,7 @@ describe('StockRestorationTest', function (): void {
         $this->order->update(['status' => OrderStatus::Cancelled, 'cancelled_at' => now()]);
 
         $restoreListener = resolve(RestoreOrderStockListener::class);
-        $restoreListener->handle(new OrderCancel($this->order));
+        $restoreListener->handle(new OrderCancelled($this->order));
 
         expect($this->product->getStock())->toBe(50);
     });
@@ -91,7 +95,7 @@ describe('StockRestorationTest', function (): void {
         $this->order->update(['status' => OrderStatus::Cancelled, 'cancelled_at' => now()]);
 
         $restoreListener = resolve(RestoreOrderStockListener::class);
-        $restoreListener->handle(new OrderCancel($this->order));
+        $restoreListener->handle(new OrderCancelled($this->order));
 
         expect($productA->getStock())->toBe(30)
             ->and($productB->getStock())->toBe(15);
@@ -111,7 +115,7 @@ describe('StockRestorationTest', function (): void {
         $this->order->update(['status' => OrderStatus::Cancelled, 'cancelled_at' => now()]);
 
         $restoreListener = resolve(RestoreOrderStockListener::class);
-        $restoreListener->handle(new OrderCancel($this->order));
+        $restoreListener->handle(new OrderCancelled($this->order));
 
         $histories = $this->product->inventoryHistories()
             ->where('reference_type', $this->order->getMorphClass())
@@ -122,7 +126,9 @@ describe('StockRestorationTest', function (): void {
         // One reservation (-6) + one restoration (+6)
         expect($histories)->toHaveCount(2)
             ->and($histories[0]->quantity)->toBe(-6)
-            ->and($histories[1]->quantity)->toBe(6);
+            ->and($histories[0]->user_id)->toBe($this->user->id)
+            ->and($histories[1]->quantity)->toBe(6)
+            ->and($histories[1]->user_id)->toBe($this->user->id);
     });
 
     it('restores stock to the correct inventories after a split reservation is cancelled', function (): void {
@@ -134,6 +140,7 @@ describe('StockRestorationTest', function (): void {
         $product->mutateStock($paris->id, 3, ['event' => 'Initial', 'old_quantity' => 0]);
 
         $order = Order::factory()->create([
+            'customer_id' => $this->user->id,
             'status' => OrderStatus::New,
             'payment_status' => PaymentStatus::Pending,
             'shipping_status' => ShippingStatus::Unfulfilled,
@@ -157,7 +164,7 @@ describe('StockRestorationTest', function (): void {
         $order->update(['status' => OrderStatus::Cancelled, 'cancelled_at' => now()]);
 
         $restoreListener = resolve(RestoreOrderStockListener::class);
-        $restoreListener->handle(new OrderCancel($order));
+        $restoreListener->handle(new OrderCancelled($order));
 
         expect($product->stockInventory($lyon->id))->toBe(2)
             ->and($product->stockInventory($paris->id))->toBe(3);

@@ -25,7 +25,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'number' => '#SH'.$this->faker->unique()->randomNumber(6),
+            'number' => $this->faker->unique()->randomNumber(6),
             'currency_code' => shopper_currency(),
             'status' => $this->faker->randomElement(OrderStatus::values()),
             'payment_status' => $this->faker->randomElement(PaymentStatus::values()),
