@@ -154,21 +154,17 @@ class Inventory extends Component implements HasActions, HasForms, HasTable
 
                         if ($realTimeStock >= $currentStock) {
                             $this->product->mutateStock(
-                                $inventoryId,
-                                $quantity,
-                                [
-                                    'event' => __('shopper::pages/products.inventory.add'),
-                                    'old_quantity' => $quantity,
-                                ]
+                                inventoryId: $inventoryId,
+                                quantity: $quantity,
+                                oldQuantity: $quantity,
+                                event: __('shopper::pages/products.inventory.add'),
                             );
                         } else {
                             $this->product->decreaseStock(
-                                $inventoryId,
-                                $quantity,
-                                [
-                                    'event' => __('shopper::pages/products.inventory.remove'),
-                                    'old_quantity' => $quantity,
-                                ]
+                                inventoryId: $inventoryId,
+                                quantity: $quantity,
+                                oldQuantity: $quantity,
+                                event: __('shopper::pages/products.inventory.remove'),
                             );
                         }
 

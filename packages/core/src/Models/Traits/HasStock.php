@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Shopper\Core\Exceptions\LazyStockLoadingException;
@@ -110,41 +109,57 @@ trait HasStock
             ->sum('quantity');
     }
 
-    /**
-     * @param  array<string, mixed>  $arguments
-     */
-    public function mutateStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
-    {
-        return $this->createStockMutation($quantity, $inventoryId, $arguments);
+    public function mutateStock(
+        int $inventoryId,
+        int $quantity = 1,
+        int $oldQuantity = 0,
+        ?string $event = null,
+        ?string $description = null,
+        ?int $userId = null,
+        ?Model $reference = null,
+    ): InventoryHistory {
+        return $this->createStockMutation($quantity, $inventoryId, $oldQuantity, $event, $description, $userId, $reference);
     }
 
-    /**
-     * @param  array<string, mixed>  $arguments
-     */
-    public function decreaseStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
-    {
-        return $this->createStockMutation(-1 * abs($quantity), $inventoryId, $arguments);
+    public function decreaseStock(
+        int $inventoryId,
+        int $quantity = 1,
+        int $oldQuantity = 0,
+        ?string $event = null,
+        ?string $description = null,
+        ?int $userId = null,
+        ?Model $reference = null,
+    ): InventoryHistory {
+        return $this->createStockMutation(-1 * abs($quantity), $inventoryId, $oldQuantity, $event, $description, $userId, $reference);
     }
 
-    /**
-     * @param  array<string, mixed>  $arguments
-     */
-    public function clearStock(?int $inventoryId = null, ?int $newQuantity = null, array $arguments = []): bool
-    {
+    public function clearStock(
+        ?int $inventoryId = null,
+        ?int $newQuantity = null,
+        int $oldQuantity = 0,
+        ?string $event = null,
+        ?string $description = null,
+        ?int $userId = null,
+        ?Model $reference = null,
+    ): bool {
         $this->inventoryHistories()->delete();
 
         if ($inventoryId && $newQuantity) {
-            $this->createStockMutation($newQuantity, $inventoryId, $arguments);
+            $this->createStockMutation($newQuantity, $inventoryId, $oldQuantity, $event, $description, $userId, $reference);
         }
 
         return true;
     }
 
-    /**
-     * @param  array<string, mixed>  $arguments
-     */
-    public function setStock(int $newQuantity, int $inventoryId, array $arguments = []): ?InventoryHistory
-    {
+    public function setStock(
+        int $newQuantity,
+        int $inventoryId,
+        int $oldQuantity = 0,
+        ?string $event = null,
+        ?string $description = null,
+        ?int $userId = null,
+        ?Model $reference = null,
+    ): ?InventoryHistory {
         $currentStock = $this->stock;
         $deltaStock = $newQuantity - $currentStock;
 
@@ -152,27 +167,31 @@ trait HasStock
             return null;
         }
 
-        return $this->createStockMutation($deltaStock, $inventoryId, $arguments);
+        return $this->createStockMutation($deltaStock, $inventoryId, $oldQuantity, $event, $description, $userId, $reference);
     }
 
-    /**
-     * @param  array<string, mixed>  $arguments
-     */
-    public function createStockMutation(int $quantity, int $inventoryId, array $arguments = []): InventoryHistory
-    {
-        $reference = Arr::get($arguments, 'reference');
-
-        $createArguments = collect([
+    public function createStockMutation(
+        int $quantity,
+        int $inventoryId,
+        int $oldQuantity = 0,
+        ?string $event = null,
+        ?string $description = null,
+        ?int $userId = null,
+        ?Model $reference = null,
+    ): InventoryHistory {
+        $createArguments = [
             'quantity' => $quantity,
-            'old_quantity' => Arr::get($arguments, 'old_quantity'),
-            'description' => Arr::get($arguments, 'description'),
-            'event' => Arr::get($arguments, 'event'),
+            'old_quantity' => $oldQuantity,
+            'description' => $description,
+            'event' => $event,
             'inventory_id' => $inventoryId,
-            'user_id' => Arr::get($arguments, 'user_id', Auth::id()),
-        ])->when($reference, fn ($collection) => $collection
-            ->put('reference_type', $reference->getMorphClass())
-            ->put('reference_id', $reference->getKey()))
-            ->toArray();
+            'user_id' => $userId ?? Auth::id(),
+        ];
+
+        if ($reference) {
+            $createArguments['reference_type'] = $reference->getMorphClass();
+            $createArguments['reference_id'] = $reference->getKey();
+        }
 
         return $this->inventoryHistories()->create($createArguments);
     }

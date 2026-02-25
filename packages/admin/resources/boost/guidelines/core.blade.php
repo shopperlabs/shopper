@@ -291,8 +291,8 @@ multi-location inventory:
     $product = Product::query()->find($id);
     $inventory = Inventory::query()->where('is_default', true)->first();
 
-    $product->setStock(100, $inventory->id);
-    $product->decreaseStock($inventory->id, 5);
+    $product->setStock(newQuantity: 100, inventoryId: $inventory->id);
+    $product->decreaseStock(inventoryId: $inventory->id, quantity: 5);
     $currentStock = $product->getStock();
     </code-snippet>
 @endverbatim

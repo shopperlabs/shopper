@@ -35,7 +35,7 @@ beforeEach(function (): void {
 
 describe(Product::class, function (): void {
     it('checks if product is in stock', function (): void {
-        $this->product->mutateStock($this->inventory->id, 10, ['old_quantity' => 0]);
+        $this->product->mutateStock($this->inventory->id, 10);
 
         expect($this->product->inStock())->toBeTrue()
             ->and($this->product->inStock(5))->toBeTrue()
@@ -47,7 +47,7 @@ describe(Product::class, function (): void {
     });
 
     it('gets current stock', function (): void {
-        $this->product->mutateStock($this->inventory->id, 10, ['old_quantity' => 0]);
+        $this->product->mutateStock($this->inventory->id, 10);
 
         expect($this->product->getStock())->toBe(10)
             ->and($this->product->stock)->toBe(10);
@@ -55,10 +55,10 @@ describe(Product::class, function (): void {
 
     it('gets stock at specific date', function (): void {
         Carbon::setTestNow('2024-01-01 10:00:00');
-        $this->product->mutateStock($this->inventory->id, 10, ['old_quantity' => 0]);
+        $this->product->mutateStock($this->inventory->id, 10);
 
         Carbon::setTestNow('2024-01-02 10:00:00');
-        $this->product->mutateStock($this->inventory->id, 5, ['old_quantity' => 10]);
+        $this->product->mutateStock($this->inventory->id, 5, oldQuantity: 10);
 
         $stockAtFirstDate = $this->product->getStock(Carbon::parse('2024-01-01 12:00:00'));
         $stockAtSecondDate = $this->product->getStock(Carbon::parse('2024-01-02 12:00:00'));
@@ -73,15 +73,15 @@ describe(Product::class, function (): void {
         $inventory1 = Inventory::factory()->create();
         $inventory2 = Inventory::factory()->create();
 
-        $this->product->mutateStock($inventory1->id, 10, ['old_quantity' => 0]);
-        $this->product->mutateStock($inventory2->id, 5, ['old_quantity' => 0]);
+        $this->product->mutateStock($inventory1->id, 10);
+        $this->product->mutateStock($inventory2->id, 5);
 
         expect($this->product->stockInventory($inventory1->id))->toBe(10)
             ->and($this->product->stockInventory($inventory2->id))->toBe(5);
     });
 
     it('mutates stock by adding quantity', function (): void {
-        $history = $this->product->mutateStock($this->inventory->id, 10, ['old_quantity' => 0]);
+        $history = $this->product->mutateStock($this->inventory->id, 10);
 
         expect($history)->toBeInstanceOf(InventoryHistory::class)
             ->and($history->quantity)->toBe(10)
@@ -89,8 +89,8 @@ describe(Product::class, function (): void {
     });
 
     it('decreases stock', function (): void {
-        $this->product->mutateStock($this->inventory->id, 20, ['old_quantity' => 0]);
-        $history = $this->product->decreaseStock($this->inventory->id, 5, ['old_quantity' => 20]);
+        $this->product->mutateStock($this->inventory->id, 20);
+        $history = $this->product->decreaseStock($this->inventory->id, 5, oldQuantity: 20);
 
         expect($history)->toBeInstanceOf(InventoryHistory::class)
             ->and($history->quantity)->toBe(-5)
@@ -98,7 +98,7 @@ describe(Product::class, function (): void {
     });
 
     it('clears all stock', function (): void {
-        $this->product->mutateStock($this->inventory->id, 10, ['old_quantity' => 0]);
+        $this->product->mutateStock($this->inventory->id, 10);
 
         $result = $this->product->clearStock();
 
@@ -108,18 +108,18 @@ describe(Product::class, function (): void {
     });
 
     it('clears stock and sets new quantity', function (): void {
-        $this->product->mutateStock($this->inventory->id, 10, ['old_quantity' => 0]);
+        $this->product->mutateStock($this->inventory->id, 10);
 
-        $this->product->clearStock($this->inventory->id, 20, ['old_quantity' => 0]);
+        $this->product->clearStock($this->inventory->id, 20);
 
         expect($this->product->stock)->toBe(20)
             ->and($this->product->inventoryHistories()->count())->toBe(1);
     });
 
     it('sets stock to new quantity', function (): void {
-        $this->product->mutateStock($this->inventory->id, 10, ['old_quantity' => 0]);
+        $this->product->mutateStock($this->inventory->id, 10);
 
-        $history = $this->product->setStock(25, $this->inventory->id, ['old_quantity' => 10]);
+        $history = $this->product->setStock(25, $this->inventory->id, oldQuantity: 10);
 
         expect($history)->toBeInstanceOf(InventoryHistory::class)
             ->and($history->quantity)->toBe(15)
@@ -127,9 +127,9 @@ describe(Product::class, function (): void {
     });
 
     it('sets stock returns null when quantity is same', function (): void {
-        $this->product->mutateStock($this->inventory->id, 10, ['old_quantity' => 0]);
+        $this->product->mutateStock($this->inventory->id, 10);
 
-        $history = $this->product->setStock(10, $this->inventory->id, ['old_quantity' => 10]);
+        $history = $this->product->setStock(10, $this->inventory->id, oldQuantity: 10);
 
         expect($history)->toBeNull();
     });
@@ -138,11 +138,12 @@ describe(Product::class, function (): void {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $history = $this->product->mutateStock($this->inventory->id, 10, [
-            'description' => 'Initial stock',
-            'event' => 'purchase',
-            'old_quantity' => 0,
-        ]);
+        $history = $this->product->mutateStock(
+            inventoryId: $this->inventory->id,
+            quantity: 10,
+            event: 'purchase',
+            description: 'Initial stock',
+        );
 
         expect($history->description)->toBe('Initial stock')
             ->and($history->event)->toBe('purchase')
@@ -153,18 +154,19 @@ describe(Product::class, function (): void {
     it('creates stock mutation with reference', function (): void {
         $reference = Product::factory()->create();
 
-        $history = $this->product->mutateStock($this->inventory->id, 10, [
-            'reference' => $reference,
-            'old_quantity' => 0,
-        ]);
+        $history = $this->product->mutateStock(
+            inventoryId: $this->inventory->id,
+            quantity: 10,
+            reference: $reference,
+        );
 
         expect($history->reference_type)->toBe($reference->getMorphClass())
             ->and($history->reference_id)->toBe($reference->id);
     });
 
     it('has inventory histories relationship', function (): void {
-        $this->product->mutateStock($this->inventory->id, 10, ['old_quantity' => 0]);
-        $this->product->mutateStock($this->inventory->id, 5, ['old_quantity' => 10]);
+        $this->product->mutateStock($this->inventory->id, 10);
+        $this->product->mutateStock($this->inventory->id, 5, oldQuantity: 10);
 
         expect($this->product->inventoryHistories())->toBeInstanceOf(MorphMany::class)
             ->and($this->product->inventoryHistories()->count())->toBe(2);
@@ -310,8 +312,8 @@ describe(Product::class, function (): void {
         $variant1 = ProductVariant::factory()->create(['product_id' => $product->id]);
         $variant2 = ProductVariant::factory()->create(['product_id' => $product->id]);
 
-        $variant1->mutateStock($this->inventory->id, 10, ['old_quantity' => 0]);
-        $variant2->mutateStock($this->inventory->id, 5, ['old_quantity' => 0]);
+        $variant1->mutateStock($this->inventory->id, 10);
+        $variant2->mutateStock($this->inventory->id, 5);
 
         expect($product->fresh()->variants_stock)->toBe(15);
     });
@@ -445,7 +447,7 @@ describe(Product::class, function (): void {
         $inventory = Inventory::factory()->create();
         $product = Product::factory()->create();
 
-        $product->mutateStock($inventory->id, 10, ['old_quantity' => 0]);
+        $product->mutateStock($inventory->id, 10);
 
         expect($product->stock)->toBe(10)
             ->and($product->inventoryHistories()->count())->toBe(1);

@@ -60,7 +60,7 @@ describe('StockAllocatorBindingTest', function (): void {
         });
 
         $product = Product::factory()->standard()->create();
-        $product->mutateStock($specificInventory->id, 20, ['event' => 'Initial', 'old_quantity' => 0]);
+        $product->mutateStock($specificInventory->id, 20, event: 'Initial');
 
         $allocator = resolve(StockAllocator::class);
         $allocations = $allocator->allocate($product, 5);

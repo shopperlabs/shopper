@@ -79,7 +79,7 @@ describe(ProductVariant::class, function (): void {
         $inventory = Inventory::factory()->create();
         $variant = ProductVariant::factory()->create();
 
-        $variant->mutateStock($inventory->id, 10, ['old_quantity' => 0]);
+        $variant->mutateStock($inventory->id, 10);
 
         expect($variant->stock)->toBe(10)
             ->and($variant->inventoryHistories()->count())->toBe(1);

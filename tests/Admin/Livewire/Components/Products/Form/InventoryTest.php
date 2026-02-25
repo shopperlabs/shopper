@@ -91,7 +91,7 @@ describe(Inventory::class, function (): void {
     });
 
     it('can remove stock from product', function (): void {
-        $this->product->mutateStock($this->inventory->id, 20, ['old_quantity' => 0]);
+        $this->product->mutateStock($this->inventory->id, 20);
 
         Livewire::test(Inventory::class, ['product' => $this->product])
             ->callTableAction('stock', data: [
@@ -105,8 +105,8 @@ describe(Inventory::class, function (): void {
     });
 
     it('displays inventory history table', function (): void {
-        $this->product->mutateStock($this->inventory->id, 10, ['old_quantity' => 0, 'event' => 'purchase']);
-        $this->product->decreaseStock($this->inventory->id, 3, ['old_quantity' => 10, 'event' => 'sale']);
+        $this->product->mutateStock($this->inventory->id, 10, event: 'purchase');
+        $this->product->decreaseStock($this->inventory->id, 3, oldQuantity: 10, event: 'sale');
 
         Livewire::test(Inventory::class, ['product' => $this->product])
             ->assertCountTableRecords(2);

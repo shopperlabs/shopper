@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Listeners\Orders;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Contracts\StockAllocator;
 use Shopper\Core\Events\Orders\OrderItemCreated;
 use Shopper\Core\Models\Contracts\Stockable;
@@ -25,16 +26,17 @@ final readonly class ReserveOrderItemStockListener implements ShouldQueue
 
         $allocations = $this->allocator->allocate($item->product, $item->quantity);
 
+        /** @var Model $order */
+        $order = $item->order;
+
         foreach ($allocations as $allocation) {
             $item->product->decreaseStock(
                 inventoryId: $allocation->inventoryId,
                 quantity: $allocation->quantity,
-                arguments: [
-                    'event' => __('shopper-core::status.stock.reserved'),
-                    'old_quantity' => $item->product->stockInventory($allocation->inventoryId),
-                    'reference' => $item->order,
-                    'user_id' => $item->order->customer_id,
-                ],
+                oldQuantity: $item->product->stockInventory($allocation->inventoryId),
+                event: __('shopper-core::status.stock.reserved'),
+                userId: $order->getAttribute('customer_id'),
+                reference: $order,
             );
         }
     }

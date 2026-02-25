@@ -29,10 +29,7 @@ beforeEach(function (): void {
     ]);
 
     $this->product = Product::factory()->standard()->create();
-    $this->product->mutateStock($this->inventory->id, 50, [
-        'event' => 'Initial',
-        'old_quantity' => 0,
-    ]);
+    $this->product->mutateStock($this->inventory->id, 50, event: 'Initial');
 
     $this->order = Order::factory()->create([
         'customer_id' => $this->user->id,
@@ -66,10 +63,10 @@ describe('StockRestorationTest', function (): void {
 
     it('restores stock for all items in a cancelled order', function (): void {
         $productA = Product::factory()->standard()->create();
-        $productA->mutateStock($this->inventory->id, 30, ['event' => 'Initial', 'old_quantity' => 0]);
+        $productA->mutateStock($this->inventory->id, 30, event: 'Initial');
 
         $productB = Product::factory()->standard()->create();
-        $productB->mutateStock($this->inventory->id, 15, ['event' => 'Initial', 'old_quantity' => 0]);
+        $productB->mutateStock($this->inventory->id, 15, event: 'Initial');
 
         $itemA = OrderItem::factory()->create([
             'order_id' => $this->order->id,
@@ -136,8 +133,8 @@ describe('StockRestorationTest', function (): void {
         $paris = Inventory::factory()->create(['priority' => 1, 'is_default' => false]);
 
         $product = Product::factory()->standard()->create();
-        $product->mutateStock($lyon->id, 2, ['event' => 'Initial', 'old_quantity' => 0]);
-        $product->mutateStock($paris->id, 3, ['event' => 'Initial', 'old_quantity' => 0]);
+        $product->mutateStock($lyon->id, 2, event: 'Initial');
+        $product->mutateStock($paris->id, 3, event: 'Initial');
 
         $order = Order::factory()->create([
             'customer_id' => $this->user->id,

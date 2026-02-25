@@ -19,8 +19,8 @@ describe('PriorityStockAllocation', function (): void {
         $paris = Inventory::factory()->create(['priority' => 1, 'is_default' => false]);
 
         $product = Product::factory()->standard()->create();
-        $product->mutateStock($douala->id, 20, ['event' => 'Initial', 'old_quantity' => 0]);
-        $product->mutateStock($paris->id, 30, ['event' => 'Initial', 'old_quantity' => 0]);
+        $product->mutateStock($douala->id, 20, event: 'Initial');
+        $product->mutateStock($paris->id, 30, event: 'Initial');
 
         $allocator = resolve(StockAllocator::class);
         $allocations = $allocator->allocate($product, 15);
@@ -35,8 +35,8 @@ describe('PriorityStockAllocation', function (): void {
         $paris = Inventory::factory()->create(['priority' => 1, 'is_default' => false]);
 
         $product = Product::factory()->standard()->create();
-        $product->mutateStock($douala->id, 2, ['event' => 'Initial', 'old_quantity' => 0]);
-        $product->mutateStock($paris->id, 30, ['event' => 'Initial', 'old_quantity' => 0]);
+        $product->mutateStock($douala->id, 2, event: 'Initial');
+        $product->mutateStock($paris->id, 30, event: 'Initial');
 
         $allocator = resolve(StockAllocator::class);
         $allocations = $allocator->allocate($product, 10);
@@ -52,8 +52,8 @@ describe('PriorityStockAllocation', function (): void {
         $paris = Inventory::factory()->create(['priority' => 1, 'is_default' => false]);
 
         $product = Product::factory()->standard()->create();
-        $product->mutateStock($douala->id, 2, ['event' => 'Initial', 'old_quantity' => 0]);
-        $product->mutateStock($paris->id, 3, ['event' => 'Initial', 'old_quantity' => 0]);
+        $product->mutateStock($douala->id, 2, event: 'Initial');
+        $product->mutateStock($paris->id, 3, event: 'Initial');
 
         $allocator = resolve(StockAllocator::class);
         $allocations = $allocator->allocate($product, 4);
@@ -72,9 +72,9 @@ describe('PriorityStockAllocation', function (): void {
         $marseille = Inventory::factory()->create(['priority' => 2, 'is_default' => false]);
 
         $product = Product::factory()->standard()->create();
-        $product->mutateStock($douala->id, 3, ['event' => 'Initial', 'old_quantity' => 0]);
-        $product->mutateStock($paris->id, 4, ['event' => 'Initial', 'old_quantity' => 0]);
-        $product->mutateStock($marseille->id, 5, ['event' => 'Initial', 'old_quantity' => 0]);
+        $product->mutateStock($douala->id, 3, event: 'Initial');
+        $product->mutateStock($paris->id, 4, event: 'Initial');
+        $product->mutateStock($marseille->id, 5, event: 'Initial');
 
         $allocator = resolve(StockAllocator::class);
         $allocations = $allocator->allocate($product, 10);
@@ -93,7 +93,7 @@ describe('PriorityStockAllocation', function (): void {
         $inventory = Inventory::factory()->create(['priority' => 0, 'is_default' => true]);
 
         $product = Product::factory()->standard()->create();
-        $product->mutateStock($inventory->id, 3, ['event' => 'Initial', 'old_quantity' => 0]);
+        $product->mutateStock($inventory->id, 3, event: 'Initial');
 
         $allocator = resolve(StockAllocator::class);
         $allocations = $allocator->allocate($product, 10);
@@ -120,9 +120,9 @@ describe('PriorityStockAllocation', function (): void {
         $marseille = Inventory::factory()->create(['priority' => 2, 'is_default' => false]);
 
         $product = Product::factory()->standard()->create();
-        $product->mutateStock($douala->id, 3, ['event' => 'Initial', 'old_quantity' => 0]);
+        $product->mutateStock($douala->id, 3, event: 'Initial');
         // Paris has 0 stock
-        $product->mutateStock($marseille->id, 5, ['event' => 'Initial', 'old_quantity' => 0]);
+        $product->mutateStock($marseille->id, 5, event: 'Initial');
 
         $allocator = resolve(StockAllocator::class);
         $allocations = $allocator->allocate($product, 6);

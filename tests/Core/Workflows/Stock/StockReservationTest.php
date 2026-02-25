@@ -28,10 +28,7 @@ beforeEach(function (): void {
     ]);
 
     $this->product = Product::factory()->standard()->create();
-    $this->product->mutateStock($this->inventory->id, 50, [
-        'event' => 'Initial',
-        'old_quantity' => 0,
-    ]);
+    $this->product->mutateStock($this->inventory->id, 50, event: 'Initial');
 
     $this->order = Order::factory()->create([
         'customer_id' => $this->user->id,
@@ -81,10 +78,10 @@ describe('StockReservationTest', function (): void {
 
     it('reserves stock independently for each item in an order', function (): void {
         $productA = Product::factory()->standard()->create();
-        $productA->mutateStock($this->inventory->id, 20, ['event' => 'Initial', 'old_quantity' => 0]);
+        $productA->mutateStock($this->inventory->id, 20, event: 'Initial');
 
         $productB = Product::factory()->standard()->create();
-        $productB->mutateStock($this->inventory->id, 10, ['event' => 'Initial', 'old_quantity' => 0]);
+        $productB->mutateStock($this->inventory->id, 10, event: 'Initial');
 
         $itemA = OrderItem::factory()->create([
             'order_id' => $this->order->id,

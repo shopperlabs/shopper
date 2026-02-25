@@ -61,21 +61,17 @@ class VariantStock extends Component implements HasActions, HasSchemas
 
                 if ($realTimeStock >= $currentStock) {
                     $this->variant->mutateStock(
-                        $inventoryId,
-                        $quantity,
-                        [
-                            'event' => __('shopper::pages/products.inventory.add'),
-                            'old_quantity' => $quantity,
-                        ]
+                        inventoryId: $inventoryId,
+                        quantity: $quantity,
+                        oldQuantity: $quantity,
+                        event: __('shopper::pages/products.inventory.add'),
                     );
                 } else {
                     $this->variant->decreaseStock(
-                        $inventoryId,
-                        $quantity,
-                        [
-                            'event' => __('shopper::pages/products.inventory.remove'),
-                            'old_quantity' => $quantity,
-                        ]
+                        inventoryId: $inventoryId,
+                        quantity: $quantity,
+                        oldQuantity: $quantity,
+                        event: __('shopper::pages/products.inventory.remove'),
                     );
                 }
 
