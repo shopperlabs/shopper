@@ -1,0 +1,40 @@
+name: Code Quality
+
+on:
+  push:
+    branches:
+      - '*.x'
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Cache dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.composer/cache/files
+          key: quality-php-8.4-composer-${{ hashFiles('composer.json') }}
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          extensions: mbstring, pdo, pdo_sqlite, intl, gd, exif, iconv, imagick
+          tools: composer:v2
+          coverage: none
+      - name: Install dependencies
+        run: composer install --no-interaction
+      - name: Run Rector
+        run: composer test:refactor
+      - name: Run Laravel Pint
+        run: composer test:lint
+      - name: Run PHPStan
+        run: composer test:types
