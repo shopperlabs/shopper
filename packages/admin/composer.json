@@ -46,6 +46,7 @@
     "milon/barcode": "^11.0|^12.0",
     "pragmarx/google2fa": "^8.0|^9.0",
     "psr/simple-cache": "^3.0",
+    "shopper/cart": "self.version",
     "shopper/core": "self.version",
     "shopper/sidebar": "self.version",
     "shopper/shipping": "self.version",
