@@ -36,6 +36,8 @@ class Fulfillment extends Component
     #[On('order.updated')]
     public function render(): View
     {
+        $this->order->loadMissing('shippingAddress');
+
         $shippingAddress = $this->order->shippingAddress;
 
         $country = $shippingAddress

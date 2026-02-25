@@ -29,6 +29,8 @@ class OrderCustomer extends Component
 
     public function render(): View
     {
+        $this->order->loadMissing(['shippingAddress', 'billingAddress']);
+
         return view('shopper::livewire.components.orders.order-customer', [
             'shippingAddress' => $this->order->shippingAddress,
             'billingAddress' => $this->order->billingAddress,

@@ -35,16 +35,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
     {
         $this->authorize('read_orders');
 
-        $this->order->load(
-            'items',
-            'customer',
-            'shippingAddress',
-            'billingAddress',
-            'shippingOption.carrier',
-            'shippings',
-            'channel',
-            'zone',
-        );
+        $this->order->load('customer', 'channel');
     }
 
     public function goToOrder(int $id): void
