@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\TaxZoneFactory;
 use Shopper\Core\Models\Contracts\TaxZone as TaxZoneContract;
+use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
@@ -37,7 +38,14 @@ class TaxZone extends Model implements TaxZoneContract
     /** @use HasFactory<TaxZoneFactory> */
     use HasFactory;
 
+    use HasModelContract;
+
     protected $guarded = [];
+
+    public static function configKey(): string
+    {
+        return 'tax_zone';
+    }
 
     public function getTable(): string
     {

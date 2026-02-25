@@ -134,7 +134,7 @@ class TaxRateOverrideForm extends SlideOverComponent implements HasActions, HasF
                                 $usedIds = $siblings
                                     ->where('reference_type', $type)
                                     ->pluck('reference_id')
-                                    ->reject(fn ($id) => $id === $currentId)
+                                    ->reject(fn ($id): bool => $id === $currentId)
                                     ->filter()
                                     ->all();
 

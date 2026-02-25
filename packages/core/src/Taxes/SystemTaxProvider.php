@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Taxes;
 
+use Illuminate\Database\Eloquent\Collection;
 use Shopper\Core\Contracts\TaxableItem;
 use Shopper\Core\Contracts\TaxCalculationProvider;
-use Shopper\Core\Models\TaxRate;
+use Shopper\Core\Models\Contracts\TaxRate;
+use Shopper\Core\Models\Contracts\TaxZone;
 use Shopper\Core\Models\TaxRateRule;
-use Shopper\Core\Models\TaxZone;
 
-final readonly class SystemTaxProvider implements TaxCalculationProvider
+final class SystemTaxProvider implements TaxCalculationProvider
 {
+    /** @var array<int, Collection<int, TaxRate>> */
+    private array $ratesCache = [];
+
     public function identifier(): string
     {
         return 'system';
@@ -22,7 +26,7 @@ final readonly class SystemTaxProvider implements TaxCalculationProvider
      */
     public function getTaxLines(TaxableItem $item, TaxCalculationContext $context): array
     {
-        $taxZone = $this->resolveTaxZone($context);
+        $taxZone = $context->resolvedZone;
 
         if (! $taxZone) {
             return [];
@@ -51,35 +55,16 @@ final readonly class SystemTaxProvider implements TaxCalculationProvider
         ];
     }
 
-    private function resolveTaxZone(TaxCalculationContext $context): ?TaxZone
-    {
-        if ($context->provinceCode) {
-            $zone = TaxZone::query()
-                ->whereHas('country', fn ($q) => $q->where('cca2', $context->countryCode))
-                ->where('province_code', $context->provinceCode)
-                ->first();
-
-            if ($zone) {
-                return $zone;
-            }
-        }
-
-        return TaxZone::query()
-            ->whereHas('country', fn ($q) => $q->where('cca2', $context->countryCode))
-            ->whereNull('province_code')
-            ->first();
-    }
-
     private function resolveApplicableTaxRate(TaxZone $taxZone, TaxableItem $item): ?TaxRate
     {
-        $rates = $taxZone->rates()->with('rules')->get();
+        $rates = $this->ratesCache[$taxZone->id] ??= $taxZone->rates()->with('rules')->get();
 
         foreach ($rates as $rate) {
-            if ($rate->rules->isEmpty()) {
+            if ($rate->rules->isEmpty()) { // @phpstan-ignore-line
                 continue;
             }
 
-            foreach ($rate->rules as $rule) {
+            foreach ($rate->rules as $rule) { // @phpstan-ignore-line
                 if ($this->ruleMatchesItem($rule, $item)) {
                     return $rate;
                 }

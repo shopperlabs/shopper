@@ -8,6 +8,7 @@ use Shopper\Core\Models\TaxRateRule;
 use Shopper\Core\Models\TaxZone;
 use Shopper\Core\Taxes\SystemTaxProvider;
 use Shopper\Core\Taxes\TaxCalculationContext;
+use Shopper\Core\Taxes\TaxCalculator;
 use Tests\Core\Stubs\TaxableItemStub;
 
 uses(Tests\TestCase::class);
@@ -29,7 +30,7 @@ describe('SystemTaxProvider', function (): void {
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'FR');
+        $context = new TaxCalculationContext(countryCode: 'FR', resolvedZone: $zone);
         $item = new TaxableItemStub(amount: 10000);
 
         $taxLines = $provider->getTaxLines($item, $context);
@@ -65,7 +66,7 @@ describe('SystemTaxProvider', function (): void {
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'US', provinceCode: 'US-CA');
+        $context = new TaxCalculationContext(countryCode: 'US', provinceCode: 'US-CA', resolvedZone: $california);
         $item = new TaxableItemStub(amount: 10000);
 
         $taxLines = $provider->getTaxLines($item, $context);
@@ -77,35 +78,7 @@ describe('SystemTaxProvider', function (): void {
             ->and($taxLines[0]->amount)->toBe(850);
     });
 
-    it('falls back to country zone when province zone does not exist', function (): void {
-        $germany = Country::query()->where('cca2', 'DE')->first();
-
-        $zone = TaxZone::factory()->create([
-            'country_id' => $germany->id,
-            'is_tax_inclusive' => true,
-        ]);
-
-        TaxRate::factory()->create([
-            'name' => 'MwSt 19%',
-            'rate' => 19.0,
-            'is_default' => true,
-            'tax_zone_id' => $zone->id,
-        ]);
-
-        $provider = new SystemTaxProvider;
-        // Province code "BY" (Bavaria) doesn't have its own zone
-        $context = new TaxCalculationContext(countryCode: 'DE', provinceCode: 'BY');
-        $item = new TaxableItemStub(amount: 5000);
-
-        $taxLines = $provider->getTaxLines($item, $context);
-
-        // Falls back to Germany zone: 5000 - (5000 / 1.19) = 5000 - 4201.68 = 798.32 → 798
-        expect($taxLines)->toHaveCount(1)
-            ->and($taxLines[0]->name)->toBe('MwSt 19%')
-            ->and($taxLines[0]->amount)->toBe(798);
-    });
-
-    it('returns empty when no zone matches the context', function (): void {
+    it('returns empty when resolved zone is null', function (): void {
         $provider = new SystemTaxProvider;
         $context = new TaxCalculationContext(countryCode: 'XX');
         $item = new TaxableItemStub(amount: 10000);
@@ -118,13 +91,13 @@ describe('SystemTaxProvider', function (): void {
     it('returns empty when zone exists but has no default rate', function (): void {
         $japan = Country::query()->where('cca2', 'JP')->first();
 
-        TaxZone::factory()->create([
+        $zone = TaxZone::factory()->create([
             'country_id' => $japan->id,
             'is_tax_inclusive' => true,
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'JP');
+        $context = new TaxCalculationContext(countryCode: 'JP', resolvedZone: $zone);
         $item = new TaxableItemStub(amount: 10000);
 
         $taxLines = $provider->getTaxLines($item, $context);
@@ -161,7 +134,7 @@ describe('SystemTaxProvider', function (): void {
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'GB');
+        $context = new TaxCalculationContext(countryCode: 'GB', resolvedZone: $zone);
 
         // Standard product → default 20% rate
         $standardItem = new TaxableItemStub(amount: 12000, productType: 'standard');
@@ -200,7 +173,7 @@ describe('SystemTaxProvider', function (): void {
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'FR', provinceCode: 'FR-IDF');
+        $context = new TaxCalculationContext(countryCode: 'FR', provinceCode: 'FR-IDF', resolvedZone: $zone);
         // 3 items at 5000 cents each
         $item = new TaxableItemStub(amount: 5000, quantity: 3);
 
@@ -229,12 +202,73 @@ describe('SystemTaxProvider', function (): void {
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'US', provinceCode: 'US-OR');
+        $context = new TaxCalculationContext(countryCode: 'US', provinceCode: 'US-OR', resolvedZone: $zone);
         $item = new TaxableItemStub(amount: 10000);
 
         $taxLines = $provider->getTaxLines($item, $context);
 
         expect($taxLines)->toHaveCount(1)
             ->and($taxLines[0]->amount)->toBe(0);
+    });
+});
+
+describe('TaxCalculator', function (): void {
+    it('falls back to country zone when province zone does not exist', function (): void {
+        $germany = Country::query()->where('cca2', 'DE')->first();
+
+        $zone = TaxZone::factory()->create([
+            'country_id' => $germany->id,
+            'is_tax_inclusive' => true,
+        ]);
+
+        TaxRate::factory()->create([
+            'name' => 'MwSt 19%',
+            'rate' => 19.0,
+            'is_default' => true,
+            'tax_zone_id' => $zone->id,
+        ]);
+
+        $calculator = resolve(TaxCalculator::class);
+        // Province code "BY" (Bavaria) doesn't have its own zone
+        $context = new TaxCalculationContext(countryCode: 'DE', provinceCode: 'BY');
+        $item = new TaxableItemStub(amount: 5000);
+
+        $taxLines = $calculator->calculate($item, $context);
+
+        // Falls back to Germany zone: 5000 - (5000 / 1.19) = 5000 - 4201.68 = 798.32 → 798
+        expect($taxLines)->toHaveCount(1)
+            ->and($taxLines[0]->name)->toBe('MwSt 19%')
+            ->and($taxLines[0]->amount)->toBe(798);
+    });
+
+    it('resolves province zone over country zone', function (): void {
+        $us = Country::query()->where('cca2', 'US')->first();
+
+        TaxZone::factory()->create([
+            'country_id' => $us->id,
+            'is_tax_inclusive' => false,
+        ]);
+
+        $california = TaxZone::factory()->create([
+            'country_id' => $us->id,
+            'province_code' => 'US-CA',
+            'name' => 'California',
+            'is_tax_inclusive' => false,
+        ]);
+
+        TaxRate::factory()->create([
+            'name' => 'CA Sales Tax',
+            'rate' => 7.25,
+            'is_default' => true,
+            'tax_zone_id' => $california->id,
+        ]);
+
+        $calculator = resolve(TaxCalculator::class);
+        $context = new TaxCalculationContext(countryCode: 'US', provinceCode: 'US-CA');
+
+        $resolvedZone = $calculator->resolveZone($context);
+
+        expect($resolvedZone)->not->toBeNull()
+            ->and($resolvedZone->province_code)->toBe('US-CA');
     });
 })->group('workflows', 'tax');

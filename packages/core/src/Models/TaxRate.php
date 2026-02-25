@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\TaxRateFactory;
 use Shopper\Core\Models\Contracts\TaxRate as TaxRateContract;
+use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
@@ -32,7 +33,14 @@ class TaxRate extends Model implements TaxRateContract
     /** @use HasFactory<TaxRateFactory> */
     use HasFactory;
 
+    use HasModelContract;
+
     protected $guarded = [];
+
+    public static function configKey(): string
+    {
+        return 'tax_rate';
+    }
 
     public function getTable(): string
     {
