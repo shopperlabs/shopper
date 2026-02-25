@@ -7,6 +7,7 @@ namespace Shopper\Core\Taxes;
 use Shopper\Core\Contracts\TaxableItem;
 use Shopper\Core\Contracts\TaxCalculationProvider;
 use Shopper\Core\Models\TaxRate;
+use Shopper\Core\Models\TaxRateRule;
 use Shopper\Core\Models\TaxZone;
 
 final readonly class SystemTaxProvider implements TaxCalculationProvider
@@ -54,7 +55,7 @@ final readonly class SystemTaxProvider implements TaxCalculationProvider
     {
         if ($context->provinceCode) {
             $zone = TaxZone::query()
-                ->where('country_code', $context->countryCode)
+                ->whereHas('country', fn ($q) => $q->where('cca2', $context->countryCode))
                 ->where('province_code', $context->provinceCode)
                 ->first();
 
@@ -64,7 +65,7 @@ final readonly class SystemTaxProvider implements TaxCalculationProvider
         }
 
         return TaxZone::query()
-            ->where('country_code', $context->countryCode)
+            ->whereHas('country', fn ($q) => $q->where('cca2', $context->countryCode))
             ->whereNull('province_code')
             ->first();
     }
@@ -88,7 +89,7 @@ final readonly class SystemTaxProvider implements TaxCalculationProvider
         return $rates->firstWhere('is_default', true);
     }
 
-    private function ruleMatchesItem(\Shopper\Core\Models\TaxRateRule $rule, TaxableItem $item): bool
+    private function ruleMatchesItem(TaxRateRule $rule, TaxableItem $item): bool
     {
         return match ($rule->reference_type) {
             'product_type' => $item->getProductType() === $rule->reference_id,

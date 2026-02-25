@@ -45,7 +45,7 @@ final readonly class TaxCalculator
     private function resolveProvider(TaxCalculationContext $context): TaxCalculationProvider
     {
         $taxZone = TaxZone::query()
-            ->where('country_code', $context->countryCode)
+            ->whereHas('country', fn ($q) => $q->where('cca2', $context->countryCode))
             ->when(
                 $context->provinceCode,
                 fn ($query) => $query->where('province_code', $context->provinceCode),

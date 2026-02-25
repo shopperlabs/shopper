@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Shopper\Core\Models\Country;
 use Shopper\Core\Models\TaxZone;
 
 /**
@@ -20,8 +21,7 @@ class TaxZoneFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->country(),
-            'country_code' => $this->faker->countryCode(),
+            'country_id' => Country::query()->inRandomOrder()->value('id'),
             'is_tax_inclusive' => false,
         ];
     }

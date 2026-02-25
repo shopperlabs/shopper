@@ -27,6 +27,7 @@ return [
         Items\CarrierSetting::class => true,
         Items\LegalSetting::class => true,
         Items\ZoneSetting::class => true,
+        Items\TaxSetting::class => true,
     ],
 
 ];

@@ -18,6 +18,7 @@ Route::get('/analytics', config('shopper.components.setting.pages.analytics'))->
 Route::get('/payment-methods', config('shopper.components.setting.pages.payment-methods'))->name('payment-methods');
 Route::get('/carriers', config('shopper.components.setting.pages.carriers'))->name('carriers');
 Route::get('/zones', config('shopper.components.setting.pages.zones'))->name('zones');
+Route::get('/taxes', config('shopper.components.setting.pages.taxes'))->name('taxes');
 
 Route::prefix('team')->group(function (): void {
     Route::get('/', config('shopper.components.setting.pages.team-index'))->name('users');

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 interface TaxZone
 {
+    public function country(): BelongsTo;
+
     public function parent(): BelongsTo;
 
     public function children(): HasMany;

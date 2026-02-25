@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Shopper\Core\Models\Country;
 use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxRateRule;
 use Shopper\Core\Models\TaxZone;
@@ -13,9 +14,10 @@ uses(Tests\TestCase::class);
 
 describe('SystemTaxProvider', function (): void {
     it('calculates VAT 20% inclusive on a 10000 cents item (France)', function (): void {
-        $france = TaxZone::factory()->create([
-            'name' => 'France',
-            'country_code' => 'fr',
+        $france = Country::query()->where('cca2', 'FR')->first();
+
+        $zone = TaxZone::factory()->create([
+            'country_id' => $france->id,
             'is_tax_inclusive' => true,
         ]);
 
@@ -23,11 +25,11 @@ describe('SystemTaxProvider', function (): void {
             'name' => 'TVA 20%',
             'rate' => 20.0,
             'is_default' => true,
-            'tax_zone_id' => $france->id,
+            'tax_zone_id' => $zone->id,
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'fr');
+        $context = new TaxCalculationContext(countryCode: 'FR');
         $item = new TaxableItemStub(amount: 10000);
 
         $taxLines = $provider->getTaxLines($item, $context);
@@ -40,18 +42,19 @@ describe('SystemTaxProvider', function (): void {
     });
 
     it('calculates Sales Tax 8.5% exclusive on a 10000 cents item (California)', function (): void {
-        $us = TaxZone::factory()->create([
-            'name' => 'United States',
-            'country_code' => 'us',
+        $us = Country::query()->where('cca2', 'US')->first();
+
+        $usZone = TaxZone::factory()->create([
+            'country_id' => $us->id,
             'is_tax_inclusive' => false,
         ]);
 
         $california = TaxZone::factory()->create([
+            'country_id' => $us->id,
+            'province_code' => 'US-CA',
             'name' => 'California',
-            'country_code' => 'us',
-            'province_code' => 'CA',
             'is_tax_inclusive' => false,
-            'parent_id' => $us->id,
+            'parent_id' => $usZone->id,
         ]);
 
         TaxRate::factory()->create([
@@ -62,7 +65,7 @@ describe('SystemTaxProvider', function (): void {
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'us', provinceCode: 'CA');
+        $context = new TaxCalculationContext(countryCode: 'US', provinceCode: 'US-CA');
         $item = new TaxableItemStub(amount: 10000);
 
         $taxLines = $provider->getTaxLines($item, $context);
@@ -75,24 +78,23 @@ describe('SystemTaxProvider', function (): void {
     });
 
     it('falls back to country zone when province zone does not exist', function (): void {
-        TaxZone::factory()->create([
-            'name' => 'Germany',
-            'country_code' => 'de',
+        $germany = Country::query()->where('cca2', 'DE')->first();
+
+        $zone = TaxZone::factory()->create([
+            'country_id' => $germany->id,
             'is_tax_inclusive' => true,
         ]);
-
-        $germany = TaxZone::query()->where('country_code', 'de')->first();
 
         TaxRate::factory()->create([
             'name' => 'MwSt 19%',
             'rate' => 19.0,
             'is_default' => true,
-            'tax_zone_id' => $germany->id,
+            'tax_zone_id' => $zone->id,
         ]);
 
         $provider = new SystemTaxProvider;
         // Province code "BY" (Bavaria) doesn't have its own zone
-        $context = new TaxCalculationContext(countryCode: 'de', provinceCode: 'BY');
+        $context = new TaxCalculationContext(countryCode: 'DE', provinceCode: 'BY');
         $item = new TaxableItemStub(amount: 5000);
 
         $taxLines = $provider->getTaxLines($item, $context);
@@ -105,7 +107,7 @@ describe('SystemTaxProvider', function (): void {
 
     it('returns empty when no zone matches the context', function (): void {
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'xx');
+        $context = new TaxCalculationContext(countryCode: 'XX');
         $item = new TaxableItemStub(amount: 10000);
 
         $taxLines = $provider->getTaxLines($item, $context);
@@ -114,14 +116,15 @@ describe('SystemTaxProvider', function (): void {
     });
 
     it('returns empty when zone exists but has no default rate', function (): void {
+        $japan = Country::query()->where('cca2', 'JP')->first();
+
         TaxZone::factory()->create([
-            'name' => 'Japan',
-            'country_code' => 'jp',
+            'country_id' => $japan->id,
             'is_tax_inclusive' => true,
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'jp');
+        $context = new TaxCalculationContext(countryCode: 'JP');
         $item = new TaxableItemStub(amount: 10000);
 
         $taxLines = $provider->getTaxLines($item, $context);
@@ -130,24 +133,25 @@ describe('SystemTaxProvider', function (): void {
     });
 
     it('applies a product type override rate instead of the default', function (): void {
-        $uk = TaxZone::factory()->create([
-            'name' => 'United Kingdom',
-            'country_code' => 'gb',
+        $uk = Country::query()->where('cca2', 'GB')->first();
+
+        $zone = TaxZone::factory()->create([
+            'country_id' => $uk->id,
             'is_tax_inclusive' => true,
         ]);
 
-        $standardRate = TaxRate::factory()->create([
+        TaxRate::factory()->create([
             'name' => 'Standard VAT',
             'rate' => 20.0,
             'is_default' => true,
-            'tax_zone_id' => $uk->id,
+            'tax_zone_id' => $zone->id,
         ]);
 
         $reducedRate = TaxRate::factory()->create([
             'name' => 'Reduced VAT',
             'rate' => 5.0,
             'is_default' => false,
-            'tax_zone_id' => $uk->id,
+            'tax_zone_id' => $zone->id,
         ]);
 
         TaxRateRule::factory()->create([
@@ -157,7 +161,7 @@ describe('SystemTaxProvider', function (): void {
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'gb');
+        $context = new TaxCalculationContext(countryCode: 'GB');
 
         // Standard product → default 20% rate
         $standardItem = new TaxableItemStub(amount: 12000, productType: 'standard');
@@ -179,10 +183,12 @@ describe('SystemTaxProvider', function (): void {
     });
 
     it('multiplies by quantity for multi-unit orders', function (): void {
-        $france = TaxZone::factory()->create([
-            'name' => 'France Multi',
-            'country_code' => 'fr',
-            'province_code' => 'IDF',
+        $france = Country::query()->where('cca2', 'FR')->first();
+
+        $zone = TaxZone::factory()->create([
+            'country_id' => $france->id,
+            'province_code' => 'FR-IDF',
+            'name' => 'Île-de-France',
             'is_tax_inclusive' => false,
         ]);
 
@@ -190,11 +196,11 @@ describe('SystemTaxProvider', function (): void {
             'name' => 'TVA 20%',
             'rate' => 20.0,
             'is_default' => true,
-            'tax_zone_id' => $france->id,
+            'tax_zone_id' => $zone->id,
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'fr', provinceCode: 'IDF');
+        $context = new TaxCalculationContext(countryCode: 'FR', provinceCode: 'FR-IDF');
         // 3 items at 5000 cents each
         $item = new TaxableItemStub(amount: 5000, quantity: 3);
 
@@ -206,10 +212,12 @@ describe('SystemTaxProvider', function (): void {
     });
 
     it('calculates 0% tax correctly', function (): void {
-        $oregon = TaxZone::factory()->create([
+        $us = Country::query()->where('cca2', 'US')->first();
+
+        $zone = TaxZone::factory()->create([
+            'country_id' => $us->id,
+            'province_code' => 'US-OR',
             'name' => 'Oregon',
-            'country_code' => 'us',
-            'province_code' => 'OR',
             'is_tax_inclusive' => false,
         ]);
 
@@ -217,11 +225,11 @@ describe('SystemTaxProvider', function (): void {
             'name' => 'No Sales Tax',
             'rate' => 0.0,
             'is_default' => true,
-            'tax_zone_id' => $oregon->id,
+            'tax_zone_id' => $zone->id,
         ]);
 
         $provider = new SystemTaxProvider;
-        $context = new TaxCalculationContext(countryCode: 'us', provinceCode: 'OR');
+        $context = new TaxCalculationContext(countryCode: 'US', provinceCode: 'US-OR');
         $item = new TaxableItemStub(amount: 10000);
 
         $taxLines = $provider->getTaxLines($item, $context);

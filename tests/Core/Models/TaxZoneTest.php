@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Shopper\Core\Models\Country;
 use Shopper\Core\Models\TaxProvider;
 use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxZone;
@@ -10,15 +11,24 @@ uses(Tests\TestCase::class);
 
 describe(TaxZone::class, function (): void {
     it('can be created with factory', function (): void {
+        $france = Country::query()->where('cca2', 'FR')->first();
+
         $taxZone = TaxZone::factory()->create([
-            'name' => 'France',
-            'country_code' => 'fr',
+            'country_id' => $france->id,
             'is_tax_inclusive' => true,
         ]);
 
-        expect($taxZone->name)->toBe('France')
-            ->and($taxZone->country_code)->toBe('fr')
+        expect($taxZone->country_id)->toBe($france->id)
             ->and($taxZone->is_tax_inclusive)->toBeTrue();
+    });
+
+    it('has country relationship', function (): void {
+        $germany = Country::query()->where('cca2', 'DE')->first();
+        $taxZone = TaxZone::factory()->create(['country_id' => $germany->id]);
+
+        expect($taxZone->country)->toBeInstanceOf(Country::class)
+            ->and($taxZone->country->name)->toBe($germany->name)
+            ->and($taxZone->country->cca2)->toBe('DE');
     });
 
     it('has rates relationship', function (): void {
@@ -29,15 +39,14 @@ describe(TaxZone::class, function (): void {
     });
 
     it('has parent relationship', function (): void {
-        $parent = TaxZone::factory()->create([
-            'name' => 'United States',
-            'country_code' => 'us',
-        ]);
+        $us = Country::query()->where('cca2', 'US')->first();
+
+        $parent = TaxZone::factory()->create(['country_id' => $us->id]);
 
         $child = TaxZone::factory()->create([
+            'country_id' => $us->id,
+            'province_code' => 'US-CA',
             'name' => 'California',
-            'country_code' => 'us',
-            'province_code' => 'CA',
             'parent_id' => $parent->id,
         ]);
 
@@ -46,13 +55,15 @@ describe(TaxZone::class, function (): void {
     });
 
     it('has children relationship', function (): void {
-        $parent = TaxZone::factory()->create([
-            'name' => 'United States',
-            'country_code' => 'us',
-        ]);
+        $us = Country::query()->where('cca2', 'US')->first();
 
-        TaxZone::factory()->count(2)->create([
-            'country_code' => 'us',
+        $parent = TaxZone::factory()->create(['country_id' => $us->id]);
+
+        TaxZone::factory()->count(2)->sequence(
+            ['province_code' => 'US-CA', 'name' => 'California'],
+            ['province_code' => 'US-NY', 'name' => 'New York'],
+        )->create([
+            'country_id' => $us->id,
             'parent_id' => $parent->id,
         ]);
 
@@ -86,5 +97,24 @@ describe(TaxZone::class, function (): void {
         $taxZone = TaxZone::factory()->inclusive()->create();
 
         expect($taxZone->is_tax_inclusive)->toBeTrue();
+    });
+
+    it('stores nullable name for province zones', function (): void {
+        $us = Country::query()->where('cca2', 'US')->first();
+
+        $countryZone = TaxZone::factory()->create([
+            'country_id' => $us->id,
+        ]);
+
+        $provinceZone = TaxZone::factory()->create([
+            'country_id' => $us->id,
+            'province_code' => 'US-CA',
+            'name' => 'California',
+            'parent_id' => $countryZone->id,
+        ]);
+
+        expect($countryZone->name)->toBeNull()
+            ->and($provinceZone->name)->toBe('California')
+            ->and($provinceZone->province_code)->toBe('US-CA');
     });
 })->group('tax', 'models');

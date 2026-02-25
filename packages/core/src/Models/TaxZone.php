@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,8 +16,8 @@ use Shopper\Core\Models\Contracts\TaxZone as TaxZoneContract;
 
 /**
  * @property-read int $id
- * @property-read string $name
- * @property-read string $country_code
+ * @property-read ?string $name
+ * @property-read int $country_id
  * @property-read ?string $province_code
  * @property-read bool $is_tax_inclusive
  * @property-read ?int $parent_id
@@ -24,6 +25,8 @@ use Shopper\Core\Models\Contracts\TaxZone as TaxZoneContract;
  * @property-read array<string, mixed>|null $metadata
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
+ * @property-read string $display_name
+ * @property-read Country $country
  * @property-read ?TaxZone $parent
  * @property-read EloquentCollection<int, TaxZone> $children
  * @property-read EloquentCollection<int, TaxRate> $rates
@@ -39,6 +42,14 @@ class TaxZone extends Model implements TaxZoneContract
     public function getTable(): string
     {
         return shopper_table('tax_zones');
+    }
+
+    /**
+     * @return BelongsTo<Country, $this>
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'country_id');
     }
 
     /**
@@ -76,6 +87,19 @@ class TaxZone extends Model implements TaxZoneContract
     protected static function newFactory(): TaxZoneFactory
     {
         return TaxZoneFactory::new();
+    }
+
+    protected function displayName(): Attribute
+    {
+        return Attribute::get(function (): string {
+            $countryName = $this->country->name;
+
+            if ($this->name) {
+                return $countryName.' — '.$this->name;
+            }
+
+            return $countryName;
+        });
     }
 
     protected function casts(): array

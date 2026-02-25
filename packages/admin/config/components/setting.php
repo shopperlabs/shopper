@@ -26,6 +26,7 @@ return [
         'team-index' => Pages\Settings\Team\Index::class,
         'team-roles' => Pages\Settings\Team\RolePermission::class,
         'zones' => Pages\Settings\Zones::class,
+        'taxes' => Pages\Settings\Taxes::class,
     ],
 
     /*
@@ -45,9 +46,14 @@ return [
         'settings.team.users' => Components\Settings\Team\UsersRole::class,
         'settings.zones.detail' => Components\Settings\Zones\Detail::class,
         'settings.zones.shipping-options' => Components\Settings\Zones\ZoneShippingOptions::class,
+        'settings.taxes.detail' => Components\Settings\Taxes\Detail::class,
+        'settings.taxes.rates' => Components\Settings\Taxes\TaxRates::class,
 
         'slide-overs.create-team-member' => Livewire\SlideOvers\CreateTeamMember::class,
         'slide-overs.shipping-option-form' => Livewire\SlideOvers\ShippingOptionForm::class,
+        'slide-overs.tax-zone-form' => Livewire\SlideOvers\TaxZoneForm::class,
+        'slide-overs.tax-rate-form' => Livewire\SlideOvers\TaxRateForm::class,
+        'slide-overs.tax-rate-override-form' => Livewire\SlideOvers\TaxRateOverrideForm::class,
         'slide-overs.zone-form' => Livewire\SlideOvers\ZoneForm::class,
     ],
 
