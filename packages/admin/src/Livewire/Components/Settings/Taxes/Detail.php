@@ -45,9 +45,9 @@ class Detail extends Component implements HasActions, HasSchemas
             ->iconButton()
             ->successNotificationTitle(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/taxes.single')]))
             ->after(function (): void {
-                $this->reset('taxZone');
+                unset($this->taxZone);
 
-                $this->dispatch('refresh-tax-zones');
+                $this->redirectRoute('shopper.settings.taxes');
             });
     }
 
