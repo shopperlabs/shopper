@@ -15,6 +15,7 @@ jobs:
       matrix:
         package:
           - admin
+          - cart
           - core
           - payment
           - sidebar
@@ -24,6 +25,8 @@ jobs:
         include:
           - package: admin
             repository: admin
+          - package: cart
+            repository: cart
           - package: core
             repository: core
           - package: payment

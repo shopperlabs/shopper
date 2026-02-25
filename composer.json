@@ -65,11 +65,13 @@
     "psr-4": {
       "Shopper\\": [
         "packages/admin/src",
+        "packages/cart/src",
         "packages/core/src",
         "packages/sidebar/src",
         "packages/shipping/src",
         "packages/payment/src"
       ],
+      "Shopper\\Cart\\": "packages/cart/src",
       "Shopper\\Core\\": "packages/core/src",
       "Shopper\\Core\\Database\\Factories\\": "packages/core/database/factories",
       "Shopper\\Core\\Database\\Seeders\\": "packages/core/database/seeders",
@@ -85,6 +87,7 @@
     }
   },
   "replace": {
+    "shopper/cart": "self.version",
     "shopper/core": "self.version",
     "shopper/framework": "self.version",
     "shopper/payment": "self.version",
@@ -96,6 +99,7 @@
     "laravel": {
       "providers": [
         "Shopper\\ShopperServiceProvider",
+        "Shopper\\Cart\\CartServiceProvider",
         "Shopper\\Core\\CoreServiceProvider",
         "Shopper\\Payment\\PaymentServiceProvider",
         "Shopper\\Shipping\\ShippingServiceProvider",

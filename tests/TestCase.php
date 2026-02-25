@@ -14,11 +14,13 @@ use Filament\Forms\FormsServiceProvider;
 use Filament\Infolists\InfolistsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Schemas\SchemasServiceProvider;
+use Filament\Support\Livewire\Partials\DataStoreOverride;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use JaOcero\RadioDeck\RadioDeckServiceProvider;
 use Livewire\LivewireServiceProvider;
+use Livewire\Mechanisms\DataStore;
 use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
 use Milon\Barcode\BarcodeServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
@@ -26,6 +28,7 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 use PDO;
 use PDOException;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
+use Shopper\Cart\CartServiceProvider;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Core\Database\Seeders\ShopperSeeder;
 use Shopper\Payment\PaymentServiceProvider;
@@ -63,10 +66,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function fixFilamentDataStoreBinding(): void
     {
-        $this->app->singleton(
-            \Livewire\Mechanisms\DataStore::class,
-            \Filament\Support\Livewire\Partials\DataStoreOverride::class
-        );
+        $this->app->singleton(DataStore::class, DataStoreOverride::class);
     }
 
     protected function getPackageProviders($app): array
@@ -80,6 +80,7 @@ abstract class TestCase extends BaseTestCase
             BladeUntitledUIIconsServiceProvider::class,
             BladePhosphorIconsServiceProvider::class,
             BladeIconsServiceProvider::class,
+            CartServiceProvider::class,
             CoreServiceProvider::class,
             FilamentServiceProvider::class,
             PaymentServiceProvider::class,

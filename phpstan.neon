@@ -37,9 +37,9 @@ parameters:
         -
             identifier: generics.notSubtype
         -
-            message: '#Method Shopper\\Core\\Models\\.*should return .* but returns#'
+            message: '#Method Shopper\\.*\\Models\\.*should return .* but returns#'
             identifier: return.type
-            path: packages/core/src/Models/*
+            path: packages/*/src/Models/*
         -
             message: '#Call to an undefined method Filament\\Forms\\Components\\TextInput::currencyMask\(\)#'
             identifier: method.notFound

@@ -1,0 +1,26 @@
+{
+  "name": "shopper/cart",
+  "description": "Shopper cart management with pipeline-based calculation",
+  "license": "MIT",
+  "require": {
+    "php": "^8.3",
+    "shopper/core": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shopper\\Cart\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shopper\\Cart\\CartServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
