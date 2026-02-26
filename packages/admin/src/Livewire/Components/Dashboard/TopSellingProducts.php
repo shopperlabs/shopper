@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Dashboard;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Contracts\ProductVariant;
-use Shopper\Core\Models\OrderItem;
 
 /**
  * @property-read Collection $products
@@ -39,54 +42,39 @@ final class TopSellingProducts extends Component
     {
         $variantClass = resolve(ProductVariant::class)::class;
 
-        $items = OrderItem::query()
-            ->selectRaw('product_id, product_type, SUM(quantity) as total_sales')
-            ->whereHas('order', fn ($query) => $query->where('payment_status', PaymentStatus::Paid))
-            ->groupBy('product_id', 'product_type')
+        $topProducts = DB::table(shopper_table('order_items').' as oi')
+            ->join(shopper_table('orders').' as o', 'o.id', '=', 'oi.order_id')
+            ->leftJoin(shopper_table('product_variants').' as pv', function (JoinClause $join) use ($variantClass): void {
+                $join->on('pv.id', '=', 'oi.product_id')
+                    ->where('oi.product_type', '=', $variantClass);
+            })
+            ->where('o.payment_status', PaymentStatus::Paid->value)
+            ->selectRaw('COALESCE(pv.product_id, oi.product_id) as parent_product_id, SUM(oi.quantity) as total_sales')
+            ->groupBy('parent_product_id')
             ->orderByDesc('total_sales')
-            ->with(['product'])
+            ->limit(6)
             ->get();
 
-        $items->each(function (OrderItem $item) use ($variantClass): void {
-            if ($item->getAttribute('product_type') === $variantClass) {
-                $item->product->load('product');
-            }
-        });
+        $productIds = $topProducts->pluck('parent_product_id')->filter()->all();
 
-        return $items
-            ->map(function ($item) use ($variantClass): array {
-                /** @var OrderItem $item */
-                $product = $item->getAttribute('product_type') === $variantClass
-                    ? $item->product->getAttribute('product')
-                    : $item->product;
-
-                return [
-                    'product_id' => $product?->id,
-                    'product' => $product,
-                    'sales' => (int) $item->getAttribute('total_sales'),
-                ];
-            })
-            ->groupBy('product_id')
-            ->map(fn (Collection $group): array => [
-                'product' => $group->first()['product'],
-                'sales' => $group->sum('sales'),
+        /** @var \Illuminate\Database\Eloquent\Collection<int, Model> $products */
+        $products = resolve(ProductContract::class)::query()
+            ->whereIn('id', $productIds)
+            ->with([
+                'media',
+                'ratings' => fn ($query) => $query->where('approved', true),
             ])
-            ->sortByDesc('sales')
-            ->take(6)
-            ->values()
-            ->map(function (array $item): array {
-                $product = $item['product'];
+            ->get()
+            ->keyBy('id');
 
-                $product?->load([
-                    'media',
-                    'ratings' => fn ($query) => $query->where('approved', true),
-                ]);
-
-                $approvedRatings = $product?->ratings;
+        return $topProducts
+            ->map(function (object $row) use ($products): array {
+                $product = $products->get((int) $row->parent_product_id);
+                $approvedRatings = $product?->getRelation('ratings');
 
                 return [
                     'product' => $product,
-                    'sales' => $item['sales'],
+                    'sales' => (int) $row->total_sales,
                     'reviews_count' => $approvedRatings?->count() ?? 0,
                     'average_rating' => $approvedRatings?->isNotEmpty()
                         ? round($approvedRatings->avg('rating'), 1)
