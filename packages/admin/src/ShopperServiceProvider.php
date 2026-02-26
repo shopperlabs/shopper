@@ -128,6 +128,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'auth.login' => Pages\Auth\Login::class,
             'auth.password' => Pages\Auth\ForgotPassword::class,
             'auth.password-reset' => Pages\Auth\ResetPassword::class,
+            'setup-guide' => Components\Dashboard\SetupGuide::class,
             'initialize' => Pages\Initialization::class,
             'initialize-wizard' => Components\Initialization\InitializationWizard::class,
             'initialize-store-information' => Components\Initialization\Steps\StoreInformation::class,

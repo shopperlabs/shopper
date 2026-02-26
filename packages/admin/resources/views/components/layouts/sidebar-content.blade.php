@@ -7,7 +7,7 @@
         ></div>
 
         <div class="h-full overflow-y-auto">
-            <nav class="sh-si-nav px-4 py-4">
+            <nav class="sh-si-nav px-3 py-3">
                 {!! $renderedSidebar !!}
             </nav>
         </div>
@@ -19,9 +19,9 @@
     </div>
 
     <!-- Footer -->
-    <div class="sh-sidebar border-t border-gray-200 px-4 pt-4 pb-10 dark:border-white/20">
+    <div class="sh-sidebar border-t border-gray-200 px-3 pt-3 pb-6 dark:border-white/20">
         <div class="sh-sidebar-group">
-            <ul role="list" class="sh-sidebar-group-items space-y-1">
+            <ul role="list" class="sh-sidebar-group-items">
                 @can('access_setting')
                     <li
                         class="sh-sidebar-item"

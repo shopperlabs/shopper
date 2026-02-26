@@ -60,7 +60,7 @@
             </div>
             <div class="relative z-20 flex h-full w-full rounded-tl-2xl bg-white shadow-xl dark:bg-gray-900">
                 <div class="p-8">
-                    <x-shopper::brand class="size-10" />
+                    <x-shopper::brand class="size-10" aria-hidden="true" />
                 </div>
                 <div
                     class="flex-1 divide-y divide-gray-100 border-l border-gray-100 pl-4 dark:divide-white/10 dark:border-white/10"

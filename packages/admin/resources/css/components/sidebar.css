@@ -9,23 +9,29 @@
     @apply border-t border-transparent;
 
     .sh-sidebar-group-label {
-      @apply flex items-center justify-between px-2 pb-4 text-sm/4 text-gray-700 dark:text-gray-300;
+      @apply flex items-center justify-between px-2 pb-3 text-sm/4 font-medium text-gray-900 dark:text-gray-200;
+
+      .sh-sidebar-group-toggle {
+        @apply text-gray-400 dark:text-gray-500;
+      }
     }
 
     .sh-sidebar-group-items {
-      @apply space-y-1;
-
       .sh-sidebar-item-icon,
       .sh-sidebar-item-icon svg {
         @apply size-5 shrink-0 fill-current;
       }
 
       .sh-sidebar-item-label {
-        @apply flex-1 font-medium;
+        @apply flex-1;
       }
 
       .sh-sidebar-item-nav {
         @apply ml-auto flex items-center justify-end gap-2;
+
+        .sh-sidebar-item-toggle {
+          @apply text-gray-400 dark:text-gray-500;
+        }
       }
 
       .sh-sidebar-item {
@@ -42,7 +48,7 @@
 
       > .sh-sidebar-item {
         &:not(.sh-sidebar-item-active) {
-          @apply text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white;
+          @apply text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white;
 
           .sh-sidebar-item-icon,
           .sh-sidebar-item-icon svg {
@@ -55,32 +61,50 @@
         }
 
         &:not(.sh-items-has-child).sh-sidebar-item-active {
-          @apply text-primary-600 dark:text-primary-500 bg-white shadow-xs ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/10;
+          @apply relative bg-gray-50 text-gray-900 dark:bg-white/5 dark:text-white;
+
+          &::before {
+            content: '';
+            @apply absolute top-1/2 -left-3 h-6 w-1 -translate-y-1/2 rounded-full bg-current;
+          }
+
+          .sh-sidebar-item-label {
+            @apply font-medium;
+          }
         }
 
-        &.sh-items-has-child {
+        &.sh-items-has-child.sh-sidebar-item-active {
           > .sh-sidebar-item-link.sh-active {
-            @apply text-primary-600 dark:text-primary-500 rounded-lg bg-white shadow-xs ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/10;
+            @apply relative rounded-lg bg-gray-50 text-gray-900 dark:bg-white/5 dark:text-white;
+
+            &::before {
+              content: '';
+              @apply absolute top-1/2 -left-3 h-6 w-1 -translate-y-1/2 rounded-full bg-current;
+            }
 
             .sh-sidebar-item-icon,
             .sh-sidebar-item-icon svg {
-              @apply fill-primary-500;
+              @apply fill-gray-900 dark:fill-white;
+            }
+
+            .sh-sidebar-item-label {
+              @apply font-medium;
             }
           }
         }
 
         .sh-submenu {
-          @apply ml-5 hidden rounded-b-lg border-l border-gray-200 py-1.5 dark:border-white/20;
+          @apply ml-4 hidden border-l border-gray-200 py-1 dark:border-white/20 lg:ml-7 lg:border-l-0 lg:py-0 lg:mt-0.5;
 
           .sh-sidebar-item {
-            @apply rounded-none;
+            @apply rounded-none lg:rounded-lg;
 
             .sh-sidebar-item-link {
-              @apply relative py-2 pl-5;
+              @apply relative py-1.5 pl-4 lg:static lg:p-2;
 
               &::before {
                 content: '';
-                @apply absolute top-1/2 -left-0.75 size-4 -translate-y-1/2 transition-all duration-150;
+                @apply absolute top-1/2 -left-0.75 size-3 -translate-y-1/2 transition-all duration-150 lg:hidden;
                 background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'/%3E%3Cpolyline points='176 104 224 152 176 200' fill='none' stroke='%23e5e7eb' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3Cpath d='M32,56a96,96,0,0,0,96,96h96' fill='none' stroke='%23e5e7eb' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3C/svg%3E");
                 background-repeat: no-repeat;
                 background-size: contain;
@@ -92,19 +116,19 @@
             }
 
             &:not(.sh-sidebar-item-active) {
-              @apply text-gray-500 dark:text-gray-400;
+              @apply text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-900 lg:dark:hover:bg-white/5 lg:dark:hover:text-white;
 
-              &:hover {
-                @apply text-gray-700 dark:text-gray-300;
-
-                .sh-sidebar-item-link::before {
-                  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'/%3E%3Cpolyline points='176 104 224 152 176 200' fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3Cpath d='M32,56a96,96,0,0,0,96,96h96' fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3C/svg%3E");
-                }
+              &:hover .sh-sidebar-item-link::before {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'/%3E%3Cpolyline points='176 104 224 152 176 200' fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3Cpath d='M32,56a96,96,0,0,0,96,96h96' fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3C/svg%3E");
               }
             }
 
             &.sh-sidebar-item-active {
               @apply bg-transparent text-gray-950 shadow-none ring-0 dark:text-white;
+
+              .sh-sidebar-item-label {
+                @apply font-medium;
+              }
             }
           }
         }

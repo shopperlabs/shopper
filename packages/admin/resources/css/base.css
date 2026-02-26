@@ -41,6 +41,11 @@ html {
 @plugin '@tailwindcss/typography';
 
 @theme inline {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-heading: 'Figtree', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+
   --color-gray-50: oklch(0.985 0 0);
   --color-gray-100: oklch(0.967 0.001 286.375);
   --color-gray-200: oklch(0.92 0.004 286.32);

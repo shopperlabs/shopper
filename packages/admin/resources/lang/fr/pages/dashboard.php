@@ -5,27 +5,63 @@ declare(strict_types=1);
 return [
 
     'menu' => 'Tableau de bord',
-    'welcome_message' => 'Bienvenue sur le tableau de bord de Shopper',
-    'header' => 'Commencez par les éléments de base de votre boutique en ligne',
-    'description' => 'Pour commencer à construire votre nouvelle boutique avec Laravel Shopper, nous vous recommandons de commencer par ces étapes.
-                            Le framework vous permet de créer votre boutique et de la configurer exactement comme vous le souhaitez.
-                            Vous pouvez faire des intégrations pour aller plus vite si vous le souhaitez.',
+    'welcome_message' => 'Bienvenue sur Shopper',
+    'welcome_description' => 'Voici ce dont vous avez besoin pour lancer votre boutique.',
+
     'cards' => [
         'doc_title' => 'Documentation',
-        'doc_description' => 'Apprenez à connaître Laravel Shopper en comprenant ses capacités de la bonne manière, que vous soyez nouveau sur le framework ou que vous ayez déjà travaillé dessus. Cette documentation est faite pour vous.',
-        'doc_link' => 'Visitez la documentation',
+    ],
 
-        'screencast_title' => 'Screencasts',
-        'screencast_description' => 'Apprenez à construire une boutique en ligne professionnelle du début à la fin avec des leçons vidéo complètes sur Shopper et des exemples de codes pour configurer rapidement votre boutique.',
-        'screencast_link' => 'Commencez à regarder',
+    'guide' => [
+        'title' => 'Guide de configuration',
+        'description' => 'Complétez ces étapes pour commencer à vendre.',
+        'progress' => 'sur :total complétées',
+        'dismiss' => 'Masquer',
+        'footer_hint' => 'Vous pouvez toujours accéder à ces paramètres plus tard.',
 
-        'theme_title' => 'Thèmes',
-        'theme_description' => 'Votre boutique est le site Web de vos produits. Soyez rapidement opérationnel grâce à un thème disponible, spécialement créé pour Shopper. Modifiez-le selon vos besoins ou créez votre propre thème.',
-        'theme_link' => 'Chercher un Thème',
+        'steps' => [
+            'add_product' => [
+                'title' => 'Ajouter votre premier produit',
+                'description' => 'Ajoutez des produits avec des prix, des images et des variantes pour commencer à construire votre catalogue.',
+                'action' => 'Ajouter un produit',
+            ],
+            'create_collection' => [
+                'title' => 'Créer une collection',
+                'description' => 'Organisez vos produits en collections pour faciliter la navigation de vos clients.',
+                'action' => 'Créer une collection',
+            ],
+            'setup_zones' => [
+                'title' => 'Configurer les zones de livraison',
+                'description' => 'Configurez vos zones de livraison pour définir où vous livrez et à quel coût.',
+                'action' => 'Configurer la livraison',
+            ],
+            'setup_payments' => [
+                'title' => 'Configurer les moyens de paiement',
+                'description' => 'Ajoutez des moyens de paiement pour que vos clients puissent payer leurs commandes.',
+                'action' => 'Configurer les paiements',
+            ],
+            'setup_taxes' => [
+                'title' => 'Configurer les taxes',
+                'description' => 'Configurez les zones et taux de taxes pour calculer automatiquement les taxes sur les commandes.',
+                'action' => 'Configurer les taxes',
+            ],
+        ],
+    ],
 
-        'product_title' => 'Ajout produit',
-        'product_description' => 'Ajoutez des produits et des prix pour commencer à vendre. Adaptez-le aux besoins de votre magasin avec un nombre illimité de produits (selon la taille de votre magasin), de marques, de collections et de variations.',
-        'product_link' => 'Ajouter un produit',
+    'addons' => [
+        'title' => 'Étendre votre boutique',
+        'badge' => 'Add-on',
+        'learn_more' => 'En savoir plus',
+        'configure' => 'Configurer les transporteurs',
+
+        'stripe' => [
+            'title' => 'Stripe',
+            'description' => 'Acceptez les cartes bancaires, Apple Pay et Google Pay avec Stripe.',
+        ],
+        'carriers' => [
+            'title' => 'Transporteurs',
+            'description' => 'Connectez UPS, FedEx, USPS et plus pour des tarifs en temps réel.',
+        ],
     ],
 
 ];

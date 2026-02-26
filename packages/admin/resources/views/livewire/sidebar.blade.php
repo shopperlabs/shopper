@@ -15,15 +15,15 @@
             <div class="from-primary-600 to-primary-100 dark:to-primary-600/10 h-1 bg-linear-to-br"></div>
             <div class="flex h-full flex-col">
                 <!-- Header / Branding -->
-                <div class="px-3 py-4">
+                <div class="px-3 pt-3 pb-2">
                     <x-shopper::link
                         :href="route('shopper.dashboard')"
-                        class="relative flex items-start gap-2 rounded-lg p-2 transition-all duration-200"
+                        class="relative flex items-center gap-2 rounded-md px-2 py-1.5"
                         x-bind:class="$store.sidebar.isCollapsed
                             ? 'justify-center'
                             : 'bg-white shadow-xs ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/20'"
                     >
-                        <x-shopper::brand class="size-8 shrink-0" aria-hidden="true" />
+                        <x-shopper::brand class="size-6 shrink-0" aria-hidden="true" />
                         <div
                             class="min-w-0 truncate overflow-hidden transition-all duration-200"
                             x-show="!$store.sidebar.isCollapsed"
@@ -37,9 +37,6 @@
                             <h4 class="font-heading truncate text-sm/4 font-medium text-gray-900 dark:text-white">
                                 {{ shopper_setting('name') }}
                             </h4>
-                            <span class="text-sm/4 text-gray-500 dark:text-gray-400">
-                                {{ shopper_setting('email') }}
-                            </span>
                         </div>
                     </x-shopper::link>
                 </div>

@@ -24,7 +24,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 $item->setAuthorized($this->user->hasPermissionTo('browse_products'));
                 $item->useSpa();
                 $item->route('shopper.products.index');
-                $item->setIcon('phosphor-book-open-text');
+                $item->setIcon('phosphor-package');
 
                 if (Feature::enabled('attribute')) {
                     $item->item(__('shopper::pages/attributes.menu'), function (Item $item): void {

@@ -40,7 +40,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
     public function table(Table $table): Table
     {
         return $table
-            ->query(resolve(BrandContract::class)::query()->latest())
+            ->query(resolve(BrandContract::class)::query()->latest()->orderBy('position'))
             ->columns([
                 SpatieMediaLibraryImageColumn::make('Logo')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))

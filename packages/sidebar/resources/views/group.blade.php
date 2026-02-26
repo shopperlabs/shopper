@@ -22,9 +22,14 @@
 
             @if ($group->isCollapsible())
                 <span x-show="!$store.sidebar?.isCollapsed" class="sh-sidebar-group-toggle">
-                    <x-untitledui-chevron-down
-                        class="size-4 transition-transform duration-200"
-                        x-bind:class="{ 'rotate-180': !$store.sidebar?.isGroupCollapsed(label) }"
+                    <x-untitledui-minus
+                        x-show="!$store.sidebar?.isGroupCollapsed(label)"
+                        class="size-3.5"
+                        aria-hidden="true"
+                    />
+                    <x-untitledui-plus
+                        x-show="$store.sidebar?.isGroupCollapsed(label)"
+                        class="size-3.5"
                         aria-hidden="true"
                     />
                 </span>

@@ -57,6 +57,7 @@ class General extends Component implements HasActions, HasForms
             'street_address',
             'postal_code',
             'city',
+            'state',
             'country_id',
             'default_currency_id',
             'currencies',
@@ -151,11 +152,13 @@ class General extends Component implements HasActions, HasForms
                             TextInput::make('postal_code')
                                 ->label(__('shopper::forms.label.postal_code'))
                                 ->required(),
+                            TextInput::make('state')
+                                ->label(__('shopper::forms.label.state')),
+                            Select::make('country_id')
+                                ->label(__('shopper::forms.label.country'))
+                                ->options(Country::query()->pluck('name', 'id'))
+                                ->searchable(),
                         ]),
-                        Select::make('country_id')
-                            ->label(__('shopper::forms.label.country'))
-                            ->options(Country::query()->pluck('name', 'id'))
-                            ->searchable(),
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/settings/global.general.store_currency'))

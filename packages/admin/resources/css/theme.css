@@ -1,11 +1,22 @@
 @import 'tailwindcss';
-@import '../../../../../vendor/filament/filament/resources/css/index.css';
+@import '../../../../../vendor/filament/support/resources/css/index.css';
+@import '../../../../../vendor/filament/actions/resources/css/index.css';
+@import '../../../../../vendor/filament/forms/resources/css/index.css';
+@import '../../../../../vendor/filament/schemas/resources/css/index.css';
+@import '../../../../../vendor/filament/tables/resources/css/index.css';
+@import '../../../../../vendor/filament/notifications/resources/css/index.css';
 
 @import './base.css';
 @import './components/index.css';
 
 @source '../views';
 @source '../../src';
-@source '../../../../../vendor/filament/**/resources/views';
+@source '../../../../../vendor/filament/actions/resources/views';
+@source '../../../../../vendor/filament/forms/resources/views';
+@source '../../../../../vendor/filament/infolists/resources/views';
+@source '../../../../../vendor/filament/notifications/resources/views';
+@source '../../../../../vendor/filament/schemas/resources/views';
+@source '../../../../../vendor/filament/support/resources/views';
+@source '../../../../../vendor/filament/tables/resources/views';
 @source '../../../../../vendor/codewithdennis/filament-select-tree/resources/views';
 @source '../../../../../vendor/jaocero/radio-deck/resources/views';

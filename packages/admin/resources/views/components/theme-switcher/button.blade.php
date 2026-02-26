@@ -10,7 +10,7 @@
 <button
     aria-label="{{ $label }}"
     type="button"
-    x-on:click="(theme = @js($theme)) && close()"
+    x-on:click="theme = @js($theme); dropdownOpen = false"
     x-tooltip="{
         content: {{ Js::from($label) }},
         theme: $store.theme,
