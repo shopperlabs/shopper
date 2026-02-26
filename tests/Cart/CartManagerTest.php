@@ -26,7 +26,7 @@ beforeEach(function (): void {
 
     $this->product = Product::factory()->standard()->create();
     $this->product->prices()->create([
-        'amount' => 2500,
+        'amount' => 25,
         'currency_id' => $this->currency->id,
     ]);
     $this->product->load('prices');
@@ -44,7 +44,7 @@ describe(CartManager::class, function (): void {
 
         expect($line)->toBeInstanceOf(CartLine::class)
             ->and($line->quantity)->toBe(1)
-            ->and($line->unit_price_amount)->toBe(2500)
+            ->and($line->unit_price_amount)->toBe(25)
             ->and($line->purchasable_type)->toBe($this->product->getMorphClass())
             ->and($line->purchasable_id)->toBe($this->product->id)
             ->and($this->cart->lines()->count())->toBe(1);
@@ -63,14 +63,14 @@ describe(CartManager::class, function (): void {
             'product_id' => $this->product->id,
         ]);
         $variant->prices()->create([
-            'amount' => 3000,
+            'amount' => 30,
             'currency_id' => $this->currency->id,
         ]);
         $variant->mutateStock($this->inventory->id, 20);
 
         $line = $this->cartManager->add($this->cart, $variant);
 
-        expect($line->unit_price_amount)->toBe(3000)
+        expect($line->unit_price_amount)->toBe(30)
             ->and($line->purchasable_type)->toBe($variant->getMorphClass())
             ->and($line->purchasable_id)->toBe($variant->id);
     });
@@ -94,7 +94,7 @@ describe(CartManager::class, function (): void {
     it('clears all cart lines', function (): void {
         $product2 = Product::factory()->create();
         $product2->prices()->create([
-            'amount' => 1500,
+            'amount' => 15,
             'currency_id' => $this->currency->id,
         ]);
         $product2->mutateStock($this->inventory->id, 10);
@@ -149,7 +149,7 @@ describe(CartManager::class, function (): void {
     it('throws `InsufficientStockException` when exceeding available stock', function (): void {
         $product = Product::factory()->standard()->create();
         $product->prices()->create([
-            'amount' => 1000,
+            'amount' => 10,
             'currency_id' => $this->currency->id,
         ]);
         $product->load('prices');
@@ -161,7 +161,7 @@ describe(CartManager::class, function (): void {
     it('throws `InsufficientStockException` when increment exceeds stock', function (): void {
         $product = Product::factory()->standard()->create();
         $product->prices()->create([
-            'amount' => 1000,
+            'amount' => 10,
             'currency_id' => $this->currency->id,
         ]);
         $product->load('prices');
@@ -174,7 +174,7 @@ describe(CartManager::class, function (): void {
     it('allows backorder products to exceed stock', function (): void {
         $product = Product::factory()->standard()->create(['allow_backorder' => true]);
         $product->prices()->create([
-            'amount' => 1000,
+            'amount' => 10,
             'currency_id' => $this->currency->id,
         ]);
         $product->load('prices');
@@ -192,7 +192,7 @@ describe(CartManager::class, function (): void {
     it('throws `InsufficientStockException` when updating quantity exceeds stock', function (): void {
         $product = Product::factory()->standard()->create();
         $product->prices()->create([
-            'amount' => 1000,
+            'amount' => 10,
             'currency_id' => $this->currency->id,
         ]);
         $product->load('prices');

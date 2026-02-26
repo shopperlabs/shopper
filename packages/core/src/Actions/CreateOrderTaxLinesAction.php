@@ -49,11 +49,11 @@ final readonly class CreateOrderTaxLinesAction
                 $itemTaxTotal += $taxLine->amount;
             }
 
-            $item->updateQuietly(['tax_amount' => $itemTaxTotal]);
+            $item->updateQuietly(['tax_amount' => $itemTaxTotal / 100]);
             $orderTaxTotal += $itemTaxTotal;
         }
 
-        $order->updateQuietly(['tax_amount' => $orderTaxTotal]);
+        $order->updateQuietly(['tax_amount' => $orderTaxTotal / 100]);
     }
 
     private function resolveCountryCode(Order $order): ?string

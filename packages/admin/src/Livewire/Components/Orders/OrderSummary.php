@@ -26,7 +26,6 @@ class OrderSummary extends Component
         $shippingPrice = $shippingOption?->price ?? 0; // @phpstan-ignore nullsafe.neverNull
         $taxAmount = $this->order->tax_amount ?? 0;
         $isTaxInclusive = $this->resolveTaxInclusivity();
-        $divisor = is_no_division_currency($this->order->currency_code) ? 1 : 100;
 
         return view('shopper::livewire.components.orders.order-summary', [
             'subtotal' => $subtotal,
@@ -40,7 +39,7 @@ class OrderSummary extends Component
                 ?? ($paymentMethod ? Payment::driver($paymentMethod->driver ?? 'manual')->logo() : null),
             'itemsCount' => $this->order->items->count(),
             'total' => $this->order->price_amount !== null
-                ? $this->order->price_amount / $divisor
+                ? $this->order->price_amount
                 : ($subtotal + $shippingPrice + ($isTaxInclusive ? 0 : $taxAmount)),
         ]);
     }

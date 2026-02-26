@@ -30,7 +30,7 @@ beforeEach(function (): void {
 
     $this->product = Product::factory()->standard()->create();
     $this->product->prices()->create([
-        'amount' => 2500,
+        'amount' => 25,
         'currency_id' => $this->currency->id,
     ]);
     $this->product->load('prices');
@@ -45,7 +45,7 @@ beforeEach(function (): void {
         'purchasable_type' => $this->product->getMorphClass(),
         'purchasable_id' => $this->product->id,
         'quantity' => 2,
-        'unit_price_amount' => 2500,
+        'unit_price_amount' => 25,
     ]);
 
     $this->context = new CartPipelineContext($this->cart);

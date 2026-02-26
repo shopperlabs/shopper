@@ -33,7 +33,7 @@ beforeEach(function (): void {
 
     $this->product = Product::factory()->standard()->create();
     $this->product->prices()->create([
-        'amount' => 2500,
+        'amount' => 25,
         'currency_id' => $this->currency->id,
     ]);
     $this->product->load('prices');
@@ -52,13 +52,13 @@ describe(CalculateLines::class, function (): void {
         $context = $this->cartManager->calculate($this->cart);
 
         expect($context)->toBeInstanceOf(CartPipelineContext::class)
-            ->and($context->subtotal)->toBe(5000);
+            ->and($context->subtotal)->toBe(50);
     });
 
     it('calculates subtotal for multiple lines', function (): void {
         $product2 = Product::factory()->standard()->create();
         $product2->prices()->create([
-            'amount' => 1000,
+            'amount' => 10,
             'currency_id' => $this->currency->id,
         ]);
         $product2->load('prices');
@@ -69,7 +69,7 @@ describe(CalculateLines::class, function (): void {
 
         $context = $this->cartManager->calculate($this->cart);
 
-        expect($context->subtotal)->toBe(8000);
+        expect($context->subtotal)->toBe(80);
     });
 
     it('calculates total without discount or tax', function (): void {
@@ -77,7 +77,7 @@ describe(CalculateLines::class, function (): void {
 
         $context = $this->cartManager->calculate($this->cart);
 
-        expect($context->total)->toBe(2500)
+        expect($context->total)->toBe(25)
             ->and($context->discountTotal)->toBe(0)
             ->and($context->taxTotal)->toBe(0);
     });
@@ -100,15 +100,15 @@ describe(CalculateLines::class, function (): void {
 
         $context = $this->cartManager->calculate($this->cart->refresh());
 
-        expect($context->subtotal)->toBe(5000)
-            ->and($context->discountTotal)->toBe(1000)
-            ->and($context->total)->toBe(4000);
+        expect($context->subtotal)->toBe(50)
+            ->and($context->discountTotal)->toBe(10)
+            ->and($context->total)->toBe(40);
     });
 
     it('applies fixed amount discount distributed across lines', function (): void {
         $product2 = Product::factory()->standard()->create();
         $product2->prices()->create([
-            'amount' => 1500,
+            'amount' => 15,
             'currency_id' => $this->currency->id,
         ]);
         $product2->load('prices');
@@ -118,7 +118,7 @@ describe(CalculateLines::class, function (): void {
             'code' => 'FLAT10',
             'is_active' => true,
             'type' => DiscountType::FixedAmount,
-            'value' => 1000,
+            'value' => 10,
             'apply_to' => DiscountApplyTo::Order,
             'eligibility' => DiscountEligibility::Everyone,
             'min_required' => DiscountRequirement::None,
@@ -132,9 +132,9 @@ describe(CalculateLines::class, function (): void {
 
         $context = $this->cartManager->calculate($this->cart->refresh());
 
-        expect($context->subtotal)->toBe(4000)
-            ->and($context->discountTotal)->toBe(1000)
-            ->and($context->total)->toBe(3000);
+        expect($context->subtotal)->toBe(40)
+            ->and($context->discountTotal)->toBe(10)
+            ->and($context->total)->toBe(30);
     });
 
     it('calculates tax on lines after discount', function (): void {
@@ -164,10 +164,10 @@ describe(CalculateLines::class, function (): void {
 
         $context = $this->cartManager->calculate($this->cart->refresh());
 
-        expect($context->subtotal)->toBe(2500)
-            ->and($context->taxTotal)->toBe(250)
+        expect($context->subtotal)->toBe(25)
+            ->and($context->taxTotal)->toBe(2.5)
             ->and($context->taxInclusive)->toBeFalse()
-            ->and($context->total)->toBe(2750);
+            ->and($context->total)->toBe(27.5);
     });
 
     it('handles tax inclusive mode', function (): void {
@@ -233,6 +233,6 @@ describe(CalculateLines::class, function (): void {
         $context = $this->cartManager->calculate($this->cart->refresh());
 
         expect($context->discountTotal)->toBe(0)
-            ->and($context->total)->toBe(2500);
+            ->and($context->total)->toBe(25);
     });
 })->group('cart', 'cart-calculation');

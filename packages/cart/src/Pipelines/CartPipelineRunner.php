@@ -20,9 +20,16 @@ final class CartPipelineRunner
 
         $context = new CartPipelineContext($cart);
 
-        return app(Pipeline::class)
+        app(Pipeline::class)
             ->send($context)
             ->through(config('shopper.cart.pipelines.cart'))
             ->thenReturn();
+
+        $context->subtotal /= 100;
+        $context->discountTotal /= 100;
+        $context->taxTotal /= 100;
+        $context->total /= 100;
+
+        return $context;
     }
 }

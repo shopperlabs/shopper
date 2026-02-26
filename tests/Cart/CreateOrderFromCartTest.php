@@ -34,7 +34,7 @@ beforeEach(function (): void {
 
     $this->product = Product::factory()->standard()->create();
     $this->product->prices()->create([
-        'amount' => 2500,
+        'amount' => 25,
         'currency_id' => $this->currency->id,
     ]);
     $this->product->load('prices');
@@ -64,7 +64,7 @@ describe(CreateOrderFromCartAction::class, function (): void {
 
         $line = $this->cart->lines->first();
         $line->adjustments()->create([
-            'amount' => 500,
+            'amount' => 5,
             'code' => 'TEST',
             'discount_id' => null,
         ]);
@@ -72,7 +72,7 @@ describe(CreateOrderFromCartAction::class, function (): void {
         $order = $this->action->execute($this->cart->refresh());
         $orderItem = $order->items->first();
 
-        expect($orderItem->discount_amount)->toBe(500);
+        expect($orderItem->discount_amount)->toBe(5);
     });
 
     it('creates order addresses from cart addresses', function (): void {

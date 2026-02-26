@@ -7,10 +7,10 @@ namespace Shopper\Cart\Pipelines;
 use Closure;
 use Shopper\Cart\Discounts\DiscountCalculator;
 
-final class ApplyDiscounts
+final readonly class ApplyDiscounts
 {
     public function __construct(
-        private readonly DiscountCalculator $calculator,
+        private DiscountCalculator $calculator,
     ) {}
 
     public function handle(CartPipelineContext $context, Closure $next): mixed

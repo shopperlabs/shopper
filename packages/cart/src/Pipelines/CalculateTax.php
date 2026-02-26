@@ -9,24 +9,29 @@ use Shopper\Cart\Taxes\CartLineTaxAdapter;
 use Shopper\Core\Taxes\TaxCalculationContext;
 use Shopper\Core\Taxes\TaxCalculator;
 
-final class CalculateTax
+final readonly class CalculateTax
 {
     public function __construct(
-        private readonly TaxCalculator $calculator,
+        private TaxCalculator $calculator,
     ) {}
 
     public function handle(CartPipelineContext $context, Closure $next): mixed
     {
-        $countryCode = $this->resolveCountryCode($context);
+        $shippingAddress = $context->cart->shippingAddress();
+        $countryCode = $shippingAddress?->country?->cca2;
 
         if (! $countryCode) {
             return $next($context);
         }
 
-        $taxContext = new TaxCalculationContext(countryCode: $countryCode);
+        $taxContext = new TaxCalculationContext(
+            countryCode: $countryCode,
+            provinceCode: $shippingAddress->state,
+            customerId: $context->cart->customer_id,
+        );
 
         foreach ($context->cart->lines as $line) {
-            $discountAmount = $line->adjustments->sum('amount');
+            $discountAmount = (int) $line->adjustments->sum(fn ($adj) => $adj->getRawOriginal('amount'));
             $taxableAmount = ($context->lineSubtotals[$line->id] ?? 0) - $discountAmount;
 
             if ($taxableAmount <= 0) {
@@ -44,7 +49,7 @@ final class CalculateTax
                     'code' => $taxLine->code ?? $taxLine->name,
                     'name' => $taxLine->name,
                     'rate' => $taxLine->rate,
-                    'amount' => $taxLine->amount,
+                    'amount' => $taxLine->amount / 100,
                     'tax_rate_id' => $taxLine->taxRateId,
                 ]);
 
@@ -58,10 +63,5 @@ final class CalculateTax
         $context->taxInclusive = $zone->is_tax_inclusive ?? false;
 
         return $next($context);
-    }
-
-    private function resolveCountryCode(CartPipelineContext $context): ?string
-    {
-        return $context->cart->shippingAddress()?->country?->cca2;
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Cart\Actions;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Events\CartCompleted;
@@ -11,15 +12,17 @@ use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartAddress;
 use Shopper\Core\Actions\CreateOrderTaxLinesAction;
+use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderAddress;
+use Shopper\Core\Models\ProductVariant as ProductVariantModel;
 
-final class CreateOrderFromCartAction
+final readonly class CreateOrderFromCartAction
 {
     public function __construct(
-        private readonly CartManager $cartManager,
-        private readonly CreateOrderTaxLinesAction $createOrderTaxLines,
+        private CartManager $cartManager,
+        private CreateOrderTaxLinesAction $createOrderTaxLines,
     ) {}
 
     public function execute(Cart $cart): Order
@@ -34,8 +37,8 @@ final class CreateOrderFromCartAction
 
             $context = $this->cartManager->calculate($cart);
 
-            $shippingAddress = $this->createOrderAddress($cart->shippingAddress());
-            $billingAddress = $this->createOrderAddress($cart->billingAddress());
+            $shippingAddress = $this->createOrderAddress($cart->shippingAddress(), $cart->customer_id);
+            $billingAddress = $this->createOrderAddress($cart->billingAddress(), $cart->customer_id);
 
             $order = Order::query()->create([
                 'number' => generate_number(),
@@ -49,12 +52,17 @@ final class CreateOrderFromCartAction
                 'billing_address_id' => $billingAddress?->id,
             ]);
 
+            $cart->lines->loadMorph('purchasable', [
+                ProductVariantModel::class => ['product'],
+            ]);
+
             foreach ($cart->lines as $line) {
                 $discountAmount = $line->adjustments->sum('amount');
+                $purchasable = $line->purchasable;
 
                 $order->items()->create([
-                    'name' => $line->purchasable->name ?? '',
-                    'sku' => $line->purchasable->sku ?? '',
+                    'name' => $this->resolveItemName($purchasable),
+                    'sku' => $purchasable->sku ?? '',
                     'quantity' => $line->quantity,
                     'unit_price_amount' => $line->unit_price_amount,
                     'discount_amount' => $discountAmount,
@@ -85,13 +93,27 @@ final class CreateOrderFromCartAction
         });
     }
 
-    private function createOrderAddress(?CartAddress $cartAddress): ?OrderAddress
+    private function resolveItemName(Model $purchasable): string
+    {
+        if ($purchasable instanceof ProductVariant) {
+            $productName = $purchasable->product?->name;
+
+            return $productName
+                ? $productName.' / '.$purchasable->name
+                : $purchasable->name ?? '';
+        }
+
+        return $purchasable->name ?? '';
+    }
+
+    private function createOrderAddress(?CartAddress $cartAddress, ?int $customerId): ?OrderAddress
     {
         if (! $cartAddress) {
             return null;
         }
 
         return OrderAddress::query()->create([
+            'customer_id' => $customerId,
             'first_name' => $cartAddress->first_name,
             'last_name' => $cartAddress->last_name,
             'company' => $cartAddress->company,

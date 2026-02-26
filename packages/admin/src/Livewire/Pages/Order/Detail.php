@@ -13,7 +13,6 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
-use Shopper\Core\Enum\FulfillmentStatus;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Events\Orders\OrderArchived;
@@ -73,10 +72,6 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->visible($this->order->isNew())
             ->action(function (): void {
                 $this->order->update(['status' => OrderStatus::Processing]);
-
-                $this->order->items()
-                    ->where('fulfillment_status', FulfillmentStatus::Pending)
-                    ->update(['fulfillment_status' => FulfillmentStatus::Processing]);
 
                 $this->order->refresh();
                 $this->dispatch('order.updated');
