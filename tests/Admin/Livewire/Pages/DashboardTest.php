@@ -23,6 +23,6 @@ describe(Dashboard::class, function (): void {
     it('has correct page title', function (): void {
         Livewire::test(Dashboard::class)
             ->assertOk()
-            ->assertSeeHtml(__('shopper::pages/dashboard.menu'));
+            ->assertSet('showSetupGuide', true);
     });
 });

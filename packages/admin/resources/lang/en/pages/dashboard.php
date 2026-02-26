@@ -48,6 +48,35 @@ return [
         ],
     ],
 
+    'stats' => [
+        'revenue' => 'Total Revenue',
+        'products' => 'Total Products',
+        'orders' => 'Total Orders',
+        'customers' => 'Total Customers',
+        'vs_last_month' => 'vs last month',
+        'view_more' => 'View more',
+    ],
+
+    'chart' => [
+        'heading' => 'Performance',
+        'series_label' => 'Revenue',
+    ],
+
+    'recent_orders' => [
+        'heading' => 'Recent Orders',
+        'view_all' => 'View all',
+        'empty' => 'No orders yet.',
+    ],
+
+    'top_products' => [
+        'heading' => 'Top Selling Products',
+        'view_all' => 'View all',
+        'product' => 'Product',
+        'sales' => 'Sales',
+        'reviews' => 'Reviews',
+        'empty' => 'No sales yet.',
+    ],
+
     'addons' => [
         'title' => 'Extend your store',
         'badge' => 'Add-on',

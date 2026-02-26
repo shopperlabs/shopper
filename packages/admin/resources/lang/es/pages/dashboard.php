@@ -48,6 +48,35 @@ return [
         ],
     ],
 
+    'stats' => [
+        'revenue' => 'Ingresos totales',
+        'products' => 'Total productos',
+        'orders' => 'Total pedidos',
+        'customers' => 'Total clientes',
+        'vs_last_month' => 'vs mes anterior',
+        'view_more' => 'Ver más',
+    ],
+
+    'chart' => [
+        'heading' => 'Rendimiento',
+        'series_label' => 'Ingresos',
+    ],
+
+    'recent_orders' => [
+        'heading' => 'Pedidos recientes',
+        'view_all' => 'Ver todos',
+        'empty' => 'Aún no hay pedidos.',
+    ],
+
+    'top_products' => [
+        'heading' => 'Productos más vendidos',
+        'view_all' => 'Ver todos',
+        'product' => 'Producto',
+        'sales' => 'Ventas',
+        'reviews' => 'Reseñas',
+        'empty' => 'Aún no hay ventas.',
+    ],
+
     'addons' => [
         'title' => 'Amplía tu tienda',
         'badge' => 'Add-on',

@@ -48,6 +48,35 @@ return [
         ],
     ],
 
+    'stats' => [
+        'revenue' => 'Revenu total',
+        'products' => 'Total produits',
+        'orders' => 'Total commandes',
+        'customers' => 'Total clients',
+        'vs_last_month' => 'vs mois dernier',
+        'view_more' => 'Voir plus',
+    ],
+
+    'chart' => [
+        'heading' => 'Performance',
+        'series_label' => 'Revenus',
+    ],
+
+    'recent_orders' => [
+        'heading' => 'Commandes récentes',
+        'view_all' => 'Voir tout',
+        'empty' => 'Aucune commande pour le moment.',
+    ],
+
+    'top_products' => [
+        'heading' => 'Produits les plus vendus',
+        'view_all' => 'Voir tout',
+        'product' => 'Produit',
+        'sales' => 'Ventes',
+        'reviews' => 'Avis',
+        'empty' => 'Aucune vente pour le moment.',
+    ],
+
     'addons' => [
         'title' => 'Étendre votre boutique',
         'badge' => 'Add-on',
