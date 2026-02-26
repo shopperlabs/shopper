@@ -1,3 +1,5 @@
+@blaze
+
 @props([
     'key',
     'value' => null,

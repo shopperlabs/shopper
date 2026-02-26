@@ -1,3 +1,5 @@
+@blaze
+
 <div class="relative isolate flex min-h-screen items-center justify-center">
     <svg
         class="absolute inset-0 -z-10 hidden size-full mask-[radial-gradient(64rem_64rem_at_top,white,transparent)] stroke-gray-200 sm:block dark:stroke-gray-900"

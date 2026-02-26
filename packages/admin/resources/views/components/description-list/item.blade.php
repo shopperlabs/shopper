@@ -1,3 +1,5 @@
+@blaze
+
 @props([
     'heading',
     'icon' => null,

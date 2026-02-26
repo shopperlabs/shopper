@@ -1,3 +1,5 @@
+@blaze(memo: true)
+
 <svg {{ $attributes }} fill="currentColor" viewBox="0 0 20 20">
     <path
         fill-rule="evenodd"

@@ -1,3 +1,5 @@
+@blaze(memo: true)
+
 <svg {{ $attributes }} fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="M12 5.09V18.92A6.92 6.92 0 0 0 18.919 12c0-3.816-3.103-6.91-6.919-6.91Z" />
     <path

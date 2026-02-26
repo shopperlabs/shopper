@@ -1,3 +1,5 @@
+@blaze(memo: true)
+
 <svg
     {{ $attributes }}
     fill="currentColor"

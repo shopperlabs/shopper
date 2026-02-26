@@ -1,3 +1,5 @@
+@blaze
+
 <td
     {{ $attributes->twMerge(['class' => 'px-6 py-3 text-sm leading-5 text-gray-500 dark:text-gray-400']) }}
 >

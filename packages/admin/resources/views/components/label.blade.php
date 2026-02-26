@@ -1,3 +1,5 @@
+@blaze
+
 @props([
     'value',
     'isRequired' => false,

@@ -42,6 +42,7 @@
     "illuminate/view": "^11.0|^12.0",
     "jenssegers/agent": "^2.6",
     "jaocero/radio-deck": "^3.0",
+    "livewire/blaze": "^1.0",
     "mckenziearts/filament-untitledui-icons": "^1.1",
     "milon/barcode": "^11.0|^12.0",
     "pragmarx/google2fa": "^8.0|^9.0",

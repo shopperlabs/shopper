@@ -1,3 +1,5 @@
+@blaze(memo: true)
+
 <svg
     {{ $attributes->twMerge(['class' => 'size-5 animate-spin']) }}
     fill="none"
