@@ -1,11 +1,9 @@
 <div class="flex h-full flex-col divide-y divide-gray-200 dark:divide-white/10">
-    <div class="h-0 flex-1 overflow-y-auto py-6">
-        <div class="px-4 sm:px-6">
-            <x-shopper::heading class="mt-5">
-                <x-slot name="title">
-                    {{ $review->reviewrateable->name }}
-                </x-slot>
-            </x-shopper::heading>
+    <div class="h-0 flex-1 overflow-y-auto py-4">
+        <div class="px-4">
+            <h2 class="font-heading text-2xl font-bold text-gray-900 dark:text-white">
+                {{ $review->reviewrateable->name }}
+            </h2>
 
             <div class="mt-8">
                 <x-shopper::section-heading

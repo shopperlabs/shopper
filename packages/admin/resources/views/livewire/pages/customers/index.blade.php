@@ -2,7 +2,7 @@
     <x-shopper::heading :title="__('shopper::pages/customers.menu')">
         <x-slot name="action">
             @can('add_customers')
-                <x-filament::button tag="a" :href="route('shopper.customers.create')">
+                <x-filament::button tag="a" :href="route('shopper.customers.create')" wire:navigate>
                     {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')]) }}
                 </x-filament::button>
             @endcan

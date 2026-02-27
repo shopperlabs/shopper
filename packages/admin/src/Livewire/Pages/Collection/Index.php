@@ -90,6 +90,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             parameters: ['collection' => $record]
                         ),
                     )
+                    ->extraAttributes(['wire:navigate' => true])
                     ->visible(Shopper::auth()->user()->can('edit_collections')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))

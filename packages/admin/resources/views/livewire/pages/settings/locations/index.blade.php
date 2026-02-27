@@ -15,7 +15,7 @@
             @can('add_inventories')
                 @if ($inventories->count() < (int) config('shopper.admin.inventory_limit') + 1)
                     <div class="flex">
-                        <x-filament::button tag="a" :href="route('shopper.settings.locations.create')">
+                        <x-filament::button tag="a" :href="route('shopper.settings.locations.create')" wire:navigate>
                             {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/settings/global.location.single')]) }}
                         </x-filament::button>
                     </div>

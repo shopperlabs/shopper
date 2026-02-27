@@ -28,7 +28,7 @@
             @if ($permission)
                 @can($permission)
                     @if ($url)
-                        <x-filament::button tag="a" :href="$url" class="mt-5">
+                        <x-filament::button tag="a" :href="$url" wire:navigate class="mt-5">
                             {{ $button }}
                         </x-filament::button>
                     @elseif ($panel)
