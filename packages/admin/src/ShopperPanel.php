@@ -11,6 +11,8 @@ use Illuminate\Foundation\Vite;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
+use Shopper\Addon\AddonManager;
+use Shopper\Contracts\ShopperAddon;
 use Shopper\Enum\RenderHook;
 use Shopper\Events\LoadShopper;
 
@@ -35,6 +37,8 @@ final class ShopperPanel
     /** @var list<string> */
     private array $scripts = [];
 
+    private ?AddonManager $addonManager = null;
+
     public function auth(): StatefulGuard
     {
         /** @var StatefulGuard */
@@ -44,6 +48,106 @@ final class ShopperPanel
     public function prefix(): string
     {
         return config('shopper.admin.prefix');
+    }
+
+    public function addonManager(): AddonManager
+    {
+        if ($this->addonManager === null) {
+            $this->addonManager = new AddonManager;
+        }
+
+        return $this->addonManager;
+    }
+
+    public function addon(ShopperAddon $addon): self
+    {
+        $this->addonManager()->register($addon, $this);
+
+        return $this;
+    }
+
+    public function hasAddon(string $id): bool
+    {
+        return $this->addonManager()->has($id);
+    }
+
+    public function getAddon(string $id): ShopperAddon
+    {
+        return $this->addonManager()->get($id);
+    }
+
+    public function addonRoutes(Closure $routes): self
+    {
+        $this->addonManager()->addRoutes($routes);
+
+        return $this;
+    }
+
+    /**
+     * @param  class-string  $sidebarClass
+     */
+    public function addonSidebar(string $sidebarClass): self
+    {
+        $this->addonManager()->addSidebar($sidebarClass);
+
+        return $this;
+    }
+
+    /**
+     * @param  array<string, class-string>  $components
+     */
+    public function addonLivewireComponents(array $components): self
+    {
+        $this->addonManager()->addLivewireComponents($components);
+
+        return $this;
+    }
+
+    public function addonViews(string $namespace, string $path): self
+    {
+        $this->addonManager()->addViewNamespace($namespace, $path);
+
+        return $this;
+    }
+
+    /**
+     * @param  array<class-string, bool>  $items
+     */
+    public function addonSettingItems(array $items): self
+    {
+        $this->addonManager()->addSettingItems($items);
+
+        return $this;
+    }
+
+    /**
+     * @param  list<string>  $permissions
+     */
+    public function addonPermissions(array $permissions): self
+    {
+        $this->addonManager()->addPermissions($permissions);
+
+        return $this;
+    }
+
+    /**
+     * @param  list<string>  $styles
+     */
+    public function addonStyles(array $styles): self
+    {
+        $this->addonManager()->addStyles($styles);
+
+        return $this;
+    }
+
+    /**
+     * @param  list<string>  $scripts
+     */
+    public function addonScripts(array $scripts): self
+    {
+        $this->addonManager()->addScripts($scripts);
+
+        return $this;
     }
 
     public function registerTheme(string|Htmlable|null $theme): self
@@ -144,6 +248,7 @@ final class ShopperPanel
         return array_merge(
             config('shopper.admin.resources.stylesheets', []),
             $this->styles,
+            $this->addonManager()->getStyles(),
         );
     }
 
@@ -165,6 +270,7 @@ final class ShopperPanel
         return array_merge(
             config('shopper.admin.resources.scripts', []),
             $this->scripts,
+            $this->addonManager()->getScripts(),
         );
     }
 
@@ -185,6 +291,6 @@ final class ShopperPanel
 
     public function version(): string
     {
-        return 'v2';
+        return 'v2.6';
     }
 }

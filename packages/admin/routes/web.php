@@ -70,6 +70,10 @@ Route::domain(config('shopper.admin.domain'))
                 if (config('shopper.routes.custom_file')) {
                     Route::as('shopper.')->group(config('shopper.routes.custom_file'));
                 }
+
+                foreach (shopper()->addonManager()->getRoutes() as $addonRoutes) {
+                    Route::as('shopper.')->group($addonRoutes);
+                }
             });
         });
     });

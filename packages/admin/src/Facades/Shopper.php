@@ -8,10 +8,24 @@ use Closure;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Facade;
+use Shopper\Addon\AddonManager;
+use Shopper\Contracts\ShopperAddon;
 use Shopper\Enum\RenderHook;
 use Shopper\ShopperPanel;
 
 /**
+ * @method static AddonManager addonManager()
+ * @method static ShopperPanel addon(ShopperAddon $addon)
+ * @method static bool hasAddon(string $id)
+ * @method static ShopperAddon getAddon(string $id)
+ * @method static ShopperPanel addonRoutes(Closure $routes)
+ * @method static ShopperPanel addonSidebar(string $sidebarClass)
+ * @method static ShopperPanel addonLivewireComponents(array $components)
+ * @method static ShopperPanel addonViews(string $namespace, string $path)
+ * @method static ShopperPanel addonSettingItems(array $items)
+ * @method static ShopperPanel addonPermissions(array $permissions)
+ * @method static ShopperPanel addonStyles(array $styles)
+ * @method static ShopperPanel addonScripts(array $scripts)
  * @method static StatefulGuard auth()
  * @method static string prefix()
  * @method static Htmlable getThemeLink()

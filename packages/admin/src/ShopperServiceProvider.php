@@ -41,6 +41,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
     /** @var string[] */
     protected array $configFiles = [
+        'addons',
         'admin',
         'auth',
         'features',
@@ -74,6 +75,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         $this->bootLivewireComponents();
+        $this->bootAddons();
         $this->registerCustomFilamentItems();
 
         Shopper::serving(function (): void {
@@ -100,6 +102,32 @@ final class ShopperServiceProvider extends PackageServiceProvider
         ));
 
         $this->loadViewsFrom($this->root.'/resources/views', 'shopper');
+    }
+
+    protected function bootAddons(): void
+    {
+        $panel = app('shopper');
+        $manager = $panel->addonManager();
+
+        $manager->boot($panel);
+
+        foreach ($manager->getSidebars() as $sidebarClass) {
+            $this->app['events']->listen(Sidebar\SidebarBuilder::class, $sidebarClass);
+        }
+
+        foreach ($manager->getLivewireComponents() as $alias => $component) {
+            Livewire::component("shopper-{$alias}", $component);
+        }
+
+        foreach ($manager->getViewNamespaces() as $namespace => $path) {
+            $this->loadViewsFrom($path, $namespace);
+        }
+
+        $settingItems = $manager->getSettingItems();
+
+        if ($settingItems !== []) {
+            app(SettingManager::class)->register($settingItems);
+        }
     }
 
     protected function bootLivewireComponents(): void
