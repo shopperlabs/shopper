@@ -21,13 +21,13 @@
                 @endisset
 
                 <main class="sh-main flex-1">
-                    {{ shopper()->getRenderHook(\Shopper\Enum\RenderHook::ContentStart) }}
+                    {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::CONTENT_START) }}
 
                     <div {{ $attributes->twMerge(['class' => 'flex-1 min-h-full']) }}>
                         {{ $slot }}
                     </div>
 
-                    {{ shopper()->getRenderHook(\Shopper\Enum\RenderHook::ContentEnd) }}
+                    {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::CONTENT_END) }}
                 </main>
             </div>
         </div>

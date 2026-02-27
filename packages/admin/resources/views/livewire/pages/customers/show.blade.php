@@ -58,9 +58,13 @@
         </div>
     </x-shopper::container>
 
+    {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_HEADER_AFTER) }}
+
     <div class="relative">
         <div class="sticky top-0">
             <div class="border-t border-gray-200 dark:border-white/10">
+                {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_TABS_BEFORE) }}
+
                 <x-filament::tabs :contained="true">
                     <x-filament::tabs.item alpine-active="currentTab === 'profile'" x-on:click="currentTab = 'profile'">
                         {{ __('shopper::pages/customers.profile.title') }}
@@ -71,11 +75,15 @@
                     <x-filament::tabs.item alpine-active="currentTab === 'orders'" x-on:click="currentTab = 'orders'">
                         {{ __('shopper::pages/orders.menu') }}
                     </x-filament::tabs.item>
+
+                    {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_TABS_END) }}
                 </x-filament::tabs>
             </div>
         </div>
 
         <div class="mt-10">
+            {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_CONTENT_BEFORE) }}
+
             <div x-show="currentTab === 'profile'">
                 <livewire:shopper-customers.profile :$customer :key="'profile-'.$customer->id" />
             </div>
@@ -85,6 +93,8 @@
             <div x-cloak x-show="currentTab === 'orders'">
                 <livewire:shopper-customers.orders :$customer :key="'orders-'.$customer->id" />
             </div>
+
+            {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_CONTENT_AFTER) }}
         </div>
     </div>
 

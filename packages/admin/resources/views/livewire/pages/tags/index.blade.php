@@ -15,7 +15,11 @@
         </x-slot>
     </x-shopper::heading>
 
+    {{ shopper()->getRenderHook(\Shopper\View\CatalogRenderHook::TAGS_TABLE_BEFORE) }}
+
     <div class="mt-8">
         {{ $this->table }}
     </div>
+
+    {{ shopper()->getRenderHook(\Shopper\View\CatalogRenderHook::TAGS_TABLE_AFTER) }}
 </x-shopper::container>

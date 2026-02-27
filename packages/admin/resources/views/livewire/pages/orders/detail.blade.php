@@ -73,8 +73,8 @@
                     @endif
 
                     <span class="relative z-0 inline-flex">
-                            <button
-                                @if($prevOrder) wire:click="goToOrder({{ $prevOrder->id }})" @endif
+                        <button
+                            @if($prevOrder) wire:click="goToOrder({{ $prevOrder->id }})" @endif
                             type="button"
                                 @class([
                                     'focus:shadow-outline-primary focus:border-primary-300 relative inline-flex items-center rounded-l-lg border border-gray-300 px-2 py-2 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
@@ -83,11 +83,11 @@
                                 ])
                                 aria-label="{{ __('Previous order') }}"
                                 @if(! $prevOrder) disabled @endif
-                            >
-                                <x-untitledui-chevron-left class="size-5" stroke-width="1.5" aria-hidden="true" />
-                            </button>
-                            <button
-                                @if($nextOrder) wire:click="goToOrder({{ $nextOrder->id }})" @endif
+                        >
+                            <x-untitledui-chevron-left class="size-5" stroke-width="1.5" aria-hidden="true" />
+                        </button>
+                        <button
+                            @if($nextOrder) wire:click="goToOrder({{ $nextOrder->id }})" @endif
                             type="button"
                                 @class([
                                     'focus:shadow-outline-primary focus:border-primary-300 relative -ml-px inline-flex items-center rounded-r-lg border border-gray-300 px-2 py-2 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
@@ -97,9 +97,9 @@
                                 aria-label="{{ __('Next order') }}"
                                 @if(! $nextOrder) disabled @endif
                             >
-                                <x-untitledui-chevron-right class="size-5" stroke-width="1.5" aria-hidden="true" />
-                            </button>
-                        </span>
+                            <x-untitledui-chevron-right class="size-5" stroke-width="1.5" aria-hidden="true" />
+                        </button>
+                    </span>
                 </div>
             </div>
             <div class="flex flex-col sm:flex-row sm:items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
@@ -132,7 +132,11 @@
         </x-shopper::container>
     </div>
 
+    {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_HEADER_AFTER) }}
+
     <x-shopper::container>
+        {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_MAIN_BEFORE) }}
+
         <div class="grid sm:grid-cols-6">
             <div class="sm:col-span-4 divide-y divide-gray-200 pt-2 sm:pr-4 lg:pr-6 dark:divide-white/10">
                 <div class="py-4">
@@ -144,10 +148,16 @@
                 <div class="py-4">
                     <livewire:shopper-order-summary :$order />
                 </div>
+
+                {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_MAIN_AFTER) }}
             </div>
 
             <div class="border-t border-gray-200 py-2 sm:col-span-2 sm:border-t-0 sm:border-l sm:pl-6 dark:border-white/10">
+                {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_SIDEBAR_BEFORE) }}
+
                 <livewire:shopper-order-customer :$order />
+
+                {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_SIDEBAR_AFTER) }}
             </div>
         </div>
     </x-shopper::container>

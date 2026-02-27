@@ -53,7 +53,11 @@
                             {{ $this->deleteAction }}
                         </x-slot>
                     </x-shopper::heading>
+
+                    {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::EDIT_HEADER_AFTER) }}
                 </x-shopper::container>
+
+                {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::EDIT_TABS_BEFORE) }}
 
                 <x-filament::tabs :contained="true">
                     <x-filament::tabs.item
@@ -145,11 +149,15 @@
                     >
                         {{ __('shopper::pages/products.related_products') }}
                     </x-filament::tabs.item>
+
+                    {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::EDIT_TABS_END) }}
                 </x-filament::tabs>
             </div>
         </div>
 
         <div class="sh-product-edit-page z-0 py-8">
+            {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::EDIT_CONTENT_BEFORE) }}
+
             <div x-show="activeTab === 'detail'">
                 <livewire:shopper-products.form.edit :$product />
             </div>
@@ -197,6 +205,8 @@
             <div x-cloak x-show="activeTab === 'related'">
                 <livewire:shopper-products.form.related-products :$product />
             </div>
+
+            {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::EDIT_CONTENT_AFTER) }}
         </div>
     </div>
 

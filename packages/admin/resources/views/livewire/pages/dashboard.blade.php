@@ -1,4 +1,6 @@
 <x-shopper::container class="py-12">
+    {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::DASHBOARD_START) }}
+
     @if ($this->showSetupGuide)
         <livewire:shopper-setup-guide />
     @else
@@ -15,5 +17,7 @@
 
             <livewire:shopper-dashboard.recent-orders />
         </div>
-   @endif
+    @endif
+
+    {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::DASHBOARD_END) }}
 </x-shopper::container>

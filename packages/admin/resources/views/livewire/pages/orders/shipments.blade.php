@@ -22,6 +22,10 @@
             :active="$this->activeTab"
         />
 
+        {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::SHIPMENTS_TABLE_BEFORE) }}
+
         {{ $this->table }}
+
+        {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::SHIPMENTS_TABLE_AFTER) }}
     </div>
 </x-shopper::container>

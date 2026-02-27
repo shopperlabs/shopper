@@ -14,7 +14,11 @@
             :active="$this->activeTab"
         />
 
+        {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::INDEX_TABLE_BEFORE) }}
+
         {{ $this->table }}
+
+        {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::INDEX_TABLE_AFTER) }}
     </div>
 
     <x-shopper::learn-more :name="__('shopper::pages/orders.menu')" link="orders" />

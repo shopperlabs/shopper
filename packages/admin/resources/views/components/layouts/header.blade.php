@@ -38,12 +38,16 @@
     @endif
 
     <div class="flex flex-1 items-center justify-between gap-4 px-4 lg:px-6">
+        {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEADER_START) }}
+
         <div class="flex flex-1">
             @if (config('shopper.components.dashboard.components.search'))
                 <livewire:shopper-search />
             @endif
         </div>
         <div class="flex items-center gap-x-3">
+            {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEADER_END) }}
+
             <a
                 href="{{ url('/') }}"
                 target="_blank"

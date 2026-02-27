@@ -9,6 +9,8 @@
 
     <x-shopper::heading class="mt-6" :title="$collection->name" />
 
+    {{ shopper()->getRenderHook(\Shopper\View\CollectionRenderHook::EDIT_FORM_BEFORE) }}
+
     <form wire:submit="store" class="mt-8 border-t border-gray-200 pt-10 dark:border-white/20">
         <div class="space-y-10">
             {{ $this->form }}
@@ -23,4 +25,6 @@
             </div>
         </div>
     </form>
+
+    {{ shopper()->getRenderHook(\Shopper\View\CollectionRenderHook::EDIT_FORM_AFTER) }}
 </x-shopper::container>

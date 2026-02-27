@@ -12,9 +12,13 @@
         </x-slot>
     </x-shopper::heading>
 
+    {{ shopper()->getRenderHook(\Shopper\View\CatalogRenderHook::CATEGORIES_TABLE_BEFORE) }}
+
     <div class="mt-10">
         {{ $this->table }}
     </div>
+
+    {{ shopper()->getRenderHook(\Shopper\View\CatalogRenderHook::CATEGORIES_TABLE_AFTER) }}
 
     <x-shopper::learn-more :name="__('shopper::pages/categories.menu')" link="categories" />
 </x-shopper::container>

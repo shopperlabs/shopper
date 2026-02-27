@@ -20,9 +20,13 @@
         </x-slot>
     </x-shopper::heading>
 
+    {{ shopper()->getRenderHook(\Shopper\View\CatalogRenderHook::ATTRIBUTES_TABLE_BEFORE) }}
+
     <div class="mt-8">
         {{ $this->table }}
     </div>
+
+    {{ shopper()->getRenderHook(\Shopper\View\CatalogRenderHook::ATTRIBUTES_TABLE_AFTER) }}
 
     <x-shopper::learn-more :name="__('shopper::pages/attributes.menu')" link="attributes" />
 </x-shopper::container>

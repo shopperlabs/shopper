@@ -12,9 +12,13 @@
         </x-slot>
     </x-shopper::heading>
 
+    {{ shopper()->getRenderHook(\Shopper\View\CollectionRenderHook::INDEX_TABLE_BEFORE) }}
+
     <div class="mt-10">
         {{ $this->table }}
     </div>
+
+    {{ shopper()->getRenderHook(\Shopper\View\CollectionRenderHook::INDEX_TABLE_AFTER) }}
 
     <x-shopper::learn-more :name="__('shopper::pages/collections.menu')" link="collections" />
 </x-shopper::container>

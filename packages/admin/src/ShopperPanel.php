@@ -13,7 +13,6 @@ use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Shopper\Addon\AddonManager;
 use Shopper\Contracts\ShopperAddon;
-use Shopper\Enum\RenderHook;
 use Shopper\Events\LoadShopper;
 
 final class ShopperPanel
@@ -214,16 +213,16 @@ final class ShopperPanel
         return null;
     }
 
-    public function renderHook(RenderHook $hook, Closure $callback): self
+    public function renderHook(string $hook, Closure $callback): self
     {
-        $this->renderHooks[$hook->value][] = $callback;
+        $this->renderHooks[$hook][] = $callback;
 
         return $this;
     }
 
-    public function getRenderHook(RenderHook $hook): Htmlable
+    public function getRenderHook(string $hook): Htmlable
     {
-        $output = collect($this->renderHooks[$hook->value] ?? [])
+        $output = collect($this->renderHooks[$hook] ?? [])
             ->map(fn (Closure $callback): string => $callback())
             ->implode('');
 

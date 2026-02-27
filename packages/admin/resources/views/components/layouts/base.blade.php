@@ -30,7 +30,7 @@
             rel="stylesheet"
         />
 
-        {{ shopper()->getRenderHook(\Shopper\Enum\RenderHook::HeadStart) }}
+        {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEAD_START) }}
 
         @filamentStyles
         {{ \Shopper\Facades\Shopper::getThemeLink() }}
@@ -47,7 +47,7 @@
 
         @include('shopper::includes._additional-styles')
 
-        {{ shopper()->getRenderHook(\Shopper\Enum\RenderHook::HeadEnd) }}
+        {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEAD_END) }}
 
         <style>
             :root {
@@ -78,7 +78,7 @@
         data-sidebar-breakpoint="{{ \Shopper\Sidebar\sidebar_breakpoint() }}"
         data-sidebar-collapsible="{{ \Shopper\Sidebar\sidebar_is_collapsible() ? 'true' : 'false' }}"
     >
-        {{ shopper()->getRenderHook(\Shopper\Enum\RenderHook::BodyStart) }}
+        {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::BODY_START) }}
 
         {{ $slot }}
 
@@ -89,6 +89,6 @@
 
         @include('shopper::includes._additional-scripts')
 
-        {{ shopper()->getRenderHook(\Shopper\Enum\RenderHook::BodyEnd) }}
+        {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::BODY_END) }}
     </body>
 </html>

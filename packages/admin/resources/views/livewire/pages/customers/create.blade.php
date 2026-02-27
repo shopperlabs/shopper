@@ -12,6 +12,8 @@
         :title="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')])"
     />
 
+    {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::CREATE_FORM_BEFORE) }}
+
     <form wire:submit="store" class="mt-10">
         {{ $this->form }}
 
@@ -24,4 +26,6 @@
             </div>
         </div>
     </form>
+
+    {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::CREATE_FORM_AFTER) }}
 </x-shopper::container>

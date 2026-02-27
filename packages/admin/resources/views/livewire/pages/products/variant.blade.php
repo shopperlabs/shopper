@@ -14,6 +14,8 @@
 
     <x-shopper::heading :title="$variant->name" class="mt-5" />
 
+    {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::VARIANT_HEADER_AFTER) }}
+
     <div class="mt-8 grid gap-x-6 gap-y-8 lg:grid-cols-3">
         <div class="space-y-8 *:space-y-4 lg:col-span-2">
             <div>
@@ -179,6 +181,8 @@
                     <livewire:shopper-products.variant-stock :$variant />
                 </x-shopper::card>
             </div>
+
+            {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::VARIANT_MAIN_AFTER) }}
         </div>
         <div class="space-y-6">
             <x-shopper::card>
@@ -285,6 +289,8 @@
                     </div>
                 </dl>
             </x-shopper::card>
+
+            {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::VARIANT_SIDEBAR_AFTER) }}
         </div>
     </div>
 
