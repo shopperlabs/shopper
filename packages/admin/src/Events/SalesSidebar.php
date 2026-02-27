@@ -41,6 +41,13 @@ final class SalesSidebar extends AbstractAdminSidebar
                     $item->useSpa();
                     $item->route('shopper.orders.shipments');
                 });
+
+                $item->item(__('shopper::pages/orders.abandoned_carts.menu'), function (Item $item): void {
+                    $item->weight(2);
+                    $item->setAuthorized($this->user->hasPermissionTo('browse_orders'));
+                    $item->useSpa();
+                    $item->route('shopper.orders.abandoned-carts');
+                });
             });
 
             if (Feature::enabled('discount')) {

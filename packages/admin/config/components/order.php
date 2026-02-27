@@ -16,6 +16,7 @@ return [
         'order-index' => Livewire\Pages\Order\Index::class,
         'order-detail' => Livewire\Pages\Order\Detail::class,
         'order-shipments' => Livewire\Pages\Order\Shipments::class,
+        'order-abandoned-carts' => Livewire\Pages\Order\AbandonedCarts::class,
     ],
 
     /*
@@ -34,6 +35,7 @@ return [
 
         'slide-overs.create-shipping-label' => Livewire\SlideOvers\CreateShippingLabel::class,
         'slide-overs.shipment-detail' => Livewire\SlideOvers\ShipmentDetail::class,
+        'slide-overs.abandoned-cart-detail' => Livewire\SlideOvers\AbandonedCartDetail::class,
     ],
 
 ];

@@ -67,6 +67,19 @@ return [
         'no_events' => 'Aucun événement de suivi.',
     ],
 
+    'abandoned_carts' => [
+        'menu' => 'Paniers abandonnés',
+        'title' => 'Paniers abandonnés',
+        'detail_title' => 'Panier #:id',
+        'guest' => 'Visiteur',
+        'items' => 'Articles',
+        'channel' => 'Canal',
+        'last_activity' => 'Dernière activité',
+        'billing_address' => 'Adresse de facturation',
+        'empty' => 'Aucun panier abandonné',
+        'empty_description' => "Il n'y a aucun panier abandonné pour le moment.",
+    ],
+
     'notifications' => [
         'archived' => 'La commande a été archivée avec succès !',
         'cancelled' => 'La commande a été annulée avec succès !',

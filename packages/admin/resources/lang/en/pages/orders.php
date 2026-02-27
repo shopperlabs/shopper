@@ -67,6 +67,19 @@ return [
         'no_events' => 'No tracking events yet.',
     ],
 
+    'abandoned_carts' => [
+        'menu' => 'Abandoned Carts',
+        'title' => 'Abandoned Carts',
+        'detail_title' => 'Cart #:id',
+        'guest' => 'Guest',
+        'items' => 'Items',
+        'channel' => 'Channel',
+        'last_activity' => 'Last Activity',
+        'billing_address' => 'Billing Address',
+        'empty' => 'No abandoned carts',
+        'empty_description' => 'There are no abandoned carts at this time.',
+    ],
+
     'notifications' => [
         'archived' => 'The orders has successfully archived !',
         'cancelled' => 'The order has successfully cancelled !',
