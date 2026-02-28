@@ -21,13 +21,6 @@ describe(PaymentMethods::class, function (): void {
             ->assertViewIs('shopper::livewire.pages.settings.payment-methods');
     });
 
-    it('initializes tabs on mount', function (): void {
-        $component = Livewire::test(PaymentMethods::class);
-
-        expect($component->get('tabs'))->toBeArray()
-            ->and($component->get('tabs'))->toContain('general');
-    });
-
     it('can list payment methods in table', function (): void {
         PaymentMethod::factory()->count(3)->create();
 

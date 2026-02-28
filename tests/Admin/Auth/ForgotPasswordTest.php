@@ -16,15 +16,15 @@ describe(ForgotPassword::class, function (): void {
 
     it('validates email is required', function (): void {
         Livewire::test(ForgotPassword::class)
-            ->set('email', '')
+            ->set('data.email', '')
             ->call('sendResetPasswordLink')
-            ->assertHasErrors(['email' => 'required']);
+            ->assertHasErrors(['data.email' => 'required']);
     });
 
     it('validates email format', function (): void {
         Livewire::test(ForgotPassword::class)
-            ->set('email', 'invalid-email')
+            ->set('data.email', 'invalid-email')
             ->call('sendResetPasswordLink')
-            ->assertHasErrors(['email' => 'email']);
+            ->assertHasErrors(['data.email' => 'email']);
     });
 })->group('livewire', 'auth');

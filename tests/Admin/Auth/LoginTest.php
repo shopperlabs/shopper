@@ -22,8 +22,8 @@ describe(Login::class, function (): void {
         $userToAuthenticate->assignRole(config('shopper.core.roles.admin'));
 
         Livewire::test(Login::class)
-            ->set('email', $userToAuthenticate->email)
-            ->set('password', 'password')
+            ->set('data.email', $userToAuthenticate->email)
+            ->set('data.password', 'password')
             ->call('authenticate')
             ->assertRedirect(Shopper::prefix().'/dashboard');
 
@@ -35,9 +35,9 @@ describe(Login::class, function (): void {
         $user->assignRole(config('shopper.core.roles.admin'));
 
         Livewire::test(Login::class)
-            ->set('email', $user->email)
-            ->set('password', 'password')
-            ->set('remember', true)
+            ->set('data.email', $user->email)
+            ->set('data.password', 'password')
+            ->set('data.remember', true)
             ->call('authenticate')
             ->assertRedirect(Shopper::prefix().'/dashboard');
 
@@ -48,45 +48,45 @@ describe(Login::class, function (): void {
         $user = User::factory()->create();
 
         Livewire::test(Login::class)
-            ->set('email', $user->email)
-            ->set('password', 'wrong-password')
+            ->set('data.email', $user->email)
+            ->set('data.password', 'wrong-password')
             ->call('authenticate')
-            ->assertHasErrors(['email']);
+            ->assertHasErrors(['data.email']);
 
         $this->assertGuest(config('shopper.auth.guard'));
     });
 
     it('fails authentication with non-existent user', function (): void {
         Livewire::test(Login::class)
-            ->set('email', 'nonexistent@example.com')
-            ->set('password', 'password')
+            ->set('data.email', 'nonexistent@example.com')
+            ->set('data.password', 'password')
             ->call('authenticate')
-            ->assertHasErrors(['email']);
+            ->assertHasErrors(['data.email']);
 
         $this->assertGuest(config('shopper.auth.guard'));
     });
 
     it('validates required email field', function (): void {
         Livewire::test(Login::class)
-            ->set('email', '')
-            ->set('password', 'password')
+            ->set('data.email', '')
+            ->set('data.password', 'password')
             ->call('authenticate')
-            ->assertHasErrors(['email' => 'required']);
+            ->assertHasErrors(['data.email' => 'required']);
     });
 
     it('validates email format', function (): void {
         Livewire::test(Login::class)
-            ->set('email', 'invalid-email')
-            ->set('password', 'password')
+            ->set('data.email', 'invalid-email')
+            ->set('data.password', 'password')
             ->call('authenticate')
-            ->assertHasErrors(['email' => 'email']);
+            ->assertHasErrors(['data.email' => 'email']);
     });
 
     it('validates required password field', function (): void {
         Livewire::test(Login::class)
-            ->set('email', 'test@example.com')
-            ->set('password', '')
+            ->set('data.email', 'test@example.com')
+            ->set('data.password', '')
             ->call('authenticate')
-            ->assertHasErrors(['password' => 'required']);
+            ->assertHasErrors(['data.password' => 'required']);
     });
 })->group('authenticate');

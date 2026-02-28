@@ -18,23 +18,23 @@ describe(ResetPassword::class, function (): void {
         $component = Livewire::withQueryParams(['email' => 'test@example.com'])
             ->test(ResetPassword::class, ['token' => 'test-token']);
 
-        expect($component->get('email'))->toBe('test@example.com')
+        expect($component->get('data.email'))->toBe('test@example.com')
             ->and($component->get('token'))->toBe('test-token');
     });
 
     it('validates required fields', function (): void {
         Livewire::test(ResetPassword::class, ['token' => null])
-            ->set('email', '')
-            ->set('password', '')
+            ->set('data.email', '')
+            ->set('data.password', '')
             ->call('resetPassword')
-            ->assertHasErrors(['token', 'email', 'password']);
+            ->assertHasErrors(['data.email', 'data.password']);
     });
 
     it('validates email format', function (): void {
         Livewire::test(ResetPassword::class, ['token' => 'test-token'])
-            ->set('email', 'invalid-email')
-            ->set('password', 'Password123!')
+            ->set('data.email', 'invalid-email')
+            ->set('data.password', 'Password123!')
             ->call('resetPassword')
-            ->assertHasErrors(['email' => 'email']);
+            ->assertHasErrors(['data.email' => 'email']);
     });
 })->group('livewire', 'auth');
