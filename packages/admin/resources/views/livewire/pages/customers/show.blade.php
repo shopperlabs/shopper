@@ -1,7 +1,4 @@
-<div x-data="{
-    options: ['profile', 'address', 'orders'],
-    currentTab: 'profile',
-}" class="py-5">
+<div x-data="{ currentTab: $wire.entangle('activeTab') }" class="py-5">
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.customers.index')" :current="$customer->full_name">
             <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
