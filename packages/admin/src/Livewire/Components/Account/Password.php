@@ -49,18 +49,21 @@ class Password extends Component implements HasActions, HasForms
                             ->password()
                             ->currentPassword()
                             ->revealable()
+                            ->inlineSuffix()
                             ->required(),
                         TextInput::make('password')
                             ->label(__('shopper::forms.label.new_password'))
                             ->helperText(__('shopper::pages/auth.account.password_helper_validation'))
                             ->password()
                             ->revealable()
+                            ->inlineSuffix()
                             ->required()
                             ->confirmed(),
                         TextInput::make('password_confirmation')
                             ->label(__('shopper::forms.label.confirm_password'))
                             ->password()
                             ->revealable()
+                            ->inlineSuffix()
                             ->required(),
                     ]),
             ])

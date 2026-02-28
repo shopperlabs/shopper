@@ -41,30 +41,21 @@
             <x-shopper::container>
                 <div class="w-full space-y-6 lg:max-w-4xl">
                     @if (config('shopper.core.roles.admin') === $role->name)
-                        <div
-                            class="bg-info-100 ring-info-200 dark:bg-info-800/20 dark:ring-info-400/20 rounded-md p-4 ring-1"
+                        <x-filament::callout
+                            color="info"
+                            icon="untitledui-alert-circle"
+                            :description="__('shopper::pages/settings/staff.role_alert_msg')"
                         >
-                            <div class="flex">
-                                <div class="shrink-0">
-                                    <x-untitledui-alert-circle class="text-info-400 size-5" aria-hidden="true" />
-                                </div>
-                                <div class="ml-3 flex-1 lg:flex lg:justify-between">
-                                    <p class="text-info-700 dark:text-info-400 text-sm">
-                                        {{ __('shopper::pages/settings/staff.role_alert_msg') }}
-                                    </p>
-                                    <p class="mt-3 text-sm leading-5 lg:mt-0 lg:ml-6">
-                                        <a
-                                            href="https://docs.laravelshopper.dev/v2/acl"
-                                            target="_blank"
-                                            class="whitespace-no-wrap text-info-700 hover:text-info-600 font-medium transition duration-150 ease-in-out"
-                                        >
-                                            {{ __('shopper::words.learn_more') }}
-                                            &rarr;
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                            <x-slot name="footer">
+                                <a
+                                    href="https://docs.laravelshopper.dev/v2/acl"
+                                    target="_blank"
+                                    class="text-info-700 hover:text-info-600 dark:text-info-400 text-sm font-medium"
+                                >
+                                    {{ __('shopper::words.learn_more') }} &rarr;
+                                </a>
+                            </x-slot>
+                        </x-filament::callout>
                     @endif
 
                     <form wire:submit="save">

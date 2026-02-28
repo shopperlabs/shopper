@@ -41,14 +41,6 @@ class PaymentMethods extends Component implements HasActions, HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
-    /** @var array<string>|null */
-    public ?array $tabs = [];
-
-    public function mount(): void
-    {
-        $this->tabs = collect(['general'])->toArray();
-    }
-
     public function createPaymentAction(): Action
     {
         return Action::make('createPayment')

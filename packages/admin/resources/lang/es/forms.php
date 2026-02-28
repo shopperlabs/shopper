@@ -198,7 +198,7 @@ return [
         'apply' => 'Aplicar',
         'next' => 'Siguiente',
         'back' => 'Atrás',
-        'theme_switcher' => 'Habilitar tema :label',
+        'theme_switcher' => ':label',
 
         'add_label' => 'Nuevo :label',
         'edit_label' => 'Editar :label',

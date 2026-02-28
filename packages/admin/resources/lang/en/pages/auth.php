@@ -5,7 +5,8 @@ declare(strict_types=1);
 return [
 
     'login' => [
-        'title' => 'Welcome Back !',
+        'title' => 'Sign in with email',
+        'subtitle' => 'Sign into your Shopper Admin Panel',
         'or' => 'Or',
         'return_landing' => 'Return to the landing page',
         'forgot_password' => 'Forgot your password?',
@@ -23,10 +24,11 @@ return [
 
     'email' => [
         'title' => 'Reset your password',
-        'message' => 'Enter the email address you used when creating your account and we will send you instructions to reset your password.',
+        'message' => 'Enter your email below, and we will send you instructions on how to reset your password.',
         'action' => 'Send password reset mail',
         'return_to_login' => 'Return to login page',
         'mail' => [
+            'subject' => 'Reset Password',
             'content' => 'You are receiving this email because we received a password reset request for your account.',
             'action' => 'Reset password',
             'message' => 'If you did not request a password reset, no further action is required.',

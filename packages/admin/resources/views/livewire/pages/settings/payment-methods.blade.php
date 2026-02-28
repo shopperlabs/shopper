@@ -1,7 +1,4 @@
-<div x-data="{
-    options: @js($tabs),
-    currentTab: 'general',
-}">
+<div>
     <x-shopper::container>
         <x-shopper::breadcrumb
             :back="route('shopper.settings.index')"
@@ -18,20 +15,8 @@
                 {{ $this->createPaymentAction }}
             </x-slot>
         </x-shopper::heading>
-    </x-shopper::container>
 
-    <div class="relative space-y-4 border-gray-200 px-4 lg:border-t lg:px-0 dark:border-white/10">
-        <x-filament::tabs :contained="true">
-            <x-filament::tabs.item alpine-active="currentTab === 'general'" x-on:click="currentTab = 'general'">
-                {{ __('shopper::words.general') }}
-            </x-filament::tabs.item>
-        </x-filament::tabs>
-    </div>
-
-    <x-shopper::container class="mt-6 pb-10">
-        <div x-show="currentTab === 'general'">
-            {{ $this->table }}
-        </div>
+        {{ $this->table }}
     </x-shopper::container>
 
     <x-filament-actions::modals />

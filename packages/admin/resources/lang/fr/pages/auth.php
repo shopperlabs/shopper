@@ -27,6 +27,7 @@ return [
         'action' => 'Envoyer un lien de réinitialisation',
         'return_to_login' => 'Retour à la page de connexion',
         'mail' => [
+            'subject' => 'Réinitialiser le mot de passe',
             'content' => 'Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation du mot de passe pour votre compte.',
             'action' => 'Réinitialiser le mot de passe',
             'message' => 'Si vous n\'avez pas demandé de réinitialisation de mot de passe, aucune autre action n\'est requise.',

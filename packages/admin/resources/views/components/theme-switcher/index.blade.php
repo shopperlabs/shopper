@@ -7,11 +7,11 @@
 
         theme = localStorage.getItem('theme') || 'system'
     "
-    class="fi-theme-switcher grid grid-flow-col gap-x-1"
+    class="fi-theme-switcher grid grid-flow-col gap-x-1 p-0.5 rounded-lg bg-white dark:bg-gray-900 ring-1 ring-gray-200 dark:ring-white/10"
 >
-    <x-shopper::theme-switcher.button icon="heroicon-m-sun" theme="light" />
+    <x-shopper::theme-switcher.button icon="phosphor-sun" theme="light" />
 
-    <x-shopper::theme-switcher.button icon="heroicon-m-moon" theme="dark" />
+    <x-shopper::theme-switcher.button icon="phosphor-moon-stars" theme="dark" />
 
-    <x-shopper::theme-switcher.button icon="heroicon-m-computer-desktop" theme="system" />
+    <x-shopper::theme-switcher.button icon="phosphor-monitor" theme="system" />
 </div>

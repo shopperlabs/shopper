@@ -28,6 +28,7 @@ trait ConfirmsPasswords
                     ->label(__('shopper::forms.label.password'))
                     ->password()
                     ->revealable()
+                    ->inlineSuffix()
                     ->required(),
             ])
             ->action(function (array $data): void {

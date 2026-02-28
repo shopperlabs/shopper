@@ -28,4 +28,17 @@ return [
 
     '2fa_enabled' => env('SHOPPER_ENABLED_TWO_FACTOR', false),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Password Reset
+    |--------------------------------------------------------------------------
+    |
+    | Enable the password reset flow on the Shopper admin panel. When disabled
+    | the "Forgot your password?" link will be hidden from the login page
+    | and the reset password routes will not be registered.
+    |
+    */
+
+    'password_reset' => true,
+
 ];

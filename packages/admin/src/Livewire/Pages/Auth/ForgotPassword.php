@@ -4,32 +4,66 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Auth;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Schema;
 use Illuminate\Auth\Passwords\PasswordBroker;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Shopper\Notifications\AdminResetPassword;
 
+/**
+ * @property-read Schema $form
+ */
 #[Layout('shopper::components.layouts.base')]
-final class ForgotPassword extends Component
+final class ForgotPassword extends Component implements HasForms
 {
-    public string $email = '';
+    use InteractsWithForms;
+
+    /** @var array<string, mixed>|null */
+    public ?array $data = [];
+
+    public function mount(): void
+    {
+        $this->form->fill();
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                TextInput::make('email')
+                    ->label(__('shopper::forms.label.email'))
+                    ->email()
+                    ->required()
+                    ->autocomplete('email')
+                    ->autofocus(),
+            ])
+            ->statePath('data');
+    }
 
     public function sendResetPasswordLink(): void
     {
-        $this->validate([
-            'email' => ['required', 'email'],
-        ]);
+        $data = $this->form->getState();
 
-        $response = $this->broker()->sendResetLink(['email' => $this->email]);
+        $response = $this->broker()->sendResetLink(
+            ['email' => $data['email']],
+            fn ($user, string $token): string => tap(Password::RESET_LINK_SENT, function () use ($user, $token): void {
+                $user->notify(new AdminResetPassword($token));
+            })
+        );
 
         if ($response === Password::RESET_LINK_SENT) {
             session()->flash('success', trans($response));
+            $this->reset('data');
 
             return;
         }
 
-        $this->addError('email', trans($response));
+        $this->addError('data.email', trans($response));
     }
 
     public function broker(): PasswordBroker
