@@ -89,7 +89,7 @@ final class InstallCommand extends Command
     protected function introMessage(): void
     {
         note($this->shopperLogo());
-        intro('✦ Laravel Shopper :: Install ✦');
+        intro('✦ Shopper :: Install ✦');
     }
 
     private function shopperLogo(): string

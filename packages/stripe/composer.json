@@ -1,6 +1,6 @@
 {
   "name": "shopper/stripe",
-  "description": "Stripe payment driver for Laravel Shopper",
+  "description": "Stripe payment driver for Shopper",
   "license": "MIT",
   "require": {
     "php": "^8.3",

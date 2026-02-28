@@ -1,6 +1,6 @@
 {
   "name": "shopper/core",
-  "description": "Laravel Shopper e-commerce core functionality",
+  "description": "Shopper e-commerce core functionality",
   "license": "MIT",
   "require": {
     "ext-intl": "*",

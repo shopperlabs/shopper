@@ -1,6 +1,6 @@
 ---
 name: shopper-livewire
-description: Provides patterns for building Livewire components in Laravel Shopper with Filament Forms, Tables, and Actions. Use when creating Pages, SlideOvers, or reusable components.
+description: Provides patterns for building Livewire components in Shopper with Filament Forms, Tables, and Actions. Use when creating Pages, SlideOvers, or reusable components.
 ---
 
 # Shopper Livewire Components

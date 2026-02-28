@@ -1,6 +1,6 @@
 {
   "name": "shopper/payment",
-  "description": "Laravel Shopper payment providers integration",
+  "description": "Shopper payment providers integration",
   "license": "MIT",
   "require": {
     "php": "^8.3",

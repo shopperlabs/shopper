@@ -2,7 +2,7 @@
     /** @var \Laravel\Boost\Install\GuidelineAssist $assist */
 @endphp
 
-## Laravel Shopper Laravel Shopper is a headless e-commerce framework providing a complete admin panel built with
+## Shopper Shopper is a headless e-commerce framework providing a complete admin panel built with
 Filament and Livewire. For detailed documentation, refer to https://docs.laravelshopper.dev ### Installation - Use
 `{{ $assist->composerCommand('require shopper/framework --with-dependencies') }}` to install Shopper. - Run
 `{{ $assist->artisanCommand('shopper:install') }}` to publish config, migrations, and assets. - Run

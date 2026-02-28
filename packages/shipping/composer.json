@@ -1,6 +1,6 @@
 {
   "name": "shopper/shipping",
-  "description": "Laravel Shopper shipping providers integration",
+  "description": "Shopper shipping providers integration",
   "license": "MIT",
   "require": {
     "php": "^8.3",

@@ -6,6 +6,6 @@
     <img
         {{ $attributes }}
         src="{{ asset(shopper()->prefix() . '/images/shopper-icon.svg') }}"
-        alt="Laravel Shopper"
+        alt="Shopper"
     />
 @endif

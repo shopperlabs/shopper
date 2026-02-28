@@ -1,6 +1,6 @@
 ---
 name: developing-shopper
-description: Provides coding standards and patterns for Laravel Shopper development. Use when creating or modifying Models, Actions, Enums, Livewire components, migrations, or tests in any Shopper package.
+description: Provides coding standards and patterns for Shopper development. Use when creating or modifying Models, Actions, Enums, Livewire components, migrations, or tests in any Shopper package.
 ---
 
 # Developing Shopper

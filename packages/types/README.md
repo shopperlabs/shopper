@@ -4,7 +4,7 @@
 
 # Shopper Types definitions
 
-TypeScript types derived from the OpenAPI Spec (OAS) to be used in API clients for Laravel Shopper.
+TypeScript types derived from the OpenAPI Spec (OAS) to be used in API clients for Shopper.
 
 ## Install
 

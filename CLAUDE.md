@@ -1,26 +1,33 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working with code in the Laravel Shopper repository.
+This file provides guidance to Claude Code when working with code in the Shopper repository.
 
 ## Project Overview
 
-Laravel Shopper is a headless e-commerce admin panel built for Laravel using the TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire). It is organized as a monorepo with four packages: `admin`, `core`, `sidebar`, and `shipping`.
+Shopper is a headless e-commerce admin panel built for Laravel using the TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire). It is organized as a monorepo with eight packages.
 
 ## Monorepo Structure
 
 ```
 packages/
-├── admin/      → Main admin UI (Livewire components, views, routes, assets)
-├── core/       → E-commerce domain logic (Models, Actions, Enums, Contracts)
+├── admin/      → Main admin UI (Livewire components, Filament forms/tables, views, routes, assets)
+├── cart/       → Cart management with pipeline-based calculation, discounts, and taxes
+├── core/       → E-commerce domain logic (Models, Actions, Enums, Contracts, Stock, Taxes)
+├── payment/    → Payment processing with extensible driver architecture
+├── shipping/   → Shipping providers integration with driver architecture
 ├── sidebar/    → Sidebar navigation builder (DDD-style architecture)
-└── shipping/   → Shipping providers integration
+├── stripe/     → Stripe payment driver for the payment system
+└── types/      → TypeScript type definitions (NPM package, no PHP)
 ```
 
-Each package has its own service provider:
+Each PHP package has its own service provider:
 - `Shopper\ShopperServiceProvider` (admin)
+- `Shopper\Cart\CartServiceProvider` (cart)
 - `Shopper\Core\CoreServiceProvider` (core)
-- `Shopper\Sidebar\SidebarServiceProvider` (sidebar)
+- `Shopper\Payment\PaymentServiceProvider` (payment)
 - `Shopper\Shipping\ShippingServiceProvider` (shipping)
+- `Shopper\Sidebar\SidebarServiceProvider` (sidebar)
+- `Shopper\Stripe\StripeServiceProvider` (stripe)
 
 Packages are split to separate repositories via the `monorepo-split.yml` workflow on push to `*.x` branches.
 
@@ -254,10 +261,12 @@ it('can display the product list', function (): void {
 
 ### Key PHP Packages
 
-- `filament/filament` ^4.5 (headless admin panel components)
+- `filament/filament` ^4.7 (headless admin panel components)
 - `livewire/livewire` ^3.7
 - `spatie/laravel-permission` ^6.24
 - `spatie/laravel-media-library` ^11.5
+- `stripe/stripe-php` ^16.0 (stripe package)
+- `ivanmitrikeski/laravel-shipping` ^1.0 (shipping package)
 
 ### PHP Version
 
@@ -277,3 +286,8 @@ it('can display the product list', function (): void {
 - Config: `packages/*/config/`
 - Migrations: `packages/core/database/migrations/`
 - Routes: `packages/admin/routes/`
+- Render hooks: `packages/admin/src/View/*RenderHook.php` (scoped by business domain)
+- Payment drivers: `packages/payment/src/Drivers/`
+- Shipping drivers: `packages/shipping/src/Drivers/`
+- Cart pipelines: `packages/cart/src/Pipelines/`
+- TypeScript types: `packages/types/`

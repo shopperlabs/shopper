@@ -1,6 +1,6 @@
 ---
 name: extending-shopper
-description: Provides patterns for extending Laravel Shopper with custom sidebar items, component overrides, event listeners, and domain features like stock, pricing, and media. Use when customizing Shopper behavior.
+description: Provides patterns for extending Shopper with custom sidebar items, component overrides, event listeners, and domain features like stock, pricing, and media. Use when customizing Shopper behavior.
 ---
 
 # Extending Shopper
