@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Shopper\Core\Models\Permission;
-use Shopper\Core\Models\Role;
+use Shopper\Models\Permission;
+use Shopper\Models\Role;
 use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
@@ -42,7 +42,7 @@ describe(Role::class, function (): void {
     });
 
     it('checks if role is admin', function (): void {
-        $adminRole = Role::query()->firstOrCreate(['name' => config('shopper.core.roles.admin')]);
+        $adminRole = Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.admin')]);
         $editorRole = Role::create(['name' => 'editor-role']);
 
         expect($adminRole->isAdmin())->toBeTrue()

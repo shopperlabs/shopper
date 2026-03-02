@@ -7,14 +7,14 @@ namespace Tests\Core\Stubs;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Shopper\Core\Models\Contracts\ShopperUser as ShopperUserInterface;
-use Shopper\Core\Traits\ShopperUser;
+use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Traits\InteractsWithShopper;
 
-class User extends Authenticatable implements ShopperUserInterface
+class User extends Authenticatable implements ShopperUser
 {
     use HasFactory;
+    use InteractsWithShopper;
     use Notifiable;
-    use ShopperUser;
 
     protected $guarded = [];
 

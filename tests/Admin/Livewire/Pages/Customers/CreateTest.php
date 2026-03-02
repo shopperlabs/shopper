@@ -80,7 +80,7 @@ describe(Create::class, function (): void {
 
         $customer = User::where('email', 'jane.smith@example.com')->first();
 
-        expect($customer->hasRole(config('shopper.core.roles.user')))->toBeTrue();
+        expect($customer->hasRole(config('shopper.admin.roles.user')))->toBeTrue();
     });
 
     it('creates customer address with correct type', function (): void {

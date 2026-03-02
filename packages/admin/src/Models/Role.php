@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Models;
+namespace Shopper\Models;
 
 use Spatie\Permission\Models\Role as Model;
 
@@ -14,11 +14,11 @@ use Spatie\Permission\Models\Role as Model;
  * @property-read string $display_name
  * @property-read ?string $description
  */
-class Role extends Model
+final class Role extends Model
 {
     public function isAdmin(): bool
     {
-        return $this->name === config('shopper.core.roles.admin');
+        return $this->name === config('shopper.admin.roles.admin');
     }
 
     protected function casts(): array

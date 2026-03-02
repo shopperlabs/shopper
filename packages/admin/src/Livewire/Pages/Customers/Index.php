@@ -22,8 +22,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
-use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Models\Contracts\ShopperUser;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {

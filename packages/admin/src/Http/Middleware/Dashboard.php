@@ -7,8 +7,8 @@ namespace Shopper\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Facades\Shopper;
+use Shopper\Models\Contracts\ShopperUser;
 use Spatie\Permission\Contracts\Permission;
 
 class Dashboard

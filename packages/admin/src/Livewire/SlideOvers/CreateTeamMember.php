@@ -21,9 +21,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\GenderField;
 use Shopper\Components\Section;
-use Shopper\Core\Models\Contracts\ShopperUser;
-use Shopper\Core\Models\Role;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Models\Role;
 use Shopper\Notifications\AdminSendCredentials;
 
 /**
@@ -90,7 +90,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasForm
                             ->label(__('shopper::pages/settings/staff.choose_role'))
                             ->options(
                                 Role::query()
-                                    ->where('name', '<>', config('shopper.core.roles.user'))
+                                    ->where('name', '<>', config('shopper.admin.roles.user'))
                                     ->pluck('display_name', 'id')
                             )
                             ->required(),

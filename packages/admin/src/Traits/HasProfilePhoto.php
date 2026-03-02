@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Models\Traits;
+namespace Shopper\Traits;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
 
-/**
- * @deprecated use Shopper\Traits\HasProfilePhoto
- */
 trait HasProfilePhoto
 {
     protected function picture(): Attribute

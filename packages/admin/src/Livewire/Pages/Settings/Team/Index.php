@@ -26,8 +26,8 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
-use Shopper\Core\Models\Contracts\ShopperUser;
-use Shopper\Core\Models\Role;
+use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Models\Role;
 
 #[Layout('shopper::components.layouts.setting')]
 class Index extends Component implements HasActions, HasForms, HasTable
@@ -99,7 +99,7 @@ class Index extends Component implements HasActions, HasForms, HasTable
                     ->label(__('shopper::forms.label.access'))
                     ->color('gray')
                     ->formatStateUsing(
-                        fn (ShopperUser $record): string|array|null => $record->hasRole(config('shopper.core.roles.admin'))
+                        fn (ShopperUser $record): string|array|null => $record->hasRole(config('shopper.admin.roles.admin'))
                         ? __('shopper::words.full')
                         : __('shopper::words.limited')
                     ),
@@ -119,7 +119,7 @@ class Index extends Component implements HasActions, HasForms, HasTable
         return view('shopper::livewire.pages.settings.team.index', [
             'roles' => Role::query()
                 ->with('users')
-                ->where('name', '<>', config('shopper.core.roles.user'))
+                ->where('name', '<>', config('shopper.admin.roles.user'))
                 ->orderBy('created_at')
                 ->get(),
         ])

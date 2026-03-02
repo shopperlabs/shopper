@@ -15,8 +15,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Url;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
-use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Models\Contracts\ShopperUser;
 
 class Show extends AbstractPageComponent implements HasActions, HasSchemas
 {

@@ -11,7 +11,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Contracts\Address as AddressContract;
-use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Models\Contracts\ShopperUser;
 
 class Addresses extends Component
 {

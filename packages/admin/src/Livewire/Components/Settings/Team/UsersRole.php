@@ -17,8 +17,8 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
-use Shopper\Core\Models\Contracts\ShopperUser;
-use Shopper\Core\Models\Role;
+use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Models\Role;
 
 class UsersRole extends Component implements HasActions, HasForms, HasTable
 {
@@ -55,7 +55,7 @@ class UsersRole extends Component implements HasActions, HasForms, HasTable
                     ->label(__('shopper::forms.label.access'))
                     ->color('gray')
                     ->formatStateUsing(
-                        fn (ShopperUser $record): string|array|null => $record->hasRole(config('shopper.core.roles.admin'))
+                        fn (ShopperUser $record): string|array|null => $record->hasRole(config('shopper.admin.roles.admin'))
                         ? __('shopper::words.full')
                         : __('shopper::words.limited')
                     ),

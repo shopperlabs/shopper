@@ -40,7 +40,7 @@
         <div x-show="currentTab === 'role'">
             <x-shopper::container>
                 <div class="w-full space-y-6 lg:max-w-4xl">
-                    @if (config('shopper.core.roles.admin') === $role->name)
+                    @if (config('shopper.admin.roles.admin') === $role->name)
                         <x-filament::callout
                             color="info"
                             icon="untitledui-alert-circle"

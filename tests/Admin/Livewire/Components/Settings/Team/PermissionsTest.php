@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\Permission;
-use Shopper\Core\Models\Role;
 use Shopper\Livewire\Components\Settings\Team\Permissions;
+use Shopper\Models\Permission;
+use Shopper\Models\Role;
 use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);

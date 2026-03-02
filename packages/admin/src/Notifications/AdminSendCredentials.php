@@ -7,7 +7,7 @@ namespace Shopper\Notifications;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Models\Contracts\ShopperUser;
 
 final class AdminSendCredentials extends Notification
 {

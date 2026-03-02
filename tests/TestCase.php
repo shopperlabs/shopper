@@ -30,7 +30,7 @@ use PDOException;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Shopper\Cart\CartServiceProvider;
 use Shopper\Core\CoreServiceProvider;
-use Shopper\Core\Database\Seeders\ShopperSeeder;
+use Tests\Database\Seeders\TestSeeder;
 use Shopper\Payment\PaymentServiceProvider;
 use Shopper\ShopperServiceProvider;
 use Shopper\Shipping\ShippingServiceProvider;
@@ -50,7 +50,7 @@ abstract class TestCase extends BaseTestCase
 
     protected bool $seed = true;
 
-    protected string $seeder = ShopperSeeder::class;
+    protected string $seeder = TestSeeder::class;
 
     protected function setUp(): void
     {
@@ -111,7 +111,7 @@ abstract class TestCase extends BaseTestCase
     protected function makeAdminUser(): User
     {
         $admin = User::factory()->create();
-        $admin->assignRole(config('shopper.core.roles.admin'));
+        $admin->assignRole(config('shopper.admin.roles.admin'));
 
         return $admin;
     }

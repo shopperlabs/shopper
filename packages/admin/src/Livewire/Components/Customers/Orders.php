@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Order;
-use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Models\Contracts\ShopperUser;
 
 class Orders extends Component implements HasActions, HasForms, HasTable
 {

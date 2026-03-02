@@ -16,7 +16,7 @@ use Livewire\Component;
 use Shopper\Actions\Auth\DisableTwoFactorAuthentication;
 use Shopper\Actions\Auth\EnableTwoFactorAuthentication;
 use Shopper\Actions\Auth\GenerateNewRecoveryCodes;
-use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Traits\ConfirmsPasswords;
 
 /**

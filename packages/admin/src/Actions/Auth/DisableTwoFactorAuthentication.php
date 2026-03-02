@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Actions\Auth;
 
-use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Models\Contracts\ShopperUser;
 
 class DisableTwoFactorAuthentication
 {

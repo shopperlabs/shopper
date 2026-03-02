@@ -8,19 +8,22 @@ use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use Shopper\Traits\LoadComponents;
 
-final class FeatureServiceProvider extends ServiceProvider
+final class ComponentsServiceProvider extends ServiceProvider
 {
     use LoadComponents;
 
     protected array $componentsConfig = [
+        'account',
         'brand',
         'category',
         'collection',
         'customer',
+        'dashboard',
         'discount',
         'order',
         'product',
         'review',
+        'setting',
     ];
 
     protected string $root = __DIR__.'/../..';

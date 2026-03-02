@@ -27,7 +27,7 @@ use Shopper\Http\Middleware\DispatchShopper;
 use Shopper\Http\Responses\LoginResponse;
 use Shopper\Livewire\Components;
 use Shopper\Livewire\Pages;
-use Shopper\Providers\FeatureServiceProvider;
+use Shopper\Providers\ComponentsServiceProvider;
 use Shopper\Providers\SidebarServiceProvider;
 use Shopper\Settings\SettingManager;
 use Shopper\Traits\LoadComponents;
@@ -43,14 +43,13 @@ final class ShopperServiceProvider extends PackageServiceProvider
     protected array $configFiles = [
         'addons',
         'admin',
+        // 'media',
+        // 'models',
         'auth',
         'features',
         'routes',
         'settings',
     ];
-
-    /** @var string[] */
-    protected array $componentsConfig = ['account', 'dashboard', 'setting'];
 
     protected string $root = __DIR__.'/..';
 
@@ -86,7 +85,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->registerConfigFiles();
-        $this->registerComponentsConfigFiles();
+        $this->registerDatabase();
 
         $this->app->singleton(
             TwoFactorAuthenticationProviderContract::class,
@@ -94,9 +93,12 @@ final class ShopperServiceProvider extends PackageServiceProvider
         );
 
         $this->app->bind(LoginResponseContract::class, LoginResponse::class);
+
         $this->app->register(SidebarServiceProvider::class);
-        $this->app->register(FeatureServiceProvider::class);
+        $this->app->register(ComponentsServiceProvider::class);
+
         $this->app->scoped('shopper', fn (): ShopperPanel => new ShopperPanel);
+
         $this->app->singleton(SettingManager::class, fn (): SettingManager => (new SettingManager)->register(
             config('shopper.settings.items', [])
         ));
@@ -178,6 +180,11 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'sky' => Color::Sky,
             'indigo' => Color::Indigo,
             'info' => Color::Cyan,
+            'danger' => Color::Red,
+            'purple' => Color::Purple,
+            'violet' => Color::Violet,
+            'rose' => Color::Rose,
+            'pink' => Color::Pink,
         ]);
 
         Field::configureUsing(

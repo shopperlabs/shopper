@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Database\Seeders;
+namespace Shopper\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
-use Shopper\Core\Models\Permission;
-use Shopper\Core\Models\Role;
+use Shopper\Models\Permission;
+use Shopper\Models\Role;
 
 final class PermissionRoleTableSeeder extends Seeder
 {
@@ -16,7 +16,7 @@ final class PermissionRoleTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
 
         $administrator = Role::query()
-            ->where('name', config('shopper.core.roles.admin'))
+            ->where('name', config('shopper.admin.roles.admin'))
             ->firstOrFail();
 
         $permissions = Permission::all();

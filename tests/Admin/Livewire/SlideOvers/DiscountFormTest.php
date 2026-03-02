@@ -26,7 +26,7 @@ beforeEach(function (): void {
 
     $this->products = Product::factory()->count(3)->publish()->create();
     $this->customers = User::factory()->count(3)->create()->each(function ($user): void {
-        $user->assignRole(config('shopper.core.roles.user'));
+        $user->assignRole(config('shopper.admin.roles.user'));
     });
 
     Queue::fake();

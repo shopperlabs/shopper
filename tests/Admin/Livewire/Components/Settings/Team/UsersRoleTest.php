@@ -3,15 +3,15 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Core\Models\Role;
 use Shopper\Livewire\Components\Settings\Team\UsersRole;
+use Shopper\Models\Role;
 use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
     $this->adminUser = User::factory()->create();
-    $this->adminUser->assignRole(config('shopper.core.roles.admin'));
+    $this->adminUser->assignRole(config('shopper.admin.roles.admin'));
     $this->actingAs($this->adminUser);
 
     $this->role = Role::create([
@@ -32,7 +32,7 @@ describe(UsersRole::class, function (): void {
         $editorUser->assignRole($this->role->name);
 
         $otherUser = User::factory()->create();
-        $otherUser->assignRole(config('shopper.core.roles.manager'));
+        $otherUser->assignRole(config('shopper.admin.roles.manager'));
 
         $component = Livewire::test(UsersRole::class, ['role' => $this->role]);
 
@@ -82,9 +82,9 @@ describe(UsersRole::class, function (): void {
 
     it('displays access level for admin users', function (): void {
         $adminUser = User::factory()->create();
-        $adminUser->assignRole(config('shopper.core.roles.admin'));
+        $adminUser->assignRole(config('shopper.admin.roles.admin'));
 
-        Livewire::test(UsersRole::class, ['role' => Role::query()->where('name', config('shopper.core.roles.admin'))->first()])
+        Livewire::test(UsersRole::class, ['role' => Role::query()->where('name', config('shopper.admin.roles.admin'))->first()])
             ->loadTable()
             ->assertCanSeeTableRecords([$adminUser]);
     });
@@ -108,9 +108,9 @@ describe(UsersRole::class, function (): void {
 
     it('admin cannot see delete action for admin users', function (): void {
         $anotherAdmin = User::factory()->create();
-        $anotherAdmin->assignRole(config('shopper.core.roles.admin'));
+        $anotherAdmin->assignRole(config('shopper.admin.roles.admin'));
 
-        Livewire::test(UsersRole::class, ['role' => Role::query()->where('name', config('shopper.core.roles.admin'))->first()])
+        Livewire::test(UsersRole::class, ['role' => Role::query()->where('name', config('shopper.admin.roles.admin'))->first()])
             ->assertTableActionHidden('delete', $anotherAdmin);
     });
 

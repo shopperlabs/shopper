@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Shopper\ShopperPanel;
 
@@ -54,5 +55,13 @@ if (! function_exists('shopper_panel_asset')) {
     function shopper_panel_assets(string $asset): string
     {
         return url(shopper()->prefix().$asset);
+    }
+}
+
+if (! function_exists('shopper_asset')) {
+    function shopper_asset(string $file): string
+    {
+        // @phpstan-ignore-next-line
+        return Storage::disk(config('shopper.media.storage.disk_name'))->url($file);
     }
 }

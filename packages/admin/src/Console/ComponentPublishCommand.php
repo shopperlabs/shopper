@@ -14,21 +14,11 @@ use function Laravel\Prompts\select;
 #[AsCommand(name: 'shopper:component:publish')]
 final class ComponentPublishCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'shopper:component:publish
                     {name? : The name of the components config file to publish}
                     {--all : Publish all components config files}
                     {--force : Overwrite any existing components configuration files}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Publish livewire components files in your application';
 
     /**

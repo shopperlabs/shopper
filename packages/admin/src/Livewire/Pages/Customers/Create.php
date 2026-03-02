@@ -28,9 +28,9 @@ use Shopper\Components\Form\GenderField;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
 use Shopper\Core\Enum\AddressType;
-use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Core\Models\Country;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Notifications\CustomerSendCredentials;
 
 /**
@@ -159,7 +159,7 @@ class Create extends AbstractPageComponent implements HasActions, HasForms
             ['email_verified_at' => now()->toDateTimeString()],
         ));
 
-        $customer->assignRole(config('shopper.core.roles.user'));
+        $customer->assignRole(config('shopper.admin.roles.user'));
         $customer->addresses()->create($address);
 
         if ($sendMail) {

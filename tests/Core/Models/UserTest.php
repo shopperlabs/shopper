@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Shopper\Core\Models\Address;
-use Shopper\Core\Models\Role;
+use Shopper\Models\Role;
 use Tests\Core\Stubs\User;
 
 uses(Tests\TestCase::class);
@@ -26,7 +26,7 @@ describe(User::class, function (): void {
 
     it('checks if user is admin', function (): void {
         $user = User::factory()->create();
-        $adminRole = Role::firstOrCreate(['name' => config('shopper.core.roles.admin')]);
+        $adminRole = Role::firstOrCreate(['name' => config('shopper.admin.roles.admin')]);
 
         $user->assignRole($adminRole);
 
@@ -41,7 +41,7 @@ describe(User::class, function (): void {
 
     it('checks if user is manager', function (): void {
         $user = User::factory()->create();
-        $managerRole = Role::firstOrCreate(['name' => config('shopper.core.roles.manager')]);
+        $managerRole = Role::firstOrCreate(['name' => config('shopper.admin.roles.manager')]);
 
         $user->assignRole($managerRole);
 
@@ -63,7 +63,7 @@ describe(User::class, function (): void {
     });
 
     it('scopes customers correctly', function (): void {
-        $customerRole = Role::firstOrCreate(['name' => config('shopper.core.roles.user')]);
+        $customerRole = Role::firstOrCreate(['name' => config('shopper.admin.roles.user')]);
         $customers = User::factory()->count(3)->create();
         $customers->each(fn ($user) => $user->assignRole($customerRole));
 
@@ -73,8 +73,8 @@ describe(User::class, function (): void {
     });
 
     it('scopes administrators correctly', function (): void {
-        $adminRole = Role::firstOrCreate(['name' => config('shopper.core.roles.admin')]);
-        $managerRole = Role::firstOrCreate(['name' => config('shopper.core.roles.manager')]);
+        $adminRole = Role::firstOrCreate(['name' => config('shopper.admin.roles.admin')]);
+        $managerRole = Role::firstOrCreate(['name' => config('shopper.admin.roles.manager')]);
 
         $admins = User::factory()->count(2)->create();
         $admins->each(fn ($user) => $user->assignRole($adminRole));

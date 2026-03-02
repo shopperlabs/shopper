@@ -6,8 +6,8 @@ namespace Shopper\Actions\Auth;
 
 use Illuminate\Support\Collection;
 use Shopper\Contracts\TwoFactorAuthenticationProvider;
-use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Events\TwoFactor\TwoFactorAuthenticationEnabled;
+use Shopper\Models\Contracts\ShopperUser;
 
 class EnableTwoFactorAuthentication
 {

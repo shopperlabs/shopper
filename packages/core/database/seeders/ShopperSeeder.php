@@ -13,7 +13,6 @@ final class ShopperSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(AuthTableSeeder::class);
         $this->call(CountriesTableSeeder::class);
         $this->call(CurrenciesTableSeeder::class);
         $this->call(LegalsPageTableSeeder::class);

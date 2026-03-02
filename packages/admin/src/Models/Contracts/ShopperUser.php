@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Models\Contracts;
+namespace Shopper\Models\Contracts;
 
 use Carbon\CarbonInterface;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -29,8 +29,6 @@ use Shopper\Core\Models\Order;
  * @property-read ?CarbonInterface $email_verified_at
  * @property-read ?CarbonInterface $birth_date
  * @property-read ?CarbonInterface $last_login_at
- *
- * @deprecated use Shopper\Models\Contracts\ShopperUser
  */
 interface ShopperUser extends Authenticatable
 {

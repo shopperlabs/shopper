@@ -20,13 +20,13 @@ parameters:
             message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
             identifier: larastan.noEnvCallsOutsideOfConfig
         -
-            message: '#Access to an undefined property (Illuminate\\Database\\Eloquent\\Model&)?Shopper\\Core\\Models\\Contracts\\[a-zA-Z]+::\$[a-zA-Z_]+#'
+            message: '#Access to an undefined property (Illuminate\\Database\\Eloquent\\Model&)?Shopper\\(Core\\)?Models\\Contracts\\[a-zA-Z]+::\$[a-zA-Z_]+#'
             identifier: property.notFound
         -
-            message: '#Call to an undefined method (Illuminate\\Database\\Eloquent\\Model&)?Shopper\\Core\\Models\\Contracts\\[a-zA-Z]+::[a-zA-Z_]+\(\)#'
+            message: '#Call to an undefined method (Illuminate\\Database\\Eloquent\\Model&)?Shopper\\(Core\\)?Models\\Contracts\\[a-zA-Z]+::[a-zA-Z_]+\(\)#'
             identifier: method.notFound
         -
-            message: '#Call to an undefined static method Shopper\\Core\\Models\\Contracts\\[a-zA-Z]+::[a-zA-Z_]+\(\)#'
+            message: '#Call to an undefined static method Shopper\\(Core\\)?Models\\Contracts\\[a-zA-Z]+::[a-zA-Z_]+\(\)#'
             identifier: staticMethod.notFound
         -
             message: '#expects view-string(\|null)?, string given#'

@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Number;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Order;
@@ -41,6 +40,19 @@ if (! function_exists('generate_number')) {
     }
 }
 
+if (! function_exists('shopper_setting')) {
+    function shopper_setting(string $key, bool $withCache = true): mixed
+    {
+        $setting = Cache::remember(
+            "shopper-setting.{$key}",
+            $withCache ? 3600 * 24 : 1,
+            fn () => Setting::query()->where('key', $key)->first()
+        );
+
+        return $setting?->value;
+    }
+}
+
 if (! function_exists('shopper_table')) {
     function shopper_table(string $table): string
     {
@@ -49,14 +61,6 @@ if (! function_exists('shopper_table')) {
         }
 
         return $table;
-    }
-}
-
-if (! function_exists('shopper_asset')) {
-    function shopper_asset(string $file): string
-    {
-        // @phpstan-ignore-next-line
-        return Storage::disk(config('shopper.media.storage.disk_name'))->url($file);
     }
 }
 
@@ -87,19 +91,6 @@ if (! function_exists('shopper_money_format')) {
             in: $currency ?? shopper_currency(),
             locale: app()->getLocale()
         );
-    }
-}
-
-if (! function_exists('shopper_setting')) {
-    function shopper_setting(string $key, bool $withCache = true): mixed
-    {
-        $setting = Cache::remember(
-            "shopper-setting.{$key}",
-            $withCache ? 3600 * 24 : 1,
-            fn () => Setting::query()->where('key', $key)->first()
-        );
-
-        return $setting?->value;
     }
 }
 

@@ -8,8 +8,8 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Shopper\Core\Models\Permission;
-use Shopper\Core\Models\Role;
+use Shopper\Models\Permission;
+use Shopper\Models\Role;
 
 class Permissions extends Component
 {

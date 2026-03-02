@@ -77,6 +77,7 @@
       "Shopper\\Core\\": "packages/core/src",
       "Shopper\\Core\\Database\\Factories\\": "packages/core/database/factories",
       "Shopper\\Core\\Database\\Seeders\\": "packages/core/database/seeders",
+      "Shopper\\Database\\Seeders\\": "packages/admin/database/seeders",
       "Shopper\\Payment\\": "packages/payment/src",
       "Shopper\\Shipping\\": "packages/shipping/src",
       "Shopper\\Sidebar\\": "packages/sidebar/src",
@@ -85,7 +86,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\": "tests"
+      "Tests\\": "tests",
+      "Tests\\Database\\Seeders\\": "tests/database/seeders"
     }
   },
   "replace": {

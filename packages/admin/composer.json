@@ -64,7 +64,8 @@
       "src/helpers.php"
     ],
     "psr-4": {
-      "Shopper\\": "src/"
+      "Shopper\\": "src/",
+      "Shopper\\Database\\Seeders\\": "database/seeders"
     }
   },
   "extra": {

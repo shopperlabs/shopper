@@ -19,7 +19,7 @@ describe(Login::class, function (): void {
         $this->assertGuest();
 
         $userToAuthenticate = User::factory()->create();
-        $userToAuthenticate->assignRole(config('shopper.core.roles.admin'));
+        $userToAuthenticate->assignRole(config('shopper.admin.roles.admin'));
 
         Livewire::test(Login::class)
             ->set('data.email', $userToAuthenticate->email)
@@ -32,7 +32,7 @@ describe(Login::class, function (): void {
 
     it('can authenticate with remember me', function (): void {
         $user = User::factory()->create();
-        $user->assignRole(config('shopper.core.roles.admin'));
+        $user->assignRole(config('shopper.admin.roles.admin'));
 
         Livewire::test(Login::class)
             ->set('data.email', $user->email)

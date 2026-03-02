@@ -5,8 +5,8 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
-use Shopper\Core\Models\Role;
 use Shopper\Livewire\SlideOvers\CreateTeamMember;
+use Shopper\Models\Role;
 use Shopper\Notifications\AdminSendCredentials;
 use Tests\Core\Stubs\User;
 

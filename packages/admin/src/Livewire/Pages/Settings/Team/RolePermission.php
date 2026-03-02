@@ -21,8 +21,8 @@ use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
-use Shopper\Core\Models\Permission;
-use Shopper\Core\Models\Role;
+use Shopper\Models\Permission;
+use Shopper\Models\Role;
 
 /**
  * @property Schema $form

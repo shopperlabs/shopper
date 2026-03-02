@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Database\Seeders;
+namespace Shopper\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
-use Shopper\Core\Models\Permission;
+use Shopper\Models\Permission;
 
 final class PermissionsTableSeeder extends Seeder
 {

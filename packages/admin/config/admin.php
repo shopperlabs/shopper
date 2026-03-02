@@ -46,6 +46,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Roles
+    |--------------------------------------------------------------------------
+    |
+    | User configuration to manage user access using spatie/laravel-permission.
+    | We recommend that you do not update this configuration in production,
+    | this could cause a bug on your system.
+    |
+    */
+
+    'roles' => [
+        'admin' => 'administrator',
+        'manager' => 'manager',
+        'user' => 'user',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Brand Logo
     |--------------------------------------------------------------------------
     |

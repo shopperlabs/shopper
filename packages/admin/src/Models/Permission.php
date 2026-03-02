@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Models;
+namespace Shopper\Models;
 
 use Spatie\Permission\Models\Permission as Model;
 
@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Permission as Model;
  * @property-read ?string $display_name
  * @property-read bool $can_be_removed
  */
-class Permission extends Model
+final class Permission extends Model
 {
     /**
      * @return array<string, array<string, mixed>|string|null>
