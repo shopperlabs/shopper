@@ -106,6 +106,9 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->sortable(),
                 TextColumn::make('type')
                     ->label(__('shopper::forms.label.type'))
+                    ->icon(fn (Product $record): string => $record->type->getIcon())
+                    ->color(fn (Product $record): string => $record->type->getColor())
+                    ->formatStateUsing(fn (ProductType $state): string => $state->getLabel())
                     ->badge(),
                 TextColumn::make('sku')
                     ->label(__('shopper::layout.tables.sku'))

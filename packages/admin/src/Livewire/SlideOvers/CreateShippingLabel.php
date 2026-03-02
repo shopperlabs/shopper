@@ -19,7 +19,6 @@ use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
-use Filament\Support\Enums\TextSize;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\HtmlString;
@@ -90,11 +89,6 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasF
                             ->columnSpan(3)
                             ->extraAttributes(['class' => 'py-6 pr-6'])
                             ->schema([
-                                TextEntry::make('heading')
-                                    ->hiddenLabel()
-                                    ->size(TextSize::Large)
-                                    ->weight('bold')
-                                    ->state(__('shopper::pages/orders.shipping_details')),
                                 Select::make('carrier_id')
                                     ->label(__('shopper::pages/orders.carrier_service'))
                                     ->options(fn (): array => resolve(CarrierRateService::class)->getCarrierSelectOptions())

@@ -89,10 +89,19 @@ class AddProduct extends SlideOverComponent implements HasActions, HasForms
                         ->schema([
                             RadioDeck::make('type')
                                 ->options(ProductType::class)
-                                ->descriptions(ProductType::class)
-                                ->icons(ProductType::class)
+                                ->descriptions([
+                                    ProductType::Virtual->value => __('shopper-core::enum/product.virtual_description'),
+                                    ProductType::External->value => __('shopper-core::enum/product.external_description'),
+                                    ProductType::Standard->value => __('shopper-core::enum/product.standard_product_description'),
+                                    ProductType::Variant->value => __('shopper-core::enum/product.variant_product_description'),
+                                ])
+                                ->icons([
+                                    ProductType::Virtual->value => 'phosphor-monitor-duotone',
+                                    ProductType::External->value => 'phosphor-link-simple-duotone',
+                                    ProductType::Standard->value => 'phosphor-tag-duotone',
+                                    ProductType::Variant->value => 'phosphor-swatches-duotone',
+                                ])
                                 ->alignment(Alignment::Start)
-                                // ->color('primary')
                                 ->columns(3)
                                 ->live()
                                 ->required(),
@@ -100,7 +109,6 @@ class AddProduct extends SlideOverComponent implements HasActions, HasForms
                                 'defaultProductType' => $get('type'),
                             ]),
                         ]),
-
                     StepColumn::make(__('shopper::words.general'))
                         ->icon(Untitledui::File02)
                         ->extraAttributes([

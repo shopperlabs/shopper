@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
-use Filament\Support\Contracts\HasColor;
-use Filament\Support\Contracts\HasDescription;
-use Filament\Support\Contracts\HasIcon;
-use Filament\Support\Contracts\HasLabel;
-use JaOcero\RadioDeck\Contracts\HasDescriptions;
-use JaOcero\RadioDeck\Contracts\HasIcons;
+use Shopper\Core\Contracts\HasColor;
+use Shopper\Core\Contracts\HasDescription;
+use Shopper\Core\Contracts\HasIcon;
+use Shopper\Core\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 use Shopper\Core\Traits\HasEnumStaticMethods;
 
@@ -19,7 +17,7 @@ use Shopper\Core\Traits\HasEnumStaticMethods;
  * @method static string Standard()
  * @method static string Variant()
  */
-enum ProductType: string implements HasColor, HasDescription, HasDescriptions, HasIcon, HasIcons, HasLabel
+enum ProductType: string implements HasColor, HasDescription, HasIcon, HasLabel
 {
     use ArrayableEnum;
     use HasEnumStaticMethods;
@@ -42,7 +40,7 @@ enum ProductType: string implements HasColor, HasDescription, HasDescriptions, H
         };
     }
 
-    public function getDescriptions(): string
+    public function getDescription(): string
     {
         return match ($this) {
             self::Virtual => __('shopper-core::enum/product.virtual_description'),
@@ -52,12 +50,7 @@ enum ProductType: string implements HasColor, HasDescription, HasDescriptions, H
         };
     }
 
-    public function getDescription(): string
-    {
-        return $this->getDescriptions();
-    }
-
-    public function getIcons(): string
+    public function getIcon(): string
     {
         return match ($this) {
             self::Virtual => 'phosphor-monitor-duotone',
@@ -65,11 +58,6 @@ enum ProductType: string implements HasColor, HasDescription, HasDescriptions, H
             self::Standard => 'phosphor-tag-duotone',
             self::Variant => 'phosphor-swatches-duotone',
         };
-    }
-
-    public function getIcon(): string
-    {
-        return $this->getIcons();
     }
 
     public function getColor(): string

@@ -9,9 +9,6 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
 
 interface Category
 {
-    /**
-     * Use to display a custom label into filament relationship select form component
-     */
     public function getLabelOptionName(): string;
 
     public function descendantCategories(): HasManyOfDescendants;

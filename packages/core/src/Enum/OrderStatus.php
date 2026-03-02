@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
-use BackedEnum;
-use Filament\Support\Contracts\HasColor;
-use Filament\Support\Contracts\HasIcon;
-use Filament\Support\Contracts\HasLabel;
-use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Core\Contracts\HasColor;
+use Shopper\Core\Contracts\HasIcon;
+use Shopper\Core\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 use Shopper\Core\Traits\HasEnumStaticMethods;
 
@@ -45,14 +43,14 @@ enum OrderStatus: string implements HasColor, HasIcon, HasLabel
         };
     }
 
-    public function getIcon(): string|BackedEnum
+    public function getIcon(): string
     {
         return match ($this) {
-            self::New => Untitledui::Star,
-            self::Processing => Untitledui::Loading02,
+            self::New => 'untitledui-star',
+            self::Processing => 'untitledui-loading-02',
             self::Completed => 'heroicon-o-check-badge',
             self::Cancelled => 'heroicon-o-minus-circle',
-            self::Archived => Untitledui::Archive,
+            self::Archived => 'untitledui-archive',
         };
     }
 

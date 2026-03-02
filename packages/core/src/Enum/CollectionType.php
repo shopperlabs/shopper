@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
-use Filament\Support\Contracts\HasDescription;
-use Filament\Support\Contracts\HasLabel;
+use Shopper\Core\Contracts\HasDescription;
+use Shopper\Core\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 use Shopper\Core\Traits\HasEnumStaticMethods;
 
