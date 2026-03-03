@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Shopper\Core\Exceptions\LazyStockLoadingException;
 use Shopper\Core\Models\InventoryHistory;
 
@@ -185,7 +184,7 @@ trait HasStock
             'description' => $description,
             'event' => $event,
             'inventory_id' => $inventoryId,
-            'user_id' => $userId ?? Auth::id(),
+            'user_id' => $userId,
         ];
 
         if ($reference) {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "60d9b856747608255284b5a7b0e1a021",
+    "content-hash": "c322265381f3010b9537ea625a551bbe",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -638,30 +638,30 @@
         },
         {
             "name": "codewithdennis/filament-select-tree",
-            "version": "v4.0.16",
+            "version": "v4.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CodeWithDennis/filament-select-tree.git",
-                "reference": "7c0d7653c3f83ce4d4c64b85bed4561a7070b678"
+                "reference": "247b00a732674a8c8bd9977f9741a63d2fb6d298"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CodeWithDennis/filament-select-tree/zipball/7c0d7653c3f83ce4d4c64b85bed4561a7070b678",
-                "reference": "7c0d7653c3f83ce4d4c64b85bed4561a7070b678",
+                "url": "https://api.github.com/repos/CodeWithDennis/filament-select-tree/zipball/247b00a732674a8c8bd9977f9741a63d2fb6d298",
+                "reference": "247b00a732674a8c8bd9977f9741a63d2fb6d298",
                 "shasum": ""
             },
             "require": {
                 "filament/forms": "^4.0|^5.0",
-                "illuminate/contracts": "^10.0|^11.0|^12.0",
+                "illuminate/contracts": "^10.0|^11.0|^12.0|^13.0",
                 "php": "^8.2",
                 "spatie/laravel-package-tools": "^1.15.0"
             },
             "require-dev": {
                 "nunomaduro/collision": "^7.9||^8.0",
-                "orchestra/testbench": "^8.0|^9.0|^10.0",
-                "pestphp/pest": "^2.0|^3.7",
-                "pestphp/pest-plugin-arch": "^2.0|^3.0",
-                "pestphp/pest-plugin-laravel": "^2.0|^3.1"
+                "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0",
+                "pestphp/pest": "^2.0|^3.7|^4.4",
+                "pestphp/pest-plugin-arch": "^2.0|^3.0|^4.0",
+                "pestphp/pest-plugin-laravel": "^2.0|^3.1|^4.1"
             },
             "type": "library",
             "extra": {
@@ -705,7 +705,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-21T10:49:44+00:00"
+            "time": "2026-03-02T14:57:15+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -1445,7 +1445,7 @@
         },
         {
             "name": "filament/actions",
-            "version": "v4.8.0",
+            "version": "v4.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/actions.git",
@@ -1494,16 +1494,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v4.8.0",
+            "version": "v4.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/panels.git",
-                "reference": "d4066f05e45a0e8f352e6e28969b98a090044a8b"
+                "reference": "853ba7ceb538c006215c49c37005db315ef48310"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/panels/zipball/d4066f05e45a0e8f352e6e28969b98a090044a8b",
-                "reference": "d4066f05e45a0e8f352e6e28969b98a090044a8b",
+                "url": "https://api.github.com/repos/filamentphp/panels/zipball/853ba7ceb538c006215c49c37005db315ef48310",
+                "reference": "853ba7ceb538c006215c49c37005db315ef48310",
                 "shasum": ""
             },
             "require": {
@@ -1547,11 +1547,11 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2026-02-28T22:46:34+00:00"
+            "time": "2026-03-03T09:22:23+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v4.8.0",
+            "version": "v4.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/forms.git",
@@ -1601,7 +1601,7 @@
         },
         {
             "name": "filament/infolists",
-            "version": "v4.8.0",
+            "version": "v4.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/infolists.git",
@@ -1646,7 +1646,7 @@
         },
         {
             "name": "filament/notifications",
-            "version": "v4.8.0",
+            "version": "v4.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/notifications.git",
@@ -1693,7 +1693,7 @@
         },
         {
             "name": "filament/query-builder",
-            "version": "v4.8.0",
+            "version": "v4.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/query-builder.git",
@@ -1739,7 +1739,7 @@
         },
         {
             "name": "filament/schemas",
-            "version": "v4.8.0",
+            "version": "v4.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/schemas.git",
@@ -1784,7 +1784,7 @@
         },
         {
             "name": "filament/spatie-laravel-media-library-plugin",
-            "version": "v4.8.0",
+            "version": "v4.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/spatie-laravel-media-library-plugin.git",
@@ -1821,7 +1821,7 @@
         },
         {
             "name": "filament/support",
-            "version": "v4.8.0",
+            "version": "v4.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/support.git",
@@ -1879,7 +1879,7 @@
         },
         {
             "name": "filament/tables",
-            "version": "v4.8.0",
+            "version": "v4.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/tables.git",
@@ -1925,7 +1925,7 @@
         },
         {
             "name": "filament/widgets",
-            "version": "v4.8.0",
+            "version": "v4.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/widgets.git",
@@ -4539,25 +4539,25 @@
         },
         {
             "name": "mckenziearts/blade-untitledui-icons",
-            "version": "v1.4.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mckenziearts/blade-untitledui-icons.git",
-                "reference": "6999f08ec6d9c9b42427a247e2acfcbfefd930c9"
+                "reference": "a3cb8822a7dd95d9ae7d4a75dd4893ea67c32c90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mckenziearts/blade-untitledui-icons/zipball/6999f08ec6d9c9b42427a247e2acfcbfefd930c9",
-                "reference": "6999f08ec6d9c9b42427a247e2acfcbfefd930c9",
+                "url": "https://api.github.com/repos/mckenziearts/blade-untitledui-icons/zipball/a3cb8822a7dd95d9ae7d4a75dd4893ea67c32c90",
+                "reference": "a3cb8822a7dd95d9ae7d4a75dd4893ea67c32c90",
                 "shasum": ""
             },
             "require": {
-                "blade-ui-kit/blade-icons": "^1.6",
-                "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
+                "blade-ui-kit/blade-icons": "^1.9",
+                "illuminate/support": "^9.0|^10.0|^11.0|^12.0|^13.0",
                 "php": "^8.1"
             },
             "require-dev": {
-                "orchestra/testbench": "^7.0|^8.0|^9.0|^10",
+                "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0|^11.0",
                 "phpunit/phpunit": "^9.0|^10.5|^11.0"
             },
             "type": "library",
@@ -4592,34 +4592,38 @@
             ],
             "support": {
                 "issues": "https://github.com/mckenziearts/blade-untitledui-icons/issues",
-                "source": "https://github.com/mckenziearts/blade-untitledui-icons/tree/v1.4.0"
+                "source": "https://github.com/mckenziearts/blade-untitledui-icons/tree/v1.5.0"
             },
             "funding": [
+                {
+                    "url": "https://www.paypal.me/monneyarthur",
+                    "type": "custom"
+                },
                 {
                     "url": "https://github.com/mckenziearts",
                     "type": "github"
                 }
             ],
-            "time": "2025-02-25T12:25:58+00:00"
+            "time": "2026-03-03T09:57:46+00:00"
         },
         {
             "name": "mckenziearts/filament-untitledui-icons",
-            "version": "v1.1",
+            "version": "v1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mckenziearts/filament-untitledui-icons.git",
-                "reference": "c57c3174847eab6899c6a3a981fa239a5be9a8bd"
+                "reference": "6aa935917ad45ec7126c1f837a486a6799d30331"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mckenziearts/filament-untitledui-icons/zipball/c57c3174847eab6899c6a3a981fa239a5be9a8bd",
-                "reference": "c57c3174847eab6899c6a3a981fa239a5be9a8bd",
+                "url": "https://api.github.com/repos/mckenziearts/filament-untitledui-icons/zipball/6aa935917ad45ec7126c1f837a486a6799d30331",
+                "reference": "6aa935917ad45ec7126c1f837a486a6799d30331",
                 "shasum": ""
             },
             "require": {
                 "filafly/filament-icons": "^2.0",
                 "filament/filament": "^4.0 || ^5.0",
-                "mckenziearts/blade-untitledui-icons": "^1.4",
+                "mckenziearts/blade-untitledui-icons": "^1.5",
                 "php": "^8.2"
             },
             "require-dev": {
@@ -4651,9 +4655,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mckenziearts/filament-untitledui-icons/issues",
-                "source": "https://github.com/mckenziearts/filament-untitledui-icons/tree/v1.1"
+                "source": "https://github.com/mckenziearts/filament-untitledui-icons/tree/v1.2"
             },
-            "time": "2026-02-01T23:18:22+00:00"
+            "time": "2026-03-03T10:55:16+00:00"
         },
         {
             "name": "milon/barcode",

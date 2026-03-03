@@ -143,6 +143,7 @@ describe(Product::class, function (): void {
             quantity: 10,
             event: 'purchase',
             description: 'Initial stock',
+            userId: $user->id
         );
 
         expect($history->description)->toBe('Initial stock')

@@ -10,7 +10,7 @@
     "illuminate/contracts": "^11.0|^12.0",
     "illuminate/database": "^11.0|^12.0",
     "illuminate/support": "^11.0|^12.0",
-    "spatie/laravel-package-tools": "^1.19",
+    "spatie/laravel-package-tools": "^1.9",
     "staudenmeir/laravel-adjacency-list": "^1.0"
   },
   "autoload": {
