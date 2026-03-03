@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Filament\Support\RawJs;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Js;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Contracts\Order;
@@ -28,7 +30,7 @@ final class RevenueChart extends ApexChartWidget
         $symbol = Currency::query()->where('code', $this->filter)->value('symbol') ?? $this->filter;
         $locale = str_replace('_', '-', app()->getLocale());
 
-        $this->js("window.__shopperRevenueChart = { symbol: '{$symbol}', locale: '{$locale}' }");
+        $this->js('window.__shopperRevenueChart = '.Js::from(['symbol' => $symbol, 'locale' => $locale]));
     }
 
     public function updatedFilter(): void
@@ -38,12 +40,9 @@ final class RevenueChart extends ApexChartWidget
         $currency = $this->filter ?? shopper_currency();
         $symbol = Currency::query()->where('code', $currency)->value('symbol') ?? $currency;
         $locale = str_replace('_', '-', app()->getLocale());
-        $options = json_encode($this->options);
+        $options = Js::from($this->options);
 
-        $this->js(<<<JS
-            window.__shopperRevenueChart = { symbol: '{$symbol}', locale: '{$locale}' };
-            \$wire.dispatchSelf('updateOptions', { options: {$options} });
-        JS);
+        $this->js('window.__shopperRevenueChart = '.Js::from(['symbol' => $symbol, 'locale' => $locale])."; \$wire.dispatchSelf('updateOptions', { options: {$options} });");
     }
 
     protected function getHeading(): string
@@ -99,17 +98,20 @@ final class RevenueChart extends ApexChartWidget
 
         $months = collect(CarbonPeriod::create($startDate, '1 month', $endDate));
 
+        /** @var array{select: string, groupBy: string} $expr */
+        $expr = $this->revenueExpressions();
+
         /** @var array<string, float> $revenueByMonth */
         $revenueByMonth = Cache::flexible(
             "dashboard:revenue:{$currency}",
             [300, 1800],
             fn () => resolve(Order::class)::query()
-                ->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, SUM(price_amount) as total')
+                ->selectRaw($expr['select'])
                 ->where('payment_status', PaymentStatus::Paid)
                 ->where('currency_code', $currency)
                 ->where('created_at', '>=', $startDate)
                 ->where('created_at', '<=', $endDate)
-                ->groupByRaw('YEAR(created_at), MONTH(created_at)')
+                ->groupByRaw($expr['groupBy'])
                 ->get()
                 ->keyBy(fn ($row): string => $row->getAttribute('year').'-'.$row->getAttribute('month'))
                 ->map(fn ($row): float => (float) $row->getAttribute('total') / 100)
@@ -151,5 +153,26 @@ final class RevenueChart extends ApexChartWidget
                 'borderColor' => 'rgba(0,0,0,0.05)',
             ],
         ];
+    }
+
+    /**
+     * @return array{select: string, groupBy: string}
+     */
+    private function revenueExpressions(): array
+    {
+        return match (DB::connection()->getDriverName()) {
+            'pgsql' => [
+                'select' => 'EXTRACT(YEAR FROM created_at)::int as year, EXTRACT(MONTH FROM created_at)::int as month, SUM(price_amount) as total',
+                'groupBy' => 'EXTRACT(YEAR FROM created_at), EXTRACT(MONTH FROM created_at)',
+            ],
+            'sqlite' => [
+                'select' => "CAST(strftime('%Y', created_at) AS INTEGER) as year, CAST(strftime('%m', created_at) AS INTEGER) as month, SUM(price_amount) as total",
+                'groupBy' => "strftime('%Y', created_at), strftime('%m', created_at)",
+            ],
+            default => [
+                'select' => 'YEAR(created_at) as year, MONTH(created_at) as month, SUM(price_amount) as total',
+                'groupBy' => 'YEAR(created_at), MONTH(created_at)',
+            ],
+        };
     }
 }
