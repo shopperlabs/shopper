@@ -15,8 +15,14 @@ class Permissions extends Component
 {
     public Role $role;
 
+    public function mount(): void
+    {
+        $this->authorize('view_users');
+    }
+
     public function togglePermission(int $id): void
     {
+        $this->authorize('view_users');
         /** @var Permission $permission */
         $permission = Permission::query()->find($id);
 
@@ -39,6 +45,8 @@ class Permissions extends Component
 
     public function removePermission(int $id): void
     {
+        $this->authorize('view_users');
+
         Permission::query()->find($id)->delete();
 
         Notification::make()

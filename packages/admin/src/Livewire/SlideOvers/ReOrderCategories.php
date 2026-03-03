@@ -16,6 +16,8 @@ class ReOrderCategories extends SlideOverComponent
      */
     public function updateGroupOrder(array $items): void
     {
+        $this->authorize('edit_categories');
+
         foreach ($items as $item) {
             resolve(Category::class)::query()
                 ->findOrFail((int) $item['value'])
@@ -30,6 +32,8 @@ class ReOrderCategories extends SlideOverComponent
      */
     public function updateCategoryOrder(array $groups): void
     {
+        $this->authorize('edit_categories');
+
         foreach ($groups as $group) {
             foreach ($group['items'] as $item) {
                 resolve(Category::class)::query()

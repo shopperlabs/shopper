@@ -11,6 +11,7 @@ uses(Tests\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
+    $this->user->givePermissionTo('access_setting');
     $this->actingAs($this->user);
 });
 

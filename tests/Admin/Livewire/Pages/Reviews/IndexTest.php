@@ -14,6 +14,7 @@ beforeEach(function (): void {
     config()->set('shopper.models.product', Product::class);
 
     $this->user = User::factory()->create();
+    $this->user->givePermissionTo('browse_reviews');
     $this->actingAs($this->user);
 });
 

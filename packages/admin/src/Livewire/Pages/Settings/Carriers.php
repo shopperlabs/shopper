@@ -41,6 +41,11 @@ class Carriers extends Component implements HasActions, HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
+    public function mount(): void
+    {
+        $this->authorize('access_setting');
+    }
+
     public function createCarrierAction(): Action
     {
         return Action::make('createCarrier')

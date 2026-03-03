@@ -38,30 +38,6 @@ final class PermissionsTableSeeder extends Seeder
             'can_be_removed' => false,
         ]);
 
-        Permission::query()->create([
-            'name' => 'manage_mail',
-            'group_name' => 'system',
-            'display_name' => __('Manage mail setting'),
-            'description' => __('This permission allow user to manage the mail configuration with template.'),
-            'can_be_removed' => false,
-        ]);
-
-        Permission::query()->create([
-            'name' => 'impersonate',
-            'group_name' => 'system',
-            'display_name' => __('Impersonate User'),
-            'description' => __('This permission allow user to logged with the account of another user.'),
-            'can_be_removed' => false,
-        ]);
-
-        Permission::query()->create([
-            'name' => 'setting_analytics',
-            'group_name' => 'system',
-            'display_name' => __('Manage Analytics setting'),
-            'description' => __('This permission allow user to add, update, and remove analytics settings such as Google Analytics, Facebook Pixel and more.'),
-            'can_be_removed' => false,
-        ]);
-
         Permission::generate('brands');
         Permission::generate('categories');
         Permission::generate('collections');

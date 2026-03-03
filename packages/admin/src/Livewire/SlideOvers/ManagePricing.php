@@ -49,6 +49,8 @@ class ManagePricing extends SlideOverComponent implements HasActions, HasForms
      */
     public function mount(int $modelId, string $modelType, ?int $currencyId = null): void
     {
+        $this->authorize('edit_products');
+
         $this->model = $modelType::with('prices')->find($modelId);
         $this->currencyId = $currencyId;
 
@@ -83,6 +85,8 @@ class ManagePricing extends SlideOverComponent implements HasActions, HasForms
 
     public function save(): void
     {
+        $this->authorize('edit_products');
+
         $this->validate();
 
         app()->call(SavePricingAction::class, [

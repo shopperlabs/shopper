@@ -13,6 +13,7 @@ beforeEach(function (): void {
     config()->set('shopper.models.product', Product::class);
 
     $this->user = User::factory()->create();
+    $this->user->givePermissionTo('edit_products');
     $this->actingAs($this->user);
 
     $this->product = Product::factory()->create();

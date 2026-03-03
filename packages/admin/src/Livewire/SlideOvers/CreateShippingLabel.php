@@ -53,6 +53,8 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasF
 
     public function mount(): void
     {
+        $this->authorize('edit_orders');
+
         $this->form->fill([
             'carrier_id' => $this->order->shippingOption?->carrier_id,
             'items' => $this->unfulfilledItems->map(fn ($item): array => [
@@ -172,6 +174,8 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasF
 
     public function save(): void
     {
+        $this->authorize('edit_orders');
+
         $data = $this->form->getState();
 
         $itemIds = collect($data['items'])->pluck('item_id')->all();

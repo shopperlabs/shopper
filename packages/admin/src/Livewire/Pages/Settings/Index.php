@@ -9,6 +9,11 @@ use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Index extends AbstractPageComponent
 {
+    public function mount(): void
+    {
+        $this->authorize('access_setting');
+    }
+
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.index')

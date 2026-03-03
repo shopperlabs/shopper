@@ -49,6 +49,8 @@ class TaxZoneForm extends SlideOverComponent implements HasActions, HasForms, Sl
 
     public function mount(?int $taxZoneId = null): void
     {
+        $this->authorize('access_setting');
+
         $this->taxZone = $taxZoneId
             ? TaxZone::with('country')->find($taxZoneId)
             : new TaxZone;
@@ -97,6 +99,8 @@ class TaxZoneForm extends SlideOverComponent implements HasActions, HasForms, Sl
 
     public function store(): void
     {
+        $this->authorize('access_setting');
+
         $data = $this->form->getState();
 
         if ($this->taxZone->id) {

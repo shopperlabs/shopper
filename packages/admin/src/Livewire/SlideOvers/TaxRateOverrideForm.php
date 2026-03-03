@@ -58,6 +58,8 @@ class TaxRateOverrideForm extends SlideOverComponent implements HasActions, HasF
 
     public function mount(int $taxZoneId, ?int $taxRateId = null): void
     {
+        $this->authorize('access_setting');
+
         $this->taxZoneId = $taxZoneId;
 
         $this->taxRate = $taxRateId
@@ -175,6 +177,8 @@ class TaxRateOverrideForm extends SlideOverComponent implements HasActions, HasF
 
     public function store(): void
     {
+        $this->authorize('access_setting');
+
         $data = $this->form->getState();
         $targets = collect(Arr::pull($data, 'targets', []))
             ->unique(fn (array $tx): string => $tx['reference_type'].':'.$tx['reference_id'])

@@ -16,6 +16,11 @@ class Taxes extends Component
     #[Url(as: 'zone', except: '')]
     public ?int $currentTaxZoneId = null;
 
+    public function mount(): void
+    {
+        $this->authorize('access_setting');
+    }
+
     public function updatedCurrentTaxZoneId(int $value): void
     {
         $this->currentTaxZoneId = $value;

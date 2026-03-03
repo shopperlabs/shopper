@@ -18,6 +18,7 @@ beforeEach(function (): void {
     setupCurrencies(['USD', 'EUR']);
 
     $this->user = User::factory()->create();
+    $this->user->givePermissionTo('edit_products');
     $this->actingAs($this->user);
 });
 

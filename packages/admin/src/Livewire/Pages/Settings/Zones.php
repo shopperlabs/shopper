@@ -16,6 +16,11 @@ class Zones extends Component
     #[Url(as: 'zone', except: '')]
     public ?int $currentZoneId = null;
 
+    public function mount(): void
+    {
+        $this->authorize('access_setting');
+    }
+
     public function updatedCurrentZoneId(int $value): void
     {
         $this->currentZoneId = $value;

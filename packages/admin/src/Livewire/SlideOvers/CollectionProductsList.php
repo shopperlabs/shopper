@@ -47,6 +47,8 @@ class CollectionProductsList extends SlideOverComponent implements HasActions, H
      */
     public function mount(?Collection $collection = null, array $exceptProductIds = []): void
     {
+        $this->authorize('edit_collections');
+
         $this->collection = $collection;
         $this->exceptProductIds = $exceptProductIds;
     }

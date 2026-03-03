@@ -52,6 +52,8 @@ class UpdateVariant extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(): void
     {
+        $this->authorize('edit_product_variants');
+
         $this->variant?->load(['values', 'values.attribute']);
 
         $this->form->fill(array_merge(
@@ -133,6 +135,8 @@ class UpdateVariant extends SlideOverComponent implements HasActions, HasForms
 
     public function save(): void
     {
+        $this->authorize('edit_product_variants');
+
         $values = data_get($this->form->getState(), 'values');
 
         if ($values && $this->variantAlreadyExist($values)) {

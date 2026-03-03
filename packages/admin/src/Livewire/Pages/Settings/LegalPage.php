@@ -12,6 +12,11 @@ use Shopper\Core\Models\Legal;
 #[Layout('shopper::components.layouts.setting')]
 class LegalPage extends Component
 {
+    public function mount(): void
+    {
+        $this->authorize('access_setting');
+    }
+
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.legal', [

@@ -45,6 +45,8 @@ class General extends Component implements HasActions, HasForms
 
     public function mount(): void
     {
+        $this->authorize('access_setting');
+
         /** @var Collection<int, Setting> $settings */
         $settings = Setting::query()->whereIn('key', [
             'name',
