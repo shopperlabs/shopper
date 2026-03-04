@@ -22,7 +22,7 @@
 
 ## Introduction
 
-[Shopper](https://laravelshopper.dev) is a Headless e-commerce Admin Panel build for Laravel 10.0+ which includes all the necessary for your online store application.
+[Shopper](https://laravelshopper.dev) is a Headless e-commerce Admin Panel build for Laravel 11.0+ which includes all the necessary for your online store application.
 Web Application has made using Laravel. We feel building ecommerce websites has become a convoluted and confusing process that leaves developers unsatisfied.
 We want to turn you around to the simpler side and get back to basics.
 
@@ -55,7 +55,7 @@ The Framework uses [Laravel](https://laravel.com) as a foundation PHP framework.
 You can communicate with us using the following mediums:
 
 - [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
-- [Join us on Discord](https://discord.gg/YMFynwHZ) to chat with us.
+- [Join us on Discord](https://laravelshopper.dev/discord) to chat with us.
 
 ## Contributing
 
@@ -63,7 +63,7 @@ Please see [contributing.md](CONTRIBUTING.md) for details and a todolist.
 
 ## Security
 
-If you discover any security related issues, please email contact@shopperlabs.co instead of using the issue tracker.
+If you discover any security related issues, please email arthur@shopperlabs.co instead of using the issue tracker.
 
 ## Credits
 
@@ -80,4 +80,4 @@ The Shopper Framework is open-sourced software licensed under the [MIT license](
 
 ## Sponsoring
 
-Support this project by becoming a [Sponsor](https://github.com/sponsors/mckenziearts). Your logo will show up here with a link to your website.
+Support this project by becoming a [Sponsor](https://github.com/sponsors/shopperlabs). Your logo will show up here with a link to your website.

@@ -51,7 +51,7 @@ export interface TaxZone extends Entity {
 export interface TaxRate extends Entity {
   /** The rate name (e.g., "TVA", "Sales Tax"). */
   name: string
-  /** The rate code (e.g., "FR-TVA-20"). */
+  /** The rate code (e.g., "CM-TVA-20"). */
   code: string | null
   /** The tax rate percentage (e.g., 20.0 for 20%). */
   rate: number
@@ -84,18 +84,18 @@ export interface TaxRateRule extends Entity {
 }
 
 /**
- * OrderTaxLine model — snapshotted tax applied to an order item or shipping.
+ * OrderTaxLine model — snapshot tax applied to an order item or shipping.
  */
 export interface OrderTaxLine extends Entity {
   /** The morph type (OrderItem or OrderShipping). */
   taxable_type: string
   /** The morph ID. */
   taxable_id: number
-  /** The snapshotted tax code (e.g., "VAT", "GST"). */
+  /** The snapshot tax code (e.g., "VAT", "GST"). */
   code: string
-  /** The snapshotted tax name (e.g., "TVA 20%"). */
+  /** The snapshot tax name (e.g., "TVA 20%"). */
   name: string
-  /** The snapshotted tax rate percentage. */
+  /** The snapshot tax rate percentage. */
   rate: number
   /** The calculated tax amount (in cents). */
   amount: number
