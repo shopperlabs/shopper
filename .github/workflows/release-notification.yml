@@ -1,0 +1,23 @@
+name: Release Notification
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
+        run: |
+          VERSION="${{ github.event.release.tag_name }}"
+          URL="${{ github.event.release.html_url }}"
+
+          curl -s -H "Content-Type: application/json" \
+            -d "{
+              \"username\": \"Release\",
+              \"content\": \"**Shopper ${VERSION} is out!** 🛍️ @here\n\nCheck out the changes here: ${URL}\"
+            }" \
+            "$DISCORD_WEBHOOK"
