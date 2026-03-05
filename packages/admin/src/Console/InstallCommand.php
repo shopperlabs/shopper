@@ -35,6 +35,18 @@ final class InstallCommand extends Command
         $this->renderLogo();
 
         $this->newLine();
+
+        if (file_exists(config_path('shopper/admin.php'))) {
+            $this->line('  <fg=#EAB308>⚠</> Shopper is already installed in this project.');
+            $this->newLine();
+            $this->line('  <fg=#475569>To publish assets or run migrations manually, use:</>');
+            $this->line('  <fg=#60A5FA>php artisan vendor:publish --tag=shopper-config</>');
+            $this->line('  <fg=#60A5FA>php artisan migrate</>');
+            $this->newLine();
+
+            return;
+        }
+
         $this->line('  <fg=#3B82F6>◆</> 🛍  <fg=#94A3B8>The headless e-commerce admin panel for Laravel</> <fg=#3B82F6>◆</>');
         $this->newLine();
 

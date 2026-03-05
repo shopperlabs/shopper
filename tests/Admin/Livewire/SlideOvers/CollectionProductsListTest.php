@@ -102,9 +102,12 @@ describe(CollectionProductsList::class, function (): void {
 
         $collection->refresh();
 
+        $collectionProductIds = $collection->products->pluck('id')->sort()->values()->toArray();
+        $expectedProductIds = $products->pluck('id')->sort()->values()->toArray();
+
         expect($collection->products)->toHaveCount(3)
-            ->and($collection->products->pluck('id')->toArray())
-            ->toEqual($products->pluck('id')->toArray());
+            ->and($collectionProductIds)
+            ->toEqual($expectedProductIds);
     });
 
     it('merges new products with existing collection products', function (): void {
