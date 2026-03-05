@@ -15,12 +15,4 @@ return new class extends Migration
             $table->unique(['attribute_id', 'key']);
         });
     }
-
-    public function down(): void
-    {
-        Schema::table(shopper_table('attribute_values'), function (Blueprint $table): void {
-            $table->dropUnique(['attribute_id', 'key']);
-            $table->unique('key');
-        });
-    }
 };

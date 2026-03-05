@@ -14,11 +14,4 @@ return new class extends Migration
             $table->boolean('allow_backorder')->default(false)->after('brand_id');
         });
     }
-
-    public function down(): void
-    {
-        Schema::table($this->getTableName('products'), static function (Blueprint $table): void {
-            $table->dropColumn('allow_backorder');
-        });
-    }
 };

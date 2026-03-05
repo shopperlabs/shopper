@@ -21,18 +21,4 @@ return new class extends Migration
                 ->nullOnDelete();
         });
     }
-
-    public function down(): void
-    {
-        Schema::table($this->getTableName('inventory_histories'), static function (Blueprint $table): void {
-            $table->dropForeign(['user_id']);
-
-            $table->unsignedBigInteger('user_id')->nullable(false)->change();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->cascadeOnDelete();
-        });
-    }
 };

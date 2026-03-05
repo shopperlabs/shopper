@@ -17,11 +17,4 @@ return new class extends Migration
                 ->after('price_amount');
         });
     }
-
-    public function down(): void
-    {
-        Schema::table($this->getTableName('orders'), static function (Blueprint $table): void {
-            $table->dropColumn('tax_amount');
-        });
-    }
 };

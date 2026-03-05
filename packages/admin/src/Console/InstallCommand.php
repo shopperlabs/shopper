@@ -4,28 +4,22 @@ declare(strict_types=1);
 
 namespace Shopper\Console;
 
+use Closure;
 use Illuminate\Console\Command;
-use Shopper\Core\Console\Thanks;
-use Shopper\Core\CoreServiceProvider;
 use Shopper\Core\Database\Seeders\ShopperSeeder;
 use Shopper\Database\Seeders\AuthTableSeeder;
-use Shopper\ShopperServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Helper\ProgressBar;
 
 use function Laravel\Prompts\confirm;
-use function Laravel\Prompts\intro;
-use function Laravel\Prompts\note;
+use function Laravel\Prompts\spin;
 
 #[AsCommand(name: 'shopper:install')]
 final class InstallCommand extends Command
 {
-    protected ProgressBar $progressBar;
-
     protected $signature = 'shopper:install';
 
-    protected $description = 'Install Shopper e-commerce admin panel';
+    protected $description = 'Install the Shopper e-commerce admin panel';
 
     public function __construct()
     {
@@ -38,104 +32,95 @@ final class InstallCommand extends Command
 
     public function handle(): void
     {
-        $this->progressBar = $this->output->createProgressBar(4);
-
-        $this->introMessage();
-
-        sleep(1);
-
-        if (! $this->progressBar->getProgress()) {
-            $this->progressBar->start();
-        }
+        $this->renderLogo();
 
         $this->newLine();
-        $this->components->info('Publishing configuration and migrations...');
+        $this->line('  <fg=#3B82F6>◆</> 🛍  <fg=#94A3B8>The headless e-commerce admin panel for Laravel</> <fg=#3B82F6>◆</>');
+        $this->newLine();
 
-        $this->call('vendor:publish', ['--provider' => CoreServiceProvider::class]);
-        $this->call('vendor:publish', ['--provider' => ShopperServiceProvider::class]);
-        $this->call(
-            'vendor:publish',
-            ['--provider' => MediaLibraryServiceProvider::class, '--tag' => 'medialibrary-migrations']
-        );
+        $this->task('Publishing configuration files', function (): void {
+            $this->callSilently('vendor:publish', ['--tag' => 'shopper-config']);
+        });
 
-        $this->progressBar->advance();
+        $this->task('Publishing media library migrations', function (): void {
+            $this->callSilently('vendor:publish', [
+                '--provider' => MediaLibraryServiceProvider::class,
+                '--tag' => 'medialibrary-migrations',
+            ]);
+        });
 
-        $this->components->info('Publishing Filament assets...');
-        $this->call('filament:assets');
+        $this->task('Publishing Filament assets', function (): void {
+            $this->callSilently('filament:assets');
+        });
 
-        $this->components->info('Enabling Shopper symlink for storage...');
-        $this->call('shopper:link');
-
-        $this->progressBar->advance();
+        $this->task('Creating storage symlink', function (): void {
+            $this->callSilently('shopper:link');
+        });
 
         if (confirm('Run database migrations and seeders?')) {
-            $this->setupDatabase();
+            $this->newLine();
+
+            $this->task('Running database migrations', function (): void {
+                $this->callSilently('migrate');
+            });
+
+            $this->task('Seeding domain data', function (): void {
+                $this->callSilently('db:seed', ['--class' => ShopperSeeder::class]);
+            });
+
+            $this->task('Seeding roles and permissions', function (): void {
+                $this->callSilently('db:seed', ['--class' => AuthTableSeeder::class]);
+            });
         }
 
-        $this->completeSetup();
+        $this->renderSuccess();
+    }
 
-        if (! $this->option('no-interaction')) {
-            (new Thanks($this->output))();
+    private function task(string $title, Closure $callback): void
+    {
+        spin(callback: $callback, message: $title);
+
+        $width = 52;
+        $dots = str_repeat('.', max(1, $width - mb_strlen($title)));
+
+        $this->output->writeln("  <fg=#94A3B8>{$title}</> <fg=#334155>{$dots}</> <fg=#22C55E>✓</>");
+    }
+
+    private function renderLogo(): void
+    {
+        $lines = [
+            '  ███████╗ ██╗  ██╗  ██████╗  ██████╗  ██████╗  ███████╗ ██████╗',
+            '  ██╔════╝ ██║  ██║ ██╔═══██╗ ██╔══██╗ ██╔══██╗ ██╔════╝ ██╔══██╗',
+            '  ███████╗ ███████║ ██║   ██║ ██████╔╝ ██████╔╝ █████╗   ██████╔╝',
+            '  ╚════██║ ██╔══██║ ██║   ██║ ██╔═══╝  ██╔═══╝  ██╔══╝   ██╔══██╗',
+            '  ███████║ ██║  ██║ ╚██████╔╝ ██║      ██║      ███████╗ ██║  ██║',
+            '  ╚══════╝ ╚═╝  ╚═╝  ╚═════╝  ╚═╝      ╚═╝      ╚══════╝ ╚═╝  ╚═╝',
+        ];
+
+        $colors = ['#1E40AF', '#2563EB', '#3B82F6', '#60A5FA', '#93C5FD', '#BFDBFE'];
+
+        $this->newLine();
+
+        foreach ($lines as $index => $line) {
+            $color = $colors[$index];
+            $this->line("<fg={$color}>{$line}</>");
         }
     }
 
-    protected function setupDatabase(): void
+    private function renderSuccess(): void
     {
-        $this->components->info('Migrating the database tables into your application...');
-        $this->call('migrate');
-
-        $this->progressBar->advance();
-
-        $this->components->info('Seeding domain data...');
-        $this->call('db:seed', ['--class' => ShopperSeeder::class]);
-
-        $this->components->info('Seeding roles and permissions...');
-        $this->call('db:seed', ['--class' => AuthTableSeeder::class]);
-
-        $this->progressBar->advance();
-
-        usleep(350000);
-
-        $this->progressBar->finish();
-    }
-
-    protected function completeSetup(): void
-    {
-        $this->progressBar->finish();
-
-        $this->components->info("
-                                      ,@@@@@@@,
-                              ,,,.   ,@@@@@@/@@,  .oo8888o.
-                           ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o
-                          ,%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'
-                          %&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'
-                          %&&%/ %&%%&&@@\\ V /@@' `88\\8 `/88'
-                          `&%\\ ` /%&'    |.|        \\ '|8'
-                              |o|        | |         | |
-                              |.|        | |         | |
-       ======================== Installation Complete 🚀 ======================
-        ");
-
-        $this->comment('Before creating an admin user, add the InteractsWithShopper trait to your User model.');
-        $this->comment("To create a user, run 'php artisan shopper:user'");
-    }
-
-    protected function introMessage(): void
-    {
-        note($this->shopperLogo());
-        intro('✦ Shopper :: Install ✦');
-    }
-
-    private function shopperLogo(): string
-    {
-        return
-            <<<'HEADER'
-            ███████╗ ██╗  ██╗  ██████╗  ██████╗  ██████╗  ███████╗ ██████╗
-            ██╔════╝ ██║  ██║ ██╔═══██╗ ██╔══██╗ ██╔══██╗ ██╔════╝ ██╔══██╗
-            ███████╗ ███████║ ██║   ██║ ██████╔╝ ██████╔╝ █████╗   ██████╔╝
-            ╚════██║ ██╔══██║ ██║   ██║ ██╔═══╝  ██╔═══╝  ██╔══╝   ██╔══██╗
-            ███████║ ██║  ██║ ╚██████╔╝ ██║      ██║      ███████╗ ██║  ██║
-            ╚══════╝ ╚═╝  ╚═╝  ╚═════╝  ╚═╝      ╚═╝      ╚══════╝ ╚═╝  ╚═╝
-            HEADER;
+        $this->newLine();
+        $this->line('  <fg=#22C55E;options=bold>✓ Shopper has been installed successfully!</>');
+        $this->newLine();
+        $this->line('  <fg=#475569>Next steps:</>');
+        $this->newLine();
+        $this->line('  <fg=#3B82F6>→</> Add <options=bold>InteractsWithShopper</> to your <options=bold>User</> model');
+        $this->line('  <fg=#3B82F6>→</> Run <fg=#60A5FA>php artisan shopper:user</> to create your first admin');
+        $prefix = config('shopper.admin.prefix', 'cpanel');
+        $adminUrl = mb_rtrim(config('app.url'), '/').'/'.$prefix;
+        $this->line("  <fg=#3B82F6>→</> Visit <fg=#60A5FA>{$adminUrl}</> to access the panel");
+        $this->newLine();
+        $this->line('  ⭐ Star us on GitHub: <fg=#3B82F6>https://github.com/shopperlabs/shopper</>');
+        $this->newLine();
     }
 }

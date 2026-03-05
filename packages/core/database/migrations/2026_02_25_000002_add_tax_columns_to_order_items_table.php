@@ -20,11 +20,4 @@ return new class extends Migration
                 ->default(0);
         });
     }
-
-    public function down(): void
-    {
-        Schema::table($this->getTableName('order_items'), static function (Blueprint $table): void {
-            $table->dropColumn(['tax_amount', 'discount_amount']);
-        });
-    }
 };

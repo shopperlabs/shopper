@@ -15,12 +15,4 @@ return new class extends Migration
             $table->index(['status', 'created_at']);
         });
     }
-
-    public function down(): void
-    {
-        Schema::table($this->getTableName('orders'), static function (Blueprint $table): void {
-            $table->dropIndex(['payment_status', 'currency_code', 'created_at']);
-            $table->dropIndex(['status', 'created_at']);
-        });
-    }
 };
