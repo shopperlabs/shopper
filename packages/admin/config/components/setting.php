@@ -27,6 +27,7 @@ return [
         'team-roles' => Pages\Settings\Team\RolePermission::class,
         'zones' => Pages\Settings\Zones::class,
         'taxes' => Pages\Settings\Taxes::class,
+        'currencies' => Pages\Settings\Currencies::class,
     ],
 
     /*

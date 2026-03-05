@@ -22,6 +22,8 @@ return [
     'zone_description' => 'Gestiona envío, pago y cumplimiento a través de zonas',
     'tax' => 'Impuestos',
     'tax_description' => 'Gestiona cómo tu tienda cobra impuestos.',
+    'currency' => 'Divisas',
+    'currency_description' => 'Activa divisas y gestiona los tipos de cambio.',
     'sales' => 'Canales de venta',
     'sales_description' => 'Gestiona los canales en línea y fuera de línea en los que vendes productos.',
 

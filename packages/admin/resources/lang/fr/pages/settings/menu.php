@@ -22,6 +22,8 @@ return [
     'zone_description' => "Gérer l'expédition, le paiement et l'exécution dans toutes les zones",
     'tax' => 'Tax',
     'tax_description' => 'Gérez la façon dont votre boutique facture les taxes.',
+    'currency' => 'Devises',
+    'currency_description' => 'Activez les devises et gérez les taux de change.',
     'sales' => 'Cannaux de vente',
     'sales_description' => 'Gérez les canaux en ligne et hors ligne sur lesquels vous vendez vos produits.',
 
