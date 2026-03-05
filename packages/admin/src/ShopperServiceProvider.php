@@ -43,10 +43,10 @@ final class ShopperServiceProvider extends PackageServiceProvider
     protected array $configFiles = [
         'addons',
         'admin',
-        // 'media',
-        // 'models',
         'auth',
         'features',
+        'media',
+        // 'models',
         'routes',
         'settings',
     ];

@@ -43,7 +43,6 @@ final class CoreServiceProvider extends PackageServiceProvider
     /** @var string[] */
     protected array $configFiles = [
         'core',
-        'media',
         'models',
         'orders',
     ];
