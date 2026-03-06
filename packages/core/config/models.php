@@ -99,7 +99,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Channel Model
+    | Inventory Model
     |--------------------------------------------------------------------------
     |
     | Eloquent model should be used to interact with inventories.
@@ -112,7 +112,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Channel Model
+    | Order Model
     |--------------------------------------------------------------------------
     |
     | Eloquent model should be used to interact with your orders.
