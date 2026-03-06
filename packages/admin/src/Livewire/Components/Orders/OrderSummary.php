@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Orders;
 
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\TaxZone;
@@ -15,6 +16,7 @@ class OrderSummary extends Component
 {
     public Order $order;
 
+    #[On('order.updated')]
     public function render(): View
     {
         $this->order->loadMissing(['shippingOption.carrier', 'paymentMethod', 'items', 'zone.countries']);
