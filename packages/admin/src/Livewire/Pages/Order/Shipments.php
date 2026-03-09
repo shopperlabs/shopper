@@ -193,7 +193,7 @@ class Shipments extends AbstractPageComponent implements HasActions, HasForms, H
             ->filters([
                 SelectFilter::make('status')
                     ->label(__('shopper::forms.label.status'))
-                    ->options(ShipmentStatus::class)
+                    ->options(ShipmentStatus::options())
                     ->multiple(),
                 SelectFilter::make('order_id')
                     ->label(__('shopper::pages/orders.order_number'))

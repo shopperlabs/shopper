@@ -71,7 +71,7 @@ class AttributeForm extends SlideOverComponent implements HasActions, HasForms
                     ->unique(table: Attribute::class, column: 'slug', ignoreRecord: true),
                 Select::make('type')
                     ->label(__('shopper::forms.label.type'))
-                    ->options(FieldType::class)
+                    ->options(FieldType::options())
                     ->required()
                     ->native(false),
                 IconPicker::make('icon')

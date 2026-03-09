@@ -21,7 +21,7 @@ final class StatCards extends Component
     #[Computed]
     public function cards(): array
     {
-        return Cache::flexible('dashboard:stat-cards', [300, 1800], function () {
+        return Cache::flexible('dashboard:stat-cards:'.app()->getLocale(), [300, 1800], function () {
             $now = Carbon::now();
             $currency = shopper_currency();
 

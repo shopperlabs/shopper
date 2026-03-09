@@ -70,7 +70,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
             ->filters([
                 SelectFilter::make('type')
                     ->label(__('shopper::pages/collections.filter_type'))
-                    ->options(CollectionType::class),
+                    ->options(CollectionType::options()),
                 SelectFilter::make('zones')
                     ->label(__('shopper::pages/settings/zones.title'))
                     ->relationship('zones', 'name')

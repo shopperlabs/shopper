@@ -88,7 +88,7 @@ class AddProduct extends SlideOverComponent implements HasActions, HasForms
                         ->icon(Untitledui::Dataflow04)
                         ->schema([
                             RadioDeck::make('type')
-                                ->options(ProductType::class)
+                                ->options(ProductType::options())
                                 ->descriptions([
                                     ProductType::Virtual->value => __('shopper-core::enum/product.virtual_description'),
                                     ProductType::External->value => __('shopper-core::enum/product.external_description'),

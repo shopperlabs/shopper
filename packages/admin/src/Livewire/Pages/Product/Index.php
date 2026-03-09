@@ -165,7 +165,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->constraints([
                         TextConstraint::make('name'),
                         SelectConstraint::make('type')
-                            ->options(ProductType::class)
+                            ->options(ProductType::options())
                             ->multiple(),
                         BooleanConstraint::make('is_visible')
                             ->label(__('shopper::forms.label.availability')),

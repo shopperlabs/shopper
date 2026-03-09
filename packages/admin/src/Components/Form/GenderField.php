@@ -14,7 +14,7 @@ final class GenderField
     {
         return Select::make('gender')
             ->label(__('shopper::forms.label.gender'))
-            ->options(GenderType::class)
-            ->default(GenderType::Female);
+            ->options(GenderType::options())
+            ->default(GenderType::Female->value);
     }
 }

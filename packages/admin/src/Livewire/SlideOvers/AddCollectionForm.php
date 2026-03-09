@@ -76,7 +76,7 @@ class AddCollectionForm extends SlideOverComponent implements HasActions, HasFor
                         Radio::make('type')
                             ->label(__('shopper::pages/collections.filter_type'))
                             ->required()
-                            ->options(CollectionType::class),
+                            ->options(CollectionType::options()),
                         Select::make('zones')
                             ->label(__('shopper::pages/settings/zones.title'))
                             ->relationship('zones', 'name')

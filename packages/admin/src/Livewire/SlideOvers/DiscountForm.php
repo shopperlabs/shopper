@@ -120,7 +120,7 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasForms
                             ->label(__('shopper::forms.label.type'))
                             ->inline()
                             ->inlineLabel(false)
-                            ->options(DiscountType::class)
+                            ->options(DiscountType::options())
                             ->required()
                             ->live(),
                         Grid::make()
@@ -141,15 +141,15 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasForms
                                 TextInput::make('value')
                                     ->label(
                                         fn (Get $get): ?string => match ($get('type')) {
-                                            DiscountType::Percentage => __('shopper::pages/discounts.percentage'),
-                                            DiscountType::FixedAmount => __('shopper::pages/discounts.fixed_amount'),
+                                            DiscountType::Percentage->value => __('shopper::pages/discounts.percentage'),
+                                            DiscountType::FixedAmount->value => __('shopper::pages/discounts.fixed_amount'),
                                             default => null
                                         }
                                     )
                                     ->suffix(
                                         fn (Get $get): ?string => match ($get('type')) {
-                                            DiscountType::Percentage => '%',
-                                            DiscountType::FixedAmount => $get('zone_id')
+                                            DiscountType::Percentage->value => '%',
+                                            DiscountType::FixedAmount->value => $get('zone_id')
                                                 ? Zone::query()->find($get('zone_id'))->currency_code
                                                 : shopper_currency(),
                                             default => null
@@ -219,11 +219,12 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasForms
                             Blade))),
                         Radio::make('apply_to')
                             ->label(__('shopper::pages/discounts.applies_to'))
-                            ->options(DiscountApplyTo::class)
+                            ->options(DiscountApplyTo::options())
                             ->inline()
                             ->required()
                             ->live(),
                         Select::make('products')
+                            ->label(__('shopper::pages/discounts.select_products'))
                             ->options(
                                 resolve(Product::class)::query()
                                     ->scopes('publish')
@@ -236,18 +237,19 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasForms
                             ->optionsLimit(10)
                             ->minItems(1)
                             ->required(
-                                fn (Get $get): bool => $get('apply_to') === DiscountApplyTo::Products
+                                fn (Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value
                             )
                             ->visible(
-                                fn (Get $get): bool => $get('apply_to') === DiscountApplyTo::Products
+                                fn (Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value
                             ),
                         Radio::make('eligibility')
                             ->label(__('shopper::pages/discounts.customer_eligibility'))
                             ->inline()
-                            ->options(DiscountEligibility::class)
+                            ->options(DiscountEligibility::options())
                             ->required()
                             ->live(),
                         Select::make('customers')
+                            ->label(__('shopper::pages/discounts.select_customers'))
                             ->options(
                                 config('auth.providers.users.model')::query()
                                     ->scopes('customers')
@@ -260,16 +262,16 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasForms
                             ->optionsLimit(10)
                             ->minItems(1)
                             ->required(
-                                fn (Get $get): bool => $get('eligibility') === DiscountEligibility::Customers
+                                fn (Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value
                             )
                             ->visible(
-                                fn (Get $get): bool => $get('eligibility') === DiscountEligibility::Customers
+                                fn (Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value
                             ),
                         Radio::make('min_required')
                             ->label(__('shopper::pages/discounts.min_requirement'))
                             ->inline()
                             ->inlineLabel(false)
-                            ->options(DiscountRequirement::class)
+                            ->options(DiscountRequirement::options())
                             ->required()
                             ->live(),
                         TextInput::make('min_required_value')
@@ -277,18 +279,18 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasForms
                             ->numeric()
                             ->suffix(
                                 fn (Get $get): ?string => match ($get('min_required')) {
-                                    DiscountRequirement::Price => $get('zone_id')
+                                    DiscountRequirement::Price->value => $get('zone_id')
                                         ? Zone::query()->find($get('zone_id'))->currency_code
                                         : shopper_currency(),
                                     default => null
                                 }
                             )
                             ->required(
-                                fn (Get $get): bool => $get('min_required') !== DiscountRequirement::None
+                                fn (Get $get): bool => $get('min_required') !== DiscountRequirement::None->value
                             )
                             ->visible(function (Get $get): bool {
                                 if ($get('min_required')) {
-                                    return $get('min_required') !== DiscountRequirement::None;
+                                    return $get('min_required') !== DiscountRequirement::None->value;
                                 }
 
                                 return false;

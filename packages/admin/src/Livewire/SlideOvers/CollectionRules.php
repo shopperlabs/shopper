@@ -82,7 +82,7 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
                     ->schema([
                         Select::make('rule')
                             ->label(__('shopper::pages/collections.conditions.choose_rule'))
-                            ->options(Rule::class)
+                            ->options(Rule::options())
                             ->live()
                             ->afterStateUpdated(function (Select $component): void {
                                 $component->getContainer()->getComponent('operator')?->state(null);
@@ -92,13 +92,13 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
                         Select::make('operator')
                             ->key('operator')
                             ->label(__('shopper::pages/collections.conditions.select_operator'))
-                            ->options(fn (Get $get): array => collect($get('rule')?->allowedOperators() ?? [])
+                            ->options(fn (Get $get): array => collect(Rule::tryFrom($get('rule') ?? '')?->allowedOperators() ?? [])
                                 ->mapWithKeys(fn (Operator $op): array => [$op->value => $op->getLabel()])
                                 ->all())
                             ->required(),
                         DatePicker::make('date_value')
                             ->label(__('shopper::forms.label.value'))
-                            ->visible(fn (Get $get): bool => $get('rule')?->isDate() ?? false)
+                            ->visible(fn (Get $get): bool => Rule::tryFrom($get('rule') ?? '')?->isDate() ?? false)
                             ->native(false),
                         Select::make('boolean_value')
                             ->label(__('shopper::forms.label.value'))
@@ -106,11 +106,11 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
                                 '1' => __('shopper::forms.label.yes'),
                                 '0' => __('shopper::forms.label.no'),
                             ])
-                            ->visible(fn (Get $get): bool => $get('rule')?->isBoolean() ?? false),
+                            ->visible(fn (Get $get): bool => Rule::tryFrom($get('rule') ?? '')?->isBoolean() ?? false),
                         TextInput::make('value')
                             ->label(__('shopper::forms.label.value'))
-                            ->numeric(fn (Get $get): bool => $get('rule')?->isNumeric() ?? false)
-                            ->visible(fn (Get $get): bool => ! ($get('rule')?->isDate() ?? false) && ! ($get('rule')?->isBoolean() ?? false)),
+                            ->numeric(fn (Get $get): bool => Rule::tryFrom($get('rule') ?? '')?->isNumeric() ?? false)
+                            ->visible(fn (Get $get): bool => ! (Rule::tryFrom($get('rule') ?? '')?->isDate() ?? false) && ! (Rule::tryFrom($get('rule') ?? '')?->isBoolean() ?? false)),
                     ])
                     ->columns(3)
                     ->defaultItems(1),

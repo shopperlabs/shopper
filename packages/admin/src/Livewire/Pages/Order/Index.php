@@ -225,15 +225,15 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->preload(),
                 SelectFilter::make('status')
                     ->label(__('shopper::forms.label.status'))
-                    ->options(OrderStatus::class)
+                    ->options(OrderStatus::options())
                     ->multiple(),
                 SelectFilter::make('payment_status')
                     ->label(__('shopper::forms.label.payment_status'))
-                    ->options(PaymentStatus::class)
+                    ->options(PaymentStatus::options())
                     ->multiple(),
                 SelectFilter::make('shipping_status')
                     ->label(__('shopper::forms.label.shipping_status'))
-                    ->options(ShippingStatus::class)
+                    ->options(ShippingStatus::options())
                     ->multiple(),
                 Filter::make('created_at')
                     ->label(__('shopper::words.date'))
