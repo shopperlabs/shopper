@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopper\Actions\Store;
 
+use Shopper\Core\Enum\DiscountApplyTo;
+use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
 use Shopper\Jobs\AttachedDiscountToCustomers;
 use Shopper\Jobs\AttachedDiscountToProducts;
@@ -28,14 +30,17 @@ final readonly class SaveAndDispatchDiscountAction
             $discount = Discount::query()->create($values);
         }
 
+        $applyTo = data_get($values, 'apply_to');
+        $eligibility = data_get($values, 'eligibility');
+
         AttachedDiscountToProducts::dispatch(
-            data_get($values, 'apply_to'),
+            $applyTo instanceof DiscountApplyTo ? $applyTo : DiscountApplyTo::from($applyTo),
             $productsIds,
             $discount,
         );
 
         AttachedDiscountToCustomers::dispatch(
-            data_get($values, 'eligibility'),
+            $eligibility instanceof DiscountEligibility ? $eligibility : DiscountEligibility::from($eligibility),
             $customersIds,
             $discount,
         );
