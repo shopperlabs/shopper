@@ -16,6 +16,8 @@
                 <div class="flex space-x-3">
                     {{ $this->deleteAction }}
 
+                    {{ $this->generatePermissionsAction }}
+
                     {{ $this->createPermissionAction }}
                 </div>
             </x-slot>
