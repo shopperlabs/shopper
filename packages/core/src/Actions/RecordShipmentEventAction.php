@@ -53,7 +53,13 @@ final class RecordShipmentEventAction
             ->where('fulfillment_status', FulfillmentStatus::Pending)
             ->update(['fulfillment_status' => FulfillmentStatus::Shipped]);
 
-        (new SyncOrderShippingStatusAction)->execute($shipment->order);
+        $order = $shipment->order;
+
+        if ($order->status === OrderStatus::New) {
+            $order->update(['status' => OrderStatus::Processing]);
+        }
+
+        (new SyncOrderShippingStatusAction)->execute($order);
     }
 
     private function onDelivered(OrderShipping $shipment, OrderShippingEvent $event): void
