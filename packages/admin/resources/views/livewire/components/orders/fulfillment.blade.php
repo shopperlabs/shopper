@@ -12,11 +12,11 @@
                             <img
                                 src="{{ $country->svg_flag }}"
                                 class="size-4 rounded-full object-cover object-center"
-                                alt="{{ $country->name }}"
+                                alt="{{ $country->translated_name }}"
                             />
                             <span class="text-gray-500 dark:text-gray-400">
-                            {{ $country->cca2 }}, {{ $country->name }}
-                        </span>
+                                {{ $country->cca2 }}, {{ $country->translated_name }}
+                            </span>
                         @elseif ($shippingAddress->country_name)
                             <span class="text-gray-500 dark:text-gray-400">
                                 {{ $shippingAddress->country_name }}

@@ -10,7 +10,7 @@
                     <div class="flex items-center gap-3">
                         <img
                             src="{{ $taxZone->country->svg_flag }}"
-                            alt="{{ $taxZone->country->name }}"
+                            alt="{{ $taxZone->country->translated_name }}"
                             class="size-6 shrink-0 rounded-full object-cover"
                         />
                         <x-filament::section.heading class="font-heading font-semibold text-gray-950 dark:text-white">
@@ -28,7 +28,7 @@
                 <x-shopper::description-list.item
                     icon="phosphor-globe-hemisphere-west"
                     :heading="__('shopper::forms.label.country')"
-                    :content="$taxZone->country->name"
+                    :content="$taxZone->country->translated_name"
                 />
                 @if ($taxZone->province_code)
                     <x-shopper::description-list.item

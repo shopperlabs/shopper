@@ -59,7 +59,7 @@ class Zone extends Model implements ZoneContract
 
     public function countriesName(): Attribute
     {
-        $countries = $this->countries->pluck('name')->toArray();
+        $countries = $this->countries->pluck('translated_name')->toArray();
 
         return Attribute::make(
             get: fn (): string => count($countries)

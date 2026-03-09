@@ -159,7 +159,7 @@
                                 @endif
                                 <p>{{ $shippingAddress->city }} {{ $shippingAddress->postal_code }}</p>
                                 @if ($shippingAddress->country)
-                                    <p>{{ $shippingAddress->country->name }}</p>
+                                    <p>{{ $shippingAddress->country->translated_name }}</p>
                                 @endif
                                 @if ($shippingAddress->phone)
                                     <p>{{ $shippingAddress->phone }}</p>
@@ -181,7 +181,7 @@
                                 @endif
                                 <p>{{ $billingAddress->city }} {{ $billingAddress->postal_code }}</p>
                                 @if ($billingAddress->country)
-                                    <p>{{ $billingAddress->country->name }}</p>
+                                    <p>{{ $billingAddress->country->translated_name }}</p>
                                 @endif
                             </div>
                         </div>

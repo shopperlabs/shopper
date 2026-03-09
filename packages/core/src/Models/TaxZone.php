@@ -100,7 +100,7 @@ class TaxZone extends Model implements TaxZoneContract
     protected function displayName(): Attribute
     {
         return Attribute::get(function (): string {
-            $countryName = $this->country->name;
+            $countryName = $this->country->translated_name;
 
             if ($this->name) {
                 return $countryName.' — '.$this->name;

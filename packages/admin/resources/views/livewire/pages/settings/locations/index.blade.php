@@ -65,10 +65,10 @@
                                                 >
                                                     <img
                                                         src="{{ $inventory->country->svg_flag }}"
-                                                        alt="{{ $inventory->country->name }} flag"
+                                                        alt="{{ $inventory->country->translated_name }} flag"
                                                         class="size-5 shrink-0 rounded-full object-cover"
                                                     />
-                                                    {{ $inventory->country->name }}
+                                                    {{ $inventory->country->translated_name }}
                                                 </div>
                                             @endif
 

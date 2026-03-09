@@ -61,7 +61,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                 TextColumn::make('country')
                     ->label(__('shopper::forms.label.country'))
                     ->getStateUsing(
-                        fn (ShopperUser $record): ?string => $record->addresses->first()?->country?->name // @phpstan-ignore-line
+                        fn (ShopperUser $record): ?string => $record->addresses->first()?->country?->translated_name // @phpstan-ignore-line
                     ),
                 TextColumn::make('orders_count')
                     ->counts([

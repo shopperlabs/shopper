@@ -54,7 +54,7 @@
                                 <span id="tax-zone-{{ $taxZone->id }}-label" class="flex items-center gap-x-2">
                                     <img
                                         src="{{ $taxZone->country->svg_flag }}"
-                                        alt="{{ $taxZone->country->name }}"
+                                        alt="{{ $taxZone->country->translated_name }}"
                                         class="size-5 shrink-0 rounded-full object-cover"
                                     />
                                     <span

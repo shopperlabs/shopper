@@ -35,7 +35,7 @@
                                             class="size-4 rounded-full object-cover object-center"
                                             alt="Country flag"
                                         />
-                                        {{ $address->country->name }}
+                                        {{ $address->country->translated_name }}
                                     </span>
                                 @endif
 
