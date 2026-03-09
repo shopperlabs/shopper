@@ -30,7 +30,6 @@ return [
         'order-fulfillment' => Livewire\Components\Orders\Fulfillment::class,
         'order-items' => Livewire\Components\Orders\OrderItems::class,
         'order-notes' => Livewire\Components\Orders\OrderNotes::class,
-        'order-shipment-timeline' => Livewire\Components\Orders\ShipmentTimeline::class,
         'order-summary' => Livewire\Components\Orders\OrderSummary::class,
 
         'slide-overs.create-shipping-label' => Livewire\SlideOvers\CreateShippingLabel::class,
