@@ -34,6 +34,7 @@ class Fulfillment extends Component
     }
 
     #[On('order.updated')]
+    #[On('order.shipping.created')]
     public function render(): View
     {
         $this->order->loadMissing('shippingAddress');

@@ -133,7 +133,7 @@ class ShipmentDetail extends SlideOverComponent implements HasActions, HasForms
                 $this->dispatch('shipment-updated');
 
                 Notification::make()
-                    ->body(__('shopper::pages/orders.shipment.event_added'))
+                    ->title(__('shopper::pages/orders.shipment.event_added'))
                     ->success()
                     ->send();
             });

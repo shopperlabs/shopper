@@ -254,6 +254,7 @@
                                             'bg-indigo-100 dark:bg-indigo-900' => $event->status->getColor() === 'indigo',
                                             'bg-yellow-100 dark:bg-yellow-900' => $event->status->getColor() === 'warning',
                                             'bg-green-100 dark:bg-green-900' => $event->status->getColor() === 'green',
+                                            'bg-success-100 dark:bg-success-900' => $event->status->getColor() === 'success',
                                             'bg-red-100 dark:bg-red-900' => $event->status->getColor() === 'danger',
                                             'bg-gray-100 dark:bg-gray-800' => $event->status->getColor() === 'gray',
                                         ])
