@@ -20,6 +20,7 @@ use Shopper\Core\Models\Traits\HasZones;
  * @property-read string $cca3
  * @property-read string $cca2
  * @property-read string $flag
+ * @property-read string $translated_name
  * @property-read string $svg_flag
  * @property-read float $latitude
  * @property-read float $longitude
@@ -58,6 +59,24 @@ class Country extends Model implements CountryContract
             'phone_calling_code' => 'array',
             'currencies' => 'array',
         ];
+    }
+
+    protected function translatedName(): Attribute
+    {
+        return Attribute::get(function (): string {
+            static $cache = [];
+
+            $locale = app()->getLocale();
+
+            if (! isset($cache[$locale])) {
+                $path = __DIR__.'/../../resources/lang/countries/'.$locale.'.json';
+                $cache[$locale] = file_exists($path)
+                    ? json_decode(file_get_contents($path), true)
+                    : [];
+            }
+
+            return $cache[$locale][$this->cca2] ?? $this->attributes['name'];
+        });
     }
 
     protected function svgFlag(): Attribute
