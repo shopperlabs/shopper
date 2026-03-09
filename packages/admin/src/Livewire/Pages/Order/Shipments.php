@@ -180,9 +180,10 @@ class Shipments extends AbstractPageComponent implements HasActions, HasForms, H
                             ->send();
                     }),
                 Action::make('view')
-                    ->label(__('shopper::words.details'))
-                    ->icon(Untitledui::Eye)
+                    ->label(__('shopper::pages/orders.shipment.manage'))
+                    ->icon(Untitledui::Sliders)
                     ->iconButton()
+                    ->tooltip(__('shopper::pages/orders.shipment.manage'))
                     ->action(fn (OrderShipping $record) => $this->dispatch(
                         'openPanel',
                         component: 'shopper-slide-overs.shipment-detail',

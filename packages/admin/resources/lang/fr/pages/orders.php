@@ -58,6 +58,7 @@ return [
         'shipping_from' => 'Expéditeur',
         'shipping_to' => 'Destinataire',
         'timeline' => 'Suivi de livraison',
+        'manage' => "Gérer l'expédition",
         'add_event' => 'Ajouter un événement',
         'location' => 'Localisation',
         'latitude' => 'Latitude',

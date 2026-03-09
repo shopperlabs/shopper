@@ -58,6 +58,7 @@ return [
         'shipping_from' => 'From',
         'shipping_to' => 'To',
         'timeline' => 'Shipment Timeline',
+        'manage' => 'Manage shipment',
         'add_event' => 'Add event',
         'location' => 'Location',
         'latitude' => 'Latitude',
