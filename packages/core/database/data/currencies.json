@@ -1,0 +1,950 @@
+{
+  "AED": {
+    "name": "UAE Dirham",
+    "symbol": "دإ‏",
+    "format": "دإ‏ 1,0.00",
+    "exchange_rate": 0
+  },
+  "AFN": {
+    "name": "Afghanistan, Afghani",
+    "symbol": "؋",
+    "format": "؋1,0.00",
+    "exchange_rate": 0
+  },
+  "ALL": {
+    "name": "Albania, Lek",
+    "symbol": "Lek",
+    "format": "1,0.00Lek",
+    "exchange_rate": 0
+  },
+  "AMD": {
+    "name": "Armenian Dram",
+    "symbol": "&#1423;",
+    "format": "1,0.00 &#1423;",
+    "exchange_rate": 0
+  },
+  "ANG": {
+    "name": "Netherlands Antillian Guilder",
+    "symbol": "ƒ",
+    "format": "ƒ1,0.00",
+    "exchange_rate": 0
+  },
+  "AOA": {
+    "name": "Angola, Kwanza",
+    "symbol": "Kz",
+    "format": "Kz1,0.00",
+    "exchange_rate": 0
+  },
+  "ARS": {
+    "name": "Argentine Peso",
+    "symbol": "$",
+    "format": "$ 1,0.00",
+    "exchange_rate": 0
+  },
+  "AUD": {
+    "name": "Australian Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "AWG": {
+    "name": "Aruban Guilder",
+    "symbol": "ƒ",
+    "format": "ƒ1,0.00",
+    "exchange_rate": 0
+  },
+  "AZN": {
+    "name": "Azerbaijanian Manat",
+    "symbol": "₼",
+    "format": "1 0,00 ₼",
+    "exchange_rate": 0
+  },
+  "BAM": {
+    "name": "Bosnia and Herzegovina, Convertible Marks",
+    "symbol": "КМ",
+    "format": "1,0.00 КМ",
+    "exchange_rate": 0
+  },
+  "BBD": {
+    "name": "Barbados Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "BDT": {
+    "name": "Bangladesh, Taka",
+    "symbol": "৳",
+    "format": "৳ 1,0.",
+    "exchange_rate": 0
+  },
+  "BGN": {
+    "name": "Bulgarian Lev",
+    "symbol": "лв.",
+    "format": "1 0,00 лв.",
+    "exchange_rate": 0
+  },
+  "BHD": {
+    "name": "Bahraini Dinar",
+    "symbol": ".د.",
+    "format": ".د. 1,0.000",
+    "exchange_rate": 0
+  },
+  "BIF": {
+    "name": "Burundi Franc",
+    "symbol": "FBu",
+    "format": "1,0.FBu",
+    "exchange_rate": 0
+  },
+  "BMD": {
+    "name": "Bermudian Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "BND": {
+    "name": "Brunei Dollar",
+    "symbol": "$",
+    "format": "$1,0.",
+    "exchange_rate": 0
+  },
+  "BOB": {
+    "name": "Bolivia, Boliviano",
+    "symbol": "Bs",
+    "format": "Bs 1,0.00",
+    "exchange_rate": 0
+  },
+  "BRL": {
+    "name": "Brazilian Real",
+    "symbol": "R$",
+    "format": "R$ 1,0.00",
+    "exchange_rate": 0
+  },
+  "BSD": {
+    "name": "Bahamian Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "BTN": {
+    "name": "Bhutan, Ngultrum",
+    "symbol": "Nu.",
+    "format": "Nu. 1,0.0",
+    "exchange_rate": 0
+  },
+  "BWP": {
+    "name": "Botswana, Pula",
+    "symbol": "P",
+    "format": "P1,0.00",
+    "exchange_rate": 0
+  },
+  "BYN": {
+    "name": "Belarussian Ruble",
+    "symbol": "р.",
+    "format": "1 0,00 р.",
+    "exchange_rate": 0
+  },
+  "BZD": {
+    "name": "Belize Dollar",
+    "symbol": "BZ$",
+    "format": "BZ$1,0.00",
+    "exchange_rate": 0
+  },
+  "CAD": {
+    "name": "Canadian Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "CDF": {
+    "name": "Franc Congolais",
+    "symbol": "FC",
+    "format": "1,0.00FC",
+    "exchange_rate": 0
+  },
+  "CHF": {
+    "name": "Swiss Franc",
+    "symbol": "CHF",
+    "format": "1'0.00 CHF",
+    "exchange_rate": 0
+  },
+  "CLP": {
+    "name": "Chilean Peso",
+    "symbol": "$",
+    "format": "$ 1,0.00",
+    "exchange_rate": 0
+  },
+  "CNY": {
+    "name": "China Yuan Renminbi",
+    "symbol": "¥",
+    "format": "¥1,0.00",
+    "exchange_rate": 0
+  },
+  "COP": {
+    "name": "Colombian Peso",
+    "symbol": "$",
+    "format": "$ 1,0.00",
+    "exchange_rate": 0
+  },
+  "CRC": {
+    "name": "Costa Rican Colon",
+    "symbol": "₡",
+    "format": "₡1,0.00",
+    "exchange_rate": 0
+  },
+  "CUC": {
+    "name": "Cuban Convertible Peso",
+    "symbol": "CUC",
+    "format": "CUC1,0.00",
+    "exchange_rate": 0
+  },
+  "CUP": {
+    "name": "Cuban Peso",
+    "symbol": "$MN",
+    "format": "$MN1,0.00",
+    "exchange_rate": 0
+  },
+  "CVE": {
+    "name": "Cape Verde Escudo",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "CZK": {
+    "name": "Czech Koruna",
+    "symbol": "Kč",
+    "format": "1 0,00 Kč",
+    "exchange_rate": 0
+  },
+  "DJF": {
+    "name": "Djibouti Franc",
+    "symbol": "Fdj",
+    "format": "1,0.Fdj",
+    "exchange_rate": 0
+  },
+  "DKK": {
+    "name": "Danish Krone",
+    "symbol": "kr.",
+    "format": "1 0,00 kr.",
+    "exchange_rate": 0
+  },
+  "DOP": {
+    "name": "Dominican Peso",
+    "symbol": "RD$",
+    "format": "RD$1,0.00",
+    "exchange_rate": 0
+  },
+  "DZD": {
+    "name": "Algerian Dinar",
+    "symbol": "د.ج‏",
+    "format": "د.ج‏ 1,0.00",
+    "exchange_rate": 0
+  },
+  "EGP": {
+    "name": "Egyptian Pound",
+    "symbol": "ج.م",
+    "format": "ج.م 1,0.00",
+    "exchange_rate": 0
+  },
+  "ERN": {
+    "name": "Eritrea, Nakfa",
+    "symbol": "Nfk",
+    "format": "1,0.00Nfk",
+    "exchange_rate": 0
+  },
+  "ETB": {
+    "name": "Ethiopian Birr",
+    "symbol": "ETB",
+    "format": "ETB1,0.00",
+    "exchange_rate": 0
+  },
+  "EUR": {
+    "name": "Euro",
+    "symbol": "€",
+    "format": "1.0,00 €",
+    "exchange_rate": 0
+  },
+  "FJD": {
+    "name": "Fiji Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "FKP": {
+    "name": "Falkland Islands Pound",
+    "symbol": "£",
+    "format": "£1,0.00",
+    "exchange_rate": 0
+  },
+  "GBP": {
+    "name": "Pound Sterling",
+    "symbol": "£",
+    "format": "£1,0.00",
+    "exchange_rate": 0
+  },
+  "GEL": {
+    "name": "Georgia, Lari",
+    "symbol": "Lari",
+    "format": "1 0,00 Lari",
+    "exchange_rate": 0
+  },
+  "GHS": {
+    "name": "Ghana Cedi",
+    "symbol": "₵",
+    "format": "₵1,0.00",
+    "exchange_rate": 0
+  },
+  "GIP": {
+    "name": "Gibraltar Pound",
+    "symbol": "£",
+    "format": "£1,0.00",
+    "exchange_rate": 0
+  },
+  "GMD": {
+    "name": "Gambia, Dalasi",
+    "symbol": "D",
+    "format": "1,0.00D",
+    "exchange_rate": 0
+  },
+  "GNF": {
+    "name": "Guinean franc",
+    "symbol": "FG",
+    "format": "1,0.00FG",
+    "exchange_rate": 0
+  },
+  "GTQ": {
+    "name": "Guatemala, Quetzal",
+    "symbol": "Q",
+    "format": "Q1,0.00",
+    "exchange_rate": 0
+  },
+  "GYD": {
+    "name": "Guyana Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "HKD": {
+    "name": "Hong Kong Dollar",
+    "symbol": "HK$",
+    "format": "HK$1,0.00",
+    "exchange_rate": 0
+  },
+  "HNL": {
+    "name": "Honduras, Lempira",
+    "symbol": "L.",
+    "format": "L. 1,0.00",
+    "exchange_rate": 0
+  },
+  "HRK": {
+    "name": "Croatian Kuna",
+    "symbol": "kn",
+    "format": "1,0.00 kn",
+    "exchange_rate": 0
+  },
+  "HTG": {
+    "name": "Haiti, Gourde",
+    "symbol": "G",
+    "format": "G1,0.00",
+    "exchange_rate": 0
+  },
+  "HUF": {
+    "name": "Hungary, Forint",
+    "symbol": "Ft",
+    "format": "1 0,00 Ft",
+    "exchange_rate": 0
+  },
+  "IDR": {
+    "name": "Indonesia, Rupiah",
+    "symbol": "Rp",
+    "format": "Rp1,0.",
+    "exchange_rate": 0
+  },
+  "ILS": {
+    "name": "New Israeli Shekel",
+    "symbol": "₪",
+    "format": "₪ 1,0.00",
+    "exchange_rate": 0
+  },
+  "INR": {
+    "name": "Indian Rupee",
+    "symbol": "₹",
+    "format": "1,0.00₹",
+    "exchange_rate": 0
+  },
+  "IQD": {
+    "name": "Iraqi Dinar",
+    "symbol": "د.ع.‏",
+    "format": "د.ع.‏ 1,0.00",
+    "exchange_rate": 0
+  },
+  "IRR": {
+    "name": "Iranian Rial",
+    "symbol": "﷼",
+    "format": "﷼ 1,0\/00",
+    "exchange_rate": 0
+  },
+  "ISK": {
+    "name": "Iceland Krona",
+    "symbol": "kr.",
+    "format": "1,0. kr.",
+    "exchange_rate": 0
+  },
+  "JMD": {
+    "name": "Jamaican Dollar",
+    "symbol": "J$",
+    "format": "J$1,0.00",
+    "exchange_rate": 0
+  },
+  "JOD": {
+    "name": "Jordanian Dinar",
+    "symbol": "د.ا.‏",
+    "format": "د.ا.‏ 1,0.000",
+    "exchange_rate": 0
+  },
+  "JPY": {
+    "name": "Japan, Yen",
+    "symbol": "¥",
+    "format": "¥1,0.",
+    "exchange_rate": 0
+  },
+  "KES": {
+    "name": "Kenyan Shilling",
+    "symbol": "S",
+    "format": "S1,0.00",
+    "exchange_rate": 0
+  },
+  "KGS": {
+    "name": "Kyrgyzstan, Som",
+    "symbol": "сом",
+    "format": "1 0-00 сом",
+    "exchange_rate": 0
+  },
+  "KHR": {
+    "name": "Cambodia, Riel",
+    "symbol": "៛",
+    "format": "1,0.៛",
+    "exchange_rate": 0
+  },
+  "KMF": {
+    "name": "Comoro Franc",
+    "symbol": "CF",
+    "format": "1,0.00CF",
+    "exchange_rate": 0
+  },
+  "KPW": {
+    "name": "North Korean Won",
+    "symbol": "₩",
+    "format": "₩1,0.",
+    "exchange_rate": 0
+  },
+  "KRW": {
+    "name": "South Korea, Won",
+    "symbol": "₩",
+    "format": "₩1,0.",
+    "exchange_rate": 0
+  },
+  "KWD": {
+    "name": "Kuwaiti Dinar",
+    "symbol": "دينار‎‎‏",
+    "format": "دينار‎‎‏ 1,0.000",
+    "exchange_rate": 0
+  },
+  "KYD": {
+    "name": "Cayman Islands Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "KZT": {
+    "name": "Kazakhstan, Tenge",
+    "symbol": "₸",
+    "format": "₸1 0-00",
+    "exchange_rate": 0
+  },
+  "LAK": {
+    "name": "Laos, Kip",
+    "symbol": "₭",
+    "format": "1,0.₭",
+    "exchange_rate": 0
+  },
+  "LBP": {
+    "name": "Lebanese Pound",
+    "symbol": "ل.ل.‏",
+    "format": "ل.ل.‏ 1,0.00",
+    "exchange_rate": 0
+  },
+  "LKR": {
+    "name": "Sri Lanka Rupee",
+    "symbol": "₨",
+    "format": "₨ 1,0.",
+    "exchange_rate": 0
+  },
+  "LRD": {
+    "name": "Liberian Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "LSL": {
+    "name": "Lesotho, Loti",
+    "symbol": "M",
+    "format": "1,0.00M",
+    "exchange_rate": 0
+  },
+  "LYD": {
+    "name": "Libyan Dinar",
+    "symbol": "د.ل.‏",
+    "format": "د.ل.‏1,0.000",
+    "exchange_rate": 0
+  },
+  "MAD": {
+    "name": "Moroccan Dirham",
+    "symbol": "د.م.‏",
+    "format": "د.م.‏ 1,0.00",
+    "exchange_rate": 0
+  },
+  "MDL": {
+    "name": "Moldovan Leu",
+    "symbol": "lei",
+    "format": "1,0.00 lei",
+    "exchange_rate": 0
+  },
+  "MGA": {
+    "name": "Malagasy Ariary",
+    "symbol": "Ar",
+    "format": "Ar1,0.",
+    "exchange_rate": 0
+  },
+  "MKD": {
+    "name": "Macedonia, Denar",
+    "symbol": "ден.",
+    "format": "1,0.00 ден.",
+    "exchange_rate": 0
+  },
+  "MMK": {
+    "name": "Myanmar, Kyat",
+    "symbol": "K",
+    "format": "K1,0.00",
+    "exchange_rate": 0
+  },
+  "MNT": {
+    "name": "Mongolia, Tugrik",
+    "symbol": "₮",
+    "format": "₮1 0,00",
+    "exchange_rate": 0
+  },
+  "MOP": {
+    "name": "Macao, Pataca",
+    "symbol": "MOP$",
+    "format": "MOP$1,0.00",
+    "exchange_rate": 0
+  },
+  "MRU": {
+    "name": "Mauritania, Ouguiya",
+    "symbol": "UM",
+    "format": "1,0.00UM",
+    "exchange_rate": 0
+  },
+  "MTL": {
+    "name": "Maltese Lira",
+    "symbol": "₤",
+    "format": "₤1,0.00",
+    "exchange_rate": 0
+  },
+  "MUR": {
+    "name": "Mauritius Rupee",
+    "symbol": "₨",
+    "format": "₨1,0.00",
+    "exchange_rate": 0
+  },
+  "MVR": {
+    "name": "Maldives, Rufiyaa",
+    "symbol": "MVR",
+    "format": "1,0.0 MVR",
+    "exchange_rate": 0
+  },
+  "MWK": {
+    "name": "Malawi, Kwacha",
+    "symbol": "MK",
+    "format": "MK1,0.00",
+    "exchange_rate": 0
+  },
+  "MXN": {
+    "name": "Mexican Peso",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "MYR": {
+    "name": "Malaysian Ringgit",
+    "symbol": "RM",
+    "format": "RM1,0.00",
+    "exchange_rate": 0
+  },
+  "MZN": {
+    "name": "Mozambique Metical",
+    "symbol": "MT",
+    "format": "MT1,0.",
+    "exchange_rate": 0
+  },
+  "NAD": {
+    "name": "Namibian Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "NGN": {
+    "name": "Nigeria, Naira",
+    "symbol": "₦",
+    "format": "₦1,0.00",
+    "exchange_rate": 0
+  },
+  "NIO": {
+    "name": "Nicaragua, Cordoba Oro",
+    "symbol": "C$",
+    "format": "C$ 1,0.00",
+    "exchange_rate": 0
+  },
+  "NOK": {
+    "name": "Norwegian Krone",
+    "symbol": "kr",
+    "format": "1.0,00 kr",
+    "exchange_rate": 0
+  },
+  "NPR": {
+    "name": "Nepalese Rupee",
+    "symbol": "₨",
+    "format": "₨1,0.00",
+    "exchange_rate": 0
+  },
+  "NZD": {
+    "name": "New Zealand Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "OMR": {
+    "name": "Rial Omani",
+    "symbol": "﷼",
+    "format": "﷼ 1,0.000",
+    "exchange_rate": 0
+  },
+  "PAB": {
+    "name": "Panama, Balboa",
+    "symbol": "B\/.",
+    "format": "B\/. 1,0.00",
+    "exchange_rate": 0
+  },
+  "PEN": {
+    "name": "Peru, Nuevo Sol",
+    "symbol": "S\/.",
+    "format": "S\/. 1,0.00",
+    "exchange_rate": 0
+  },
+  "PGK": {
+    "name": "Papua New Guinea, Kina",
+    "symbol": "K",
+    "format": "K1,0.00",
+    "exchange_rate": 0
+  },
+  "PHP": {
+    "name": "Philippine Peso",
+    "symbol": "₱",
+    "format": "₱1,0.00",
+    "exchange_rate": 0
+  },
+  "PKR": {
+    "name": "Pakistan Rupee",
+    "symbol": "₨",
+    "format": "₨1,0.00",
+    "exchange_rate": 0
+  },
+  "PLN": {
+    "name": "Poland, Zloty",
+    "symbol": "zł",
+    "format": "1 0,00 zł",
+    "exchange_rate": 0
+  },
+  "PYG": {
+    "name": "Paraguay, Guarani",
+    "symbol": "₲",
+    "format": "₲ 1,0.00",
+    "exchange_rate": 0
+  },
+  "QAR": {
+    "name": "Qatari Rial",
+    "symbol": "﷼",
+    "format": "﷼ 1,0.00",
+    "exchange_rate": 0
+  },
+  "RON": {
+    "name": "Romania, New Leu",
+    "symbol": "lei",
+    "format": "1,0.00 lei",
+    "exchange_rate": 0
+  },
+  "RSD": {
+    "name": "Serbian Dinar",
+    "symbol": "Дин.",
+    "format": "1,0.00 Дин.",
+    "exchange_rate": 0
+  },
+  "RUB": {
+    "name": "Russian Ruble",
+    "symbol": "₽",
+    "format": "1 0,00 ₽",
+    "exchange_rate": 0
+  },
+  "RWF": {
+    "name": "Rwanda Franc",
+    "symbol": "RWF",
+    "format": "RWF 1 0,00",
+    "exchange_rate": 0
+  },
+  "SAR": {
+    "name": "Saudi Riyal",
+    "symbol": "﷼",
+    "format": "﷼ 1,0.00",
+    "exchange_rate": 0
+  },
+  "SBD": {
+    "name": "Solomon Islands Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "SCR": {
+    "name": "Seychelles Rupee",
+    "symbol": "₨",
+    "format": "₨1,0.00",
+    "exchange_rate": 0
+  },
+  "SDG": {
+    "name": "Sudanese Pound",
+    "symbol": "ج.س",
+    "format": "1,0.00 Sd",
+    "exchange_rate": 0
+  },
+  "SEK": {
+    "name": "Swedish Krona",
+    "symbol": "kr",
+    "format": "1 0,00 kr",
+    "exchange_rate": 0
+  },
+  "SGD": {
+    "name": "Singapore Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "SHP": {
+    "name": "Saint Helena Pound",
+    "symbol": "£",
+    "format": "£1,0.00",
+    "exchange_rate": 0
+  },
+  "SLL": {
+    "name": "Sierra Leone, Leone",
+    "symbol": "Le",
+    "format": "Le1,0.00",
+    "exchange_rate": 0
+  },
+  "SOS": {
+    "name": "Somali Shilling",
+    "symbol": "S",
+    "format": "S1,0.00",
+    "exchange_rate": 0
+  },
+  "SRD": {
+    "name": "Surinam Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "SSP": {
+    "name": "South Sudanese pound",
+    "symbol": "SS£",
+    "format": "SS £1,0.00",
+    "exchange_rate": 0
+  },
+  "STN": {
+    "name": "Sao Tome and Principe, Dobra",
+    "symbol": "Db",
+    "format": "Db1,0.00",
+    "exchange_rate": 0
+  },
+  "SVC": {
+    "name": "El Salvador Colon",
+    "symbol": "₡",
+    "format": "₡1,0.00",
+    "exchange_rate": 0
+  },
+  "SYP": {
+    "name": "Syrian Pound",
+    "symbol": "£",
+    "format": "£ 1,0.00",
+    "exchange_rate": 0
+  },
+  "SZL": {
+    "name": "Swaziland, Lilangeni",
+    "symbol": "E",
+    "format": "E1,0.00",
+    "exchange_rate": 0
+  },
+  "THB": {
+    "name": "Thailand, Baht",
+    "symbol": "฿",
+    "format": "฿1,0.00",
+    "exchange_rate": 0
+  },
+  "TJS": {
+    "name": "Tajikistan, Somoni",
+    "symbol": "TJS",
+    "format": "1 0;00 TJS",
+    "exchange_rate": 0
+  },
+  "TMT": {
+    "name": "Turkmenistani New Manat",
+    "symbol": "m",
+    "format": "1 0,m",
+    "exchange_rate": 0
+  },
+  "TND": {
+    "name": "Tunisian Dinar",
+    "symbol": "د.ت.‏",
+    "format": "د.ت.‏ 1,0.000",
+    "exchange_rate": 0
+  },
+  "TOP": {
+    "name": "Tonga, Paanga",
+    "symbol": "T$",
+    "format": "T$1,0.00",
+    "exchange_rate": 0
+  },
+  "TRY": {
+    "name": "Turkish Lira",
+    "symbol": "TL",
+    "format": "₺1,0.00",
+    "exchange_rate": 0
+  },
+  "TTD": {
+    "name": "Trinidad and Tobago Dollar",
+    "symbol": "TT$",
+    "format": "TT$1,0.00",
+    "exchange_rate": 0
+  },
+  "TWD": {
+    "name": "New Taiwan Dollar",
+    "symbol": "NT$",
+    "format": "NT$1,0.00",
+    "exchange_rate": 0
+  },
+  "TZS": {
+    "name": "Tanzanian Shilling",
+    "symbol": "TSh",
+    "format": "TSh1,0.00",
+    "exchange_rate": 0
+  },
+  "UAH": {
+    "name": "Ukraine, Hryvnia",
+    "symbol": "₴",
+    "format": "1 0,00₴",
+    "exchange_rate": 0
+  },
+  "UGX": {
+    "name": "Uganda Shilling",
+    "symbol": "USh",
+    "format": "USh1,0.00",
+    "exchange_rate": 0
+  },
+  "USD": {
+    "name": "US Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "UYU": {
+    "name": "Peso Uruguayo",
+    "symbol": "$U",
+    "format": "$U 1,0.00",
+    "exchange_rate": 0
+  },
+  "UZS": {
+    "name": "Uzbekistan Sum",
+    "symbol": "сўм",
+    "format": "1 0,00 сўм",
+    "exchange_rate": 0
+  },
+  "VES": {
+    "name": "Venezuela Bolivares soberano",
+    "symbol": "Bs. S.",
+    "format": "Bs. S. 1,0.00",
+    "exchange_rate": 0
+  },
+  "VND": {
+    "name": "Viet Nam, Dong",
+    "symbol": "₫",
+    "format": "1,0.0 ₫",
+    "exchange_rate": 0
+  },
+  "VUV": {
+    "name": "Vanuatu, Vatu",
+    "symbol": "VT",
+    "format": "1,0.VT",
+    "exchange_rate": 0
+  },
+  "WST": {
+    "name": "Samoa, Tala",
+    "symbol": "WS$",
+    "format": "WS$1,0.00",
+    "exchange_rate": 0
+  },
+  "XAF": {
+    "name": "Central African CFA Franc",
+    "symbol": "FCFA",
+    "format": "1,0.00 FCFA",
+    "exchange_rate": 0
+  },
+  "XCD": {
+    "name": "East Caribbean Dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  },
+  "XOF": {
+    "name": "West African CFA Franc",
+    "symbol": "FCFA",
+    "format": "1,0.00 FCFA",
+    "exchange_rate": 0
+  },
+  "XPF": {
+    "name": "CFP Franc",
+    "symbol": "F",
+    "format": "1,0.00F",
+    "exchange_rate": 0
+  },
+  "YER": {
+    "name": "Yemeni Rial",
+    "symbol": "﷼",
+    "format": "﷼ 1,0.00",
+    "exchange_rate": 0
+  },
+  "ZAR": {
+    "name": "South Africa, Rand",
+    "symbol": "R",
+    "format": "R 1,0.00",
+    "exchange_rate": 0
+  },
+  "ZMW": {
+    "name": "Zambia Kwacha",
+    "symbol": "ZK",
+    "format": "ZK1,0.00",
+    "exchange_rate": 0
+  },
+  "ZWL": {
+    "name": "Zimbabwean dollar",
+    "symbol": "$",
+    "format": "$1,0.00",
+    "exchange_rate": 0
+  }
+}

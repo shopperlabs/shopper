@@ -5,24 +5,17 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Core\Models\Country;
 
 final class CountriesTableSeeder extends Seeder
 {
-    /** @var array<int, array<string, mixed>> */
-    protected array $countries;
-
-    public function __construct()
-    {
-        $this->countries = include __DIR__.'/../data/countries.php';
-    }
-
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
 
-        $countries = collect($this->countries)
+        $countries = collect(json_decode(File::get(__DIR__.'/../data/countries.json'), true))
             ->map(fn (array $country): array => [
                 'name' => $country['name']['common'],
                 'name_official' => $country['name']['official'],
