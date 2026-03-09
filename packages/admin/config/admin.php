@@ -160,6 +160,38 @@ return [
     |
     */
 
+    /*
+    |--------------------------------------------------------------------------
+    | Locales
+    |--------------------------------------------------------------------------
+    |
+    | The list of locales available in the admin panel. Each entry maps a
+    | locale code to its display label and the corresponding country flag code
+    | (ISO 3166-1 alpha-2, lowercase) used to resolve the flag SVG.
+    |
+    | Example:
+    |   'de' => ['label' => 'Deutsch', 'flag' => 'de'],
+    |
+    */
+
+    'locales' => [
+        'en' => ['label' => 'English', 'flag' => 'gb'],
+        'fr' => ['label' => 'Français', 'flag' => 'fr'],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Caching Blade Icons
+    |--------------------------------------------------------------------------
+    |
+    | This section lets you configure the caching option of the icon picker component.
+    |
+    | Since icon packs are often packed with a lots of icons,
+    | searching through all of them can take quite a lot of time, which is
+    | why the plugin caches each field with it's configuration and search queries.
+    |
+    */
+
     'icon-picker' => [
         'cache' => true,
         'duration' => '7 days',

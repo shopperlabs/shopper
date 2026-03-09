@@ -55,6 +55,11 @@
             >
                 <x-phosphor-google-chrome-logo class="size-6" stroke-width="1.5" aria-hidden="true" />
             </a>
+
+            @if (count(config('shopper.admin.locales', [])) > 1)
+                <livewire:shopper-locale-switcher />
+            @endif
+
             <livewire:shopper-account.dropdown />
         </div>
     </div>

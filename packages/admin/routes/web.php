@@ -18,6 +18,7 @@ use Shopper\Http\Middleware\Dashboard;
 use Shopper\Http\Middleware\DispatchShopper;
 use Shopper\Http\Middleware\HasConfiguration;
 use Shopper\Http\Middleware\RedirectIfAuthenticated;
+use Shopper\Http\Middleware\SetLocale;
 use Shopper\Livewire\Pages\Initialization;
 use Shopper\Sidebar\Middleware\ResolveSidebars;
 
@@ -31,6 +32,7 @@ Route::domain(config('shopper.admin.domain'))
         VerifyCsrfToken::class,
         SubstituteBindings::class,
         DispatchShopper::class,
+        SetLocale::class,
     ])
     ->group(function (): void {
         Route::prefix(shopper()->prefix())->group(function (): void {

@@ -24,6 +24,7 @@ use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Shopper\Facades\Shopper;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Middleware\DispatchShopper;
+use Shopper\Http\Middleware\SetLocale;
 use Shopper\Http\Responses\LoginResponse;
 use Shopper\Livewire\Components;
 use Shopper\Livewire\Pages;
@@ -137,6 +138,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
         Livewire::addPersistentMiddleware([
             Authenticate::class,
             DispatchShopper::class,
+            SetLocale::class,
         ]);
 
         foreach (array_merge(
