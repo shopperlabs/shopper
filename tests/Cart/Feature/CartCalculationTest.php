@@ -21,7 +21,7 @@ use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxZone;
 use Tests\Core\Stubs\User;
 
-uses(Tests\cart\TestCase::class);
+uses(Tests\Cart\TestCase::class);
 
 beforeEach(function (): void {
     setupCurrencies();
