@@ -79,8 +79,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->action(
                         fn (Category $record) => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.category-form',
-                            arguments: ['category' => $record]
+                            'shopper-slide-overs.category-form',
+                            ['category' => $record]
                         )
                     )
                     ->visible($this->getUser()->can('edit_categories')),
@@ -156,7 +156,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->action(
                         fn () => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.re-order-categories'
+                            'shopper-slide-overs.re-order-categories'
                         )
                     ),
             ]);

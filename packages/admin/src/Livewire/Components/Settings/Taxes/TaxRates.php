@@ -67,8 +67,8 @@ class TaxRates extends Component implements HasActions, HasForms, HasTable
                     ->icon(Untitledui::Plus)
                     ->action(fn () => $this->dispatch(
                         'openPanel',
-                        component: 'shopper-slide-overs.tax-rate-form',
-                        arguments: ['taxZoneId' => $this->selectedTaxZoneId]
+                        'shopper-slide-overs.tax-rate-form',
+                        ['taxZoneId' => $this->selectedTaxZoneId]
                     )),
                 Action::make('addOverride')
                     ->label(__('shopper::pages/settings/taxes.overrides.add'))
@@ -76,8 +76,8 @@ class TaxRates extends Component implements HasActions, HasForms, HasTable
                     ->color('gray')
                     ->action(fn () => $this->dispatch(
                         'openPanel',
-                        component: 'shopper-slide-overs.tax-rate-override-form',
-                        arguments: ['taxZoneId' => $this->selectedTaxZoneId]
+                        'shopper-slide-overs.tax-rate-override-form',
+                        ['taxZoneId' => $this->selectedTaxZoneId]
                     )),
             ])
             ->recordActions([
@@ -87,10 +87,10 @@ class TaxRates extends Component implements HasActions, HasForms, HasTable
                     ->iconButton()
                     ->action(fn (TaxRate $record) => $this->dispatch(
                         'openPanel',
-                        component: $record->is_default
+                        $record->is_default
                             ? 'shopper-slide-overs.tax-rate-form'
                             : 'shopper-slide-overs.tax-rate-override-form',
-                        arguments: ['taxZoneId' => $this->selectedTaxZoneId, 'taxRateId' => $record->id]
+                        ['taxZoneId' => $this->selectedTaxZoneId, 'taxRateId' => $record->id]
                     )),
                 DeleteAction::make('delete')
                     ->label(__('shopper::forms.actions.delete'))

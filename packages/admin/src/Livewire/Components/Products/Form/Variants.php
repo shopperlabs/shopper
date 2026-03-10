@@ -86,8 +86,8 @@ class Variants extends Component implements HasActions, HasForms, HasTable
                     ->action(
                         fn () => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.generate-variants',
-                            arguments: ['product' => $this->product]
+                            'shopper-slide-overs.generate-variants',
+                            ['product' => $this->product]
                         )
                     )
                     ->visible($this->product->options->count() > 0),
@@ -96,8 +96,8 @@ class Variants extends Component implements HasActions, HasForms, HasTable
                     ->action(
                         fn () => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.add-variant',
-                            arguments: ['product' => $this->product]
+                            'shopper-slide-overs.add-variant',
+                            ['product' => $this->product]
                         )
                     ),
             ])

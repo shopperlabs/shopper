@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Reflector;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use ReflectionClass;
 use ReflectionException;
@@ -18,9 +19,11 @@ use Shopper\Contracts\PanelContract;
 
 class SlideOverPanel extends Component
 {
+    #[Locked]
     public ?string $activeComponent = null;
 
     /** @var array<string, array<string, mixed>> */
+    #[Locked]
     public array $components = [];
 
     public function resetState(): void

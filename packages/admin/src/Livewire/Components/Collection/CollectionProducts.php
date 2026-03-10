@@ -110,8 +110,8 @@ class CollectionProducts extends Component implements HasActions, HasForms, HasT
                     ->color('gray')
                     ->action(fn () => $this->dispatch(
                         'openPanel',
-                        component: 'shopper-slide-overs.collection-rules',
-                        arguments: ['collection' => $this->collection]
+                        'shopper-slide-overs.collection-rules',
+                        ['collection' => $this->collection]
                     ))
                     ->visible($this->collection->isAutomatic()),
                 Action::make('products')
@@ -121,8 +121,8 @@ class CollectionProducts extends Component implements HasActions, HasForms, HasT
                     ->color('gray')
                     ->action(fn () => $this->dispatch(
                         'openPanel',
-                        component: 'shopper-slide-overs.collection-products-list',
-                        arguments: [
+                        'shopper-slide-overs.collection-products-list',
+                        [
                             'collection' => $this->collection,
                             'exceptProductIds' => $this->productsIds,
                         ]

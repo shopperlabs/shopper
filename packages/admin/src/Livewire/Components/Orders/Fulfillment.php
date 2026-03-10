@@ -28,8 +28,8 @@ class Fulfillment extends Component
     {
         $this->dispatch(
             'openPanel',
-            component: 'shopper-slide-overs.create-shipping-label',
-            arguments: ['order' => $this->order->id],
+            'shopper-slide-overs.create-shipping-label',
+            ['order' => $this->order->id],
         );
     }
 

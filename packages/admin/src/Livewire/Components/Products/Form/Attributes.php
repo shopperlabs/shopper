@@ -73,8 +73,8 @@ class Attributes extends Component implements HasActions, HasForms, HasTable
                     ->action(
                         fn () => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.choose-product-attributes',
-                            arguments: ['product' => $this->product]
+                            'shopper-slide-overs.choose-product-attributes',
+                            ['product' => $this->product]
                         )
                     )
                     ->visible(Attribute::query()->count() > 0),

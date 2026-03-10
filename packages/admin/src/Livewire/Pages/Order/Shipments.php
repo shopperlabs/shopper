@@ -186,8 +186,8 @@ class Shipments extends AbstractPageComponent implements HasActions, HasForms, H
                     ->tooltip(__('shopper::pages/orders.shipment.manage'))
                     ->action(fn (OrderShipping $record) => $this->dispatch(
                         'openPanel',
-                        component: 'shopper-slide-overs.shipment-detail',
-                        arguments: ['shipment' => $record],
+                        'shopper-slide-overs.shipment-detail',
+                        ['shipment' => $record],
                     )),
             ])
             ->filters([

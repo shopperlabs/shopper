@@ -86,8 +86,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->action(
                         fn (Review $record) => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.review-detail',
-                            arguments: ['review' => $record]
+                            'shopper-slide-overs.review-detail',
+                            ['review' => $record]
                         )
                     ),
                 Action::make('delete')
