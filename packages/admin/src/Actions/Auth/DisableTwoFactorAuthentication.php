@@ -11,8 +11,8 @@ class DisableTwoFactorAuthentication
     public function __invoke(ShopperUser $user): void
     {
         $user->forceFill([
-            'two_factor_secret' => null,
-            'two_factor_recovery_codes' => null,
+            'store_two_factor_secret' => null,
+            'store_two_factor_recovery_codes' => null,
         ])->save();
     }
 }
