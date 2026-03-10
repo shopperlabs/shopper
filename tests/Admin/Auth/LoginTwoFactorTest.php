@@ -16,8 +16,8 @@ beforeEach(function (): void {
     $this->secret = $google2fa->generateSecretKey();
 
     $this->user = User::factory()->create([
-        'two_factor_secret' => encrypt($this->secret),
-        'two_factor_recovery_codes' => encrypt(json_encode([
+        'store_two_factor_secret' => encrypt($this->secret),
+        'store_two_factor_recovery_codes' => encrypt(json_encode([
             'recovery-code-1',
             'recovery-code-2',
         ])),
@@ -109,7 +109,7 @@ describe('Login Two-Factor Authentication', function (): void {
             ->set('twoFactorData.recovery_code', 'recovery-code-1')
             ->call('authenticate');
 
-        $recoveryCodes = json_decode(decrypt($this->user->fresh()->two_factor_recovery_codes), true);
+        $recoveryCodes = json_decode(decrypt($this->user->fresh()->store_two_factor_recovery_codes), true);
 
         expect($recoveryCodes)->not->toContain('recovery-code-1');
     });
@@ -142,8 +142,8 @@ describe('Login Two-Factor Authentication', function (): void {
 
     it('does not challenge user without two factor secret', function (): void {
         $userWithout2fa = User::factory()->create([
-            'two_factor_secret' => null,
-            'two_factor_recovery_codes' => null,
+            'store_two_factor_secret' => null,
+            'store_two_factor_recovery_codes' => null,
         ]);
 
         Livewire::test(Login::class)

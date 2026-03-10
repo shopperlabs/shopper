@@ -41,16 +41,16 @@ describe(TwoFactor::class, function (): void {
 
         $user = $this->user->fresh();
 
-        expect($user->two_factor_secret)->not->toBeNull()
-            ->and($user->two_factor_recovery_codes)->not->toBeNull();
+        expect($user->store_two_factor_secret)->not->toBeNull()
+            ->and($user->store_two_factor_recovery_codes)->not->toBeNull();
 
         Event::assertDispatched(TwoFactorAuthenticationEnabled::class);
     });
 
     it('shows enabled state when user has two factor secret', function (): void {
         $this->user->forceFill([
-            'two_factor_secret' => encrypt('secret'),
-            'two_factor_recovery_codes' => encrypt(json_encode(['code1', 'code2'])),
+            'store_two_factor_secret' => encrypt('secret'),
+            'store_two_factor_recovery_codes' => encrypt(json_encode(['code1', 'code2'])),
         ])->save();
 
         Livewire::test(TwoFactor::class)
@@ -59,8 +59,8 @@ describe(TwoFactor::class, function (): void {
 
     it('can show recovery codes', function (): void {
         $this->user->forceFill([
-            'two_factor_secret' => encrypt('secret'),
-            'two_factor_recovery_codes' => encrypt(json_encode(['code1', 'code2'])),
+            'store_two_factor_secret' => encrypt('secret'),
+            'store_two_factor_recovery_codes' => encrypt(json_encode(['code1', 'code2'])),
         ])->save();
 
         Livewire::test(TwoFactor::class)
@@ -70,11 +70,11 @@ describe(TwoFactor::class, function (): void {
 
     it('can regenerate recovery codes', function (): void {
         $this->user->forceFill([
-            'two_factor_secret' => encrypt('original-secret'),
-            'two_factor_recovery_codes' => encrypt(json_encode(['old-code'])),
+            'store_two_factor_secret' => encrypt('original-secret'),
+            'store_two_factor_recovery_codes' => encrypt(json_encode(['old-code'])),
         ])->save();
 
-        $oldCodes = $this->user->two_factor_recovery_codes;
+        $oldCodes = $this->user->store_two_factor_recovery_codes;
 
         Livewire::test(TwoFactor::class)
             ->call('regenerateRecoveryCodes', app(GenerateNewRecoveryCodes::class))
@@ -82,13 +82,13 @@ describe(TwoFactor::class, function (): void {
 
         $user = $this->user->fresh();
 
-        expect($user->two_factor_recovery_codes)->not->toBe($oldCodes);
+        expect($user->store_two_factor_recovery_codes)->not->toBe($oldCodes);
     });
 
     it('can disable two factor authentication', function (): void {
         $this->user->forceFill([
-            'two_factor_secret' => encrypt('secret'),
-            'two_factor_recovery_codes' => encrypt(json_encode(['code1', 'code2'])),
+            'store_two_factor_secret' => encrypt('secret'),
+            'store_two_factor_recovery_codes' => encrypt(json_encode(['code1', 'code2'])),
         ])->save();
 
         Livewire::test(TwoFactor::class)
@@ -96,8 +96,8 @@ describe(TwoFactor::class, function (): void {
 
         $user = $this->user->fresh();
 
-        expect($user->two_factor_secret)->toBeNull()
-            ->and($user->two_factor_recovery_codes)->toBeNull();
+        expect($user->store_two_factor_secret)->toBeNull()
+            ->and($user->store_two_factor_recovery_codes)->toBeNull();
     });
 
     it('returns authenticated user from user property', function (): void {
