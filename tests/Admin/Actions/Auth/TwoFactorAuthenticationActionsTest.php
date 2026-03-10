@@ -20,10 +20,10 @@ describe('EnableTwoFactorAuthentication', function (): void {
 
         $action($user);
 
-        expect($user->two_factor_secret)->not->toBeNull()
-            ->and($user->two_factor_recovery_codes)->not->toBeNull();
+        expect($user->store_two_factor_secret)->not->toBeNull()
+            ->and($user->store_two_factor_recovery_codes)->not->toBeNull();
 
-        $recoveryCodes = json_decode(decrypt($user->two_factor_recovery_codes), true);
+        $recoveryCodes = json_decode(decrypt($user->store_two_factor_recovery_codes), true);
         expect($recoveryCodes)->toHaveCount(8);
 
         Event::assertDispatched(TwoFactorAuthenticationEnabled::class);
@@ -35,10 +35,10 @@ describe('EnableTwoFactorAuthentication', function (): void {
 
         $action($user);
 
-        $secret = decrypt($user->two_factor_secret);
+        $secret = decrypt($user->store_two_factor_secret);
         expect($secret)->toBeString()->not->toBeEmpty();
 
-        $recoveryCodes = json_decode(decrypt($user->two_factor_recovery_codes), true);
+        $recoveryCodes = json_decode(decrypt($user->store_two_factor_recovery_codes), true);
         expect($recoveryCodes)->toBeArray();
 
         foreach ($recoveryCodes as $code) {
@@ -50,47 +50,47 @@ describe('EnableTwoFactorAuthentication', function (): void {
 describe('DisableTwoFactorAuthentication', function (): void {
     it('can disable two factor authentication', function (): void {
         $user = User::factory()->create([
-            'two_factor_secret' => encrypt('secret'),
-            'two_factor_recovery_codes' => encrypt(json_encode(['code1', 'code2'])),
+            'store_two_factor_secret' => encrypt('secret'),
+            'store_two_factor_recovery_codes' => encrypt(json_encode(['code1', 'code2'])),
         ]);
 
         $action = app(DisableTwoFactorAuthentication::class);
         $action($user);
 
-        expect($user->fresh()->two_factor_secret)->toBeNull()
-            ->and($user->fresh()->two_factor_recovery_codes)->toBeNull();
+        expect($user->fresh()->store_two_factor_secret)->toBeNull()
+            ->and($user->fresh()->store_two_factor_recovery_codes)->toBeNull();
     });
 })->group('two-factor', 'actions');
 
 describe('GenerateNewRecoveryCodes', function (): void {
     it('can generate new recovery codes', function (): void {
         $user = User::factory()->create([
-            'two_factor_secret' => encrypt('secret'),
-            'two_factor_recovery_codes' => encrypt(json_encode(['old-code'])),
+            'store_two_factor_secret' => encrypt('secret'),
+            'store_two_factor_recovery_codes' => encrypt(json_encode(['old-code'])),
         ]);
 
-        $oldCodes = $user->two_factor_recovery_codes;
+        $oldCodes = $user->store_two_factor_recovery_codes;
 
         $action = app(GenerateNewRecoveryCodes::class);
         $action($user);
 
-        expect($user->fresh()->two_factor_recovery_codes)->not->toBe($oldCodes);
+        expect($user->fresh()->store_two_factor_recovery_codes)->not->toBe($oldCodes);
 
-        $newCodes = json_decode(decrypt($user->fresh()->two_factor_recovery_codes), true);
+        $newCodes = json_decode(decrypt($user->fresh()->store_two_factor_recovery_codes), true);
         expect($newCodes)->toHaveCount(8);
     });
 
     it('keeps the two factor secret when regenerating codes', function (): void {
         $user = User::factory()->create([
-            'two_factor_secret' => encrypt('original-secret'),
-            'two_factor_recovery_codes' => encrypt(json_encode(['old-code'])),
+            'store_two_factor_secret' => encrypt('original-secret'),
+            'store_two_factor_recovery_codes' => encrypt(json_encode(['old-code'])),
         ]);
 
-        $originalSecret = $user->two_factor_secret;
+        $originalSecret = $user->store_two_factor_secret;
 
         $action = app(GenerateNewRecoveryCodes::class);
         $action($user);
 
-        expect($user->fresh()->two_factor_secret)->toBe($originalSecret);
+        expect($user->fresh()->store_two_factor_secret)->toBe($originalSecret);
     });
 })->group('two-factor', 'actions');
