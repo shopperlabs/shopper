@@ -15,12 +15,12 @@ use Shopper\Contracts\TwoFactorAuthenticationProvider;
 
 trait TwoFactorAuthenticatable
 {
-    public function recoveryCodes(): array
+    public function getStoreAuthenticationRecoveryCodes(): array
     {
         return json_decode(decrypt($this->store_two_factor_recovery_codes), true);
     }
 
-    public function replaceRecoveryCode(string $code): void
+    public function replaceStoreAuthenticationRecoveryCode(string $code): void
     {
         $this->forceFill([
             'store_two_factor_recovery_codes' => encrypt(str_replace(
@@ -31,19 +31,19 @@ trait TwoFactorAuthenticatable
         ])->save();
     }
 
-    public function twoFactorQrCodeSvg(): string
+    public function getStoreAuthenticationQrCodeSvg(): string
     {
         $svg = (new Writer(
             new ImageRenderer(
                 new RendererStyle(192, 0, null, null, Fill::uniformColor(new Rgb(255, 255, 255), new Rgb(45, 55, 72))),
                 new SvgImageBackEnd
             )
-        ))->writeString($this->twoFactorQrCodeUrl());
+        ))->writeString($this->getStoreAuthenticationQrCodeUrl());
 
         return mb_trim(mb_substr($svg, mb_strpos($svg, "\n") + 1));
     }
 
-    public function twoFactorQrCodeUrl(): string
+    public function getStoreAuthenticationQrCodeUrl(): string
     {
         return app(TwoFactorAuthenticationProvider::class)->qrCodeUrl(
             config('app.name'),
