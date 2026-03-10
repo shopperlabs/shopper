@@ -9,6 +9,7 @@ use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Zone;
+use Shopper\Payment\Contracts\PaymentDriver;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
@@ -22,7 +23,7 @@ final class PaymentProcessingService
      */
     public function getLogoUrl(PaymentMethod $method): ?string
     {
-        return Payment::driver($method->driver ?? 'manual')->logo();
+        return $method->logo();
     }
 
     /**
@@ -35,11 +36,7 @@ final class PaymentProcessingService
         return $zone->paymentMethods()
             ->where('is_enabled', true)
             ->get()
-            ->filter(function (PaymentMethod $method): bool {
-                $driver = $method->driver ?? 'manual';
-
-                return Payment::isConfigured($driver);
-            })
+            ->filter(fn (PaymentMethod $method): bool => Payment::isConfigured($method->driver ?? 'manual'))
             ->values();
     }
 
@@ -51,7 +48,7 @@ final class PaymentProcessingService
     public function initiate(Order $order, array $context = []): PaymentResult
     {
         $paymentMethod = $order->paymentMethod;
-        $driver = Payment::driver($paymentMethod->driver ?? 'manual');
+        $driver = $this->resolveDriver($paymentMethod);
 
         $result = $driver->initiatePayment(
             amount: $order->price_amount,
@@ -83,7 +80,7 @@ final class PaymentProcessingService
     public function authorize(Order $order, string $reference, array $data = []): PaymentResult
     {
         $paymentMethod = $order->paymentMethod;
-        $driver = Payment::driver($paymentMethod->driver ?? 'manual');
+        $driver = $this->resolveDriver($paymentMethod);
 
         $result = $driver->authorizePayment($reference, $data);
 
@@ -107,7 +104,7 @@ final class PaymentProcessingService
     public function capture(Order $order, string $reference, ?int $amount = null): PaymentResult
     {
         $paymentMethod = $order->paymentMethod;
-        $driver = Payment::driver($paymentMethod->driver ?? 'manual');
+        $driver = $this->resolveDriver($paymentMethod);
 
         $result = $driver->capturePayment($reference, $amount);
 
@@ -131,7 +128,7 @@ final class PaymentProcessingService
     public function refund(Order $order, string $reference, int $amount, ?string $reason = null): PaymentResult
     {
         $paymentMethod = $order->paymentMethod;
-        $driver = Payment::driver($paymentMethod->driver ?? 'manual');
+        $driver = $this->resolveDriver($paymentMethod);
 
         $result = $driver->refundPayment($reference, $amount, $reason);
 
@@ -155,7 +152,7 @@ final class PaymentProcessingService
     public function cancel(Order $order, string $reference): PaymentResult
     {
         $paymentMethod = $order->paymentMethod;
-        $driver = Payment::driver($paymentMethod->driver ?? 'manual');
+        $driver = $this->resolveDriver($paymentMethod);
 
         $result = $driver->cancelPayment($reference);
 
@@ -196,6 +193,11 @@ final class PaymentProcessingService
             ->successful()
             ->latest()
             ->value('reference');
+    }
+
+    private function resolveDriver(PaymentMethod $method): PaymentDriver
+    {
+        return Payment::driver($method->driver ?? 'manual');
     }
 
     private function syncPaymentStatus(Order $order, TransactionType $type, PaymentResult $result): void

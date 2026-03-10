@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Shopper\Payment;
 
+use Closure;
 use Illuminate\Support\ServiceProvider;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\PaymentMethod;
+use Shopper\Payment\Facades\Payment;
 use Shopper\Payment\Models\PaymentTransaction;
 use Shopper\Payment\Services\PaymentProcessingService;
 
@@ -17,6 +20,11 @@ final class PaymentServiceProvider extends ServiceProvider
 
         $this->app->singleton(PaymentManager::class, fn (): PaymentManager => new PaymentManager);
         $this->app->singleton(PaymentProcessingService::class);
+
+        $this->app->bind(
+            'shopper.payment.logo',
+            fn (): Closure => fn (PaymentMethod $method): ?string => Payment::driver($method->driver ?? 'manual')->logo()
+        );
     }
 
     public function boot(): void

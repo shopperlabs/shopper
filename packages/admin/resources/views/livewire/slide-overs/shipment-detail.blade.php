@@ -4,9 +4,7 @@
     $order = $this->shipment->order;
     $carrier = $this->shipment->carrier;
     $shippingAddress = $order->shippingAddress;
-    $carrierLogoUrl = $carrier
-        ? \Shopper\Shipping\Facades\Shipping::driver($carrier->driver ?? 'manual')->logo()
-        : null;
+    $carrierLogoUrl = $carrier?->logo();
 
     $steps = [
         ShipmentStatus::Pending,

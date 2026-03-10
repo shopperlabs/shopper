@@ -30,7 +30,7 @@
         <div class="lg:grid lg:grid-cols-2 lg:gap-6">
             @forelse ($zone->shippingOptions as $shippingOption)
                 @php
-                    $carrierLogoUrl = \Shopper\Shipping\Facades\Shipping::driver($shippingOption->carrier->driver ?? 'manual')->logo();
+                    $carrierLogoUrl = $shippingOption->carrier?->logo();
                 @endphp
 
                 <div

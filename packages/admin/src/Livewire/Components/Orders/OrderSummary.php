@@ -9,8 +9,6 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\TaxZone;
-use Shopper\Payment\Facades\Payment;
-use Shopper\Shipping\Facades\Shipping;
 
 class OrderSummary extends Component
 {
@@ -35,8 +33,8 @@ class OrderSummary extends Component
             'shippingOption' => $shippingOption,
             'taxAmount' => $taxAmount,
             'isTaxInclusive' => $isTaxInclusive,
-            'carrierLogoUrl' => $carrier ? Shipping::driver($carrier->driver ?? 'manual')->logo() : null,
-            'paymentLogoUrl' => $paymentMethod ? Payment::driver($paymentMethod->driver ?? 'manual')->logo() : null,
+            'carrierLogoUrl' => $carrier?->logo(),
+            'paymentLogoUrl' => $paymentMethod?->logo(),
             'itemsCount' => $this->order->items->count(),
             'total' => $this->order->price_amount !== null
                 ? $this->order->price_amount

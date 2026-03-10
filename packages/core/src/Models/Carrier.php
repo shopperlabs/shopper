@@ -20,7 +20,7 @@ use Shopper\Core\Models\Traits\HasZones;
  * @property-read string $name
  * @property-read bool $is_enabled
  * @property-read ?string $slug
- * @property-read ?string $driver
+ * @property-read string $driver
  * @property-read ?string $link_url
  * @property-read ?string $description
  * @property-read ?int $shipping_amount
@@ -59,6 +59,18 @@ class Carrier extends Model implements CarrierContract
     public function options(): HasMany
     {
         return $this->hasMany(CarrierOption::class);
+    }
+
+    public function logo(): ?string
+    {
+        if (! app()->bound('shopper.carrier.logo')) {
+            return null;
+        }
+
+        /** @var callable(static): ?string $resolver */
+        $resolver = app('shopper.carrier.logo');
+
+        return $resolver($this);
     }
 
     protected static function newFactory(): CarrierFactory
