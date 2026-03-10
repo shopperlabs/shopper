@@ -14,6 +14,11 @@ class ProductVariantFactory extends Factory
 {
     protected $model = ProductVariant::class;
 
+    public function modelName(): string
+    {
+        return config('shopper.models.variant', ProductVariant::class);
+    }
+
     /**
      * Define the model's default state.
      *

@@ -15,6 +15,11 @@ class CollectionFactory extends Factory
 {
     protected $model = Collection::class;
 
+    public function modelName(): string
+    {
+        return config('shopper.models.collection', Collection::class);
+    }
+
     /**
      * Define the model's default state.
      *

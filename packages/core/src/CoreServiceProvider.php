@@ -43,7 +43,6 @@ final class CoreServiceProvider extends PackageServiceProvider
     /** @var string[] */
     protected array $configFiles = [
         'core',
-        'models',
         'orders',
     ];
 
@@ -62,9 +61,9 @@ final class CoreServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         setlocale(LC_ALL, config('app.locale'));
-
         Carbon::setLocale(config('app.locale'));
 
+        $this->registerModelBindings();
         $this->bootModelRelationName();
         $this->registerObservers();
     }
@@ -75,7 +74,6 @@ final class CoreServiceProvider extends PackageServiceProvider
 
         $this->registerConfigFiles();
         $this->registerDatabase();
-        $this->registerModelBindings();
         $this->registerStockAllocator();
         $this->registerTaxCalculator();
     }

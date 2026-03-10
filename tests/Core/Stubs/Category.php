@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Core\Stubs;
 
-use Shopper\Core\Models\Category as BaseCategory;
+use Shopper\Models\Category as BaseCategory;
 
 final class Category extends BaseCategory
 {

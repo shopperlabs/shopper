@@ -14,6 +14,11 @@ class BrandFactory extends Factory
 {
     protected $model = Brand::class;
 
+    public function modelName(): string
+    {
+        return config('shopper.models.brand', Brand::class);
+    }
+
     /**
      * Define the model's default state.
      *

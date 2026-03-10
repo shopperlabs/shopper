@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Shopper\Core\Models;
+use Shopper\Models;
 
 return [
 
@@ -17,7 +17,7 @@ return [
     |
     */
 
-    'address' => Models\Address::class,
+    'address' => Shopper\Core\Models\Address::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     | Eloquent model should be used to interacts with your brands.
     | If you want to use a custom model, your model needs to extends the
-    | \Shopper\Core\Models\Brand Model.
+    | \Shopper\Models\Brand Model.
     |
     */
 
@@ -39,7 +39,7 @@ return [
     |
     | Eloquent model should be used to interacts with your categories.
     | If you want to use a custom model, your model needs to extends the
-    | \Shopper\Core\Models\Category Model.
+    | \Shopper\Models\Category Model.
     |
     */
 
@@ -52,7 +52,7 @@ return [
     |
     | Eloquent model should be used to interacts with your collections.
     | If you want to use a custom model, your model needs to extends the
-    | \Shopper\Core\Models\Collection Model.
+    | \Shopper\Models\Collection Model.
     |
     */
 
@@ -65,7 +65,7 @@ return [
     |
     | Eloquent model should be used to interacts with your products.
     | If you want to use a custom model, your model needs to extends the
-    | \Shopper\Core\Models\Product Model.
+    | \Shopper\Models\Product Model.
     |
     */
 
@@ -78,7 +78,7 @@ return [
     |
     | Eloquent model should be used to interacts with your product variants.
     | If you want to use a custom model, your model needs to extends the
-    | \Shopper\Core\Models\ProductVariant Model.
+    | \Shopper\Models\ProductVariant Model.
     |
     */
 
@@ -95,7 +95,7 @@ return [
     |
     */
 
-    'channel' => Models\Channel::class,
+    'channel' => Shopper\Core\Models\Channel::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -108,7 +108,7 @@ return [
     |
     */
 
-    'inventory' => Models\Inventory::class,
+    'inventory' => Shopper\Core\Models\Inventory::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -121,7 +121,7 @@ return [
     |
     */
 
-    'order' => Models\Order::class,
+    'order' => Shopper\Core\Models\Order::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -134,7 +134,7 @@ return [
     |
     */
 
-    'supplier' => Models\Supplier::class,
+    'supplier' => Shopper\Core\Models\Supplier::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -147,7 +147,7 @@ return [
     |
     */
 
-    'tax_zone' => Models\TaxZone::class,
+    'tax_zone' => Shopper\Core\Models\TaxZone::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -160,6 +160,6 @@ return [
     |
     */
 
-    'tax_rate' => Models\TaxRate::class,
+    'tax_rate' => Shopper\Core\Models\TaxRate::class,
 
 ];

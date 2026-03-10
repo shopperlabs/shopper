@@ -47,7 +47,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
         'auth',
         'features',
         'media',
-        // 'models',
+        'models',
         'routes',
         'settings',
     ];
@@ -187,6 +187,8 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'violet' => Color::Violet,
             'rose' => Color::Rose,
             'pink' => Color::Pink,
+            'mauve' => Color::Mauve,
+            'olive' => Color::Olive,
         ]);
 
         Field::configureUsing(

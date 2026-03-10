@@ -9,12 +9,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Core\Contracts\Media\HasMedia as ShopperHasMedia;
 use Shopper\Core\Database\Factories\BrandFactory;
 use Shopper\Core\Models\Contracts\Brand as BrandContract;
-use Shopper\Core\Models\Traits\HasMedia;
+use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Traits\HasModelContract;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
@@ -31,12 +31,12 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read CarbonInterface $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Product> $products
  */
-class Brand extends Model implements BrandContract, SpatieHasMedia
+class Brand extends Model implements BrandContract, ShopperHasMedia
 {
     /** @use HasFactory<BrandFactory> */
     use HasFactory;
 
-    use HasMedia;
+    use HasMediaCollections;
     use HasModelContract;
     use HasSlug;
 

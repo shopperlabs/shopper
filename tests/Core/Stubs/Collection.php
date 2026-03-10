@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Core\Stubs;
 
-use Shopper\Core\Models\Collection as BaseCollection;
+use Shopper\Models\Collection as BaseCollection;
 
 final class Collection extends BaseCollection
 {

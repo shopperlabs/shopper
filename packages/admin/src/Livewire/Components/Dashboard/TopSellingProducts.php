@@ -58,6 +58,7 @@ final class TopSellingProducts extends Component
         $productIds = $topProducts->pluck('parent_product_id')->filter()->all();
 
         /** @var \Illuminate\Database\Eloquent\Collection<int, Model> $products */
+        // @phpstan-ignore-next-line
         $products = resolve(ProductContract::class)::query()
             ->whereIn('id', $productIds)
             ->with([

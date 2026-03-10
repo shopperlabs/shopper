@@ -16,22 +16,23 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Shopper\Core\Contracts\HasReviews;
+use Shopper\Core\Contracts\Media\HasMedia as ShopperHasMedia;
 use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Database\Factories\ProductFactory;
 use Shopper\Core\Enum\Dimension\Length;
 use Shopper\Core\Enum\Dimension\Volume;
 use Shopper\Core\Enum\Dimension\Weight;
 use Shopper\Core\Enum\ProductType;
+use Shopper\Core\Media\MediaCollectionConfig;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Traits\HasDimensions;
 use Shopper\Core\Models\Traits\HasDiscounts;
-use Shopper\Core\Models\Traits\HasMedia;
+use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasPrices;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasStock;
 use Shopper\Core\Models\Traits\InteractsWithReviews;
 use Shopper\Core\Traits\HasModelContract;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
@@ -80,7 +81,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  *
  * @implements Priceable<Product>
  */
-class Product extends Model implements HasReviews, Priceable, ProductContract, SpatieHasMedia
+class Product extends Model implements HasReviews, Priceable, ProductContract, ShopperHasMedia
 {
     use HasDimensions;
     use HasDiscounts;
@@ -88,7 +89,7 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
     /** @use HasFactory<ProductFactory> */
     use HasFactory;
 
-    use HasMedia;
+    use HasMediaCollections;
     use HasModelContract;
     use HasPrices;
     use HasSlug;
@@ -171,21 +172,18 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
         });
     }
 
-    public function registerMediaCollections(): void
+    /** @return array<string, MediaCollectionConfig> */
+    public function getMediaCollections(): array
     {
-        $this->addMediaCollection(config('shopper.media.storage.collection_name'))
-            ->useDisk(config('shopper.media.storage.disk_name'))
-            ->acceptsMimeTypes(config('shopper.media.accepts_mime_types'))
-            ->useFallbackUrl(shopper_fallback_url());
-
-        $this->addMediaCollection(config('shopper.media.storage.thumbnail_collection'))
-            ->singleFile()
-            ->useDisk(config('shopper.media.storage.disk_name'))
-            ->acceptsMimeTypes(config('shopper.media.accepts_mime_types'))
-            ->useFallbackUrl(shopper_fallback_url());
-
-        $this->addMediaCollection('files')
-            ->useDisk(config('shopper.media.storage.disk_name'));
+        return array_merge(
+            $this->defaultMediaCollections(),
+            [
+                'files' => new MediaCollectionConfig(
+                    name: 'files',
+                    disk: config('shopper.media.storage.disk_name', 'public'),
+                ),
+            ]
+        );
     }
 
     /**

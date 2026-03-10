@@ -14,6 +14,11 @@ class CategoryFactory extends Factory
 {
     protected $model = Category::class;
 
+    public function modelName(): string
+    {
+        return config('shopper.models.category', Category::class);
+    }
+
     /**
      * Define the model's default state.
      *

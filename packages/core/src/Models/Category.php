@@ -10,12 +10,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Shopper\Core\Contracts\Media\HasMedia as ShopperHasMedia;
 use Shopper\Core\Database\Factories\CategoryFactory;
 use Shopper\Core\Models\Contracts\Category as CategoryContract;
-use Shopper\Core\Models\Traits\HasMedia;
+use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Traits\HasModelContract;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
 
@@ -35,12 +35,12 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
  * @property-read ?static $parent
  * @property-read Collection<int, Product> $products
  */
-class Category extends Model implements CategoryContract, SpatieHasMedia
+class Category extends Model implements CategoryContract, ShopperHasMedia
 {
     /** @use HasFactory<CategoryFactory> */
     use HasFactory;
 
-    use HasMedia;
+    use HasMediaCollections;
     use HasModelContract;
     use HasRecursiveRelationships;
     use HasSlug;

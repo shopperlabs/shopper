@@ -15,6 +15,11 @@ class ProductFactory extends Factory
 {
     protected $model = Product::class;
 
+    public function modelName(): string
+    {
+        return config('shopper.models.product', Product::class);
+    }
+
     /**
      * Define the model's default state.
      *

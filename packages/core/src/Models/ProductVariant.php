@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Shopper\Core\Contracts\Media\HasMedia as ShopperHasMedia;
 use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Database\Factories\ProductVariantFactory;
 use Shopper\Core\Enum\Dimension\Length;
@@ -17,11 +18,10 @@ use Shopper\Core\Enum\Dimension\Volume;
 use Shopper\Core\Enum\Dimension\Weight;
 use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Core\Models\Traits\HasDimensions;
-use Shopper\Core\Models\Traits\HasMedia;
+use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasPrices;
 use Shopper\Core\Models\Traits\HasStock;
 use Shopper\Core\Traits\HasModelContract;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
@@ -52,14 +52,14 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  *
  * @implements Priceable<ProductVariant>
  */
-class ProductVariant extends Model implements Priceable, ProductVariantContract, SpatieHasMedia
+class ProductVariant extends Model implements Priceable, ProductVariantContract, ShopperHasMedia
 {
     use HasDimensions;
 
     /** @use HasFactory<ProductVariantFactory> */
     use HasFactory;
 
-    use HasMedia;
+    use HasMediaCollections;
     use HasModelContract;
     use HasPrices;
     use HasStock;

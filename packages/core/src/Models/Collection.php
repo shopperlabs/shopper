@@ -11,14 +11,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Shopper\Core\Contracts\Media\HasMedia as ShopperHasMedia;
 use Shopper\Core\Database\Factories\CollectionFactory;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Contracts\Collection as CollectionContract;
-use Shopper\Core\Models\Traits\HasMedia;
+use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Queries\CollectionProductsQuery;
 use Shopper\Core\Traits\HasModelContract;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
@@ -38,12 +38,12 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read EloquentCollection<int, Zone> $zones
  * @property-read EloquentCollection<int, Product> $products
  */
-class Collection extends Model implements CollectionContract, SpatieHasMedia
+class Collection extends Model implements CollectionContract, ShopperHasMedia
 {
     /** @use HasFactory<CollectionFactory> */
     use HasFactory;
 
-    use HasMedia;
+    use HasMediaCollections;
     use HasModelContract;
     use HasSlug;
 
