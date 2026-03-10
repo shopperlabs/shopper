@@ -15,8 +15,8 @@ use Shopper\Core\Models\Traits\HasDiscounts;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * @property-read ?string $two_factor_recovery_codes
- * @property-read ?string $two_factor_secret
+ * @property-read ?string $store_two_factor_recovery_codes
+ * @property-read ?string $store_two_factor_secret
  * @property-read Collection<int, Order> $orders
  * @property-read Collection<int, Address> $addresses
  */

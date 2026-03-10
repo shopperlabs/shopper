@@ -161,7 +161,7 @@ final class Login extends Component implements HasForms
     private function shouldChallenge(mixed $user): bool
     {
         return config('shopper.auth.2fa_enabled')
-            && $user->two_factor_secret
+            && $user->store_two_factor_secret
             && in_array(TwoFactorAuthenticatable::class, class_uses_recursive($user));
     }
 
@@ -182,7 +182,7 @@ final class Login extends Component implements HasForms
             $user->replaceRecoveryCode($validCode);
         } else {
             $isValid = app(TwoFactorAuthenticationProvider::class)->verify(
-                decrypt($user->two_factor_secret),
+                decrypt($user->store_two_factor_secret),
                 $data['code'],
             );
 

@@ -12,7 +12,7 @@ class GenerateNewRecoveryCodes
     public function __invoke(ShopperUser $user): void
     {
         $user->forceFill([
-            'two_factor_recovery_codes' => encrypt(json_encode(
+            'store_two_factor_recovery_codes' => encrypt(json_encode(
                 Collection::times(8, fn (): string => RecoveryCode::generate())->all()
             )),
         ])->save();

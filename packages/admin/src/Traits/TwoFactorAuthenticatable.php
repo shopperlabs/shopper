@@ -17,16 +17,16 @@ trait TwoFactorAuthenticatable
 {
     public function recoveryCodes(): array
     {
-        return json_decode(decrypt($this->two_factor_recovery_codes), true);
+        return json_decode(decrypt($this->store_two_factor_recovery_codes), true);
     }
 
     public function replaceRecoveryCode(string $code): void
     {
         $this->forceFill([
-            'two_factor_recovery_codes' => encrypt(str_replace(
+            'store_two_factor_recovery_codes' => encrypt(str_replace(
                 $code,
                 RecoveryCode::generate(),
-                decrypt($this->two_factor_recovery_codes)
+                decrypt($this->store_two_factor_recovery_codes)
             )),
         ])->save();
     }
@@ -48,7 +48,7 @@ trait TwoFactorAuthenticatable
         return app(TwoFactorAuthenticationProvider::class)->qrCodeUrl(
             config('app.name'),
             $this->email,
-            decrypt($this->two_factor_secret)
+            decrypt($this->store_two_factor_secret)
         );
     }
 }
