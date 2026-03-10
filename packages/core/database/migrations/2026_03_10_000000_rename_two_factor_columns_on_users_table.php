@@ -10,6 +10,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (! Schema::hasColumn('users', 'two_factor_secret') || Schema::hasColumn('users', 'store_two_factor_secret')) {
+            return;
+        }
+
         Schema::table('users', static function (Blueprint $table): void {
             $table->renameColumn('two_factor_secret', 'store_two_factor_secret');
             $table->renameColumn('two_factor_recovery_codes', 'store_two_factor_recovery_codes');
