@@ -3,7 +3,7 @@ name: Builds assets
 on:
   pull_request:
     branches:
-      - '*.x'
+      - 2.x
     types:
       - closed
 
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.pull_request.base.ref }}
+          ref: 2.x
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -35,5 +35,5 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          branch: ${{ github.ref_name }}
+          branch: 2.x
           commit_message: "chore: Build assets"

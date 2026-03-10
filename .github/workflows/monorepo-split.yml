@@ -2,8 +2,6 @@ name: monorepo-split
 
 on:
   push:
-    branches:
-      - '*.x'
     tags:
       - '*'
 
@@ -49,7 +47,7 @@ jobs:
           package_directory: 'packages/${{ matrix.package }}'
           repository_organization: 'shopperlabs'
           repository_name: '${{ matrix.repository }}'
-          branch: ${{ github.ref_type == 'tag' && '2.x' || github.ref_name }}
-          tag: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+          branch: 2.x
+          tag: ${{ github.ref_name }}
           user_name: 'Arthur Monney'
           user_email: 'monneylobe@gmail.com'
