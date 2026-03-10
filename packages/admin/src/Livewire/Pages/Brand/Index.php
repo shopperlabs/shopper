@@ -74,8 +74,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->action(
                         fn (BrandContract $record) => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.brand-form',
-                            arguments: ['brand' => $record]
+                            'shopper-slide-overs.brand-form',
+                            ['brand' => $record]
                         )
                     )
                     ->visible(Shopper::auth()->user()->can('edit_brands')),

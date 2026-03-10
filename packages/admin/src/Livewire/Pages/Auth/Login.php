@@ -170,7 +170,7 @@ final class Login extends Component implements HasForms
         $data = $this->twoFactorForm->getState();
 
         if ($this->useRecoveryCode) {
-            $validCode = collect($user->recoveryCodes())
+            $validCode = collect($user->getStoreAuthenticationRecoveryCodes())
                 ->first(fn ($code): bool => hash_equals($data['recovery_code'], $code));
 
             if (! $validCode) {
@@ -179,7 +179,7 @@ final class Login extends Component implements HasForms
                 ]);
             }
 
-            $user->replaceRecoveryCode($validCode);
+            $user->replaceStoreAuthenticationRecoveryCode($validCode);
         } else {
             $isValid = app(TwoFactorAuthenticationProvider::class)->verify(
                 decrypt($user->store_two_factor_secret),

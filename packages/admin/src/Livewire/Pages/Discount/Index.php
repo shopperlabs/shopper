@@ -104,8 +104,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->action(
                         fn (Discount $record) => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.discount-form',
-                            arguments: ['discountId' => $record->id]
+                            'shopper-slide-overs.discount-form',
+                            ['discountId' => $record->id]
                         )
                     )
                     ->visible($this->getUser()->can('edit_discounts')),

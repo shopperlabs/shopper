@@ -81,7 +81,7 @@
                                 </p>
 
                                 <div class="mt-4">
-                                    {!! $this->user->twoFactorQrCodeSvg() !!}
+                                    {!! $this->user->getStoreAuthenticationQrCodeSvg() !!}
                                 </div>
                             </div>
                         @endif

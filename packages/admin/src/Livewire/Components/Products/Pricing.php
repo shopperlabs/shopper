@@ -57,8 +57,8 @@ class Pricing extends Component implements HasActions, HasForms, HasTable
                     ->action(
                         fn (Price $record) => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.manage-pricing',
-                            arguments: [
+                            'shopper-slide-overs.manage-pricing',
+                            [
                                 'modelId' => $this->model->id, // @phpstan-ignore-line
                                 'modelType' => get_class($this->model),
                                 'currencyId' => $record->currency->id,
@@ -77,8 +77,8 @@ class Pricing extends Component implements HasActions, HasForms, HasTable
                     ->action(
                         fn () => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.manage-pricing',
-                            arguments: [
+                            'shopper-slide-overs.manage-pricing',
+                            [
                                 'modelId' => $this->model->id, // @phpstan-ignore-line
                                 'modelType' => get_class($this->model),
                             ]

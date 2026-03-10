@@ -62,8 +62,8 @@ class Detail extends Component implements HasActions, HasSchemas
             ->icon(Untitledui::Edit03)
             ->action(fn (array $arguments) => $this->dispatch(
                 'openPanel',
-                component: 'shopper-slide-overs.zone-form',
-                arguments: ['zoneId' => $arguments['id']]
+                'shopper-slide-overs.zone-form',
+                ['zoneId' => $arguments['id']]
             ));
     }
 

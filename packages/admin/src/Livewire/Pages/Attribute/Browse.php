@@ -72,8 +72,8 @@ class Browse extends AbstractPageComponent implements HasActions, HasForms, HasT
                     ->action(
                         fn (Attribute $record) => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.attribute-values',
-                            arguments: ['attributeId' => $record->id]
+                            'shopper-slide-overs.attribute-values',
+                            ['attributeId' => $record->id]
                         )
                     )
                     ->visible(fn (Attribute $record): bool => in_array($record->type, Attribute::fieldsWithValues())),
@@ -84,8 +84,8 @@ class Browse extends AbstractPageComponent implements HasActions, HasForms, HasT
                     ->action(
                         fn (Attribute $record) => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.attribute-form',
-                            arguments: ['attributeId' => $record->id]
+                            'shopper-slide-overs.attribute-form',
+                            ['attributeId' => $record->id]
                         )
                     )
                     ->visible(shopper()->auth()->user()->can('edit_attributes')),

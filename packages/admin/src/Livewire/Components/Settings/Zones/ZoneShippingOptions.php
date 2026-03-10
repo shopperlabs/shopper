@@ -68,8 +68,8 @@ class ZoneShippingOptions extends Component implements HasActions, HasSchemas
             ->icon(Untitledui::Edit03)
             ->action(fn (array $arguments) => $this->dispatch(
                 'openPanel',
-                component: 'shopper-slide-overs.shipping-option-form',
-                arguments: ['zoneId' => $arguments['zone_id'], 'optionId' => $arguments['option_id']]
+                'shopper-slide-overs.shipping-option-form',
+                ['zoneId' => $arguments['zone_id'], 'optionId' => $arguments['option_id']]
             ));
     }
 

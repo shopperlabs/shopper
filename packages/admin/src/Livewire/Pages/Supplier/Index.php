@@ -70,8 +70,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->action(
                         fn (SupplierContract $record) => $this->dispatch(
                             'openPanel',
-                            component: 'shopper-slide-overs.supplier-form',
-                            arguments: ['supplier' => $record]
+                            'shopper-slide-overs.supplier-form',
+                            ['supplier' => $record]
                         )
                     )
                     ->visible(Shopper::auth()->user()->can('edit_suppliers')),

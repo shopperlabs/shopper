@@ -53,8 +53,8 @@ class AbandonedCarts extends AbstractPageComponent implements HasActions, HasFor
                     ->iconButton()
                     ->action(fn (Cart $record) => $this->dispatch(
                         'openPanel',
-                        component: 'shopper-slide-overs.abandoned-cart-detail',
-                        arguments: ['cart' => $record],
+                        'shopper-slide-overs.abandoned-cart-detail',
+                        ['cart' => $record],
                     )),
             ])
             ->columns([
