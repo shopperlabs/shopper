@@ -9,7 +9,7 @@ use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Zone;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Zone::class, function (): void {
     it('has enabled scope', function (): void {

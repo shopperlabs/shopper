@@ -6,7 +6,7 @@ use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Price;
 use Shopper\Core\Models\Product;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Price::class, function (): void {
     it('belongs to currency', function (): void {

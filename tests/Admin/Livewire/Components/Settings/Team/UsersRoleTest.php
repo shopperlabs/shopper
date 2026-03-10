@@ -7,7 +7,7 @@ use Shopper\Livewire\Components\Settings\Team\UsersRole;
 use Shopper\Models\Role;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->adminUser = User::factory()->create();

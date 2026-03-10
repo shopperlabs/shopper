@@ -7,7 +7,7 @@ use Shopper\Core\Models\InventoryHistory;
 use Shopper\Core\Models\Product;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(InventoryHistory::class, function (): void {
     it('belongs to inventory', function (): void {

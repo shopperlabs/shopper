@@ -4,121 +4,20 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
-use BladeUI\Icons\BladeIconsServiceProvider;
-use Codeat3\BladePhosphorIcons\BladePhosphorIconsServiceProvider;
-use CodeWithDennis\FilamentSelectTree\FilamentSelectTreeServiceProvider;
-use Filament\Actions\ActionsServiceProvider;
-use Filament\FilamentServiceProvider;
-use Filament\Forms\FormsServiceProvider;
-use Filament\Infolists\InfolistsServiceProvider;
-use Filament\Notifications\NotificationsServiceProvider;
-use Filament\Schemas\SchemasServiceProvider;
-use Filament\Support\Livewire\Partials\DataStoreOverride;
-use Filament\Support\SupportServiceProvider;
-use Filament\Tables\TablesServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use JaOcero\RadioDeck\RadioDeckServiceProvider;
-use Livewire\LivewireServiceProvider;
-use Livewire\Mechanisms\DataStore;
-use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
-use Milon\Barcode\BarcodeServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use PDO;
 use PDOException;
-use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use Shopper\Cart\CartServiceProvider;
-use Shopper\Core\CoreServiceProvider;
-use Tests\Database\Seeders\TestSeeder;
-use Shopper\Payment\PaymentServiceProvider;
-use Shopper\ShopperServiceProvider;
-use Shopper\Shipping\ShippingServiceProvider;
-use Shopper\Sidebar\SidebarServiceProvider;
-use Shopper\Stripe\StripeServiceProvider;
-use Spatie\LivewireWizard\WizardServiceProvider;
-use Spatie\MediaLibrary\MediaLibraryServiceProvider;
-use Spatie\Permission\PermissionRegistrar;
-use Spatie\Permission\PermissionServiceProvider;
-use TailwindMerge\Laravel\TailwindMergeServiceProvider;
-use Tests\Core\Stubs\User;
 
 abstract class TestCase extends BaseTestCase
 {
     use RefreshDatabase;
     use WithWorkbench;
 
-    protected bool $seed = true;
-
-    protected string $seeder = TestSeeder::class;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app->make(PermissionRegistrar::class)->forgetCachedPermissions();
-
-        $this->fixFilamentDataStoreBinding();
-
-        // Freeze time to avoid timestamp errors
-        $this->freezeTime();
-    }
-
-    protected function fixFilamentDataStoreBinding(): void
-    {
-        $this->app->singleton(DataStore::class, DataStoreOverride::class);
-    }
-
-    protected function getPackageProviders($app): array
-    {
-        return [
-            LivewireServiceProvider::class,
-            ActionsServiceProvider::class,
-            BarcodeServiceProvider::class,
-            BladeCaptureDirectiveServiceProvider::class,
-            BladeHeroiconsServiceProvider::class,
-            BladeUntitledUIIconsServiceProvider::class,
-            BladePhosphorIconsServiceProvider::class,
-            BladeIconsServiceProvider::class,
-            CartServiceProvider::class,
-            CoreServiceProvider::class,
-            FilamentServiceProvider::class,
-            PaymentServiceProvider::class,
-            PermissionServiceProvider::class,
-            ShippingServiceProvider::class,
-            ShopperServiceProvider::class,
-            SidebarServiceProvider::class,
-            StripeServiceProvider::class,
-            FormsServiceProvider::class,
-            InfolistsServiceProvider::class,
-            SchemasServiceProvider::class,
-            SupportServiceProvider::class,
-            NotificationsServiceProvider::class,
-            TablesServiceProvider::class,
-            MediaLibraryServiceProvider::class,
-            TailwindMergeServiceProvider::class,
-            RadioDeckServiceProvider::class,
-            FilamentSelectTreeServiceProvider::class,
-            WizardServiceProvider::class,
-        ];
-    }
-
-    protected function asAdmin(): self
-    {
-        return $this->actingAs($this->makeAdminUser(), config('shopper.auth.guard'));
-    }
-
-    protected function makeAdminUser(): User
-    {
-        $admin = User::factory()->create();
-        $admin->assignRole(config('shopper.admin.roles.admin'));
-
-        return $admin;
-    }
-
     protected function defineEnvironment($app): void
     {
-        $app['config']->set('auth.providers.users.model', User::class);
+        $app['config']->set('auth.providers.users.model', Core\Stubs\User::class);
         $app['config']->set('view.paths', [
             ...$app['config']->get('view.paths'),
             __DIR__.'/../packages/admin/resources/views',
@@ -181,6 +80,19 @@ abstract class TestCase extends BaseTestCase
 
         $app['config']->set('database.default', $connection);
         $app['config']->set('database.connections.testing', $app['config']->get('database.connections.sqlite'));
+
+        $this->replaceModelsForTesting();
+    }
+
+    protected function replaceModelsForTesting(): void
+    {
+        config([
+            'shopper.models.brand' => Core\Stubs\Brand::class,
+            'shopper.models.category' => Core\Stubs\Category::class,
+            'shopper.models.collection' => Core\Stubs\Collection::class,
+            'shopper.models.product' => Core\Stubs\Product::class,
+            'shopper.models.variant' => Core\Stubs\ProductVariant::class,
+        ]);
     }
 
     protected function ensureDatabaseExists(string $driver, string $dbName, array $config): void

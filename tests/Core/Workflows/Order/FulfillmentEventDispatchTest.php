@@ -17,7 +17,7 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\OrderShipping;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe('Fulfillment event dispatch correctness', function (): void {
     it('dispatches OrderShipped only once when status transitions to shipped', function (): void {

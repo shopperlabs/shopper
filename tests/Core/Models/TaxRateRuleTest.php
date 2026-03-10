@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxRateRule;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(TaxRateRule::class, function (): void {
     it('can be created with factory', function (): void {

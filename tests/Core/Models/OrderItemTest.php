@@ -6,7 +6,7 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\Product;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(OrderItem::class, function (): void {
     it('belongs to order', function (): void {

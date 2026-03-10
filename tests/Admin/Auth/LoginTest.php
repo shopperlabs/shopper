@@ -7,7 +7,7 @@ use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\Auth\Login;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 describe(Login::class, function (): void {
     it('can render login page', function (): void {

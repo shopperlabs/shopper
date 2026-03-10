@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Inventory;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Inventory::class, function (): void {
     it('has default scope', function (): void {

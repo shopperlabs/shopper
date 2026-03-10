@@ -7,7 +7,7 @@ use Shopper\Core\Enum\Rule;
 use Shopper\Core\Models\Collection;
 use Shopper\Core\Models\CollectionRule;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(CollectionRule::class, function (): void {
     it('belongs to collection', function (): void {

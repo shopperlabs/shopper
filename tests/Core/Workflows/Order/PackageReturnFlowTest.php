@@ -12,7 +12,7 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\OrderShipping;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe('Package return — full shipment returned', function (): void {
     it('marks items as cancelled and order as returned when shipment is returned', function (): void {

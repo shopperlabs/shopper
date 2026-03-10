@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Shopper\Core\Models\Setting;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Setting::class, function (): void {
     it('has value cast as array', function (): void {

@@ -7,10 +7,9 @@ use Shopper\Livewire\Pages\Brand\Index;
 use Tests\Core\Stubs\Brand;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
-    config()->set('shopper.models.brand', Brand::class);
 
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('browse_brands');

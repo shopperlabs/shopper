@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Models\OrderAddress;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(OrderAddress::class, function (): void {
     it('has full name accessor', function (): void {

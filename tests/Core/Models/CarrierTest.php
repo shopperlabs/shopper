@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\Zone;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Carrier::class, function (): void {
     it('has enabled scope', function (): void {

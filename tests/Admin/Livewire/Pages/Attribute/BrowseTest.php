@@ -7,7 +7,7 @@ use Shopper\Core\Models\Attribute;
 use Shopper\Livewire\Pages\Attribute\Browse;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();

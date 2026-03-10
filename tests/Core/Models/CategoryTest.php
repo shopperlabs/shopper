@@ -6,7 +6,7 @@ use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Contracts\Category as CategoryContract;
 use Shopper\Core\Models\Product;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Category::class, function (): void {
     it('has enabled scope', function (): void {

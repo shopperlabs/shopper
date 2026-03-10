@@ -20,7 +20,7 @@ use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Models\Review;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();

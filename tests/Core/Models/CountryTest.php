@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Zone;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Country::class, function (): void {
     it('has zones relationship from HasZones trait', function (): void {

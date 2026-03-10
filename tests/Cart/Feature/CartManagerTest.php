@@ -14,7 +14,7 @@ use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\cart\TestCase::class);
 
 beforeEach(function (): void {
     setupCurrencies();

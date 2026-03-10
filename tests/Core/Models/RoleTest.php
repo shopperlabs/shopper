@@ -6,7 +6,7 @@ use Shopper\Models\Permission;
 use Shopper\Models\Role;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Role::class, function (): void {
     it('has users relationship', function (): void {

@@ -7,13 +7,11 @@ use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Core\Models\Zone;
 use Shopper\Livewire\SlideOvers\AddCollectionForm;
-use Tests\Core\Stubs\Collection;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
-    config()->set('shopper.models.collection', Collection::class);
 
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('add_collections');

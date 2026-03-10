@@ -10,7 +10,7 @@ use Shopper\Core\Stock\DefaultInventoryResolver;
 use Shopper\Core\Stock\PriorityStockAllocator;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 beforeEach(function (): void {
     $this->actingAs(User::factory()->create());

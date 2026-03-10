@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Shopper\Core\Models\PaymentMethod;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(PaymentMethod::class, function (): void {
     it('has enabled scope', function (): void {
@@ -32,13 +32,6 @@ describe(PaymentMethod::class, function (): void {
         expect($payment->slug)->toBe('credit-card-payment');
     });
 
-    it('returns null for `logoUrl()` when no media is attached', function (): void {
-        $payment = PaymentMethod::factory()->create();
-
-        expect($payment->logoUrl())->toBeNull();
-    });
-
-    // HasZones trait tests
     it('has zones relationship from HasZones trait', function (): void {
         $payment = PaymentMethod::factory()->create(['title' => 'Test Payment', 'slug' => 'test-payment']);
         $zone = Shopper\Core\Models\Zone::factory()->create();

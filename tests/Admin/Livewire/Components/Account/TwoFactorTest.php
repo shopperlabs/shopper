@@ -10,7 +10,7 @@ use Shopper\Events\TwoFactor\TwoFactorAuthenticationEnabled;
 use Shopper\Livewire\Components\Account\TwoFactor;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     config()->set('shopper.auth.2fa_enabled', false);

@@ -16,7 +16,7 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\OrderShipping;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe('Standard order — purchase to delivery', function (): void {
     it('starts with correct default statuses', function (): void {

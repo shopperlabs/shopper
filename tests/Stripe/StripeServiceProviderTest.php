@@ -6,7 +6,7 @@ use Shopper\Payment\Facades\Payment;
 use Shopper\Stripe\StripeDriver;
 use Shopper\Stripe\StripeServiceProvider;
 
-uses(Tests\TestCase::class);
+uses(Tests\Stripe\TestCase::class);
 
 beforeEach(function (): void {
     $this->app->register(Shopper\Payment\PaymentServiceProvider::class);

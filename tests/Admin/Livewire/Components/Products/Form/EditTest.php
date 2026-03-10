@@ -11,10 +11,9 @@ use Shopper\Livewire\Components\Products\Form\Edit;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
-    config()->set('shopper.models.product', Product::class);
 
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('edit_products');

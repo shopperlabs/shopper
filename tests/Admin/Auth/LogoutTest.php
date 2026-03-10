@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 use Shopper\Facades\Shopper;
 use Tests\Core\Stubs\User;
-use Tests\TestCase;
 
-uses(TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 it('can log a user out', function (): void {
     $prefix = Shopper::prefix();

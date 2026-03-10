@@ -7,7 +7,7 @@ use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Product;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Attribute::class, function (): void {
     it('has correct field types', function (): void {

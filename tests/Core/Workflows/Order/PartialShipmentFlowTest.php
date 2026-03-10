@@ -16,7 +16,7 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\OrderShipping;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe('Partial shipment — multi-package delivery', function (): void {
     it('sets order to partially shipped when only some items are picked up', function (): void {

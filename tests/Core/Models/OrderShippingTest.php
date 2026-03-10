@@ -6,7 +6,7 @@ use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderShipping;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(OrderShipping::class, function (): void {
     it('belongs to order', function (): void {

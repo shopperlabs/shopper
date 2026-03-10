@@ -7,7 +7,7 @@ use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Product;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 beforeEach(function (): void {
     $this->actingAs(User::factory()->create());

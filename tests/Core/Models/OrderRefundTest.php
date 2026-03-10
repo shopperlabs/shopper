@@ -7,7 +7,7 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderRefund;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(OrderRefund::class, function (): void {
     it('belongs to order', function (): void {

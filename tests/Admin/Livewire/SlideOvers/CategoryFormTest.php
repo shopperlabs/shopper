@@ -8,10 +8,9 @@ use Shopper\Livewire\SlideOvers\CategoryForm;
 use Tests\Core\Stubs\Category;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
-    config()->set('shopper.models.category', Category::class);
 
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('add_categories', 'edit_categories');

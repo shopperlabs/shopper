@@ -6,7 +6,7 @@ use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\DiscountDetail;
 use Shopper\Core\Models\Product;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(DiscountDetail::class, function (): void {
     it('belongs to discount', function (): void {

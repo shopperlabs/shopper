@@ -9,7 +9,7 @@ use Shopper\Actions\Auth\GenerateNewRecoveryCodes;
 use Shopper\Events\TwoFactor\TwoFactorAuthenticationEnabled;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 describe('EnableTwoFactorAuthentication', function (): void {
     it('can enable two factor authentication', function (): void {

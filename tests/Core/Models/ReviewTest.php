@@ -6,7 +6,7 @@ use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Review;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Review::class, function (): void {
     it('belongs to reviewrateable product', function (): void {

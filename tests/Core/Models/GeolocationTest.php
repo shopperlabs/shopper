@@ -6,7 +6,7 @@ use Shopper\Core\Models\Geolocation;
 use Shopper\Core\Models\Order;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Geolocation::class, function (): void {
     it('belongs to user', function (): void {

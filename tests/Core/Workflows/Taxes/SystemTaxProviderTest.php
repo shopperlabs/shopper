@@ -11,7 +11,7 @@ use Shopper\Core\Taxes\TaxCalculationContext;
 use Shopper\Core\Taxes\TaxCalculator;
 use Tests\Core\Stubs\TaxableItemStub;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe('SystemTaxProvider', function (): void {
     it('calculates VAT 20% inclusive on a 10000 cents item (France)', function (): void {

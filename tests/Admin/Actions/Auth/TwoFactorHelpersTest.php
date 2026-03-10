@@ -6,7 +6,7 @@ use PragmaRX\Google2FA\Google2FA;
 use Shopper\Actions\Auth\RecoveryCode;
 use Shopper\Concerns\TwoFactorAuthenticationProvider;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 describe(RecoveryCode::class, function (): void {
     it('generates recovery code in correct format', function (): void {

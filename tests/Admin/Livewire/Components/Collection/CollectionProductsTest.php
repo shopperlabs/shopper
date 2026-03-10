@@ -8,10 +8,9 @@ use Shopper\Livewire\Components\Collection\CollectionProducts;
 use Tests\Core\Stubs\Collection;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
-    config()->set('shopper.models.collection', Collection::class);
 
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('edit_collections');

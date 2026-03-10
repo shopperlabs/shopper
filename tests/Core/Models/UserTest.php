@@ -6,12 +6,12 @@ use Shopper\Core\Models\Address;
 use Shopper\Models\Role;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(User::class, function (): void {
     it('deletes user addresses and roles when user is deleted', function (): void {
         $user = User::factory()->create();
-        $role = Role::create(['name' => 'test-role']);
+        $role = Role::query()->create(['name' => 'test-role']);
         $user->roles()->attach($role);
 
         Address::factory()->count(2)->create(['user_id' => $user->id]);
@@ -20,13 +20,13 @@ describe(User::class, function (): void {
 
         $user->delete();
 
-        expect(Address::whereIn('id', $addressIds)->exists())->toBeFalse()
+        expect(Address::query()->whereIn('id', $addressIds)->exists())->toBeFalse()
             ->and($user->roles()->count())->toBe(0);
     });
 
     it('checks if user is admin', function (): void {
         $user = User::factory()->create();
-        $adminRole = Role::firstOrCreate(['name' => config('shopper.admin.roles.admin')]);
+        $adminRole = Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.admin')]);
 
         $user->assignRole($adminRole);
 
@@ -41,7 +41,7 @@ describe(User::class, function (): void {
 
     it('checks if user is manager', function (): void {
         $user = User::factory()->create();
-        $managerRole = Role::firstOrCreate(['name' => config('shopper.admin.roles.manager')]);
+        $managerRole = Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.manager')]);
 
         $user->assignRole($managerRole);
 
@@ -63,7 +63,7 @@ describe(User::class, function (): void {
     });
 
     it('scopes customers correctly', function (): void {
-        $customerRole = Role::firstOrCreate(['name' => config('shopper.admin.roles.user')]);
+        $customerRole = Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.user')]);
         $customers = User::factory()->count(3)->create();
         $customers->each(fn ($user) => $user->assignRole($customerRole));
 
@@ -73,8 +73,8 @@ describe(User::class, function (): void {
     });
 
     it('scopes administrators correctly', function (): void {
-        $adminRole = Role::firstOrCreate(['name' => config('shopper.admin.roles.admin')]);
-        $managerRole = Role::firstOrCreate(['name' => config('shopper.admin.roles.manager')]);
+        $adminRole = Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.admin')]);
+        $managerRole = Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.manager')]);
 
         $admins = User::factory()->count(2)->create();
         $admins->each(fn ($user) => $user->assignRole($adminRole));

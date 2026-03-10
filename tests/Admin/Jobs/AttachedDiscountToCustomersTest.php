@@ -9,7 +9,7 @@ use Shopper\Core\Models\DiscountDetail;
 use Shopper\Jobs\AttachedDiscountToCustomers;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 describe(AttachedDiscountToCustomers::class, function (): void {
     it('can be dispatched', function (): void {

@@ -12,7 +12,7 @@ use Shopper\Core\Models\CollectionRule;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Zone;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Collection::class, function (): void {
     it('has correct type methods', function (): void {

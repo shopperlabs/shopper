@@ -8,10 +8,9 @@ use Shopper\Livewire\SlideOvers\BrandForm;
 use Tests\Core\Stubs\Brand;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
-    config()->set('shopper.models.brand', Brand::class);
 
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('add_brands', 'edit_brands');

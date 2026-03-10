@@ -9,11 +9,9 @@ use Shopper\Core\Models\DiscountDetail;
 use Shopper\Jobs\AttachedDiscountToProducts;
 use Tests\Core\Stubs\Product;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
-beforeEach(function (): void {
-    config()->set('shopper.models.product', Product::class);
-});
+beforeEach(function (): void {});
 
 describe(AttachedDiscountToProducts::class, function (): void {
     it('can be dispatched', function (): void {

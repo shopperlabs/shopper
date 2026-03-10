@@ -9,14 +9,11 @@ use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Inventory;
 use Tests\Core\Stubs\Product;
-use Tests\Core\Stubs\ProductVariant;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
-    config()->set('shopper.models.product', Product::class);
-    config()->set('shopper.models.variant', ProductVariant::class);
 
     $this->user = User::factory()->create();
     $this->actingAs($this->user);

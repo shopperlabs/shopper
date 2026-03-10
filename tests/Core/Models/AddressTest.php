@@ -7,7 +7,7 @@ use Shopper\Core\Exceptions\UndefinedEnumCaseError;
 use Shopper\Core\Models\Address;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Address::class, function (): void {
     it('has address types from enum', function (): void {

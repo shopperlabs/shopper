@@ -7,7 +7,7 @@ use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Product;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(AttributeProduct::class, function (): void {
     it('belongs to attribute', function (): void {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Livewire\Livewire;
 use Shopper\Livewire\Pages\Auth\ForgotPassword;
 
-uses(Tests\TestCase::class);
+uses(Tests\Admin\TestCase::class);
 
 describe(ForgotPassword::class, function (): void {
     it('can render forgot password component', function (): void {

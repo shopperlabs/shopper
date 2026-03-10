@@ -14,7 +14,7 @@ use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\Product;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();

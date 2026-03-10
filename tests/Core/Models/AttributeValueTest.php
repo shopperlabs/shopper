@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(AttributeValue::class, function (): void {
     it('belongs to attribute', function (): void {

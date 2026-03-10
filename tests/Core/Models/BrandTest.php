@@ -7,7 +7,7 @@ use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Contracts\Brand as BrandContract;
 use Shopper\Core\Models\Product;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Brand::class, function (): void {
     it('can update brand status', function (): void {

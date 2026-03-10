@@ -11,7 +11,7 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\OrderShipping;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe('Shipment state machine — invalid transitions', function (): void {
     it('rejects direct transition from pending to delivered', function (): void {

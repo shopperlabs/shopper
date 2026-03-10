@@ -6,7 +6,7 @@ use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Order;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe('Order cancellation rules', function (): void {
     it('allows cancellation when order is unfulfilled', function (): void {

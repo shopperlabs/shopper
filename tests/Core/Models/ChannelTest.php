@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Contracts\Channel as ChannelContract;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Channel::class, function (): void {
     it('scopes enabled channels', function (): void {

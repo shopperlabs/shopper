@@ -15,7 +15,7 @@ use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Zone;
 use Tests\Core\Stubs\User;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(Order::class, function (): void {
     it('calculates total from order items', function (): void {

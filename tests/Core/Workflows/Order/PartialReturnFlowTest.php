@@ -13,7 +13,7 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\OrderShipping;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe('Partial return — one package delivered, one returned', function (): void {
     it('sets order to partially returned when one shipment is delivered and another returned', function (): void {

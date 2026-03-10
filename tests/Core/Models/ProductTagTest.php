@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductTag;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(ProductTag::class, function (): void {
     it('uses correct table name', function (): void {

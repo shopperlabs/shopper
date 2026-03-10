@@ -6,7 +6,7 @@ use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Zone;
 
-uses(Tests\TestCase::class);
+uses(Tests\Core\TestCase::class);
 
 describe(CarrierOption::class, function (): void {
     it('checks if carrier option is enabled', function (): void {
