@@ -62,12 +62,11 @@ final class CarrierRateService
     }
 
     /**
-     * Get the logo URL for a carrier, with driver logo as fallback.
+     * Get the logo URL for a carrier from its driver.
      */
     public function getLogoUrl(Carrier $carrier): ?string
     {
-        return $carrier->logoUrl()
-            ?? $this->resolveDriver($carrier)?->logo()
+        return $this->resolveDriver($carrier)?->logo()
             ?? Shipping::driver('manual')->logo();
     }
 
@@ -87,7 +86,6 @@ final class CarrierRateService
     {
         return Carrier::query()
             ->enabled()
-            ->with('media')
             ->get()
             ->mapWithKeys(fn (Carrier $carrier): array => [
                 $carrier->id => '<div class="flex items-center gap-2">'

@@ -5,7 +5,7 @@
     $carrier = $this->shipment->carrier;
     $shippingAddress = $order->shippingAddress;
     $carrierLogoUrl = $carrier
-        ? ($carrier->logoUrl() ?? \Shopper\Shipping\Facades\Shipping::driver($carrier->driver ?? 'manual')->logo())
+        ? \Shopper\Shipping\Facades\Shipping::driver($carrier->driver ?? 'manual')->logo()
         : null;
 
     $steps = [

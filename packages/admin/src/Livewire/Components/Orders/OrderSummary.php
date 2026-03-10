@@ -35,10 +35,8 @@ class OrderSummary extends Component
             'shippingOption' => $shippingOption,
             'taxAmount' => $taxAmount,
             'isTaxInclusive' => $isTaxInclusive,
-            'carrierLogoUrl' => $carrier?->logoUrl()
-                ?? ($carrier ? Shipping::driver($carrier->driver ?? 'manual')->logo() : null),
-            'paymentLogoUrl' => $paymentMethod?->logoUrl()
-                ?? ($paymentMethod ? Payment::driver($paymentMethod->driver ?? 'manual')->logo() : null),
+            'carrierLogoUrl' => $carrier ? Shipping::driver($carrier->driver ?? 'manual')->logo() : null,
+            'paymentLogoUrl' => $paymentMethod ? Payment::driver($paymentMethod->driver ?? 'manual')->logo() : null,
             'itemsCount' => $this->order->items->count(),
             'total' => $this->order->price_amount !== null
                 ? $this->order->price_amount

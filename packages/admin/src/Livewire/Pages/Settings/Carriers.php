@@ -11,13 +11,11 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\ImageColumn;
@@ -50,7 +48,7 @@ class Carriers extends Component implements HasActions, HasForms, HasTable
     {
         return Action::make('createCarrier')
             ->label(__('shopper::pages/settings/carriers.add_carrier'))
-            ->modalWidth(Width::TwoExtraLarge)
+            ->modalWidth(Width::ExtraLarge)
             ->modalHeading(__('shopper::pages/settings/carriers.add_carrier'))
             ->modalSubmitActionLabel(__('shopper::forms.actions.save'))
             ->schema($this->getCarrierFormSchema())
@@ -98,7 +96,7 @@ class Carriers extends Component implements HasActions, HasForms, HasTable
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon(Untitledui::Edit03)
                     ->iconButton()
-                    ->modalWidth(Width::TwoExtraLarge)
+                    ->modalWidth(Width::ExtraLarge)
                     ->schema($this->getCarrierFormSchema())
                     ->successNotificationTitle(__('shopper::notifications.carrier.update')),
                 DeleteAction::make('delete')
@@ -121,31 +119,21 @@ class Carriers extends Component implements HasActions, HasForms, HasTable
     protected function getCarrierFormSchema(): array
     {
         return [
-            SpatieMediaLibraryFileUpload::make('logo')
-                ->label(__('shopper::forms.label.provider_logo'))
-                ->avatar()
-                ->image()
-                ->maxSize(1024)
-                ->collection(config('shopper.media.storage.thumbnail_collection'))
-                ->columnSpan('full'),
-            Grid::make()
-                ->schema([
-                    TextInput::make('name')
-                        ->label(__('shopper::forms.label.carrier_name'))
-                        ->placeholder('UPS, FedEx, DHL...')
-                        ->required()
-                        ->live(onBlur: true)
-                        ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('slug', $state)),
-                    Hidden::make('slug'),
-                    Select::make('driver')
-                        ->label(__('shopper::forms.label.driver'))
-                        ->options($this->getDriverOptions())
-                        ->default('manual')
-                        ->required()
-                        ->helperText(__('shopper::pages/settings/carriers.driver_help'))
-                        ->native(false)
-                        ->allowHtml(),
-                ]),
+            TextInput::make('name')
+                ->label(__('shopper::forms.label.carrier_name'))
+                ->placeholder('UPS, FedEx, DHL...')
+                ->required()
+                ->live(onBlur: true)
+                ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('slug', $state)),
+            Hidden::make('slug'),
+            Select::make('driver')
+                ->label(__('shopper::forms.label.driver'))
+                ->options($this->getDriverOptions())
+                ->default('manual')
+                ->required()
+                ->helperText(__('shopper::pages/settings/carriers.driver_help'))
+                ->native(false)
+                ->allowHtml(),
             TextInput::make('link_url')
                 ->label(__('shopper::forms.label.website'))
                 ->placeholder('https://www.ups.com')

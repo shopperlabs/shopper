@@ -12,10 +12,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\CarrierFactory;
 use Shopper\Core\Models\Contracts\Carrier as CarrierContract;
-use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasZones;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
@@ -31,12 +29,11 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read CarbonInterface $updated_at
  * @property-read Collection<int, CarrierOption> $options
  */
-class Carrier extends Model implements CarrierContract, SpatieHasMedia
+class Carrier extends Model implements CarrierContract
 {
     /** @use HasFactory<CarrierFactory> */
     use HasFactory;
 
-    use HasMedia;
     use HasSlug;
     use HasZones;
 
@@ -62,17 +59,6 @@ class Carrier extends Model implements CarrierContract, SpatieHasMedia
     public function options(): HasMany
     {
         return $this->hasMany(CarrierOption::class);
-    }
-
-    public function logoUrl(): ?string
-    {
-        $media = $this->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection'));
-
-        if ($media && $media !== shopper_fallback_url()) {
-            return $media;
-        }
-
-        return null;
     }
 
     protected static function newFactory(): CarrierFactory

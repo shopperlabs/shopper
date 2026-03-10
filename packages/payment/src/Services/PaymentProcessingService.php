@@ -18,11 +18,11 @@ use Shopper\Payment\Models\PaymentTransaction;
 final class PaymentProcessingService
 {
     /**
-     * Get the logo URL for a payment method, with driver logo as fallback.
+     * Get the logo URL for a payment method from its driver.
      */
     public function getLogoUrl(PaymentMethod $method): ?string
     {
-        return $method->logoUrl() ?? Payment::driver($method->driver ?? 'manual')->logo();
+        return Payment::driver($method->driver ?? 'manual')->logo();
     }
 
     /**

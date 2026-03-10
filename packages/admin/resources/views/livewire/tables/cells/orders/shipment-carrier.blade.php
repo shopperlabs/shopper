@@ -1,7 +1,7 @@
 @php
     $carrier = $record->carrier;
     $logoUrl = $carrier
-        ? ($carrier->logoUrl() ?? \Shopper\Shipping\Facades\Shipping::driver($carrier->driver ?? 'manual')->logo())
+        ? \Shopper\Shipping\Facades\Shipping::driver($carrier->driver ?? 'manual')->logo()
         : null;
 @endphp
 

@@ -11,13 +11,11 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\ImageColumn;
@@ -50,7 +48,7 @@ class PaymentMethods extends Component implements HasActions, HasForms, HasTable
     {
         return Action::make('createPayment')
             ->label(__('shopper::pages/settings/payments.add_payment'))
-            ->modalWidth(Width::TwoExtraLarge)
+            ->modalWidth(Width::ExtraLarge)
             ->modalHeading(__('shopper::pages/settings/payments.add_payment'))
             ->modalSubmitActionLabel(__('shopper::forms.actions.save'))
             ->schema($this->getPaymentFormSchema())
@@ -98,7 +96,7 @@ class PaymentMethods extends Component implements HasActions, HasForms, HasTable
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon(Untitledui::Edit03)
                     ->iconButton()
-                    ->modalWidth(Width::TwoExtraLarge)
+                    ->modalWidth(Width::ExtraLarge)
                     ->schema($this->getPaymentFormSchema())
                     ->successNotificationTitle(__('shopper::notifications.payment.update')),
                 DeleteAction::make('delete')
@@ -121,31 +119,21 @@ class PaymentMethods extends Component implements HasActions, HasForms, HasTable
     protected function getPaymentFormSchema(): array
     {
         return [
-            SpatieMediaLibraryFileUpload::make('logo')
-                ->label(__('shopper::forms.label.provider_logo'))
-                ->avatar()
-                ->image()
-                ->maxSize(config('shopper.media.max_size.thumbnail'))
-                ->collection(config('shopper.media.storage.thumbnail_collection'))
-                ->columnSpan('full'),
-            Grid::make()
-                ->schema([
-                    TextInput::make('title')
-                        ->label(__('shopper::forms.label.payment_method'))
-                        ->placeholder('NotchPay')
-                        ->required()
-                        ->live(onBlur: true)
-                        ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('slug', $state)),
-                    Hidden::make('slug'),
-                    Select::make('driver')
-                        ->label(__('shopper::forms.label.driver'))
-                        ->options($this->getDriverOptions())
-                        ->default('manual')
-                        ->required()
-                        ->helperText(__('shopper::pages/settings/payments.driver_help'))
-                        ->native(false)
-                        ->allowHtml(),
-                ]),
+            TextInput::make('title')
+                ->label(__('shopper::forms.label.payment_method'))
+                ->placeholder('NotchPay')
+                ->required()
+                ->live(onBlur: true)
+                ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('slug', $state)),
+            Hidden::make('slug'),
+            Select::make('driver')
+                ->label(__('shopper::forms.label.driver'))
+                ->options($this->getDriverOptions())
+                ->default('manual')
+                ->required()
+                ->helperText(__('shopper::pages/settings/payments.driver_help'))
+                ->native(false)
+                ->allowHtml(),
             TextInput::make('link_url')
                 ->label(__('shopper::forms.label.payment_doc'))
                 ->placeholder('https://laravelshopper.dev')
