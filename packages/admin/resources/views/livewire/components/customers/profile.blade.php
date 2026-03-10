@@ -103,8 +103,8 @@
                         {{ __('shopper::pages/customers.profile.two_factor') }}
                     </dt>
                     <dd class="flex text-sm sm:col-span-2 sm:mt-0">
-                        <x-filament::badge :color="$customer->two_factor_secret ? 'success' : 'gray'" size="sm">
-                            {{ $customer->two_factor_secret ? __('shopper::forms.actions.enable') : __('shopper::forms.actions.disable') }}
+                        <x-filament::badge :color="$customer->store_two_factor_secret ? 'success' : 'gray'" size="sm">
+                            {{ $customer->store_two_factor_secret ? __('shopper::forms.actions.enable') : __('shopper::forms.actions.disable') }}
                         </x-filament::badge>
                     </dd>
                 </div>

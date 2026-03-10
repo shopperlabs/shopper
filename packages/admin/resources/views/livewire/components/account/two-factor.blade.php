@@ -95,7 +95,7 @@
                                 <div
                                     class="mt-4 grid max-w-xl gap-1 rounded-lg bg-gray-50 p-4 text-sm dark:bg-gray-700"
                                 >
-                                    @foreach (json_decode(decrypt($this->user->two_factor_recovery_codes), true) as $code)
+                                    @foreach (json_decode(decrypt($this->user->store_two_factor_recovery_codes), true) as $code)
                                         <span class="leading-5 text-gray-700 dark:text-gray-300">
                                             {{ $code }}
                                         </span>

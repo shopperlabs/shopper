@@ -105,7 +105,7 @@ class TwoFactor extends Component implements HasActions, HasForms
     #[Computed]
     public function enabled(): bool
     {
-        return ! empty($this->user->two_factor_secret);
+        return ! empty($this->user->store_two_factor_secret);
     }
 
     public function render(): View
