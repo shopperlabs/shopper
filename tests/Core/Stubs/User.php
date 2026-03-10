@@ -23,8 +23,8 @@ class User extends Authenticatable implements ShopperUser
         'remember_token',
         'last_login_at',
         'last_login_ip',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
+        'store_two_factor_recovery_codes',
+        'store_two_factor_secret',
     ];
 
     protected static function newFactory(): UserFactory
