@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Reflector;
 use Livewire\Component;
-use Livewire\Mechanisms\ComponentRegistry;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
@@ -39,7 +38,7 @@ class SlideOverPanel extends Component
     public function openPanel(string $component, array $arguments = [], array $panelAttributes = []): void
     {
         $requiredInterface = PanelContract::class;
-        $componentClass = app(ComponentRegistry::class)->getClass($component);
+        $componentClass = app('livewire.factory')->resolveComponentClass($component);
         $reflect = new ReflectionClass($componentClass);
 
         if ($reflect->implementsInterface($requiredInterface) === false) {

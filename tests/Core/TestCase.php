@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Core;
 
+use Livewire\LivewireServiceProvider;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Payment\PaymentServiceProvider;
 use Shopper\ShopperServiceProvider;
@@ -31,6 +32,7 @@ abstract class TestCase extends \Tests\TestCase
     protected function getPackageProviders($app): array
     {
         return [
+            LivewireServiceProvider::class,
             CoreServiceProvider::class,
             ShopperServiceProvider::class,
             SidebarServiceProvider::class,
