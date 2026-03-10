@@ -4213,16 +4213,16 @@
         },
         {
             "name": "livewire/blaze",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/blaze.git",
-                "reference": "581ee7feff0f594e1e1678a59bda186a2154e335"
+                "reference": "28565fb28a5ddd66b3e3678fef44f7f09e5a7b79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/blaze/zipball/581ee7feff0f594e1e1678a59bda186a2154e335",
-                "reference": "581ee7feff0f594e1e1678a59bda186a2154e335",
+                "url": "https://api.github.com/repos/livewire/blaze/zipball/28565fb28a5ddd66b3e3678fef44f7f09e5a7b79",
+                "reference": "28565fb28a5ddd66b3e3678fef44f7f09e5a7b79",
                 "shasum": ""
             },
             "require": {
@@ -4265,9 +4265,9 @@
             "description": "A tool for optimizing Blade component performance by folding them into parent templates",
             "support": {
                 "issues": "https://github.com/livewire/blaze/issues",
-                "source": "https://github.com/livewire/blaze/tree/v1.0.4"
+                "source": "https://github.com/livewire/blaze/tree/v1.0.5"
             },
-            "time": "2026-03-01T21:10:57+00:00"
+            "time": "2026-03-10T17:50:23+00:00"
         },
         {
             "name": "livewire/livewire",
