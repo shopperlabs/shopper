@@ -31,8 +31,8 @@ use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Zone;
 use Shopper\Livewire\Components\SlideOverComponent;
-use Shopper\Traits\InteractsWithSlideOverForm;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
  * @property Schema $form

@@ -25,8 +25,8 @@ use Shopper\Traits\HandlesAuthorizationExceptions;
  */
 class TwoFactor extends Component implements HasActions, HasForms
 {
-    use HandlesAuthorizationExceptions;
     use ConfirmsPasswords;
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
