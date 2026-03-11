@@ -32,7 +32,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
 
     public function mount(): void
     {
-        $this->authorize('edit_products');
+        $this->authorize('products.edit');
 
         $this->product?->load('prices');
     }
@@ -44,8 +44,8 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
             ->icon(Untitledui::Trash03)
             ->modalIcon(Untitledui::Trash03)
             ->requiresConfirmation()
-            ->authorize('delete_products', $this->product)
-            ->visible(shopper()->auth()->user()->can('delete_products'))
+            ->authorize('products.delete', $this->product)
+            ->visible(shopper()->auth()->user()->can('products.delete'))
             ->color('danger')
             ->action(function (): void {
                 event(new ProductDeleted($this->product));

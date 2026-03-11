@@ -33,7 +33,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
 
     public function mount(): void
     {
-        $this->authorize('browse_reviews');
+        $this->authorize('reviews.browse');
     }
 
     public function table(Table $table): Table
@@ -97,7 +97,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Review $record) => $record->delete())
-                    ->visible(shopper()->auth()->user()->can('delete_reviews')),
+                    ->visible(shopper()->auth()->user()->can('reviews.delete')),
             ])
             ->groupedBulkActions([
                 DeleteBulkAction::make()
@@ -112,7 +112,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->success()
                             ->send();
                     })
-                    ->visible(shopper()->auth()->user()->can('delete_reviews'))
+                    ->visible(shopper()->auth()->user()->can('reviews.delete'))
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([

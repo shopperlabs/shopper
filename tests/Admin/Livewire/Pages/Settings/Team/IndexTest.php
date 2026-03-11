@@ -11,7 +11,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('view_users');
+    $this->user->givePermissionTo('system.users');
     $this->actingAs($this->user);
 });
 

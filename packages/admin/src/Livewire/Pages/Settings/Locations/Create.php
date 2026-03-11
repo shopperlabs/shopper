@@ -13,7 +13,7 @@ class Create extends Component
 {
     public function mount(): void
     {
-        $this->authorize('add_inventories');
+        $this->authorize('inventories.create');
     }
 
     public function render(): View

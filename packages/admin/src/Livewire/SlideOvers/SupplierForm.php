@@ -106,11 +106,11 @@ class SupplierForm extends SlideOverComponent implements HasActions, HasForms
     public function save(): void
     {
         if ($this->supplier->id) {
-            $this->authorize('edit_suppliers', $this->supplier);
+            $this->authorize('suppliers.edit', $this->supplier);
 
             $this->supplier->update($this->form->getState());
         } else {
-            $this->authorize('add_suppliers');
+            $this->authorize('suppliers.create');
 
             resolve(Supplier::class)::query()->create($this->form->getState());
         }

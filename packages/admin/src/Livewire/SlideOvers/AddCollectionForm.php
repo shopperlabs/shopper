@@ -41,7 +41,7 @@ class AddCollectionForm extends SlideOverComponent implements HasActions, HasFor
 
     public function mount(): void
     {
-        $this->authorize('add_collections');
+        $this->authorize('collections.create');
 
         $this->form->fill();
     }

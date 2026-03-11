@@ -16,7 +16,7 @@ beforeEach(function (): void {
     setupCurrencies();
 
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('access_setting');
+    $this->user->givePermissionTo('system.settings');
     $this->actingAs($this->user);
 
     $currency = Currency::query()->where('code', 'USD')->first();

@@ -33,7 +33,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
 
     public function mount(): void
     {
-        $this->authorize('browse_collections');
+        $this->authorize('collections.browse');
     }
 
     public function table(Table $table): Table
@@ -91,7 +91,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                         ),
                     )
                     ->extraAttributes(['wire:navigate' => true])
-                    ->visible(Shopper::auth()->user()->can('edit_collections')),
+                    ->visible(Shopper::auth()->user()->can('collections.edit')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
@@ -100,7 +100,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (CollectionContract $record) => $record->delete())
-                    ->visible(Shopper::auth()->user()->can('delete_collections')),
+                    ->visible(Shopper::auth()->user()->can('collections.delete')),
             ])
             ->groupedBulkActions([
                 DeleteBulkAction::make()
@@ -119,7 +119,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->success()
                             ->send();
                     })
-                    ->visible(Shopper::auth()->user()->can('delete_collections'))
+                    ->visible(Shopper::auth()->user()->can('collections.delete'))
                     ->deselectRecordsAfterCompletion(),
             ])
             ->emptyState(view('shopper::livewire.tables.empty-states.collections'));

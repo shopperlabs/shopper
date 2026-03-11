@@ -15,7 +15,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('read_orders');
+    $this->user->givePermissionTo('orders.read');
     $this->actingAs($this->user);
 });
 

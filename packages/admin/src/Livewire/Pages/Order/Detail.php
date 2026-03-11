@@ -32,7 +32,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
 
     public function mount(): void
     {
-        $this->authorize('read_orders');
+        $this->authorize('orders.read');
 
         $this->order->load('customer', 'channel');
     }

@@ -24,7 +24,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
 
     public function mount(): void
     {
-        $this->authorize('browse_brands');
+        $this->authorize('brands.browse');
     }
 
     public function table(Table $table): Table
@@ -141,10 +141,10 @@ class BrandForm extends SlideOverComponent implements HasActions, HasForms
     public function save(): void
     {
         if ($this->brand->id) {
-            $this->authorize('edit_brands', $this->brand);
+            $this->authorize('brands.edit', $this->brand);
             $this->brand->update($this->form->getState());
         } else {
-            $this->authorize('add_brands');
+            $this->authorize('brands.create');
             $brand = resolve(Brand::class)::query()->create($this->form->getState());
             $this->form->model($brand)->saveRelationships();
         }
@@ -209,8 +209,8 @@ public function categories(): Collection
 
 ```php
 // In mount
-$this->authorize('browse_brands');
+$this->authorize('brands.browse');
 
 // In table actions
-->visible(Shopper::auth()->user()->can('edit_brands'))
+->visible(Shopper::auth()->user()->can('brands.edit'))
 ```

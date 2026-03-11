@@ -12,7 +12,7 @@
 
     <x-shopper::heading class="my-6" :title="__('shopper::pages/settings/global.location.menu')">
         <x-slot name="action">
-            @can('add_inventories')
+            @can('inventories.create')
                 @if ($inventories->count() < (int) config('shopper.admin.inventory_limit') + 1)
                     <div class="flex">
                         <x-filament::button tag="a" :href="route('shopper.settings.locations.create')" wire:navigate>

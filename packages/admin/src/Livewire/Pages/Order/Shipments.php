@@ -40,7 +40,7 @@ class Shipments extends AbstractPageComponent implements HasActions, HasForms, H
 
     public function mount(): void
     {
-        $this->authorize('browse_orders');
+        $this->authorize('orders.browse');
 
         $this->loadDefaultActiveTab();
     }

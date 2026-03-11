@@ -61,7 +61,7 @@ class AddVariant extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('add_products');
+        $this->authorize('products.create');
 
         $this->form->fill();
     }

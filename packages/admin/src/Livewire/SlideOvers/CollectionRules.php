@@ -44,7 +44,7 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('edit_collections');
+        $this->authorize('collections.edit');
 
         $this->form->fill($this->collection->toArray());
     }
@@ -121,7 +121,7 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasForms
 
     public function store(): void
     {
-        $this->authorize('edit_collections');
+        $this->authorize('collections.edit');
 
         $this->collection->update($this->form->getState());
         $this->form->model($this->collection)->saveRelationships(); // @phpstan-ignore-line

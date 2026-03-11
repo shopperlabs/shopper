@@ -31,7 +31,7 @@ class Variant extends AbstractPageComponent implements HasActions, HasSchemas
 
     public function mount(): void
     {
-        $this->authorize('edit_products');
+        $this->authorize('products.edit');
 
         $this->variant?->load([
             'prices',

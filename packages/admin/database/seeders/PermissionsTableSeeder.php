@@ -15,42 +15,46 @@ final class PermissionsTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
 
         Permission::query()->create([
-            'name' => 'access_dashboard',
+            'name' => 'system.dashboard',
             'group_name' => 'system',
-            'display_name' => __('Access Dashboard'),
-            'description' => __('This permission allow user to access to the dashboard.'),
+            'display_name' => __('shopper::permissions.system.dashboard.display_name'),
+            'description' => __('shopper::permissions.system.dashboard.description'),
             'can_be_removed' => false,
         ]);
 
         Permission::query()->create([
-            'name' => 'access_setting',
+            'name' => 'system.settings',
             'group_name' => 'system',
-            'display_name' => __('Access Setting'),
-            'description' => __('This permission allow user to view the setting page.'),
+            'display_name' => __('shopper::permissions.system.settings.display_name'),
+            'description' => __('shopper::permissions.system.settings.description'),
             'can_be_removed' => false,
         ]);
 
         Permission::query()->create([
-            'name' => 'view_users',
+            'name' => 'system.users',
             'group_name' => 'system',
-            'display_name' => __('Views Users'),
-            'description' => __('This permission allow user to access to the administrator area.'),
+            'display_name' => __('shopper::permissions.system.users.display_name'),
+            'description' => __('shopper::permissions.system.users.description'),
             'can_be_removed' => false,
         ]);
 
-        Permission::generate('brands');
-        Permission::generate('categories');
-        Permission::generate('collections');
-        Permission::generate('customers');
-        Permission::generate('discounts');
-        Permission::generate('orders');
-        Permission::generate('inventories', 'products');
+        Permission::generate('brands', 'catalog');
+        Permission::generate('categories', 'catalog');
+        Permission::generate('collections', 'catalog');
+
+        Permission::generate('products');
+        Permission::generate('products.variants', 'products');
         Permission::generate('attributes', 'products');
-        Permission::generate('reviews', 'products');
-        Permission::generate('product_variants', 'products');
         Permission::generate('suppliers', 'products');
         Permission::generate('tags', 'products');
-        Permission::generate('products');
+        Permission::generate('reviews', 'products');
+
+        Permission::generate('orders', 'sales');
+        Permission::generate('discounts', 'sales');
+
+        Permission::generate('customers');
+
+        Permission::generate('inventories', 'inventory');
 
         Schema::enableForeignKeyConstraints();
     }

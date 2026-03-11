@@ -35,7 +35,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
 
     public function mount(): void
     {
-        $this->authorize('browse_categories');
+        $this->authorize('categories.browse');
     }
 
     public function table(Table $table): Table
@@ -83,7 +83,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ['category' => $record]
                         )
                     )
-                    ->visible($this->getUser()->can('edit_categories')),
+                    ->visible($this->getUser()->can('categories.edit')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
@@ -92,7 +92,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Category $record) => $record->delete())
-                    ->visible($this->getUser()->can('delete_categories')),
+                    ->visible($this->getUser()->can('categories.delete')),
             ])
             ->groupedBulkActions([
                 BulkAction::make('enabled')
@@ -143,7 +143,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->success()
                             ->send();
                     })
-                    ->visible($this->getUser()->can('delete_categories'))
+                    ->visible($this->getUser()->can('categories.delete'))
                     ->deselectRecordsAfterCompletion(),
             ])
             ->persistFiltersInSession()

@@ -46,7 +46,7 @@ class ShipmentDetail extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('read_orders');
+        $this->authorize('orders.read');
 
         $this->shipment->load('events');
     }

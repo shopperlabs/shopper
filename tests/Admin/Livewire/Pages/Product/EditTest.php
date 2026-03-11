@@ -17,7 +17,7 @@ beforeEach(function (): void {
     setupCurrencies();
 
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('edit_products', 'delete_products');
+    $this->user->givePermissionTo('products.edit', 'products.delete');
     $this->actingAs($this->user);
 });
 
@@ -74,7 +74,7 @@ describe(Edit::class, function (): void {
 
     it('delete action requires delete_products permission', function (): void {
         $user = User::factory()->create();
-        $user->givePermissionTo('edit_products');
+        $user->givePermissionTo('products.edit');
         $this->actingAs($user);
 
         $product = Product::factory()->create();

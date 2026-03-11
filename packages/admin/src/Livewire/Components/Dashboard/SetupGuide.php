@@ -39,39 +39,39 @@ final class SetupGuide extends Component
     {
         return [
             [
-                'key' => 'add_product',
+                'key' => 'product.create',
                 'completed' => resolve(ProductContract::class)::query()->exists(),
                 'icon' => 'untitledui-package',
                 'route' => 'shopper.products.index',
-                'permission' => 'add_products',
+                'permission' => 'products.create',
             ],
             [
                 'key' => 'create_collection',
                 'completed' => resolve(CollectionContract::class)::query()->exists(),
                 'icon' => 'untitledui-layers-three',
                 'route' => 'shopper.collections.index',
-                'permission' => 'add_collections',
+                'permission' => 'collections.create',
             ],
             [
                 'key' => 'setup_zones',
                 'completed' => Zone::query()->where('is_enabled', true)->exists(),
                 'icon' => 'untitledui-globe-05',
                 'route' => 'shopper.settings.zones',
-                'permission' => 'access_setting',
+                'permission' => 'system.settings',
             ],
             [
                 'key' => 'setup_payments',
                 'completed' => PaymentMethod::query()->where('is_enabled', true)->exists(),
                 'icon' => 'untitledui-credit-card-02',
                 'route' => 'shopper.settings.payment-methods',
-                'permission' => 'access_setting',
+                'permission' => 'system.settings',
             ],
             [
                 'key' => 'setup_taxes',
                 'completed' => resolve(TaxZoneContract::class)::query()->exists(),
                 'icon' => 'untitledui-receipt-check',
                 'route' => 'shopper.settings.taxes',
-                'permission' => 'access_setting',
+                'permission' => 'system.settings',
             ],
         ];
     }

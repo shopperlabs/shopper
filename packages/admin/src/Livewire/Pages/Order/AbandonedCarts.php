@@ -30,7 +30,7 @@ class AbandonedCarts extends AbstractPageComponent implements HasActions, HasFor
 
     public function mount(): void
     {
-        $this->authorize('browse_orders');
+        $this->authorize('orders.browse');
     }
 
     public function table(Table $table): Table

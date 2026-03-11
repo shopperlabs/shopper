@@ -14,7 +14,7 @@ uses(Tests\Admin\TestCase::class);
 beforeEach(function (): void {
 
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('edit_product_variants');
+    $this->user->givePermissionTo('products.variants.edit');
     $this->actingAs($this->user);
 
     $this->product = Product::factory()->create(['type' => ProductType::Variant]);

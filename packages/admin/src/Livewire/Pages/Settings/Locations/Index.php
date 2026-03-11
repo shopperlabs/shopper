@@ -24,7 +24,7 @@ class Index extends Component implements HasActions, HasSchemas
 
     public function mount(): void
     {
-        $this->authorize('browse_inventories');
+        $this->authorize('inventories.browse');
     }
 
     public function removeAction(): Action
@@ -44,7 +44,7 @@ class Index extends Component implements HasActions, HasSchemas
 
                 $this->dispatch('$refresh');
             })
-            ->visible(shopper()->auth()->user()->can('delete_inventories'));
+            ->visible(shopper()->auth()->user()->can('inventories.delete'));
     }
 
     public function render(): View

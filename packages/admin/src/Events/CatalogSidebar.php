@@ -21,7 +21,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
 
             $group->item(__('shopper::pages/products.menu'), function (Item $item): void {
                 $item->weight(1);
-                $item->setAuthorized($this->user->hasPermissionTo('browse_products'));
+                $item->setAuthorized($this->user->hasPermissionTo('products.browse'));
                 $item->useSpa();
                 $item->route('shopper.products.index');
                 $item->setIcon('phosphor-package');
@@ -29,7 +29,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 if (Feature::enabled('attribute')) {
                     $item->item(__('shopper::pages/attributes.menu'), function (Item $item): void {
                         $item->weight(1);
-                        $item->setAuthorized($this->user->hasPermissionTo('browse_products') || $this->user->hasPermissionTo('browse_attributes'));
+                        $item->setAuthorized($this->user->hasPermissionTo('products.browse') || $this->user->hasPermissionTo('attributes.browse'));
                         $item->useSpa();
                         $item->route('shopper.attributes.index');
                     });
@@ -38,7 +38,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 if (Feature::enabled('supplier')) {
                     $item->item(__('shopper::pages/suppliers.menu'), function (Item $item): void {
                         $item->weight(2);
-                        $item->setAuthorized($this->user->hasPermissionTo('browse_suppliers'));
+                        $item->setAuthorized($this->user->hasPermissionTo('suppliers.browse'));
                         $item->useSpa();
                         $item->route('shopper.suppliers.index');
                     });
@@ -47,7 +47,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 if (Feature::enabled('tag')) {
                     $item->item(__('shopper::pages/tags.menu'), function (Item $item): void {
                         $item->weight(3);
-                        $item->setAuthorized($this->user->hasPermissionTo('browse_products') || $this->user->hasPermissionTo('browse_tags'));
+                        $item->setAuthorized($this->user->hasPermissionTo('products.browse') || $this->user->hasPermissionTo('tags.browse'));
                         $item->useSpa();
                         $item->route('shopper.tags.index');
                     });
@@ -57,7 +57,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
             if (Feature::enabled('category')) {
                 $group->item(__('shopper::pages/categories.menu'), function (Item $item): void {
                     $item->weight(2);
-                    $item->setAuthorized($this->user->hasPermissionTo('browse_categories'));
+                    $item->setAuthorized($this->user->hasPermissionTo('categories.browse'));
                     $item->useSpa();
                     $item->route('shopper.categories.index');
                     $item->setIcon('phosphor-tag');
@@ -67,7 +67,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
             if (Feature::enabled('collection')) {
                 $group->item(__('shopper::pages/collections.menu'), function (Item $item): void {
                     $item->weight(3);
-                    $item->setAuthorized($this->user->hasPermissionTo('browse_collections'));
+                    $item->setAuthorized($this->user->hasPermissionTo('collections.browse'));
                     $item->useSpa();
                     $item->route('shopper.collections.index');
                     $item->setIcon('phosphor-stack');
@@ -77,7 +77,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
             if (Feature::enabled('brand')) {
                 $group->item(__('shopper::pages/brands.menu'), function (Item $item): void {
                     $item->weight(4);
-                    $item->setAuthorized($this->user->hasPermissionTo('browse_brands'));
+                    $item->setAuthorized($this->user->hasPermissionTo('brands.browse'));
                     $item->useSpa();
                     $item->route('shopper.brands.index');
                     $item->setIcon('phosphor-bookmarks');

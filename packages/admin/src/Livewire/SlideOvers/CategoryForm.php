@@ -118,11 +118,11 @@ class CategoryForm extends SlideOverComponent implements HasActions, HasForms
     public function save(): void
     {
         if ($this->category->id) {
-            $this->authorize('edit_categories', $this->category);
+            $this->authorize('categories.edit', $this->category);
 
             $this->category->update($this->form->getState());
         } else {
-            $this->authorize('add_categories');
+            $this->authorize('categories.create');
 
             $category = resolve(Category::class)::query()->create($this->form->getState());
             $this->form->model($category)->saveRelationships();

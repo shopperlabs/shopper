@@ -61,7 +61,7 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(?int $discountId = null): void
     {
-        abort_unless($this->authorize('add_discounts') || $this->authorize('edit_discounts'), 403);
+        abort_unless($this->authorize('discounts.create') || $this->authorize('discounts.edit'), 403);
 
         $this->discount = $discountId
             ? Discount::query()->find($discountId)

@@ -87,7 +87,7 @@ class Attributes extends Component implements HasActions, HasForms, HasTable
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(function (AttributeProduct $record): void {
-                        $this->authorize('delete_attributes', $record);
+                        $this->authorize('attributes.delete', $record);
 
                         app()->call(DetachAttributesToProductAction::class, [
                             'attributeProduct' => $record,

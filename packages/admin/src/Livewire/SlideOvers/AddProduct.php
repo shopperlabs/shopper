@@ -63,7 +63,7 @@ class AddProduct extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('add_products');
+        $this->authorize('products.create');
 
         $this->currentProductType = shopper_setting('default_product_type');
 

@@ -53,7 +53,7 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasF
 
     public function mount(): void
     {
-        $this->authorize('edit_orders');
+        $this->authorize('orders.edit');
 
         $this->form->fill([
             'carrier_id' => $this->order->shippingOption?->carrier_id,
@@ -174,7 +174,7 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasF
 
     public function save(): void
     {
-        $this->authorize('edit_orders');
+        $this->authorize('orders.edit');
 
         $data = $this->form->getState();
 

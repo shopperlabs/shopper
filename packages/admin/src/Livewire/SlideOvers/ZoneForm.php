@@ -63,7 +63,7 @@ class ZoneForm extends SlideOverComponent implements HasActions, HasForms, Slide
 
     public function mount(?int $zoneId = null): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
 
         $this->zone = $zoneId
             ? Zone::with(['countries', 'paymentMethods', 'carriers'])->find($zoneId)
@@ -182,7 +182,7 @@ class ZoneForm extends SlideOverComponent implements HasActions, HasForms, Slide
 
     public function store(): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
 
         $data = $this->form->getState();
         $validInputs = Arr::except($data, ['countries', 'payments', 'carriers']);

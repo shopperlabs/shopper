@@ -11,7 +11,7 @@ class Index extends AbstractPageComponent
 {
     public function mount(): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
     }
 
     public function render(): View

@@ -20,7 +20,7 @@ uses(Tests\Admin\TestCase::class);
 beforeEach(function (): void {
 
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('add_discounts', 'edit_discounts');
+    $this->user->givePermissionTo('discounts.create', 'discounts.edit');
     $this->actingAs($this->user);
 
     $this->products = Product::factory()->count(3)->publish()->create();

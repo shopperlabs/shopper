@@ -20,7 +20,7 @@ beforeEach(function (): void {
     setupCurrencies();
 
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('add_products');
+    $this->user->givePermissionTo('products.create');
     $this->actingAs($this->user);
 
     $this->product = Product::factory()->create(['type' => ProductType::Variant]);

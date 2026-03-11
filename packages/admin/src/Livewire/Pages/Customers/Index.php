@@ -33,7 +33,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
 
     public function mount(): void
     {
-        $this->authorize('browse_customers');
+        $this->authorize('customers.browse');
     }
 
     public function table(Table $table): Table

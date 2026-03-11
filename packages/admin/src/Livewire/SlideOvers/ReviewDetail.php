@@ -24,7 +24,7 @@ class ReviewDetail extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('browse_reviews');
+        $this->authorize('reviews.browse');
 
         $this->review->load('author', 'reviewrateable');
     }

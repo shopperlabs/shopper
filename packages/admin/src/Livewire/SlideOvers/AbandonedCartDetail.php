@@ -19,7 +19,7 @@ class AbandonedCartDetail extends SlideOverComponent
 
     public function mount(): void
     {
-        $this->authorize('browse_orders');
+        $this->authorize('orders.browse');
 
         $this->cart->load([
             'customer',

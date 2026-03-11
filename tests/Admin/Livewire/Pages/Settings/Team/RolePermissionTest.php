@@ -12,7 +12,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('view_users');
+    $this->user->givePermissionTo('system.users');
     $this->actingAs($this->user);
 
     $this->role = Role::create([
@@ -172,7 +172,7 @@ describe(RolePermission::class, function (): void {
 
         Livewire::test(RolePermission::class, ['role' => $this->role])
             ->callAction('createPermission', [
-                'name' => 'edit_blog',
+                'name' => 'blog.edit',
                 'display_name' => 'Edit Blog',
             ])
             ->assertHasNoFormErrors();

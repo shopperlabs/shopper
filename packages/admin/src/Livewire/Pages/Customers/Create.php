@@ -46,7 +46,7 @@ class Create extends AbstractPageComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('add_customers');
+        $this->authorize('customers.create');
 
         $this->form->fill();
     }

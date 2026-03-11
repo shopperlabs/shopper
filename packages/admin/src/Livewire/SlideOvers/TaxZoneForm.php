@@ -49,7 +49,7 @@ class TaxZoneForm extends SlideOverComponent implements HasActions, HasForms, Sl
 
     public function mount(?int $taxZoneId = null): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
 
         $this->taxZone = $taxZoneId
             ? TaxZone::with('country')->find($taxZoneId)
@@ -99,7 +99,7 @@ class TaxZoneForm extends SlideOverComponent implements HasActions, HasForms, Sl
 
     public function store(): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
 
         $data = $this->form->getState();
 

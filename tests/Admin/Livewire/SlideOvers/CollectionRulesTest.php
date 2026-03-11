@@ -12,7 +12,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('edit_collections');
+    $this->user->givePermissionTo('collections.edit');
     $this->actingAs($this->user);
 });
 

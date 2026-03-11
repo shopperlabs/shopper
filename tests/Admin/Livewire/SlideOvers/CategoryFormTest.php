@@ -13,7 +13,7 @@ uses(Tests\Admin\TestCase::class);
 beforeEach(function (): void {
 
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('add_categories', 'edit_categories');
+    $this->user->givePermissionTo('categories.create', 'categories.edit');
     $this->actingAs($this->user);
 });
 

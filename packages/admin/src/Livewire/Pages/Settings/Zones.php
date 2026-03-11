@@ -18,7 +18,7 @@ class Zones extends Component
 
     public function mount(): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
     }
 
     public function updatedCurrentZoneId(int $value): void

@@ -16,7 +16,7 @@ class Edit extends Component
 
     public function mount(): void
     {
-        $this->authorize('edit_inventories');
+        $this->authorize('inventories.edit');
     }
 
     public function render(): View

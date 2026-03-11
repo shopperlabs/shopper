@@ -12,7 +12,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('add_attributes');
+    $this->user->givePermissionTo('attributes.create');
     $this->actingAs($this->user);
 });
 
@@ -80,7 +80,7 @@ describe(AttributeForm::class, function (): void {
     });
 
     it('can edit existing attribute', function (): void {
-        $this->user->givePermissionTo('edit_attributes');
+        $this->user->givePermissionTo('attributes.edit');
 
         $attribute = Attribute::factory()->create([
             'name' => 'Old Name',
@@ -100,7 +100,7 @@ describe(AttributeForm::class, function (): void {
     });
 
     it('initializes form with attribute data on edit', function (): void {
-        $this->user->givePermissionTo('edit_attributes');
+        $this->user->givePermissionTo('attributes.edit');
 
         $attribute = Attribute::factory()->create([
             'name' => 'Size',

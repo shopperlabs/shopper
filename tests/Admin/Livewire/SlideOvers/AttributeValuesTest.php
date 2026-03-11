@@ -13,7 +13,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('edit_attributes');
+    $this->user->givePermissionTo('attributes.edit');
     $this->actingAs($this->user);
 
     $this->attribute = Attribute::factory()->create([

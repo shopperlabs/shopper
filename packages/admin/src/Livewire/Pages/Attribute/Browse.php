@@ -33,7 +33,7 @@ class Browse extends AbstractPageComponent implements HasActions, HasForms, HasT
 
     public function mount(): void
     {
-        $this->authorize('browse_attributes');
+        $this->authorize('attributes.browse');
     }
 
     public function table(Table $table): Table
@@ -88,7 +88,7 @@ class Browse extends AbstractPageComponent implements HasActions, HasForms, HasT
                             ['attributeId' => $record->id]
                         )
                     )
-                    ->visible(shopper()->auth()->user()->can('edit_attributes')),
+                    ->visible(shopper()->auth()->user()->can('attributes.edit')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
@@ -97,7 +97,7 @@ class Browse extends AbstractPageComponent implements HasActions, HasForms, HasT
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Attribute $record) => $record->delete())
-                    ->visible(shopper()->auth()->user()->can('delete_attributes')),
+                    ->visible(shopper()->auth()->user()->can('attributes.delete')),
             ])
             ->groupedBulkActions([
                 DeleteBulkAction::make()

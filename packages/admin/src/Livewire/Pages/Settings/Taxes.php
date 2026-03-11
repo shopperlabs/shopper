@@ -18,7 +18,7 @@ class Taxes extends Component
 
     public function mount(): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
     }
 
     public function updatedCurrentTaxZoneId(int $value): void

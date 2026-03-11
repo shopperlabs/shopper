@@ -45,7 +45,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('edit_collections');
+        $this->authorize('collections.edit');
 
         $this->collection?->load('rules');
 

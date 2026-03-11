@@ -45,7 +45,7 @@ class AttributeValues extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(int $attributeId): void
     {
-        $this->authorize('edit_attributes');
+        $this->authorize('attributes.edit');
 
         $this->attribute = Attribute::with('values')->find($attributeId);
         $this->values = $this->attribute->values;
@@ -160,7 +160,7 @@ class AttributeValues extends SlideOverComponent implements HasActions, HasForms
 
     public function removeValue(int $id): void
     {
-        $this->authorize('edit_attributes');
+        $this->authorize('attributes.edit');
 
         AttributeValue::query()->find($id)->delete();
 

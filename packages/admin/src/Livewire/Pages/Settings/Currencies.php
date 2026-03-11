@@ -35,7 +35,7 @@ class Currencies extends Component implements HasActions, HasForms, HasTable
 
     public function mount(): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
     }
 
     public function table(Table $table): Table

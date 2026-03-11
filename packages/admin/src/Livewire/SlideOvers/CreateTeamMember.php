@@ -39,7 +39,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasForm
 
     public function mount(): void
     {
-        $this->authorize('view_users');
+        $this->authorize('system.users');
 
         $this->form->fill();
     }
@@ -103,7 +103,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasForm
 
     public function store(): void
     {
-        $this->authorize('view_users');
+        $this->authorize('system.users');
 
         $data = $this->form->getState();
         $userModel = config('auth.providers.users.model');
