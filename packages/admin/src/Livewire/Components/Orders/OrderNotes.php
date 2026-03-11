@@ -10,9 +10,12 @@ use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Shopper\Core\Events\Orders\OrderNoteAdded;
 use Shopper\Core\Models\Contracts\Order;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class OrderNotes extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     public Order $order;
 
     #[Validate('required|string')]

@@ -10,9 +10,12 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Models\Permission;
 use Shopper\Models\Role;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Permissions extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     public Role $role;
 
     public function mount(): void

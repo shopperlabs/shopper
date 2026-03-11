@@ -24,9 +24,11 @@ use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
@@ -91,6 +93,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                         ),
                     )
                     ->extraAttributes(['wire:navigate' => true])
+                    ->authorize('collections.edit')
                     ->visible(Shopper::auth()->user()->can('collections.edit')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
@@ -100,6 +103,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (CollectionContract $record) => $record->delete())
+                    ->authorize('collections.delete')
                     ->visible(Shopper::auth()->user()->can('collections.delete')),
             ])
             ->groupedBulkActions([
@@ -119,6 +123,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->success()
                             ->send();
                     })
+                    ->authorize('collections.delete')
                     ->visible(Shopper::auth()->user()->can('collections.delete'))
                     ->deselectRecordsAfterCompletion(),
             ])

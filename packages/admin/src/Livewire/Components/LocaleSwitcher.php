@@ -6,9 +6,12 @@ namespace Shopper\Livewire\Components;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class LocaleSwitcher extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     public string $locale;
 
     public function mount(): void

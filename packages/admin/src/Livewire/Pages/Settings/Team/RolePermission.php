@@ -28,6 +28,7 @@ use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Models\Permission;
 use Shopper\Models\Role;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property Schema $form
@@ -35,6 +36,7 @@ use Shopper\Models\Role;
 #[Layout('shopper::components.layouts.setting')]
 class RolePermission extends Component implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 

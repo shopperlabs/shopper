@@ -10,9 +10,11 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Traits\HasAuthenticated;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Dropdown extends Component
 {
+    use HandlesAuthorizationExceptions;
     use HasAuthenticated;
 
     /**

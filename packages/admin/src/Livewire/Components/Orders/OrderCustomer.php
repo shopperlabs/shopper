@@ -9,12 +9,15 @@ use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read ShopperUser|null $customer
  */
 class OrderCustomer extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     public Order $order;
 
     #[Computed]

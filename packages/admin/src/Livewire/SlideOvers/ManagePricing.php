@@ -20,6 +20,7 @@ use Shopper\Components\Form\CurrenciesField;
 use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Models\Currency;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
@@ -27,6 +28,7 @@ use Shopper\Livewire\Components\SlideOverComponent;
  */
 class ManagePricing extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 

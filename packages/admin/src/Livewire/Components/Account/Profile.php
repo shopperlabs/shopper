@@ -17,12 +17,14 @@ use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Components\Section;
 use Shopper\Traits\HasAuthenticated;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class Profile extends Component implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use HasAuthenticated;
     use InteractsWithActions;
     use InteractsWithForms;

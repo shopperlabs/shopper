@@ -30,12 +30,14 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\InventoryHistory;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class Inventory extends Component implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;

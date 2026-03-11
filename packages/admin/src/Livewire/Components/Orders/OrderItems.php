@@ -9,9 +9,11 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Core\Models\Contracts\Order;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class OrderItems extends Component
 {
+    use HandlesAuthorizationExceptions;
     use WithPagination;
 
     public Order $order;

@@ -25,12 +25,14 @@ use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Models\Role;
 use Shopper\Notifications\AdminSendCredentials;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class CreateTeamMember extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 

@@ -7,9 +7,12 @@ namespace Shopper\Livewire\Components\Settings\Legal;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Core\Models\Legal;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Privacy extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     public Legal $legal;
 
     public function render(): View

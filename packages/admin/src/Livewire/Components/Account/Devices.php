@@ -24,9 +24,11 @@ use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Stevebauman\Location\Facades\Location;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Devices extends Component implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 

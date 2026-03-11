@@ -16,12 +16,14 @@ use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Core\Models\Legal;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property Schema $form
  */
 class PolicyForm extends Component implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 

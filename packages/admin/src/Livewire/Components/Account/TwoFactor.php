@@ -18,12 +18,14 @@ use Shopper\Actions\Auth\EnableTwoFactorAuthentication;
 use Shopper\Actions\Auth\GenerateNewRecoveryCodes;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Traits\ConfirmsPasswords;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read ShopperUser $user
  */
 class TwoFactor extends Component implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use ConfirmsPasswords;
     use InteractsWithActions;
     use InteractsWithForms;

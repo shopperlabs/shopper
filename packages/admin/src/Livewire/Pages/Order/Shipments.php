@@ -30,9 +30,11 @@ use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Models\OrderShipping;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Shipping\Services\CarrierRateService;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Shipments extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use HasTabs;
     use InteractsWithActions;
     use InteractsWithForms;

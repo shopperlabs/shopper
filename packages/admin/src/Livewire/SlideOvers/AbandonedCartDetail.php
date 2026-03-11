@@ -7,9 +7,12 @@ namespace Shopper\Livewire\SlideOvers;
 use Illuminate\Contracts\View\View;
 use Shopper\Cart\Models\Cart;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class AbandonedCartDetail extends SlideOverComponent
 {
+    use HandlesAuthorizationExceptions;
+
     public Cart $cart;
 
     public static function panelMaxWidth(): string

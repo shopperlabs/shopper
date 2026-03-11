@@ -15,12 +15,14 @@ use Livewire\Component;
 use Shopper\Components\Form\ShippingField;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Contracts\Product;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class Shipping extends Component implements HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithSchemas;
 
     /** @var Model&Product */

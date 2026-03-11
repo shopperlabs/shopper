@@ -23,12 +23,14 @@ use Shopper\Core\Enum\Rule;
 use Shopper\Core\Jobs\SyncCollectionProductsJob;
 use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class CollectionRules extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
