@@ -1,6 +1,7 @@
 import * as esbuild from 'esbuild'
 
 const isDev = process.argv.includes('--dev')
+const targetPackage = process.argv.find(arg => arg.startsWith('--package='))?.split('=')[1]
 
 async function compile(options) {
   const context = await esbuild.context(options)
@@ -48,7 +49,11 @@ const packages = [
   { name: 'sidebar', entry: 'index.js', outDir: 'dist', outFile: 'sidebar.js' },
 ]
 
-packages.forEach(pkg => {
+const filteredPackages = targetPackage
+  ? packages.filter(pkg => pkg.name === targetPackage)
+  : packages
+
+filteredPackages.forEach(pkg => {
   compile({
     ...defaultOptions,
     platform: 'browser',

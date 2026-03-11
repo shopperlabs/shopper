@@ -3,12 +3,16 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev:css": "npx @tailwindcss/cli -i ./packages/admin/resources/css/shopper.css -o ./packages/admin/dist/shopper.css --watch",
-    "dev:js": "node scripts/build.js --dev",
-    "dev": "npm-run-all --parallel dev:*",
-    "build:css": "npx @tailwindcss/cli -i ./packages/admin/resources/css/shopper.css -o ./packages/admin/dist/shopper.css --minify",
-    "build:js": "node scripts/build.js",
-    "build": "npm-run-all build:*",
+    "dev": "npm-run-all --parallel dev:panel dev:sidebar",
+    "dev:panel": "npm-run-all --parallel dev:panel:css dev:panel:js",
+    "dev:panel:css": "npx @tailwindcss/cli -i ./packages/admin/resources/css/shopper.css -o ./packages/admin/dist/shopper.css --watch",
+    "dev:panel:js": "node scripts/build.js --dev --package=admin",
+    "dev:sidebar": "node scripts/build.js --dev --package=sidebar",
+    "build": "npm-run-all build:panel build:sidebar",
+    "build:panel": "npm-run-all --parallel build:panel:css build:panel:js",
+    "build:panel:css": "npx @tailwindcss/cli -i ./packages/admin/resources/css/shopper.css -o ./packages/admin/dist/shopper.css --minify",
+    "build:panel:js": "node scripts/build.js --package=admin",
+    "build:sidebar": "node scripts/build.js --package=sidebar",
     "prettier": "npx prettier --write ./packages/admin/resources"
   },
   "devDependencies": {
