@@ -13,7 +13,6 @@ use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
-use Shopper\Core\Enum\ProductType;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\SaveSettings;
 
