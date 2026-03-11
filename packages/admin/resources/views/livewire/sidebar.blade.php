@@ -4,14 +4,7 @@
         class="sh-si hidden h-full lg:flex lg:shrink-0"
         x-bind:class="{ 'sh-si-collapsed': $store.sidebar.isCollapsed }"
     >
-        <div
-            class="sh-si-content h-full flex-1 overflow-hidden transition-all duration-200"
-            x-bind:style="
-                $store.sidebar.isCollapsed
-                    ? 'width: var(--sidebar-collapsed-width)'
-                    : 'width: var(--sidebar-width)'
-            "
-        >
+        <div class="sh-si-content h-full flex-1 overflow-hidden transition-[width] duration-200">
             <div class="from-primary-600 to-primary-100 dark:to-primary-600/10 h-1 bg-linear-to-br"></div>
             <div class="flex h-full flex-col">
                 <!-- Header / Branding -->

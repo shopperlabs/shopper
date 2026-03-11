@@ -137,6 +137,15 @@
   }
 }
 
+.sh-si-content {
+  width: var(--sidebar-width);
+}
+
+html.sidebar-collapsed .sh-si-content,
+.sh-si-collapsed .sh-si-content {
+  width: var(--sidebar-collapsed-width);
+}
+
 .sh-si-collapsed .sh-sidebar {
   .sh-sidebar-group {
     @apply border-gray-200 pt-4 dark:border-white/20;
