@@ -18,8 +18,8 @@ use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxZone;
 use Shopper\Livewire\Components\SlideOverComponent;
-use Shopper\Traits\InteractsWithSlideOverForm;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
  * @property-read Schema $form

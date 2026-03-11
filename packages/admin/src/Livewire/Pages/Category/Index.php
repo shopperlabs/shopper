@@ -24,8 +24,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Category;
 use Shopper\Livewire\Pages\AbstractPageComponent;
-use Shopper\Traits\HasAuthenticated;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\HasAuthenticated;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {

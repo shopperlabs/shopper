@@ -28,8 +28,8 @@ use Shopper\Components\Separator;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
-use Shopper\Traits\SaveSettings;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\SaveSettings;
 
 /**
  * @property-read Schema $form

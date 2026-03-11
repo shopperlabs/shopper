@@ -29,8 +29,8 @@ use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
 use Shopper\Livewire\Pages\AbstractPageComponent;
-use Shopper\Traits\HasAuthenticated;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\HasAuthenticated;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {

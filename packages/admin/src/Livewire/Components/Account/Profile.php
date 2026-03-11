@@ -16,8 +16,8 @@ use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Components\Section;
-use Shopper\Traits\HasAuthenticated;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\HasAuthenticated;
 
 /**
  * @property-read Schema $form

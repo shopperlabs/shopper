@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Models\Contracts\ShopperUser;
-use Shopper\Traits\HasAuthenticated;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\HasAuthenticated;
 
 class Dropdown extends Component
 {

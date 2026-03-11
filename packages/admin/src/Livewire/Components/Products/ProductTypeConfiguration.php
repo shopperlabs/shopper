@@ -13,8 +13,9 @@ use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
-use Shopper\Traits\SaveSettings;
+use Shopper\Core\Enum\ProductType;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\SaveSettings;
 
 /**
  * @property-read Schema $form
