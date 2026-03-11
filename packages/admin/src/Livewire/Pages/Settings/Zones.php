@@ -9,10 +9,13 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Shopper\Core\Models\Zone;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Layout('shopper::components.layouts.setting')]
 class Zones extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     #[Url(as: 'zone', except: '')]
     public ?int $currentZoneId = null;
 

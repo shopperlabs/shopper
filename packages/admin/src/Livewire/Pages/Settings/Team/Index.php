@@ -28,10 +28,12 @@ use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Models\Role;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Layout('shopper::components.layouts.setting')]
 class Index extends Component implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;

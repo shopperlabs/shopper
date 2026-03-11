@@ -33,12 +33,14 @@ use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class ChooseProductAttributes extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 

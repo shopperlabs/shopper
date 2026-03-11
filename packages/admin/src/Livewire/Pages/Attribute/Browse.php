@@ -24,9 +24,11 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Components\Tables\IconColumn;
 use Shopper\Core\Models\Attribute;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Browse extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
@@ -88,6 +90,7 @@ class Browse extends AbstractPageComponent implements HasActions, HasForms, HasT
                             arguments: ['attributeId' => $record->id]
                         )
                     )
+                    ->authorize('edit_attributes')
                     ->visible(shopper()->auth()->user()->can('edit_attributes')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
@@ -97,6 +100,7 @@ class Browse extends AbstractPageComponent implements HasActions, HasForms, HasT
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Attribute $record) => $record->delete())
+                    ->authorize('delete_attributes')
                     ->visible(shopper()->auth()->user()->can('delete_attributes')),
             ])
             ->groupedBulkActions([

@@ -12,9 +12,12 @@ use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Country;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Fulfillment extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     public Order $order;
 
     public function hasUnfulfilledItems(): bool

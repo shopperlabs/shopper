@@ -21,9 +21,11 @@ use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Orders extends Component implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;

@@ -30,9 +30,11 @@ use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HasAuthenticated;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use HasAuthenticated;
     use InteractsWithActions;
     use InteractsWithForms;
@@ -108,6 +110,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             arguments: ['discountId' => $record->id]
                         )
                     )
+                    ->authorize('edit_discounts')
                     ->visible($this->getUser()->can('edit_discounts')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
@@ -117,6 +120,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Discount $record) => $record->delete())
+                    ->authorize('delete_discounts')
                     ->visible($this->getUser()->can('delete_discounts')),
             ])
             ->groupedBulkActions([
@@ -136,6 +140,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->success()
                             ->send();
                     })
+                    ->authorize('delete_discounts')
                     ->visible($this->getUser()->can('delete_discounts'))
                     ->deselectRecordsAfterCompletion(),
             ])

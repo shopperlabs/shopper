@@ -25,9 +25,11 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Category;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HasAuthenticated;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use HasAuthenticated;
     use InteractsWithActions;
     use InteractsWithForms;
@@ -83,6 +85,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             arguments: ['category' => $record]
                         )
                     )
+                    ->authorize('edit_categories')
                     ->visible($this->getUser()->can('edit_categories')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
@@ -92,6 +95,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Category $record) => $record->delete())
+                    ->authorize('delete_categories')
                     ->visible($this->getUser()->can('delete_categories')),
             ])
             ->groupedBulkActions([
@@ -143,6 +147,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->success()
                             ->send();
                     })
+                    ->authorize('delete_categories')
                     ->visible($this->getUser()->can('delete_categories'))
                     ->deselectRecordsAfterCompletion(),
             ])

@@ -30,9 +30,11 @@ use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Currency;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use HasTabs;
     use InteractsWithActions;
     use InteractsWithForms;

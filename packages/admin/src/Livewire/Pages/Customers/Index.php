@@ -24,9 +24,11 @@ use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;

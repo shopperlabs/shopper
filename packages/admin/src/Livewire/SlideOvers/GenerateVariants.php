@@ -15,9 +15,12 @@ use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class GenerateVariants extends SlideOverComponent
 {
+    use HandlesAuthorizationExceptions;
+
     #[Locked]
     public ProductContract $product;
 

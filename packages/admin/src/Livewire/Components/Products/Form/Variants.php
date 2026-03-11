@@ -26,10 +26,12 @@ use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Lazy]
 class Variants extends Component implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;

@@ -18,9 +18,11 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Events\Products\ProductDeleted;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Edit extends AbstractPageComponent implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 

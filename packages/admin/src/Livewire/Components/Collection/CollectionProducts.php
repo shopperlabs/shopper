@@ -25,12 +25,14 @@ use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Core\Models\Contracts\Product;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read array<int> $productsIds
  */
 class CollectionProducts extends Component implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;

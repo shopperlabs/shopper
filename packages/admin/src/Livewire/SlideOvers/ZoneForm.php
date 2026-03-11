@@ -32,12 +32,14 @@ use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Zone;
 use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\InteractsWithSlideOverForm;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property Schema $form
  */
 class ZoneForm extends SlideOverComponent implements HasActions, HasForms, SlideOverForm
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithSlideOverForm;

@@ -35,9 +35,11 @@ use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable {
@@ -145,6 +147,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             parameters: ['product' => $record],
                             navigate: true
                         ))
+                        ->authorize('edit_products')
                         ->visible(shopper()->auth()->user()->can('edit_products')),
                     Action::make(__('shopper::forms.actions.delete'))
                         ->icon(Untitledui::Trash03)
@@ -156,6 +159,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
 
                             $record->delete();
                         })
+                        ->authorize('delete_products')
                         ->visible(shopper()->auth()->user()->can('delete_products')),
                 ])
                     ->tooltip('Actions'),

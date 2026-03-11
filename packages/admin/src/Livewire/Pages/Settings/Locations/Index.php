@@ -15,10 +15,12 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Inventory;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Layout('shopper::components.layouts.setting')]
 class Index extends Component implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 
@@ -44,6 +46,7 @@ class Index extends Component implements HasActions, HasSchemas
 
                 $this->dispatch('$refresh');
             })
+            ->authorize('delete_inventories')
             ->visible(shopper()->auth()->user()->can('delete_inventories'));
     }
 

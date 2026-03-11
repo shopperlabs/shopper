@@ -22,12 +22,14 @@ use Illuminate\Support\Str;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Contracts\Supplier;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class SupplierForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 

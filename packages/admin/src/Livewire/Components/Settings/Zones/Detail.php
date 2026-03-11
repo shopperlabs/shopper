@@ -17,6 +17,7 @@ use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Zone;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Zone $zone
@@ -24,6 +25,7 @@ use Shopper\Core\Models\Zone;
 #[Lazy]
 class Detail extends Component implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 

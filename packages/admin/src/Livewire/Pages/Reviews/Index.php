@@ -24,9 +24,11 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Review;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
@@ -97,6 +99,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Review $record) => $record->delete())
+                    ->authorize('delete_reviews')
                     ->visible(shopper()->auth()->user()->can('delete_reviews')),
             ])
             ->groupedBulkActions([
@@ -112,6 +115,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->success()
                             ->send();
                     })
+                    ->authorize('delete_reviews')
                     ->visible(shopper()->auth()->user()->can('delete_reviews'))
                     ->deselectRecordsAfterCompletion(),
             ])

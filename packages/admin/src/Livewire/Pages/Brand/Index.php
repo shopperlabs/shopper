@@ -25,9 +25,11 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Brand as BrandContract;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
@@ -78,6 +80,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             arguments: ['brand' => $record]
                         )
                     )
+                    ->authorize('edit_brands')
                     ->visible(Shopper::auth()->user()->can('edit_brands')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
@@ -87,6 +90,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (BrandContract $record) => $record->delete())
+                    ->authorize('delete_brands')
                     ->visible(Shopper::auth()->user()->can('delete_brands')),
             ])
             ->groupedBulkActions([
@@ -139,6 +143,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->success()
                             ->send();
                     })
+                    ->authorize('delete_brands')
                     ->visible(Shopper::auth()->user()->can('delete_brands'))
                     ->deselectRecordsAfterCompletion(),
             ])

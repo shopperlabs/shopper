@@ -14,9 +14,11 @@ use Filament\Support\Enums\Size;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\Review;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class ReviewDetail extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 

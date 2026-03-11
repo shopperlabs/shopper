@@ -19,12 +19,14 @@ use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxZone;
 use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\InteractsWithSlideOverForm;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class TaxRateForm extends SlideOverComponent implements HasActions, HasForms, SlideOverForm
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithSlideOverForm;

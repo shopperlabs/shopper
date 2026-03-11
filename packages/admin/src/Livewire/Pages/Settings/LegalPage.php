@@ -8,10 +8,13 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Shopper\Core\Models\Legal;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Layout('shopper::components.layouts.setting')]
 class LegalPage extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     public function mount(): void
     {
         $this->authorize('access_setting');

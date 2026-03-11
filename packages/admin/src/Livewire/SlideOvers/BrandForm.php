@@ -23,12 +23,14 @@ use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Contracts\Brand;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class BrandForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 

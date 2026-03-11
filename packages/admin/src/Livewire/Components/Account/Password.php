@@ -17,12 +17,14 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Shopper\Components\Section;
 use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class Password extends Component implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 

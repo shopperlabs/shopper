@@ -7,9 +7,12 @@ namespace Shopper\Livewire\Pages;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Dashboard extends AbstractPageComponent
 {
+    use HandlesAuthorizationExceptions;
+
     #[Computed]
     public function showSetupGuide(): bool
     {

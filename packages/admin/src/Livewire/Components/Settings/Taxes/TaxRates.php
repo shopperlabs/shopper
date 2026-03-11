@@ -20,9 +20,11 @@ use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\TaxRate;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class TaxRates extends Component implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;

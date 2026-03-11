@@ -23,6 +23,7 @@ use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Zone;
 use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\InteractsWithSlideOverForm;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Zone $zone
@@ -30,6 +31,7 @@ use Shopper\Traits\InteractsWithSlideOverForm;
  */
 class ShippingOptionForm extends SlideOverComponent implements HasActions, HasForms, SlideOverForm
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithSlideOverForm;

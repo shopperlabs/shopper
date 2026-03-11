@@ -23,12 +23,14 @@ use Shopper\Components\Form\AddressField;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
 use Shopper\Core\Models\Contracts\Inventory;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class InventoryForm extends Component implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
