@@ -16,9 +16,12 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
 use Shopper\Contracts\PanelContract;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class SlideOverPanel extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     #[Locked]
     public ?string $activeComponent = null;
 

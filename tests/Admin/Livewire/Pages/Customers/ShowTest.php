@@ -10,7 +10,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('read_customers');
+    $this->user->givePermissionTo('customers.read');
     $this->actingAs($this->user);
 });
 

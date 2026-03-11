@@ -31,17 +31,19 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Payment\Facades\Payment;
 use Shopper\Payment\Services\PaymentProcessingService;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Layout('shopper::components.layouts.setting')]
 class PaymentMethods extends Component implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
     public function mount(): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
     }
 
     public function createPaymentAction(): Action

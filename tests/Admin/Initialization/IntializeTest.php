@@ -24,7 +24,7 @@ it('only admin can not access dashboard', function (): void {
     $this->actingAs(User::factory()->create());
 
     $this->get($this->prefix.'/dashboard')
-        ->assertForbidden();
+        ->assertRedirect($this->prefix.'/forbidden');
 });
 
 it('can not access dashboard with unfinished configuration', function (): void {

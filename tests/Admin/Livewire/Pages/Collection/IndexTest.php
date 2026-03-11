@@ -14,7 +14,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo(['browse_collections', 'edit_collections', 'delete_collections']);
+    $this->user->givePermissionTo(['collections.browse', 'collections.edit', 'collections.delete']);
     $this->actingAs($this->user);
 });
 

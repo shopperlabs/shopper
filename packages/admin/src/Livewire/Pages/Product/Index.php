@@ -35,9 +35,11 @@ use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable {
@@ -83,7 +85,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
 
     public function mount(): void
     {
-        $this->authorize('browse_products');
+        $this->authorize('products.browse');
     }
 
     public function table(Table $table): Table
@@ -145,7 +147,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             parameters: ['product' => $record],
                             navigate: true
                         ))
-                        ->visible(shopper()->auth()->user()->can('edit_products')),
+                        ->authorize('products.edit')
+                        ->visible(shopper()->auth()->user()->can('products.edit')),
                     Action::make(__('shopper::forms.actions.delete'))
                         ->icon(Untitledui::Trash03)
                         ->modalIcon(Untitledui::Trash03)
@@ -156,7 +159,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
 
                             $record->delete();
                         })
-                        ->visible(shopper()->auth()->user()->can('delete_products')),
+                        ->authorize('products.delete')
+                        ->visible(shopper()->auth()->user()->can('products.delete')),
                 ])
                     ->tooltip('Actions'),
             ])

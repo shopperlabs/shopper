@@ -13,12 +13,14 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Core\Models\Contracts\Product;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class Media extends Component implements HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithSchemas;
 
     /** @var Model&Product */

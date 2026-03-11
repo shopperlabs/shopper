@@ -25,12 +25,14 @@ use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Contracts\Category;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class CategoryForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -118,11 +120,11 @@ class CategoryForm extends SlideOverComponent implements HasActions, HasForms
     public function save(): void
     {
         if ($this->category->id) {
-            $this->authorize('edit_categories', $this->category);
+            $this->authorize('categories.edit', $this->category);
 
             $this->category->update($this->form->getState());
         } else {
-            $this->authorize('add_categories');
+            $this->authorize('categories.create');
 
             $category = resolve(Category::class)::query()->create($this->form->getState());
             $this->form->model($category)->saveRelationships();

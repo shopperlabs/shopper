@@ -1,7 +1,7 @@
 <x-shopper::container class="py-5">
     <x-shopper::heading :title="__('shopper::pages/brands.menu')">
         <x-slot name="action">
-            @can('add_brands')
+            @can('brands.create')
                 <x-filament::button
                     wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.brand-form' })"
                     type="button"

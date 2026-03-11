@@ -22,9 +22,11 @@ use Shopper\Core\Events\Orders\OrderPaid;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Payment\Services\PaymentProcessingService;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Detail extends AbstractPageComponent implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 
@@ -32,7 +34,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
 
     public function mount(): void
     {
-        $this->authorize('read_orders');
+        $this->authorize('orders.read');
 
         $this->order->load('customer', 'channel');
     }

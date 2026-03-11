@@ -11,7 +11,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('browse_attributes');
+    $this->user->givePermissionTo('attributes.browse');
     $this->actingAs($this->user);
 });
 

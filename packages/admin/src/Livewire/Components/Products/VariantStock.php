@@ -18,9 +18,11 @@ use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\InventoryHistory;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class VariantStock extends Component implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 

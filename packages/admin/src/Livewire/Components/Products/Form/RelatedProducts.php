@@ -17,10 +17,12 @@ use Livewire\Attributes\Lazy;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Product;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Lazy]
 class RelatedProducts extends Component implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 

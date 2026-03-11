@@ -23,10 +23,12 @@ use Jenssegers\Agent\Agent;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 use Stevebauman\Location\Facades\Location;
 
 class Devices extends Component implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 

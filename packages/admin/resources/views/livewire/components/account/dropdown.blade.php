@@ -45,7 +45,7 @@
                         <x-phosphor-user-circle class="size-5 text-gray-400" aria-hidden="true" />
                         {{ __('shopper::layout.account_dropdown.personal_account') }}
                     </x-shopper::dropdown-link>
-                    @can('view_users')
+                    @can('system.users')
                         <x-shopper::dropdown-link :href="route('shopper.settings.users')">
                             <x-phosphor-users class="size-5 text-gray-400" aria-hidden="true" />
                             {{ __('shopper::layout.account_dropdown.manage_users') }}

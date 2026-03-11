@@ -15,7 +15,7 @@ uses(Tests\Admin\TestCase::class);
 beforeEach(function (): void {
     $this->user = User::factory()->create();
     $this->country = Country::query()->where('cca2', 'CM')->firstOrFail();
-    $this->user->givePermissionTo('add_customers');
+    $this->user->givePermissionTo('customers.create');
     $this->actingAs($this->user);
 });
 

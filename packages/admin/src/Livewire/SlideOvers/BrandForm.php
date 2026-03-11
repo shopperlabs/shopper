@@ -23,12 +23,14 @@ use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Contracts\Brand;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class BrandForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -106,11 +108,11 @@ class BrandForm extends SlideOverComponent implements HasActions, HasForms
     public function save(): void
     {
         if ($this->brand->id) {
-            $this->authorize('edit_brands', $this->brand);
+            $this->authorize('brands.edit', $this->brand);
 
             $this->brand->update($this->form->getState());
         } else {
-            $this->authorize('add_brands');
+            $this->authorize('brands.create');
 
             $brand = resolve(Brand::class)::query()->create($this->form->getState());
             $this->form->model($brand)->saveRelationships();

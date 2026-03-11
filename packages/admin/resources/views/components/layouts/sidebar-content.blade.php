@@ -22,7 +22,7 @@
     <div class="sh-sidebar border-t border-gray-200 px-3 pt-3 pb-6 dark:border-white/20">
         <div class="sh-sidebar-group">
             <ul role="list" class="sh-sidebar-group-items">
-                @can('access_setting')
+                @can('system.settings')
                     <li
                         class="sh-sidebar-item"
                         x-data="{ url: {{ Js::from(route('shopper.settings.index')) }} }"

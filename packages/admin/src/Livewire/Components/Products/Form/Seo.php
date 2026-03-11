@@ -15,12 +15,14 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Components\Form\SeoField;
 use Shopper\Core\Models\Contracts\Product;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class Seo extends Component implements HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithSchemas;
 
     /** @var Model&Product */

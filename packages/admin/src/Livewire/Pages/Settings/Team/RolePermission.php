@@ -28,6 +28,7 @@ use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Models\Permission;
 use Shopper\Models\Role;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property Schema $form
@@ -35,6 +36,7 @@ use Shopper\Models\Role;
 #[Layout('shopper::components.layouts.setting')]
 class RolePermission extends Component implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 
@@ -45,7 +47,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
 
     public function mount(): void
     {
-        $this->authorize('view_users');
+        $this->authorize('system.users');
 
         $this->form->fill($this->role->toArray());
     }
@@ -124,17 +126,17 @@ class RolePermission extends Component implements HasActions, HasSchemas
                     ->columnSpan('full'),
             ])
             ->action(function (array $data): void {
-                $this->authorize('view_users');
+                $this->authorize('system.users');
 
                 $resource = $data['resource'];
                 $group = $data['group_name'] ?? null;
 
                 Permission::generate($resource, $group);
 
-                $prefixes = ['browse', 'read', 'edit', 'add', 'delete'];
+                $actions = ['browse', 'read', 'edit', 'create', 'delete'];
 
-                foreach ($prefixes as $prefix) {
-                    $this->role->givePermissionTo("{$prefix}_{$resource}");
+                foreach ($actions as $action) {
+                    $this->role->givePermissionTo("{$resource}.{$action}");
                 }
 
                 $this->dispatch('permissionAdded');
@@ -178,7 +180,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
                     ->columnSpan('full'),
             ])
             ->action(function (array $data): void {
-                $this->authorize('view_users');
+                $this->authorize('system.users');
 
                 /** @var Permission $permission */
                 $permission = Permission::query()->create($data);
@@ -196,7 +198,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
 
     public function save(): void
     {
-        $this->authorize('view_users');
+        $this->authorize('system.users');
 
         $this->role->update($this->form->getState());
 

@@ -23,12 +23,14 @@ use Shopper\Components\Separator;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class AttributeForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -41,7 +43,7 @@ class AttributeForm extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(?int $attributeId = null): void
     {
-        abort_unless($this->authorize('add_attributes') || $this->authorize('edit_attributes'), 403);
+        abort_unless($this->authorize('attributes.create') || $this->authorize('attributes.edit'), 403);
 
         $this->attribute = Attribute::query()->find($attributeId);
 

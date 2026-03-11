@@ -41,7 +41,7 @@ in `resources/views/livewire/shopper`
 
         public function mount(): void
         {
-            $this->authorize('browse_shipping'); // Optional authorization
+            $this->authorize('shipping.browse'); // Optional authorization
         }
 
         public function table(Table $table): Table
@@ -187,7 +187,7 @@ sidebar extender class:
 
                 $group->item(__('Shipping'), function (Item $item): void {
                     $item->weight(1);
-                    $item->setAuthorized($this->user->hasPermissionTo('browse_shipping'));
+                    $item->setAuthorized($this->user->hasPermissionTo('shipping.browse'));
                     $item->useSpa();
                     $item->route('shopper.shipping.index');
                     $item->setIcon('untitledui-truck-01');
@@ -453,11 +453,11 @@ management - `product.php` - Product management (pages, forms, modals, slide-ove
     // In Livewire component
     public function mount(): void
     {
-        $this->authorize('browse_products');
+        $this->authorize('products.browse');
     }
 
     // In Blade
-    @can('add_products')
+    @can('products.create')
         <x-filament::button>Add Product</x-filament::button>
     @endcan
     </code-snippet>

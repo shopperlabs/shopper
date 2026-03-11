@@ -11,7 +11,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('edit_inventories');
+    $this->user->givePermissionTo('inventories.edit');
     $this->actingAs($this->user);
 
     $this->inventory = Inventory::factory()->create(['name' => 'Main Warehouse']);

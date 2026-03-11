@@ -24,10 +24,12 @@ use Shopper\Components\Tables\IconColumn;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\Contracts\Product;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Lazy]
 class Attributes extends Component implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
@@ -87,7 +89,7 @@ class Attributes extends Component implements HasActions, HasForms, HasTable
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(function (AttributeProduct $record): void {
-                        $this->authorize('delete_attributes', $record);
+                        $this->authorize('attributes.delete', $record);
 
                         app()->call(DetachAttributesToProductAction::class, [
                             'attributeProduct' => $record,

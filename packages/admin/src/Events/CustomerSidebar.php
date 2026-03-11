@@ -21,7 +21,7 @@ final class CustomerSidebar extends AbstractAdminSidebar
 
             $group->item(__('shopper::pages/customers.menu'), function (Item $item): void {
                 $item->weight(1);
-                $item->setAuthorized($this->user->hasPermissionTo('browse_customers'));
+                $item->setAuthorized($this->user->hasPermissionTo('customers.browse'));
                 $item->route('shopper.customers.index');
                 $item->useSpa();
                 $item->setIcon('phosphor-users');
@@ -30,7 +30,7 @@ final class CustomerSidebar extends AbstractAdminSidebar
             if (Feature::enabled('review')) {
                 $group->item(__('shopper::pages/reviews.menu'), function (Item $item): void {
                     $item->weight(2);
-                    $item->setAuthorized($this->user->hasPermissionTo('browse_products'));
+                    $item->setAuthorized($this->user->hasPermissionTo('products.browse'));
                     $item->route('shopper.reviews.index');
                     $item->useSpa();
                     $item->setIcon('phosphor-sparkle');

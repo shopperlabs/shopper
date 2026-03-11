@@ -38,12 +38,14 @@ use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Zone;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class DiscountForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -61,7 +63,7 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(?int $discountId = null): void
     {
-        abort_unless($this->authorize('add_discounts') || $this->authorize('edit_discounts'), 403);
+        abort_unless($this->authorize('discounts.create') || $this->authorize('discounts.edit'), 403);
 
         $this->discount = $discountId
             ? Discount::query()->find($discountId)

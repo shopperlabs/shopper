@@ -33,12 +33,14 @@ use Shopper\Components\Separator;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\ProductTag;
 use Shopper\Feature;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class Edit extends Component implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 

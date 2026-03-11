@@ -12,9 +12,12 @@ use Livewire\Component;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Contracts\Address as AddressContract;
 use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Addresses extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     /** @var Model&ShopperUser */
     public ShopperUser $customer;
 

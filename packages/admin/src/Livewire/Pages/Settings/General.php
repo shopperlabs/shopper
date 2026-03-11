@@ -28,6 +28,7 @@ use Shopper\Components\Separator;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\SaveSettings;
 
 /**
@@ -36,6 +37,7 @@ use Shopper\Traits\SaveSettings;
 #[Layout('shopper::components.layouts.setting')]
 class General extends Component implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use SaveSettings;
@@ -45,7 +47,7 @@ class General extends Component implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
 
         /** @var Collection<int, Setting> $settings */
         $settings = Setting::query()->whereIn('key', [

@@ -29,10 +29,12 @@ use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\HasAuthenticated;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use HasAuthenticated;
     use InteractsWithActions;
     use InteractsWithForms;
@@ -40,7 +42,7 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
 
     public function mount(): void
     {
-        $this->authorize('browse_discounts');
+        $this->authorize('discounts.browse');
     }
 
     public function table(Table $table): Table
@@ -108,7 +110,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ['discountId' => $record->id]
                         )
                     )
-                    ->visible($this->getUser()->can('edit_discounts')),
+                    ->authorize('discounts.edit')
+                    ->visible($this->getUser()->can('discounts.edit')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
@@ -117,7 +120,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Discount $record) => $record->delete())
-                    ->visible($this->getUser()->can('delete_discounts')),
+                    ->authorize('discounts.delete')
+                    ->visible($this->getUser()->can('discounts.delete')),
             ])
             ->groupedBulkActions([
                 DeleteBulkAction::make()
@@ -136,7 +140,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->success()
                             ->send();
                     })
-                    ->visible($this->getUser()->can('delete_discounts'))
+                    ->authorize('discounts.delete')
+                    ->visible($this->getUser()->can('discounts.delete'))
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([

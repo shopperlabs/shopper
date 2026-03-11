@@ -10,19 +10,22 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Models\Permission;
 use Shopper\Models\Role;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Permissions extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     public Role $role;
 
     public function mount(): void
     {
-        $this->authorize('view_users');
+        $this->authorize('system.users');
     }
 
     public function togglePermission(int $id): void
     {
-        $this->authorize('view_users');
+        $this->authorize('system.users');
         /** @var Permission $permission */
         $permission = Permission::query()->find($id);
 
@@ -45,7 +48,7 @@ class Permissions extends Component
 
     public function removePermission(int $id): void
     {
-        $this->authorize('view_users');
+        $this->authorize('system.users');
 
         Permission::query()->find($id)->delete();
 

@@ -20,6 +20,7 @@ use Shopper\Components\Form\CurrenciesField;
 use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Models\Currency;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
@@ -27,6 +28,7 @@ use Shopper\Livewire\Components\SlideOverComponent;
  */
 class ManagePricing extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -49,7 +51,7 @@ class ManagePricing extends SlideOverComponent implements HasActions, HasForms
      */
     public function mount(int $modelId, string $modelType, ?int $currencyId = null): void
     {
-        $this->authorize('edit_products');
+        $this->authorize('products.edit');
 
         $this->model = $modelType::with('prices')->find($modelId);
         $this->currencyId = $currencyId;
@@ -85,7 +87,7 @@ class ManagePricing extends SlideOverComponent implements HasActions, HasForms
 
     public function save(): void
     {
-        $this->authorize('edit_products');
+        $this->authorize('products.edit');
 
         $this->validate();
 

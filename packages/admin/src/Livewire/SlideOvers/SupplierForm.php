@@ -22,12 +22,14 @@ use Illuminate\Support\Str;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Contracts\Supplier;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class SupplierForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -106,11 +108,11 @@ class SupplierForm extends SlideOverComponent implements HasActions, HasForms
     public function save(): void
     {
         if ($this->supplier->id) {
-            $this->authorize('edit_suppliers', $this->supplier);
+            $this->authorize('suppliers.edit', $this->supplier);
 
             $this->supplier->update($this->form->getState());
         } else {
-            $this->authorize('add_suppliers');
+            $this->authorize('suppliers.create');
 
             resolve(Supplier::class)::query()->create($this->form->getState());
         }

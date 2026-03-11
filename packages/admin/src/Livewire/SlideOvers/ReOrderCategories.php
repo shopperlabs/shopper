@@ -8,15 +8,18 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Shopper\Core\Models\Contracts\Category;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class ReOrderCategories extends SlideOverComponent
 {
+    use HandlesAuthorizationExceptions;
+
     /**
      * @param  array<string, mixed>  $items
      */
     public function updateGroupOrder(array $items): void
     {
-        $this->authorize('edit_categories');
+        $this->authorize('categories.edit');
 
         foreach ($items as $item) {
             resolve(Category::class)::query()
@@ -32,7 +35,7 @@ class ReOrderCategories extends SlideOverComponent
      */
     public function updateCategoryOrder(array $groups): void
     {
-        $this->authorize('edit_categories');
+        $this->authorize('categories.edit');
 
         foreach ($groups as $group) {
             foreach ($group['items'] as $item) {

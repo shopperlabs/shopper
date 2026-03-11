@@ -40,12 +40,14 @@ use Shopper\Core\Models\Contracts\Channel;
 use Shopper\Feature;
 use Shopper\Livewire\Components\Products\ProductTypeConfiguration;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class AddProduct extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -63,7 +65,7 @@ class AddProduct extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('add_products');
+        $this->authorize('products.create');
 
         $this->currentProductType = shopper_setting('default_product_type');
 

@@ -32,12 +32,14 @@ use Shopper\Core\Models\Country;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Notifications\CustomerSendCredentials;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class Create extends AbstractPageComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -46,7 +48,7 @@ class Create extends AbstractPageComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('add_customers');
+        $this->authorize('customers.create');
 
         $this->form->fill();
     }

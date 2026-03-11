@@ -27,6 +27,7 @@ use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxRateRule;
 use Shopper\Core\Models\TaxZone;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
@@ -34,6 +35,7 @@ use Shopper\Traits\InteractsWithSlideOverForm;
  */
 class TaxRateOverrideForm extends SlideOverComponent implements HasActions, HasForms, SlideOverForm
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithSlideOverForm;
@@ -58,7 +60,7 @@ class TaxRateOverrideForm extends SlideOverComponent implements HasActions, HasF
 
     public function mount(int $taxZoneId, ?int $taxRateId = null): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
 
         $this->taxZoneId = $taxZoneId;
 
@@ -177,7 +179,7 @@ class TaxRateOverrideForm extends SlideOverComponent implements HasActions, HasF
 
     public function store(): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
 
         $data = $this->form->getState();
         $targets = collect(Arr::pull($data, 'targets', []))

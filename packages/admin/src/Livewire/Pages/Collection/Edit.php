@@ -29,12 +29,14 @@ use Shopper\Components\Form\SeoField;
 use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class Edit extends AbstractPageComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -45,7 +47,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('edit_collections');
+        $this->authorize('collections.edit');
 
         $this->collection?->load('rules');
 

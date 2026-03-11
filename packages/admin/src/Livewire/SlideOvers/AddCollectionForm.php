@@ -27,12 +27,14 @@ use Shopper\Components\Section;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class AddCollectionForm extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -41,7 +43,7 @@ class AddCollectionForm extends SlideOverComponent implements HasActions, HasFor
 
     public function mount(): void
     {
-        $this->authorize('add_collections');
+        $this->authorize('collections.create');
 
         $this->form->fill();
     }

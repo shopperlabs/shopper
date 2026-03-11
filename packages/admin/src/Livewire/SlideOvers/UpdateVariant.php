@@ -30,6 +30,7 @@ use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
@@ -38,6 +39,7 @@ use Shopper\Livewire\Components\SlideOverComponent;
  */
 class UpdateVariant extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -52,7 +54,7 @@ class UpdateVariant extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('edit_product_variants');
+        $this->authorize('products.variants.edit');
 
         $this->variant?->load(['values', 'values.attribute']);
 
@@ -135,7 +137,7 @@ class UpdateVariant extends SlideOverComponent implements HasActions, HasForms
 
     public function save(): void
     {
-        $this->authorize('edit_product_variants');
+        $this->authorize('products.variants.edit');
 
         $values = data_get($this->form->getState(), 'values');
 

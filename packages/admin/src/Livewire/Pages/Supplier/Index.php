@@ -24,16 +24,18 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Supplier as SupplierContract;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
     public function mount(): void
     {
-        $this->authorize('browse_suppliers');
+        $this->authorize('suppliers.browse');
     }
 
     public function table(Table $table): Table
@@ -74,7 +76,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ['supplier' => $record]
                         )
                     )
-                    ->visible(Shopper::auth()->user()->can('edit_suppliers')),
+                    ->authorize('suppliers.edit')
+                    ->visible(Shopper::auth()->user()->can('suppliers.edit')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
@@ -83,7 +86,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (SupplierContract $record) => $record->delete())
-                    ->visible(Shopper::auth()->user()->can('delete_suppliers')),
+                    ->authorize('suppliers.delete')
+                    ->visible(Shopper::auth()->user()->can('suppliers.delete')),
             ])
             ->groupedBulkActions([
                 BulkAction::make('enabled')
@@ -135,7 +139,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->success()
                             ->send();
                     })
-                    ->visible(Shopper::auth()->user()->can('delete_suppliers'))
+                    ->authorize('suppliers.delete')
+                    ->visible(Shopper::auth()->user()->can('suppliers.delete'))
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([

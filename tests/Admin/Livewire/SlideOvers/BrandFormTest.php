@@ -13,14 +13,14 @@ uses(Tests\Admin\TestCase::class);
 beforeEach(function (): void {
 
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('add_brands', 'edit_brands');
+    $this->user->givePermissionTo('brands.create', 'brands.edit');
     $this->actingAs($this->user);
 });
 
 describe(BrandForm::class, function (): void {
     it('can validate required fields on brand form', function (): void {
         Livewire::test(BrandForm::class)
-            ->assertFormExists()
+            ->assertSchemaExists('form')
             ->fillForm()
             ->call('save')
             ->assertHasFormErrors(['name' => 'required']);
@@ -28,7 +28,7 @@ describe(BrandForm::class, function (): void {
 
     it('can create brand', function (): void {
         Livewire::test(BrandForm::class)
-            ->assertFormExists()
+            ->assertSchemaExists('form')
             ->fillForm([
                 'name' => 'Nike',
             ])
@@ -40,7 +40,7 @@ describe(BrandForm::class, function (): void {
         Brand::factory()->create(['name' => 'Nike Old', 'slug' => 'nike']);
 
         Livewire::test(BrandForm::class)
-            ->assertFormExists()
+            ->assertSchemaExists('form')
             ->fillForm([
                 'name' => 'Nike',
             ])
@@ -54,5 +54,26 @@ describe(BrandForm::class, function (): void {
             ->toBe(2)
             ->and($query->latest()->first()?->slug)
             ->toBe('nike-1');
+    });
+
+    it('dispatches unauthorized notification when user lacks `add_brands` permission', function (): void {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        Livewire::test(BrandForm::class)
+            ->fillForm(['name' => 'Nike'])
+            ->call('save')
+            ->assertNotified(__('shopper::notifications.unauthorized.title'));
+    });
+
+    it('dispatches unauthorized notification when user lacks `edit_brands` permission', function (): void {
+        $brand = Brand::factory()->create();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        Livewire::test(BrandForm::class, ['brand' => $brand])
+            ->fillForm(['name' => 'Nike Updated'])
+            ->call('save')
+            ->assertNotified(__('shopper::notifications.unauthorized.title'));
     });
 })->group('livewire', 'slideovers', 'brands');

@@ -19,9 +19,11 @@ use Illuminate\Validation\Rules\Unique;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Variant extends AbstractPageComponent implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 
@@ -31,7 +33,7 @@ class Variant extends AbstractPageComponent implements HasActions, HasSchemas
 
     public function mount(): void
     {
-        $this->authorize('edit_products');
+        $this->authorize('products.edit');
 
         $this->variant?->load([
             'prices',

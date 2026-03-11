@@ -17,9 +17,11 @@ use Livewire\Attributes\Url;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Show extends AbstractPageComponent implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 
@@ -30,7 +32,7 @@ class Show extends AbstractPageComponent implements HasActions, HasSchemas
 
     public function mount(int $user): void
     {
-        $this->authorize('read_customers');
+        $this->authorize('customers.read');
 
         $userModel = config('auth.providers.users.model');
 
@@ -44,13 +46,13 @@ class Show extends AbstractPageComponent implements HasActions, HasSchemas
     {
         return Action::make('anonymize')
             ->label(__('shopper::pages/customers.anonymize.action'))
-            ->authorize('delete_customers', $this->customer) // @phpstan-ignore-line
+            ->authorize('customers.delete', $this->customer) // @phpstan-ignore-line
             ->icon(Untitledui::UserX02)
             ->modalIcon(Untitledui::UserX02)
             ->modalHeading(__('shopper::pages/customers.anonymize.title'))
             ->modalDescription(__('shopper::pages/customers.anonymize.description'))
             ->modalSubmitActionLabel(__('shopper::pages/customers.anonymize.confirm'))
-            ->visible(shopper()->auth()->user()->can('delete_customers'))
+            ->visible(shopper()->auth()->user()->can('customers.delete'))
             ->requiresConfirmation()
             ->color('danger')
             ->action(function (): void {

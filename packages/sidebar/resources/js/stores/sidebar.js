@@ -1,179 +1,172 @@
-export default (config = {}) => ({
-    isOpen: false,
-    isCollapsed: false,
-    collapsedGroups: [],
+export default (config = {}) => {
+  const persistKeys = {
+    isOpen: config.persistKeys?.isOpen ?? 'sidebar-is-open',
+    isCollapsed: config.persistKeys?.isCollapsed ?? 'sidebar-is-collapsed',
+    collapsedGroups: config.persistKeys?.collapsedGroups ?? 'sidebar-collapsed-groups',
+  }
+
+  // Read synchronously so Alpine initialises the DOM with the correct values — prevents width flash on load
+  const readStored = (key, fallback) => {
+    const raw = localStorage.getItem(key)
+    return raw !== null ? JSON.parse(raw) : fallback
+  }
+
+  return {
+    isOpen: readStored(persistKeys.isOpen, false),
+    isCollapsed: readStored(persistKeys.isCollapsed, false),
+    collapsedGroups: readStored(persistKeys.collapsedGroups, []),
     collapsible: true,
     currentPath: window.location.pathname,
 
     breakpoint: config.breakpoint ?? 1024,
-    persistKeys: {
-        isOpen: config.persistKeys?.isOpen ?? 'sidebar-is-open',
-        isCollapsed: config.persistKeys?.isCollapsed ?? 'sidebar-is-collapsed',
-        collapsedGroups: config.persistKeys?.collapsedGroups ?? 'sidebar-collapsed-groups',
-    },
+    persistKeys,
 
     init() {
-        this.loadConfigFromDOM()
-        this.loadPersistedState()
-        this.setupResizeObserver()
-        this.setupNavigationListener()
+      this.loadConfigFromDOM()
+      this.setupResizeObserver()
+      this.setupNavigationListener()
 
-        if (window.innerWidth >= this.breakpoint) {
-            this.isOpen = true
-        }
+      if (window.innerWidth >= this.breakpoint) {
+        this.isOpen = true
+      }
     },
 
     loadConfigFromDOM() {
-        const body = document.body
-        const breakpoint = body.dataset.sidebarBreakpoint
-        const collapsible = body.dataset.sidebarCollapsible
+      const body = document.body
+      const breakpoint = body.dataset.sidebarBreakpoint
+      const collapsible = body.dataset.sidebarCollapsible
 
-        if (breakpoint) {
-            this.breakpoint = parseInt(breakpoint, 10)
-        }
+      if (breakpoint) {
+        this.breakpoint = parseInt(breakpoint, 10)
+      }
 
-        if (collapsible !== undefined) {
-            this.collapsible = collapsible === 'true'
-        }
-    },
-
-    loadPersistedState() {
-        const storedIsOpen = localStorage.getItem(this.persistKeys.isOpen)
-        const storedIsCollapsed = localStorage.getItem(this.persistKeys.isCollapsed)
-        const storedCollapsedGroups = localStorage.getItem(this.persistKeys.collapsedGroups)
-
-        if (storedIsOpen !== null) {
-            this.isOpen = JSON.parse(storedIsOpen)
-        }
-
-        if (storedIsCollapsed !== null) {
-            this.isCollapsed = JSON.parse(storedIsCollapsed)
-        }
-
-        if (storedCollapsedGroups !== null) {
-            this.collapsedGroups = JSON.parse(storedCollapsedGroups)
-        }
+      if (collapsible !== undefined) {
+        this.collapsible = collapsible === 'true'
+      }
     },
 
     persistState(key, value) {
-        localStorage.setItem(key, JSON.stringify(value))
+      localStorage.setItem(key, JSON.stringify(value))
     },
 
     // Sidebar visibility (mobile)
     open() {
-        this.isOpen = true
-        this.persistState(this.persistKeys.isOpen, true)
+      this.isOpen = true
+      this.persistState(this.persistKeys.isOpen, true)
     },
 
     close() {
-        this.isOpen = false
-        this.persistState(this.persistKeys.isOpen, false)
+      this.isOpen = false
+      this.persistState(this.persistKeys.isOpen, false)
     },
 
     toggle() {
-        if (window.innerWidth < this.breakpoint) {
-            this.isOpen ? this.close() : this.open()
-        } else {
-            this.toggleCollapse()
-        }
+      if (window.innerWidth < this.breakpoint) {
+        this.isOpen ? this.close() : this.open()
+      } else {
+        this.toggleCollapse()
+      }
     },
 
     // Sidebar collapse (desktop)
     collapse() {
-        if (!this.collapsible) return
+      if (!this.collapsible) return
 
-        this.isCollapsed = true
-        this.persistState(this.persistKeys.isCollapsed, true)
+      this.isCollapsed = true
+      this.persistState(this.persistKeys.isCollapsed, true)
+      document.documentElement.classList.add('sidebar-collapsed')
     },
 
     expand() {
-        this.isCollapsed = false
-        this.persistState(this.persistKeys.isCollapsed, false)
+      this.isCollapsed = false
+      this.persistState(this.persistKeys.isCollapsed, false)
+      document.documentElement.classList.remove('sidebar-collapsed')
     },
 
     toggleCollapse() {
-        if (!this.collapsible) return
+      if (!this.collapsible) return
 
-        this.isCollapsed ? this.expand() : this.collapse()
+      this.isCollapsed ? this.expand() : this.collapse()
     },
 
     // Group management
     isGroupCollapsed(label) {
-        return this.collapsedGroups.includes(label)
+      return this.collapsedGroups.includes(label)
     },
 
     collapseGroup(label) {
-        if (!this.collapsedGroups.includes(label)) {
-            this.collapsedGroups.push(label)
-            this.persistState(this.persistKeys.collapsedGroups, this.collapsedGroups)
-        }
+      if (!this.collapsedGroups.includes(label)) {
+        this.collapsedGroups.push(label)
+        this.persistState(this.persistKeys.collapsedGroups, this.collapsedGroups)
+      }
     },
 
     expandGroup(label) {
-        const index = this.collapsedGroups.indexOf(label)
-        if (index !== -1) {
-            this.collapsedGroups.splice(index, 1)
-            this.persistState(this.persistKeys.collapsedGroups, this.collapsedGroups)
-        }
+      const index = this.collapsedGroups.indexOf(label)
+      if (index !== -1) {
+        this.collapsedGroups.splice(index, 1)
+        this.persistState(this.persistKeys.collapsedGroups, this.collapsedGroups)
+      }
     },
 
     toggleGroup(label) {
-        this.isGroupCollapsed(label) ? this.expandGroup(label) : this.collapseGroup(label)
+      this.isGroupCollapsed(label) ? this.expandGroup(label) : this.collapseGroup(label)
     },
 
     // Responsive handling
     setupResizeObserver() {
-        let previousWidth = window.innerWidth
+      let previousWidth = window.innerWidth
 
-        window.addEventListener('resize', () => {
-            const currentWidth = window.innerWidth
+      window.addEventListener('resize', () => {
+        const currentWidth = window.innerWidth
 
-            // Transitioning from mobile to desktop
-            if (previousWidth < this.breakpoint && currentWidth >= this.breakpoint) {
-                this.isOpen = true
-            }
+        // Transitioning from mobile to desktop
+        if (previousWidth < this.breakpoint && currentWidth >= this.breakpoint) {
+          this.isOpen = true
+        }
 
-            // Transitioning from desktop to mobile
-            if (previousWidth >= this.breakpoint && currentWidth < this.breakpoint) {
-                this.isOpen = false
-            }
+        // Transitioning from desktop to mobile
+        if (previousWidth >= this.breakpoint && currentWidth < this.breakpoint) {
+          this.isOpen = false
+        }
 
-            previousWidth = currentWidth
-        })
+        previousWidth = currentWidth
+      })
     },
 
     // Livewire integration
     refresh() {
-        if (window.Livewire) {
-            window.Livewire.dispatch('sidebar:refresh')
-        }
+      if (window.Livewire) {
+        window.Livewire.dispatch('sidebar:refresh')
+      }
     },
 
     // Navigation tracking
     setupNavigationListener() {
-        document.addEventListener('livewire:navigated', () => {
-            this.currentPath = window.location.pathname
-        })
+      document.addEventListener('livewire:navigated', () => {
+        this.currentPath = window.location.pathname
+      })
     },
 
     isActive(url) {
-        if (!url) return false
+      if (!url) return false
 
-        try {
-            const linkPath = new URL(url, window.location.origin).pathname
+      try {
+        const linkPath = new URL(url, window.location.origin).pathname
 
-            // Exact match
-            if (this.currentPath === linkPath) return true
+        // Exact match
+        if (this.currentPath === linkPath) return true
 
-            // Check if current path starts with link path (for nested routes)
-            // But not for root paths to avoid false positives
-            if (linkPath !== '/' && linkPath.length > 1) {
-                return this.currentPath.startsWith(linkPath + '/') || this.currentPath.startsWith(linkPath)
-            }
-
-            return false
-        } catch (e) {
-            return false
+        // Check if current path starts with link path (for nested routes)
+        // But not for root paths to avoid false positives
+        if (linkPath !== '/' && linkPath.length > 1) {
+          return this.currentPath.startsWith(linkPath + '/') || this.currentPath.startsWith(linkPath)
         }
+
+        return false
+      } catch (e) {
+        return false
+      }
     },
-})
+  }
+}

@@ -33,12 +33,14 @@ use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Schema $form
  */
 class ChooseProductAttributes extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -54,7 +56,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasActions, 
 
     public function mount(): void
     {
-        $this->authorize('edit_products');
+        $this->authorize('products.edit');
 
         $this->form->fill();
     }
@@ -189,7 +191,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasActions, 
 
     public function store(): void
     {
-        $this->authorize('edit_products');
+        $this->authorize('products.edit');
 
         $values = data_get($this->form->getState(), 'values');
 

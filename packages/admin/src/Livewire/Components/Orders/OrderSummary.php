@@ -9,9 +9,12 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\TaxZone;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class OrderSummary extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     public Order $order;
 
     #[On('order.updated')]

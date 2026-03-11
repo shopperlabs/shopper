@@ -10,7 +10,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('add_inventories');
+    $this->user->givePermissionTo('inventories.create');
     $this->actingAs($this->user);
 });
 

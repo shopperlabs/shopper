@@ -28,12 +28,14 @@ use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Models\OrderShipping;
 use Shopper\Core\Models\OrderShippingEvent;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Collection<int, OrderShippingEvent> $events
  */
 class ShipmentDetail extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -46,7 +48,7 @@ class ShipmentDetail extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('read_orders');
+        $this->authorize('orders.read');
 
         $this->shipment->load('events');
     }

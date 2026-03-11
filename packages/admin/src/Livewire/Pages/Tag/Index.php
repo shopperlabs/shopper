@@ -25,16 +25,18 @@ use Illuminate\Support\Str;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\ProductTag;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
 
     public function mount(): void
     {
-        $this->authorize('browse_tags');
+        $this->authorize('tags.browse');
     }
 
     public function table(Table $table): Table
@@ -71,7 +73,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->send();
                     })
                     ->modalSubmitActionLabel(__('shopper::forms.actions.update'))
-                    ->visible(shopper()->auth()->user()->can('edit_tags')),
+                    ->authorize('tags.edit')
+                    ->visible(shopper()->auth()->user()->can('tags.edit')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
@@ -87,7 +90,8 @@ class Index extends AbstractPageComponent implements HasActions, HasForms, HasTa
                             ->success()
                             ->send();
                     })
-                    ->visible(shopper()->auth()->user()->can('delete_tags')),
+                    ->authorize('tags.delete')
+                    ->visible(shopper()->auth()->user()->can('tags.delete')),
             ])
             ->groupedBulkActions([
                 DeleteBulkAction::make()

@@ -9,7 +9,7 @@
 
     <x-shopper::heading class="mt-5" :title="__('shopper::pages/tags.menu')">
         <x-slot name="action">
-            @can('add_tags')
+            @can('tags.create')
                 {{ $this->createAction }}
             @endcan
         </x-slot>

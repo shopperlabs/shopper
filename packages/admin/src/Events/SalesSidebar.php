@@ -25,7 +25,7 @@ final class SalesSidebar extends AbstractAdminSidebar
 
             $group->item(__('shopper::pages/orders.menu'), function (Item $item) use ($count): void {
                 $item->weight(1);
-                $item->setAuthorized($this->user->hasPermissionTo('browse_orders'));
+                $item->setAuthorized($this->user->hasPermissionTo('orders.browse'));
 
                 if ($count > 0) {
                     $item->badge($count)->color('warning');
@@ -37,14 +37,14 @@ final class SalesSidebar extends AbstractAdminSidebar
 
                 $item->item(__('shopper::pages/orders.shipments'), function (Item $item): void {
                     $item->weight(1);
-                    $item->setAuthorized($this->user->hasPermissionTo('browse_orders'));
+                    $item->setAuthorized($this->user->hasPermissionTo('orders.browse'));
                     $item->useSpa();
                     $item->route('shopper.orders.shipments');
                 });
 
                 $item->item(__('shopper::pages/orders.abandoned_carts.menu'), function (Item $item): void {
                     $item->weight(2);
-                    $item->setAuthorized($this->user->hasPermissionTo('browse_orders'));
+                    $item->setAuthorized($this->user->hasPermissionTo('orders.browse'));
                     $item->useSpa();
                     $item->route('shopper.orders.abandoned-carts');
                 });
@@ -53,7 +53,7 @@ final class SalesSidebar extends AbstractAdminSidebar
             if (Feature::enabled('discount')) {
                 $group->item(__('shopper::pages/discounts.menu'), function (Item $item): void {
                     $item->weight(2);
-                    $item->setAuthorized($this->user->hasPermissionTo('browse_discounts'));
+                    $item->setAuthorized($this->user->hasPermissionTo('discounts.browse'));
                     $item->useSpa();
                     $item->route('shopper.discounts.index');
                     $item->setIcon('phosphor-seal-percent');

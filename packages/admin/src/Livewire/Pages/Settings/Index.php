@@ -6,12 +6,15 @@ namespace Shopper\Livewire\Pages\Settings;
 
 use Illuminate\Contracts\View\View;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Index extends AbstractPageComponent
 {
+    use HandlesAuthorizationExceptions;
+
     public function mount(): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
     }
 
     public function render(): View

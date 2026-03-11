@@ -4,25 +4,12 @@
         class="sh-si hidden h-full lg:flex lg:shrink-0"
         x-bind:class="{ 'sh-si-collapsed': $store.sidebar.isCollapsed }"
     >
-        <div
-            class="sh-si-content h-full flex-1 overflow-hidden transition-all duration-200"
-            x-bind:style="
-                $store.sidebar.isCollapsed
-                    ? 'width: var(--sidebar-collapsed-width)'
-                    : 'width: var(--sidebar-width)'
-            "
-        >
+        <div class="sh-si-content h-full flex-1 overflow-hidden transition-[width] duration-200">
             <div class="from-primary-600 to-primary-100 dark:to-primary-600/10 h-1 bg-linear-to-br"></div>
             <div class="flex h-full flex-col">
                 <!-- Header / Branding -->
-                <div class="px-3 pt-3 pb-2">
-                    <x-shopper::link
-                        :href="route('shopper.dashboard')"
-                        class="relative flex items-center gap-2 rounded-md px-2 py-1.5"
-                        x-bind:class="$store.sidebar.isCollapsed
-                            ? 'justify-center'
-                            : 'bg-white shadow-xs ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/20'"
-                    >
+                <div class="py-4 px-6 border-b border-dashed border-gray-200 dark:border-white/20">
+                    <div class="relative flex items-center gap-3">
                         <x-shopper::brand class="size-6 shrink-0" aria-hidden="true" />
                         <div
                             class="min-w-0 truncate overflow-hidden transition-all duration-200"
@@ -34,11 +21,11 @@
                             x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0"
                         >
-                            <h4 class="font-heading truncate text-sm/4 font-medium text-gray-900 dark:text-white">
+                            <h4 class="truncate text-sm font-medium text-gray-900 dark:text-white">
                                 {{ shopper_setting('name') }}
                             </h4>
                         </div>
-                    </x-shopper::link>
+                    </div>
                 </div>
 
                 <x-shopper::layouts.sidebar-content :rendered-sidebar="$renderedSidebar" />

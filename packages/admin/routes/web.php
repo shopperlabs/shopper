@@ -19,6 +19,7 @@ use Shopper\Http\Middleware\DispatchShopper;
 use Shopper\Http\Middleware\HasConfiguration;
 use Shopper\Http\Middleware\RedirectIfAuthenticated;
 use Shopper\Http\Middleware\SetLocale;
+use Shopper\Livewire\Pages\Forbidden;
 use Shopper\Livewire\Pages\Initialization;
 use Shopper\Sidebar\Middleware\ResolveSidebars;
 
@@ -59,6 +60,11 @@ Route::domain(config('shopper.admin.domain'))
                 HasConfiguration::class,
                 ResolveSidebars::class,
             ])->get('/initialize', Initialization::class)->name('shopper.initialize');
+
+            Route::middleware([
+                Authenticate::class,
+                ResolveSidebars::class,
+            ])->get('/forbidden', Forbidden::class)->name('shopper.forbidden');
 
             Route::middleware(array_merge([
                 Authenticate::class,

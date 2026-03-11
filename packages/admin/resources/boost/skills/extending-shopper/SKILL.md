@@ -30,7 +30,7 @@ class ShippingSidebar extends AbstractAdminSidebar
                 $item->useSpa();
                 $item->route('shopper.shipping.index');
                 $item->setIcon('untitledui-truck-01');
-                $item->setAuthorized($this->user->hasPermissionTo('browse_shipping'));
+                $item->setAuthorized($this->user->hasPermissionTo('shipping.browse'));
             });
         });
 

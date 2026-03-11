@@ -23,9 +23,11 @@ use Livewire\Attributes\Locked;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class RelatedProductsList extends SlideOverComponent implements HasActions, HasForms, HasTable
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithTable;
@@ -46,7 +48,7 @@ class RelatedProductsList extends SlideOverComponent implements HasActions, HasF
      */
     public function mount(?Product $product = null, array $ids = []): void
     {
-        $this->authorize('edit_products');
+        $this->authorize('products.edit');
 
         $this->product = $product;
         $this->exceptProductIds = $ids;

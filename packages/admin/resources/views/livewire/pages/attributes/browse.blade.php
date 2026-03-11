@@ -9,7 +9,7 @@
 
     <x-shopper::heading class="mt-5" :title="__('shopper::pages/attributes.menu')">
         <x-slot name="action">
-            @can('add_attributes')
+            @can('attributes.create')
                 <x-filament::button
                     wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.attribute-form' })"
                     type="button"

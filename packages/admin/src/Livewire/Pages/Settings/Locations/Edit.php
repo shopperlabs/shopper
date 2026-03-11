@@ -8,15 +8,18 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Shopper\Core\Models\Inventory;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Layout('shopper::components.layouts.setting')]
 class Edit extends Component
 {
+    use HandlesAuthorizationExceptions;
+
     public Inventory $inventory;
 
     public function mount(): void
     {
-        $this->authorize('edit_inventories');
+        $this->authorize('inventories.edit');
     }
 
     public function render(): View

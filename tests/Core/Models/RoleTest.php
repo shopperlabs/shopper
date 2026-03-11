@@ -23,7 +23,7 @@ describe(Role::class, function (): void {
     it('has permissions relationship', function (): void {
         $role = Role::create(['name' => 'test-role-perms']);
 
-        $permissions = collect(['view_products', 'edit_products', 'delete_products'])->map(
+        $permissions = collect(['products.view', 'products.edit', 'products.delete'])->map(
             fn ($name) => Permission::query()->firstOrCreate(['name' => $name])
         );
 

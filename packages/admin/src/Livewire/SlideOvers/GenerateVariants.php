@@ -15,9 +15,12 @@ use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class GenerateVariants extends SlideOverComponent
 {
+    use HandlesAuthorizationExceptions;
+
     #[Locked]
     public ProductContract $product;
 
@@ -34,7 +37,7 @@ class GenerateVariants extends SlideOverComponent
 
     public function mount(): void
     {
-        $this->authorize('edit_product_variants');
+        $this->authorize('products.variants.edit');
 
         $this->product->loadMissing(['options', 'options.values']);
 
@@ -43,7 +46,7 @@ class GenerateVariants extends SlideOverComponent
 
     public function generate(): void
     {
-        $this->authorize('edit_product_variants');
+        $this->authorize('products.variants.edit');
 
         $this->variants = app()->call(SaveProductVariantsAction::class, [
             'product' => $this->product,

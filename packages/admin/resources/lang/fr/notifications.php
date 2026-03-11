@@ -71,4 +71,9 @@ return [
         'remove' => ':item a été correctement supprimé',
     ],
 
+    'unauthorized' => [
+        'title' => 'Non autorisé',
+        'body' => 'Vous n\'avez pas la permission d\'effectuer cette action.',
+    ],
+
 ];

@@ -71,6 +71,12 @@
             loadDarkMode()
 
             document.addEventListener('livewire:navigated', loadDarkMode)
+
+            // Pre-apply sidebar collapsed state from localStorage before Alpine initialises
+            // — prevents the width flash caused by CSS transitions firing on first render
+            if (localStorage.getItem('sidebar-is-collapsed') === 'true') {
+                document.documentElement.classList.add('sidebar-collapsed')
+            }
         </script>
     </head>
     <body

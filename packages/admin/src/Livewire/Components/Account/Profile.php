@@ -16,6 +16,7 @@ use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Components\Section;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\HasAuthenticated;
 
 /**
@@ -23,6 +24,7 @@ use Shopper\Traits\HasAuthenticated;
  */
 class Profile extends Component implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use HasAuthenticated;
     use InteractsWithActions;
     use InteractsWithForms;

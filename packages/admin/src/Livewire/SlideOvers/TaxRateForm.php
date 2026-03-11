@@ -18,6 +18,7 @@ use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxZone;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
@@ -25,6 +26,7 @@ use Shopper\Traits\InteractsWithSlideOverForm;
  */
 class TaxRateForm extends SlideOverComponent implements HasActions, HasForms, SlideOverForm
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
     use InteractsWithSlideOverForm;
@@ -49,7 +51,7 @@ class TaxRateForm extends SlideOverComponent implements HasActions, HasForms, Sl
 
     public function mount(int $taxZoneId, ?int $taxRateId = null): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
 
         $this->taxZoneId = $taxZoneId;
 
@@ -100,7 +102,7 @@ class TaxRateForm extends SlideOverComponent implements HasActions, HasForms, Sl
 
     public function store(): void
     {
-        $this->authorize('access_setting');
+        $this->authorize('system.settings');
 
         $data = $this->form->getState();
         $data['tax_zone_id'] = $this->taxZoneId;

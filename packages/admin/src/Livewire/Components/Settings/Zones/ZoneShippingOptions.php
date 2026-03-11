@@ -18,6 +18,7 @@ use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Zone;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
  * @property-read Zone $zone
@@ -25,6 +26,7 @@ use Shopper\Core\Models\Zone;
 #[Lazy]
 class ZoneShippingOptions extends Component implements HasActions, HasSchemas
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
 

@@ -14,9 +14,11 @@ use Filament\Support\Enums\Size;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\Review;
 use Shopper\Livewire\Components\SlideOverComponent;
+use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class ReviewDetail extends SlideOverComponent implements HasActions, HasForms
 {
+    use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -24,7 +26,7 @@ class ReviewDetail extends SlideOverComponent implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->authorize('browse_reviews');
+        $this->authorize('reviews.browse');
 
         $this->review->load('author', 'reviewrateable');
     }

@@ -65,4 +65,9 @@ return [
         'remove' => 'The :item has been correctly removed.',
     ],
 
+    'unauthorized' => [
+        'title' => 'Unauthorized',
+        'body' => 'You do not have permission to perform this action.',
+    ],
+
 ];
