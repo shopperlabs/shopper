@@ -9,10 +9,10 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\TextColumn;
@@ -27,11 +27,11 @@ use Shopper\Core\Models\ProductTag;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
-class Index extends AbstractPageComponent implements HasActions, HasForms, HasTable
+class Index extends AbstractPageComponent implements HasActions, HasSchemas, HasTable
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use InteractsWithTable;
 
     public function mount(): void

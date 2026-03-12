@@ -13,9 +13,9 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Size;
 use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
@@ -33,11 +33,11 @@ use Shopper\Traits\HandlesAuthorizationExceptions;
 /**
  * @property-read Collection<int, OrderShippingEvent> $events
  */
-class ShipmentDetail extends SlideOverComponent implements HasActions, HasForms
+class ShipmentDetail extends SlideOverComponent implements HasActions, HasSchemas
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     public OrderShipping $shipment;
 

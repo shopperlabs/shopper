@@ -10,11 +10,11 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -35,11 +35,11 @@ use Shopper\Traits\SaveSettings;
  * @property-read Schema $form
  */
 #[Layout('shopper::components.layouts.setting')]
-class General extends Component implements HasActions, HasForms
+class General extends Component implements HasActions, HasSchemas
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use SaveSettings;
 
     /** @var array<string, mixed>|null */

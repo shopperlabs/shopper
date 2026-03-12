@@ -9,9 +9,9 @@ use Filament\Actions\BulkAction;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -26,11 +26,11 @@ use Shopper\Core\Models\Attribute;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
-class Browse extends AbstractPageComponent implements HasActions, HasForms, HasTable
+class Browse extends AbstractPageComponent implements HasActions, HasSchemas, HasTable
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use InteractsWithTable;
 
     public function mount(): void

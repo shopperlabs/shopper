@@ -6,9 +6,9 @@ namespace Shopper\Livewire\SlideOvers;
 
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,11 +26,11 @@ use Shopper\Traits\HandlesAuthorizationExceptions;
  * @property-read Schema $form
  * @property-read Collection<int, Currency> $currencies
  */
-class ManagePricing extends SlideOverComponent implements HasActions, HasForms
+class ManagePricing extends SlideOverComponent implements HasActions, HasSchemas
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     /** @var (Model&Priceable<Model>) */
     public Model&Priceable $model;

@@ -7,9 +7,9 @@ namespace Shopper\Livewire\SlideOvers;
 use Filament\Actions\BulkAction;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
@@ -25,11 +25,11 @@ use Shopper\Core\Models\Contracts\Product;
 use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
-class RelatedProductsList extends SlideOverComponent implements HasActions, HasForms, HasTable
+class RelatedProductsList extends SlideOverComponent implements HasActions, HasSchemas, HasTable
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use InteractsWithTable;
 
     public Product $product;

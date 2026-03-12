@@ -7,20 +7,20 @@ namespace Shopper\Livewire\SlideOvers;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Size;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\Review;
 use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
-class ReviewDetail extends SlideOverComponent implements HasActions, HasForms
+class ReviewDetail extends SlideOverComponent implements HasActions, HasSchemas
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     public Review $review;
 

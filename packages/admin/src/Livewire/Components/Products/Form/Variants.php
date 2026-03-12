@@ -9,9 +9,9 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -29,11 +29,11 @@ use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Lazy]
-class Variants extends Component implements HasActions, HasForms, HasTable
+class Variants extends Component implements HasActions, HasSchemas, HasTable
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use InteractsWithTable;
 
     public Product $product;

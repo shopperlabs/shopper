@@ -7,9 +7,9 @@ namespace Shopper\Livewire\Components\Initialization\Steps;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -20,10 +20,10 @@ use Spatie\LivewireWizard\Components\StepComponent;
 /**
  * @property-read Schema $form
  */
-final class StoreAddress extends StepComponent implements HasActions, HasForms
+final class StoreAddress extends StepComponent implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use SaveSettings;
 
     /** @var array<string, mixed>|null */
