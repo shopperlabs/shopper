@@ -1,10 +1,11 @@
 import SlideOverPanel from './components/panel'
 import CodePreview from './components/code-preview'
-import './components/sortable'
+import NestedSortable from './components/nested-sortable'
 import sidebarStore from '../../../sidebar/resources/js/stores/sidebar'
 
 window.SlideOverPanel = SlideOverPanel
 window.codePreview = CodePreview
+window.nestedSortable = NestedSortable
 
 document.addEventListener('alpine:init', () => {
   const theme = localStorage.getItem('theme') ?? 'system'
