@@ -8,8 +8,8 @@ use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Size;
 use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
@@ -26,11 +26,11 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 use Stevebauman\Location\Facades\Location;
 
-class Devices extends Component implements HasActions, HasForms
+class Devices extends Component implements HasActions, HasSchemas
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     public function logoutOtherBrowsersAction(): Action
     {

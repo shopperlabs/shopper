@@ -7,8 +7,8 @@ namespace Shopper\Livewire\Components\Customers;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -23,11 +23,11 @@ use Shopper\Core\Models\Contracts\Order;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
-class Orders extends Component implements HasActions, HasForms, HasTable
+class Orders extends Component implements HasActions, HasSchemas, HasTable
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use InteractsWithTable;
 
     /** @var Model&ShopperUser */

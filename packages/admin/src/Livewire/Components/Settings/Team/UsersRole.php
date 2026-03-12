@@ -7,8 +7,8 @@ namespace Shopper\Livewire\Components\Settings\Team;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\DeleteAction;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -21,11 +21,11 @@ use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Models\Role;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
-class UsersRole extends Component implements HasActions, HasForms, HasTable
+class UsersRole extends Component implements HasActions, HasSchemas, HasTable
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use InteractsWithTable;
 
     public Role $role;

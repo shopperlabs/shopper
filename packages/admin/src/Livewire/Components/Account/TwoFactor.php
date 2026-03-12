@@ -6,9 +6,9 @@ namespace Shopper\Livewire\Components\Account;
 
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
@@ -23,12 +23,12 @@ use Shopper\Traits\HandlesAuthorizationExceptions;
 /**
  * @property-read ShopperUser $user
  */
-class TwoFactor extends Component implements HasActions, HasForms
+class TwoFactor extends Component implements HasActions, HasSchemas
 {
     use ConfirmsPasswords;
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     public bool $showingQrCode = false;
 

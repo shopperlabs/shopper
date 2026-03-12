@@ -9,8 +9,8 @@ use DanHarrin\LivewireRateLimiting\WithRateLimiting;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
@@ -28,9 +28,9 @@ use Shopper\Traits\TwoFactorAuthenticatable;
  * @property-read Schema $twoFactorForm
  */
 #[Layout('shopper::components.layouts.base')]
-final class Login extends Component implements HasForms
+final class Login extends Component implements HasSchemas
 {
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use WithRateLimiting;
 
     /** @var array<string, mixed>|null */

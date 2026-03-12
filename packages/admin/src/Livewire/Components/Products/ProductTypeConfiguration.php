@@ -7,8 +7,8 @@ namespace Shopper\Livewire\Components\Products;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Reactive;
@@ -20,11 +20,11 @@ use Shopper\Traits\SaveSettings;
 /**
  * @property-read Schema $form
  */
-class ProductTypeConfiguration extends Component implements HasActions, HasForms
+class ProductTypeConfiguration extends Component implements HasActions, HasSchemas
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use SaveSettings;
 
     #[Reactive]

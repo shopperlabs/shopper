@@ -9,11 +9,11 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Resources\Concerns\HasTabs;
 use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
@@ -32,12 +32,12 @@ use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Shipping\Services\CarrierRateService;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
-class Shipments extends AbstractPageComponent implements HasActions, HasForms, HasTable
+class Shipments extends AbstractPageComponent implements HasActions, HasSchemas, HasTable
 {
     use HandlesAuthorizationExceptions;
     use HasTabs;
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
     use InteractsWithTable;
 
     public function mount(): void

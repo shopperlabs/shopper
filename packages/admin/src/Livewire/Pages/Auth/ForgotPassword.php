@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Pages\Auth;
 
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Auth\Passwords\PasswordBroker;
 use Illuminate\Contracts\View\View;
@@ -19,9 +19,9 @@ use Shopper\Notifications\AdminResetPassword;
  * @property-read Schema $form
  */
 #[Layout('shopper::components.layouts.base')]
-final class ForgotPassword extends Component implements HasForms
+final class ForgotPassword extends Component implements HasSchemas
 {
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
