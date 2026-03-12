@@ -10,17 +10,7 @@
                         {{ $attribute->name }}
                     </x-filament::badge>
                 </div>
-                <div class="ml-3 flex h-7 items-center gap-2">
-                    <x-shopper::escape />
-                    <button
-                        type="button"
-                        class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none dark:bg-gray-900 dark:text-gray-500 dark:hover:text-gray-300"
-                        wire:click="$dispatch('closePanel')"
-                    >
-                        <span class="sr-only">Close panel</span>
-                        <x-untitledui-x class="size-6" stroke-width="1.5" aria-hidden="true" />
-                    </button>
-                </div>
+                <x-shopper::close-icon />
             </div>
             <div class="mt-1">
                 <p class="text-sm text-gray-500 dark:text-gray-400">
