@@ -3,7 +3,7 @@
     :content="__('shopper::pages/suppliers.content')"
     :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/suppliers.single')])"
     panel="{ component: 'shopper-slide-overs.supplier-form' }"
-    permission="add_suppliers"
+    permission="suppliers.create"
 >
     <div class="shrink-0">
         <svg

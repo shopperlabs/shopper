@@ -3,7 +3,7 @@
     :content="__('shopper::pages/brands.content')"
     :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/brands.single')])"
     panel="{ component: 'shopper-slide-overs.brand-form' }"
-    permission="add_brands"
+    permission="brands.create"
 >
     <div class="shrink-0">
         <svg

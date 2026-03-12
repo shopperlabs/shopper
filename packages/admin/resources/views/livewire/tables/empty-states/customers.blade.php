@@ -2,7 +2,7 @@
     :title="__('shopper::pages/customers.title')"
     :content="__('shopper::pages/customers.content')"
     :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')])"
-    permission="add_customers"
+    permission="customers.create"
     :url="route('shopper.customers.create')"
 >
     <div class="shrink-0">

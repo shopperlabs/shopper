@@ -3,7 +3,7 @@
     :content="__('shopper::pages/products.content')"
     :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/products.single')])"
     panel="{ component: 'shopper-slide-overs.add-product' }"
-    permission="add_products"
+    permission="products.create"
     class="lg:pb-0"
 >
     <div class="shrink-0">
