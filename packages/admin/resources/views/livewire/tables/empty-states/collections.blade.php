@@ -2,7 +2,7 @@
     :title="__('shopper::pages/collections.title')"
     :content="__('shopper::pages/collections.content')"
     :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/collections.single')])"
-    permission="add_collections"
+    permission="collections.create"
     panel="{ component: 'shopper-slide-overs.add-collection-form' }"
 >
     <div class="shrink-0">

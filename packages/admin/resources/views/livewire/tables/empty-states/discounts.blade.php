@@ -2,7 +2,7 @@
     :title="__('shopper::pages/discounts.title')"
     :content="__('shopper::pages/discounts.description')"
     :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/discounts.single')])"
-    permission="add_discounts"
+    permission="discounts.create"
     panel="{ component: 'shopper-slide-overs.discount-form' }"
 >
     <div class="shrink-0">

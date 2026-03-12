@@ -2,7 +2,7 @@
     :title="__('shopper::pages/attributes.title')"
     :content="__('shopper::pages/attributes.content')"
     :button="__('shopper::pages/attributes.add')"
-    permission="add_attributes"
+    permission="attributes.create"
     panel="{ component: 'shopper-slide-overs.attribute-form' }"
 >
     <div class="shrink-0">

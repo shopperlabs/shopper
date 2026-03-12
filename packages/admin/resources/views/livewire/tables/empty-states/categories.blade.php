@@ -2,7 +2,7 @@
     :title="__('shopper::pages/categories.title')"
     :content="__('shopper::pages/categories.content')"
     :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/categories.single')])"
-    permission="add_categories"
+    permission="categories.create"
     panel="{ component: 'shopper-slide-overs.category-form' }"
 >
     <div class="shrink-0">
