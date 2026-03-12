@@ -4,17 +4,7 @@
             <h2 class="text-lg font-medium text-gray-900 dark:text-white">
                 {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/products.single')]) }}
             </h2>
-            <div class="ml-3 flex h-7 items-center gap-2">
-                <x-shopper::escape />
-                <button
-                    type="button"
-                    class="rounded-md bg-white text-gray-400 outline-none hover:text-gray-500 dark:bg-gray-900 dark:text-gray-500 dark:hover:text-gray-300"
-                    wire:click="$dispatch('closePanel')"
-                >
-                    <span class="sr-only">Close panel</span>
-                    <x-untitledui-x class="size-6" stroke-width="1.5" aria-hidden="true" />
-                </button>
-            </div>
+            <x-shopper::close-icon />
         </div>
     </header>
 

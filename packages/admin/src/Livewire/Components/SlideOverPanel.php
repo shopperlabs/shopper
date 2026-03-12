@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Reflector;
 use Livewire\Attributes\Locked;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use ReflectionClass;
 use ReflectionException;
@@ -41,6 +42,7 @@ class SlideOverPanel extends Component
      *
      * @throws ReflectionException
      */
+    #[On('openPanel')]
     public function openPanel(string $component, array $arguments = [], array $panelAttributes = []): void
     {
         $requiredInterface = PanelContract::class;
@@ -97,20 +99,10 @@ class SlideOverPanel extends Component
             ->filter();
     }
 
+    #[On('destroyComponent')]
     public function destroyComponent(string $id): void
     {
         unset($this->components[$id]);
-    }
-
-    /**
-     * @return array<string>
-     */
-    public function getListeners(): array
-    {
-        return [
-            'openPanel',
-            'destroyComponent',
-        ];
     }
 
     public function render(): View
