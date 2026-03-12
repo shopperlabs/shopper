@@ -3,6 +3,7 @@ const SlideOverPanel = () => {
     open: false,
     showActiveComponent: true,
     activeComponent: false,
+    closeOnEscape: true,
     componentHistory: [],
     panelWidth: null,
     listeners: [],
@@ -79,6 +80,7 @@ const SlideOverPanel = () => {
         this.activeComponent = id
         this.showActiveComponent = true
         this.panelWidth = this.getActiveComponentPanelAttribute('maxWidthClass')
+        this.closeOnEscape = this.getActiveComponentPanelAttribute('closeOnEscape') ?? true
       } else {
         this.showActiveComponent = false
 
@@ -88,6 +90,7 @@ const SlideOverPanel = () => {
           this.activeComponent = id
           this.showActiveComponent = true
           this.panelWidth = this.getActiveComponentPanelAttribute('maxWidthClass')
+          this.closeOnEscape = this.getActiveComponentPanelAttribute('closeOnEscape') ?? true
         }, 300)
       }
 

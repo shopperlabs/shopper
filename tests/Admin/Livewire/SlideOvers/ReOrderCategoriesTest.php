@@ -46,112 +46,52 @@ describe(ReOrderCategories::class, function (): void {
         expect($categories->first()->children)->toHaveCount(2);
     });
 
-    it('can update group order', function (): void {
+    it('can reorder root categories', function (): void {
         $category1 = Category::factory()->create(['parent_id' => null, 'position' => 1]);
         $category2 = Category::factory()->create(['parent_id' => null, 'position' => 2]);
         $category3 = Category::factory()->create(['parent_id' => null, 'position' => 3]);
 
         Livewire::test(ReOrderCategories::class)
-            ->call('updateGroupOrder', [
-                ['value' => $category1->id, 'order' => 3],
-                ['value' => $category2->id, 'order' => 1],
-                ['value' => $category3->id, 'order' => 2],
-            ])
-            ->assertDispatched('category-save');
-
-        $category1->refresh();
-        $category2->refresh();
-        $category3->refresh();
-
-        expect($category1->position)->toBe(3)
-            ->and($category2->position)->toBe(1)
-            ->and($category3->position)->toBe(2);
-    });
-
-    it('can update category order with parent change', function (): void {
-        $parent1 = Category::factory()->create(['parent_id' => null]);
-        $parent2 = Category::factory()->create(['parent_id' => null]);
-        $child = Category::factory()->create(['parent_id' => $parent1->id, 'position' => 1]);
-
-        Livewire::test(ReOrderCategories::class)
-            ->call('updateCategoryOrder', [
-                [
-                    'value' => $parent2->id,
-                    'items' => [
-                        ['value' => $child->id, 'order' => 2],
-                    ],
-                ],
-            ])
-            ->assertDispatched('category-save');
-
-        $child->refresh();
-
-        expect($child->parent_id)->toBe($parent2->id)
-            ->and($child->position)->toBe(2);
-    });
-
-    it('can update multiple categories in different groups', function (): void {
-        $parent1 = Category::factory()->create(['parent_id' => null]);
-        $parent2 = Category::factory()->create(['parent_id' => null]);
-        $child1 = Category::factory()->create(['parent_id' => $parent1->id]);
-        $child2 = Category::factory()->create(['parent_id' => $parent1->id]);
-
-        Livewire::test(ReOrderCategories::class)
-            ->call('updateCategoryOrder', [
-                [
-                    'value' => $parent1->id,
-                    'items' => [
-                        ['value' => $child1->id, 'order' => 1],
-                    ],
-                ],
-                [
-                    'value' => $parent2->id,
-                    'items' => [
-                        ['value' => $child2->id, 'order' => 1],
-                    ],
-                ],
+            ->call('reorder', [
+                (string) $category3->id,
+                (string) $category1->id,
+                (string) $category2->id,
             ]);
 
-        $child1->refresh();
-        $child2->refresh();
-
-        expect($child1->parent_id)->toBe($parent1->id)
-            ->and($child1->position)->toBe(1)
-            ->and($child2->parent_id)->toBe($parent2->id)
-            ->and($child2->position)->toBe(1);
+        expect($category1->refresh()->position)->toBe(2)
+            ->and($category2->refresh()->position)->toBe(3)
+            ->and($category3->refresh()->position)->toBe(1);
     });
 
-    it('dispatches category-save event after updating group order', function (): void {
-        $category = Category::factory()->create(['parent_id' => null, 'position' => 1]);
+    it('can move a child to a different parent', function (): void {
+        $parent1 = Category::factory()->create(['parent_id' => null]);
+        $parent2 = Category::factory()->create(['parent_id' => null]);
+        $child1 = Category::factory()->create(['parent_id' => $parent1->id, 'position' => 1]);
+        $child2 = Category::factory()->create(['parent_id' => $parent2->id, 'position' => 1]);
 
         Livewire::test(ReOrderCategories::class)
-            ->call('updateGroupOrder', [
-                ['value' => $category->id, 'order' => 2],
-            ])
-            ->assertDispatched('category-save');
+            ->call('reorder', [
+                (string) $child1->id,
+                (string) $child2->id,
+            ], (string) $parent2->id);
+
+        expect($child1->refresh()->parent_id)->toBe($parent2->id)
+            ->and($child1->refresh()->position)->toBe(1)
+            ->and($child2->refresh()->position)->toBe(2);
     });
 
-    it('dispatches category-save event after updating category order', function (): void {
-        $parent = Category::factory()->create(['parent_id' => null]);
-        $child = Category::factory()->create(['parent_id' => $parent->id]);
+    it('can move a category to root level', function (): void {
+        $parent = Category::factory()->create(['parent_id' => null, 'position' => 1]);
+        $child = Category::factory()->create(['parent_id' => $parent->id, 'position' => 1]);
 
         Livewire::test(ReOrderCategories::class)
-            ->call('updateCategoryOrder', [
-                [
-                    'value' => $parent->id,
-                    'items' => [
-                        ['value' => $child->id, 'order' => 1],
-                    ],
-                ],
-            ])
-            ->assertDispatched('category-save');
-    });
+            ->call('reorder', [
+                (string) $child->id,
+                (string) $parent->id,
+            ]);
 
-    it('refreshes on category-save event', function (): void {
-        $component = Livewire::test(ReOrderCategories::class);
-
-        $component->dispatch('category-save');
-
-        $component->assertOk();
+        expect($child->refresh()->parent_id)->toBeNull()
+            ->and($child->refresh()->position)->toBe(1)
+            ->and($parent->refresh()->position)->toBe(2);
     });
 })->group('livewire', 'slideovers', 'products');

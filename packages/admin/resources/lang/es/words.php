@@ -95,6 +95,8 @@ return [
     'logout_session' => 'Cerrar otras sesiones de navegador',
     'logout_session_confirm' => 'Por favor ingresa tu contraseña para confirmar que deseas cerrar sesión en tus otras sesiones de navegador en todos tus dispositivos.',
     'reorder' => 'Reordenar',
+    'collapse' => 'Contraer',
+    'expand' => 'Expandir',
     'all' => 'Todo',
     'open' => 'Abiertas',
     'fulfilled' => 'Enviadas',

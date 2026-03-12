@@ -95,6 +95,8 @@ return [
     'logout_session' => 'Déconnexion des autres sessions du navigateur',
     'logout_session_confirm' => 'Please enter your password to confirm you would like to logout of your other browser sessions across all of your devices.',
     'reorder' => 'Réorganiser',
+    'collapse' => 'Réduire',
+    'expand' => 'Développer',
     'all' => 'Tous',
     'open' => 'Ouvertes',
     'fulfilled' => 'Expédiées',
