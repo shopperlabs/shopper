@@ -42,6 +42,9 @@ return [
         'use_recovery_code' => 'Usar un código de recuperación',
         'use_authentication_code' => 'Usar un código de autenticación',
         'action' => 'Iniciar sesión',
+        'recovery_not_enabled' => 'Los códigos de recuperación no están habilitados para esta cuenta.',
+        'invalid_recovery_code' => 'El código de recuperación proporcionado no es válido.',
+        'invalid_code' => 'El código de autenticación de dos factores proporcionado no es válido.',
     ],
 
     'account' => [

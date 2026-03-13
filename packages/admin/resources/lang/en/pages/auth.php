@@ -44,6 +44,9 @@ return [
         'use_recovery_code' => 'Use a recovery code',
         'use_authentication_code' => 'Use an authentication code',
         'action' => 'Login',
+        'recovery_not_enabled' => 'Recovery codes are not enabled for this account.',
+        'invalid_recovery_code' => 'The provided two factor recovery code was invalid.',
+        'invalid_code' => 'The provided two factor authentication code was invalid.',
     ],
 
     'account' => [

@@ -16,12 +16,13 @@ use Livewire\Component;
 use Shopper\Actions\Auth\DisableTwoFactorAuthentication;
 use Shopper\Actions\Auth\EnableTwoFactorAuthentication;
 use Shopper\Actions\Auth\GenerateNewRecoveryCodes;
-use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Contracts\HasStoreAuthentication;
+use Shopper\Contracts\HasStoreAuthenticationRecovery;
 use Shopper\Traits\ConfirmsPasswords;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
- * @property-read ShopperUser $user
+ * @property-read HasStoreAuthentication&HasStoreAuthenticationRecovery $user
  */
 class TwoFactor extends Component implements HasActions, HasSchemas
 {
@@ -98,16 +99,16 @@ class TwoFactor extends Component implements HasActions, HasSchemas
     }
 
     #[Computed]
-    public function user(): ShopperUser
+    public function user(): HasStoreAuthentication
     {
-        /** @var ShopperUser */
+        /** @var HasStoreAuthentication */
         return shopper()->auth()->user();
     }
 
     #[Computed]
     public function enabled(): bool
     {
-        return ! empty($this->user->store_two_factor_secret);
+        return $this->user->getStoreAuthenticationSecret() !== null;
     }
 
     public function render(): View

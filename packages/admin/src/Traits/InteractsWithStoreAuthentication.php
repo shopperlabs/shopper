@@ -10,25 +10,28 @@ use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
-use Shopper\Actions\Auth\RecoveryCode;
 use Shopper\Contracts\TwoFactorAuthenticationProvider;
 
-trait TwoFactorAuthenticatable
+/**
+ * @property ?string $store_two_factor_secret
+ */
+trait InteractsWithStoreAuthentication
 {
-    public function getStoreAuthenticationRecoveryCodes(): array
+    public function getStoreAuthenticationSecret(): ?string
     {
-        return json_decode(decrypt($this->store_two_factor_recovery_codes), true);
+        return $this->store_two_factor_secret;
     }
 
-    public function replaceStoreAuthenticationRecoveryCode(string $code): void
+    public function saveStoreAuthenticationSecret(?string $secret): void
     {
         $this->forceFill([
-            'store_two_factor_recovery_codes' => encrypt(str_replace(
-                $code,
-                RecoveryCode::generate(),
-                decrypt($this->store_two_factor_recovery_codes)
-            )),
+            'store_two_factor_secret' => $secret !== null ? encrypt($secret) : null,
         ])->save();
+    }
+
+    public function getStoreAuthenticationHolderName(): string
+    {
+        return $this->email;
     }
 
     public function getStoreAuthenticationQrCodeSvg(): string
@@ -47,7 +50,7 @@ trait TwoFactorAuthenticatable
     {
         return app(TwoFactorAuthenticationProvider::class)->qrCodeUrl(
             config('app.name'),
-            $this->email,
+            $this->getStoreAuthenticationHolderName(),
             decrypt($this->store_two_factor_secret)
         );
     }

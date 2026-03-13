@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace Shopper\Actions\Auth;
 
 use Illuminate\Support\Collection;
-use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Contracts\HasStoreAuthenticationRecovery;
 
 class GenerateNewRecoveryCodes
 {
-    public function __invoke(ShopperUser $user): void
+    public function __invoke(HasStoreAuthenticationRecovery $user): void
     {
-        $user->forceFill([
-            'store_two_factor_recovery_codes' => encrypt(json_encode(
-                Collection::times(8, fn (): string => RecoveryCode::generate())->all()
-            )),
-        ])->save();
+        $user->saveStoreAuthenticationRecoveryCodes(
+            Collection::times(8, fn (): string => RecoveryCode::generate())->all()
+        );
     }
 }
