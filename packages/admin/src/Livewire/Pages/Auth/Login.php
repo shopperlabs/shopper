@@ -18,10 +18,11 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
+use Shopper\Contracts\HasStoreAuthentication;
+use Shopper\Contracts\HasStoreAuthenticationRecovery;
 use Shopper\Contracts\LoginResponse;
 use Shopper\Contracts\TwoFactorAuthenticationProvider;
 use Shopper\Facades\Shopper;
-use Shopper\Traits\TwoFactorAuthenticatable;
 
 /**
  * @property-read Schema $form
@@ -161,8 +162,8 @@ final class Login extends Component implements HasSchemas
     private function shouldChallenge(mixed $user): bool
     {
         return config('shopper.auth.2fa_enabled')
-            && $user->store_two_factor_secret
-            && in_array(TwoFactorAuthenticatable::class, class_uses_recursive($user));
+            && $user instanceof HasStoreAuthentication
+            && $user->getStoreAuthenticationSecret();
     }
 
     private function verifyTwoFactorCode(mixed $user): mixed
@@ -170,16 +171,23 @@ final class Login extends Component implements HasSchemas
         $data = $this->twoFactorForm->getState();
 
         if ($this->useRecoveryCode) {
-            $validCode = collect($user->recoveryCodes())
-                ->first(fn ($code): bool => hash_equals($data['recovery_code'], $code));
-
-            if (! $validCode) {
+            if (! $user instanceof HasStoreAuthenticationRecovery) {
                 throw ValidationException::withMessages([
-                    'twoFactorData.recovery_code' => __('The provided two factor recovery code was invalid.'),
+                    'twoFactorData.recovery_code' => __('shopper::pages/auth.two_factor.recovery_not_enabled'),
                 ]);
             }
 
-            $user->replaceRecoveryCode($validCode);
+            /** @var ?string $validCode */
+            $validCode = collect($user->getStoreAuthenticationRecoveryCodes())
+                ->first(fn (string $code): bool => hash_equals($data['recovery_code'], $code));
+
+            if ($validCode === null) {
+                throw ValidationException::withMessages([
+                    'twoFactorData.recovery_code' => __('shopper::pages/auth.two_factor.invalid_recovery_code'),
+                ]);
+            }
+
+            $user->replaceStoreAuthenticationRecoveryCode($validCode);
         } else {
             $isValid = app(TwoFactorAuthenticationProvider::class)->verify(
                 decrypt($user->store_two_factor_secret),
@@ -188,7 +196,7 @@ final class Login extends Component implements HasSchemas
 
             if (! $isValid) {
                 throw ValidationException::withMessages([
-                    'twoFactorData.code' => __('The provided two factor authentication code was invalid.'),
+                    'twoFactorData.code' => __('shopper::pages/auth.two_factor.invalid_code'),
                 ]);
             }
         }

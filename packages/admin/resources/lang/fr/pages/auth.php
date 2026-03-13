@@ -43,6 +43,9 @@ return [
         'use_recovery_code' => 'Utiliser un code de récupération',
         'use_authentication_code' => 'Utiliser un code d\'authentification',
         'action' => 'Connexion',
+        'recovery_not_enabled' => 'Les codes de récupération ne sont pas activés pour ce compte.',
+        'invalid_recovery_code' => 'Le code de récupération fourni est invalide.',
+        'invalid_code' => 'Le code d\'authentification à deux facteurs fourni est invalide.',
     ],
 
     'account' => [

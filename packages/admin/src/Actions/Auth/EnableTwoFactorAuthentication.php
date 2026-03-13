@@ -5,22 +5,24 @@ declare(strict_types=1);
 namespace Shopper\Actions\Auth;
 
 use Illuminate\Support\Collection;
+use Shopper\Contracts\HasStoreAuthentication;
+use Shopper\Contracts\HasStoreAuthenticationRecovery;
 use Shopper\Contracts\TwoFactorAuthenticationProvider;
 use Shopper\Events\TwoFactor\TwoFactorAuthenticationEnabled;
-use Shopper\Models\Contracts\ShopperUser;
 
 class EnableTwoFactorAuthentication
 {
     public function __construct(protected TwoFactorAuthenticationProvider $provider) {}
 
-    public function __invoke(ShopperUser $user): void
+    public function __invoke(HasStoreAuthentication $user): void
     {
-        $user->forceFill([
-            'store_two_factor_secret' => encrypt($this->provider->generateSecretKey()),
-            'store_two_factor_recovery_codes' => encrypt(json_encode(
+        $user->saveStoreAuthenticationSecret($this->provider->generateSecretKey());
+
+        if ($user instanceof HasStoreAuthenticationRecovery) {
+            $user->saveStoreAuthenticationRecoveryCodes(
                 Collection::times(8, fn (): string => RecoveryCode::generate())->all()
-            )),
-        ])->save();
+            );
+        }
 
         TwoFactorAuthenticationEnabled::dispatch($user);
     }
