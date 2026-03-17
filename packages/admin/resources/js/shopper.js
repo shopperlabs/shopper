@@ -1,9 +1,8 @@
-import SlideOverPanel from './components/panel'
+import '../../../../vendor/laravelcm/livewire-slide-overs/resources/js/slide-over'
 import CodePreview from './components/code-preview'
 import NestedSortable from './components/nested-sortable'
 import sidebarStore from '../../../sidebar/resources/js/stores/sidebar'
 
-window.SlideOverPanel = SlideOverPanel
 window.codePreview = CodePreview
 window.nestedSortable = NestedSortable
 

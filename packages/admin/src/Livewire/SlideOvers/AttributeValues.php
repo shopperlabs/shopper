@@ -19,13 +19,13 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\On;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Components\Form\CustomAttributeKeyInput;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class AttributeValues extends SlideOverComponent implements HasActions, HasSchemas, HasTable

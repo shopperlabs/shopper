@@ -20,6 +20,7 @@ use Filament\Support\Enums\Size;
 use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Computed;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Actions\MarkShipmentDeliveredAction;
@@ -27,7 +28,6 @@ use Shopper\Core\Actions\RecordShipmentEventAction;
 use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Models\OrderShipping;
 use Shopper\Core\Models\OrderShippingEvent;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**

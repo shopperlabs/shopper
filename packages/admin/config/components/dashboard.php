@@ -25,7 +25,6 @@ return [
 
     'components' => [
         // 'search' => Components\Search::class,
-        'side-panel' => Components\SlideOverPanel::class,
         'locale-switcher' => Components\LocaleSwitcher::class,
     ],
 

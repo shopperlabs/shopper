@@ -29,7 +29,7 @@
     $isError = $isFailed || $isReturned;
 @endphp
 
-<div class="flex h-full flex-col divide-y divide-gray-200 dark:divide-white/10">
+<div class="flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-xl ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10 divide-y divide-gray-200 dark:divide-white/10">
     <div class="h-0 flex-1 overflow-y-auto py-4">
         <div class="px-4">
             <div class="flex items-start justify-between">
@@ -68,7 +68,7 @@
                         </span>
                     </p>
                 </div>
-                <x-shopper::close-icon />
+                <x-livewire-slide-over::close-icon />
             </div>
 
             @if ($shippingAddress || $carrier)

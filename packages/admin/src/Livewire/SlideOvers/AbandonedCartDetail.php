@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopper\Livewire\SlideOvers;
 
 use Illuminate\Contracts\View\View;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Cart\Models\Cart;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class AbandonedCartDetail extends SlideOverComponent
