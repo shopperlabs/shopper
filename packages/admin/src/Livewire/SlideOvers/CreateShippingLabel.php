@@ -22,6 +22,7 @@ use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\HtmlString;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Computed;
 use Shopper\Core\Enum\FulfillmentStatus;
 use Shopper\Core\Enum\ShipmentStatus;
@@ -29,7 +30,6 @@ use Shopper\Core\Events\Orders\OrderShipmentCreated;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\OrderShipping;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Shipping\Services\CarrierRateService;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 

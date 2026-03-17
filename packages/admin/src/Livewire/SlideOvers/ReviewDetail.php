@@ -12,8 +12,8 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Size;
 use Illuminate\Contracts\View\View;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Core\Models\Review;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class ReviewDetail extends SlideOverComponent implements HasActions, HasSchemas

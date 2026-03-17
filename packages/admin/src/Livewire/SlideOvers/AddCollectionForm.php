@@ -22,11 +22,11 @@ use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Contracts\Collection;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**

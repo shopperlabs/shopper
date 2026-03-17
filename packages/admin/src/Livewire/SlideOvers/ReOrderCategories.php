@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopper\Livewire\SlideOvers;
 
 use Illuminate\Contracts\View\View;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Renderless;
 use Shopper\Core\Models\Contracts\Category;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class ReOrderCategories extends SlideOverComponent

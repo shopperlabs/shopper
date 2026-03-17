@@ -18,6 +18,7 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Arr;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Enum\ProductType;
@@ -26,7 +27,6 @@ use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxRateRule;
 use Shopper\Core\Models\TaxZone;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\InteractsWithSlideOverForm;
 

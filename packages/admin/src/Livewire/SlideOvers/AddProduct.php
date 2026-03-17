@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use JaOcero\RadioDeck\Forms\Components\RadioDeck;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Actions\Store\Product\CreateProductAction;
 use Shopper\Components\Separator;
@@ -39,7 +40,6 @@ use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Contracts\Channel;
 use Shopper\Feature;
 use Shopper\Livewire\Components\Products\ProductTypeConfiguration;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**

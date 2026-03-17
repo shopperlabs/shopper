@@ -7,6 +7,7 @@ namespace Shopper\Livewire\SlideOvers;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\Product\SaveProductVariantsAction;
 use Shopper\Core\Macros\Arr;
@@ -14,7 +15,6 @@ use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Helpers\MapProductOptions;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class GenerateVariants extends SlideOverComponent

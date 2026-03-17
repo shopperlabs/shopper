@@ -18,11 +18,11 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Form\IconPicker;
 use Shopper\Components\Separator;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**

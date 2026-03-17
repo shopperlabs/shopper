@@ -89,7 +89,7 @@
         {{ $slot }}
 
         @livewire(\Filament\Notifications\Livewire\Notifications::class)
-        @livewire(\Shopper\Livewire\Components\SlideOverPanel::class)
+        @livewire('slide-over-panel')
 
         @filamentScripts
 

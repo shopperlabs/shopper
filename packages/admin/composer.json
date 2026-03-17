@@ -42,6 +42,7 @@
     "illuminate/support": "^11.0|^12.0",
     "illuminate/view": "^11.0|^12.0",
     "jenssegers/agent": "^2.6",
+    "laravelcm/livewire-slide-overs": "^2.0",
     "jaocero/radio-deck": "^3.0",
     "livewire/blaze": "^1.0",
     "mckenziearts/filament-untitledui-icons": "^1.2",
