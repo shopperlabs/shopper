@@ -20,3 +20,6 @@
 @source '../../../../../vendor/filament/tables/resources/views';
 @source '../../../../../vendor/codewithdennis/filament-select-tree/resources/views';
 @source '../../../../../vendor/jaocero/radio-deck/resources/views';
+@source '../../../../../vendor/laravelcm/livewire-slide-overs/resources/views';
+
+@source inline("max-w-{md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl}");

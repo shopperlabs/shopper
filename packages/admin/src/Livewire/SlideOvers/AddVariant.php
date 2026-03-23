@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Validation\Rules\Unique;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
@@ -35,7 +36,6 @@ use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Core\Models\Currency;
 use Shopper\Helpers\MapProductOptions;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**

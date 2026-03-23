@@ -16,12 +16,12 @@ use Filament\Schemas\Components\Group;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Computed;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Zone;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\InteractsWithSlideOverForm;
 

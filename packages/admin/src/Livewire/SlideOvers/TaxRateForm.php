@@ -13,11 +13,11 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
+use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxZone;
-use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\InteractsWithSlideOverForm;
 

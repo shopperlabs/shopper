@@ -1,4 +1,4 @@
-<div class="flex h-full flex-col divide-y divide-gray-200 dark:divide-white/10">
+<div class="flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-xl ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10 divide-y divide-gray-200 dark:divide-white/10">
     <div class="h-0 flex-1 overflow-y-auto py-4">
         <div class="px-4">
             <h2 class="font-heading text-2xl font-bold text-gray-900 dark:text-white">

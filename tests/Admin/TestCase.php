@@ -18,6 +18,7 @@ use Filament\Support\Livewire\Partials\DataStoreOverride;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use JaOcero\RadioDeck\RadioDeckServiceProvider;
+use Laravelcm\LivewireSlideOvers\LivewireSlideOverServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Livewire\Mechanisms\DataStore;
 use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
@@ -91,6 +92,7 @@ abstract class TestCase extends \Tests\TestCase
             TailwindMergeServiceProvider::class,
             RadioDeckServiceProvider::class,
             FilamentSelectTreeServiceProvider::class,
+            LivewireSlideOverServiceProvider::class,
             WizardServiceProvider::class,
         ];
     }
