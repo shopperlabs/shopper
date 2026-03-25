@@ -6,7 +6,6 @@ namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -291,22 +290,6 @@ class Order extends Model implements OrderContract
     protected static function newFactory(): OrderFactory
     {
         return OrderFactory::new();
-    }
-
-    protected function priceAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn (int|float|null $value): int|float => ($value ?? 0) / 100,
-            set: fn (int|float $value): int => (int) round($value * 100),
-        );
-    }
-
-    protected function taxAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn (int|float|null $value): int|float => ($value ?? 0) / 100,
-            set: fn (int|float $value): int => (int) round($value * 100),
-        );
     }
 
     protected function casts(): array

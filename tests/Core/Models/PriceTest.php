@@ -56,7 +56,7 @@ describe(Price::class, function (): void {
         expect($price->compare_amount)->toBe(1500);
     });
 
-    it('converts amount accessor and mutator correctly', function (): void {
+    it('stores amount in smallest currency unit without conversion', function (): void {
         $currency = Currency::query()->first();
         /** @var Product $product */
         $product = Product::factory()->create();
@@ -65,14 +65,14 @@ describe(Price::class, function (): void {
             'priceable_id' => $product->id,
             'priceable_type' => $product->getMorphClass(),
             'currency_id' => $currency->id,
-            'amount' => 50,
+            'amount' => 5000,
         ]);
 
-        expect($price->fresh()->amount)->toBe(50)
+        expect($price->fresh()->amount)->toBe(5000)
             ->and($price->fresh()->getAttributes()['amount'])->toBe(5000);
     });
 
-    it('converts compare_amount accessor and mutator correctly', function (): void {
+    it('stores compare_amount in smallest currency unit without conversion', function (): void {
         $currency = Currency::query()->first();
         /** @var Product $product */
         $product = Product::factory()->create();
@@ -81,15 +81,15 @@ describe(Price::class, function (): void {
             'priceable_id' => $product->id,
             'priceable_type' => $product->getMorphClass(),
             'currency_id' => $currency->id,
-            'amount' => 50,
-            'compare_amount' => 75,
+            'amount' => 5000,
+            'compare_amount' => 7500,
         ]);
 
-        expect($price->fresh()->compare_amount)->toBe(75)
+        expect($price->fresh()->compare_amount)->toBe(7500)
             ->and($price->fresh()->getAttributes()['compare_amount'])->toBe(7500);
     });
 
-    it('converts cost_amount accessor and mutator correctly', function (): void {
+    it('stores cost_amount in smallest currency unit without conversion', function (): void {
         $currency = Currency::query()->first();
         /** @var Product $product */
         $product = Product::factory()->create();
@@ -98,11 +98,11 @@ describe(Price::class, function (): void {
             'priceable_id' => $product->id,
             'priceable_type' => $product->getMorphClass(),
             'currency_id' => $currency->id,
-            'amount' => 50,
-            'cost_amount' => 30,
+            'amount' => 5000,
+            'cost_amount' => 3000,
         ]);
 
-        expect($price->fresh()->cost_amount)->toBe(30)
+        expect($price->fresh()->cost_amount)->toBe(3000)
             ->and($price->fresh()->getAttributes()['cost_amount'])->toBe(3000);
     });
 

@@ -43,13 +43,13 @@ class Pricing extends Component implements HasActions, HasSchemas, HasTable
                     ->sortable(),
                 TextColumn::make('amount')
                     ->label(__('shopper::forms.label.price'))
-                    ->money(fn ($record) => $record->currencyCode),
+                    ->currency(fn ($record) => $record->currencyCode), // @phpstan-ignore method.notFound
                 TextColumn::make('compare_amount')
                     ->label(__('shopper::forms.label.compare_price'))
-                    ->money(fn ($record) => $record->currencyCode),
+                    ->currency(fn ($record) => $record->currencyCode), // @phpstan-ignore method.notFound
                 TextColumn::make('cost_amount')
                     ->label(__('shopper::forms.label.cost_per_item'))
-                    ->money(fn ($record) => $record->currencyCode),
+                    ->currency(fn ($record) => $record->currencyCode), // @phpstan-ignore method.notFound
             ])
             ->recordActions([
                 Action::make('edit')

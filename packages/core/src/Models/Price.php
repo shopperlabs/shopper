@@ -91,28 +91,4 @@ class Price extends Model implements PriceContract
     {
         return PriceFactory::new();
     }
-
-    protected function amount(): Attribute
-    {
-        return Attribute::make(
-            get: fn (?int $value): float|int|null => $value ? $value / 100 : null,
-            set: fn (int|float|null $value): ?int => $value ? (int) round($value * 100) : null,
-        );
-    }
-
-    protected function compareAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn (?int $value): float|int|null => $value ? $value / 100 : null,
-            set: fn (int|float|null $value): ?int => $value ? (int) round($value * 100) : null,
-        );
-    }
-
-    protected function costAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn (?int $value): float|int|null => $value ? $value / 100 : null,
-            set: fn (int|float|null $value): ?int => $value ? (int) round($value * 100) : null,
-        );
-    }
 }

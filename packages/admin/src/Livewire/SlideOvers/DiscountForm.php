@@ -157,6 +157,25 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas
                                             default => null
                                         }
                                     )
+                                    ->afterStateHydrated(function (TextInput $component, $state): void {
+                                        if ($this->discount->exists && $this->discount->type === DiscountType::FixedAmount && $state) {
+                                            $currency = $this->discount->zone?->currency_code ?? shopper_currency(); // @phpstan-ignore nullsafe.neverNull
+                                            $component->state(
+                                                is_no_division_currency($currency) ? $state : $state / 100
+                                            );
+                                        }
+                                    })
+                                    ->dehydrateStateUsing(function (Get $get, $state) {
+                                        if ($get('type') !== DiscountType::FixedAmount->value) {
+                                            return (int) $state;
+                                        }
+
+                                        $currency = $get('zone_id')
+                                            ? Zone::query()->find($get('zone_id'))->currency_code
+                                            : shopper_currency();
+
+                                        return is_no_division_currency($currency) ? (int) $state : (int) round((float) $state * 100);
+                                    })
                                     ->numeric()
                                     ->required(),
                             ]),
@@ -287,6 +306,25 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas
                                     default => null
                                 }
                             )
+                            ->afterStateHydrated(function (TextInput $component, $state): void {
+                                if ($this->discount->exists && $this->discount->min_required === DiscountRequirement::Price->value && $state) {
+                                    $currency = $this->discount->zone?->currency_code ?? shopper_currency(); // @phpstan-ignore nullsafe.neverNull
+                                    $component->state(
+                                        is_no_division_currency($currency) ? $state : (string) ((int) $state / 100)
+                                    );
+                                }
+                            })
+                            ->dehydrateStateUsing(function (Get $get, $state) {
+                                if ($get('min_required') !== DiscountRequirement::Price->value) {
+                                    return $state;
+                                }
+
+                                $currency = $get('zone_id')
+                                    ? Zone::query()->find($get('zone_id'))->currency_code
+                                    : shopper_currency();
+
+                                return is_no_division_currency($currency) ? (string) (int) $state : (string) ((int) round((float) $state * 100));
+                            })
                             ->required(
                                 fn (Get $get): bool => $get('min_required') !== DiscountRequirement::None->value
                             )

@@ -60,7 +60,7 @@ final class StatCards extends Component
 
         return [
             'label' => __('shopper::pages/dashboard.stats.revenue'),
-            'value' => shopper_money_format($currentMonth / 100, $currency),
+            'value' => shopper_money_format($currentMonth, $currency),
             ...$this->calculateChange($currentMonth, $lastMonth),
             'icon' => 'phosphor-coins-duotone',
             'route' => route('shopper.orders.index'),

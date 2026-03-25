@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -77,18 +76,6 @@ class Discount extends Model implements DiscountContract
     protected static function newFactory(): DiscountFactory
     {
         return DiscountFactory::new();
-    }
-
-    protected function value(): Attribute
-    {
-        return Attribute::make(
-            get: fn (int $value): int => $this->type === DiscountType::FixedAmount
-                ? $value / 100
-                : $value,
-            set: fn (int $value): int => $this->type === DiscountType::FixedAmount
-                ? $value * 100
-                : $value,
-        );
     }
 
     protected function casts(): array
