@@ -48,7 +48,7 @@ class CollectionRule extends Model implements CollectionRuleContract
     public function getFormattedValue(): string
     {
         if ($this->rule->isPrice()) {
-            return shopper_money_format((int) $this->value / 100);
+            return shopper_money_format((int) $this->value);
         }
 
         if ($this->rule->isBoolean()) {

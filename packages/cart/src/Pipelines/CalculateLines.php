@@ -11,7 +11,7 @@ final class CalculateLines
     public function handle(CartPipelineContext $context, Closure $next): mixed
     {
         foreach ($context->cart->lines as $line) {
-            $subtotal = (int) $line->getRawOriginal('unit_price_amount') * $line->quantity;
+            $subtotal = $line->unit_price_amount * $line->quantity;
             $context->lineSubtotals[$line->id] = $subtotal;
             $context->subtotal += $subtotal;
         }

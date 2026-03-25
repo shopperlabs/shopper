@@ -62,11 +62,11 @@ describe(CarrierOption::class, function (): void {
             ->and($carrierOption->metadata)->toBe($metadata);
     });
 
-    it('converts price accessor and mutator correctly', function (): void {
+    it('stores price in smallest currency unit without conversion', function (): void {
         $carrierOption = CarrierOption::factory()->create();
-        $carrierOption->update(['price' => 10]);
+        $carrierOption->update(['price' => 1000]);
 
-        expect($carrierOption->fresh()->price)->toBe(10)
+        expect($carrierOption->fresh()->price)->toBe(1000)
             ->and($carrierOption->fresh()->getAttributes()['price'])->toBe(1000);
     });
 })->group('carrier', 'models');

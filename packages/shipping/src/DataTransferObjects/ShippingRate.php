@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Shipping\DataTransferObjects;
 
-use Illuminate\Support\Number;
-
 final readonly class ShippingRate
 {
     public function __construct(
@@ -20,7 +18,7 @@ final readonly class ShippingRate
 
     public function formattedAmount(): string
     {
-        return Number::format($this->amount / 100, 2);
+        return shopper_money_format($this->amount, $this->currency);
     }
 
     /**

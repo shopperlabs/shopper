@@ -31,7 +31,7 @@ final readonly class CalculateTax
         );
 
         foreach ($context->cart->lines as $line) {
-            $discountAmount = (int) $line->adjustments->sum(fn ($adj) => $adj->getRawOriginal('amount'));
+            $discountAmount = (int) $line->adjustments->sum('amount');
             $taxableAmount = ($context->lineSubtotals[$line->id] ?? 0) - $discountAmount;
 
             if ($taxableAmount <= 0) {
@@ -49,7 +49,7 @@ final readonly class CalculateTax
                     'code' => $taxLine->code ?? $taxLine->name,
                     'name' => $taxLine->name,
                     'rate' => $taxLine->rate,
-                    'amount' => $taxLine->amount / 100,
+                    'amount' => $taxLine->amount,
                     'tax_rate_id' => $taxLine->taxRateId,
                 ]);
 

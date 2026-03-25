@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Cart\Models;
 
 use Carbon\CarbonInterface;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -75,14 +74,6 @@ class CartLine extends Model implements CartLineContract
     public function taxLines(): HasMany
     {
         return $this->hasMany(CartLineTaxLine::class);
-    }
-
-    protected function unitPriceAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn (float|int $value): float|int => $value / 100,
-            set: fn (float|int $value): int => (int) round($value * 100),
-        );
     }
 
     protected function casts(): array

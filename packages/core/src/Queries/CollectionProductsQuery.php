@@ -144,8 +144,11 @@ final class CollectionProductsQuery
             default => '=',
         };
 
-        $query->whereHas('prices', function (Builder $subQuery) use ($column, $operator, $rule): void {
-            $subQuery->where($column, $operator, (int) $rule->value);
+        $currencyId = shopper_setting('default_currency_id');
+
+        $query->whereHas('prices', function (Builder $subQuery) use ($column, $operator, $rule, $currencyId): void {
+            $subQuery->where($column, $operator, (int) $rule->value)
+                ->where('currency_id', $currencyId);
         });
     }
 

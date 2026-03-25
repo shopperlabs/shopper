@@ -86,9 +86,11 @@ if (! function_exists('shopper_currency')) {
 if (! function_exists('shopper_money_format')) {
     function shopper_money_format(int|float $amount, ?string $currency = null): string
     {
+        $currency = $currency ?? shopper_currency();
+
         return (string) Number::currency(
-            number: $amount,
-            in: $currency ?? shopper_currency(),
+            number: is_no_division_currency($currency) ? $amount : $amount / 100,
+            in: $currency,
             locale: app()->getLocale()
         );
     }

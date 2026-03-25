@@ -150,7 +150,7 @@ final class CarrierRateService
         return $query->get()->map(fn (CarrierOption $option): ShippingRate => new ShippingRate(
             serviceCode: $option->id,
             serviceName: $option->name,
-            amount: $option->getRawOriginal('price'),
+            amount: $option->price,
             currency: $zone->currency->code ?? shopper_currency(),
             carrierCode: $carrier->slug ?? $carrier->name,
         ));

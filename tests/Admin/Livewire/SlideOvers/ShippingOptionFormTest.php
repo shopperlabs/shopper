@@ -58,7 +58,7 @@ describe(ShippingOptionForm::class, function (): void {
             'zone_id' => $this->zone->id,
             'carrier_id' => $this->carrier->id,
             'name' => 'Express Shipping',
-            'price' => 15.99,
+            'price' => 1599,
         ]);
 
         $component = Livewire::test(ShippingOptionForm::class, [
@@ -109,7 +109,7 @@ describe(ShippingOptionForm::class, function (): void {
         expect($option)->not->toBeNull()
             ->and($option->zone_id)->toBe($this->zone->id)
             ->and($option->carrier_id)->toBe($this->carrier->id)
-            ->and($option->price)->toBe(10)
+            ->and($option->price)->toBe(1000)
             ->and($option->description)->toBe('Delivery within 3-5 business days')
             ->and($option->is_enabled)->toBeTrue();
     });
@@ -137,7 +137,7 @@ describe(ShippingOptionForm::class, function (): void {
         $option->refresh();
 
         expect($option->name)->toBe('Updated Name')
-            ->and($option->price)->toBe(15);
+            ->and($option->price)->toBe(1500);
     });
 
     it('validates required fields', function (): void {

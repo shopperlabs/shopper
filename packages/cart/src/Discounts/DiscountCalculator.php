@@ -124,7 +124,7 @@ final readonly class DiscountCalculator
      */
     private function applyFixedAmount(Discount $discount, Collection $lines, CartPipelineContext $context): int
     {
-        $fixedAmount = (int) $discount->getRawOriginal('value');
+        $fixedAmount = $discount->value;
         $applicableSubtotal = $lines->sum(fn (CartLine $line): int => $context->lineSubtotals[$line->id] ?? 0);
 
         if ($applicableSubtotal === 0) {

@@ -65,7 +65,7 @@
                             <p class="text-sm text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::forms.label.price') }}:
                                 <span class="font-medium text-gray-700 dark:text-gray-300">
-                                    {{ \Illuminate\Support\Number::currency($shippingOption->price, in: $zone->currency->code) }}
+                                    {{ shopper_money_format($shippingOption->price, $zone->currency->code) }}
                                 </span>
                             </p>
                         </div>

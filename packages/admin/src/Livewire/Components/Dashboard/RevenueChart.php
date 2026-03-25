@@ -114,7 +114,9 @@ final class RevenueChart extends ApexChartWidget
                 ->groupByRaw($expr['groupBy'])
                 ->get()
                 ->keyBy(fn ($row): string => $row->getAttribute('year').'-'.$row->getAttribute('month'))
-                ->map(fn ($row): float => (float) $row->getAttribute('total') / 100)
+                ->map(fn ($row): float => is_no_division_currency($currency)
+                    ? (float) $row->getAttribute('total')
+                    : (float) $row->getAttribute('total') / 100)
                 ->all(),
         );
 

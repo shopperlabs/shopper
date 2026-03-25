@@ -103,7 +103,7 @@ describe(ManagePricing::class, function (): void {
         $product->refresh();
 
         expect($product->prices)->toHaveCount(1)
-            ->and($product->prices->first()->amount)->toBe(100);
+            ->and($product->prices->first()->amount)->toBe(10000);
     });
 
     it('dispatches event after saving pricing', function (): void {

@@ -109,30 +109,6 @@ class OrderItem extends Model implements OrderItemContract
         ];
     }
 
-    protected function unitPriceAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn (float|int $value): float|int => $value / 100,
-            set: fn (float|int $value): int => (int) round($value * 100),
-        );
-    }
-
-    protected function taxAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn (float|int $value): float|int => $value / 100,
-            set: fn (float|int $value): int => (int) round($value * 100),
-        );
-    }
-
-    protected function discountAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn (float|int $value): float|int => $value / 100,
-            set: fn (float|int $value): int => (int) round($value * 100),
-        );
-    }
-
     protected function total(): Attribute
     {
         return Attribute::make(

@@ -70,7 +70,10 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasSchem
                         $rule = Rule::tryFrom($data['rule'] ?? '');
 
                         if ($rule?->isPrice() && isset($data['value'])) {
-                            $data['value'] = (string) ((int) $data['value'] / 100);
+                            $currency = shopper_currency();
+                            $data['value'] = is_no_division_currency($currency)
+                                ? $data['value']
+                                : (string) ((int) $data['value'] / 100);
                         } elseif ($rule?->isBoolean() && isset($data['value'])) {
                             $data['boolean_value'] = $data['value'];
                         } elseif ($rule?->isDate() && isset($data['value'])) {
@@ -170,7 +173,10 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasSchem
         }
 
         if ($rule?->isPrice()) {
-            $data['value'] = (string) ((int) ((float) $data['value'] * 100));
+            $currency = shopper_currency();
+            $data['value'] = is_no_division_currency($currency)
+                ? (string) (int) $data['value']
+                : (string) ((int) ((float) $data['value'] * 100));
         }
 
         return $data;
