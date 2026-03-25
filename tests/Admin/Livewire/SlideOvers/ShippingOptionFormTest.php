@@ -58,7 +58,7 @@ describe(ShippingOptionForm::class, function (): void {
             'zone_id' => $this->zone->id,
             'carrier_id' => $this->carrier->id,
             'name' => 'Express Shipping',
-            'price' => 15.99,
+            'price' => 1599,
         ]);
 
         $component = Livewire::test(ShippingOptionForm::class, [

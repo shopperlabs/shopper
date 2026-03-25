@@ -26,9 +26,9 @@ class PriceFactory extends Factory
         return [
             'priceable_type' => Product::class,
             'priceable_id' => Product::factory(),
-            'amount' => $this->faker->randomFloat(min: 100, max: 500),
-            'compare_amount' => $this->faker->randomFloat(min: 80, max: 400),
-            'cost_amount' => $this->faker->randomFloat(min: 50, max: 200),
+            'amount' => $this->faker->numberBetween(10000, 50000),
+            'compare_amount' => $this->faker->numberBetween(8000, 40000),
+            'cost_amount' => $this->faker->numberBetween(5000, 20000),
             'currency_id' => Currency::factory(),
         ];
     }
