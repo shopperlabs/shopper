@@ -23,7 +23,6 @@ use Livewire\LivewireServiceProvider;
 use Livewire\Mechanisms\DataStore;
 use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
 use Milon\Barcode\BarcodeServiceProvider;
-use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Shopper\Cart\CartServiceProvider;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Payment\PaymentServiceProvider;
@@ -68,7 +67,6 @@ abstract class TestCase extends \Tests\TestCase
             LivewireServiceProvider::class,
             ActionsServiceProvider::class,
             BarcodeServiceProvider::class,
-            BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
             BladeUntitledUIIconsServiceProvider::class,
             BladePhosphorIconsServiceProvider::class,
