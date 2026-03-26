@@ -51,6 +51,11 @@ class ShipmentAddEvent extends SlideOverComponent implements HasActions, HasSche
         return '3xl';
     }
 
+    public static function destroyOnClose(): bool
+    {
+        return true;
+    }
+
     public function mount(): void
     {
         $this->authorize('read_orders');
@@ -89,8 +94,8 @@ class ShipmentAddEvent extends SlideOverComponent implements HasActions, HasSche
                             ])
                             ->all()
                     )
-                    ->required()
-                    ->inline(),
+                    ->grouped()
+                    ->required(),
                 DateTimePicker::make('occurred_at')
                     ->label(__('shopper::pages/orders.shipment.occurred_at'))
                     ->default(now())
