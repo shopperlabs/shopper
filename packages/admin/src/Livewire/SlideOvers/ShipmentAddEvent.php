@@ -94,7 +94,10 @@ class ShipmentAddEvent extends SlideOverComponent implements HasActions, HasSche
                 DateTimePicker::make('occurred_at')
                     ->label(__('shopper::pages/orders.shipment.occurred_at'))
                     ->default(now())
+                    ->minDate($this->shipment->events()->latest('occurred_at')->value('occurred_at'))
+                    ->seconds(false)
                     ->native(false)
+                    ->closeOnDateSelection()
                     ->required(),
                 TextInput::make('location')
                     ->label(__('shopper::pages/orders.shipment.location'))

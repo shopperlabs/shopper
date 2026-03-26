@@ -139,5 +139,4 @@ class SupplierForm extends SlideOverComponent implements HasActions, HasSchemas,
             navigate: true,
         );
     }
-
 }

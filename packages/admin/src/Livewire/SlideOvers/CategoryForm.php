@@ -152,5 +152,4 @@ class CategoryForm extends SlideOverComponent implements HasActions, HasSchemas,
             navigate: true,
         );
     }
-
 }
