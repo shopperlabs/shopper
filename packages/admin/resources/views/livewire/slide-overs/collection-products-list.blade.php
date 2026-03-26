@@ -1,4 +1,4 @@
-<div class="flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-xl ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10">
+<x-shopper::slideover-card>
     <div class="h-0 flex-1 overflow-y-auto py-6">
         <header class="px-4 sm:px-6">
             <div class="flex items-start justify-between">
@@ -12,4 +12,4 @@
             {{ $this->table }}
         </div>
     </div>
-</div>
+</x-shopper::slideover-card>

@@ -14,10 +14,10 @@ final class RecordShipmentEventAction
 {
     /**
      * @param  array{
-     *     description?: string,
-     *     location?: string,
-     *     latitude?: float,
-     *     longitude?: float,
+     *     description?: string|null,
+     *     location?: string|null,
+     *     latitude?: float|null,
+     *     longitude?: float|null,
      *     occurred_at?: \Carbon\CarbonInterface,
      *     metadata?: array<string, mixed>,
      * }  $context
@@ -28,6 +28,12 @@ final class RecordShipmentEventAction
         array $context = [],
     ): ?OrderShippingEvent {
         if (! $shipment->canTransitionTo($status)) {
+            return null;
+        }
+
+        $lastEventDate = $shipment->events()->latest('occurred_at')->value('occurred_at');
+
+        if ($lastEventDate && isset($context['occurred_at']) && $context['occurred_at']->isBefore($lastEventDate)) {
             return null;
         }
 

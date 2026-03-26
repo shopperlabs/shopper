@@ -22,7 +22,6 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
@@ -30,6 +29,7 @@ use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Actions\Store\SaveAndDispatchDiscountAction;
 use Shopper\Components\Separator;
+use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
@@ -39,17 +39,25 @@ use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Zone;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
  * @property-read Schema $form
  */
-class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas
+class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas, SlideOverForm
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use InteractsWithSlideOverForm;
 
     public Discount $discount;
+
+    public string $action = 'store';
+
+    public ?string $title = null;
+
+    public ?string $description = null;
 
     /**
      * @var array<string, mixed>|null
@@ -68,6 +76,11 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas
         $this->discount = $discountId
             ? Discount::query()->find($discountId)
             : new Discount;
+
+        $this->title = $this->discount->id
+            ? $this->discount->code
+            : __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/discounts.single')]);
+        $this->description = __('shopper::pages/discounts.description');
 
         $products = collect();
         $customers = collect();
@@ -367,10 +380,5 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas
             name: 'shopper.discounts.index',
             navigate: true,
         );
-    }
-
-    public function render(): View
-    {
-        return view('shopper::livewire.slide-overs.discount-form');
     }
 }

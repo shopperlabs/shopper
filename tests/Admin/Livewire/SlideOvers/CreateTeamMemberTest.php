@@ -23,8 +23,7 @@ beforeEach(function (): void {
 describe(CreateTeamMember::class, function (): void {
     it('can render create team member form', function (): void {
         Livewire::test(CreateTeamMember::class)
-            ->assertOk()
-            ->assertViewIs('shopper::livewire.slide-overs.create-team-member');
+            ->assertOk();
     });
 
     it('can create new team member', function (): void {

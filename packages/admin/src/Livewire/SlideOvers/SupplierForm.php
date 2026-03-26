@@ -17,23 +17,31 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Section;
+use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Models\Contracts\Supplier;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
  * @property-read Schema $form
  */
-class SupplierForm extends SlideOverComponent implements HasActions, HasSchemas
+class SupplierForm extends SlideOverComponent implements HasActions, HasSchemas, SlideOverForm
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use InteractsWithSlideOverForm;
 
     public Supplier $supplier;
+
+    public string $action = 'save';
+
+    public ?string $title = null;
+
+    public ?string $description = null;
 
     /** @var array<array-key, mixed>|null */
     public ?array $data = [];
@@ -41,6 +49,10 @@ class SupplierForm extends SlideOverComponent implements HasActions, HasSchemas
     public function mount(?Supplier $supplier = null): void
     {
         $this->supplier = $supplier ?? resolve(Supplier::class)::query()->newModelInstance();
+
+        $this->title = $this->supplier->id
+            ? $this->supplier->name
+            : __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/suppliers.single')]);
 
         $this->form->fill($this->supplier->toArray());
     }
@@ -126,10 +138,5 @@ class SupplierForm extends SlideOverComponent implements HasActions, HasSchemas
             name: 'shopper.suppliers.index',
             navigate: true,
         );
-    }
-
-    public function render(): View
-    {
-        return view('shopper::livewire.slide-overs.supplier-form');
     }
 }

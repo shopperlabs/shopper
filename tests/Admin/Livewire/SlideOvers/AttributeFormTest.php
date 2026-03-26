@@ -19,8 +19,7 @@ beforeEach(function (): void {
 describe(AttributeForm::class, function (): void {
     it('can render attribute form component', function (): void {
         Livewire::test(AttributeForm::class)
-            ->assertOk()
-            ->assertViewIs('shopper::livewire.slide-overs.attribute-form');
+            ->assertOk();
     });
 
     it('requires add_attributes or edit_attributes permission', function (): void {

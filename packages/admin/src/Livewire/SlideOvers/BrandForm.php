@@ -17,24 +17,32 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
+use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Models\Contracts\Brand;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
  * @property-read Schema $form
  */
-class BrandForm extends SlideOverComponent implements HasActions, HasSchemas
+class BrandForm extends SlideOverComponent implements HasActions, HasSchemas, SlideOverForm
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use InteractsWithSlideOverForm;
 
     public Brand $brand;
+
+    public string $action = 'save';
+
+    public ?string $title = null;
+
+    public ?string $description = null;
 
     /** @var array<array-key, mixed>|null */
     public ?array $data = [];
@@ -42,6 +50,10 @@ class BrandForm extends SlideOverComponent implements HasActions, HasSchemas
     public function mount(?Brand $brand = null): void
     {
         $this->brand = $brand ?? resolve(Brand::class)::query()->newModelInstance();
+
+        $this->title = $this->brand->id
+            ? $this->brand->name
+            : __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/brands.single')]);
 
         $this->form->fill($this->brand->toArray());
     }
@@ -127,10 +139,5 @@ class BrandForm extends SlideOverComponent implements HasActions, HasSchemas
             name: 'shopper.brands.index',
             navigate: true,
         );
-    }
-
-    public function render(): View
-    {
-        return view('shopper::livewire.slide-overs.brand-form');
     }
 }
