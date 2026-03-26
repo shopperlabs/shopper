@@ -4,7 +4,7 @@
     'description' => null,
 ])
 
-<div class="h-full overflow-hidden rounded-xl bg-white shadow-xl ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10">
+<x-shopper::slideover-card>
     <form wire:submit="{{ $action }}" class="flex h-full flex-col divide-y divide-gray-100 dark:divide-white/10">
         <header class="p-4">
             <div class="flex items-start justify-between">
@@ -22,7 +22,7 @@
                 </div>
             @endif
         </header>
-        <div class="h-0 flex-1 overflow-y-auto p-4 py-6">
+        <div class="h-0 flex-1 overflow-y-auto px-4 py-6">
             {{ $slot }}
         </div>
         <div class="flex shrink-0 justify-end gap-3 p-4">
@@ -40,4 +40,4 @@
             </x-filament::button>
         </div>
     </form>
-</div>
+</x-shopper::slideover-card>

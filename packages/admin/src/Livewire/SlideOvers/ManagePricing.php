@@ -10,7 +10,6 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
@@ -18,25 +17,34 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\Product\SavePricingAction;
 use Shopper\Components\Form\CurrenciesField;
+use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Models\Currency;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
  * @property-read Schema $form
  * @property-read Collection<int, Currency> $currencies
  */
-class ManagePricing extends SlideOverComponent implements HasActions, HasSchemas
+class ManagePricing extends SlideOverComponent implements HasActions, HasSchemas, SlideOverForm
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use InteractsWithSlideOverForm;
 
     /** @var (Model&Priceable<Model>) */
     public Model&Priceable $model;
 
     #[Locked]
     public ?int $currencyId = null;
+
+    public string $action = 'save';
+
+    public ?string $title = null;
+
+    public ?string $description = null;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -54,6 +62,7 @@ class ManagePricing extends SlideOverComponent implements HasActions, HasSchemas
         $this->authorize('edit_products');
 
         $this->model = $modelType::with('prices')->find($modelId);
+        $this->title = __('shopper::pages/products.pricing.title');
         $this->currencyId = $currencyId;
 
         $this->form->fill($this->getModelPrices());
@@ -104,11 +113,6 @@ class ManagePricing extends SlideOverComponent implements HasActions, HasSchemas
         $this->dispatch('product.pricing.manage');
 
         $this->closePanel();
-    }
-
-    public function render(): View
-    {
-        return view('shopper::livewire.slide-overs.add-pricing');
     }
 
     /**

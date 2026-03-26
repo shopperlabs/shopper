@@ -44,12 +44,11 @@ enum ShipmentStatus: string implements HasColor, HasIcon, HasLabel
     public function getColor(): string
     {
         return match ($this) {
-            self::Pending => 'warning',
+            self::Pending, self::OutForDelivery => 'warning',
             self::PickedUp => 'info',
             self::InTransit => 'primary',
             self::AtSortingCenter => 'indigo',
-            self::OutForDelivery => 'warning',
-            self::Delivered => 'green',
+            self::Delivered => 'success',
             self::DeliveryFailed => 'danger',
             self::Returned => 'gray',
         };

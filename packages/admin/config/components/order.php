@@ -33,6 +33,7 @@ return [
         'order-summary' => Livewire\Components\Orders\OrderSummary::class,
 
         'slide-overs.create-shipping-label' => Livewire\SlideOvers\CreateShippingLabel::class,
+        'slide-overs.shipment-add-event' => Livewire\SlideOvers\ShipmentAddEvent::class,
         'slide-overs.shipment-detail' => Livewire\SlideOvers\ShipmentDetail::class,
         'slide-overs.abandoned-cart-detail' => Livewire\SlideOvers\AbandonedCartDetail::class,
     ],

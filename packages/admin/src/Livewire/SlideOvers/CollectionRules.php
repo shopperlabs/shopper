@@ -16,25 +16,33 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
+use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Enum\Operator;
 use Shopper\Core\Enum\Rule;
 use Shopper\Core\Jobs\SyncCollectionProductsJob;
 use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
  * @property-read Schema $form
  */
-class CollectionRules extends SlideOverComponent implements HasActions, HasSchemas
+class CollectionRules extends SlideOverComponent implements HasActions, HasSchemas, SlideOverForm
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use InteractsWithSlideOverForm;
 
     public Collection $collection;
+
+    public string $action = 'store';
+
+    public ?string $title = null;
+
+    public ?string $description = null;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -47,6 +55,9 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasSchem
     public function mount(): void
     {
         $this->authorize('edit_collections');
+
+        $this->title = __('shopper::pages/collections.product_conditions');
+        $this->description = __('shopper::pages/collections.automatic_description');
 
         $this->form->fill($this->collection->toArray());
     }
@@ -141,11 +152,6 @@ class CollectionRules extends SlideOverComponent implements HasActions, HasSchem
             ->title(__('shopper::pages/collections.conditions.update'))
             ->success()
             ->send();
-    }
-
-    public function render(): View
-    {
-        return view('shopper::livewire.slide-overs.collection-rules');
     }
 
     /**

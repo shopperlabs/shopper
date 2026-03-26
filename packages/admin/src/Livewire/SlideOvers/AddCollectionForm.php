@@ -19,24 +19,32 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
+use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
  * @property-read Schema $form
  */
-class AddCollectionForm extends SlideOverComponent implements HasActions, HasSchemas
+class AddCollectionForm extends SlideOverComponent implements HasActions, HasSchemas, SlideOverForm
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use InteractsWithSlideOverForm;
+
+    public string $action = 'store';
+
+    public ?string $title = null;
+
+    public ?string $description = null;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -44,6 +52,8 @@ class AddCollectionForm extends SlideOverComponent implements HasActions, HasSch
     public function mount(): void
     {
         $this->authorize('add_collections');
+
+        $this->title = __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/collections.single')]);
 
         $this->form->fill();
     }
@@ -138,10 +148,5 @@ class AddCollectionForm extends SlideOverComponent implements HasActions, HasSch
             parameters: ['collection' => $collection],
             navigate: true
         );
-    }
-
-    public function render(): View
-    {
-        return view('shopper::livewire.slide-overs.add-collection-form');
     }
 }

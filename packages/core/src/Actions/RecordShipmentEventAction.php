@@ -14,11 +14,11 @@ final class RecordShipmentEventAction
 {
     /**
      * @param  array{
-     *     description?: string,
-     *     location?: string,
-     *     latitude?: float,
-     *     longitude?: float,
-     *     occurred_at?: \Carbon\CarbonInterface,
+     *     occurred_at: \Carbon\CarbonInterface,
+     *     description?: string|null,
+     *     location?: string|null,
+     *     latitude?: float|null,
+     *     longitude?: float|null,
      *     metadata?: array<string, mixed>,
      * }  $context
      */
