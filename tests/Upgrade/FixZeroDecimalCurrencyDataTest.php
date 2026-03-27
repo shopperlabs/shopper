@@ -27,11 +27,11 @@ beforeEach(function (): void {
     $this->usd = Currency::query()->where('code', 'USD')->first();
 });
 
-describe('shopper:fix-zero-decimal-currencies', function (): void {
+describe('shopper:upgrade:fix-zero-decimal-currencies', function (): void {
     it('skips when no zero-decimal currencies exist in database', function (): void {
         DB::table(shopper_table('currencies'))->whereIn('code', zero_decimal_currencies())->delete();
 
-        $this->artisan('shopper:fix-zero-decimal-currencies', ['--force' => true])
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])
             ->assertSuccessful();
     });
 
@@ -44,7 +44,7 @@ describe('shopper:fix-zero-decimal-currencies', function (): void {
             'amount' => 60000,
         ]);
 
-        $this->artisan('shopper:fix-zero-decimal-currencies', ['--dry-run' => true])
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--dry-run' => true])
             ->assertSuccessful();
 
         expect(DB::table(shopper_table('prices'))->where('currency_id', $this->xaf->id)->value('amount'))
@@ -62,7 +62,7 @@ describe('shopper:fix-zero-decimal-currencies', function (): void {
             'cost_amount' => 30000,
         ]);
 
-        $this->artisan('shopper:fix-zero-decimal-currencies', ['--force' => true])
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])
             ->assertSuccessful();
 
         $price = DB::table(shopper_table('prices'))->where('currency_id', $this->xaf->id)->first();
@@ -86,7 +86,7 @@ describe('shopper:fix-zero-decimal-currencies', function (): void {
             'discount_amount' => 1000,
         ]);
 
-        $this->artisan('shopper:fix-zero-decimal-currencies', ['--force' => true])
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])
             ->assertSuccessful();
 
         $fixedOrder = DB::table(shopper_table('orders'))->find($order->id);
@@ -111,7 +111,7 @@ describe('shopper:fix-zero-decimal-currencies', function (): void {
             'price' => 60000,
         ]);
 
-        $this->artisan('shopper:fix-zero-decimal-currencies', ['--force' => true])
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])
             ->assertSuccessful();
 
         expect(DB::table(shopper_table('carrier_options'))->where('zone_id', $zone->id)->value('price'))
@@ -144,7 +144,7 @@ describe('shopper:fix-zero-decimal-currencies', function (): void {
             'code' => 'PROMO',
         ]);
 
-        $this->artisan('shopper:fix-zero-decimal-currencies', ['--force' => true])
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])
             ->assertSuccessful();
 
         expect(DB::table(shopper_table('cart_lines'))->find($line->id)->unit_price_amount)->toBe(600)
@@ -161,7 +161,7 @@ describe('shopper:fix-zero-decimal-currencies', function (): void {
             'zone_id' => $zone->id,
         ]);
 
-        $this->artisan('shopper:fix-zero-decimal-currencies', ['--force' => true])
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])
             ->assertSuccessful();
 
         expect(DB::table(shopper_table('discounts'))->where('zone_id', $zone->id)->value('value'))
@@ -177,7 +177,7 @@ describe('shopper:fix-zero-decimal-currencies', function (): void {
             'zone_id' => $zone->id,
         ]);
 
-        $this->artisan('shopper:fix-zero-decimal-currencies', ['--force' => true])
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])
             ->assertSuccessful();
 
         expect(DB::table(shopper_table('discounts'))->where('zone_id', $zone->id)->value('value'))
@@ -199,7 +199,7 @@ describe('shopper:fix-zero-decimal-currencies', function (): void {
             'price_amount' => 16300,
         ]);
 
-        $this->artisan('shopper:fix-zero-decimal-currencies', ['--force' => true])
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])
             ->assertSuccessful();
 
         expect(DB::table(shopper_table('prices'))->where('currency_id', $this->usd->id)->value('amount'))
@@ -217,7 +217,7 @@ describe('shopper:fix-zero-decimal-currencies', function (): void {
             'amount' => 60000,
         ]);
 
-        $this->artisan('shopper:fix-zero-decimal-currencies')
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies')
             ->expectsConfirmation('Apply these fixes to your database?', 'no')
             ->assertSuccessful();
 
