@@ -32,7 +32,6 @@
     "jenssegers/agent": "^2.6",
     "laravelcm/livewire-slide-overs": "^2.0",
     "laravel/framework": "^11.28|^12.0|^13.0",
-    "laravel/mcp": "^0.5.1|^0.6.0",
     "leandrocfe/filament-apex-charts": "^5.0",
     "livewire/blaze": "^1.0",
     "mckenziearts/filament-untitledui-icons": "^1.2",

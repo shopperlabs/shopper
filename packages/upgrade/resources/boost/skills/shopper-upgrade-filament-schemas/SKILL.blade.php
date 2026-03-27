@@ -1,3 +1,11 @@
+---
+name: shopper-upgrade-filament-schemas
+description: Guides migration of Filament InteractsWithForms to InteractsWithSchemas in custom Shopper components. Only needed if app/Shopper/ or app/Livewire/ contains custom Filament components.
+license: MIT
+metadata:
+    author: shopperlabs
+---
+
 # Shopper Upgrade: Filament Schemas Migration
 
 You are upgrading a project that uses Laravel Shopper to version 2.7+. This prompt covers the migration from Filament's `InteractsWithForms` to `InteractsWithSchemas`.
