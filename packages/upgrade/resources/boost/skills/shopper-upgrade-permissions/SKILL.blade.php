@@ -1,6 +1,9 @@
 ---
 name: shopper-upgrade-permissions
 description: Guides migration of permission names from underscore format (read_orders) to dot notation (orders.read). Required when upgrading to Shopper 3.x.
+license: MIT
+metadata:
+    author: shopperlabs
 ---
 
 # Shopper Upgrade: Permission Names Migration
