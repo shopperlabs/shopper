@@ -20,6 +20,7 @@ jobs:
           - shipping
           - stripe
           - types
+          - upgrade
         include:
           - package: admin
             repository: admin
@@ -37,6 +38,8 @@ jobs:
             repository: stripe
           - package: types
             repository: shopper-types
+          - package: upgrade
+            repository: upgrade
     steps:
       - uses: actions/checkout@v6
       - name: Monorepo Split of ${{ matrix.package }}
