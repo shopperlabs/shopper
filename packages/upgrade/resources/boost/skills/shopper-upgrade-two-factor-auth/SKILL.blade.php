@@ -1,3 +1,11 @@
+---
+name: shopper-upgrade-two-factor-auth
+description: Guides migration of TwoFactorAuthenticatable trait to new SOLID interfaces. Only needed if the User model uses TwoFactorAuthenticatable.
+license: MIT
+metadata:
+    author: shopperlabs
+---
+
 # Shopper Upgrade: Two-Factor Authentication
 
 You are upgrading a project that uses Laravel Shopper to version 2.7+. This prompt covers the migration of the TwoFactorAuthenticatable trait to new SOLID interfaces.

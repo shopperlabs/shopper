@@ -1,3 +1,11 @@
+---
+name: shopper-upgrade-money-storage
+description: Guides the migration of storefront code to use smallest currency unit storage (cents). Required when upgrading to Shopper 2.7+.
+license: MIT
+metadata:
+    author: shopperlabs
+---
+
 # Shopper Upgrade: Money Storage Migration
 
 You are upgrading a project that uses Laravel Shopper to version 2.7+. The most critical change is how monetary values are stored and read.
@@ -130,7 +138,7 @@ If the project uses zero-decimal currencies (XAF, JPY, KRW, etc.), existing data
 
 Run the Shopper upgrade command:
 ```bash
-php artisan shopper:fix-zero-decimal-currencies
+php artisan shopper:upgrade:fix-zero-decimal-currencies
 ```
 
 This command corrects the stored values for all zero-decimal currency amounts.

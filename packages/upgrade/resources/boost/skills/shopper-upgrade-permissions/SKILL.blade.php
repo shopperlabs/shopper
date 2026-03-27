@@ -1,3 +1,8 @@
+---
+name: shopper-upgrade-permissions
+description: Guides migration of permission names from underscore format (read_orders) to dot notation (orders.read). Required when upgrading to Shopper 3.x.
+---
+
 # Shopper Upgrade: Permission Names Migration
 
 You are upgrading a project from Shopper 2.x to 3.x. This prompt covers the migration of permission names from underscore format to dot notation.
@@ -122,13 +127,12 @@ Gate::allows('customers.delete')
 
 ### Step 4: Update database
 
-If you have custom permissions stored in the `permissions` table (Spatie), update the `name` column:
-
-```sql
-UPDATE permissions SET name = REPLACE(REPLACE(REPLACE(name, 'browse_', ''), 'read_', ''), 'add_', '') WHERE name LIKE '%\_%';
+Run the Shopper upgrade command to rename permissions in the database:
+```bash
+php artisan shopper:upgrade:permissions
 ```
 
-**Important:** Do NOT run this SQL blindly. Use the mapping table above and update each permission individually to avoid mistakes, especially for `add_` → `.create` and `access_setting` → `system.settings`.
+This command updates all permission names in the Spatie permissions table from underscore to dot notation.
 
 ### Step 5: Search and replace
 

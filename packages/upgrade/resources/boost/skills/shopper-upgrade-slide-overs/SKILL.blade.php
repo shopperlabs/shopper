@@ -1,3 +1,11 @@
+---
+name: shopper-upgrade-slide-overs
+description: Guides migration of custom slide-over components from Shopper internal SlideOverComponent to laravelcm/livewire-slide-overs package. Only needed if app/Shopper/ contains custom slide-over classes.
+license: MIT
+metadata:
+    author: shopperlabs
+---
+
 # Shopper Upgrade: Slide-Over Components
 
 You are upgrading a project that uses Laravel Shopper to version 2.7+. This prompt covers the migration of custom slide-over components.
