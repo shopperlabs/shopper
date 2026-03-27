@@ -15,7 +15,7 @@ use function Laravel\Prompts\spin;
 use function Laravel\Prompts\table;
 use function Laravel\Prompts\warning;
 
-final class FixZeroDecimalCurrencyData extends Command
+final class FixZeroDecimalCurrency extends Command
 {
     protected $signature = 'shopper:fix-zero-decimal-currencies
         {--dry-run : Show what would be changed without modifying data}

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Upgrade;
 
 use Laravel\Mcp\Facades\Mcp;
-use Shopper\Upgrade\Console\FixZeroDecimalCurrencyData;
+use Shopper\Upgrade\Console\FixZeroDecimalCurrency;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -16,7 +16,7 @@ final class UpgradeServiceProvider extends PackageServiceProvider
         $package
             ->name('shopper-upgrade')
             ->hasCommands([
-                FixZeroDecimalCurrencyData::class,
+                FixZeroDecimalCurrency::class,
             ]);
     }
 
