@@ -8,6 +8,7 @@ use Laravel\Mcp\Server;
 use Laravel\Mcp\Server\Prompt;
 use Shopper\Upgrade\Mcp\Prompts\UpgradeFilamentSchemas\UpgradeFilamentSchemas;
 use Shopper\Upgrade\Mcp\Prompts\UpgradeMoneyStorage\UpgradeMoneyStorage;
+use Shopper\Upgrade\Mcp\Prompts\UpgradePermissions\UpgradePermissions;
 use Shopper\Upgrade\Mcp\Prompts\UpgradeSlideOvers\UpgradeSlideOvers;
 use Shopper\Upgrade\Mcp\Prompts\UpgradeTwoFactorAuth\UpgradeTwoFactorAuth;
 
@@ -29,6 +30,7 @@ class ShopperUpgradeServer extends Server
             UpgradeSlideOvers::class,
             UpgradeTwoFactorAuth::class,
             UpgradeFilamentSchemas::class,
+            UpgradePermissions::class,
         ];
     }
 }
