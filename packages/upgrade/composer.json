@@ -1,0 +1,34 @@
+{
+  "name": "shopper/upgrade",
+  "description": "Upgrade assistant for Shopper, temporary package for version migrations",
+  "license": "MIT",
+  "require": {
+    "php": "^8.3",
+    "illuminate/console": "^11.28|^12.0|^13.0",
+    "illuminate/database": "^11.28|^12.0|^13.0",
+    "illuminate/support": "^11.28|^12.0|^13.0",
+    "laravel/mcp": "^0.5.1|^0.6.0",
+    "laravel/prompts": "^0.3.16",
+    "spatie/laravel-package-tools": "^1.9"
+  },
+  "suggest": {
+    "shopper/core": "Required for the shopper_table() helper used by upgrade commands."
+  },
+  "autoload": {
+    "psr-4": {
+      "Shopper\\Upgrade\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shopper\\Upgrade\\UpgradeServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
