@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\Stripe;
+namespace Tests\Upgrade;
 
 use Livewire\LivewireServiceProvider;
+use Shopper\Cart\CartServiceProvider;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Payment\PaymentServiceProvider;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
-use Shopper\Stripe\StripeServiceProvider;
+use Shopper\Upgrade\UpgradeServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
@@ -37,10 +38,11 @@ abstract class TestCase extends \Tests\TestCase
             CoreServiceProvider::class,
             ShopperServiceProvider::class,
             SidebarServiceProvider::class,
+            CartServiceProvider::class,
             MediaLibraryServiceProvider::class,
-            PermissionServiceProvider::class,
             PaymentServiceProvider::class,
-            StripeServiceProvider::class,
+            PermissionServiceProvider::class,
+            UpgradeServiceProvider::class,
         ];
     }
 }

@@ -31,7 +31,7 @@
     "jaocero/radio-deck": "^3.0",
     "jenssegers/agent": "^2.6",
     "laravelcm/livewire-slide-overs": "^2.0",
-    "laravel/framework": "^11.28|^12.0|^13.0",
+    "laravel/framework": "^12.0|^13.0",
     "leandrocfe/filament-apex-charts": "^5.0",
     "livewire/blaze": "^1.0",
     "mckenziearts/filament-untitledui-icons": "^1.2",
@@ -51,7 +51,7 @@
     "laravel/pint": "^1.16",
     "mockery/mockery": "^1.4",
     "nunomaduro/collision": "^8.1.1",
-    "orchestra/testbench": "^9.0|^10.0|^11.0",
+    "orchestra/testbench": "^10.0|^11.0",
     "pestphp/pest": "^3.8|^4.0",
     "pestphp/pest-plugin-laravel": "^3.0|^4.0",
     "pestphp/pest-plugin-livewire": "^3.0|^4.0",
@@ -82,7 +82,8 @@
       "Shopper\\Payment\\": "packages/payment/src",
       "Shopper\\Shipping\\": "packages/shipping/src",
       "Shopper\\Sidebar\\": "packages/sidebar/src",
-      "Shopper\\Stripe\\": "packages/stripe/src"
+      "Shopper\\Stripe\\": "packages/stripe/src",
+      "Shopper\\Upgrade\\": "packages/upgrade/src"
     }
   },
   "autoload-dev": {
@@ -98,7 +99,8 @@
     "shopper/payment": "self.version",
     "shopper/shipping": "self.version",
     "shopper/sidebar": "self.version",
-    "shopper/stripe": "self.version"
+    "shopper/stripe": "self.version",
+    "shopper/upgrade": "self.version"
   },
   "extra": {
     "laravel": {
@@ -109,7 +111,8 @@
         "Shopper\\Payment\\PaymentServiceProvider",
         "Shopper\\Shipping\\ShippingServiceProvider",
         "Shopper\\Sidebar\\SidebarServiceProvider",
-        "Shopper\\Stripe\\StripeServiceProvider"
+        "Shopper\\Stripe\\StripeServiceProvider",
+        "Shopper\\Upgrade\\UpgradeServiceProvider"
       ]
     }
   },

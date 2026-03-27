@@ -8,11 +8,6 @@ use Shopper\Stripe\StripeServiceProvider;
 
 uses(Tests\Stripe\TestCase::class);
 
-beforeEach(function (): void {
-    $this->app->register(Shopper\Payment\PaymentServiceProvider::class);
-    $this->app->register(StripeServiceProvider::class);
-});
-
 describe(StripeServiceProvider::class, function (): void {
     it('merges config under `shopper.stripe`', function (): void {
         expect(config('shopper.stripe'))->toBeArray()
