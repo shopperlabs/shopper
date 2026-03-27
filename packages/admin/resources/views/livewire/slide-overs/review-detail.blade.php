@@ -1,9 +1,12 @@
 <x-shopper::slideover-card>
     <div class="h-0 flex-1 overflow-y-auto py-4">
         <div class="px-4">
-            <h2 class="font-heading text-2xl font-bold text-gray-900 dark:text-white">
-                {{ $review->reviewrateable->name }}
-            </h2>
+            <div class="flex items-start justify-between">
+                <h2 class="font-heading text-2xl font-bold text-gray-900 dark:text-white">
+                    {{ $review->reviewrateable->name }}
+                </h2>
+                <x-livewire-slide-over::close-icon />
+            </div>
 
             <div class="mt-8">
                 <x-shopper::section-heading
