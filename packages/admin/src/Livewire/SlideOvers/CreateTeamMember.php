@@ -132,8 +132,8 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
             'password' => Hash::make(
                 value: $data['password']
             ),
-            'phone_number' => $data['first_name'],
-            'gender' => $data['gender'],
+            'phone_number' => $data['phone_number'] ?? null,
+            'gender' => $data['gender'] ?? null,
             'email_verified_at' => now()->toDateTimeString(),
         ]);
 
