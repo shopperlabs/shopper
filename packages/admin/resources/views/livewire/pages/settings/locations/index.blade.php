@@ -13,13 +13,11 @@
     <x-shopper::heading class="my-6" :title="__('shopper::pages/settings/global.location.menu')">
         <x-slot name="action">
             @can('add_inventories')
-                @if ($inventories->count() < (int) config('shopper.admin.inventory_limit') + 1)
-                    <div class="flex">
-                        <x-filament::button tag="a" :href="route('shopper.settings.locations.create')" wire:navigate>
-                            {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/settings/global.location.single')]) }}
-                        </x-filament::button>
-                    </div>
-                @endif
+                <div class="flex">
+                    <x-filament::button tag="a" :href="route('shopper.settings.locations.create')" wire:navigate>
+                        {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/settings/global.location.single')]) }}
+                    </x-filament::button>
+                </div>
             @endcan
         </x-slot>
     </x-shopper::heading>
@@ -32,7 +30,7 @@
                     :description="__('shopper::pages/settings/global.location.description')"
                 />
                 <x-filament::section.description class="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                    {{ __('shopper::pages/settings/global.location.count', ['count' => $inventories->count(), 'total' => config('shopper.admin.inventory_limit')]) }}
+                    {{ __('shopper::pages/settings/global.location.count', ['count' => $inventories->count()]) }}
                 </x-filament::section.description>
             </div>
         </div>
