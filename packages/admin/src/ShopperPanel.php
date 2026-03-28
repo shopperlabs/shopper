@@ -245,7 +245,6 @@ final class ShopperPanel
     public function getStyles(): array
     {
         return array_merge(
-            config('shopper.admin.resources.stylesheets', []),
             $this->styles,
             $this->addonManager()->getStyles(),
         );
@@ -267,7 +266,6 @@ final class ShopperPanel
     public function getScripts(): array
     {
         return array_merge(
-            config('shopper.admin.resources.scripts', []),
             $this->scripts,
             $this->addonManager()->getScripts(),
         );

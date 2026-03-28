@@ -55,7 +55,6 @@ class Index extends Component implements HasActions, HasSchemas
         return view('shopper::livewire.pages.settings.locations.index', [
             'inventories' => resolve(Inventory::class)::query()
                 ->with('country')
-                ->limit(config('shopper.admin.inventory_limit'))
                 ->get(),
         ])->title(__('shopper::pages/settings/global.location.menu'));
     }

@@ -103,62 +103,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Filament Primary UI color
+    | Brand Primary UI color
     |--------------------------------------------------------------------------
     |
-    | By default on some elements filament does not take into account the "primary"
+    | By default on some elements, filament does not take into account the "primary"
     | color, to correct this after changing your primary color in your tailwind file
     | you must also change it here.
     |
     */
 
-    'filament_color' => Color::Blue,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Additional Resources
-    |--------------------------------------------------------------------------
-    |
-    | Automatically load the assets links. For js and css files.
-    |
-    | Example:
-    |
-    | 'stylesheets' => [
-    |    asset('/my-script.css'),
-    |   'https://example.com/my-style.css'
-    | ]
-    |
-    */
-
-    'resources' => [
-        'stylesheets' => [],
-        'scripts' => [],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Inventory Limit
-    |--------------------------------------------------------------------------
-    |
-    | Limits the number of inventories your store can manage, making it easier
-    | to manage your stock.
-    |
-    */
-
-    'inventory_limit' => 4,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Caching Blade Icons
-    |--------------------------------------------------------------------------
-    |
-    | This section lets you configure the caching option of the icon picker component.
-    |
-    | Since icon packs are often packed with a lots of icons,
-    | searching through all of them can take quite a lot of time, which is
-    | why the plugin caches each field with it's configuration and search queries.
-    |
-    */
+    'primary_color' => Color::Blue,
 
     /*
     |--------------------------------------------------------------------------

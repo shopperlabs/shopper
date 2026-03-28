@@ -30,7 +30,7 @@ return [
         'menu' => 'Ubicaciones',
         'single' => 'ubicación',
         'description' => 'Gestiona los lugares donde almacenas inventario, cumples pedidos y vendes productos.',
-        'count' => 'Estás usando :count de las :total ubicaciones disponibles.',
+        'count' => 'Tienes :count ubicación(es) configurada(s).',
         'add' => 'Añadir ubicación',
         'detail' => 'Detalles',
         'detail_summary' => 'Dale a esta ubicación un nombre corto para facilitar su identificación. Verás este nombre en áreas como productos.',

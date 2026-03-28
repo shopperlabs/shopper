@@ -30,7 +30,7 @@ return [
         'menu' => 'Emplacements',
         'single' => 'emplacement',
         'description' => 'Gérez les emplacements où vous stockez des marchandises, remplissez des commandes et vendez des produits.',
-        'count' => 'Vous utilisez :count sur les :total emplacements disponible.',
+        'count' => 'Vous avez :count emplacement(s) configuré(s).',
         'add' => 'Ajouter un emplacement',
         'detail' => 'Détails',
         'detail_summary' => "Donnez à cet emplacement un nom court pour qu'il soit facile à identifier. Vous verrez ce nom dans des domaines tels que les produits.",
