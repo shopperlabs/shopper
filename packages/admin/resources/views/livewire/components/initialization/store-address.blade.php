@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-between space-y-10 lg:space-y-20">
+<div class="flex flex-col justify-between space-y-10">
     @include('shopper::livewire.components.initialization.steps')
 
     <form wire:submit="save" class="flex-1">

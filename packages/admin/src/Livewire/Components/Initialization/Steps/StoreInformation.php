@@ -42,7 +42,6 @@ final class StoreInformation extends StepComponent implements HasActions, HasSch
         $settings = Setting::query()->whereIn('key', [
             'name',
             'email',
-            'about',
             'country_id',
             'default_currency_id',
             'currencies',
@@ -113,10 +112,6 @@ final class StoreInformation extends StepComponent implements HasActions, HasSch
                     )
                     ->native(false)
                     ->required(),
-                Textarea::make('about')
-                    ->label(__('shopper::forms.label.about'))
-                    ->helperText(__('shopper::pages/onboarding.about_description'))
-                    ->rows(3),
             ])
             ->statePath('data');
     }

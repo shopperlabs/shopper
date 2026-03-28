@@ -52,7 +52,6 @@ final class StoreSocialLink extends StepComponent implements HasActions, HasSche
                     ->inlinePrefix()
                     ->label(__('shopper::words.socials.facebook'))
                     ->placeholder('https://facebook.com/laravelshopper'),
-
                 TextInput::make('instagram_link')
                     ->prefix(
                         fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
@@ -65,7 +64,6 @@ final class StoreSocialLink extends StepComponent implements HasActions, HasSche
                     ->inlinePrefix()
                     ->label(__('shopper::words.socials.instagram'))
                     ->placeholder('https://instagram.com/laravelshopper'),
-
                 TextInput::make('twitter_link')
                     ->prefix(
                         fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
