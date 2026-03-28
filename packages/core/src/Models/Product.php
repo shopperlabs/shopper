@@ -116,7 +116,7 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
 
     public function canUseAttributes(): bool
     {
-        return $this->isStandard() || $this->isVariant();
+        return $this->isStandard() || $this->isVariant() || $this->isVirtual();
     }
 
     public function canUseVariants(): bool
