@@ -20,7 +20,7 @@ use Shopper\Core\Models\Order;
  * @property-read string $last_name
  * @property-read string $email
  * @property-read bool $opt_in
- * @property-read GenderType $gender
+ * @property-read ?GenderType $gender
  * @property-read string $avatar_type
  * @property-read ?string $timezone
  * @property-read ?string $avatar_location

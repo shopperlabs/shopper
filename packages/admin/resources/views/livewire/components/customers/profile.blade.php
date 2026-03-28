@@ -64,20 +64,22 @@
                     </div>
                 </dd>
             </div>
-            <div class="space-y-1 p-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
-                    {{ __('shopper::forms.label.gender') }}
-                </dt>
-                <dd
-                    class="flex items-center space-x-4 text-sm leading-5 text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white"
-                >
-                    <div class="grow">
-                        <span class="capitalize">
-                            {{ $customer->gender }}
-                        </span>
-                    </div>
-                </dd>
-            </div>
+            @if ($customer->gender)
+                <div class="space-y-1 p-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
+                        {{ __('shopper::forms.label.gender') }}
+                    </dt>
+                    <dd
+                        class="flex items-center space-x-4 text-sm leading-5 text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white"
+                    >
+                        <div class="grow">
+                            <span class="capitalize">
+                                {{ $customer->gender->getLabel() }}
+                            </span>
+                        </div>
+                    </dd>
+                </div>
+            @endif
         </dl>
     </x-shopper::card>
 
