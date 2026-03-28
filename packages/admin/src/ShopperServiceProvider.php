@@ -208,7 +208,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
     protected function registerCustomFilamentItems(): void
     {
         FilamentColor::register([
-            'primary' => config('shopper.admin.filament_color'),
+            'primary' => config('shopper.admin.primary_color'),
             'teal' => Color::Teal,
             'green' => Color::Green,
             'sky' => Color::Sky,
