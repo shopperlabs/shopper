@@ -196,7 +196,10 @@ describe(Product::class, function (): void {
             ->and($standard->canUseAttributes())->toBeTrue()
             ->and($standard->canUseVariants())->toBeFalse()
             ->and($variant->canUseVariants())->toBeTrue()
-            ->and($virtual->canUseShipping())->toBeFalse();
+            ->and($variant->canUseAttributes())->toBeTrue()
+            ->and($virtual->canUseShipping())->toBeFalse()
+            ->and($virtual->canUseAttributes())->toBeTrue()
+            ->and($virtual->canUseVariants())->toBeFalse();
     });
 
     it('has brand relationship', function (): void {
