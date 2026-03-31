@@ -54,7 +54,7 @@ export interface InventoryHistory extends Entity {
   /** The description of the history entry. */
   description: string | null
   /** The user ID who made the adjustment. */
-  user_id: number
+  user_id: number | null
   /** The inventory ID. */
   inventory_id: number
   /** The ID of the stockable entity. */

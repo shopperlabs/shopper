@@ -46,6 +46,8 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   featured: boolean
   /** Whether the product is visible. */
   is_visible: boolean
+  /** Whether backorders are allowed. */
+  allow_backorder: boolean
   /** The type of the product. */
   type: ProductType | null
   /** The published at date of the product. */

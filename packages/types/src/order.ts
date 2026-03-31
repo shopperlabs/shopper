@@ -139,10 +139,12 @@ export interface OrderItem extends Entity {
   name: string
   /** The quantity of the order item. */
   quantity: number
-  /** The unit price amount. */
-  unit_price_amount: number | null
+  /** The unit price amount (in cents). */
+  unit_price_amount: number
   /** The tax amount (in cents). */
   tax_amount: number
+  /** The discount amount (in cents). */
+  discount_amount: number
   /** The computed total (unit_price_amount * quantity). */
   total: number
   /** The SKU of the order item. */
@@ -204,7 +206,7 @@ export interface OrderShipping extends Entity {
   /** The shipment status. */
   status: ShipmentStatus | null
   /** The date the order was shipped. */
-  shipped_at: DateEntity
+  shipped_at: DateEntity | null
   /** The date the order was received. */
   received_at: DateEntity | null
   /** The date the order was returned. */
@@ -263,9 +265,9 @@ export interface OrderShippingEvent {
  */
 export interface OrderRefund extends Entity {
   /** The reason for the refund. */
-  refund_reason: string | null
+  reason: string | null
   /** The refund amount (in cents). */
-  refund_amount: number | null
+  amount: number
   /** The refund status. */
   status: OrderRefundStatus
   /** Additional notes. */
