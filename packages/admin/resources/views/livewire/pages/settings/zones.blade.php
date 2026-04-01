@@ -35,7 +35,7 @@
                 </x-slot>
 
                 <div class="divide-y divide-gray-200 dark:divide-white/10">
-                    @forelse ($zones as $zone)
+                    @forelse ($this->zones as $zone)
                         <label
                             wire:key="{{ $zone->slug }}"
                             for="{{ $zone->slug }}"

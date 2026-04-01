@@ -27,19 +27,37 @@ describe('Order cancellation rules', function (): void {
         expect($order->canBeCancelled())->toBeTrue();
     });
 
-    it('blocks cancellation when items are shipped', function (): void {
+    it('allows cancellation when items are shipped', function (): void {
         $order = Order::factory()->create([
             'status' => OrderStatus::Processing,
             'shipping_status' => ShippingStatus::Shipped,
         ]);
 
-        expect($order->canBeCancelled())->toBeFalse();
+        expect($order->canBeCancelled())->toBeTrue();
     });
 
-    it('blocks cancellation when items are partially shipped', function (): void {
+    it('allows cancellation when items are partially shipped', function (): void {
         $order = Order::factory()->create([
             'status' => OrderStatus::Processing,
             'shipping_status' => ShippingStatus::PartiallyShipped,
+        ]);
+
+        expect($order->canBeCancelled())->toBeTrue();
+    });
+
+    it('blocks cancellation when items are delivered', function (): void {
+        $order = Order::factory()->create([
+            'status' => OrderStatus::Processing,
+            'shipping_status' => ShippingStatus::Delivered,
+        ]);
+
+        expect($order->canBeCancelled())->toBeFalse();
+    });
+
+    it('blocks cancellation when items are returned', function (): void {
+        $order = Order::factory()->create([
+            'status' => OrderStatus::Processing,
+            'shipping_status' => ShippingStatus::Returned,
         ]);
 
         expect($order->canBeCancelled())->toBeFalse();

@@ -35,7 +35,7 @@
                 </x-slot>
 
                 <div class="divide-y divide-gray-200 dark:divide-white/10">
-                    @forelse ($taxZones as $taxZone)
+                    @forelse ($this->taxZones as $taxZone)
                         <label
                             wire:key="tax-zone-{{ $taxZone->id }}"
                             for="tax-zone-{{ $taxZone->id }}"

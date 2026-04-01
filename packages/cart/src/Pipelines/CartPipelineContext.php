@@ -8,13 +8,13 @@ use Shopper\Cart\Models\Cart;
 
 final class CartPipelineContext
 {
-    public int|float $subtotal = 0;
+    public int $subtotal = 0;
 
-    public int|float $discountTotal = 0;
+    public int $discountTotal = 0;
 
-    public int|float $taxTotal = 0;
+    public int $taxTotal = 0;
 
-    public int|float $total = 0;
+    public int $total = 0;
 
     public bool $taxInclusive = false;
 

@@ -14,12 +14,17 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\InventoryHistory;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
+/**
+ * @property-read Collection<int, Inventory> $inventories
+ */
 class VariantStock extends Component implements HasActions, HasSchemas
 {
     use HandlesAuthorizationExceptions;
@@ -86,10 +91,17 @@ class VariantStock extends Component implements HasActions, HasSchemas
             });
     }
 
+    /**
+     * @return Collection<int, Inventory>
+     */
+    #[Computed]
+    public function inventories(): Collection
+    {
+        return Inventory::query()->get();
+    }
+
     public function render(): View
     {
-        return view('shopper::livewire.components.products.variant-stock', [
-            'inventories' => Inventory::query()->get(),
-        ]);
+        return view('shopper::livewire.components.products.variant-stock');
     }
 }

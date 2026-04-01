@@ -129,7 +129,7 @@ class ManagePricing extends SlideOverComponent implements HasActions, HasSchemas
                 [
                     'amount' => $price->amount,
                     'compare_amount' => $price->compare_amount === 0 ? null : $price->compare_amount,
-                    'cost_amount' => $price->cost_amount === 0 ? null : $price->compare_amount,
+                    'cost_amount' => $price->cost_amount === 0 ? null : $price->cost_amount,
                 ]
             );
         }
