@@ -30,7 +30,7 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read Inventory $inventory
- * @property-read Model&ShopperUser $suer
+ * @property-read Model&ShopperUser $user
  */
 class InventoryHistory extends Model implements InventoryHistoryContract
 {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Stripe;
 
+use Illuminate\Support\Str;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Drivers\Driver;
@@ -70,7 +71,11 @@ final class StripeDriver extends Driver
                 $params['metadata'] = $context['metadata'];
             }
 
-            $intent = $this->getClient()->paymentIntents->create($params);
+            $idempotencyKey = $context['idempotency_key'] ?? Str::uuid()->toString();
+
+            $intent = $this->getClient()->paymentIntents->create($params, [
+                'idempotency_key' => $idempotencyKey,
+            ]);
 
             return new PaymentResult(
                 success: true,
@@ -81,6 +86,7 @@ final class StripeDriver extends Driver
                 data: [
                     'stripe_status' => $intent->status,
                     'publishable_key' => $this->publishableKey,
+                    'idempotency_key' => $idempotencyKey,
                 ],
             );
         } catch (ApiErrorException $e) {
@@ -147,7 +153,9 @@ final class StripeDriver extends Driver
                 $params['reason'] = $reason;
             }
 
-            $refund = $this->getClient()->refunds->create($params);
+            $refund = $this->getClient()->refunds->create($params, [
+                'idempotency_key' => Str::uuid()->toString(),
+            ]);
 
             return new PaymentResult(
                 success: $refund->status === 'succeeded',

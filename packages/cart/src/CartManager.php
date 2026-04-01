@@ -6,6 +6,7 @@ namespace Shopper\Cart;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use Shopper\Cart\Events\CouponApplied;
 use Shopper\Cart\Events\CouponRemoved;
@@ -20,6 +21,7 @@ use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Contracts\Stockable;
 use Shopper\Core\Models\Discount;
+use Throwable;
 
 final readonly class CartManager
 {
@@ -29,57 +31,66 @@ final readonly class CartManager
 
     /**
      * @param  array<string, mixed>|null  $metadata
+     *
+     * @throws Throwable
      */
     public function add(Cart $cart, Priceable&Model $purchasable, int $quantity = 1, ?array $metadata = null): CartLine
     {
         $this->guardQuantity($quantity);
         $this->guardCompleted($cart);
 
-        $existing = $cart->lines()
-            ->where('purchasable_type', $purchasable->getMorphClass())
-            ->where('purchasable_id', $purchasable->getKey())
-            ->first();
+        return DB::transaction(function () use ($cart, $purchasable, $quantity, $metadata): CartLine {
+            $existing = $cart->lines()
+                ->where('purchasable_type', $purchasable->getMorphClass())
+                ->where('purchasable_id', $purchasable->getKey())
+                ->lockForUpdate()
+                ->first();
 
-        $requestedQuantity = $existing ? $existing->quantity + $quantity : $quantity;
-        $this->guardStock($purchasable, $requestedQuantity);
+            $requestedQuantity = $existing ? $existing->quantity + $quantity : $quantity;
+            $this->guardStock($purchasable, $requestedQuantity);
 
-        if ($existing) {
-            $existing->update([
-                'quantity' => $requestedQuantity,
+            if ($existing) {
+                $existing->update([
+                    'quantity' => $requestedQuantity,
+                ]);
+
+                return $existing->refresh();
+            }
+
+            $price = $purchasable->getPrice($cart->currency_code);
+
+            return $cart->lines()->create([
+                'purchasable_type' => $purchasable->getMorphClass(),
+                'purchasable_id' => $purchasable->getKey(),
+                'quantity' => $quantity,
+                'unit_price_amount' => $price ? $price->amount : 0,
+                'metadata' => $metadata,
             ]);
-
-            return $existing->refresh();
-        }
-
-        $price = $purchasable->getPrice($cart->currency_code);
-
-        return $cart->lines()->create([
-            'purchasable_type' => $purchasable->getMorphClass(),
-            'purchasable_id' => $purchasable->getKey(),
-            'quantity' => $quantity,
-            'unit_price_amount' => $price ? $price->amount : 0,
-            'metadata' => $metadata,
-        ]);
+        });
     }
 
     /**
      * @param  array{quantity?: int, metadata?: array<string, mixed>|null}  $data
+     *
+     * @throws Throwable
      */
     public function update(Cart $cart, int $lineId, array $data): CartLine
     {
         $this->guardCompleted($cart);
 
-        /** @var CartLine $line */
-        $line = $cart->lines()->findOrFail($lineId);
+        return DB::transaction(function () use ($cart, $lineId, $data): CartLine {
+            /** @var CartLine $line */
+            $line = $cart->lines()->lockForUpdate()->findOrFail($lineId);
 
-        if (isset($data['quantity'])) {
-            $this->guardQuantity($data['quantity']);
-            $this->guardStock($line->purchasable, $data['quantity']);
-        }
+            if (isset($data['quantity'])) {
+                $this->guardQuantity($data['quantity']);
+                $this->guardStock($line->purchasable, $data['quantity']);
+            }
 
-        $line->update(Arr::only($data, ['quantity', 'metadata']));
+            $line->update(Arr::only($data, ['quantity', 'metadata']));
 
-        return $line->refresh();
+            return $line->refresh();
+        });
     }
 
     public function remove(Cart $cart, int $lineId): void

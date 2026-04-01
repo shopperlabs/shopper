@@ -71,7 +71,9 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
 
     public function mount(?int $discountId = null): void
     {
-        abort_unless($this->authorize('discounts.create') || $this->authorize('discounts.edit'), 403);
+        $user = shopper()->auth()->user();
+
+        abort_unless($user->can('discounts.create') || $user->can('discounts.edit'), 403);
 
         $this->discount = $discountId
             ? Discount::query()->find($discountId)
@@ -361,6 +363,8 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
 
     public function store(): void
     {
+        $this->authorize($this->discount->id ? 'discounts.edit' : 'discounts.create');
+
         $data = $this->form->getState();
         $discountFormValues = Arr::except($data, ['products', 'customers', 'usage_number']);
 

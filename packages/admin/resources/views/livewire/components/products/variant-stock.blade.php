@@ -21,7 +21,7 @@
                 </x-shopper::tables.table-head>
             </thead>
             <tbody class="divide-y divide-gray-100 dark:divide-white/10" x-max="1">
-                @foreach ($inventories as $inventory)
+                @foreach ($this->inventories as $inventory)
                     <tr>
                         <x-shopper::tables.table-cell class="whitespace-no-wrap">
                             <div class="flex items-center gap-2">

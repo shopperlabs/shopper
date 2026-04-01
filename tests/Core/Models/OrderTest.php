@@ -65,14 +65,22 @@ describe(Order::class, function (): void {
             ->and($shipped->isShipped())->toBeTrue();
     });
 
-    it('checks `canBeCancelled()` requires pending shipping and non-terminal status', function (): void {
+    it('checks `canBeCancelled()` blocks delivered/returned and terminal order statuses', function (): void {
         $canCancel = Order::factory()->create([
             'status' => OrderStatus::Processing,
             'shipping_status' => ShippingStatus::Unfulfilled,
         ]);
-        $cannotCancelShipped = Order::factory()->create([
+        $canCancelShipped = Order::factory()->create([
             'status' => OrderStatus::Processing,
             'shipping_status' => ShippingStatus::Shipped,
+        ]);
+        $cannotCancelDelivered = Order::factory()->create([
+            'status' => OrderStatus::Processing,
+            'shipping_status' => ShippingStatus::Delivered,
+        ]);
+        $cannotCancelReturned = Order::factory()->create([
+            'status' => OrderStatus::Processing,
+            'shipping_status' => ShippingStatus::Returned,
         ]);
         $alreadyCancelled = Order::factory()->create([
             'status' => OrderStatus::Cancelled,
@@ -84,7 +92,9 @@ describe(Order::class, function (): void {
         ]);
 
         expect($canCancel->canBeCancelled())->toBeTrue()
-            ->and($cannotCancelShipped->canBeCancelled())->toBeFalse()
+            ->and($canCancelShipped->canBeCancelled())->toBeTrue()
+            ->and($cannotCancelDelivered->canBeCancelled())->toBeFalse()
+            ->and($cannotCancelReturned->canBeCancelled())->toBeFalse()
             ->and($alreadyCancelled->canBeCancelled())->toBeFalse()
             ->and($archived->canBeCancelled())->toBeFalse();
     });

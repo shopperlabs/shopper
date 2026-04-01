@@ -36,6 +36,6 @@ describe(Zones::class, function (): void {
 
         $component = Livewire::test(Zones::class);
 
-        expect($component->viewData('zones')->count())->toBe(2);
+        expect($component->instance()->zones->count())->toBe(2);
     });
 })->group('livewire', 'settings', 'zones');

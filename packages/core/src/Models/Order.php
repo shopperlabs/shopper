@@ -115,7 +115,12 @@ class Order extends Model implements OrderContract
             OrderStatus::Cancelled,
             OrderStatus::Archived,
         ], true)
-            && $this->shipping_status === ShippingStatus::Unfulfilled;
+            && ! in_array($this->shipping_status, [
+                ShippingStatus::Delivered,
+                ShippingStatus::PartiallyDelivered,
+                ShippingStatus::Returned,
+                ShippingStatus::PartiallyReturned,
+            ], true);
     }
 
     public function isNotCancelled(): bool

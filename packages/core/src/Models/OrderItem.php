@@ -19,8 +19,8 @@ use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
  * @property-read int $id
  * @property-read string $name
  * @property-read int $quantity
- * @property-read float|int|null $unit_price_amount
- * @property-read float|int|null $total
+ * @property-read int $unit_price_amount
+ * @property-read int $total
  * @property-read string $sku
  * @property-read int $product_id
  * @property-read string $product_type
@@ -112,7 +112,7 @@ class OrderItem extends Model implements OrderItemContract
     protected function total(): Attribute
     {
         return Attribute::make(
-            get: fn (): int|float => ($this->unit_price_amount * $this->quantity) - $this->discount_amount
+            get: fn (): int => ($this->unit_price_amount * $this->quantity) - $this->discount_amount
         );
     }
 }

@@ -115,6 +115,8 @@ describe(StripeDriver::class, function (): void {
                     fn (array $params): bool => $params['amount'] === 5000
                     && $params['currency'] === 'usd'
                     && $params['capture_method'] === 'manual'
+                ), Mockery::on(
+                    fn (array $opts): bool => isset($opts['idempotency_key'])
                 ))
                 ->andReturn($intent);
 
@@ -140,6 +142,8 @@ describe(StripeDriver::class, function (): void {
                     fn (array $params): bool => $params['payment_method'] === 'pm_test_123'
                     && $params['customer'] === 'cus_test_456'
                     && $params['metadata'] === ['order_id' => 'ORD-001']
+                ), Mockery::on(
+                    fn (array $opts): bool => isset($opts['idempotency_key'])
                 ))
                 ->andReturn(PaymentIntent::constructFrom([
                     'id' => 'pi_test_456',
@@ -164,7 +168,7 @@ describe(StripeDriver::class, function (): void {
 
             $mocks->paymentIntents->shouldReceive('create')
                 ->once()
-                ->with(Mockery::on(fn (array $params): bool => $params['currency'] === 'eur'))
+                ->with(Mockery::on(fn (array $params): bool => $params['currency'] === 'eur'), Mockery::type('array'))
                 ->andReturn(PaymentIntent::constructFrom([
                     'id' => 'pi_test',
                     'status' => 'requires_payment_method',
@@ -366,6 +370,8 @@ describe(StripeDriver::class, function (): void {
                     fn (array $params): bool => $params['payment_intent'] === 'pi_test_123'
                     && $params['amount'] === 5000
                     && ! isset($params['reason'])
+                ), Mockery::on(
+                    fn (array $opts): bool => isset($opts['idempotency_key'])
                 ))
                 ->andReturn($refund);
 
@@ -393,6 +399,8 @@ describe(StripeDriver::class, function (): void {
                 ->with(Mockery::on(
                     fn (array $params): bool => $params['amount'] === 2500
                     && $params['reason'] === 'requested_by_customer'
+                ), Mockery::on(
+                    fn (array $opts): bool => isset($opts['idempotency_key'])
                 ))
                 ->andReturn($refund);
 
