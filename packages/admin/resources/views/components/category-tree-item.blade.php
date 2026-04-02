@@ -29,6 +29,7 @@
             @if ($category->children->isNotEmpty())
                 <button
                     type="button"
+                    aria-label="{{ __('shopper::words.collapse') }}"
                     class="rounded p-0.5 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
                     x-on:click="$el.closest('[data-sort-item]').querySelector('[data-children]').classList.toggle('hidden')"
                 >
