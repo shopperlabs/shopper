@@ -122,7 +122,7 @@ class Browse extends AbstractPageComponent implements HasActions, HasSchemas, Ha
                     ->deselectRecordsAfterCompletion(),
                 BulkAction::make('enabled')
                     ->label(__('shopper::forms.actions.enable'))
-                    ->icon('untitledui-check-verified')
+                    ->icon(Untitledui::CheckVerified)
                     ->action(function (Collection $records): void {
                         $records->each->updateStatus(); // @phpstan-ignore-line
 
@@ -138,7 +138,7 @@ class Browse extends AbstractPageComponent implements HasActions, HasSchemas, Ha
                     ->deselectRecordsAfterCompletion(),
                 BulkAction::make('disabled')
                     ->label(__('shopper::forms.actions.disable'))
-                    ->icon('untitledui-slash-circle-01')
+                    ->icon(Untitledui::SlashCircle01)
                     ->action(function (Collection $records): void {
                         $records->each->updateStatus(false); // @phpstan-ignore-line
 
