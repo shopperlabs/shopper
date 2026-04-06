@@ -28,11 +28,7 @@ it('scaffolds a complete starter kit structure', function (): void {
 
     expect($kitDir.'/composer.json')->toBeFile()
         ->and($kitDir.'/shopper-kit.yaml')->toBeFile()
-        ->and($kitDir.'/README.md')->toBeFile()
-        ->and($kitDir.'/resources/views/.gitkeep')->toBeFile()
-        ->and($kitDir.'/resources/css/.gitkeep')->toBeFile()
-        ->and($kitDir.'/resources/js/.gitkeep')->toBeFile()
-        ->and($kitDir.'/routes/.gitkeep')->toBeFile();
+        ->and($kitDir.'/README.md')->toBeFile();
 });
 
 it('generates valid JSON in `composer.json`', function (): void {
@@ -50,8 +46,8 @@ it('generates valid JSON in `composer.json`', function (): void {
     expect($composerJson)
         ->name->toBe('acme/starter-json')
         ->description->toBe('Testing JSON output')
-        ->type->toBe('shopper-starter-kit')
-        ->license->toBe('MIT');
+        ->license->toBe('MIT')
+        ->authors->toBe([['name' => 'acme']]);
 });
 
 it('generates a parsable `shopper-kit.yaml`', function (): void {

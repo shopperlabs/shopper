@@ -69,6 +69,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
             ->hasCommands([
                 Console\ComponentPublishCommand::class,
                 Console\InstallCommand::class,
+                Console\KitExportCommand::class,
                 Console\KitInitCommand::class,
                 Console\KitInstallCommand::class,
                 Console\PublishCommand::class,
