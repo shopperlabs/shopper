@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Shopper\Console;
 
-use Closure;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use stdClass;
+use Shopper\StarterKit\Concerns\HasConsoleTask;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 use function Laravel\Prompts\confirm;
-use function Laravel\Prompts\spin;
 use function Laravel\Prompts\text;
 use function Laravel\Prompts\warning;
 
 #[AsCommand(name: 'shopper:kit:init')]
 final class KitInitCommand extends Command
 {
+    use HasConsoleTask;
+
     protected $signature = 'shopper:kit:init
         {--path= : Directory where the kit will be created}';
 
@@ -69,25 +69,20 @@ final class KitInitCommand extends Command
 
         $this->newLine();
 
-        $this->task('Creating directory structure', function () use ($files, $directory): void {
-            $files->makeDirectory($directory.'/resources/views', 0755, true);
-            $files->makeDirectory($directory.'/resources/css', 0755, true);
-            $files->makeDirectory($directory.'/resources/js', 0755, true);
-            $files->makeDirectory($directory.'/routes', 0755, true);
-
-            $files->put($directory.'/resources/views/.gitkeep', '');
-            $files->put($directory.'/resources/css/.gitkeep', '');
-            $files->put($directory.'/resources/js/.gitkeep', '');
-            $files->put($directory.'/routes/.gitkeep', '');
+        $this->task('Creating directory', function () use ($files, $directory): void {
+            $files->makeDirectory($directory, 0755, true);
         });
 
-        $this->task('Generating composer.json', function () use ($files, $directory, $package, $description): void {
+        $this->task('Generating composer.json', function () use ($files, $directory, $package, $description, $author): void {
             $files->put($directory.'/composer.json', json_encode([
                 'name' => $package,
                 'description' => $description,
-                'type' => 'shopper-starter-kit',
                 'license' => 'MIT',
-                'require' => new stdClass,
+                'authors' => [
+                    [
+                        'name' => $author,
+                    ],
+                ],
             ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         });
 
@@ -146,8 +141,10 @@ final class KitInitCommand extends Command
         $this->line("  <fg=#475569>Created at:</> <options=bold>{$directory}</>");
         $this->newLine();
         $this->line('  <fg=#475569>Next steps:</>');
-        $this->line('  <fg=#3B82F6>→</> Add your storefront files (<options=bold>resources/</>, <options=bold>routes/</>)');
+        $relativePath = $this->relativePath($directory);
+
         $this->line('  <fg=#3B82F6>→</> Edit <options=bold>shopper-kit.yaml</> to configure export_paths');
+        $this->line('  <fg=#3B82F6>→</> Run <options=bold>php artisan shopper:kit:export '.$relativePath.'</> to export files from your project');
         $this->line('  <fg=#3B82F6>→</> Publish on GitHub or Packagist');
         $this->newLine();
 
@@ -162,16 +159,22 @@ final class KitInitCommand extends Command
 
         $name = explode('/', $package)[1];
 
-        return getcwd().'/'.$name;
+        return base_path($name);
     }
 
-    private function task(string $title, Closure $callback): void
+    private function relativePath(string $absolutePath): string
     {
-        spin(callback: $callback, message: $title);
+        $basePath = base_path().'/';
 
-        $width = 52;
-        $dots = str_repeat('.', max(1, $width - mb_strlen($title)));
+        if (str_starts_with($absolutePath, $basePath)) {
+            return mb_substr($absolutePath, mb_strlen($basePath));
+        }
 
-        $this->output->writeln("  <fg=#94A3B8>{$title}</> <fg=#334155>{$dots}</> <fg=#22C55E>✓</>");
+        return $absolutePath;
+    }
+
+    private function taskOutput(): \Symfony\Component\Console\Output\OutputInterface
+    {
+        return $this->output;
     }
 }

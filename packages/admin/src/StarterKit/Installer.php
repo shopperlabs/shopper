@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\StarterKit;
 
-use Closure;
 use Composer\InstalledVersions;
 use Composer\Semver\Semver;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Http;
 use RuntimeException;
+use Shopper\StarterKit\Concerns\HasConsoleTask;
 use Shopper\StarterKit\Exceptions\InvalidManifestException;
 use Shopper\StarterKit\Exceptions\ManifestNotFoundException;
 use Symfony\Component\Process\Process;
@@ -23,6 +23,8 @@ use function Laravel\Prompts\warning;
 
 final class Installer
 {
+    use HasConsoleTask;
+
     private const string MANIFEST_FILE = 'shopper-kit.yaml';
 
     /** @var list<string> */
@@ -503,14 +505,9 @@ final class Installer
         return $process;
     }
 
-    private function task(string $title, Closure $callback): void
+    private function taskOutput(): \Symfony\Component\Console\Output\OutputInterface
     {
-        spin(callback: $callback, message: $title);
-
-        $width = 52;
-        $dots = str_repeat('.', max(1, $width - mb_strlen($title)));
-
-        $this->command->getOutput()->writeln("  <fg=#94A3B8>{$title}</> <fg=#334155>{$dots}</> <fg=#22C55E>✓</>");
+        return $this->command->getOutput();
     }
 
     private function abort(string $message): never
