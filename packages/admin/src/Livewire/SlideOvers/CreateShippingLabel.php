@@ -218,6 +218,6 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasS
             ->send();
 
         $this->dispatch('order.shipping.created');
-        $this->dispatch('closePanel');
+        $this->closePanel();
     }
 }

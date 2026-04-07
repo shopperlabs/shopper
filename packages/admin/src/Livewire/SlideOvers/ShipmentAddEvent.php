@@ -122,6 +122,8 @@ class ShipmentAddEvent extends SlideOverComponent implements HasActions, HasSche
 
     public function save(): void
     {
+        $this->authorize('orders.edit');
+
         $data = $this->form->getState();
 
         (new RecordShipmentEventAction)->execute(

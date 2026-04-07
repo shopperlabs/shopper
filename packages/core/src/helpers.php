@@ -84,7 +84,7 @@ if (! function_exists('shopper_currency')) {
 }
 
 if (! function_exists('shopper_money_format')) {
-    function shopper_money_format(int|float $amount, ?string $currency = null): string
+    function shopper_money_format(int $amount, ?string $currency = null): string
     {
         $currency = $currency ?? shopper_currency();
 

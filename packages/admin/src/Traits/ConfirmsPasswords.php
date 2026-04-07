@@ -8,11 +8,13 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Support\Enums\Width;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Locked;
 use Shopper\Actions\Auth\ConfirmPassword;
 use Shopper\Facades\Shopper;
 
 trait ConfirmsPasswords
 {
+    #[Locked]
     public string $pendingConfirmableAction = '';
 
     public function confirmPasswordAction(): Action

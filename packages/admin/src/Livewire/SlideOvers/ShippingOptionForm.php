@@ -18,6 +18,7 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Shopper\Components\Form\MoneyInput;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
@@ -37,6 +38,7 @@ class ShippingOptionForm extends SlideOverComponent implements HasActions, HasSc
     use InteractsWithSchemas;
     use InteractsWithSlideOverForm;
 
+    #[Locked]
     public int $zoneId;
 
     public ?CarrierOption $option = null;

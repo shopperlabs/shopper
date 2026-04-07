@@ -6,6 +6,7 @@ namespace Shopper\Upgrade\Console;
 
 use Closure;
 use Illuminate\Console\Command;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -30,6 +31,12 @@ final class FixZeroDecimalCurrency extends Command
 
     public function handle(): int
     {
+        if ($this->hasAlreadyRun() && ! $this->option('force')) {
+            warning('This fix has already been applied. Use --force to run it again (WARNING: this will divide values again).');
+
+            return self::SUCCESS;
+        }
+
         $currencies = DB::table(shopper_table('currencies'))
             ->whereIn('code', zero_decimal_currencies())
             ->pluck('id', 'code');
@@ -86,6 +93,8 @@ final class FixZeroDecimalCurrency extends Command
                 ->values()
                 ->all(),
         );
+
+        $this->markAsRun();
 
         info('Zero-decimal currency data fixed successfully.');
 
@@ -153,9 +162,9 @@ final class FixZeroDecimalCurrency extends Command
             fn (): int => DB::table(shopper_table('prices'))
                 ->whereIn('currency_id', $currencyIds)
                 ->update([
-                    'amount' => DB::raw('FLOOR(amount / 100)'),
-                    'compare_amount' => DB::raw('CASE WHEN compare_amount IS NOT NULL THEN FLOOR(compare_amount / 100) ELSE NULL END'),
-                    'cost_amount' => DB::raw('CASE WHEN cost_amount IS NOT NULL THEN FLOOR(cost_amount / 100) ELSE NULL END'),
+                    'amount' => DB::raw('ROUND(amount / 100.0)'),
+                    'compare_amount' => DB::raw('CASE WHEN compare_amount IS NOT NULL THEN ROUND(compare_amount / 100.0) ELSE NULL END'),
+                    'cost_amount' => DB::raw('CASE WHEN cost_amount IS NOT NULL THEN ROUND(cost_amount / 100.0) ELSE NULL END'),
                 ]),
         );
 
@@ -163,8 +172,8 @@ final class FixZeroDecimalCurrency extends Command
             fn (): int => DB::table(shopper_table('orders'))
                 ->whereIn('currency_code', $currencyCodes)
                 ->update([
-                    'price_amount' => DB::raw('FLOOR(price_amount / 100)'),
-                    'tax_amount' => DB::raw('CASE WHEN tax_amount IS NOT NULL THEN FLOOR(tax_amount / 100) ELSE NULL END'),
+                    'price_amount' => DB::raw('ROUND(price_amount / 100.0)'),
+                    'tax_amount' => DB::raw('CASE WHEN tax_amount IS NOT NULL THEN ROUND(tax_amount / 100.0) ELSE NULL END'),
                 ]),
         );
 
@@ -175,9 +184,9 @@ final class FixZeroDecimalCurrency extends Command
                 fn (): int => DB::table(shopper_table('order_items'))
                     ->whereIn('order_id', $orderIds)
                     ->update([
-                        'unit_price_amount' => DB::raw('FLOOR(unit_price_amount / 100)'),
-                        'tax_amount' => DB::raw('FLOOR(tax_amount / 100)'),
-                        'discount_amount' => DB::raw('FLOOR(discount_amount / 100)'),
+                        'unit_price_amount' => DB::raw('ROUND(unit_price_amount / 100.0)'),
+                        'tax_amount' => DB::raw('ROUND(tax_amount / 100.0)'),
+                        'discount_amount' => DB::raw('ROUND(discount_amount / 100.0)'),
                     ]),
             )
             : 0;
@@ -186,7 +195,7 @@ final class FixZeroDecimalCurrency extends Command
             fn (): int => DB::table(shopper_table('carrier_options'))
                 ->whereIn('zone_id', $zoneIds)
                 ->update([
-                    'price' => DB::raw('FLOOR(price / 100)'),
+                    'price' => DB::raw('ROUND(price / 100.0)'),
                 ]),
         );
 
@@ -197,7 +206,7 @@ final class FixZeroDecimalCurrency extends Command
                 fn (): int => DB::table(shopper_table('cart_lines'))
                     ->whereIn('id', $cartLineIds)
                     ->update([
-                        'unit_price_amount' => DB::raw('FLOOR(unit_price_amount / 100)'),
+                        'unit_price_amount' => DB::raw('ROUND(unit_price_amount / 100.0)'),
                     ]),
             )
             : 0;
@@ -207,7 +216,7 @@ final class FixZeroDecimalCurrency extends Command
                 fn (): int => DB::table(shopper_table('cart_line_tax_lines'))
                     ->whereIn('cart_line_id', $cartLineIds)
                     ->update([
-                        'amount' => DB::raw('FLOOR(amount / 100)'),
+                        'amount' => DB::raw('ROUND(amount / 100.0)'),
                     ]),
             )
             : 0;
@@ -217,7 +226,7 @@ final class FixZeroDecimalCurrency extends Command
                 fn (): int => DB::table(shopper_table('cart_line_adjustments'))
                     ->whereIn('cart_line_id', $cartLineIds)
                     ->update([
-                        'amount' => DB::raw('FLOOR(amount / 100)'),
+                        'amount' => DB::raw('ROUND(amount / 100.0)'),
                     ]),
             )
             : 0;
@@ -228,7 +237,7 @@ final class FixZeroDecimalCurrency extends Command
                 ->whereNotNull('zone_id')
                 ->whereIn('zone_id', $zoneIds)
                 ->update([
-                    'value' => DB::raw('FLOOR(value / 100)'),
+                    'value' => DB::raw('ROUND(value / 100.0)'),
                 ]),
         );
     }
@@ -246,9 +255,8 @@ final class FixZeroDecimalCurrency extends Command
 
     /**
      * @param  array<int, int>  $currencyIds
-     * @return \Illuminate\Database\Query\Builder
      */
-    private function zoneIdsForCurrencies(array $currencyIds)
+    private function zoneIdsForCurrencies(array $currencyIds): Builder
     {
         return DB::table(shopper_table('zones'))
             ->whereIn('currency_id', $currencyIds)
@@ -274,5 +282,20 @@ final class FixZeroDecimalCurrency extends Command
     private function fixTable(Closure $update): int
     {
         return DB::transaction(fn (): int => $update());
+    }
+
+    private function hasAlreadyRun(): bool
+    {
+        return DB::table(shopper_table('settings'))
+            ->where('key', 'zero_decimal_fix_applied')
+            ->exists();
+    }
+
+    private function markAsRun(): void
+    {
+        DB::table(shopper_table('settings'))->insert([
+            'key' => 'zero_decimal_fix_applied',
+            'value' => json_encode(now()->toIso8601String()),
+        ]);
     }
 }
