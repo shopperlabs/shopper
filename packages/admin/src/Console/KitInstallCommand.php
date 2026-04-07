@@ -29,6 +29,13 @@ final class KitInstallCommand extends Command
     public function handle(Filesystem $files): int
     {
         $kitId = $this->argument('kit');
+
+        if (! preg_match('/^[^\/\s]+\/[^\/\s]+$/', $kitId)) {
+            $this->error("Invalid package name: [{$kitId}]. Expected format: vendor/package");
+
+            return self::FAILURE;
+        }
+
         $basePath = $this->resolveBasePath();
 
         $this->newLine();

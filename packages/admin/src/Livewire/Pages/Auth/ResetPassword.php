@@ -16,6 +16,7 @@ use Illuminate\Validation\Rules\Password as PasswordRule;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
+use Shopper\Contracts\HasStoreAuthentication;
 use Shopper\Facades\Shopper;
 
 /**
@@ -90,12 +91,21 @@ final class ResetPassword extends Component implements HasSchemas
                 $user->password = Hash::make($password);
                 $user->save();
 
+                if (config('shopper.auth.2fa_enabled')
+                    && $user instanceof HasStoreAuthentication
+                    && $user->getStoreAuthenticationSecret()) {
+
+                    return;
+                }
+
                 Shopper::auth()->login($user);
             }
         );
 
         if ($response === Password::PASSWORD_RESET) {
-            $this->redirectRoute('shopper.dashboard');
+            session()->flash('success', trans($response));
+
+            $this->redirectRoute('shopper.login');
         }
 
         $this->addError('data.email', trans($response));

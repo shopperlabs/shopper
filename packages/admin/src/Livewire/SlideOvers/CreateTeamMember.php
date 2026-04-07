@@ -125,7 +125,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
         $userModel = config('auth.providers.users.model');
 
         /** @var ShopperUser $user */
-        $user = $userModel::create([
+        $user = $userModel::query()->create([
             'email' => $data['email'],
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -154,6 +154,6 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
             ->success()
             ->send();
 
-        $this->dispatch('closePanel');
+        $this->closePanel();
     }
 }

@@ -36,6 +36,7 @@ class ReviewDetail extends SlideOverComponent implements HasActions, HasSchemas
         return Action::make('approved')
             ->label(__('shopper::forms.actions.update'))
             ->size(Size::Small)
+            ->authorize('edit_reviews')
             ->action(function (): void {
                 $this->review->updatedApproved(! $this->review->approved);
 

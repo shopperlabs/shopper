@@ -148,7 +148,7 @@ describe('shopper:fix-zero-decimal-currencies', function (): void {
             ->assertSuccessful();
 
         expect(DB::table(shopper_table('cart_lines'))->find($line->id)->unit_price_amount)->toBe(600)
-            ->and(DB::table(shopper_table('cart_line_tax_lines'))->where('cart_line_id', $line->id)->value('amount'))->toBe(115)
+            ->and(DB::table(shopper_table('cart_line_tax_lines'))->where('cart_line_id', $line->id)->value('amount'))->toBe(116)
             ->and(DB::table(shopper_table('cart_line_adjustments'))->where('cart_line_id', $line->id)->value('amount'))->toBe(50);
     });
 

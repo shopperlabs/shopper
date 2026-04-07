@@ -69,14 +69,20 @@ final class UpsDriver extends Driver
                 $this->toBoxCollection($packages),
             );
 
-            return collect($rates)->map(fn ($rate): ShippingRate => new ShippingRate(
-                serviceCode: $rate->getServiceCode(),
-                serviceName: $rate->getServiceName(),
-                amount: (int) ($rate->getPrice() * 100),
-                currency: $rate->getCurrency() ?? 'USD',
-                carrierCode: 'ups',
-                estimatedDays: $rate->getDeliveryEstimate() ?? null,
-            ));
+            return collect($rates)->map(function ($rate): ShippingRate {
+                $currency = $rate->getCurrency() ?? 'USD';
+
+                return new ShippingRate(
+                    serviceCode: $rate->getServiceCode(),
+                    serviceName: $rate->getServiceName(),
+                    amount: is_no_division_currency($currency)
+                        ? (int) $rate->getPrice()
+                        : (int) round($rate->getPrice() * 100),
+                    currency: $currency,
+                    carrierCode: 'ups',
+                    estimatedDays: $rate->getDeliveryEstimate() ?? null,
+                );
+            });
         } catch (Exception $e) {
             throw ShippingException::apiError('ups', $e->getMessage());
         }

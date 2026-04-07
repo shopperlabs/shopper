@@ -88,27 +88,15 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
         $customers = collect();
 
         if ($discountId) {
-            if ($this->discount->items()->where('condition', DiscountCondition::Eligibility)->exists()) {
-                $customerConditions = $this->discount->items()
-                    ->with('discountable')
-                    ->where('condition', DiscountCondition::Eligibility)
-                    ->get();
+            $items = $this->discount->items()->with('discountable')->get();
 
-                foreach ($customerConditions as $customerCondition) {
-                    $customers->push($customerCondition->discountable);
-                }
-            }
+            $customers = $items->where('condition', DiscountCondition::Eligibility)
+                ->map(fn ($item) => $item->discountable)
+                ->filter();
 
-            if ($this->discount->items()->where('condition', DiscountCondition::ApplyTo)->exists()) {
-                $productConditions = $this->discount->items()
-                    ->with('discountable')
-                    ->where('condition', DiscountCondition::ApplyTo)
-                    ->get();
-
-                foreach ($productConditions as $productCondition) {
-                    $products->push($productCondition->discountable);
-                }
-            }
+            $products = $items->where('condition', DiscountCondition::ApplyTo)
+                ->map(fn ($item) => $item->discountable)
+                ->filter();
         }
 
         $this->form->fill(array_merge(
@@ -261,14 +249,21 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
                             ->live(),
                         Select::make('products')
                             ->label(__('shopper::pages/discounts.select_products'))
-                            ->options(
-                                resolve(Product::class)::query()
+                            ->getSearchResultsUsing(
+                                fn (string $search): array => resolve(Product::class)::query()
                                     ->scopes('publish')
-                                    ->get()
+                                    ->where('name', 'like', "%{$search}%")
+                                    ->limit(10)
                                     ->pluck('name', 'id')
+                                    ->all()
+                            )
+                            ->getOptionLabelsUsing(
+                                fn (array $values): array => resolve(Product::class)::query()
+                                    ->whereIn('id', $values)
+                                    ->pluck('name', 'id')
+                                    ->all()
                             )
                             ->multiple()
-                            ->preload()
                             ->searchable()
                             ->optionsLimit(10)
                             ->minItems(1)
@@ -286,14 +281,26 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
                             ->live(),
                         Select::make('customers')
                             ->label(__('shopper::pages/discounts.select_customers'))
-                            ->options(
-                                config('auth.providers.users.model')::query()
+                            ->getSearchResultsUsing(
+                                fn (string $search): array => config('auth.providers.users.model')::query()
                                     ->scopes('customers')
+                                    ->where(fn ($q) => $q
+                                        ->where('first_name', 'like', "%{$search}%")
+                                        ->orWhere('last_name', 'like', "%{$search}%")
+                                        ->orWhere('email', 'like', "%{$search}%"))
+                                    ->limit(10)
                                     ->get()
                                     ->pluck('full_name', 'id')
+                                    ->all()
+                            )
+                            ->getOptionLabelsUsing(
+                                fn (array $values): array => config('auth.providers.users.model')::query()
+                                    ->whereIn('id', $values)
+                                    ->get()
+                                    ->pluck('full_name', 'id')
+                                    ->all()
                             )
                             ->multiple()
-                            ->preload()
                             ->searchable()
                             ->optionsLimit(10)
                             ->minItems(1)

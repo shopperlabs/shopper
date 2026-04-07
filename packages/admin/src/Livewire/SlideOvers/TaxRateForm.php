@@ -14,6 +14,7 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
+use Livewire\Attributes\Locked;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Models\TaxRate;
@@ -33,6 +34,7 @@ class TaxRateForm extends SlideOverComponent implements HasActions, HasSchemas, 
 
     public ?TaxRate $taxRate = null;
 
+    #[Locked]
     public ?int $taxZoneId = null;
 
     public string $action = 'store';

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Livewire\SlideOvers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\DB;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Renderless;
 use Shopper\Core\Models\Contracts\Category;
@@ -29,14 +30,16 @@ class ReOrderCategories extends SlideOverComponent
 
         $categoryModel = resolve(Category::class);
 
-        foreach ($order as $position => $categoryId) {
-            $categoryModel::query()
-                ->where('id', (int) $categoryId)
-                ->update([
-                    'parent_id' => $parentId !== null ? (int) $parentId : null,
-                    'position' => $position + 1,
-                ]);
-        }
+        DB::transaction(function () use ($order, $parentId, $categoryModel): void {
+            foreach ($order as $position => $categoryId) {
+                $categoryModel::query()
+                    ->where('id', (int) $categoryId)
+                    ->update([
+                        'parent_id' => $parentId !== null ? (int) $parentId : null,
+                        'position' => $position + 1,
+                    ]);
+            }
+        });
     }
 
     public function render(): View
