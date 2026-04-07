@@ -160,9 +160,9 @@ final class FixZeroDecimalCurrency extends Command
             fn (): int => DB::table(shopper_table('prices'))
                 ->whereIn('currency_id', $currencyIds)
                 ->update([
-                    'amount' => DB::raw('ROUND(amount / 100)'),
-                    'compare_amount' => DB::raw('CASE WHEN compare_amount IS NOT NULL THEN ROUND(compare_amount / 100) ELSE NULL END'),
-                    'cost_amount' => DB::raw('CASE WHEN cost_amount IS NOT NULL THEN ROUND(cost_amount / 100) ELSE NULL END'),
+                    'amount' => DB::raw('ROUND(amount / 100.0)'),
+                    'compare_amount' => DB::raw('CASE WHEN compare_amount IS NOT NULL THEN ROUND(compare_amount / 100.0) ELSE NULL END'),
+                    'cost_amount' => DB::raw('CASE WHEN cost_amount IS NOT NULL THEN ROUND(cost_amount / 100.0) ELSE NULL END'),
                 ]),
         );
 
@@ -170,8 +170,8 @@ final class FixZeroDecimalCurrency extends Command
             fn (): int => DB::table(shopper_table('orders'))
                 ->whereIn('currency_code', $currencyCodes)
                 ->update([
-                    'price_amount' => DB::raw('ROUND(price_amount / 100)'),
-                    'tax_amount' => DB::raw('CASE WHEN tax_amount IS NOT NULL THEN ROUND(tax_amount / 100) ELSE NULL END'),
+                    'price_amount' => DB::raw('ROUND(price_amount / 100.0)'),
+                    'tax_amount' => DB::raw('CASE WHEN tax_amount IS NOT NULL THEN ROUND(tax_amount / 100.0) ELSE NULL END'),
                 ]),
         );
 
@@ -182,9 +182,9 @@ final class FixZeroDecimalCurrency extends Command
                 fn (): int => DB::table(shopper_table('order_items'))
                     ->whereIn('order_id', $orderIds)
                     ->update([
-                        'unit_price_amount' => DB::raw('ROUND(unit_price_amount / 100)'),
-                        'tax_amount' => DB::raw('ROUND(tax_amount / 100)'),
-                        'discount_amount' => DB::raw('ROUND(discount_amount / 100)'),
+                        'unit_price_amount' => DB::raw('ROUND(unit_price_amount / 100.0)'),
+                        'tax_amount' => DB::raw('ROUND(tax_amount / 100.0)'),
+                        'discount_amount' => DB::raw('ROUND(discount_amount / 100.0)'),
                     ]),
             )
             : 0;
@@ -193,7 +193,7 @@ final class FixZeroDecimalCurrency extends Command
             fn (): int => DB::table(shopper_table('carrier_options'))
                 ->whereIn('zone_id', $zoneIds)
                 ->update([
-                    'price' => DB::raw('ROUND(price / 100)'),
+                    'price' => DB::raw('ROUND(price / 100.0)'),
                 ]),
         );
 
@@ -204,7 +204,7 @@ final class FixZeroDecimalCurrency extends Command
                 fn (): int => DB::table(shopper_table('cart_lines'))
                     ->whereIn('id', $cartLineIds)
                     ->update([
-                        'unit_price_amount' => DB::raw('ROUND(unit_price_amount / 100)'),
+                        'unit_price_amount' => DB::raw('ROUND(unit_price_amount / 100.0)'),
                     ]),
             )
             : 0;
@@ -214,7 +214,7 @@ final class FixZeroDecimalCurrency extends Command
                 fn (): int => DB::table(shopper_table('cart_line_tax_lines'))
                     ->whereIn('cart_line_id', $cartLineIds)
                     ->update([
-                        'amount' => DB::raw('ROUND(amount / 100)'),
+                        'amount' => DB::raw('ROUND(amount / 100.0)'),
                     ]),
             )
             : 0;
@@ -224,7 +224,7 @@ final class FixZeroDecimalCurrency extends Command
                 fn (): int => DB::table(shopper_table('cart_line_adjustments'))
                     ->whereIn('cart_line_id', $cartLineIds)
                     ->update([
-                        'amount' => DB::raw('ROUND(amount / 100)'),
+                        'amount' => DB::raw('ROUND(amount / 100.0)'),
                     ]),
             )
             : 0;
@@ -235,7 +235,7 @@ final class FixZeroDecimalCurrency extends Command
                 ->whereNotNull('zone_id')
                 ->whereIn('zone_id', $zoneIds)
                 ->update([
-                    'value' => DB::raw('ROUND(value / 100)'),
+                    'value' => DB::raw('ROUND(value / 100.0)'),
                 ]),
         );
     }
