@@ -46,9 +46,9 @@ class Warehouse extends Model implements WarehouseContract
 
     protected $guarded = [];
 
-    public static function configKey(): string
+    public static function configuredClass(): string
     {
-        return 'warehouse';
+        return config('shopper.models.warehouse', static::class);
     }
 
     public function getTable(): string
@@ -86,17 +86,17 @@ In `packages/core/config/models.php`:
 
 ## Available Traits
 
-| Trait | Purpose |
-|-------|---------|
-| `HasModelContract` | Enables swapping |
-| `HasSlug` | Unique slugs, `findBySlug()` |
-| `HasPrices` | `prices()`, `getPrice()` |
-| `HasStock` | Inventory tracking |
-| `HasDimensions` | weight, height, width, depth, volume |
-| `HasMedia` | Spatie Media Library |
-| `HasDiscounts` | `discounts()` |
-| `HasZones` | `zones()` polymorphic |
-| `InteractsWithReviews` | `reviews()` |
+| Trait                  | Purpose                              |
+|------------------------|--------------------------------------|
+| `HasModelContract`     | Enables swapping                     |
+| `HasSlug`              | Unique slugs, `findBySlug()`         |
+| `HasPrices`            | `prices()`, `getPrice()`             |
+| `HasStock`             | Inventory tracking                   |
+| `HasDimensions`        | weight, height, width, depth, volume |
+| `HasMediaCollections`  | Spatie Media Library                 |
+| `HasDiscounts`         | `discounts()`                        |
+| `HasZones`             | `zones()` polymorphic                |
+| `InteractsWithReviews` | `reviews()`                          |
 
 ## Relationships
 

@@ -2,20 +2,36 @@
     /** @var \Laravel\Boost\Install\GuidelineAssist $assist */
 @endphp
 
-## Shopper Shopper is a headless e-commerce framework providing a complete admin panel built with
-Filament and Livewire. For detailed documentation, refer to https://docs.laravelshopper.dev ### Installation - Use
-`{{ $assist->composerCommand('require shopper/framework --with-dependencies') }}` to install Shopper. - Run
-`{{ $assist->artisanCommand('shopper:install') }}` to publish config, migrations, and assets. - Run
-`{{ $assist->artisanCommand('shopper:user') }}` to create an admin user. - The admin panel is accessible at `/cpanel`
-by default (configurable via `SHOPPER_PREFIX` env variable). ### Configuration Configuration files are published to
-`config/shopper/`: - `admin.php` - Admin panel prefix, domain, and custom pages namespace/path - `core.php` - Table
-prefix (default: `sh_`), roles - `models.php` - Model bindings for customization - `features.php` - Enable/disable
-features (attributes, collections, reviews, discounts) - `media.php` - Media storage settings (Spatie Media Library) -
-`orders.php` - Order number generation - `routes.php` - Custom routes and middleware - `components/` - Component
-overrides by feature ### Creating Custom Admin Pages Use
-`{{ $assist->artisanCommand('make:shopper-page {PageName}') }}` to create a new page in the admin panel. This creates:
-- A Livewire component in `App\Livewire\Shopper` namespace (configurable in `config/shopper/admin.php`) - A Blade view
-in `resources/views/livewire/shopper`
+## Shopper
+
+Shopper is a headless e-commerce framework providing a complete admin panel built with Filament and Livewire. For detailed documentation, refer to https://docs.laravelshopper.dev
+
+### Installation
+
+- Use `{{ $assist->composerCommand('require shopper/framework --with-dependencies') }}` to install Shopper.
+- Run `{{ $assist->artisanCommand('shopper:install') }}` to publish config, migrations, and assets.
+- Run `{{ $assist->artisanCommand('shopper:user') }}` to create an admin user.
+- The admin panel is accessible at `/cpanel` by default (configurable via `SHOPPER_PREFIX` env variable).
+
+### Configuration
+
+Configuration files are published to `config/shopper/`:
+
+- `admin.php` - Admin panel prefix, domain, and custom pages namespace/path
+- `core.php` - Table prefix (default: `sh_`), roles
+- `models.php` - Model bindings for customization
+- `features.php` - Enable/disable features (attributes, collections, reviews, discounts)
+- `media.php` - Media storage settings (Spatie Media Library)
+- `orders.php` - Order number generation
+- `routes.php` - Custom routes and middleware
+- `components/` - Component overrides by feature
+
+### Creating Custom Admin Pages
+
+Use `{{ $assist->artisanCommand('make:shopper-page {PageName}') }}` to create a new page in the admin panel. This creates:
+
+- A Livewire component in `App\Livewire\Shopper` namespace (configurable in `config/shopper/admin.php`)
+- A Blade view in `resources/views/livewire/shopper`
 
 @verbatim
     <code-snippet name="Create a custom Shopper page with table" lang="php">
@@ -76,7 +92,7 @@ in `resources/views/livewire/shopper`
     {{-- resources/views/livewire/shopper/shipping.blade.php --}}
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('Shipping Methods')">
-            <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" />
+            <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
             <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('Settings')" />
         </x-shopper::breadcrumb>
 
@@ -89,7 +105,9 @@ in `resources/views/livewire/shopper`
     </code-snippet>
 @endverbatim
 
-### Registering Custom Routes After creating a page, register its route in `routes/shopper.php`:
+### Registering Custom Routes
+
+After creating a page, register its route in `routes/shopper.php`:
 
 @verbatim
     <code-snippet name="Register custom page route" lang="php">
@@ -106,12 +124,18 @@ in `resources/views/livewire/shopper`
     </code-snippet>
 @endverbatim
 
-### Sidebar Navigation System Shopper uses a sidebar system with 4 default groups. Each group is a class extending
-`AbstractAdminSidebar`: - `DashboardSidebar` - Dashboard menu (weight: 1, no heading) - `CatalogSidebar` - Products,
-Categories, Collections, Brands (weight: 2) - `SalesSidebar` - Orders, Discounts (weight: 3) - `CustomerSidebar` -
-Customers, Reviews (weight: 4) Groups with the same name are automatically merged. Groups without a name (empty string
-or omitted) are merged with the Dashboard group. To add items to an existing sidebar group or create a new one, create a
-sidebar extender class:
+### Sidebar Navigation System
+
+Shopper uses a sidebar system with 4 default groups. Each group is a class extending `AbstractAdminSidebar`:
+
+- `DashboardSidebar` - Dashboard menu (weight: 1, no heading)
+- `CatalogSidebar` - Products, Categories, Collections, Brands (weight: 2)
+- `SalesSidebar` - Orders, Discounts (weight: 3)
+- `CustomerSidebar` - Customers, Reviews (weight: 4)
+
+Groups with the same name are automatically merged. Groups without a name (empty string or omitted) are merged with the Dashboard group.
+
+To add items to an existing sidebar group or create a new one, create a sidebar extender class:
 
 @verbatim
     <code-snippet name="Create sidebar extender to add menu item" lang="php">
@@ -165,7 +189,9 @@ sidebar extender class:
     </code-snippet>
 @endverbatim
 
-### Creating a New Sidebar Group To create a completely new sidebar group instead of adding to an existing one:
+### Creating a New Sidebar Group
+
+To create a completely new sidebar group instead of adding to an existing one:
 
 @verbatim
     <code-snippet name="Create new sidebar group" lang="php">
@@ -207,8 +233,9 @@ sidebar extender class:
     </code-snippet>
 @endverbatim
 
-### Adding Items to the Dashboard Group (No Heading) To add items alongside the Dashboard (without a group heading),
-omit the group name:
+### Adding Items to the Dashboard Group (No Heading)
+
+To add items alongside the Dashboard (without a group heading), omit the group name:
 
 @verbatim
     <code-snippet name="Add item to dashboard group" lang="php">
@@ -226,12 +253,21 @@ omit the group name:
     </code-snippet>
 @endverbatim
 
-### Sidebar Item Options When configuring sidebar items, use these methods: - `$item->weight(int)` - Position in group
-(lower = higher) - `$item->setAuthorized(bool)` - Show/hide based on condition (use `$this->user->hasPermissionTo()`) -
-`$item->useSpa()` - Enable SPA navigation with `wire:navigate` - `$item->route('route.name')` - Set the route -
-`$item->setIcon(icon, iconClass, attributes)` - Configure icon (use Untitled UI icons: `untitledui-*`) -
-`$item->setItemClass()`, `$item->setActiveClass()` - CSS classes - `$item->item()` - Add nested sub-items ### Model
-Architecture All models use contracts and can be resolved from the container. Always use contracts when type-hinting:
+### Sidebar Item Options
+
+When configuring sidebar items, use these methods:
+
+- `$item->weight(int)` - Position in group (lower = higher)
+- `$item->setAuthorized(bool)` - Show/hide based on condition (use `$this->user->hasPermissionTo()`)
+- `$item->useSpa()` - Enable SPA navigation with `wire:navigate`
+- `$item->route('route.name')` - Set the route
+- `$item->setIcon(icon, iconClass, attributes)` - Configure icon (use Untitled UI icons: `untitledui-*`)
+- `$item->setItemClass()`, `$item->setActiveClass()` - CSS classes
+- `$item->item()` - Add nested sub-items
+
+### Model Architecture
+
+All models use contracts and can be resolved from the container. Always use contracts when type-hinting:
 
 @verbatim
     <code-snippet name="Resolve Shopper models via contracts" lang="php">
@@ -251,8 +287,9 @@ Architecture All models use contracts and can be resolved from the container. Al
     </code-snippet>
 @endverbatim
 
-### Custom Models To extend Shopper models, create your own model extending the base and update
-`config/shopper/models.php`:
+### Custom Models
+
+To extend Shopper models, create your own model extending the base and update `config/shopper/models.php`:
 
 @verbatim
     <code-snippet name="Create and register custom model" lang="php">
@@ -276,12 +313,20 @@ Architecture All models use contracts and can be resolved from the container. Al
     </code-snippet>
 @endverbatim
 
-### Product Types Products have types that determine capabilities. Use the `ProductType` enum: - `ProductType::Standard`
-- Physical products with shipping, supports variants - `ProductType::Variant` - Product with variants (sizes, colors) -
-`ProductType::Virtual` - Digital products, no shipping, no variants - `ProductType::External` - Affiliate products, no
-shipping, no variants Check capabilities with: `$product->canUseVariants()`, `$product->canUseShipping()`,
-`$product->isVirtual()` ### Stock Management Products and variants use the `HasStock` trait. Shopper supports
-multi-location inventory:
+### Product Types
+
+Products have types that determine capabilities. Use the `ProductType` enum:
+
+- `ProductType::Standard` - Physical products with shipping, supports variants
+- `ProductType::Variant` - Product with variants (sizes, colors)
+- `ProductType::Virtual` - Digital products, no shipping, no variants
+- `ProductType::External` - Affiliate products, no shipping, no variants
+
+Check capabilities with: `$product->canUseVariants()`, `$product->canUseShipping()`, `$product->isVirtual()`
+
+### Stock Management
+
+Products and variants use the `HasStock` trait. Shopper supports multi-location inventory:
 
 @verbatim
     <code-snippet name="Manage inventory stock" lang="php">
@@ -297,7 +342,9 @@ multi-location inventory:
     </code-snippet>
 @endverbatim
 
-### Pricing Products support multi-currency pricing. Amounts are stored in cents:
+### Pricing
+
+Products support multi-currency pricing. Amounts are stored in cents:
 
 @verbatim
     <code-snippet name="Create product price" lang="php">
@@ -312,7 +359,9 @@ multi-location inventory:
     </code-snippet>
 @endverbatim
 
-### Categories Categories support hierarchical structures using LaravelAdjacencyList:
+### Categories
+
+Categories support hierarchical structures using LaravelAdjacencyList:
 
 @verbatim
     <code-snippet name="Work with category hierarchy" lang="php">
@@ -323,7 +372,10 @@ multi-location inventory:
     </code-snippet>
 @endverbatim
 
-### Orders Orders use a 3-axis status system:
+### Orders
+
+Orders use a 3-axis status system:
+
 - **Lifecycle** (`status`): `OrderStatus::New`, `OrderStatus::Processing`, `OrderStatus::Completed`, `OrderStatus::Cancelled`, `OrderStatus::Archived`
 - **Payment** (`payment_status`): `PaymentStatus::Pending`, `PaymentStatus::Authorized`, `PaymentStatus::Paid`, `PaymentStatus::PartiallyRefunded`, `PaymentStatus::Refunded`, `PaymentStatus::Voided`
 - **Shipping** (`shipping_status`): `ShippingStatus::Unfulfilled`, `ShippingStatus::PartiallyShipped`, `ShippingStatus::Shipped`, `ShippingStatus::PartiallyDelivered`, `ShippingStatus::Delivered`, `ShippingStatus::PartiallyReturned`, `ShippingStatus::Returned`
@@ -341,9 +393,12 @@ multi-location inventory:
     </code-snippet>
 @endverbatim
 
-### Events Shopper dispatches events for major actions. Listen to these for custom logic: - Products: `ProductCreated`,
-`ProductUpdated`, `ProductDeleted` - Orders: `OrderCreated`, `OrderCompleted`, `OrderPaid`, `OrderShipped`, `OrderCancelled`,
-`OrderArchived`, `OrderNoteAdded`, `OrderShipmentCreated`, `OrderShipmentDelivered`, `OrderItemCreated`
+### Events
+
+Shopper dispatches events for major actions. Listen to these for custom logic:
+
+- Products: `ProductCreated`, `ProductUpdated`, `ProductDeleted`
+- Orders: `OrderCreated`, `OrderCompleted`, `OrderPaid`, `OrderShipped`, `OrderCancelled`, `OrderArchived`, `OrderNoteAdded`, `OrderShipmentCreated`, `OrderShipmentDelivered`, `OrderItemCreated`
 
 @verbatim
     <code-snippet name="Listen to Shopper events" lang="php">
@@ -358,7 +413,9 @@ multi-location inventory:
     </code-snippet>
 @endverbatim
 
-### Extending Navigation (Simple Method) For quick sidebar customization, use a closure in your ServiceProvider:
+### Extending Navigation (Simple Method)
+
+For quick sidebar customization, use a closure in your ServiceProvider:
 
 @verbatim
     <code-snippet name="Add sidebar item with closure" lang="php">
@@ -389,13 +446,23 @@ multi-location inventory:
     </code-snippet>
 @endverbatim
 
-### Override Existing Livewire Components Shopper components can be overridden via config files in
-`config/shopper/components/`. Available config files: - `account.php` - Account/profile components - `brand.php` - Brand
-management - `category.php` - Category management - `collection.php` - Collection management - `customer.php` - Customer
-management - `dashboard.php` - Dashboard components - `discount.php` - Discount management - `order.php` - Order
-management - `product.php` - Product management (pages, forms, modals, slide-overs) - `review.php` - Review management -
-`setting.php` - Settings pages and components Each config file has two sections: `pages` (full page components) and
-`components` (partial components like forms, modals, slide-overs).
+### Override Existing Livewire Components
+
+Shopper components can be overridden via config files in `config/shopper/components/`. Available config files:
+
+- `account.php` - Account/profile components
+- `brand.php` - Brand management
+- `category.php` - Category management
+- `collection.php` - Collection management
+- `customer.php` - Customer management
+- `dashboard.php` - Dashboard components
+- `discount.php` - Discount management
+- `order.php` - Order management
+- `product.php` - Product management (pages, forms, modals, slide-overs)
+- `review.php` - Review management
+- `setting.php` - Settings pages and components
+
+Each config file has two sections: `pages` (full page components) and `components` (partial components like forms, modals, slide-overs).
 
 @verbatim
     <code-snippet name="Override existing component" lang="php">
@@ -446,7 +513,9 @@ management - `product.php` - Product management (pages, forms, modals, slide-ove
     </code-snippet>
 @endverbatim
 
-### Permissions Shopper uses Spatie Laravel Permission. Check permissions in Livewire components:
+### Permissions
+
+Shopper uses Spatie Laravel Permission. Check permissions in Livewire components:
 
 @verbatim
     <code-snippet name="Authorization in components" lang="php">
@@ -463,10 +532,17 @@ management - `product.php` - Product management (pages, forms, modals, slide-ove
     </code-snippet>
 @endverbatim
 
-### Helper Functions - `shopper_table('products')` - Returns prefixed table name (e.g., `sh_products`) -
-`generate_number()` - Generates order number with configured prefix - `shopper_fallback_url()` - Returns fallback image
-URL - `shopper_setting('shop_name')` - Gets shop setting value - `shopper()->auth()->user()` - Gets authenticated admin
-user ### Feature Flags Enable/disable features in `config/shopper/features.php`:
+### Helper Functions
+
+- `shopper_table('products')` - Returns prefixed table name (e.g., `sh_products`)
+- `generate_number()` - Generates order number with configured prefix
+- `shopper_fallback_url()` - Returns fallback image URL
+- `shopper_setting('shop_name')` - Gets shop setting value
+- `shopper()->auth()->user()` - Gets authenticated admin user
+
+### Feature Flags
+
+Enable/disable features in `config/shopper/features.php`:
 
 @verbatim
     <code-snippet name="Check feature flag" lang="php">
@@ -476,13 +552,18 @@ user ### Feature Flags Enable/disable features in `config/shopper/features.php`:
     </code-snippet>
 @endverbatim
 
-### Artisan Commands - `{{ $assist->artisanCommand('shopper:install') }}` - Install Shopper -
-`{{ $assist->artisanCommand('shopper:user') }}` - Create admin user -
-`{{ $assist->artisanCommand('shopper:publish') }}` - Publish assets and config -
-`{{ $assist->artisanCommand('shopper:link') }}` - Create storage symlink -
-`{{ $assist->artisanCommand('make:shopper-page {PageName}') }}` - Create custom admin page -
-`{{ $assist->artisanCommand('shopper:component:publish') }}` - Publish specific components -
-`{{ $assist->artisanCommand('shopper:starter-kit:install') }}` - Install frontend starter kit ### Media Management
+### Artisan Commands
+
+- `{{ $assist->artisanCommand('shopper:install') }}` - Install Shopper
+- `{{ $assist->artisanCommand('shopper:user') }}` - Create admin user
+- `{{ $assist->artisanCommand('shopper:publish') }}` - Publish assets and config
+- `{{ $assist->artisanCommand('shopper:link') }}` - Create storage symlink
+- `{{ $assist->artisanCommand('make:shopper-page {PageName}') }}` - Create custom admin page
+- `{{ $assist->artisanCommand('shopper:component:publish') }}` - Publish specific components
+- `{{ $assist->artisanCommand('shopper:starter-kit:install') }}` - Install frontend starter kit
+
+### Media Management
+
 Products use Spatie Media Library. Collections are configured in `config/shopper/media.php`:
 
 @verbatim
@@ -500,7 +581,9 @@ Products use Spatie Media Library. Collections are configured in `config/shopper
     </code-snippet>
 @endverbatim
 
-### Shopper Blade Components Use these Shopper Blade components in your custom pages:
+### Shopper Blade Components
+
+Use these Shopper Blade components in your custom pages:
 
 @verbatim
     - `<x-shopper::container>` - Main content container
@@ -513,10 +596,19 @@ Products use Spatie Media Library. Collections are configured in `config/shopper
     - `<x-shopper::separator>` - Section separator
 @endverbatim
 
-### Database Tables All Shopper tables use a configurable prefix (default: `sh_`). Main tables: - `sh_products`,
-`sh_product_variants` - Products and variants - `sh_orders`, `sh_order_items` - Orders and line items - `sh_categories`,
-`sh_brands`, `sh_collections` - Catalog organization - `sh_customers`, `sh_addresses` - Customer data -
-`sh_inventories`, `sh_inventory_histories` - Stock management - `sh_discounts` - Discount codes and rules ### Testing
+### Database Tables
+
+All Shopper tables use a configurable prefix (default: `sh_`). Main tables:
+
+- `sh_products`, `sh_product_variants` - Products and variants
+- `sh_orders`, `sh_order_items` - Orders and line items
+- `sh_categories`, `sh_brands`, `sh_collections` - Catalog organization
+- `sh_customers`, `sh_addresses` - Customer data
+- `sh_inventories`, `sh_inventory_histories` - Stock management
+- `sh_discounts` - Discount codes and rules
+
+### Testing
+
 When testing Shopper functionality, use factories and respect the model contracts:
 
 @verbatim
@@ -534,3 +626,15 @@ When testing Shopper functionality, use factories and respect the model contract
     });
     </code-snippet>
 @endverbatim
+
+### Advanced Topics
+
+For detailed guides on building a complete e-commerce site, refer to the documentation at https://docs.laravelshopper.dev:
+
+- **Payment system** - Payment drivers (Manual, Stripe), creating custom gateways, PaymentProcessingService, transaction lifecycle
+- **Shipping & carriers** - Shipping drivers (Manual, UPS, FedEx, USPS), custom carrier integration, real-time rate calculation
+- **Cart & checkout** - Cart pipeline system, custom pipeline steps, discount application, order conversion
+- **Tax system** - Tax zones, tax rates, custom TaxCalculationProvider, VAT vs sales tax
+- **Render hooks** - 30+ UI injection points across the admin panel for extending pages without modifying core views
+- **Addon development** - BaseAddon contract, AddonManager for registering routes, components, sidebar items, permissions, and assets
+- **Events** - Domain events for orders, products, shipments, and cart with `ShouldDispatchAfterCommit` for transaction safety
