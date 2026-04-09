@@ -1,6 +1,9 @@
 ---
-name: extending-shopper
-description: Provides patterns for extending Shopper with custom sidebar items, component overrides, event listeners, and domain features like stock, pricing, and media. Use when customizing Shopper behavior.
+name: shopper-customization
+description: Patterns for customizing Shopper in your Laravel application. Sidebar navigation, component overrides, event listeners, and domain features like stock, pricing, and media. Use when extending Shopper behavior in a project.
+license: MIT
+metadata:
+    author: shopperlabs
 ---
 
 # Extending Shopper
@@ -133,7 +136,7 @@ protected $listen = [
     \Shopper\Core\Events\Orders\OrderCreated::class => [SendOrderConfirmation::class],
     \Shopper\Core\Events\Orders\OrderCompleted::class => [],
     \Shopper\Core\Events\Orders\OrderPaid::class => [],
-    \Shopper\Core\Events\Orders\OrderCancel::class => [],
+    \Shopper\Core\Events\Orders\OrderCancelled::class => [],
 ];
 ```
 
@@ -199,6 +202,48 @@ Configure in `config/shopper/features.php`.
 | `shopper_fallback_url()`       | Fallback image URL                  |
 | `generate_number()`            | Order number with prefix            |
 | `shopper()->auth()->user()`    | Authenticated admin                 |
+
+## Render Hooks
+
+Shopper provides 30+ UI injection points to extend admin pages without modifying core views. Register hooks in your ServiceProvider:
+
+```php
+use Shopper\Facades\Shopper;
+use Shopper\View\ProductRenderHook;
+
+public function boot(): void
+{
+    Shopper::renderHook(ProductRenderHook::EDIT_CONTENT_AFTER, fn () => view('custom.product-extra'));
+}
+```
+
+Available hook classes: `LayoutRenderHook`, `ProductRenderHook`, `OrderRenderHook`, `CustomerRenderHook`, `CatalogRenderHook`, `CollectionRenderHook`, `SalesRenderHook`. See documentation for all hook constants.
+
+## Addon System
+
+Build reusable plugins with `BaseAddon`. Register routes, components, sidebar items, permissions, and assets:
+
+```php
+use Shopper\Addon\BaseAddon;
+use Shopper\ShopperPanel;
+
+class LoyaltyAddon extends BaseAddon
+{
+    public function getId(): string
+    {
+        return 'loyalty';
+    }
+
+    public function register(ShopperPanel $panel): void
+    {
+        $panel->addRoutes(fn () => $this->loadRoutesFrom(__DIR__ . '/../routes/web.php'));
+        $panel->addSidebar(LoyaltySidebar::class);
+        $panel->addPermissions(['browse_loyalty', 'manage_loyalty']);
+    }
+}
+```
+
+See documentation at https://docs.laravelshopper.dev for the complete addon lifecycle and AddonManager API.
 
 ## Custom Routes
 
