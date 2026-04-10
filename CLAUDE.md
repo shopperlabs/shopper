@@ -4,20 +4,21 @@ This file provides guidance to Claude Code when working with code in the Shopper
 
 ## Project Overview
 
-Shopper is a headless e-commerce admin panel built for Laravel using the TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire). It is organized as a monorepo with eight packages.
+Shopper is a headless e-commerce admin panel built for Laravel using the TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire). It is organized as a monorepo with nine packages.
 
 ## Monorepo Structure
 
 ```
 packages/
-├── admin/      → Main admin UI (Livewire components, Filament forms/tables, views, routes, assets)
+├── admin/      → Main admin UI (Livewire components, Filament schemas/tables, views, routes, assets)
 ├── cart/       → Cart management with pipeline-based calculation, discounts, and taxes
 ├── core/       → E-commerce domain logic (Models, Actions, Enums, Contracts, Stock, Taxes)
 ├── payment/    → Payment processing with extensible driver architecture
 ├── shipping/   → Shipping providers integration with driver architecture
 ├── sidebar/    → Sidebar navigation builder (DDD-style architecture)
 ├── stripe/     → Stripe payment driver for the payment system
-└── types/      → TypeScript type definitions (NPM package, no PHP)
+├── types/      → TypeScript type definitions (NPM package, no PHP)
+└── upgrade/    → Upgrade assistant for version migrations
 ```
 
 Each PHP package has its own service provider:
@@ -261,11 +262,11 @@ it('can display the product list', function (): void {
 
 ### Key PHP Packages
 
-- `filament/filament` ^4.7 (headless admin panel components)
-- `livewire/livewire` ^3.7
-- `spatie/laravel-permission` ^6.24
+- `filament/filament` ^5.0 (headless admin panel components)
+- `livewire/livewire` ^3.7|^4.0
+- `spatie/laravel-permission` ^6.24|^7.0
 - `spatie/laravel-media-library` ^11.5
-- `stripe/stripe-php` ^16.0 (stripe package)
+- `stripe/stripe-php` ^19.0 (stripe package)
 - `ivanmitrikeski/laravel-shipping` ^1.0 (shipping package)
 
 ### PHP Version
@@ -275,7 +276,7 @@ it('can display the product list', function (): void {
 
 ### Laravel Version
 
-- Supports Laravel 11.x and 12.x
+- Supports Laravel 12.x and 13.x
 
 ## File Organization
 

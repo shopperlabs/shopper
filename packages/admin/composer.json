@@ -60,7 +60,7 @@
     "spatie/laravel-package-tools": "^1.9",
     "spatie/laravel-permission": "^6.24|^7.0",
     "stevebauman/location": "^7.2",
-    "symfony/yaml": "^7.0"
+    "symfony/yaml": "^7.0|^8.0"
   },
   "autoload": {
     "files": [
