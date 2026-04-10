@@ -41,8 +41,8 @@ Use `{{ $assist->artisanCommand('make:shopper-page {PageName}') }}` to create a 
     namespace App\Livewire\Shopper;
 
     use App\Models\ShippingMethod;
-    use Filament\Forms\Concerns\InteractsWithForms;
-    use Filament\Forms\Contracts\HasForms;
+    use Filament\Schemas\Concerns\InteractsWithSchemas;
+    use Filament\Schemas\Contracts\HasSchemas;
     use Filament\Tables\Columns\TextColumn;
     use Filament\Tables\Concerns\InteractsWithTable;
     use Filament\Tables\Contracts\HasTable;
@@ -50,9 +50,9 @@ Use `{{ $assist->artisanCommand('make:shopper-page {PageName}') }}` to create a 
     use Illuminate\Contracts\View\View;
     use Shopper\Livewire\Pages\AbstractPageComponent;
 
-    class Shipping extends AbstractPageComponent implements HasForms, HasTable
+    class Shipping extends AbstractPageComponent implements HasSchemas, HasTable
     {
-        use InteractsWithForms;
+        use InteractsWithSchemas;
         use InteractsWithTable;
 
         public function mount(): void
