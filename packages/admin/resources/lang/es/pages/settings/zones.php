@@ -17,6 +17,7 @@ return [
 
     'shipping_options' => [
         'title' => 'Opciones de envío',
+        'single' => 'Opción de envío',
         'description' => 'Ingresa detalles sobre los métodos de envío de zona disponibles.',
         'option_visibility' => 'Habilitar o deshabilitar la visibilidad de la opción de envío en la tienda.',
         'add' => 'Añadir Opción',

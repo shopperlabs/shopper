@@ -16,6 +16,12 @@ return [
     'visibility' => ':item ha actualizado exitosamente su visibilidad',
     'saved' => 'Guardado',
 
+    'attributes' => [
+        'remove' => 'El atributo se ha eliminado exitosamente',
+        'enable' => 'El atributo se ha habilitado exitosamente',
+        'disable' => 'El atributo se ha deshabilitado exitosamente',
+    ],
+
     'auth' => [
         'password' => 'La contraseña no coincide con nuestros registros.',
     ],

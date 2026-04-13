@@ -17,6 +17,7 @@ return [
 
     'shipping_options' => [
         'title' => 'Shipping Options',
+        'single' => 'Shipping Option',
         'description' => 'Enter specifics about available zone shipment methods.',
         'option_visibility' => 'Enable or disable the shipping option visibility in store.',
         'add' => 'Add Option',

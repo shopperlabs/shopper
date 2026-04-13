@@ -16,6 +16,12 @@ return [
     'visibility' => ':item has successfully updated visibility',
     'saved' => 'Saved',
 
+    'attributes' => [
+        'remove' => 'The attribute has been removed successfully',
+        'enable' => 'The attribute has been enabled successfully',
+        'disable' => 'The attribute has been disabled successfully',
+    ],
+
     'auth' => [
         'password' => 'This password does not match our records.',
     ],
