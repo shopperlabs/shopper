@@ -6,6 +6,7 @@ return [
 
     'login' => [
         'title' => '¡Bienvenido de nuevo!',
+        'subtitle' => 'Inicia sesión en tu panel de administración de Shopper',
         'or' => 'O',
         'return_landing' => 'Volver a la página de inicio',
         'forgot_password' => '¿Olvidaste tu contraseña?',
@@ -27,6 +28,7 @@ return [
         'action' => 'Enviar correo de restablecimiento de contraseña',
         'return_to_login' => 'Volver a la página de inicio de sesión',
         'mail' => [
+            'subject' => 'Restablecer contraseña',
             'content' => 'Estás recibiendo este correo porque recibimos una solicitud de restablecimiento de contraseña para tu cuenta.',
             'action' => 'Restablecer contraseña',
             'message' => 'Si no solicitaste un restablecimiento de contraseña, no se requiere ninguna otra acción.',

@@ -6,6 +6,7 @@ return [
 
     'login' => [
         'title' => 'Content de te revoir !',
+        'subtitle' => 'Connectez-vous à votre panneau d\'administration Shopper',
         'or' => 'Ou alors',
         'return_landing' => 'Retour à la page d\'accueil',
         'forgot_password' => 'Mot de passe oublié?',

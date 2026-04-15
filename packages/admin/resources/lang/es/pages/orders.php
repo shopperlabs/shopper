@@ -58,6 +58,7 @@ return [
         'shipping_from' => 'Remitente',
         'shipping_to' => 'Destinatario',
         'timeline' => 'Seguimiento del envío',
+        'manage' => 'Gestionar envío',
         'add_event' => 'Agregar evento',
         'location' => 'Ubicación',
         'latitude' => 'Latitud',
@@ -65,6 +66,19 @@ return [
         'occurred_at' => 'Fecha',
         'event_added' => 'El evento de seguimiento ha sido agregado.',
         'no_events' => 'Aún no hay eventos de seguimiento.',
+    ],
+
+    'abandoned_carts' => [
+        'menu' => 'Carritos abandonados',
+        'title' => 'Carritos abandonados',
+        'detail_title' => 'Carrito #:id',
+        'guest' => 'Invitado',
+        'items' => 'Artículos',
+        'channel' => 'Canal',
+        'last_activity' => 'Última actividad',
+        'billing_address' => 'Dirección de facturación',
+        'empty' => 'Sin carritos abandonados',
+        'empty_description' => 'No hay carritos abandonados en este momento.',
     ],
 
     'notifications' => [

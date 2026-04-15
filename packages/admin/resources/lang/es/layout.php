@@ -9,6 +9,8 @@ return [
         'sales' => 'Ventas',
     ],
 
+    'locale_switcher' => 'Cambiar idioma',
+
     'back' => 'Atrás',
     'view_site' => 'Ver sitio',
     'meta_title' => 'Administración de Shopper',
