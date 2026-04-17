@@ -44,7 +44,7 @@
     "spatie/laravel-permission": "^6.24|^7.0",
     "staudenmeir/laravel-adjacency-list": "^1.0",
     "stevebauman/location": "^7.2",
-    "stripe/stripe-php": "^16.0"
+    "stripe/stripe-php": "^19.0"
   },
   "require-dev": {
     "larastan/larastan": "^3.8",
