@@ -49,5 +49,9 @@ parameters:
         -
             message: '#Call to an undefined method Staudenmeir\\LaravelAdjacencyList\\Eloquent\\Builder<.*>::withTrashed\(\)#'
             identifier: method.notFound
+        -
+            message: '#Access to an undefined property Stripe\\StripeObject::\$#'
+            identifier: property.notFound
+            path: packages/stripe/src/StripeDriver.php
 
     reportUnmatchedIgnoredErrors: false
