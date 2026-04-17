@@ -58,10 +58,8 @@ describe(SavePricingAction::class, function (): void {
 
     it('keeps `Product` and `ProductVariant` prices isolated when their ids collide', function (): void {
         $product = Product::factory()->create();
-        $variant = ProductVariant::factory()->create();
+        $variant = ProductVariant::factory()->create(['id' => $product->id]);
         $currency = Currency::query()->first();
-
-        expect($product->id)->toBe($variant->id);
 
         $action = new SavePricingAction();
 
