@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Shopper\Actions\Store\Product\SavePricingAction;
 use Shopper\Core\Models\Currency;
 use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\ProductVariant;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
@@ -53,5 +54,28 @@ describe(SavePricingAction::class, function (): void {
 
         expect($product->prices()->count())->toBe(1)
             ->and($product->prices()->first()->amount)->toBe(2000);
+    });
+
+    it('keeps `Product` and `ProductVariant` prices isolated when their ids collide', function (): void {
+        $product = Product::factory()->create();
+        $variant = ProductVariant::factory()->create(['id' => $product->id]);
+        $currency = Currency::query()->first();
+
+        $action = new SavePricingAction();
+
+        $action(
+            pricing: [$currency->id => ['amount' => 1000]],
+            model: $product
+        );
+
+        $action(
+            pricing: [$currency->id => ['amount' => 2500]],
+            model: $variant
+        );
+
+        expect($product->prices()->count())->toBe(1)
+            ->and($product->prices()->first()->amount)->toBe(1000)
+            ->and($variant->prices()->count())->toBe(1)
+            ->and($variant->prices()->first()->amount)->toBe(2500);
     });
 })->group('actions', 'product');
