@@ -22,6 +22,7 @@ final class SavePricingAction
                     attributes: [
                         'currency_id' => $key,
                         'priceable_id' => $model->id, // @phpstan-ignore-line
+                        'priceable_type' => $model->getMorphClass(),
                     ],
                     values: array_merge($price, [
                         'priceable_id' => $model->id, // @phpstan-ignore-line
