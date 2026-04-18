@@ -11,6 +11,8 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Shopper\Core\Models\TaxZone;
+use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
@@ -20,9 +22,17 @@ use Shopper\Traits\HandlesAuthorizationExceptions;
 class Taxes extends Component
 {
     use HandlesAuthorizationExceptions;
+    use WithSettingsBreadcrumbs;
 
     #[Url(as: 'tax-zone', except: '')]
     public ?int $currentTaxZoneId = null;
+
+    public function settingsPageBreadcrumbs(): array
+    {
+        return [
+            new Breadcrumb(text: __('shopper::pages/settings/taxes.title')),
+        ];
+    }
 
     public function mount(): void
     {

@@ -1,12 +1,4 @@
 <x-shopper::container class="py-5">
-    <x-shopper::breadcrumb :back="route('shopper.collections.index')">
-        <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
-        <x-shopper::breadcrumb.link
-            :link="route('shopper.collections.index')"
-            :title="__('shopper::pages/collections.menu')"
-        />
-    </x-shopper::breadcrumb>
-
     <x-shopper::heading class="mt-6" :title="$collection->name" />
 
     {{ shopper()->getRenderHook(\Shopper\View\CollectionRenderHook::EDIT_FORM_BEFORE) }}

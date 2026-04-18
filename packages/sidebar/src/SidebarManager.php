@@ -39,6 +39,14 @@ class SidebarManager
         }
     }
 
+    /**
+     * @return list<string>
+     */
+    public function getSidebars(): array
+    {
+        return array_values($this->sidebars);
+    }
+
     public function flush(SidebarFlusher $flusher): void
     {
         foreach ($this->sidebars as $name) {

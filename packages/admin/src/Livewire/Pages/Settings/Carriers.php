@@ -29,8 +29,10 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Carrier;
+use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
 use Shopper\Shipping\Facades\Shipping;
 use Shopper\Shipping\Services\CarrierRateService;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Layout('shopper::components.layouts.setting')]
@@ -40,6 +42,14 @@ class Carriers extends Component implements HasActions, HasSchemas, HasTable
     use InteractsWithActions;
     use InteractsWithSchemas;
     use InteractsWithTable;
+    use WithSettingsBreadcrumbs;
+
+    public function settingsPageBreadcrumbs(): array
+    {
+        return [
+            new Breadcrumb(text: __('shopper::pages/settings/carriers.title')),
+        ];
+    }
 
     public function mount(): void
     {

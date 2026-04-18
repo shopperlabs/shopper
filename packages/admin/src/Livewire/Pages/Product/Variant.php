@@ -15,10 +15,13 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Size;
 use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rules\Unique;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
+use Shopper\Sidebar\Traits\WithBreadcrumbs;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Variant extends AbstractPageComponent implements HasActions, HasSchemas
@@ -26,10 +29,31 @@ class Variant extends AbstractPageComponent implements HasActions, HasSchemas
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use WithBreadcrumbs;
 
     public ?Product $product = null;
 
     public ?ProductVariant $variant = null;
+
+    public function getBreadcrumbs(): array
+    {
+        $crumbs = [];
+
+        if ($this->product !== null) {
+            $crumbs[] = new Breadcrumb(
+                text: $this->product->name,
+                url: Route::has('shopper.products.edit')
+                    ? route('shopper.products.edit', $this->product)
+                    : null,
+            );
+        }
+
+        if ($this->variant !== null) {
+            $crumbs[] = new Breadcrumb(text: $this->variant->name);
+        }
+
+        return $crumbs;
+    }
 
     public function mount(): void
     {

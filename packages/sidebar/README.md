@@ -279,6 +279,139 @@ $group->item('Label')
     });
 ```
 
+## Breadcrumbs
+
+The package ships a breadcrumb system that derives the current trail from the active sidebar item and lets deeper pages push their own crumbs. It works standalone on any Laravel + Livewire project.
+
+### How it works
+
+On each request:
+
+1. The sidebar's **active item** is auto-detected (based on the current URL and the item's `url()` / `isActiveWhen()`).
+2. The top-level active item becomes the first crumb, with a dropdown listing its **siblings** in the same group.
+3. If the active item has nested active children, each level is appended as an extra crumb.
+4. Pages can **push** additional crumbs through the `WithBreadcrumbs` trait (e.g. the name of an edited entity).
+
+### Render the trail
+
+Drop the pre-built partial anywhere in your layout:
+
+```blade
+@include(config('sidebar.breadcrumbs.view', 'sidebar::breadcrumbs'))
+```
+
+The default view ships with semantic HTML + Alpine.js behaviour and is styled via `sh-breadcrumb-*` class hooks — bring your own CSS (Tailwind, Bootstrap, vanilla).
+
+### Override the view
+
+Point the config to your own view for full visual customization:
+
+```php
+// config/sidebar.php
+'breadcrumbs' => [
+    'view' => 'my-app.breadcrumbs',
+],
+```
+
+Inside the view, call the helper to retrieve the trail:
+
+```blade
+@php($breadcrumbs = \Shopper\Sidebar\sidebar_breadcrumbs())
+```
+
+Or publish the default view and tweak it:
+
+```bash
+php artisan vendor:publish --provider="Shopper\Sidebar\SidebarServiceProvider" --tag="sidebar-views"
+```
+
+### Push crumbs from a page
+
+Use the `WithBreadcrumbs` trait on any Livewire component:
+
+```php
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
+use Shopper\Sidebar\Traits\WithBreadcrumbs;
+
+class ProductEdit extends Component
+{
+    use WithBreadcrumbs;
+
+    public Product $product;
+
+    public function getBreadcrumbs(): array
+    {
+        return [
+            new Breadcrumb(text: $this->product->name),
+        ];
+    }
+}
+```
+
+If the page lives under `/products/{product}/edit`, the header renders:
+`Products ▾ / Nike Air Max 90` — the first crumb comes from the sidebar, the second from your push.
+
+### Value objects
+
+```php
+new Breadcrumb(
+    text: 'Products',                            // required label
+    url: '/admin/products',                      // optional link (sanitized)
+    icon: 'phosphor-package',                    // optional blade-ui-kit icon
+    links: [                                     // optional dropdown siblings
+        new BreadcrumbLink(
+            text: 'Brands',
+            url: '/admin/brands',
+            icon: 'phosphor-tag',
+            spa: true,                           // wire:navigate on the link
+        ),
+    ],
+    spa: true,                                   // wire:navigate on the crumb
+);
+```
+
+URLs are sanitized at construction: `javascript:`, `data:`, and other unsafe schemes fall back to `null` (Breadcrumb) or `#` (BreadcrumbLink). Safe schemes are `http://`, `https://`, plus relative (`/`), fragment (`#`), and query (`?`) URLs.
+
+### Class hooks
+
+The default view exposes these hooks for custom CSS — no Tailwind imposed:
+
+| Class                             | Element                                       |
+|-----------------------------------|-----------------------------------------------|
+| `.sh-breadcrumb`                  | `<nav>` wrapper                               |
+| `.sh-breadcrumb-list`             | `<ol>` list                                   |
+| `.sh-breadcrumb-item`             | each `<li>`                                   |
+| `.sh-breadcrumb-separator`        | the `/` between crumbs                        |
+| `.sh-breadcrumb-link`             | clickable crumb label                         |
+| `.sh-breadcrumb-current`          | active (last) crumb                           |
+| `.sh-breadcrumb-group`            | wrapper around label + chevron                |
+| `.sh-breadcrumb-toggle-wrapper`   | relative container for the chevron + dropdown |
+| `.sh-breadcrumb-toggle`           | the chevron button                            |
+| `.sh-breadcrumb-toggle-open`      | added by Alpine when the dropdown is open     |
+| `.sh-breadcrumb-chevron`          | chevron SVG                                   |
+| `.sh-breadcrumb-dropdown`         | dropdown panel                                |
+| `.sh-breadcrumb-dropdown-current` | current section inside the dropdown           |
+| `.sh-breadcrumb-dropdown-divider` | separator                                     |
+| `.sh-breadcrumb-dropdown-item`    | each sibling link                             |
+| `.sh-breadcrumb-dropdown-icon`    | icon inside a dropdown item                   |
+
+### Helper
+
+```php
+\Shopper\Sidebar\sidebar_breadcrumbs(): array  // returns list<Breadcrumb>
+```
+
+Assembles the full trail by combining the auto-detected crumbs with what pages have pushed. Returns an empty array if no sidebar matches and no page pushed anything.
+
+### Registry
+
+Behind the scenes, crumbs pushed through the trait are stored on the `Breadcrumbs` registry, bound as a `scoped()` singleton (fresh per request — Octane safe). You can resolve it directly for advanced flows:
+
+```php
+resolve(\Shopper\Sidebar\Breadcrumbs\Breadcrumbs::class)
+    ->push(new Breadcrumb(text: 'Custom section'));
+```
+
 ## License
 
 This package is licensed under MIT. You are free to use it in personal and commercial projects.

@@ -3,14 +3,6 @@
     currentTab: 'role',
 }" class="pb-10">
     <x-shopper::container>
-        <x-shopper::breadcrumb :back="route('shopper.settings.users')" :current="$role->display_name">
-            <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
-            <x-shopper::breadcrumb.link
-                :link="route('shopper.settings.users')"
-                :title="__('shopper::pages/settings/menu.staff')"
-            />
-        </x-shopper::breadcrumb>
-
         <x-shopper::heading class="my-6" :title="$role->display_name">
             <x-slot name="action">
                 <div class="flex space-x-3">

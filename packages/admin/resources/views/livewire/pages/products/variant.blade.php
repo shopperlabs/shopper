@@ -1,17 +1,4 @@
 <x-shopper::container class="py-5">
-    <x-shopper::breadcrumb :back="route('shopper.products.index')">
-        <x-untitledui-chevron-left class="size-4 text-gray-300 dark:text-gray-600" aria-hidden="true" />
-        <x-shopper::breadcrumb.link
-            :link="route('shopper.products.edit', ['product' => $product, 'tab' => 'variants'])"
-            :title="$product->name"
-            class="truncate"
-        />
-        <x-untitledui-chevron-left class="size-4 text-gray-300 dark:text-gray-600" aria-hidden="true" />
-        <span class="truncate text-gray-500 dark:text-gray-400">
-            {{ $variant->name }}
-        </span>
-    </x-shopper::breadcrumb>
-
     <x-shopper::heading :title="$variant->name" class="mt-5" />
 
     {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::VARIANT_HEADER_AFTER) }}

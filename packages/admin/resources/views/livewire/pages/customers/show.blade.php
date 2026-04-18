@@ -1,13 +1,5 @@
 <div x-data="{ currentTab: $wire.entangle('activeTab') }" class="py-5">
     <x-shopper::container>
-        <x-shopper::breadcrumb :back="route('shopper.customers.index')" :current="$customer->full_name">
-            <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
-            <x-shopper::breadcrumb.link
-                :link="route('shopper.customers.index')"
-                :title="__('shopper::pages/customers.menu')"
-            />
-        </x-shopper::breadcrumb>
-
         <div class="py-6 lg:flex lg:items-center lg:justify-between">
             <div class="min-w-0 flex-1">
                 <div class="flex items-start gap-4">

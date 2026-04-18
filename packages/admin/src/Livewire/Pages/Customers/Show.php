@@ -17,6 +17,8 @@ use Livewire\Attributes\Url;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
+use Shopper\Sidebar\Traits\WithBreadcrumbs;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Show extends AbstractPageComponent implements HasActions, HasSchemas
@@ -24,11 +26,19 @@ class Show extends AbstractPageComponent implements HasActions, HasSchemas
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use WithBreadcrumbs;
 
     public ShopperUser $customer;
 
     #[Url(as: 'tab')]
     public string $activeTab = 'profile';
+
+    public function getBreadcrumbs(): array
+    {
+        return [
+            new Breadcrumb(text: $this->customer->full_name),
+        ];
+    }
 
     public function mount(int $user): void
     {

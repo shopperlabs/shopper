@@ -18,6 +18,8 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Events\Products\ProductDeleted;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
+use Shopper\Sidebar\Traits\WithBreadcrumbs;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Edit extends AbstractPageComponent implements HasActions, HasSchemas
@@ -25,12 +27,20 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use WithBreadcrumbs;
 
     /** @var Model&ProductContract */
     public ProductContract $product;
 
     #[Url(as: 'tab')]
     public string $activeTab = 'detail';
+
+    public function getBreadcrumbs(): array
+    {
+        return [
+            new Breadcrumb(text: $this->product->name),
+        ];
+    }
 
     public function mount(): void
     {

@@ -1,14 +1,4 @@
 <div>
-    <x-shopper::container class="pt-5">
-        <x-shopper::breadcrumb :back="route('shopper.products.index')" :current="$product->name">
-            <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
-            <x-shopper::breadcrumb.link
-                :link="route('shopper.products.index')"
-                :title="__('shopper::pages/products.menu')"
-            />
-        </x-shopper::breadcrumb>
-    </x-shopper::container>
-
     <div
         x-data="{
             options: [

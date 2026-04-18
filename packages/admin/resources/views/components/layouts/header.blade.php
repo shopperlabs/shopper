@@ -32,6 +32,10 @@
         <span class="font-medium">{{ $storeName }}</span>
     @endif
 
+    <span class="text-sh-header-fg-muted/60" aria-hidden="true">/</span>
+
+    @include(config('sidebar.breadcrumbs.view', 'sidebar::breadcrumbs'))
+
     <div class="flex-1"></div>
 
     <div class="flex items-center gap-x-2">

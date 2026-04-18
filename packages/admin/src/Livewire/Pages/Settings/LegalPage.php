@@ -8,12 +8,22 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Shopper\Core\Models\Legal;
+use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Layout('shopper::components.layouts.setting')]
 class LegalPage extends Component
 {
     use HandlesAuthorizationExceptions;
+    use WithSettingsBreadcrumbs;
+
+    public function settingsPageBreadcrumbs(): array
+    {
+        return [
+            new Breadcrumb(text: __('shopper::pages/settings/global.legal.title')),
+        ];
+    }
 
     public function mount(): void
     {

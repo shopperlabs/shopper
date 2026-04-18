@@ -95,6 +95,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->app['config']->set('livewire-slide-over.include_js', false);
+        $this->app['config']->set('sidebar.breadcrumbs.view', 'shopper::components.breadcrumbs');
 
         $this->registerConfigFiles();
         $this->registerDatabase();

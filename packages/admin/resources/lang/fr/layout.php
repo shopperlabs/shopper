@@ -7,6 +7,11 @@ return [
     'sidebar' => [
         'catalog' => 'Catalogue',
         'sales' => 'Ventes',
+        'toggle' => 'Basculer la barre latérale',
+    ],
+
+    'breadcrumb' => [
+        'toggle' => 'Afficher le menu :label',
     ],
 
     'locale_switcher' => 'Changer la langue',

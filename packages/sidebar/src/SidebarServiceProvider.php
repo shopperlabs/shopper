@@ -6,6 +6,7 @@ namespace Shopper\Sidebar;
 
 use Illuminate\Foundation\Application;
 use Livewire\Livewire;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumbs;
 use Shopper\Sidebar\Contracts\Builder\Append;
 use Shopper\Sidebar\Contracts\Builder\Badge;
 use Shopper\Sidebar\Contracts\Builder\Group;
@@ -62,6 +63,7 @@ final class SidebarServiceProvider extends PackageServiceProvider
         });
 
         $this->app->singleton(SidebarManager::class);
+        $this->app->scoped(Breadcrumbs::class);
 
         $this->bindingSidebarMenu();
     }
