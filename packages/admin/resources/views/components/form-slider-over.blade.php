@@ -5,10 +5,10 @@
 ])
 
 <x-shopper::slideover-card>
-    <form wire:submit="{{ $action }}" class="flex h-full flex-col divide-y divide-gray-100 dark:divide-white/10">
+    <form wire:submit="{{ $action }}" class="divide-sh-border flex h-full flex-col divide-y">
         <header class="p-4">
             <div class="flex items-start justify-between">
-                <h2 class="text-lg font-medium text-gray-900 dark:text-white">
+                <h2 class="text-sh-fg text-lg font-medium">
                     {{ $title }}
                 </h2>
                 <x-livewire-slide-over::close-icon />
@@ -16,7 +16,7 @@
 
             @if ($description)
                 <div class="mt-1">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                    <p class="text-sh-fg-muted text-sm">
                         {{ $description }}
                     </p>
                 </div>

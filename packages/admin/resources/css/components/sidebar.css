@@ -5,10 +5,10 @@
     @apply border-t border-transparent;
 
     .sh-sidebar-group-label {
-      @apply flex items-center justify-between px-2 pb-3 text-sm/4 font-medium text-gray-900 dark:text-gray-200;
+      @apply text-sh-fg flex items-center justify-between px-2 pb-3 text-sm/4 font-medium;
 
       .sh-sidebar-group-toggle {
-        @apply text-gray-400 dark:text-gray-500;
+        @apply text-sh-fg-muted;
       }
     }
 
@@ -26,7 +26,7 @@
         @apply ml-auto flex items-center justify-end gap-2;
 
         .sh-sidebar-item-toggle {
-          @apply text-gray-400 dark:text-gray-500;
+          @apply text-sh-fg-muted;
         }
       }
 
@@ -34,7 +34,7 @@
         @apply rounded-lg text-sm;
 
         .sh-sidebar-item-dot {
-          @apply size-2 rounded-full bg-gray-300 dark:bg-gray-600;
+          @apply bg-sh-fg-muted size-2 rounded-full;
         }
 
         .sh-sidebar-item-link {
@@ -44,24 +44,24 @@
 
       > .sh-sidebar-item {
         &:not(.sh-sidebar-item-active) {
-          @apply text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white;
+          @apply text-sh-fg-secondary hover:bg-sh-sidebar-hover hover:text-sh-fg;
 
           .sh-sidebar-item-icon,
           .sh-sidebar-item-icon svg {
-            @apply fill-gray-400 dark:fill-gray-500;
+            @apply fill-sh-fg-muted;
           }
 
           &:hover .sh-sidebar-item-label {
-            @apply text-gray-900 dark:text-white;
+            @apply text-sh-fg;
           }
         }
 
         &:not(.sh-items-has-child).sh-sidebar-item-active {
-          @apply relative bg-gray-50 text-gray-900 dark:bg-white/5 dark:text-white;
+          @apply bg-sh-sidebar-hover text-sh-fg relative;
 
           &::before {
             content: '';
-            @apply absolute top-1/2 -left-3 h-6 w-1 -translate-y-1/2 rounded-full bg-current;
+            @apply absolute top-1/2 -left-3 h-6 w-1 -translate-y-1/2 rounded-xs bg-current;
           }
 
           .sh-sidebar-item-label {
@@ -71,7 +71,7 @@
 
         &.sh-items-has-child.sh-sidebar-item-active {
           > .sh-sidebar-item-link.sh-active {
-            @apply relative rounded-lg bg-gray-50 text-gray-900 dark:bg-white/5 dark:text-white;
+            @apply bg-sh-sidebar-hover text-sh-fg relative rounded-lg;
 
             &::before {
               content: '';
@@ -80,7 +80,7 @@
 
             .sh-sidebar-item-icon,
             .sh-sidebar-item-icon svg {
-              @apply fill-gray-900 dark:fill-white;
+              @apply fill-sh-fg;
             }
 
             .sh-sidebar-item-label {
@@ -90,7 +90,7 @@
         }
 
         .sh-submenu {
-          @apply ml-4 hidden border-l border-gray-200 py-1 dark:border-white/20 lg:ml-7 lg:border-l-0 lg:py-0 lg:mt-0.5;
+          @apply border-sh-border ml-4 hidden border-l py-1 lg:mt-0.5 lg:ml-7 lg:border-l-0 lg:py-0;
 
           .sh-sidebar-item {
             @apply rounded-none lg:rounded-lg;
@@ -112,7 +112,7 @@
             }
 
             &:not(.sh-sidebar-item-active) {
-              @apply text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-900 lg:dark:hover:bg-white/5 lg:dark:hover:text-white;
+              @apply text-sh-fg-muted hover:text-sh-fg-secondary lg:hover:bg-sh-sidebar-hover lg:hover:text-sh-fg;
 
               &:hover .sh-sidebar-item-link::before {
                 background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'/%3E%3Cpolyline points='176 104 224 152 176 200' fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3Cpath d='M32,56a96,96,0,0,0,96,96h96' fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3C/svg%3E");
@@ -120,7 +120,7 @@
             }
 
             &.sh-sidebar-item-active {
-              @apply bg-transparent text-gray-950 shadow-none ring-0 dark:text-white;
+              @apply text-sh-fg bg-transparent shadow-none ring-0;
 
               .sh-sidebar-item-label {
                 @apply font-medium;
@@ -148,7 +148,7 @@ html.sidebar-collapsed .sh-si-content,
 
 .sh-si-collapsed .sh-sidebar {
   .sh-sidebar-group {
-    @apply border-gray-200 pt-4 dark:border-white/20;
+    @apply border-sh-border pt-4;
 
     &:first-child {
       @apply border-t-0 pt-0;
@@ -167,7 +167,7 @@ html.sidebar-collapsed .sh-si-content,
 
       &::before {
         content: '';
-        @apply absolute top-0 bottom-0 left-1/2 -z-1 w-px -translate-x-1/2 bg-gray-200 dark:bg-white/10;
+        @apply bg-sh-border absolute top-0 bottom-0 left-1/2 -z-1 w-px -translate-x-1/2;
       }
 
       .sh-sidebar-item {
@@ -188,19 +188,9 @@ html.sidebar-collapsed .sh-si-content,
         }
 
         &.sh-sidebar-item-active .sh-sidebar-item-dot {
-          @apply bg-gray-700 dark:bg-gray-300;
+          @apply bg-sh-fg-secondary;
         }
       }
     }
-  }
-}
-
-.dark .sh-sidebar .sh-submenu .sh-sidebar-item {
-  .sh-sidebar-item-link::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'/%3E%3Cpolyline points='176 104 224 152 176 200' fill='none' stroke='%23374151' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3Cpath d='M32,56a96,96,0,0,0,96,96h96' fill='none' stroke='%23374151' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3C/svg%3E");
-  }
-
-  &:hover .sh-sidebar-item-link::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'/%3E%3Cpolyline points='176 104 224 152 176 200' fill='none' stroke='%234b5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3Cpath d='M32,56a96,96,0,0,0,96,96h96' fill='none' stroke='%234b5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='16'/%3E%3C/svg%3E");
   }
 }

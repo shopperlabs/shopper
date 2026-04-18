@@ -2,7 +2,7 @@
     <x-slot name="trigger">
         <button
             type="button"
-            class="hidden cursor-pointer items-center overflow-hidden rounded-lg p-1 ring-1 ring-gray-200 hover:bg-gray-50 lg:inline-flex dark:ring-white/10 dark:hover:bg-gray-800"
+            class="hover:bg-sh-header-hover hidden cursor-pointer items-center overflow-hidden rounded-lg p-1 lg:inline-flex"
             aria-label="{{ __('shopper::layout.locale_switcher') }}"
         >
             <img

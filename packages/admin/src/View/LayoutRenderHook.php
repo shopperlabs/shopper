@@ -14,9 +14,17 @@ final class LayoutRenderHook
 
     public const string BODY_END = 'shopper::body.end';
 
+    public const string BEFORE_HEADER = 'shopper::header.before';
+
+    public const string AFTER_HEADER = 'shopper::header.after';
+
     public const string HEADER_START = 'shopper::header.start';
 
     public const string HEADER_END = 'shopper::header.end';
+
+    public const string SIDEBAR_START = 'shopper::sidebar.start';
+
+    public const string SIDEBAR_END = 'shopper::sidebar.end';
 
     public const string CONTENT_START = 'shopper::content.start';
 

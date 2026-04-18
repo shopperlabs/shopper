@@ -1,26 +1,32 @@
 <x-shopper::layouts.base :title="$title ?? null">
-    <div class="flex h-screen overflow-hidden" x-data @keydown.window.escape="$store.sidebar.close()">
-        @persist('sidebar')
-            @livewire(
-                'sidebar',
-                [
-                    'sidebarClass' => \Shopper\Sidebar\AdminSidebar::class,
-                    'view' => 'shopper::livewire.sidebar',
-                ]
-            )
-        @endpersist
+    <div
+        class="flex h-screen flex-col overflow-hidden"
+        x-data
+        @keydown.window.escape="$store.sidebar.close()"
+    >
+        {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::BEFORE_HEADER) }}
 
-        <div
-            class="flex w-0 flex-1 flex-col overflow-hidden bg-white ring-1 ring-gray-200 lg:my-2 lg:rounded-tl-xl lg:rounded-bl-xl dark:bg-gray-900 dark:ring-white/20"
-        >
-            <div class="flex flex-1 flex-col justify-between overflow-hidden overflow-y-auto">
-                <x-shopper::layouts.header />
+        <x-shopper::layouts.header />
 
+        {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::AFTER_HEADER) }}
+
+        <div class="flex flex-1 overflow-hidden">
+            @persist('sidebar')
+                @livewire(
+                    'sidebar',
+                    [
+                        'sidebarClass' => \Shopper\Sidebar\AdminSidebar::class,
+                        'view' => 'shopper::livewire.sidebar',
+                    ]
+                )
+            @endpersist
+
+            <div class="sh-main flex w-0 flex-1 flex-col overflow-hidden">
                 @isset($subHeading)
                     {{ $subHeading }}
                 @endisset
 
-                <main class="sh-main flex-1">
+                <main class="sh-main-content flex-1 overflow-y-auto">
                     {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::CONTENT_START) }}
 
                     <div {{ $attributes->twMerge(['class' => 'flex-1 min-h-full']) }}>

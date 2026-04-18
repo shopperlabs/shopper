@@ -3,14 +3,14 @@
         <x-shopper::card>
             <x-slot:title>
                 <div class="flex items-center justify-between">
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                    <span class="text-sh-fg-secondary text-sm font-medium">
                         {{ $card['label'] }}
                     </span>
-                    @svg($card['icon'], 'size-5 text-gray-700 dark:text-gray-300')
+                    @svg($card['icon'], 'size-5 text-sh-fg-secondary')
                 </div>
             </x-slot:title>
 
-            <p class="font-heading text-2xl font-bold text-gray-900 dark:text-white">
+            <p class="font-heading text-sh-fg text-2xl font-bold">
                 {{ $card['value'] }}
             </p>
 
@@ -27,9 +27,9 @@
                             {{ $card['change'] }}%
                         </span>
                     @else
-                        <span class="text-sm font-medium text-gray-400 dark:text-gray-500">0%</span>
+                        <span class="text-sh-fg-muted text-sm font-medium">0%</span>
                     @endif
-                    <span class="text-sm text-gray-400 dark:text-gray-500">
+                    <span class="text-sh-fg-muted text-sm">
                         {{ __('shopper::pages/dashboard.stats.vs_last_month') }}
                     </span>
                 </div>
@@ -37,7 +37,7 @@
                 <x-shopper::link
                     :href="$card['route']"
                     wire:navigate
-                    class="inline-flex items-center gap-1 text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    class="text-sh-fg-muted hover:text-sh-fg inline-flex items-center gap-1 text-sm font-medium transition-colors"
                 >
                     {{ __('shopper::pages/dashboard.stats.view_more') }}
                     <x-untitledui-arrow-narrow-right class="size-3.5" />

@@ -6,6 +6,7 @@ return [
 
     'menu' => 'Settings',
     'single' => 'setting',
+    'site' => 'Site',
 
     'empty_country_selector' => 'Please select a country',
     'logo_description' => 'The logo of your store that will be visible on your site. This assets will appear on your invoices.',

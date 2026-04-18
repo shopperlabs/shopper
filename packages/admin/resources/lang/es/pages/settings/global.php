@@ -6,6 +6,7 @@ return [
 
     'menu' => 'Configuraciones',
     'single' => 'configuración',
+    'site' => 'Sitio',
 
     'empty_country_selector' => 'Por favor selecciona un país',
     'logo_description' => 'El logo de tu tienda que será visible en tu sitio. Este activo aparecerá en tus facturas.',

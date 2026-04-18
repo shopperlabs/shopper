@@ -9,6 +9,7 @@ use Shopper\Events\CatalogSidebar;
 use Shopper\Events\CustomerSidebar;
 use Shopper\Events\DashboardSidebar;
 use Shopper\Events\SalesSidebar;
+use Shopper\Events\SettingsSidebar;
 use Shopper\Sidebar\AdminSidebar;
 use Shopper\Sidebar\SidebarBuilder;
 use Shopper\Sidebar\SidebarCreator;
@@ -27,6 +28,7 @@ final class SidebarServiceProvider extends ServiceProvider
         $this->app['events']->listen(SidebarBuilder::class, CatalogSidebar::class);
         $this->app['events']->listen(SidebarBuilder::class, SalesSidebar::class);
         $this->app['events']->listen(SidebarBuilder::class, CustomerSidebar::class);
+        $this->app['events']->listen(SidebarBuilder::class, SettingsSidebar::class);
 
         view()->creator('shopper::components.layouts.app.sidebar.secondary', SidebarCreator::class);
     }

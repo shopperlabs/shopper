@@ -31,7 +31,7 @@ return [
     |
     */
 
-    'width' => '16rem',
+    'width' => '15rem',
 
     'collapsed_width' => '4.5rem',
 
