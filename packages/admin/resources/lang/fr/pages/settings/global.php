@@ -6,6 +6,7 @@ return [
 
     'menu' => 'Paramètres',
     'single' => 'paramètre',
+    'site' => 'Site',
 
     'empty_country_selector' => 'Veuillez sélectionner un pays',
     'logo_description' => 'Le logo de votre boutique qui sera visible sur votre site. Cet actif apparaîtra sur vos factures.',

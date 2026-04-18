@@ -105,6 +105,24 @@ html {
   --color-success-800: oklch(0.432 0.095 166.913);
   --color-success-900: oklch(0.378 0.077 168.94);
   --color-success-950: oklch(0.262 0.051 172.552);
+
+  /* Shopper theme tokens — resolved per theme via [data-theme='…'] in themes/*.css */
+  --color-sh-header: var(--theme-sh-header);
+  --color-sh-header-border: var(--theme-sh-header-border);
+  --color-sh-header-fg: var(--theme-sh-header-fg);
+  --color-sh-header-fg-muted: var(--theme-sh-header-fg-muted);
+  --color-sh-header-hover: var(--theme-sh-header-hover);
+  --color-sh-body: var(--theme-sh-body);
+  --color-sh-sidebar: var(--theme-sh-sidebar);
+  --color-sh-sidebar-hover: var(--theme-sh-sidebar-hover);
+  --color-sh-surface: var(--theme-sh-surface);
+  --color-sh-muted: var(--theme-sh-muted);
+  --color-sh-border: var(--theme-sh-border);
+  --color-sh-fg: var(--theme-sh-fg);
+  --color-sh-fg-secondary: var(--theme-sh-fg-secondary);
+  --color-sh-fg-muted: var(--theme-sh-fg-muted);
+  --color-sh-accent: var(--theme-sh-accent);
+  --color-sh-accent-fg: var(--theme-sh-accent-fg);
 }
 
 .hide-scroll::-webkit-scrollbar {

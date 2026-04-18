@@ -1,0 +1,49 @@
+/*
+ * Shopper default theme
+ *
+ * Declared at `:root` so every theme inherits these as fallbacks. A custom
+ * theme (e.g. `midnight.css`) only needs to override the tokens it wants to
+ * change via `[data-theme='<name>']`. Any token it forgets falls through to
+ * these defaults — the UI will never break on an incomplete theme.
+ *
+ * Values reference Tailwind v4's built-in palette (`var(--color-*)`) so any
+ * Tailwind palette update flows through, and reading the file is self
+ * documenting.
+ */
+
+:root {
+    /* Header */
+    --theme-sh-header: var(--color-zinc-900);
+    --theme-sh-header-border: oklch(1 0 0 / 0.1); /* white/10 */
+    --theme-sh-header-fg: var(--color-zinc-100);
+    --theme-sh-header-fg-muted: var(--color-zinc-400);
+    --theme-sh-header-hover: var(--color-zinc-800);
+
+    /* Body */
+    --theme-sh-body: var(--color-white);
+    --theme-sh-sidebar: var(--color-zinc-50);
+    --theme-sh-sidebar-hover: var(--color-zinc-100);
+    --theme-sh-surface: var(--color-white);
+    --theme-sh-muted: var(--color-zinc-100);
+    --theme-sh-border: var(--color-zinc-200);
+    --theme-sh-fg: var(--color-zinc-900);
+    --theme-sh-fg-secondary: var(--color-zinc-700);
+    --theme-sh-fg-muted: var(--color-zinc-500);
+
+    /* Accent */
+    --theme-sh-accent: var(--color-blue-600);
+    --theme-sh-accent-fg: var(--color-white);
+}
+
+.dark {
+    /* Body */
+    --theme-sh-body: var(--color-zinc-950);
+    --theme-sh-sidebar: var(--color-zinc-950);
+    --theme-sh-sidebar-hover: oklch(1 0 0 / 0.05); /* white/5 */
+    --theme-sh-surface: var(--color-zinc-900);
+    --theme-sh-muted: var(--color-zinc-800);
+    --theme-sh-border: oklch(1 0 0 / 0.1); /* white/10 */
+    --theme-sh-fg: var(--color-zinc-50);
+    --theme-sh-fg-secondary: var(--color-zinc-300);
+    --theme-sh-fg-muted: var(--color-zinc-400);
+}

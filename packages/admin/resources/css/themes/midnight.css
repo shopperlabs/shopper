@@ -1,0 +1,40 @@
+/*
+ * Midnight theme
+ *
+ * Professional companion to the default. Deep navy header (Stripe / Linear /
+ * Mercury vibe) with a sky-blue accent. Body greys lean `slate` for cohesion
+ * with the navy chrome.
+ */
+
+[data-theme='midnight'] {
+    /* Header */
+    --theme-sh-header: var(--color-blue-950);
+    --theme-sh-header-fg: var(--color-blue-50);
+    --theme-sh-header-fg-muted: var(--color-slate-400);
+    --theme-sh-header-hover: var(--color-blue-900);
+
+    /* Body */
+    --theme-sh-body: var(--color-slate-50);
+    --theme-sh-sidebar: var(--color-slate-50);
+    --theme-sh-sidebar-hover: var(--color-slate-100);
+    --theme-sh-muted: var(--color-slate-100);
+    --theme-sh-border: var(--color-slate-200);
+    --theme-sh-fg: var(--color-slate-900);
+    --theme-sh-fg-secondary: var(--color-slate-700);
+    --theme-sh-fg-muted: var(--color-slate-500);
+
+    /* Accent */
+    --theme-sh-accent: var(--color-sky-500);
+}
+
+.dark[data-theme='midnight'] {
+    --theme-sh-body: var(--color-slate-950);
+    --theme-sh-sidebar: var(--color-slate-950);
+    --theme-sh-sidebar-hover: var(--color-slate-800);
+    --theme-sh-surface: var(--color-slate-900);
+    --theme-sh-muted: var(--color-slate-800);
+    --theme-sh-border: var(--color-slate-800);
+    --theme-sh-fg: var(--color-slate-50);
+    --theme-sh-fg-secondary: var(--color-slate-300);
+    --theme-sh-fg-muted: var(--color-slate-400);
+}

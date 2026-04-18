@@ -8,6 +8,8 @@
 
 @import './base.css';
 @import './components/index.css';
+@import './themes/default.css';
+@import './themes/midnight.css';
 
 @source '../views';
 @source '../../src';

@@ -3,98 +3,103 @@
 ])
 
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="sh min-h-screen scroll-smooth antialiased">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="locale" content="{{ str_replace('_', '-', app()->getLocale()) }}" />
-        <meta name="base-url" content="{{ config('app.url') }}" />
-        <meta name="dashboard-url" content="{{ config('app.url') . '/' . shopper()->prefix() }}" />
-        <meta name="csrf-token" content="{{ csrf_token() }}" />
+<html
+    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    class="sh min-h-screen scroll-smooth antialiased"
+    {{--data-theme="{{ shopper_setting('admin_theme', 'midnight') }}"--}}
+    data-theme="default"
+>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="locale" content="{{ str_replace('_', '-', app()->getLocale()) }}" />
+    <meta name="base-url" content="{{ config('app.url') }}" />
+    <meta name="dashboard-url" content="{{ config('app.url') . '/' . shopper()->prefix() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-        @if ($favicon = config('shopper.admin.favicon'))
-            <link rel="icon" href="{{ $favicon }}" />
-        @else
-            <x-shopper::favicons />
-        @endif
+    @if ($favicon = config('shopper.admin.favicon'))
+        <link rel="icon" href="{{ $favicon }}" />
+    @else
+        <x-shopper::favicons />
+    @endif
 
-        <title>{{ $title }} // {{ __('shopper::layout.meta_title') }}</title>
+    <title>{{ $title }} // {{ __('shopper::layout.meta_title') }}</title>
 
-        <link rel="dns-prefetch" href="{{ config('app.url') }}" />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
-            rel="stylesheet"
-        />
+    <link rel="dns-prefetch" href="{{ config('app.url') }}" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet"
+    />
 
-        {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEAD_START) }}
+    {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEAD_START) }}
 
-        @filamentStyles
-        {{ \Shopper\Facades\Shopper::getThemeLink() }}
+    @filamentStyles
+    {{ \Shopper\Facades\Shopper::getThemeLink() }}
 
-        <script
-            defer
-            src="{{
-                route('shopper.asset', [
-                    'id' => get_asset_id('shopper.js'),
-                    'file' => 'shopper.js',
-                ])
-            }}"
-        ></script>
+    <script
+        defer
+        src="{{
+            route('shopper.asset', [
+                'id' => get_asset_id('shopper.js'),
+                'file' => 'shopper.js',
+            ])
+        }}"
+    ></script>
 
-        @include('shopper::includes._additional-styles')
+    @include('shopper::includes._additional-styles')
 
-        {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEAD_END) }}
+    {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEAD_END) }}
 
-        <style>
-            :root {
-                --sidebar-width: {{ \Shopper\Sidebar\sidebar_width() }};
-                --sidebar-collapsed-width: {{ \Shopper\Sidebar\sidebar_collapsed_width() }};
+    <style>
+        :root {
+            --sidebar-width: {{ \Shopper\Sidebar\sidebar_width() }};
+            --sidebar-collapsed-width: {{ \Shopper\Sidebar\sidebar_collapsed_width() }};
+        }
+    </style>
+
+    <script>
+        const loadDarkMode = () => {
+            window.theme = localStorage.getItem('theme')
+
+            if (
+                window.theme === 'dark' ||
+                (window.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            ) {
+                document.documentElement.classList.add('dark')
             }
-        </style>
+        }
 
-        <script>
-            const loadDarkMode = () => {
-                window.theme = localStorage.getItem('theme')
+        loadDarkMode()
 
-                if (
-                    window.theme === 'dark' ||
-                    (window.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
-                ) {
-                    document.documentElement.classList.add('dark')
-                }
-            }
+        document.addEventListener('livewire:navigated', loadDarkMode)
 
-            loadDarkMode()
+        // Pre-apply sidebar collapsed state from localStorage before Alpine initialises
+        // — prevents the width flash caused by CSS transitions firing on first render
+        if (localStorage.getItem('sidebar-is-collapsed') === 'true') {
+            document.documentElement.classList.add('sidebar-collapsed')
+        }
+    </script>
+</head>
+<body
+    {{ $attributes->twMerge(['class' => 'sh-body bg-sh-body font-sans']) }}
+    data-sidebar-breakpoint="{{ \Shopper\Sidebar\sidebar_breakpoint() }}"
+    data-sidebar-collapsible="{{ \Shopper\Sidebar\sidebar_is_collapsible() ? 'true' : 'false' }}"
+>
+    {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::BODY_START) }}
 
-            document.addEventListener('livewire:navigated', loadDarkMode)
+    {{ $slot }}
 
-            // Pre-apply sidebar collapsed state from localStorage before Alpine initialises
-            // — prevents the width flash caused by CSS transitions firing on first render
-            if (localStorage.getItem('sidebar-is-collapsed') === 'true') {
-                document.documentElement.classList.add('sidebar-collapsed')
-            }
-        </script>
-    </head>
-    <body
-        {{ $attributes->twMerge(['class' => 'sh-body bg-gray-50 font-sans dark:bg-gray-950']) }}
-        data-sidebar-breakpoint="{{ \Shopper\Sidebar\sidebar_breakpoint() }}"
-        data-sidebar-collapsible="{{ \Shopper\Sidebar\sidebar_is_collapsible() ? 'true' : 'false' }}"
-    >
-        {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::BODY_START) }}
+    @livewire(\Filament\Notifications\Livewire\Notifications::class)
+    @livewire('slide-over-panel')
 
-        {{ $slot }}
+    @filamentScripts
 
-        @livewire(\Filament\Notifications\Livewire\Notifications::class)
-        @livewire('slide-over-panel')
+    @include('shopper::includes._additional-scripts')
 
-        @filamentScripts
-
-        @include('shopper::includes._additional-scripts')
-
-        {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::BODY_END) }}
-    </body>
+    {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::BODY_END) }}
+</body>
 </html>

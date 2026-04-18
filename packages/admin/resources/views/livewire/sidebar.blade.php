@@ -1,33 +1,11 @@
 <div class="h-full">
     <!-- Desktop Sidebar -->
     <aside
-        class="sh-si hidden h-full lg:flex lg:shrink-0"
+        class="sh-si bg-sh-sidebar border-sh-border hidden h-full border-r lg:flex lg:shrink-0"
         x-bind:class="{ 'sh-si-collapsed': $store.sidebar.isCollapsed }"
     >
         <div class="sh-si-content h-full flex-1 overflow-hidden transition-[width] duration-200">
-            <div class="from-primary-600 to-primary-100 dark:to-primary-600/10 h-1 bg-linear-to-br"></div>
             <div class="flex h-full flex-col">
-                <!-- Header / Branding -->
-                <div class="py-4 px-6 border-b border-dashed border-gray-200 dark:border-white/20">
-                    <div class="relative flex items-center gap-3">
-                        <x-shopper::brand class="size-6 shrink-0" aria-hidden="true" />
-                        <div
-                            class="min-w-0 truncate overflow-hidden transition-all duration-200"
-                            x-show="!$store.sidebar.isCollapsed"
-                            x-transition:enter="transition-opacity delay-100 duration-200"
-                            x-transition:enter-start="opacity-0"
-                            x-transition:enter-end="opacity-100"
-                            x-transition:leave="transition-opacity duration-100"
-                            x-transition:leave-start="opacity-100"
-                            x-transition:leave-end="opacity-0"
-                        >
-                            <h4 class="truncate text-sm font-medium text-gray-900 dark:text-white">
-                                {{ shopper_setting('name') }}
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-
                 <x-shopper::layouts.sidebar-content :rendered-sidebar="$renderedSidebar" />
             </div>
         </div>
@@ -60,30 +38,9 @@
                 x-transition:leave="transform transition duration-200 ease-in-out"
                 x-transition:leave-start="translate-x-0"
                 x-transition:leave-end="-translate-x-full"
-                class="pointer-events-auto relative flex w-full max-w-xs flex-col bg-white dark:bg-gray-900"
+                class="bg-sh-sidebar pointer-events-auto relative flex w-full max-w-xs flex-col"
             >
-                <div class="from-primary-600 to-primary-100 dark:to-primary-600/10 h-1 bg-linear-to-br"></div>
                 <div class="flex h-full flex-col overflow-hidden">
-                    <!-- Header / Branding -->
-                    <div class="px-3 py-4">
-                        <div
-                            class="relative flex items-start gap-3 rounded-lg bg-white py-2 shadow-xs ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/20"
-                        >
-                            <x-shopper::link class="shrink-0" :href="route('shopper.dashboard')">
-                                <x-shopper::brand class="size-8" aria-hidden="true" />
-                                <span class="absolute inset-0"></span>
-                            </x-shopper::link>
-                            <div class="truncate">
-                                <h4 class="font-heading truncate text-sm/4 font-medium text-gray-900 dark:text-white">
-                                    {{ shopper_setting('name') }}
-                                </h4>
-                                <span class="text-sm/4 text-gray-500 dark:text-gray-400">
-                                    {{ shopper_setting('email') }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
                     <x-shopper::layouts.sidebar-content :rendered-sidebar="$renderedSidebar" />
                 </div>
             </div>
