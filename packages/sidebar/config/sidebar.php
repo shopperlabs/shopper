@@ -58,4 +58,20 @@ return [
 
     'collapsible' => true,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Breadcrumbs
+    |--------------------------------------------------------------------------
+    |
+    | Configure the breadcrumb trail. `view` is the Blade view used to render
+    | the trail — override it from your own service provider to ship a themed
+    | version (the Shopper admin does exactly that). Any project consuming the
+    | standalone sidebar package gets the default unstyled trail out of the box.
+    |
+    */
+
+    'breadcrumbs' => [
+        'view' => 'sidebar::breadcrumbs',
+    ],
+
 ];

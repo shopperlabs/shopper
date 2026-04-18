@@ -21,13 +21,16 @@ use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
 use Shopper\Models\Permission;
 use Shopper\Models\Role;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
@@ -39,11 +42,25 @@ class RolePermission extends Component implements HasActions, HasSchemas
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use WithSettingsBreadcrumbs;
 
     public Role $role;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
+
+    public function settingsPageBreadcrumbs(): array
+    {
+        return [
+            new Breadcrumb(
+                text: __('shopper::pages/settings/staff.title'),
+                url: Route::has('shopper.settings.users')
+                    ? route('shopper.settings.users')
+                    : null,
+            ),
+            new Breadcrumb(text: $this->role->display_name ?? $this->role->name),
+        ];
+    }
 
     public function mount(): void
     {

@@ -29,6 +29,8 @@ use Shopper\Components\Form\SeoField;
 use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
+use Shopper\Sidebar\Traits\WithBreadcrumbs;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
@@ -39,11 +41,19 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use WithBreadcrumbs;
 
     public ?Collection $collection = null;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
+
+    public function getBreadcrumbs(): array
+    {
+        return $this->collection
+            ? [new Breadcrumb(text: $this->collection->name)]
+            : [];
+    }
 
     public function mount(): void
     {

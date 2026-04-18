@@ -26,8 +26,10 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Models\Role;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Layout('shopper::components.layouts.setting')]
@@ -37,6 +39,14 @@ class Index extends Component implements HasActions, HasSchemas, HasTable
     use InteractsWithActions;
     use InteractsWithSchemas;
     use InteractsWithTable;
+    use WithSettingsBreadcrumbs;
+
+    public function settingsPageBreadcrumbs(): array
+    {
+        return [
+            new Breadcrumb(text: __('shopper::pages/settings/staff.title')),
+        ];
+    }
 
     public function createRoleAction(): Action
     {

@@ -28,6 +28,8 @@ use Shopper\Components\Separator;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
+use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\SaveSettings;
 
@@ -41,9 +43,17 @@ class General extends Component implements HasActions, HasSchemas
     use InteractsWithActions;
     use InteractsWithSchemas;
     use SaveSettings;
+    use WithSettingsBreadcrumbs;
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
+
+    public function settingsPageBreadcrumbs(): array
+    {
+        return [
+            new Breadcrumb(text: __('shopper::pages/settings/global.general.title')),
+        ];
+    }
 
     public function mount(): void
     {

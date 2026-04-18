@@ -22,6 +22,8 @@ use Shopper\Core\Events\Orders\OrderPaid;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Payment\Services\PaymentProcessingService;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
+use Shopper\Sidebar\Traits\WithBreadcrumbs;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Detail extends AbstractPageComponent implements HasActions, HasSchemas
@@ -29,8 +31,16 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
+    use WithBreadcrumbs;
 
     public Order $order;
+
+    public function getBreadcrumbs(): array
+    {
+        return [
+            new Breadcrumb(text: '#'.$this->order->number),
+        ];
+    }
 
     public function mount(): void
     {

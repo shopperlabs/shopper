@@ -7,6 +7,11 @@ return [
     'sidebar' => [
         'catalog' => 'Catalog',
         'sales' => 'Sales',
+        'toggle' => 'Toggle sidebar',
+    ],
+
+    'breadcrumb' => [
+        'toggle' => 'Toggle :label menu',
     ],
 
     'locale_switcher' => 'Switch language',

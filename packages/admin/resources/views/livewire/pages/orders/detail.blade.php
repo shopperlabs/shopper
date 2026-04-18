@@ -3,15 +3,6 @@
         $customer = $order->customer;
     @endphp
 
-    <x-shopper::container class="pt-5">
-        <x-shopper::breadcrumb :back="route('shopper.orders.index')">
-            <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" />
-            <x-shopper::breadcrumb.link
-                :link="route('shopper.orders.index')"
-                :title="__('shopper::pages/orders.menu')"
-            />
-        </x-shopper::breadcrumb>
-    </x-shopper::container>
 
     <div class="sticky top-12 z-10 bg-white pt-6 backdrop-blur-lg dark:bg-gray-900">
         <x-shopper::container class="border-b space-y-2 pb-4 border-gray-200 dark:border-white/10">

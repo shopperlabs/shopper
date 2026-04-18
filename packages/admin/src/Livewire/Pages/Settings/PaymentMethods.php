@@ -29,8 +29,10 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\PaymentMethod;
+use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
 use Shopper\Payment\Facades\Payment;
 use Shopper\Payment\Services\PaymentProcessingService;
+use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Layout('shopper::components.layouts.setting')]
@@ -40,6 +42,14 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
     use InteractsWithActions;
     use InteractsWithSchemas;
     use InteractsWithTable;
+    use WithSettingsBreadcrumbs;
+
+    public function settingsPageBreadcrumbs(): array
+    {
+        return [
+            new Breadcrumb(text: __('shopper::pages/settings/payments.title')),
+        ];
+    }
 
     public function mount(): void
     {
