@@ -24,13 +24,10 @@
         class="flex items-center gap-2 font-semibold tracking-tight hover:opacity-80"
     >
         <x-shopper::brand class="size-6" aria-hidden="true" />
-        <span>Shopper</span>
+        @if ($storeName = shopper_setting('name'))
+            <span>{{ $storeName }}</span>
+        @endif
     </x-shopper::link>
-
-    @if ($storeName = shopper_setting('name'))
-        <span class="text-sh-header-fg-muted" aria-hidden="true">/</span>
-        <span class="font-medium">{{ $storeName }}</span>
-    @endif
 
     <span class="text-sh-header-fg-muted/60" aria-hidden="true">/</span>
 
