@@ -16,6 +16,13 @@ return [
         'return_login' => 'Retour à la connexion',
     ],
 
+    'session_expired' => [
+        'title' => 'Reprendre votre session',
+        'description' => 'Votre session a expiré. Entrez votre mot de passe pour reprendre là où vous en étiez.',
+        'submit' => 'Se connecter',
+        'submitting' => 'Connexion…',
+    ],
+
     'reset' => [
         'title' => 'Réinitialiser le mot de passe',
         'message' => 'Saisissez votre e-mail et le nouveau mot de passe que vous souhaitez utiliser pour accéder à votre compte.',

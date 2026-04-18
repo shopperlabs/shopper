@@ -37,5 +37,7 @@
                 </main>
             </div>
         </div>
+
+        <livewire:shopper-session-expired />
     </div>
 </x-shopper::layouts.base>
