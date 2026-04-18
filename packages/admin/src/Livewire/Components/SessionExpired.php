@@ -64,7 +64,7 @@ final class SessionExpired extends Component implements HasSchemas
 
         $user = shopper()->auth()->user();
 
-        if ($user === null || ! Hash::check($data['password'], $user->password)) {
+        if ($user === null || ! Hash::check($data['password'], $user->getAuthPassword())) {
             throw ValidationException::withMessages([
                 'data.password' => __('shopper::pages/auth.login.failed'),
             ]);
