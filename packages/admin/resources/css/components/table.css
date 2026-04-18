@@ -12,7 +12,7 @@
   .fi-ta-selection-indicator,
   .fi-ta-filter-indicators,
   .fi-ta-reorder-indicator {
-    @apply rounded-lg border-b-0 ring-1 ring-gray-200 sm:px-4 dark:ring-white/10;
+    @apply ring-sh-border rounded-lg border-b-0 ring-1 sm:px-4;
   }
 
   .fi-ta-header-ctn {
@@ -29,7 +29,7 @@
 
   .fi-ta-content-ctn,
   .fi-ta-empty-state {
-    @apply rounded-lg ring-1 ring-gray-200 dark:ring-white/10;
+    @apply ring-sh-border rounded-lg ring-1;
   }
 
   .fi-ta-empty-state:not(.fi-ta-ctn-with-content-layout .fi-ta-empty-state) {
@@ -41,27 +41,27 @@
   }
 
   .fi-ta-content {
-    @apply rounded-xl ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10;
+    @apply ring-sh-border rounded-xl ring-1;
 
     .fi-ta-table > tbody {
-      @apply bg-white dark:bg-gray-900;
+      @apply bg-sh-surface;
     }
   }
 }
 
 .fi-ta-filters-above-content-ctn.fi-open {
-  @apply rounded-xl bg-white ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10;
+  @apply bg-sh-surface ring-sh-border rounded-xl ring-1;
 }
 
 .fi-ta-table {
   @apply overflow-hidden rounded-lg;
 
   & thead > tr {
-    @apply bg-gray-50 dark:bg-gray-950;
+    @apply bg-sh-table-header;
   }
 
   & tbody {
-    @apply overflow-hidden rounded-xl bg-white dark:bg-gray-900;
+    @apply bg-sh-surface overflow-hidden rounded-xl;
   }
 }
 

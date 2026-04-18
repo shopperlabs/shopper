@@ -11,7 +11,7 @@
 }
 
 .fi-section:not(.sh-section-aside *) {
-  @apply rounded-xl bg-gray-50 p-1.5 ring-1 ring-gray-200 dark:bg-gray-950 dark:ring-white/10;
+  @apply bg-sh-card ring-sh-border rounded-xl p-1.5 ring-1;
 
   .fi-section-content {
     @apply p-1;
@@ -26,7 +26,7 @@
   }
 
   .fi-section-content-ctn {
-    @apply rounded-lg border-t-0 bg-white p-4 ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10;
+    @apply bg-sh-surface ring-sh-border rounded-lg border-t-0 p-4 ring-1;
   }
 
   &:not(.fi-section-has-header) {
@@ -39,12 +39,12 @@
 }
 
 .fi-fo-repeater-item.fi-fo-repeater-item-has-header {
-  @apply bg-gray-50 p-1.5 ring-1 ring-gray-200 dark:bg-gray-950 dark:ring-white/10;
+  @apply bg-sh-card ring-sh-border p-1.5 ring-1;
 
   > .fi-fo-repeater-item-header {
   }
 
   > .fi-fo-repeater-item-content {
-    @apply rounded-lg border-t-0 bg-white ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10;
+    @apply bg-sh-surface ring-sh-border rounded-lg border-t-0 ring-1;
   }
 }

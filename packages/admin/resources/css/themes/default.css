@@ -1,16 +1,3 @@
-/*
- * Shopper default theme
- *
- * Declared at `:root` so every theme inherits these as fallbacks. A custom
- * theme (e.g. `midnight.css`) only needs to override the tokens it wants to
- * change via `[data-theme='<name>']`. Any token it forgets falls through to
- * these defaults — the UI will never break on an incomplete theme.
- *
- * Values reference Tailwind v4's built-in palette (`var(--color-*)`) so any
- * Tailwind palette update flows through, and reading the file is self
- * documenting.
- */
-
 :root {
     /* Header */
     --theme-sh-header: var(--color-zinc-900);
@@ -30,9 +17,11 @@
     --theme-sh-fg-secondary: var(--color-zinc-700);
     --theme-sh-fg-muted: var(--color-zinc-500);
 
-    /* Accent */
-    --theme-sh-accent: var(--color-blue-600);
-    --theme-sh-accent-fg: var(--color-white);
+    --theme-sh-accent: var(--color-primary-500);
+    --theme-sh-accent-fg: var(--color-primary-50);
+
+    --theme-sh-card: var(--color-zinc-50);
+    --theme-sh-table-header: var(--color-zinc-50);
 }
 
 .dark {
@@ -46,4 +35,7 @@
     --theme-sh-fg: var(--color-zinc-50);
     --theme-sh-fg-secondary: var(--color-zinc-300);
     --theme-sh-fg-muted: var(--color-zinc-400);
+
+    --theme-sh-card: var(--color-zinc-950);
+    --theme-sh-table-header: var(--color-zinc-950);
 }

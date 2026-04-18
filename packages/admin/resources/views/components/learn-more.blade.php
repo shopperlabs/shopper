@@ -1,12 +1,10 @@
 @if(! app()->isProduction())
     <div class="my-10 flex justify-center text-center">
-        <div
-            class="flex items-center overflow-hidden rounded-lg bg-gray-50 shadow ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-white/20"
-        >
-            <div class="flex shrink-0 items-center justify-center border-r border-gray-200 p-3 dark:border-white/20">
-                <x-untitledui-info-circle class="size-5 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+        <div class="bg-sh-card ring-sh-border flex items-center overflow-hidden rounded-lg shadow ring-1">
+            <div class="border-sh-border flex shrink-0 items-center justify-center border-r p-3">
+                <x-untitledui-info-circle class="text-sh-fg-muted size-5" aria-hidden="true" />
             </div>
-            <div class="bg-white px-4 py-3 text-sm text-gray-500 dark:bg-transparent dark:text-gray-400">
+            <div class="bg-sh-surface text-sh-fg-muted px-4 py-3 text-sm dark:bg-transparent">
                 {{ __('shopper::words.learn_more') }}
                 <a
                     href="https://docs.laravelshopper.dev/{{ shopper()->version() }}/{{ $link }}"
@@ -15,7 +13,7 @@
                 >
                     {{ $name }}
                     <x-untitledui-arrow-circle-broken-right
-                        class="ml-2 size-5 text-gray-400 dark:text-gray-500"
+                        class="text-sh-fg-muted ml-2 size-5"
                         stroke-width="1.5"
                         aria-hidden="true"
                     />
