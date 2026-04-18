@@ -16,6 +16,13 @@ return [
         'return_login' => 'Back to login',
     ],
 
+    'session_expired' => [
+        'title' => 'Resume your session',
+        'description' => 'Your session has expired. Enter your password to pick up where you left off.',
+        'submit' => 'Sign in',
+        'submitting' => 'Signing in…',
+    ],
+
     'reset' => [
         'title' => 'Reset password',
         'message' => 'Enter your email and the new password you\'d like to use to access your account.',

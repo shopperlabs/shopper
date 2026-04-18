@@ -16,6 +16,13 @@ return [
         'return_login' => 'Volver al inicio de sesión',
     ],
 
+    'session_expired' => [
+        'title' => 'Reanudar tu sesión',
+        'description' => 'Tu sesión ha expirado. Ingresa tu contraseña para continuar donde lo dejaste.',
+        'submit' => 'Iniciar sesión',
+        'submitting' => 'Iniciando sesión…',
+    ],
+
     'reset' => [
         'title' => 'Restablecer contraseña',
         'message' => 'Ingresa tu correo electrónico y la nueva contraseña que te gustaría usar para acceder a tu cuenta.',

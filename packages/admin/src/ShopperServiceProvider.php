@@ -196,6 +196,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'auth.login' => Pages\Auth\Login::class,
             'auth.password' => Pages\Auth\ForgotPassword::class,
             'auth.password-reset' => Pages\Auth\ResetPassword::class,
+            'session-expired' => Components\SessionExpired::class,
             'setup-guide' => Components\Dashboard\SetupGuide::class,
             'dashboard.stat-cards' => Components\Dashboard\StatCards::class,
             'dashboard.revenue-chart' => Components\Dashboard\RevenueChart::class,
