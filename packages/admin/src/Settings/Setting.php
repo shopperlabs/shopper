@@ -22,4 +22,9 @@ abstract class Setting implements SettingItem
     {
         return 0;
     }
+
+    public function group(): ?string
+    {
+        return null;
+    }
 }

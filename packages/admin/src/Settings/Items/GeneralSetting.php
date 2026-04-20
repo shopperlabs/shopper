@@ -6,6 +6,7 @@ namespace Shopper\Settings\Items;
 
 use BackedEnum;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Enum\SettingGroup;
 use Shopper\Settings\Setting;
 
 final class GeneralSetting extends Setting
@@ -33,5 +34,10 @@ final class GeneralSetting extends Setting
     public function order(): int
     {
         return 1;
+    }
+
+    public function group(): string
+    {
+        return SettingGroup::Store->value;
     }
 }

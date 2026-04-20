@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Settings\Items;
 
+use Shopper\Enum\SettingGroup;
 use Shopper\Settings\Setting;
 
 final class CurrencySetting extends Setting
@@ -31,5 +32,10 @@ final class CurrencySetting extends Setting
     public function order(): int
     {
         return 9;
+    }
+
+    public function group(): string
+    {
+        return SettingGroup::Selling->value;
     }
 }

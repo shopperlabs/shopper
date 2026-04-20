@@ -19,21 +19,23 @@
         </button>
     @endif
 
-    <x-shopper::link
-        :href="route('shopper.dashboard')"
-        class="flex items-center gap-2 font-semibold tracking-tight hover:opacity-80"
-    >
-        <x-shopper::brand class="size-6" aria-hidden="true" />
-        @if ($storeName = shopper_setting('name'))
-            <span>{{ $storeName }}</span>
-        @endif
-    </x-shopper::link>
+    <div class="flex-1 flex items-center gap-4">
+        <x-shopper::link
+            :href="route('shopper.dashboard')"
+            class="flex items-center gap-2.5 font-semibold tracking-tight hover:opacity-80"
+        >
+            <x-shopper::brand class="size-6" aria-hidden="true" />
+            @if ($storeName = shopper_setting('name'))
+                <span>{{ $storeName }}</span>
+            @endif
+        </x-shopper::link>
 
-    <span class="text-sh-header-fg-muted/60" aria-hidden="true">/</span>
+        <div class="flex items-center gap-4 max-lg:hidden">
+            <span class="text-sh-header-fg-muted/60" aria-hidden="true">/</span>
 
-    @include(config('sidebar.breadcrumbs.view', 'sidebar::breadcrumbs'))
-
-    <div class="flex-1"></div>
+            @include(config('sidebar.breadcrumbs.view', 'sidebar::breadcrumbs'))
+        </div>
+    </div>
 
     <div class="flex items-center gap-x-2">
         {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEADER_START) }}

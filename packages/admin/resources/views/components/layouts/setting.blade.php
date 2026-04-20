@@ -1,92 +1,97 @@
-<x-shopper::layouts.app :title="$title ?? null">
-    <x-slot name="subHeading">
-        <div
-            class="sticky top-12 z-10 border-y border-gray-200 bg-white backdrop-blur-xs lg:border-t-0 dark:border-white/10 dark:bg-gray-950"
-        >
-            <div
-                x-data="{
-                    displayLeftArrow: false,
-                    displayRightArrow: true,
-                    element: document.getElementById('setting-tabs'),
-                    currentTab: document
-                        .getElementById('setting-tabs')
-                        .querySelector('.current'),
+@props([
+    'title' => null,
+])
 
-                    slideLeft() {
-                        this.element.scrollLeft -= 100
-                        this.onScroll()
-                    },
-                    slideRight() {
-                        this.element.scrollLeft += 100
-                        this.onScroll()
-                    },
-                    onScroll() {
-                        this.displayLeftArrow = this.element.scrollLeft >= 20
-                        let maxScrollPosition =
-                            this.element.scrollWidth - this.element.clientWidth - 20
-                        this.displayRightArrow = this.element.scrollLeft <= maxScrollPosition
-                    },
-                    scrollToActive() {
-                        if (this.currentTab) {
-                            this.element.scrollLeft = this.currentTab.offsetLeft - 50
-                        }
-                    },
-                }"
-                x-init="scrollToActive()"
-                class="relative overflow-hidden"
+@php
+    $buckets = resolve(\Shopper\Settings\SettingManager::class)->grouped();
+    $allItems = $buckets->flatMap(fn (array $bucket) => $bucket['items']);
+    $navLabel = __('shopper::pages/settings/global.menu');
+@endphp
+
+<x-shopper::layouts.app :title="$title">
+    <x-shopper::layouts.split with-border>
+        <x-slot name="sidebar">
+            <nav
+                class="hide-scroll -mb-px flex space-x-8 overflow-x-auto scroll-smooth px-4 lg:hidden"
+                aria-label="{{ $navLabel }}"
             >
-                <div
-                    x-cloak
-                    x-show="displayLeftArrow"
-                    x-transition:enter="transition duration-300 ease-out"
-                    x-transition:enter-start="-translate-x-2 opacity-0"
-                    x-transition:enter-end="translate-x-0 opacity-100"
-                    x-transition:leave="transition duration-300 ease-in"
-                    x-transition:leave-start="translate-x-0 opacity-100"
-                    x-transition:leave-end="-translate-x-2 opacity-0"
-                    class="absolute top-0 flex h-full w-24 items-center bg-linear-to-r from-white px-3 dark:from-gray-950"
-                >
-                    <button
-                        @click="slideLeft()"
-                        type="button"
-                        class="flex size-8 items-center justify-center rounded-full text-gray-400 transition duration-200 ease-in-out hover:bg-gray-50 focus:outline-none dark:bg-gray-800 dark:text-gray-500"
-                    >
-                        <x-untitledui-chevron-left class="size-6" aria-hidden="true" />
-                    </button>
-                </div>
-                <nav
-                    @scroll="onScroll()"
-                    class="hide-scroll -mb-px flex space-x-8 overflow-x-auto scroll-smooth pr-10 pl-6"
-                    aria-label="Tabs"
-                    id="setting-tabs"
-                >
-                    @foreach (resolve(\Shopper\Settings\SettingManager::class)->all() as $menu)
-                        <x-shopper::menu.nav-setting :$menu />
-                    @endforeach
-                </nav>
-                <div
-                    x-show="displayRightArrow"
-                    x-transition:enter="transition duration-300 ease-out"
-                    x-transition:enter-start="translate-x-2 opacity-0"
-                    x-transition:enter-end="translate-x-0 opacity-100"
-                    x-transition:leave="transition duration-300 ease-in"
-                    x-transition:leave-start="translate-x-0 opacity-100"
-                    x-transition:leave-end="translate-x-2 opacity-0"
-                    class="absolute top-0 right-0 flex h-full w-24 items-center justify-end bg-linear-to-l from-white px-3 dark:from-gray-950"
-                >
-                    <button
-                        @click="slideRight()"
-                        type="button"
-                        class="flex size-8 items-center justify-center rounded-full text-gray-400 transition duration-200 ease-in-out hover:bg-gray-50 focus:outline-none dark:bg-gray-800 dark:text-gray-500"
-                    >
-                        <x-untitledui-chevron-right class="size-6" aria-hidden="true" />
-                    </button>
-                </div>
-            </div>
-        </div>
-    </x-slot>
+                @foreach ($allItems as $item)
+                    @php
+                        $permission = $item->permission();
+                    @endphp
 
-    <div class="py-5">
-        {{ $slot }}
-    </div>
+                    @if ($permission && ! auth()->user()?->can($permission))
+                        @continue
+                    @endif
+
+                    <x-shopper::menu.nav-setting :menu="$item" />
+                @endforeach
+            </nav>
+
+            <nav class="hidden space-y-6 px-5 py-6 lg:block" aria-label="{{ $navLabel }}">
+                @foreach ($buckets as $bucket)
+                    <div>
+                        @if ($bucket['label'])
+                            <h3 class="text-sh-fg-muted px-3 text-xs font-semibold tracking-wider uppercase">
+                                {{ $bucket['label'] }}
+                            </h3>
+                        @endif
+
+                        <ul @class(['space-y-0.5', 'mt-2' => $bucket['label']])>
+                            @foreach ($bucket['items'] as $item)
+                                @php
+                                    $permission = $item->permission();
+                                @endphp
+
+                                @if ($permission && ! auth()->user()?->can($permission))
+                                    @continue
+                                @endif
+
+                                @php
+                                    $url = $item->url();
+                                    $path = $url ? trim(parse_url($url, PHP_URL_PATH) ?? '', '/') : null;
+                                    $isCurrent = $path !== null && $path !== '' && request()->is($path . '*');
+                                @endphp
+
+                                <li>
+                                    <a
+                                        href="{{ $url ?? '#' }}"
+                                        @class([
+                                            'group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm font-medium transition',
+                                            'bg-sh-sidebar-hover text-sh-fg' => $isCurrent,
+                                            'text-sh-fg-secondary hover:bg-sh-sidebar-hover hover:text-sh-fg' => ! $isCurrent,
+                                        ])
+                                        @if ($isCurrent)
+                                            aria-current="page"
+                                        @endif
+                                        wire:navigate
+                                    >
+                                        <x-filament::icon
+                                            :icon="$item->icon()"
+                                            @class([
+                                                'size-5 shrink-0',
+                                                'text-sh-fg' => $isCurrent,
+                                                'text-sh-fg-muted group-hover:text-sh-fg-secondary' => ! $isCurrent,
+                                            ])
+                                        />
+                                        <span class="truncate">{{ $item->name() }}</span>
+
+                                        @if (! $url)
+                                            <x-filament::badge size="sm" color="gray" class="ml-auto">
+                                                {{ __('shopper::words.soon') }}
+                                            </x-filament::badge>
+                                        @endif
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endforeach
+            </nav>
+        </x-slot>
+
+        <div class="py-5">
+            {{ $slot }}
+        </div>
+    </x-shopper::layouts.split>
 </x-shopper::layouts.app>

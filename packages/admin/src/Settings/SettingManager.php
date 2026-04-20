@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopper\Settings;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Shopper\Contracts\SettingItem;
+use Shopper\Enum\SettingGroup;
 
 final class SettingManager
 {
@@ -67,6 +69,67 @@ final class SettingManager
             ->map(fn (string $class): SettingItem => app($class))
             ->sortBy(fn (SettingItem $setting): int => $setting->order())
             ->values();
+    }
+
+    /**
+     * @return Collection<int, array{group: ?string, label: ?string, items: Collection<int, SettingItem>}>
+     */
+    public function grouped(): Collection
+    {
+        $items = $this->all();
+
+        /** @var Collection<int, array{group: ?string, label: ?string, items: Collection<int, SettingItem>}> $buckets */
+        $buckets = collect();
+
+        collect(SettingGroup::cases())
+            ->sortBy(fn (SettingGroup $group): int => $group->order())
+            ->each(function (SettingGroup $group) use ($items, $buckets): void {
+                $groupItems = $items
+                    ->filter(fn (SettingItem $item): bool => $item->group() === $group->value)
+                    ->values();
+
+                if ($groupItems->isNotEmpty()) {
+                    $buckets->push([
+                        'group' => $group->value,
+                        'label' => $group->getLabel(),
+                        'items' => $groupItems,
+                    ]);
+                }
+            });
+
+        $customGroups = $items
+            ->map(fn (SettingItem $item): ?string => $item->group())
+            ->filter(fn (?string $group): bool => $group !== null && SettingGroup::tryFrom($group) === null)
+            ->unique()
+            ->sort()
+            ->values();
+
+        foreach ($customGroups as $customGroup) {
+            $groupItems = $items
+                ->filter(fn (SettingItem $item): bool => $item->group() === $customGroup)
+                ->values();
+
+            $buckets->push([
+                'group' => $customGroup,
+                'label' => Str::headline($customGroup),
+                'items' => $groupItems,
+            ]);
+        }
+
+        $ungrouped = $items
+            ->filter(fn (SettingItem $item): bool => $item->group() === null)
+            ->values();
+
+        if ($ungrouped->isNotEmpty()) {
+            $buckets->push([
+                'group' => null,
+                'label' => null,
+                'items' => $ungrouped,
+            ]);
+        }
+
+        /** @phpstan-ignore return.type */
+        return $buckets;
     }
 
     /**
