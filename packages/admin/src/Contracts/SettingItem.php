@@ -19,4 +19,6 @@ interface SettingItem
     public function permission(): ?string;
 
     public function order(): int;
+
+    public function group(): ?string;
 }

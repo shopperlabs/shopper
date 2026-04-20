@@ -6,6 +6,7 @@ namespace Shopper\Settings\Items;
 
 use BackedEnum;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Enum\SettingGroup;
 use Shopper\Settings\Setting;
 
 final class TaxSetting extends Setting
@@ -33,5 +34,10 @@ final class TaxSetting extends Setting
     public function order(): int
     {
         return 8;
+    }
+
+    public function group(): string
+    {
+        return SettingGroup::Selling->value;
     }
 }

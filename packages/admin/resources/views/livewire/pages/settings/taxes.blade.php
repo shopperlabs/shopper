@@ -1,16 +1,5 @@
 <x-shopper::container>
-    <x-shopper::breadcrumb
-        :back="route('shopper.settings.index')"
-        :current="__('shopper::pages/settings/taxes.title')"
-    >
-        <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
-        <x-shopper::breadcrumb.link
-            :link="route('shopper.settings.index')"
-            :title="__('shopper::pages/settings/global.menu')"
-        />
-    </x-shopper::breadcrumb>
-
-    <div class="mt-10 lg:grid lg:grid-cols-3 lg:gap-x-12 lg:gap-y-6">
+    <div class="lg:grid lg:grid-cols-3 lg:gap-x-12 lg:gap-y-6">
         <aside class="lg:sticky lg:top-4">
             <x-shopper::card class="max-w-lg [&>div:first-of-type]:p-0">
                 <x-slot name="title">

@@ -58,6 +58,11 @@ final class StringIconSetting implements SettingItem
     {
         return 1;
     }
+
+    public function group(): ?string
+    {
+        return null;
+    }
 }
 
 final class ScalableIconSetting implements SettingItem
@@ -90,6 +95,11 @@ final class ScalableIconSetting implements SettingItem
     public function order(): int
     {
         return 0;
+    }
+
+    public function group(): ?string
+    {
+        return null;
     }
 }
 
@@ -124,6 +134,11 @@ final class PlainEnumIconSetting implements SettingItem
     {
         return 2;
     }
+
+    public function group(): ?string
+    {
+        return null;
+    }
 }
 
 final class UrlLessSetting implements SettingItem
@@ -156,6 +171,11 @@ final class UrlLessSetting implements SettingItem
     public function order(): int
     {
         return 3;
+    }
+
+    public function group(): ?string
+    {
+        return null;
     }
 }
 
