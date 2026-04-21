@@ -1,4 +1,8 @@
-<x-shopper::layouts.base :title="$title ?? null">
+@props([
+    'title' => null,
+])
+
+<x-shopper::layouts.base :$title>
     <div
         class="flex h-screen flex-col overflow-hidden"
         x-data

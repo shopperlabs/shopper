@@ -1,7 +1,4 @@
-<div x-data="{
-    options: ['role', 'users', 'permissions'],
-    currentTab: 'role',
-}" class="pb-10">
+<div class="pb-10">
     <x-shopper::container>
         <x-shopper::heading class="my-6" :title="$role->display_name">
             <x-slot name="action">
@@ -16,22 +13,31 @@
         </x-shopper::heading>
     </x-shopper::container>
 
-    <div class="relative border-t border-gray-200 dark:border-white/10">
-        <x-filament::tabs :contained="true">
-            <x-filament::tabs.item alpine-active="currentTab === 'role'" x-on:click="currentTab = 'role'">
+    <div class="mt-10">
+        <x-filament::tabs class="sh-tabs-underline">
+            <x-filament::tabs.item
+                :active="$activeTab === 'role'"
+                wire:click="$set('activeTab', 'role')"
+            >
                 {{ __('shopper::forms.label.role') }}
             </x-filament::tabs.item>
-            <x-filament::tabs.item alpine-active="currentTab === 'users'" x-on:click="currentTab = 'users'">
+            <x-filament::tabs.item
+                :active="$activeTab === 'users'"
+                wire:click="$set('activeTab', 'users')"
+            >
                 {{ __('shopper::words.users') }}
             </x-filament::tabs.item>
-            <x-filament::tabs.item alpine-active="currentTab === 'permissions'" x-on:click="currentTab = 'permissions'">
+            <x-filament::tabs.item
+                :active="$activeTab === 'permissions'"
+                wire:click="$set('activeTab', 'permissions')"
+            >
                 {{ __('shopper::pages/settings/staff.permissions') }}
             </x-filament::tabs.item>
         </x-filament::tabs>
     </div>
 
     <div class="mt-10">
-        <div x-show="currentTab === 'role'">
+        <div @class(['hidden' => $activeTab !== 'role'])>
             <x-shopper::container>
                 <div class="w-full space-y-6 lg:max-w-4xl">
                     @if (config('shopper.admin.roles.admin') === $role->name)
@@ -65,11 +71,11 @@
                 </div>
             </x-shopper::container>
         </div>
-        <div x-cloak x-show="currentTab === 'users'">
-            <livewire:shopper-settings.team.users :role="$role" />
-        </div>
-        <div x-cloak x-show="currentTab === 'permissions'">
-            <livewire:shopper-settings.team.permissions :role="$role" />
+        <x-shopper::container @class(['hidden' => $activeTab !== 'users'])>
+            <livewire:shopper-settings.team.administrators :$role />
+        </x-shopper::container>
+        <div @class(['hidden' => $activeTab !== 'permissions'])>
+            <livewire:shopper-settings.team.permissions :$role />
         </div>
     </div>
 

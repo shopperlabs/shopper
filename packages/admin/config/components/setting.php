@@ -38,13 +38,9 @@ return [
 
     'components' => [
         'settings.locations.form' => Components\Settings\Locations\InventoryForm::class,
-        'settings.legal.privacy' => Components\Settings\Legal\Privacy::class,
-        'settings.legal.refund' => Components\Settings\Legal\Refund::class,
-        'settings.legal.shipping' => Components\Settings\Legal\Shipping::class,
-        'settings.legal.terms' => Components\Settings\Legal\Terms::class,
         'settings.legal.form' => Components\Settings\Legal\PolicyForm::class,
+        'settings.team.administrators' => Components\Settings\Team\AdministratorsList::class,
         'settings.team.permissions' => Components\Settings\Team\Permissions::class,
-        'settings.team.users' => Components\Settings\Team\UsersRole::class,
         'settings.zones.detail' => Components\Settings\Zones\Detail::class,
         'settings.zones.shipping-options' => Components\Settings\Zones\ZoneShippingOptions::class,
         'settings.taxes.detail' => Components\Settings\Taxes\Detail::class,

@@ -6,6 +6,7 @@
     @else
         <div class="space-y-8">
             <livewire:shopper-dashboard.stat-cards />
+
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
                 <div class="lg:col-span-2">
                     <livewire:shopper-dashboard.revenue-chart />

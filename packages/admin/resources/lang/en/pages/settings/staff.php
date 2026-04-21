@@ -36,5 +36,10 @@ return [
     'permissions_in_role' => 'in :name role',
     'custom_permission' => 'Custom permission',
     'delete_team_member' => 'Are you sure you want to delete this member?',
+    'joined' => 'Joined',
+    'last_signed_in' => 'Last signed in',
+    'copy_user_id' => 'Copy user ID',
+    'view_profile' => 'View profile',
+    'delete_user' => 'Delete user',
 
 ];

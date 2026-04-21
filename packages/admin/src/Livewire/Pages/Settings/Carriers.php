@@ -122,7 +122,8 @@ class Carriers extends Component implements HasActions, HasSchemas, HasTable
 
     public function render(): View
     {
-        return view('shopper::livewire.pages.settings.carriers');
+        return view('shopper::livewire.pages.settings.carriers')
+            ->title(__('shopper::pages/settings/carriers.title'));
     }
 
     /**

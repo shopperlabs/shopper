@@ -42,6 +42,7 @@ return [
         'role_deleted' => 'Rôle supprimé avec succès',
         'role_added' => 'Un nouveau rôle a été ajouté avec succès',
         'admin_deleted' => 'Admin supprimé avec succès',
+        'user_id_copied' => 'Identifiant copié dans le presse-papiers',
         'permission_add' => 'Une nouvelle autorisation a été créée et ajoutée à ce rôle',
         'permission_revoke' => 'La permission :permission a été révoquée pour ce rôle',
         'permission_allow' => 'La permission :permission a été donnée à ce rôle',

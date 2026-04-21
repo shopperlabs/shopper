@@ -42,6 +42,7 @@ return [
         'role_added' => 'Se ha creado un rol exitosamente',
         'role_deleted' => 'Rol eliminado exitosamente.',
         'admin_deleted' => 'Administrador eliminado exitosamente',
+        'user_id_copied' => 'ID de usuario copiado al portapapeles',
         'permission_add' => 'Se ha creado un nuevo permiso y se ha añadido a este rol',
         'permission_revoke' => 'El permiso :permission ha sido revocado de este rol',
         'permission_allow' => 'El permiso :permission ha sido otorgado a este rol',

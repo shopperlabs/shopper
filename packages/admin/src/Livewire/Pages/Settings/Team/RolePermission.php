@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
@@ -34,7 +35,7 @@ use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
- * @property Schema $form
+ * @property-read Schema $form
  */
 #[Layout('shopper::components.layouts.setting')]
 class RolePermission extends Component implements HasActions, HasSchemas
@@ -48,6 +49,9 @@ class RolePermission extends Component implements HasActions, HasSchemas
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
+
+    #[Url(as: 'tab', except: '')]
+    public string $activeTab = 'role';
 
     public function settingsPageBreadcrumbs(): array
     {
@@ -170,7 +174,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
         return Action::make('createPermission')
             ->label(__('shopper::pages/settings/staff.create_permission'))
             ->icon(Untitledui::Lock04)
-            ->modalWidth(Width::ExtraLarge)
+            ->modalWidth(Width::Medium)
             ->modalHeading(__('shopper::modals.permissions.new'))
             ->modalDescription(__('shopper::modals.permissions.new_description'))
             ->modalSubmitActionLabel(__('shopper::forms.actions.save'))

@@ -122,7 +122,8 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
 
     public function render(): View
     {
-        return view('shopper::livewire.pages.settings.payment-methods');
+        return view('shopper::livewire.pages.settings.payment-methods')
+            ->title(__('shopper::pages/settings/payments.title'));
     }
 
     /**

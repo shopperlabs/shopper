@@ -1,32 +1,25 @@
-<div x-data="{
-    options: ['privacy', 'terms', 'shipping', 'refund'],
-    currentTab: 'privacy',
-}">
+<div>
     <x-shopper::container>
         <x-shopper::heading :title="__('shopper::pages/settings/global.legal.title')" />
     </x-shopper::container>
 
-    <div class="relative border-t border-gray-200 dark:border-white/10">
-        <x-filament::tabs :contained="true">
-            <x-filament::tabs.item alpine-active="currentTab === 'privacy'" x-on:click="currentTab = 'privacy'">
-                {{ __('shopper::pages/settings/global.legal.privacy') }}
-            </x-filament::tabs.item>
-            <x-filament::tabs.item alpine-active="currentTab === 'terms'" x-on:click="currentTab = 'terms'">
-                {{ __('shopper::pages/settings/global.legal.terms_of_use') }}
-            </x-filament::tabs.item>
-            <x-filament::tabs.item alpine-active="currentTab === 'shipping'" x-on:click="currentTab = 'shipping'">
-                {{ __('shopper::pages/settings/global.legal.shipping') }}
-            </x-filament::tabs.item>
-            <x-filament::tabs.item alpine-active="currentTab === 'refund'" x-on:click="currentTab = 'refund'">
-                {{ __('shopper::pages/settings/global.legal.refund') }}
-            </x-filament::tabs.item>
+    <div class="mt-10">
+        <x-filament::tabs class="sh-tabs-underline">
+            @foreach ($tabs as $tab)
+                <x-filament::tabs.item
+                    :active="$activeTab === $tab['key']"
+                    wire:click="$set('activeTab', '{{ $tab['key'] }}')"
+                >
+                    {{ $tab['label'] }}
+                </x-filament::tabs.item>
+            @endforeach
         </x-filament::tabs>
     </div>
 
     <x-shopper::container class="mt-8">
         @foreach ($legals as $key => $legal)
-            <div x-cloak x-show="currentTab === '{{ $key }}'">
-                @livewire('shopper-settings.legal.' . $key, ['legal' => $legal], key($key))
+            <div @class(['hidden' => $activeTab !== $key])>
+                <livewire:shopper-settings.legal.form :$legal :key="$key" />
             </div>
         @endforeach
     </x-shopper::container>
