@@ -142,6 +142,10 @@ final class CoreServiceProvider extends PackageServiceProvider
             'tax_zone' => config('shopper.models.tax_zone'),
             'tax_rate' => config('shopper.models.tax_rate'),
             'product_tag' => Models\ProductTag::class,
+            'country' => Models\Country::class,
+            'carrier' => Models\Carrier::class,
+            'carrier_option' => Models\CarrierOption::class,
+            'payment_method' => Models\PaymentMethod::class,
         ]);
     }
 }
