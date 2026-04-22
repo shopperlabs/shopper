@@ -42,6 +42,7 @@ return [
         'role_added' => 'A role has been successfully created',
         'role_deleted' => 'Role deleted successfully.',
         'admin_deleted' => 'Admin deleted successfully',
+        'user_id_copied' => 'User ID copied to clipboard',
         'permission_add' => 'A new permission has been create and add to this role',
         'permission_revoke' => 'Permission :permission has been revoked to this role',
         'permission_allow' => 'Permission :permission has been given to this role',

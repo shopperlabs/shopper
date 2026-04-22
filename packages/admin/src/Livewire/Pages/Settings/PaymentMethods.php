@@ -30,6 +30,7 @@ use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
+use Shopper\Payment\Enum\PaymentMode;
 use Shopper\Payment\Facades\Payment;
 use Shopper\Payment\Services\PaymentProcessingService;
 use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
@@ -60,7 +61,7 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
     {
         return Action::make('createPayment')
             ->label(__('shopper::pages/settings/payments.add_payment'))
-            ->modalWidth(Width::ExtraLarge)
+            ->modalWidth(Width::Large)
             ->modalHeading(__('shopper::pages/settings/payments.add_payment'))
             ->modalSubmitActionLabel(__('shopper::forms.actions.save'))
             ->schema($this->getPaymentFormSchema())
@@ -77,7 +78,7 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
     public function table(Table $table): Table
     {
         return $table
-            ->query(PaymentMethod::query()->latest())
+            ->query(PaymentMethod::query()->with('zones')->latest())
             ->columns([
                 ImageColumn::make('logo')
                     ->label(__('shopper::forms.label.logo'))
@@ -97,6 +98,19 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
                         Payment::isConfigured($state) => 'success',
                         default => 'warning',
                     }),
+                TextColumn::make('mode')
+                    ->label(__('shopper::words.mode'))
+                    ->badge()
+                    ->getStateUsing(
+                        fn (PaymentMethod $record): ?PaymentMode => $record->driver
+                            ? Payment::driver($record->driver)->mode()
+                            : null
+                    )
+                    ->placeholder('—'),
+                TextColumn::make('zones.name')
+                    ->label(__('shopper::words.zones'))
+                    ->badge()
+                    ->placeholder('—'),
                 ToggleColumn::make('is_enabled')
                     ->label(__('shopper::forms.label.status')),
                 TextColumn::make('updated_at')
@@ -122,7 +136,8 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
 
     public function render(): View
     {
-        return view('shopper::livewire.pages.settings.payment-methods');
+        return view('shopper::livewire.pages.settings.payment-methods')
+            ->title(__('shopper::pages/settings/payments.title'));
     }
 
     /**

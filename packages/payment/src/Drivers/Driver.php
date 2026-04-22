@@ -7,11 +7,17 @@ namespace Shopper\Payment\Drivers;
 use Shopper\Payment\Contracts\PaymentDriver;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
+use Shopper\Payment\Enum\PaymentMode;
 use Shopper\Payment\Exceptions\PaymentException;
 
 abstract class Driver implements PaymentDriver
 {
     public function logo(): ?string
+    {
+        return null;
+    }
+
+    public function mode(): ?PaymentMode
     {
         return null;
     }

@@ -38,7 +38,7 @@ describe(CreateTeamMember::class, function (): void {
                 'last_name' => 'Doe',
                 'gender' => 'male',
                 'phone_number' => '+1234567890',
-                'role_id' => $this->role->id,
+                'roles' => [$this->role->id],
                 'send_mail' => false,
             ])
             ->call('store')
@@ -65,7 +65,7 @@ describe(CreateTeamMember::class, function (): void {
                 'password' => 'required',
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'role_id' => 'required',
+                'roles' => 'required',
             ]);
     });
 
@@ -76,7 +76,7 @@ describe(CreateTeamMember::class, function (): void {
                 'password' => 'password123',
                 'first_name' => 'John',
                 'last_name' => 'Doe',
-                'role_id' => $this->role->id,
+                'roles' => [$this->role->id],
             ])
             ->call('store')
             ->assertHasFormErrors(['email' => 'email']);
@@ -89,7 +89,7 @@ describe(CreateTeamMember::class, function (): void {
                 'password' => 'plainpassword',
                 'first_name' => 'Jane',
                 'last_name' => 'Smith',
-                'role_id' => $this->role->id,
+                'roles' => [$this->role->id],
                 'send_mail' => false,
             ])
             ->call('store');
@@ -108,7 +108,7 @@ describe(CreateTeamMember::class, function (): void {
                 'password' => 'password123',
                 'first_name' => 'Bob',
                 'last_name' => 'Wilson',
-                'role_id' => $this->role->id,
+                'roles' => [$this->role->id],
                 'send_mail' => true,
             ])
             ->call('store');
@@ -127,7 +127,7 @@ describe(CreateTeamMember::class, function (): void {
                 'password' => 'password123',
                 'first_name' => 'Alice',
                 'last_name' => 'Johnson',
-                'role_id' => $this->role->id,
+                'roles' => [$this->role->id],
                 'send_mail' => false,
             ])
             ->call('store');
@@ -145,7 +145,7 @@ describe(CreateTeamMember::class, function (): void {
                 'password' => 'password123',
                 'first_name' => 'Role',
                 'last_name' => 'User',
-                'role_id' => $secondRole->id,
+                'roles' => [$secondRole->id],
                 'send_mail' => false,
             ])
             ->call('store');

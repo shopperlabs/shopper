@@ -12,6 +12,7 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Isolate;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
@@ -22,6 +23,7 @@ use Shopper\Traits\HandlesAuthorizationExceptions;
 /**
  * @property-read Zone $zone
  */
+#[Isolate]
 #[Lazy]
 class Detail extends Component implements HasActions, HasSchemas
 {
@@ -51,9 +53,9 @@ class Detail extends Component implements HasActions, HasSchemas
             ->iconButton()
             ->successNotificationTitle(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/zones.single')]))
             ->after(function (): void {
-                $this->reset('zone');
+                unset($this->zone);
 
-                $this->dispatch('refresh-zones');
+                $this->dispatch('zone-deleted');
             });
     }
 

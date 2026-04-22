@@ -1,78 +1,87 @@
 <x-shopper::container>
-    <div class="lg:grid lg:grid-cols-3 lg:gap-x-12 lg:gap-y-6">
-        <aside class="lg:sticky lg:top-4">
-            <x-shopper::card class="max-w-lg [&>div:first-of-type]:p-0">
+    <div class="space-y-2">
+        <x-shopper::heading :title="__('shopper::pages/settings/zones.title')">
+            <x-slot name="action">
+                <x-filament::button
+                    wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.zone-form' })"
+                    icon="untitledui-plus"
+                >
+                    {{ __('shopper::pages/settings/zones.add_action') }}
+                </x-filament::button>
+            </x-slot>
+        </x-shopper::heading>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+            {{ __('shopper::pages/settings/zones.description') }}
+        </p>
+    </div>
+
+    <div class="mt-8 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-6">
+        <aside class="lg:sticky lg:top-4 lg:self-start">
+            <x-shopper::card class="[&_.sh-card-content]:p-0 [&>div:first-of-type]:p-0">
                 <x-slot name="title">
-                    <div class="flex items-start justify-between gap-2 px-2">
-                        <x-shopper::section-heading
-                            :title="__('shopper::pages/settings/zones.title')"
-                            :description="__('shopper::pages/settings/zones.description')"
+                    <x-filament::input.wrapper prefix-icon="untitledui-search-md" inline-prefix>
+                        <x-filament::input
+                            type="search"
+                            wire:model.live.debounce.300ms="search"
+                            :placeholder="__('shopper::pages/settings/zones.search_placeholder')"
                         />
-                        <div class="flex h-7 items-center">
-                            <button
-                                type="button"
-                                wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.zone-form' })"
-                                title="{{ __('shopper::pages/settings/zones.add_action') }}"
-                                class="relative text-gray-400 hover:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:text-gray-400"
-                            >
-                                <span class="absolute -inset-2.5"></span>
-                                <span class="sr-only">Open Panel</span>
-                                <x-untitledui-plus class="size-6" aria-hidden="true" />
-                            </button>
-                        </div>
-                    </div>
+                    </x-filament::input.wrapper>
                 </x-slot>
 
                 <div class="divide-y divide-gray-200 dark:divide-white/10">
                     @forelse ($this->zones as $zone)
-                        <label
-                            wire:key="{{ $zone->slug }}"
-                            for="{{ $zone->slug }}"
-                            class="relative flex cursor-pointer bg-white p-4 focus:outline-none dark:bg-gray-900"
+                        @php
+                            $isSelected = (int) $currentZoneId === (int) $zone->id;
+                        @endphp
+                        <button
+                            type="button"
+                            wire:key="zone-{{ $zone->id }}"
+                            wire:click="$set('currentZoneId', {{ $zone->id }})"
+                            @class([
+                                'group flex w-full items-start gap-3 border-l-2 p-4 text-left transition',
+                                'border-l-gray-900 bg-gray-50 dark:border-l-white dark:bg-white/5' => $isSelected,
+                                'border-l-transparent hover:bg-gray-50/60 dark:hover:bg-white/5' => ! $isSelected,
+                            ])
                         >
-                            <x-filament::input.radio
-                                name="zone"
-                                value="{{ $zone->id }}"
-                                id="{{ $zone->slug }}"
-                                wire:model.live="currentZoneId"
-                                class="mt-0.5"
-                                aria-labelledby="zone-{{ $zone->id }}-label"
-                                aria-describedby="zone-{{ $zone->id }}-description"
-                            />
-                            <span class="ml-3 flex flex-col space-y-1">
-                                <span id="zone-{{ $zone->id }}-label" class="flex items-center gap-x-2">
-                                    <span
-                                        @class([
-                                            'block text-sm font-medium',
-                                            'text-primary-600 dark:text-primary-700' => $currentZoneId === $zone->id,
-                                            'text-gray-900 dark:text-white' => $currentZoneId !== $zone->id,
-                                        ])
-                                    >
-                                        {{ $zone->name }}
+                            <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-gray-100 ring-1 ring-gray-200 dark:ring-white/10 text-xs font-semibold text-gray-700 dark:bg-white/5 dark:text-gray-300">
+                                {{ $zone->code }}
+                            </div>
 
-                                        @if ($zone->code)
-                                            ({{ $zone->code }})
-                                        @endif
+                            <div class="min-w-0 flex-1 space-y-1.5">
+                                <div class="flex items-center gap-x-2">
+                                    <span class="text-sm font-semibold text-gray-900 dark:text-white">
+                                        {{ $zone->name }}
                                     </span>
-                                    <x-filament::badge size="sm" :color="$zone->isEnabled() ? 'success': 'warning'">
+                                    <x-filament::badge size="sm" :color="$zone->isEnabled() ? 'success' : 'gray'">
                                         {{ $zone->isEnabled() ? __('shopper::words.is_enabled') : __('shopper::words.is_disabled') }}
                                     </x-filament::badge>
-                                </span>
-                                <span
-                                    id="zone-{{ $zone->id }}-description"
-                                    class="block text-sm text-gray-500 dark:text-gray-400"
-                                >
-                                    <span class="text-gray-700 dark:text-gray-300">
-                                        {{ __('shopper::pages/settings/carriers.title') }}:
-                                    </span>
-                                    ({{ $zone->carriers_name }}) -
-                                    <span class="text-gray-700 dark:text-gray-300">
-                                        {{ __('shopper::forms.label.countries') }}:
-                                    </span>
-                                    ({{ $zone->countries_name }})
-                                </span>
-                            </span>
-                        </label>
+                                </div>
+
+                                <p class="text-xs text-gray-500 dark:text-gray-400">
+                                    {{ trans_choice('shopper::pages/settings/zones.countries_count', $zone->countries->count(), ['count' => $zone->countries->count()]) }}
+                                    @if ($zone->currency)
+                                        · {{ $zone->currency->code }}
+                                    @endif
+                                </p>
+
+                                @if ($zone->countries->isNotEmpty())
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        @foreach ($zone->countries->take(8) as $country)
+                                            <img
+                                                src="{{ $country->svg_flag }}"
+                                                alt="{{ $country->translated_name }}"
+                                                class="size-4 rounded-xs object-cover"
+                                            />
+                                        @endforeach
+                                        @if ($zone->countries->count() > 8)
+                                            <span class="ml-0.5 text-xs text-gray-400 dark:text-gray-500">
+                                                +{{ $zone->countries->count() - 8 }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                @endif
+                            </div>
+                        </button>
                     @empty
                         <x-shopper::empty-card
                             :heading="__('shopper::pages/settings/zones.empty_heading')"
@@ -82,6 +91,7 @@
                 </div>
             </x-shopper::card>
         </aside>
+
         <div class="mt-6 space-y-4 lg:col-span-2 lg:mt-0">
             @if ($currentZoneId)
                 <livewire:shopper-settings.zones.detail :$currentZoneId :key="$currentZoneId" />

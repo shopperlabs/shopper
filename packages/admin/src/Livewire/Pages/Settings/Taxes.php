@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Shopper\Core\Models\TaxZone;
@@ -37,13 +38,23 @@ class Taxes extends Component
     public function mount(): void
     {
         $this->authorize('system.settings');
+
+        if ($this->currentTaxZoneId === null) {
+            $this->currentTaxZoneId = $this->taxZones->first()?->id;
+        }
     }
 
     public function updatedCurrentTaxZoneId(int $value): void
     {
-        $this->currentTaxZoneId = $value;
-
         $this->dispatch('tax-zone.changed', currentTaxZoneId: $value);
+    }
+
+    #[On('tax-zone-deleted')]
+    public function onTaxZoneDeleted(): void
+    {
+        unset($this->taxZones);
+
+        $this->currentTaxZoneId = $this->taxZones->first()?->id;
     }
 
     /**
@@ -52,7 +63,9 @@ class Taxes extends Component
     #[Computed]
     public function taxZones(): Collection
     {
-        return TaxZone::with('country')->get();
+        return TaxZone::query()
+            ->with('country')
+            ->get();
     }
 
     public function render(): View

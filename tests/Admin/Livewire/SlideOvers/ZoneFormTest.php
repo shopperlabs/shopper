@@ -82,6 +82,7 @@ describe(ZoneForm::class, function (): void {
         Livewire::test(ZoneForm::class)
             ->fillForm([
                 'name' => 'North America',
+                'code' => 'NA',
                 'countries' => [$country->id],
                 'currency_id' => $currency->id,
                 'payments' => [$payment->id],
@@ -137,6 +138,7 @@ describe(ZoneForm::class, function (): void {
         Livewire::test(ZoneForm::class)
             ->fillForm([
                 'name' => 'Test Zone',
+                'code' => 'TZ',
                 'countries' => [$country->id],
                 'currency_id' => $currency->id,
                 'payments' => [$payment->id],

@@ -1,77 +1,63 @@
 <x-shopper::container>
-    <div class="lg:grid lg:grid-cols-3 lg:gap-x-12 lg:gap-y-6">
-        <aside class="lg:sticky lg:top-4">
-            <x-shopper::card class="max-w-lg [&>div:first-of-type]:p-0">
-                <x-slot name="title">
-                    <div class="flex items-start justify-between gap-2 px-2">
-                        <x-shopper::section-heading
-                            :title="__('shopper::pages/settings/taxes.title')"
-                            :description="__('shopper::pages/settings/taxes.description')"
-                        />
-                        <div class="flex h-7 items-center">
-                            <button
-                                type="button"
-                                wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.tax-zone-form' })"
-                                title="{{ __('shopper::pages/settings/taxes.add_action') }}"
-                                class="relative text-gray-400 hover:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:text-gray-400"
-                            >
-                                <span class="absolute -inset-2.5"></span>
-                                <span class="sr-only">{{ __('shopper::pages/settings/taxes.add_action') }}</span>
-                                <x-untitledui-plus class="size-6" aria-hidden="true" />
-                            </button>
-                        </div>
-                    </div>
-                </x-slot>
+    <div class="space-y-2">
+        <x-shopper::heading :title="__('shopper::pages/settings/taxes.title')">
+            <x-slot name="action">
+                <x-filament::button
+                    wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.tax-zone-form' })"
+                    icon="untitledui-plus"
+                >
+                    {{ __('shopper::pages/settings/taxes.add_action') }}
+                </x-filament::button>
+            </x-slot>
+        </x-shopper::heading>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+            {{ __('shopper::pages/settings/taxes.description') }}
+        </p>
+    </div>
 
+    <div class="mt-8 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-6">
+        <aside class="lg:sticky lg:top-4 lg:self-start">
+            <x-shopper::card class="[&_.sh-card-content]:p-0 [&>div:first-of-type]:p-0">
                 <div class="divide-y divide-gray-200 dark:divide-white/10">
                     @forelse ($this->taxZones as $taxZone)
-                        <label
+                        @php
+                            $isSelected = (int) $currentTaxZoneId === (int) $taxZone->id;
+                        @endphp
+                        <button
+                            type="button"
                             wire:key="tax-zone-{{ $taxZone->id }}"
-                            for="tax-zone-{{ $taxZone->id }}"
-                            class="relative flex cursor-pointer bg-white p-4 focus:outline-none dark:bg-gray-900"
+                            wire:click="$set('currentTaxZoneId', {{ $taxZone->id }})"
+                            @class([
+                                'group flex w-full items-start gap-4 border-l-2 p-4 text-left transition',
+                                'border-l-gray-900 bg-gray-50 dark:border-l-white dark:bg-white/5' => $isSelected,
+                                'border-l-transparent hover:bg-gray-50/60 dark:hover:bg-white/5' => ! $isSelected,
+                            ])
                         >
-                            <x-filament::input.radio
-                                name="taxZone"
-                                value="{{ $taxZone->id }}"
-                                id="tax-zone-{{ $taxZone->id }}"
-                                wire:model.live="currentTaxZoneId"
-                                class="mt-0.5"
-                                aria-labelledby="tax-zone-{{ $taxZone->id }}-label"
-                                aria-describedby="tax-zone-{{ $taxZone->id }}-description"
+                            <img
+                                src="{{ $taxZone->country->svg_flag }}"
+                                alt="{{ $taxZone->country->translated_name }}"
+                                class="size-6 shrink-0 rounded-full object-cover"
                             />
-                            <span class="ml-3 flex flex-col space-y-1">
-                                <span id="tax-zone-{{ $taxZone->id }}-label" class="flex items-center gap-x-2">
-                                    <img
-                                        src="{{ $taxZone->country->svg_flag }}"
-                                        alt="{{ $taxZone->country->translated_name }}"
-                                        class="size-5 shrink-0 rounded-full object-cover"
-                                    />
-                                    <span
-                                        @class([
-                                            'block text-sm font-medium',
-                                            'text-primary-600 dark:text-primary-700' => $currentTaxZoneId === $taxZone->id,
-                                            'text-gray-900 dark:text-white' => $currentTaxZoneId !== $taxZone->id,
-                                        ])
-                                    >
+
+                            <div class="min-w-0 flex-1 space-y-1.5">
+                                <div class="flex items-center gap-x-2">
+                                    <span class="text-sm font-semibold text-gray-900 dark:text-white">
                                         {{ $taxZone->display_name }}
                                     </span>
-                                    <x-filament::badge size="sm" :color="$taxZone->is_tax_inclusive ? 'success': 'warning'">
+                                    <x-filament::badge size="sm" :color="$taxZone->is_tax_inclusive ? 'success' : 'warning'">
                                         {{ $taxZone->is_tax_inclusive
                                             ? __('shopper::pages/settings/taxes.inclusive')
                                             : __('shopper::pages/settings/taxes.exclusive')
                                         }}
                                     </x-filament::badge>
-                                </span>
+                                </div>
                                 @if ($taxZone->province_code)
-                                    <span
-                                        id="tax-zone-{{ $taxZone->id }}-description"
-                                        class="block text-xs text-gray-500 dark:text-gray-400"
-                                    >
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">
                                         {{ $taxZone->province_code }}
-                                    </span>
+                                    </p>
                                 @endif
-                            </span>
-                        </label>
+                            </div>
+                        </button>
                     @empty
                         <x-shopper::empty-card
                             :heading="__('shopper::pages/settings/taxes.empty_heading')"
@@ -81,6 +67,7 @@
                 </div>
             </x-shopper::card>
         </aside>
+
         <div class="mt-6 space-y-4 lg:col-span-2 lg:mt-0">
             @if ($currentTaxZoneId)
                 <livewire:shopper-settings.taxes.detail :$currentTaxZoneId :key="$currentTaxZoneId" />

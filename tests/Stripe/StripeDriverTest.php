@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
+use Shopper\Payment\Enum\PaymentMode;
 use Shopper\Stripe\Exceptions\StripeException;
 use Shopper\Stripe\StripeDriver;
 use Stripe\Exception\InvalidRequestException;
@@ -86,6 +87,19 @@ describe(StripeDriver::class, function (): void {
 
         it('is not configured when secret key is empty', function (): void {
             expect(createDriver(secretKey: '')->isConfigured())->toBeFalse();
+        });
+
+        it('reports test mode when secret key starts with `sk_test_`', function (): void {
+            expect(createDriver(secretKey: 'sk_test_abcdef')->mode())->toBe(PaymentMode::Test);
+        });
+
+        it('reports live mode when secret key starts with `sk_live_`', function (): void {
+            expect(createDriver(secretKey: 'sk_live_abcdef')->mode())->toBe(PaymentMode::Live);
+        });
+
+        it('reports no mode when secret key is empty or unrecognised', function (): void {
+            expect(createDriver(secretKey: '')->mode())->toBeNull()
+                ->and(createDriver(secretKey: 'pk_test_something')->mode())->toBeNull();
         });
 
         it('supports webhooks', function (): void {

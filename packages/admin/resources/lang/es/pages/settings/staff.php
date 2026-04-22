@@ -36,5 +36,10 @@ return [
     'permissions_in_role' => 'en rol :name',
     'custom_permission' => 'Permiso personalizado',
     'delete_team_member' => '¿Estás seguro de que deseas eliminar este miembro?',
+    'joined' => 'Se unió',
+    'last_signed_in' => 'Último inicio de sesión',
+    'copy_user_id' => 'Copiar ID de usuario',
+    'view_profile' => 'Ver perfil',
+    'delete_user' => 'Eliminar usuario',
 
 ];

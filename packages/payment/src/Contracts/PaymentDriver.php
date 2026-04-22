@@ -6,6 +6,7 @@ namespace Shopper\Payment\Contracts;
 
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
+use Shopper\Payment\Enum\PaymentMode;
 
 interface PaymentDriver
 {
@@ -16,6 +17,12 @@ interface PaymentDriver
     public function logo(): ?string;
 
     public function isConfigured(): bool;
+
+    /**
+     * Return the live/test mode of the driver, or null when the driver has no
+     * such notion (manual providers, unconfigured drivers).
+     */
+    public function mode(): ?PaymentMode;
 
     public function supportsWebhooks(): bool;
 

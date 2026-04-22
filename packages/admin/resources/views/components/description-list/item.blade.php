@@ -7,7 +7,7 @@
 ])
 
 <div
-    {{ $attributes->twMerge(['class' => 'flex items-start space-x-3 overflow-hidden']) }}
+    {{ $attributes->twMerge(['class' => 'flex items-start space-x-3']) }}
 >
     @if ($icon)
         @svg($icon, 'mt-0.5 size-5 text-gray-400 dark:text-gray-500', ['aria-hidden' => true])

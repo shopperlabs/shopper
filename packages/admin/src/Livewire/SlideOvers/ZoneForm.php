@@ -116,7 +116,10 @@ class ZoneForm extends SlideOverComponent implements HasActions, HasSchemas, Sli
                         Hidden::make('slug'),
                         TextInput::make('code')
                             ->label(__('shopper::forms.label.code'))
-                            ->placeholder('AF'),
+                            ->placeholder('AF')
+                            ->required()
+                            ->maxLength(10)
+                            ->unique(table: Zone::class, column: 'code', ignoreRecord: true),
                     ]),
                 Select::make('countries')
                     ->label(__('shopper::forms.label.countries'))
