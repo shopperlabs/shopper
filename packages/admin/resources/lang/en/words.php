@@ -7,6 +7,8 @@ return [
     'account' => 'Account',
     'users' => 'Users',
     'user' => 'User',
+    'zones' => 'Zones',
+    'mode' => 'Mode',
     'system' => 'System',
     'catalog' => 'Catalog',
     'sales' => 'Sales',

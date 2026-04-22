@@ -58,7 +58,7 @@ class LegalPage extends Component
         return $legals
             ->map(fn (Legal $legal, string $slug): array => [
                 'key' => $slug,
-                'label' => __("shopper::pages/settings/global.legal." . (PolicyForm::SLUG_TRANSLATION_KEYS[$slug] ?? $slug)),
+                'label' => __('shopper::pages/settings/global.legal.'.(PolicyForm::SLUG_TRANSLATION_KEYS[$slug] ?? $slug)),
             ])
             ->values()
             ->all();

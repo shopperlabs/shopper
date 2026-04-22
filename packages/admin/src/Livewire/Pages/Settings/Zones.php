@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Shopper\Core\Models\Zone;
@@ -27,6 +28,9 @@ class Zones extends Component
     #[Url(as: 'zone', except: '')]
     public ?int $currentZoneId = null;
 
+    #[Url(as: 'q', except: '')]
+    public string $search = '';
+
     public function settingsPageBreadcrumbs(): array
     {
         return [
@@ -37,13 +41,23 @@ class Zones extends Component
     public function mount(): void
     {
         $this->authorize('system.settings');
+
+        if ($this->currentZoneId === null) {
+            $this->currentZoneId = $this->zones->first()?->id;
+        }
     }
 
     public function updatedCurrentZoneId(int $value): void
     {
-        $this->currentZoneId = $value;
-
         $this->dispatch('zone.changed', currentZoneId: $value);
+    }
+
+    #[On('zone-deleted')]
+    public function onZoneDeleted(): void
+    {
+        unset($this->zones);
+
+        $this->currentZoneId = $this->zones->first()?->id;
     }
 
     /**
@@ -52,7 +66,16 @@ class Zones extends Component
     #[Computed]
     public function zones(): Collection
     {
-        return Zone::with(['carriers', 'countries'])->get();
+        return Zone::query()
+            ->with(['countries', 'currency'])
+            ->when(
+                $this->search,
+                fn ($query) => $query->where(
+                    fn ($q) => $q->where('name', 'like', "%{$this->search}%")
+                        ->orWhereHas('countries', fn ($c) => $c->where('name', 'like', "%{$this->search}%"))
+                )
+            )
+            ->get();
     }
 
     public function render(): View

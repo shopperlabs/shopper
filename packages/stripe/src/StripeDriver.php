@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Drivers\Driver;
+use Shopper\Payment\Enum\PaymentMode;
 use Shopper\Stripe\Exceptions\StripeException;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\SignatureVerificationException;
@@ -43,6 +44,15 @@ final class StripeDriver extends Driver
     public function isConfigured(): bool
     {
         return filled($this->secretKey);
+    }
+
+    public function mode(): ?PaymentMode
+    {
+        return match (true) {
+            str_starts_with($this->secretKey, 'sk_test_') => PaymentMode::Test,
+            str_starts_with($this->secretKey, 'sk_live_') => PaymentMode::Live,
+            default => null,
+        };
     }
 
     public function publishableKey(): string

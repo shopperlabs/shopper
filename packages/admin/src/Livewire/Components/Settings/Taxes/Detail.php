@@ -12,6 +12,7 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Isolate;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
@@ -22,6 +23,7 @@ use Shopper\Traits\HandlesAuthorizationExceptions;
 /**
  * @property-read ?TaxZone $taxZone
  */
+#[Isolate]
 #[Lazy]
 class Detail extends Component implements HasActions, HasSchemas
 {
@@ -49,7 +51,7 @@ class Detail extends Component implements HasActions, HasSchemas
             ->after(function (): void {
                 unset($this->taxZone);
 
-                $this->redirectRoute('shopper.settings.taxes');
+                $this->dispatch('tax-zone-deleted');
             });
     }
 

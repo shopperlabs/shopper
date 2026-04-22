@@ -8,6 +8,8 @@ return [
     'single' => 'Zona',
     'description' => 'Las zonas representan los mercados en los que operarás.',
     'add_action' => 'Añadir zona',
+    'search_placeholder' => 'Buscar zona o país',
+    'countries_count' => '1 país|:count países',
     'empty_heading' => 'Sin zonas',
     'providers' => 'Proveedores',
     'providers_description' => 'Añade los métodos de entrega y pago que deberían estar disponibles en esta área.',

@@ -1,5 +1,5 @@
 <div>
-    <x-shopper::container>
+    <x-shopper::container class="space-y-8">
         <x-shopper::heading :title="__('shopper::pages/settings/carriers.title')">
             <x-slot name="action">
                 {{ $this->createCarrierAction }}

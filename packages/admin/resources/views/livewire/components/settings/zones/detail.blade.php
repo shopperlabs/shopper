@@ -34,16 +34,50 @@
                     :heading="__('shopper::forms.label.countries')"
                     :content="$zone->countries_name"
                 />
+
                 <x-shopper::description-list.item
                     icon="phosphor-credit-card"
                     :heading="__('shopper::pages/settings/payments.title')"
-                    :content="$zone->payments_name"
-                />
+                >
+                    <div class="flex flex-wrap gap-x-3 gap-y-1.5">
+                        @foreach ($zone->paymentMethods as $paymentMethod)
+                            <span class="inline-flex ring-1 px-2 py-1 bg-white shadow-xs ring-gray-200 rounded-md dark:bg-gray-900 dark:ring-white/10 items-center gap-1.5">
+                                @if ($paymentMethod->logo())
+                                    <img
+                                        src="{{ $paymentMethod->logo() }}"
+                                        alt="{{ $paymentMethod->title }}"
+                                        class="size-4 shrink-0 object-contain"
+                                    />
+                                @else
+                                    <x-untitledui-credit-card-02 class="size-4 shrink-0 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                                @endif
+                                {{ $paymentMethod->title }}
+                            </span>
+                        @endforeach
+                    </div>
+                </x-shopper::description-list.item>
+
                 <x-shopper::description-list.item
                     icon="phosphor-truck-trailer"
                     :heading="__('shopper::pages/settings/carriers.title')"
-                    :content="$zone->carriers_name"
-                />
+                >
+                    <div class="flex flex-wrap gap-x-3 gap-y-1.5">
+                        @foreach ($zone->carriers as $carrier)
+                            <span class="inline-flex ring-1 px-2 py-1 bg-white shadow-xs ring-gray-200 rounded-md dark:bg-gray-900 dark:ring-white/10 items-center gap-1.5">
+                                @if ($carrier->logo())
+                                    <img
+                                        src="{{ $carrier->logo() }}"
+                                        alt="{{ $carrier->name }}"
+                                        class="size-4 shrink-0 object-contain"
+                                    />
+                                @else
+                                    <x-untitledui-truck class="size-4 shrink-0 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                                @endif
+                                {{ $carrier->name }}
+                            </span>
+                        @endforeach
+                    </div>
+                </x-shopper::description-list.item>
                 <div class="lg:col-span-2" wire:ignore>
                     <x-shopper::description-list.item icon="phosphor-brackets-curly" :heading="__('Metadata')">
                         <x-shopper::code-preview
