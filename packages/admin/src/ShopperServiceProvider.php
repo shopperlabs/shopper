@@ -12,6 +12,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
+use Filament\Support\Facades\FilamentView;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -212,6 +213,8 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
     protected function registerCustomFilamentItems(): void
     {
+        FilamentView::spa();
+
         FilamentColor::register([
             'primary' => config('shopper.admin.primary_color'),
             'teal' => Color::Teal,

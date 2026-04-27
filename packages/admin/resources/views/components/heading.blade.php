@@ -1,5 +1,9 @@
 @blaze
 
+@props([
+    'title' => null,
+])
+
 <div
     {{ $attributes->twMerge(['class' => 'space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0']) }}
 >

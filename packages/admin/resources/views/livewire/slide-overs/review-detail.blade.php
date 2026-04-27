@@ -111,19 +111,25 @@
                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/products.reviews.approved_status') }}
                             </dt>
-                            <dd
-                                class="flex items-center justify-between space-x-4 text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white"
-                            >
+                            <dd class="flex items-center text-sm text-gray-900 sm:col-span-2 sm:mt-0 dark:text-white">
                                 <x-filament::badge :color="$review->approved ? 'success': 'warning'">
                                     {{ $review->approved ? __('shopper::pages/products.reviews.published') : __('shopper::pages/products.reviews.pending') }}
                                 </x-filament::badge>
-
-                                {{ $this->approvedAction }}
                             </dd>
                         </div>
                     </dl>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="flex shrink-0 flex-wrap items-center justify-end gap-2 border-t border-gray-200 px-4 py-4 dark:border-white/10">
+        {{ $this->markAsSpamAction }}
+
+        @if ($review->approved)
+            {{ $this->rejectAction }}
+        @else
+            {{ $this->approveAction }}
+        @endif
     </div>
 </x-shopper::slideover-card>
