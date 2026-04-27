@@ -13,7 +13,7 @@ uses(Tests\Admin\TestCase::class);
 beforeEach(function (): void {
 
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo(['reviews.browse', 'reviews.edit']);
+    $this->user->givePermissionTo(['reviews.browse', 'reviews.edit', 'reviews.delete']);
     $this->actingAs($this->user);
 
     $this->customer = User::factory()->create();
@@ -43,11 +43,11 @@ describe(ReviewDetail::class, function (): void {
             ->and($component->get('review')->reviewrateable)->not->toBeNull();
     });
 
-    it('can approve review via action', function (): void {
+    it('can approve a pending review', function (): void {
         expect($this->review->approved)->toBeFalse();
 
         Livewire::test(ReviewDetail::class, ['review' => $this->review])
-            ->callAction('approved')
+            ->callAction('approve')
             ->assertRedirect(route('shopper.reviews.index'));
 
         $this->review->refresh();
@@ -55,13 +55,13 @@ describe(ReviewDetail::class, function (): void {
         expect($this->review->approved)->toBeTrue();
     });
 
-    it('can disapprove review via action', function (): void {
+    it('can reject an approved review', function (): void {
         $this->review->update(['approved' => true]);
 
         expect($this->review->approved)->toBeTrue();
 
         Livewire::test(ReviewDetail::class, ['review' => $this->review])
-            ->callAction('approved')
+            ->callAction('reject')
             ->assertRedirect(route('shopper.reviews.index'));
 
         $this->review->refresh();
@@ -69,15 +69,45 @@ describe(ReviewDetail::class, function (): void {
         expect($this->review->approved)->toBeFalse();
     });
 
-    it('sends notification after toggling approved status', function (): void {
+    it('can flag a review as spam', function (): void {
         Livewire::test(ReviewDetail::class, ['review' => $this->review])
-            ->callAction('approved')
+            ->callAction('markAsSpam')
+            ->assertRedirect(route('shopper.reviews.index'))
+            ->assertDispatched('review-flagged-as-spam');
+
+        $this->review->refresh();
+
+        expect($this->review->approved)->toBeFalse();
+    });
+
+    it('sends notification when approving a review', function (): void {
+        Livewire::test(ReviewDetail::class, ['review' => $this->review])
+            ->callAction('approve')
             ->assertNotified();
     });
 
-    it('redirects to reviews index after action', function (): void {
+    it('dispatches review-approved event after approval', function (): void {
         Livewire::test(ReviewDetail::class, ['review' => $this->review])
-            ->callAction('approved')
-            ->assertRedirect(route('shopper.reviews.index'));
+            ->callAction('approve')
+            ->assertDispatched('review-approved');
+    });
+
+    it('hides the approve action when the user lacks `reviews.edit`', function (): void {
+        $browseOnly = User::factory()->create();
+        $browseOnly->givePermissionTo('reviews.browse');
+        $this->actingAs($browseOnly);
+
+        Livewire::test(ReviewDetail::class, ['review' => $this->review])
+            ->assertActionHidden('approve')
+            ->assertActionHidden('reject');
+    });
+
+    it('hides the markAsSpam action when the user lacks `reviews.delete`', function (): void {
+        $editor = User::factory()->create();
+        $editor->givePermissionTo(['reviews.browse', 'reviews.edit']);
+        $this->actingAs($editor);
+
+        Livewire::test(ReviewDetail::class, ['review' => $this->review])
+            ->assertActionHidden('markAsSpam');
     });
 })->group('livewire', 'slideovers', 'products');
