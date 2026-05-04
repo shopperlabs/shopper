@@ -23,4 +23,8 @@ final class CustomerRenderHook
     public const string SHOW_CONTENT_BEFORE = 'shopper::customer.show.content.before';
 
     public const string SHOW_CONTENT_AFTER = 'shopper::customer.show.content.after';
+
+    public const string SHOW_SIDEBAR_BEFORE = 'shopper::customer.show.sidebar.before';
+
+    public const string SHOW_SIDEBAR_AFTER = 'shopper::customer.show.sidebar.after';
 }

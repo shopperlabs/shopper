@@ -17,6 +17,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Order;
@@ -31,6 +32,7 @@ class Orders extends Component implements HasActions, HasSchemas, HasTable
     use InteractsWithTable;
 
     /** @var Model&ShopperUser */
+    #[Locked]
     public ShopperUser $customer;
 
     public function table(Table $table): Table

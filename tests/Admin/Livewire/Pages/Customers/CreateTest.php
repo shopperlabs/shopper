@@ -26,6 +26,14 @@ describe(Create::class, function (): void {
             ->assertViewIs('shopper::livewire.pages.customers.create');
     });
 
+    it('requires customers.create permission', function (): void {
+        $unprivileged = User::factory()->create();
+        $this->actingAs($unprivileged);
+
+        Livewire::test(Create::class)
+            ->assertForbidden();
+    });
+
     it('can create a customer successfully', function (): void {
         $password = 'secure-password-123';
 

@@ -7,6 +7,7 @@ return [
     'menu' => 'Customers',
     'single' => 'customer',
     'title' => 'Manage customer orders & details',
+    'description' => 'Browse profiles, track lifetime activity, and manage every account from one place.',
     'content' => 'This is where you can manage your customer information and view their purchase history.',
 
     'overview' => 'Profile overview',
@@ -24,6 +25,60 @@ return [
 
     'period' => 'Customer for :period',
 
+    'stats' => [
+        'total' => 'Total customers',
+        'total_subtitle' => 'All registered accounts',
+        'new' => 'New customers',
+        'new_30_days' => 'in the last 30 days',
+        'new_empty' => 'No new customers in 30 days',
+        'active' => 'Active customers',
+        'active_subtitle' => 'placed at least one paid order',
+        'active_empty' => 'No active customers yet',
+        'avg_ltv' => 'Average lifetime value',
+        'avg_ltv_subtitle' => 'Average revenue per active customer',
+        'avg_ltv_empty' => 'Awaiting first paid order',
+    ],
+
+    'header' => [
+        'since' => 'Customer since :date',
+        'orders_count' => '{0} no orders|{1} :count order|[2,*] :count orders',
+        'id' => 'Customer ID #:id',
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+        'previous' => 'Previous customer',
+        'next' => 'Next customer',
+        'last_order' => 'Last order :time',
+    ],
+
+    'details' => [
+        'title' => 'Customer details',
+        'id' => 'Customer ID',
+        'copy_id' => 'Copy customer ID',
+        'copied' => 'Copied to clipboard',
+        'created' => 'Created',
+        'email_status' => 'Email',
+        'email_verified' => 'Verified',
+        'email_unverified' => 'Unverified',
+        'marketing_on' => 'Subscribed',
+        'marketing_off' => 'Unsubscribed',
+        'two_factor_on' => 'Enabled',
+        'two_factor_off' => 'Disabled',
+    ],
+
+    'contact' => [
+        'title' => 'Contact information',
+        'no_phone' => 'No phone number on file',
+    ],
+
+    'default_address' => [
+        'title' => 'Default address',
+        'empty' => 'This customer has no address on file.',
+    ],
+
+    'create' => [
+        'description' => 'Create a customer account, set credentials, and optionally send a welcome email with their login details.',
+    ],
+
     'modal' => [
         'title' => 'Archived this customer',
         'description' => 'Are you sure you want to deactivate this customer? All of his data (orders & addresses) will be permanently removed from your store forever. This action cannot be undone.',
@@ -35,17 +90,23 @@ return [
         'description' => 'All your customer\'s public information can be found here.',
         'account' => 'Account',
         'account_description' => 'Manage how information is used on the customer account.',
-        'marketing' => 'Email Marketing',
-        'two_factor' => 'Two-Factor Authentication',
+        'marketing' => 'Marketing emails',
+        'two_factor' => 'Two-factor auth',
     ],
 
     'addresses' => [
         'title' => 'Addresses',
         'shipping' => 'Shipping Address',
         'billing' => 'Billing Address',
-        'default' => 'Default address',
+        'shipping_section' => 'Shipping addresses',
+        'billing_section' => 'Billing addresses',
+        'default' => 'Default',
         'customer' => 'Customer addresses',
         'empty_text' => 'This customer does not yet have a delivery or billing address.',
+        'shipping_empty_title' => 'No shipping address',
+        'shipping_empty' => 'This customer has not registered any shipping address yet.',
+        'billing_empty_title' => 'No billing address',
+        'billing_empty' => 'This customer has not registered any billing address yet.',
     ],
 
     'orders' => [

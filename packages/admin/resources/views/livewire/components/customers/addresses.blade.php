@@ -1,60 +1,51 @@
-<x-shopper::container>
-    <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
-        @forelse ($this->addresses as $address)
+<x-shopper::container class="space-y-8">
+    <section class="space-y-3">
+        <h4 class="text-sh-fg text-sm font-semibold">
+            {{ __('shopper::pages/customers.addresses.shipping_section') }}
+        </h4>
+
+        @if ($this->shippingAddresses->isEmpty())
             <x-shopper::card>
-                <div class="min-w-0 flex-1">
-                    <div class="focus:outline-none">
-                        <div class="flex items-center justify-between space-x-2">
-                            <span class="inline-flex text-xs leading-4 text-gray-500 dark:text-gray-400">
-                                {{
-                                    $address->type === \Shopper\Core\Enum\AddressType::Shipping
-                                        ? __('shopper::pages/customers.addresses.shipping')
-                                        : __('shopper::pages/customers.addresses.billing')
-                                }}
-                            </span>
-                        </div>
-                        <h4 class="mt-1 block text-sm font-medium text-gray-900 dark:text-white">
-                            {{ $address->full_name }}
-                        </h4>
-                        <div class="mt-1 text-sm">
-                            <p class="text-gray-500 dark:text-gray-400">
-                                {{ $address->street_address }}
-                            </p>
-                            <div
-                                class="mt-1 flex flex-col space-y-0.5 truncate text-sm text-gray-500 dark:text-gray-400"
-                            >
-                                <span>
-                                    {{ $address->postal_code }},
-                                    {{ $address->city }}
-                                </span>
-
-                                @if ($address->country)
-                                    <span class="inline-flex shrink-0 items-center gap-2">
-                                        <img
-                                            src="{{ $address->country->svg_flag }}"
-                                            class="size-4 rounded-full object-cover object-center"
-                                            alt="Country flag"
-                                        />
-                                        {{ $address->country->translated_name }}
-                                    </span>
-                                @endif
-
-                                @if ($address->phone_number)
-                                    <span>{{ $address->phone_number }}</span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </x-shopper::card>
-        @empty
-            <x-shopper::card class="sm:col-span-3">
                 <x-shopper::empty-card
-                    icon="heroicon-o-map"
-                    :heading="__('shopper::pages/customers.addresses.customer')"
-                    :description="__('shopper::pages/customers.addresses.empty_text')"
+                    icon="untitledui-truck"
+                    :heading="__('shopper::pages/customers.addresses.shipping_empty_title')"
+                    :description="__('shopper::pages/customers.addresses.shipping_empty')"
                 />
             </x-shopper::card>
-        @endforelse
-    </div>
+        @else
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($this->shippingAddresses as $address)
+                    @include('shopper::livewire.components.customers._address-card', [
+                        'address' => $address,
+                        'isDefault' => $address->shipping_default,
+                    ])
+                @endforeach
+            </div>
+        @endif
+    </section>
+
+    <section class="space-y-3">
+        <h4 class="text-sh-fg text-sm font-semibold">
+            {{ __('shopper::pages/customers.addresses.billing_section') }}
+        </h4>
+
+        @if ($this->billingAddresses->isEmpty())
+            <x-shopper::card>
+                <x-shopper::empty-card
+                    icon="untitledui-credit-card-02"
+                    :heading="__('shopper::pages/customers.addresses.billing_empty_title')"
+                    :description="__('shopper::pages/customers.addresses.billing_empty')"
+                />
+            </x-shopper::card>
+        @else
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($this->billingAddresses as $address)
+                    @include('shopper::livewire.components.customers._address-card', [
+                        'address' => $address,
+                        'isDefault' => $address->billing_default,
+                    ])
+                @endforeach
+            </div>
+        @endif
+    </section>
 </x-shopper::container>

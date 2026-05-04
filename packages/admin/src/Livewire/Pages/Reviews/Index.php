@@ -21,7 +21,6 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
@@ -62,7 +61,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
     public function stats(): array
     {
         /** @var object{total: int, pending: int, average: float|string|null, five_star_count: int, recommended_count: int, this_month: int}|null $row */
-        $row = DB::table(shopper_table('reviews'))
+        $row = Review::query()
             ->selectRaw(
                 'COUNT(*) as total,
                  COUNT(CASE WHEN NOT approved THEN 1 END) as pending,
