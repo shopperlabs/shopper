@@ -1,12 +1,16 @@
-<x-shopper::container class="py-5">
-    <x-shopper::heading
-        class="pt-6"
-        :title="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')])"
-    />
+<x-shopper::container class="space-y-8 py-5">
+    <div class="space-y-2">
+        <x-shopper::heading
+            :title="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')])"
+        />
+        <p class="text-sh-fg-secondary max-w-2xl text-sm">
+            {{ __('shopper::pages/customers.create.description') }}
+        </p>
+    </div>
 
     {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::CREATE_FORM_BEFORE) }}
 
-    <form wire:submit="store" class="mt-10">
+    <form wire:submit="store">
         {{ $this->form }}
 
         <div class="mt-10 border-t border-gray-200 pt-10 dark:border-white/20">

@@ -7,6 +7,7 @@ return [
     'menu' => 'Clients',
     'single' => 'client',
     'title' => 'Gérer les commandes et les détails des clients',
+    'description' => 'Parcourez les profils, suivez l\'activité au fil du temps et gérez chaque compte depuis un seul endroit.',
     'content' => 'C\'est ici que vous pouvez gérer les informations de vos clients et consulter leur historique d\'achat.',
 
     'overview' => 'Aperçu du profil',
@@ -24,6 +25,60 @@ return [
 
     'period' => 'Client depuis :period',
 
+    'stats' => [
+        'total' => 'Total clients',
+        'total_subtitle' => 'Tous les comptes enregistrés',
+        'new' => 'Nouveaux clients',
+        'new_30_days' => 'sur les 30 derniers jours',
+        'new_empty' => 'Aucun nouveau client sur 30 jours',
+        'active' => 'Clients actifs',
+        'active_subtitle' => 'ont passé au moins une commande payée',
+        'active_empty' => 'Aucun client actif pour le moment',
+        'avg_ltv' => 'Valeur moyenne sur la durée',
+        'avg_ltv_subtitle' => 'Revenu moyen par client actif',
+        'avg_ltv_empty' => 'En attente de la première commande payée',
+    ],
+
+    'header' => [
+        'since' => 'Client depuis le :date',
+        'orders_count' => '{0} aucune commande|{1} :count commande|[2,*] :count commandes',
+        'id' => 'ID client #:id',
+        'active' => 'Actif',
+        'inactive' => 'Inactif',
+        'previous' => 'Client précédent',
+        'next' => 'Client suivant',
+        'last_order' => 'Dernière commande :time',
+    ],
+
+    'details' => [
+        'title' => 'Informations client',
+        'id' => 'ID client',
+        'copy_id' => 'Copier l\'ID client',
+        'copied' => 'Copié dans le presse-papiers',
+        'created' => 'Créé le',
+        'email_status' => 'Email',
+        'email_verified' => 'Vérifié',
+        'email_unverified' => 'Non vérifié',
+        'marketing_on' => 'Abonné',
+        'marketing_off' => 'Désabonné',
+        'two_factor_on' => 'Activé',
+        'two_factor_off' => 'Désactivé',
+    ],
+
+    'contact' => [
+        'title' => 'Coordonnées',
+        'no_phone' => 'Aucun numéro de téléphone enregistré',
+    ],
+
+    'default_address' => [
+        'title' => 'Adresse par défaut',
+        'empty' => 'Ce client n\'a aucune adresse enregistrée.',
+    ],
+
+    'create' => [
+        'description' => 'Créez un compte client, définissez ses identifiants et envoyez-lui un e-mail de bienvenue avec ses informations de connexion.',
+    ],
+
     'modal' => [
         'title' => 'Archivé ce client',
         'description' => 'Voulez-vous vraiment désactiver ce client? Toutes ses données (commandes et adresses) seront définitivement supprimées de votre boutique pour toujours. Cette action ne peut pas être annulée.',
@@ -35,17 +90,23 @@ return [
         'description' => 'Toutes les informations publiques de vos clients peuvent être trouvées ici.',
         'account' => 'Compte',
         'account_description' => 'Gérer la façon dont les informations sont utilisées sur le compte client.',
-        'marketing' => 'Publicité par e-mail',
-        'two_factor' => 'Authentification à deux facteurs',
+        'marketing' => 'E-mails marketing',
+        'two_factor' => 'Authentification 2FA',
     ],
 
     'addresses' => [
         'title' => 'Adresses',
         'shipping' => 'Adresse de livraison',
         'billing' => 'Adresse de facturation',
-        'default' => 'Adresse par défaut',
+        'shipping_section' => 'Adresses de livraison',
+        'billing_section' => 'Adresses de facturation',
+        'default' => 'Par défaut',
         'customer' => 'Adresses clients',
         'empty_text' => 'Ce client n\'a pas encore d\'adresse de livraison ou de facturation.',
+        'shipping_empty_title' => 'Aucune adresse de livraison',
+        'shipping_empty' => 'Ce client n\'a pas encore enregistré d\'adresse de livraison.',
+        'billing_empty_title' => 'Aucune adresse de facturation',
+        'billing_empty' => 'Ce client n\'a pas encore enregistré d\'adresse de facturation.',
     ],
 
     'orders' => [
