@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Settings\Legal;
 
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Core\Models\Legal;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -13,6 +14,7 @@ class Terms extends Component
 {
     use HandlesAuthorizationExceptions;
 
+    #[Locked]
     public Legal $legal;
 
     public function render(): View

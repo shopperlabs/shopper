@@ -14,6 +14,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Product;
@@ -27,6 +28,7 @@ class RelatedProducts extends Component implements HasActions, HasSchemas
     use InteractsWithSchemas;
 
     /** @var Model&Product */
+    #[Locked]
     public Product $product;
 
     public function mount(): void

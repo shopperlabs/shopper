@@ -59,6 +59,17 @@ describe(Edit::class, function (): void {
         expect($collection->refresh()->name)->toBe($newName);
     });
 
+    it('forbids access for users without `edit_collections`', function (): void {
+        $unauthorized = User::factory()->create();
+        $unauthorized->givePermissionTo('browse_collections');
+        $this->actingAs($unauthorized);
+
+        $collection = Collection::factory()->create();
+
+        Livewire::test(Edit::class, ['collection' => $collection])
+            ->assertForbidden();
+    });
+
     it('cannot change type of collection on edit form', function (): void {
         $collection = Collection::factory(['type' => CollectionType::Manual])->create();
 

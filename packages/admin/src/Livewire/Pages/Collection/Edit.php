@@ -133,6 +133,8 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
 
     public function store(): void
     {
+        $this->authorize('edit_collections');
+
         $this->collection->update($this->form->getState());
 
         Notification::make()

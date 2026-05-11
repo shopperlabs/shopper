@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use JaOcero\RadioDeck\Forms\Components\RadioDeck;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
+use Livewire\Attributes\Locked;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Actions\Store\Product\AttachedAttributesToProductAction;
 use Shopper\Components\Separator;
@@ -47,6 +48,7 @@ class ChooseProductAttributes extends SlideOverComponent implements HasActions, 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
 
+    #[Locked]
     public Product $product;
 
     public static function panelMaxWidth(): string

@@ -12,8 +12,8 @@ use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
-use Shopper\Core\Models\DiscountDetail;
 use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\Order;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Zone;
 use Tests\Core\Stubs\User;
@@ -124,12 +124,12 @@ describe(DiscountValidator::class, function (): void {
             'usage_limit_per_user' => true,
         ]));
 
-        DiscountDetail::query()->create([
+        Order::query()->create([
+            'number' => 'ORD-PERUSER-1',
+            'price_amount' => 1000,
+            'currency_code' => 'USD',
+            'customer_id' => $this->user->id,
             'discount_id' => $discount->id,
-            'condition' => DiscountCondition::Eligibility,
-            'discountable_type' => $this->user->getMorphClass(),
-            'discountable_id' => $this->user->id,
-            'total_use' => 1,
         ]);
 
         $result = $this->validator->validate($discount, $this->context);

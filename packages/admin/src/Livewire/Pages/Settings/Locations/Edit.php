@@ -6,6 +6,7 @@ namespace Shopper\Livewire\Pages\Settings\Locations;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Core\Models\Inventory;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -15,6 +16,7 @@ class Edit extends Component
 {
     use HandlesAuthorizationExceptions;
 
+    #[Locked]
     public Inventory $inventory;
 
     public function mount(): void

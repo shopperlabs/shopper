@@ -6,6 +6,7 @@ namespace Shopper\Livewire\Components\Orders;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Shopper\Core\Events\Orders\OrderNoteAdded;
@@ -16,6 +17,7 @@ class OrderNotes extends Component
 {
     use HandlesAuthorizationExceptions;
 
+    #[Locked]
     public Order $order;
 
     #[Validate('required|string')]
@@ -23,6 +25,8 @@ class OrderNotes extends Component
 
     public function leaveNotes(): void
     {
+        $this->authorize('edit_orders');
+
         $this->validate();
 
         $this->order->update(['notes' => $this->notes]);

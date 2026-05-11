@@ -12,6 +12,7 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
@@ -27,6 +28,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
     use InteractsWithSchemas;
 
     /** @var Model&ProductContract */
+    #[Locked]
     public ProductContract $product;
 
     #[Url(as: 'tab')]

@@ -12,6 +12,7 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Components\Form\SeoField;
 use Shopper\Core\Models\Contracts\Product;
@@ -26,6 +27,7 @@ class Seo extends Component implements HasSchemas
     use InteractsWithSchemas;
 
     /** @var Model&Product */
+    #[Locked]
     public Product $product;
 
     /** @var array<string, mixed>|null */
@@ -51,6 +53,8 @@ class Seo extends Component implements HasSchemas
 
     public function store(): void
     {
+        $this->authorize('edit_products');
+
         $this->product->update($this->form->getState());
 
         $this->dispatch('product.updated');

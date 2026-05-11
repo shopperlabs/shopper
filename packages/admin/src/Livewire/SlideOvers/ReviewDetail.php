@@ -13,6 +13,7 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Size;
 use Illuminate\Contracts\View\View;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
+use Livewire\Attributes\Locked;
 use Shopper\Core\Models\Review;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
@@ -22,6 +23,7 @@ class ReviewDetail extends SlideOverComponent implements HasActions, HasSchemas
     use InteractsWithActions;
     use InteractsWithSchemas;
 
+    #[Locked]
     public Review $review;
 
     public function mount(): void

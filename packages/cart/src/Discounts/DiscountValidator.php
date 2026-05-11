@@ -8,6 +8,7 @@ use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
+use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Discount;
 
 final readonly class DiscountValidator
@@ -31,13 +32,12 @@ final readonly class DiscountValidator
         }
 
         if ($discount->usage_limit_per_user && $context->cart->customer_id) {
-            $userUses = $discount->items()
-                ->where('condition', DiscountCondition::Eligibility)
-                ->where('discountable_type', config('auth.providers.users.model'))
-                ->where('discountable_id', $context->cart->customer_id)
-                ->value('total_use') ?? 0;
+            $alreadyRedeemed = resolve(OrderContract::class)::query()
+                ->where('discount_id', $discount->id)
+                ->where('customer_id', $context->cart->customer_id)
+                ->exists();
 
-            if ($userUses > 0) {
+            if ($alreadyRedeemed) {
                 return new DiscountValidationResult(false, __('shopper-cart::messages.discount.already_used'));
             }
         }

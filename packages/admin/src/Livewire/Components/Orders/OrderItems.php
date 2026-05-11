@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Orders;
 
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,6 +17,7 @@ class OrderItems extends Component
     use HandlesAuthorizationExceptions;
     use WithPagination;
 
+    #[Locked]
     public Order $order;
 
     public int $perPage = 3;

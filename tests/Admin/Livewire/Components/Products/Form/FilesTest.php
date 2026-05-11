@@ -12,6 +12,7 @@ uses(Tests\Admin\TestCase::class);
 beforeEach(function (): void {
 
     $this->user = User::factory()->create();
+    $this->user->givePermissionTo('edit_products');
     $this->actingAs($this->user);
 
     $this->product = Product::factory()->create();
@@ -44,5 +45,15 @@ describe(Files::class, function (): void {
         Livewire::test(Files::class, ['product' => $this->product])
             ->call('store')
             ->assertNotified();
+    });
+
+    it('blocks `store` for users without `edit_products`', function (): void {
+        $unauthorized = User::factory()->create();
+        $unauthorized->givePermissionTo('browse_products');
+        $this->actingAs($unauthorized);
+
+        Livewire::test(Files::class, ['product' => $this->product])
+            ->call('store')
+            ->assertNotDispatched('product.updated');
     });
 })->group('livewire', 'components', 'products');

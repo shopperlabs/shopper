@@ -61,13 +61,15 @@ class Currencies extends Component implements HasActions, HasSchemas, HasTable
                     ->numeric(decimalPlaces: 4)
                     ->sortable(),
                 ToggleColumn::make('is_enabled')
-                    ->label(__('shopper::forms.label.status')),
+                    ->label(__('shopper::forms.label.status'))
+                    ->beforeStateUpdated(fn (): mixed => $this->authorize('access_setting')),
             ])
             ->recordActions([
                 EditAction::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon(Untitledui::Edit03)
                     ->iconButton()
+                    ->authorize('access_setting')
                     ->modalHeading(__('shopper::pages/settings/currencies.edit_rate'))
                     ->modalWidth(Width::Large)
                     ->schema([
@@ -91,6 +93,7 @@ class Currencies extends Component implements HasActions, HasSchemas, HasTable
                     ->icon(Untitledui::CheckVerified)
                     ->modalIcon(Untitledui::CheckVerified)
                     ->modalIconColor('success')
+                    ->authorize('access_setting')
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
                         Currency::withoutGlobalScopes()
@@ -108,6 +111,7 @@ class Currencies extends Component implements HasActions, HasSchemas, HasTable
                 BulkAction::make('disable')
                     ->label(__('shopper::forms.actions.disable'))
                     ->icon(Untitledui::SlashCircle01)
+                    ->authorize('access_setting')
                     ->requiresConfirmation()
                     ->color('warning')
                     ->action(function (Collection $records): void {

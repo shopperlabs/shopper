@@ -17,8 +17,11 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -31,6 +34,7 @@ class Orders extends Component implements HasActions, HasSchemas, HasTable
     use InteractsWithTable;
 
     /** @var Model&ShopperUser */
+    #[Locked]
     public ShopperUser $customer;
 
     public function table(Table $table): Table
@@ -90,11 +94,11 @@ class Orders extends Component implements HasActions, HasSchemas, HasTable
             ->filters([
                 SelectFilter::make('status')
                     ->label(__('shopper::forms.label.status'))
-                    ->options(\Shopper\Core\Enum\OrderStatus::class)
+                    ->options(OrderStatus::class)
                     ->multiple(),
                 SelectFilter::make('payment_status')
                     ->label(__('shopper::forms.label.payment_status'))
-                    ->options(\Shopper\Core\Enum\PaymentStatus::class)
+                    ->options(PaymentStatus::class)
                     ->multiple(),
                 SelectFilter::make('zone_id')
                     ->label(__('shopper::pages/settings/zones.single'))

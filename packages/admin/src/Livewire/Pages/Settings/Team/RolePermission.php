@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Models\Permission;
@@ -40,6 +41,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
     use InteractsWithActions;
     use InteractsWithSchemas;
 
+    #[Locked]
     public Role $role;
 
     /** @var array<string, mixed>|null */
@@ -93,6 +95,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
             ->label(__('shopper::pages/settings/staff.generate_permissions'))
             ->icon(Untitledui::ShieldZap)
             ->color('gray')
+            ->authorize('access_setting')
             ->modalWidth(Width::Medium)
             ->modalHeading(__('shopper::pages/settings/staff.generate_permissions'))
             ->modalDescription(__('shopper::pages/settings/staff.generate_permissions_description'))
@@ -126,8 +129,6 @@ class RolePermission extends Component implements HasActions, HasSchemas
                     ->columnSpan('full'),
             ])
             ->action(function (array $data): void {
-                $this->authorize('view_users');
-
                 $resource = $data['resource'];
                 $group = $data['group_name'] ?? null;
 
@@ -153,6 +154,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
         return Action::make('createPermission')
             ->label(__('shopper::pages/settings/staff.create_permission'))
             ->icon(Untitledui::Lock04)
+            ->authorize('access_setting')
             ->modalWidth(Width::ExtraLarge)
             ->modalHeading(__('shopper::modals.permissions.new'))
             ->modalDescription(__('shopper::modals.permissions.new_description'))
@@ -180,8 +182,6 @@ class RolePermission extends Component implements HasActions, HasSchemas
                     ->columnSpan('full'),
             ])
             ->action(function (array $data): void {
-                $this->authorize('view_users');
-
                 /** @var Permission $permission */
                 $permission = Permission::query()->create($data);
 
@@ -198,7 +198,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
 
     public function save(): void
     {
-        $this->authorize('view_users');
+        $this->authorize('access_setting');
 
         $this->role->update($this->form->getState());
 

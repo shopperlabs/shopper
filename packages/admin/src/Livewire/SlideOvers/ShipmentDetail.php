@@ -14,6 +14,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\OrderShipping;
@@ -29,6 +30,7 @@ class ShipmentDetail extends SlideOverComponent implements HasActions, HasSchema
     use InteractsWithActions;
     use InteractsWithSchemas;
 
+    #[Locked]
     public OrderShipping $shipment;
 
     public static function panelMaxWidth(): string

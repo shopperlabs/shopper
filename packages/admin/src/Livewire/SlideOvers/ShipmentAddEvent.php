@@ -17,6 +17,7 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
+use Livewire\Attributes\Locked;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Actions\RecordShipmentEventAction;
@@ -35,6 +36,7 @@ class ShipmentAddEvent extends SlideOverComponent implements HasActions, HasSche
     use InteractsWithSchemas;
     use InteractsWithSlideOverForm;
 
+    #[Locked]
     public OrderShipping $shipment;
 
     /** @var array<array-key, mixed>|null */
