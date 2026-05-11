@@ -44,6 +44,11 @@ use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
  * @property-read Schema $form
+ *
+ * @deprecated since 3.0, use the dedicated `shopper.discounts.create` and
+ *             `shopper.discounts.edit` routes instead. This slide-over now
+ *             redirects to the corresponding page on mount and will be
+ *             removed in 4.0.
  */
 class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas, SlideOverForm
 {
@@ -78,35 +83,16 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
         abort_unless($user->can('discounts.create') || $user->can('discounts.edit'), 403);
 
         $this->discount = $discountId
-            ? Discount::query()->find($discountId)
+            ? (Discount::query()->find($discountId) ?? new Discount)
             : new Discount;
 
-        $this->title = $this->discount->id
-            ? $this->discount->code
-            : __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/discounts.single')]);
-        $this->description = __('shopper::pages/discounts.description');
+        $this->dispatch('closePanel');
 
-        $products = collect();
-        $customers = collect();
-
-        if ($discountId) {
-            $items = $this->discount->items()->with('discountable')->get();
-
-            $customers = $items->where('condition', DiscountCondition::Eligibility)
-                ->map(fn ($item) => $item->discountable)
-                ->filter();
-
-            $products = $items->where('condition', DiscountCondition::ApplyTo)
-                ->map(fn ($item) => $item->discountable)
-                ->filter();
-        }
-
-        $this->form->fill(array_merge(
-            $this->discount->toArray(),
-            ['usage_number' => $this->discount->usage_limit !== null],
-            ['customers' => $customers->pluck('id')->all()],
-            ['products' => $products->pluck('id')->all()],
-        ));
+        $this->redirectRoute(
+            name: $discountId ? 'shopper.discounts.edit' : 'shopper.discounts.create',
+            parameters: $discountId ? ['record' => $discountId] : [],
+            navigate: true,
+        );
     }
 
     public function form(Schema $schema): Schema

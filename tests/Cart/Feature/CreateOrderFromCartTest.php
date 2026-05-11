@@ -7,6 +7,7 @@ use Shopper\Cart\Actions\CreateOrderFromCartAction;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Events\CartCompleted;
 use Shopper\Cart\Exceptions\CartCompletedException;
+use Shopper\Cart\Exceptions\DiscountLimitReachedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Enum\DiscountApplyTo;
@@ -137,8 +138,8 @@ describe(CreateOrderFromCartAction::class, function (): void {
         expect($discount->refresh()->total_use)->toBe(1);
     });
 
-    it('does not increment discount usage when limit is reached', function (): void {
-        $discount = Discount::factory()->create([
+    it('throws and refuses to create the order when the discount global limit is reached', function (): void {
+        Discount::factory()->create([
             'code' => 'LIMITED',
             'is_active' => true,
             'type' => DiscountType::Percentage,
@@ -152,9 +153,77 @@ describe(CreateOrderFromCartAction::class, function (): void {
         $this->cartManager->add($this->cart, $this->product);
         $this->cartManager->applyCoupon($this->cart, 'LIMITED');
 
+        $ordersBefore = Order::query()->count();
+
+        try {
+            $this->action->execute($this->cart->refresh());
+            $this->fail('Expected DiscountLimitReachedException was not thrown.');
+        } catch (DiscountLimitReachedException) {
+            // expected
+        }
+
+        expect(Order::query()->count())->toBe($ordersBefore)
+            ->and($this->cart->refresh()->isCompleted())->toBeFalse();
+    });
+
+    it('snapshots the discount fields onto the order', function (): void {
+        $discount = Discount::factory()->create([
+            'code' => 'SNAP10',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'total_use' => 0,
+            'usage_limit' => null,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->applyCoupon($this->cart, 'SNAP10');
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        expect($order->discount_id)->toBe($discount->id)
+            ->and($order->discount_code)->toBe('SNAP10')
+            ->and($order->discount_type)->toBe(DiscountType::Percentage->value)
+            ->and($order->discount_value_at_apply)->toBe(10)
+            ->and($order->discount_currency_code)->toBe('USD');
+    });
+
+    it('rejects a second redemption when the discount is limited to one use per customer', function (): void {
+        $discount = Discount::factory()->create([
+            'code' => 'ONCE',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'total_use' => 0,
+            'usage_limit' => null,
+            'usage_limit_per_user' => true,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->applyCoupon($this->cart, 'ONCE');
+
         $this->action->execute($this->cart->refresh());
 
-        expect($discount->refresh()->total_use)->toBe(5);
+        $secondCart = Cart::query()->create([
+            'currency_code' => 'USD',
+            'customer_id' => $this->user->id,
+        ]);
+        $this->cartManager->add($secondCart, $this->product);
+        $this->cartManager->applyCoupon($secondCart, 'ONCE');
+
+        try {
+            $this->action->execute($secondCart->refresh());
+            $this->fail('Expected DiscountLimitReachedException was not thrown.');
+        } catch (DiscountLimitReachedException) {
+            // expected
+        }
+
+        expect($discount->refresh()->total_use)->toBe(1)
+            ->and(Order::query()->where('discount_id', $discount->id)->count())->toBe(1);
     });
 
     it('caps `total_use` at `usage_limit` across multiple checkouts', function (): void {

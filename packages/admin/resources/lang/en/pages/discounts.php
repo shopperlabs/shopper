@@ -74,4 +74,101 @@ return [
     'save' => 'Discount code :code save successfully!',
     'total_use' => 'Redemptions',
 
+    'create' => [
+        'description' => 'Set up a new discount code. The summary on the right updates as you fill the form so you can see exactly what your customers will get.',
+    ],
+
+    'edit' => [
+        'description' => 'Update this discount and review its real usage and revenue impact.',
+    ],
+
+    'sections' => [
+        'general' => 'General',
+        'general_description' => 'Code, type and visibility of the discount.',
+        'configuration' => 'Configuration',
+        'configuration_description' => 'How many times the discount can be used and when it is active.',
+        'targeting' => 'Targeting',
+        'targeting_description' => 'Which products and customers are eligible for this discount.',
+        'advanced' => 'Advanced',
+        'advanced_description' => 'Custom metadata attached to the discount.',
+    ],
+
+    'zone_frozen_helper' => 'The zone cannot be changed once a fixed-amount discount has been used. Currency consistency is preserved on existing orders.',
+
+    'summary' => [
+        'title' => 'Rule digest',
+        'empty' => 'Pick a type and value to see the summary update in real time.',
+        'uses_total' => 'uses max',
+        'type_percentage' => ':value% off',
+        'type_fixed_amount' => ':amount off',
+        'minimum_price' => 'Cart ≥ :amount',
+        'minimum_quantity' => 'Min :count item|Min :count items',
+        'visibility_public' => 'Public',
+        'visibility_hidden' => 'Hidden',
+        'rows' => [
+            'type' => 'Type',
+            'code' => 'Code',
+            'zone' => 'Zone',
+            'applies' => 'Applies',
+            'for' => 'For',
+            'minimum' => 'Minimum',
+            'usage' => 'Usage',
+            'usage_value' => '{1} :count use max|[2,*] :count uses max',
+            'active' => 'Active',
+            'visibility' => 'Visibility',
+        ],
+    ],
+
+    'stats' => [
+        'title' => 'Performance',
+        'usage' => 'Usage',
+        'orders' => 'Orders',
+        'gross_revenue' => 'Gross revenue',
+        'discount_cost' => 'Discount cost',
+        'aov_with' => 'AOV with code',
+        'disclaimer' => 'Stats include paid orders since the discount tracking migration.',
+    ],
+
+    'actions' => [
+        'duplicate' => 'Duplicate',
+        'duplicate_confirm_heading' => 'Duplicate this discount?',
+        'duplicate_confirm_description' => 'A copy will be created with a new code suffixed `_COPY`, the active toggle off and a fresh usage counter. You will be redirected to the new discount to finish editing.',
+        'duplicate_in_progress' => 'A duplication is already in progress.',
+        'duplicate_success' => 'Discount duplicated as :code.',
+    ],
+
+    'products_picker' => [
+        'title' => 'Pick the products this discount applies to',
+        'description' => 'Select one or more products. They will appear in the discount form once you confirm the selection.',
+        'button' => 'Browse products',
+        'bulk_add' => 'Add selected products',
+        'empty' => 'No matching product found.',
+        'empty_field' => 'No product selected. Click "Browse products" to add one.',
+        'required' => 'Pick at least one product when the discount applies to specific products.',
+    ],
+
+    'customers_picker' => [
+        'title' => 'Pick the customers eligible for this discount',
+        'description' => 'Select one or more customers. They will appear in the discount form once you confirm the selection.',
+        'button' => 'Browse customers',
+        'bulk_add' => 'Add selected customers',
+        'empty' => 'No matching customer found.',
+        'empty_field' => 'No customer selected. Click "Browse customers" to add one.',
+        'required' => 'Pick at least one customer when the discount targets specific customers.',
+    ],
+
+    'apply_to_switch' => [
+        'heading' => 'Switch to entire order?',
+        'description' => 'You picked specific products for this discount. Switching to the entire order will remove them from the selection.',
+        'submit' => 'Yes, switch and clear',
+        'cancel' => 'Keep specific products',
+    ],
+
+    'eligibility_switch' => [
+        'heading' => 'Switch to everyone?',
+        'description' => 'You picked specific customers. Switching to everyone will remove them from the selection.',
+        'submit' => 'Yes, switch and clear',
+        'cancel' => 'Keep specific customers',
+    ],
+
 ];

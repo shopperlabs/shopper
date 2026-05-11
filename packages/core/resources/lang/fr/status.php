@@ -60,4 +60,14 @@ return [
         'reserved' => 'Réservé pour commande',
         'cancelled' => 'Libéré suite à annulation de commande',
     ],
+
+    'discount' => [
+        'draft' => 'Brouillon',
+        'scheduled' => 'Programmée',
+        'active' => 'Active',
+        'disabled' => 'Désactivée',
+        'expired' => 'Expirée',
+        'limit_reached' => 'Limite atteinte',
+        'inapplicable' => 'Inapplicable',
+    ],
 ];

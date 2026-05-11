@@ -15,4 +15,12 @@ final class DiscountLimitReachedException extends RuntimeException
             .'No order was created.'
         );
     }
+
+    public static function perUser(string $code): self
+    {
+        return new self(
+            "The discount [{$code}] has already been redeemed by this customer and is limited to one use per customer. "
+            .'No order was created.'
+        );
+    }
 }
