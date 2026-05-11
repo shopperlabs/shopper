@@ -141,12 +141,23 @@ class Create extends AbstractPageComponent implements HasActions, HasSchemas
 
     public function store(): void
     {
+        $this->authorize('add_customers');
+
         /** @var array<string, mixed> $data */
         $data = $this->form->getState();
         $sendMail = data_get($data, 'send_mail');
         $password = data_get($data, 'password_confirmation');
 
-        $customerData = Arr::except($data, ['address', 'send_mail', 'password_confirmation']);
+        $customerData = Arr::only($data, [
+            'first_name',
+            'last_name',
+            'email',
+            'phone_number',
+            'gender',
+            'password',
+            'opt_in',
+        ]);
+
         $address = array_merge(Arr::only($data, ['address'])['address'], [
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],

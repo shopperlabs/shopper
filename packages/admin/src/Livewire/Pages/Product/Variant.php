@@ -48,6 +48,7 @@ class Variant extends AbstractPageComponent implements HasActions, HasSchemas
         return Action::make('updateStock')
             ->label(__('shopper::forms.actions.edit'))
             ->color('gray')
+            ->authorize('edit_products')
             ->modalWidth(Width::Large)
             ->fillForm([
                 'sku' => $this->variant->sku,
@@ -67,6 +68,7 @@ class Variant extends AbstractPageComponent implements HasActions, HasSchemas
                 TextInput::make('barcode')
                     ->label(__('shopper::forms.label.barcode'))
                     ->unique(config('shopper.models.variant'), 'barcode', ignoreRecord: true)
+                    ->regex('/^[A-Za-z0-9\-]*$/')
                     ->maxLength(255),
             ])
             ->action(function (array $data): void {

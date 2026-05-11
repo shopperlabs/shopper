@@ -137,6 +137,7 @@ class Shipments extends AbstractPageComponent implements HasActions, HasSchemas,
                     ->label(__('shopper::forms.actions.mark_delivered'))
                     ->icon(Untitledui::PackageCheck)
                     ->color('success')
+                    ->authorize('edit_orders')
                     ->visible(fn (OrderShipping $record): bool => $record->canBeDelivered())
                     ->requiresConfirmation()
                     ->action(function (OrderShipping $record): void {
@@ -151,6 +152,7 @@ class Shipments extends AbstractPageComponent implements HasActions, HasSchemas,
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon(Untitledui::Edit03)
                     ->iconButton()
+                    ->authorize('edit_orders')
                     ->modalWidth(Width::Large)
                     ->fillForm(fn (OrderShipping $record): array => [
                         'carrier_id' => $record->carrier_id,

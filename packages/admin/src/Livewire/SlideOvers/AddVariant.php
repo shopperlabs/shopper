@@ -182,6 +182,7 @@ class AddVariant extends SlideOverComponent implements HasActions, HasSchemas
                                         TextInput::make('barcode')
                                             ->label(__('shopper::forms.label.barcode'))
                                             ->unique(shopper_table('product_variants'), 'barcode')
+                                            ->regex('/^[A-Za-z0-9\-]*$/')
                                             ->maxLength(255),
                                         TextInput::make('quantity')
                                             ->label(__('shopper::forms.label.quantity'))

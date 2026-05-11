@@ -50,6 +50,7 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
     {
         return Action::make('createPayment')
             ->label(__('shopper::pages/settings/payments.add_payment'))
+            ->authorize('access_setting')
             ->modalWidth(Width::ExtraLarge)
             ->modalHeading(__('shopper::pages/settings/payments.add_payment'))
             ->modalSubmitActionLabel(__('shopper::forms.actions.save'))
@@ -88,7 +89,8 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
                         default => 'warning',
                     }),
                 ToggleColumn::make('is_enabled')
-                    ->label(__('shopper::forms.label.status')),
+                    ->label(__('shopper::forms.label.status'))
+                    ->beforeStateUpdated(fn (): mixed => $this->authorize('access_setting')),
                 TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
                     ->date(),
@@ -98,12 +100,14 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon(Untitledui::Edit03)
                     ->iconButton()
+                    ->authorize('access_setting')
                     ->modalWidth(Width::ExtraLarge)
                     ->schema($this->getPaymentFormSchema())
                     ->successNotificationTitle(__('shopper::notifications.payment.update')),
                 DeleteAction::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
+                    ->authorize('access_setting')
                     ->iconButton(),
             ])
             ->emptyStateIcon(Untitledui::CreditCard02)

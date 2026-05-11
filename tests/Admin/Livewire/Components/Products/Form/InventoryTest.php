@@ -13,6 +13,7 @@ uses(Tests\Admin\TestCase::class);
 beforeEach(function (): void {
 
     $this->user = User::factory()->create();
+    $this->user->givePermissionTo('edit_products');
     $this->actingAs($this->user);
 
     $this->inventory = InventoryModel::factory()->create(['is_default' => true]);
@@ -53,6 +54,20 @@ describe(Inventory::class, function (): void {
         expect($this->product->sku)->toBe('NEW-SKU')
             ->and($this->product->barcode)->toBe('987654321')
             ->and($this->product->security_stock)->toBe(5);
+    });
+
+    it('blocks `store` for users without `edit_products`', function (): void {
+        $unauthorized = User::factory()->create();
+        $unauthorized->givePermissionTo('browse_products');
+        $this->actingAs($unauthorized);
+
+        $originalSku = $this->product->sku;
+
+        Livewire::test(Inventory::class, ['product' => $this->product])
+            ->fillForm(['sku' => 'TAMPERED-SKU'])
+            ->call('store');
+
+        expect($this->product->fresh()->sku)->toBe($originalSku);
     });
 
     it('validates unique sku', function (): void {

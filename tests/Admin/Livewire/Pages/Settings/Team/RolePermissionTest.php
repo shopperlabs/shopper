@@ -12,7 +12,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('view_users');
+    $this->user->givePermissionTo(['view_users', 'access_setting']);
     $this->actingAs($this->user);
 
     $this->role = Role::create([

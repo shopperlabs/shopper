@@ -11,7 +11,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('view_users');
+    $this->user->givePermissionTo(['view_users', 'access_setting']);
     $this->actingAs($this->user);
 });
 
@@ -69,6 +69,14 @@ describe(Index::class, function (): void {
                 'name' => $existingRole->name,
             ])
             ->assertHasFormErrors(['name' => 'unique']);
+    });
+
+    it('forbids mount for users without `view_users`', function (): void {
+        $unauthorized = User::factory()->create();
+        $this->actingAs($unauthorized);
+
+        Livewire::test(Index::class)
+            ->assertForbidden();
     });
 
     it('allows optional display_name and description when creating role', function (): void {

@@ -38,6 +38,11 @@ class Index extends Component implements HasActions, HasSchemas, HasTable
     use InteractsWithSchemas;
     use InteractsWithTable;
 
+    public function mount(): void
+    {
+        $this->authorize('view_users');
+    }
+
     public function createRoleAction(): Action
     {
         return Action::make('createRole')
@@ -46,6 +51,7 @@ class Index extends Component implements HasActions, HasSchemas, HasTable
             ->iconButton()
             ->outlined()
             ->size(Size::Small)
+            ->authorize('access_setting')
             ->modalWidth(Width::Large)
             ->modalHeading(__('shopper::modals.roles.new'))
             ->modalDescription(__('shopper::modals.roles.new_description'))
@@ -111,6 +117,7 @@ class Index extends Component implements HasActions, HasSchemas, HasTable
                     ->icon(Untitledui::Trash03)
                     ->iconButton()
                     ->label(__('shopper::forms.actions.delete'))
+                    ->authorize('access_setting')
                     ->visible(fn (ShopperUser $record): bool => shopper()->auth()->user()->isAdmin() && ! $record->isAdmin()) // @phpstan-ignore-line
                     ->successNotificationTitle(__('shopper::notifications.users_roles.admin_deleted')),
             ]);

@@ -16,6 +16,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Models\Role;
@@ -28,6 +29,7 @@ class UsersRole extends Component implements HasActions, HasSchemas, HasTable
     use InteractsWithSchemas;
     use InteractsWithTable;
 
+    #[Locked]
     public Role $role;
 
     public function table(Table $table): Table
