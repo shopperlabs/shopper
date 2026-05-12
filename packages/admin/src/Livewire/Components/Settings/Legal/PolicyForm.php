@@ -15,6 +15,7 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Core\Models\Legal;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -37,6 +38,7 @@ class PolicyForm extends Component implements HasActions, HasSchemas
         'terms' => 'terms_of_use',
     ];
 
+    #[Locked]
     public Legal $legal;
 
     /**
@@ -72,6 +74,8 @@ class PolicyForm extends Component implements HasActions, HasSchemas
 
     public function store(): void
     {
+        $this->authorize('system.settings');
+
         $this->legal->update(array_merge($this->form->getState(), [
             'slug' => $this->legal->slug,
         ]));

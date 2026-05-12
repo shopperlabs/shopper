@@ -32,6 +32,7 @@ class RelatedProductsList extends SlideOverComponent implements HasActions, HasS
     use InteractsWithSchemas;
     use InteractsWithTable;
 
+    #[Locked]
     public Product $product;
 
     /** @var array<int> */

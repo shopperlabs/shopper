@@ -11,6 +11,7 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -24,6 +25,7 @@ class Media extends Component implements HasSchemas
     use InteractsWithSchemas;
 
     /** @var Model&Product */
+    #[Locked]
     public Product $product;
 
     /** @var array<string, mixed>|null */

@@ -7,6 +7,7 @@ namespace Shopper\Livewire\Pages\Settings\Locations;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Core\Models\Inventory;
 use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
@@ -19,6 +20,7 @@ class Edit extends Component
     use HandlesAuthorizationExceptions;
     use WithSettingsBreadcrumbs;
 
+    #[Locked]
     public Inventory $inventory;
 
     public function settingsPageBreadcrumbs(): array

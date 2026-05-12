@@ -24,6 +24,7 @@ use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
@@ -43,6 +44,7 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
     use InteractsWithTable;
 
     /** @var Model&Product */
+    #[Locked]
     public Product $product;
 
     /** @var array<string, mixed>|null */
@@ -72,6 +74,7 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
                                 TextInput::make('barcode')
                                     ->label(__('shopper::forms.label.barcode'))
                                     ->unique(config('shopper.models.product'), 'barcode', ignoreRecord: true)
+                                    ->regex('/^[A-Za-z0-9\-]*$/')
                                     ->maxLength(255),
                                 TextInput::make('security_stock')
                                     ->label(__('shopper::forms.label.safety_stock'))
@@ -194,6 +197,8 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
 
     public function store(): void
     {
+        $this->authorize('products.edit');
+
         $this->product->update($this->form->getState());
 
         $this->dispatch('product.updated');

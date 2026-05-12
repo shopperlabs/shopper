@@ -60,6 +60,7 @@ class Carriers extends Component implements HasActions, HasSchemas, HasTable
     {
         return Action::make('createCarrier')
             ->label(__('shopper::pages/settings/carriers.add_carrier'))
+            ->authorize('system.settings')
             ->modalWidth(Width::ExtraLarge)
             ->modalHeading(__('shopper::pages/settings/carriers.add_carrier'))
             ->modalSubmitActionLabel(__('shopper::forms.actions.save'))
@@ -98,7 +99,8 @@ class Carriers extends Component implements HasActions, HasSchemas, HasTable
                         default => 'warning',
                     }),
                 ToggleColumn::make('is_enabled')
-                    ->label(__('shopper::forms.label.status')),
+                    ->label(__('shopper::forms.label.status'))
+                    ->beforeStateUpdated(fn (): mixed => $this->authorize('system.settings')),
                 TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
                     ->date(),
@@ -108,12 +110,14 @@ class Carriers extends Component implements HasActions, HasSchemas, HasTable
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon(Untitledui::Edit03)
                     ->iconButton()
+                    ->authorize('system.settings')
                     ->modalWidth(Width::ExtraLarge)
                     ->schema($this->getCarrierFormSchema())
                     ->successNotificationTitle(__('shopper::notifications.carrier.update')),
                 DeleteAction::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
+                    ->authorize('system.settings')
                     ->iconButton(),
             ])
             ->emptyStateIcon(Untitledui::Truck)

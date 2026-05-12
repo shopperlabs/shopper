@@ -157,6 +157,14 @@ describe(Create::class, function (): void {
             ->assertHasFormErrors(['email' => 'unique']);
     });
 
+    it('forbids access for users without `customers.create`', function (): void {
+        $unauthorized = User::factory()->create();
+        $this->actingAs($unauthorized);
+
+        Livewire::test(Create::class)
+            ->assertForbidden();
+    });
+
     it('validates password confirmation', function (): void {
         Livewire::test(Create::class)
             ->fillForm([
