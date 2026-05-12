@@ -89,8 +89,12 @@ class ProductFactory extends Factory
 
     public function configure(): static
     {
-        return $this->afterCreating(function (Product $product): void {
-            $product->loadMissing('prices');
-        });
+        $this->afterCreating = $this->afterCreating->concat([
+            function (Product $product): void {
+                $product->loadMissing('prices');
+            },
+        ]);
+
+        return $this;
     }
 }
