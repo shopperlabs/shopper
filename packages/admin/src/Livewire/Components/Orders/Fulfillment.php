@@ -6,6 +6,7 @@ namespace Shopper\Livewire\Components\Orders;
 
 use BackedEnum;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Enum\OrderStatus;
@@ -18,6 +19,7 @@ class Fulfillment extends Component
 {
     use HandlesAuthorizationExceptions;
 
+    #[Locked]
     public Order $order;
 
     public function hasUnfulfilledItems(): bool

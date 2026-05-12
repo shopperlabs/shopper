@@ -6,6 +6,7 @@ namespace Shopper\Livewire\Components\Orders;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Models\Contracts\ShopperUser;
@@ -18,6 +19,7 @@ class OrderCustomer extends Component
 {
     use HandlesAuthorizationExceptions;
 
+    #[Locked]
     public Order $order;
 
     #[Computed]

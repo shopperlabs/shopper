@@ -61,6 +61,7 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
     {
         return Action::make('createPayment')
             ->label(__('shopper::pages/settings/payments.add_payment'))
+            ->authorize('system.settings')
             ->modalWidth(Width::Large)
             ->modalHeading(__('shopper::pages/settings/payments.add_payment'))
             ->modalSubmitActionLabel(__('shopper::forms.actions.save'))
@@ -112,7 +113,8 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
                     ->badge()
                     ->placeholder('—'),
                 ToggleColumn::make('is_enabled')
-                    ->label(__('shopper::forms.label.status')),
+                    ->label(__('shopper::forms.label.status'))
+                    ->beforeStateUpdated(fn (): mixed => $this->authorize('system.settings')),
                 TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
                     ->date(),
@@ -122,12 +124,14 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon(Untitledui::Edit03)
                     ->iconButton()
+                    ->authorize('system.settings')
                     ->modalWidth(Width::ExtraLarge)
                     ->schema($this->getPaymentFormSchema())
                     ->successNotificationTitle(__('shopper::notifications.payment.update')),
                 DeleteAction::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
+                    ->authorize('system.settings')
                     ->iconButton(),
             ])
             ->emptyStateIcon(Untitledui::CreditCard02)

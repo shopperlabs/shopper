@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Orders;
 
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Models\Contracts\Order;
@@ -15,6 +16,7 @@ class OrderSummary extends Component
 {
     use HandlesAuthorizationExceptions;
 
+    #[Locked]
     public Order $order;
 
     #[On('order.updated')]

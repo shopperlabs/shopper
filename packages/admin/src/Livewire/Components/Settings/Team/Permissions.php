@@ -6,6 +6,7 @@ namespace Shopper\Livewire\Components\Settings\Team;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Models\Permission;
@@ -16,6 +17,7 @@ class Permissions extends Component
 {
     use HandlesAuthorizationExceptions;
 
+    #[Locked]
     public Role $role;
 
     public function mount(): void
@@ -25,9 +27,13 @@ class Permissions extends Component
 
     public function togglePermission(int $id): void
     {
-        $this->authorize('system.users');
-        /** @var Permission $permission */
+        $this->authorize('system.settings');
+
         $permission = Permission::query()->find($id);
+
+        if ($permission === null) {
+            return;
+        }
 
         if ($this->role->hasPermissionTo($permission->name)) {
             $this->role->revokePermissionTo($permission->name);
@@ -48,9 +54,15 @@ class Permissions extends Component
 
     public function removePermission(int $id): void
     {
-        $this->authorize('system.users');
+        $this->authorize('system.settings');
 
-        Permission::query()->find($id)->delete();
+        $permission = Permission::query()->find($id);
+
+        if ($permission === null) {
+            return;
+        }
+
+        $permission->delete();
 
         Notification::make()
             ->title(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/staff.permission')]))

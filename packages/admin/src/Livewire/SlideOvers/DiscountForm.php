@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
+use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\SaveAndDispatchDiscountAction;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
@@ -51,6 +52,7 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
     use InteractsWithSchemas;
     use InteractsWithSlideOverForm;
 
+    #[Locked]
     public Discount $discount;
 
     public string $action = 'store';

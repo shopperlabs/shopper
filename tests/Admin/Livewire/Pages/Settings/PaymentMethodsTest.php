@@ -90,4 +90,12 @@ describe(PaymentMethods::class, function (): void {
 
         expect(PaymentMethod::query()->find($payment->id))->toBeNull();
     });
+
+    it('forbids mount for users without `system.settings`', function (): void {
+        $unauthorized = User::factory()->create();
+        $this->actingAs($unauthorized);
+
+        Livewire::test(PaymentMethods::class)
+            ->assertForbidden();
+    });
 })->group('livewire', 'settings', 'payment');

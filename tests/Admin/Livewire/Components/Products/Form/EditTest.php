@@ -48,6 +48,21 @@ describe(Edit::class, function (): void {
             ->assertFormFieldIsHidden('external_id');
     });
 
+    it('blocks `store` for users without `products.edit`', function (): void {
+        $unauthorized = User::factory()->create();
+        $unauthorized->givePermissionTo('products.browse');
+        $this->actingAs($unauthorized);
+
+        $product = Product::factory()->standard()->create(['name' => 'Original']);
+
+        Livewire::test(Edit::class, ['product' => $product])
+            ->fillForm(['name' => 'Tampered'])
+            ->call('store');
+
+        expect($product->fresh()->name)->toBe('Original');
+        Event::assertNotDispatched(ProductUpdated::class);
+    });
+
     it('can view the external id field on external product editing', function (): void {
         config()->set('shopper.features.supplier', FeatureState::Enabled);
 

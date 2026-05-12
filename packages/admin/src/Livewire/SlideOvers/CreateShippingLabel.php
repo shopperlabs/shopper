@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\HtmlString;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Enum\FulfillmentStatus;
 use Shopper\Core\Enum\ShipmentStatus;
@@ -45,6 +46,7 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasS
     use InteractsWithSchemas;
     use InteractsWithSlideOverForm;
 
+    #[Locked]
     public Order $order;
 
     /** @var array<string, mixed>|null */

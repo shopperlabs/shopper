@@ -31,6 +31,11 @@ class Index extends Component implements HasActions, HasSchemas
     use InteractsWithSchemas;
     use WithSettingsBreadcrumbs;
 
+    public function mount(): void
+    {
+        $this->authorize('system.users');
+    }
+
     public function settingsPageBreadcrumbs(): array
     {
         return [
@@ -46,6 +51,7 @@ class Index extends Component implements HasActions, HasSchemas
             ->iconButton()
             ->outlined()
             ->size(Size::ExtraSmall)
+            ->authorize('system.settings')
             ->modalWidth(Width::Medium)
             ->modalHeading(__('shopper::modals.roles.new'))
             ->modalDescription(__('shopper::modals.roles.new_description'))

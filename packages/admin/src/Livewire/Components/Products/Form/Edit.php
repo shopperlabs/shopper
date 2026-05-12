@@ -212,6 +212,8 @@ class Edit extends Component implements HasActions, HasSchemas
 
     public function store(): void
     {
+        $this->authorize('products.edit');
+
         $this->validate();
 
         $this->product = app()->call(UpdateProductAction::class, [

@@ -102,6 +102,8 @@ class InventoryForm extends Component implements HasActions, HasSchemas
 
     public function store(): void
     {
+        $this->authorize($this->inventory->id ? 'inventories.edit' : 'inventories.create');
+
         if ($this->inventory->id) {
             $this->inventory->update($this->form->getState());
         } else {
