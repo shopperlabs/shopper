@@ -47,31 +47,41 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
         $this->authorize('discounts.edit');
 
         $this->discount = Discount::query()
-            ->with(['zone', 'items.discountable'])
+            ->with([
+                'zone',
+                'items:id,discount_id,discountable_type,discountable_id,condition',
+            ])
             ->findOrFail($record);
 
         $items = $this->discount->items;
 
-        $this->form->fill(array_merge(
-            $this->discount->toArray(),
-            ['usage_number' => $this->discount->usage_limit !== null],
-            [
-                'customers' => $items
-                    ->where('condition', DiscountCondition::Eligibility)
-                    ->map(fn ($item) => $item->discountable)
-                    ->filter()
-                    ->pluck('id')
-                    ->all(),
-            ],
-            [
-                'products' => $items
-                    ->where('condition', DiscountCondition::ApplyTo)
-                    ->map(fn ($item) => $item->discountable)
-                    ->filter()
-                    ->pluck('id')
-                    ->all(),
-            ],
-        ));
+        $this->form->fill([
+            'zone_id' => $this->discount->zone_id,
+            'code' => $this->discount->code,
+            'type' => $this->discount->type->value,
+            'value' => $this->discount->value,
+            'apply_to' => $this->discount->apply_to,
+            'eligibility' => $this->discount->eligibility,
+            'min_required' => $this->discount->min_required,
+            'min_required_value' => $this->discount->min_required_value,
+            'usage_limit' => $this->discount->usage_limit,
+            'usage_limit_per_user' => $this->discount->usage_limit_per_user,
+            'start_at' => $this->discount->start_at,
+            'end_at' => $this->discount->end_at,
+            'metadata' => $this->discount->metadata,
+            'is_active' => $this->discount->is_active,
+            'usage_number' => $this->discount->usage_limit !== null,
+            'customers' => $items
+                ->where('condition', DiscountCondition::Eligibility)
+                ->pluck('discountable_id')
+                ->map(fn ($id): int => (int) $id)
+                ->all(),
+            'products' => $items
+                ->where('condition', DiscountCondition::ApplyTo)
+                ->pluck('discountable_id')
+                ->map(fn ($id): int => (int) $id)
+                ->all(),
+        ]);
     }
 
     #[Computed]

@@ -28,7 +28,6 @@ return [
         'slide-overs.discount-form' => Livewire\SlideOvers\DiscountForm::class,
         'slide-overs.discount-products-picker' => Livewire\SlideOvers\DiscountProductsPicker::class,
         'slide-overs.discount-customers-picker' => Livewire\SlideOvers\DiscountCustomersPicker::class,
-        'discounts.items-list' => Livewire\Components\Discounts\ItemsList::class,
         'discounts.stats-panel' => Livewire\Components\Discounts\StatsPanel::class,
     ],
 

@@ -6,7 +6,7 @@
         : null;
 @endphp
 
-<x-shopper::card>
+<x-shopper::card class="min-w-0">
     <x-slot:title>
         <div class="flex items-center justify-between">
             <span class="text-sh-fg-secondary text-sm font-medium">

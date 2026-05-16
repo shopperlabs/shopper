@@ -3,3 +3,11 @@
     @apply py-4 lg:py-4;
   }
 }
+
+.fi-fo-key-value-table-ctn {
+  @apply overflow-hidden;
+
+  & .fi-fo-key-value-table > tbody > tr > td.fi-has-action {
+    @apply w-9;
+  }
+}

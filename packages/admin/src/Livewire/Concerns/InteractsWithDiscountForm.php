@@ -15,9 +15,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Livewire as LivewireComponent;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\View as SchemaView;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -36,7 +36,6 @@ use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Zone;
-use Shopper\Livewire\Components\Discounts\ItemsList;
 
 trait InteractsWithDiscountForm
 {
@@ -45,6 +44,12 @@ trait InteractsWithDiscountForm
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
+
+    public bool $showAllProducts = false;
+
+    public bool $showAllCustomers = false;
+
+    protected int $itemsInlineLimit = 12;
 
     protected ?Zone $cachedSelectedZone = null;
 
@@ -91,7 +96,7 @@ trait InteractsWithDiscountForm
                                             }),
                                     )
                                     ->unique(table: Discount::class, column: 'code', ignoreRecord: true)
-                                    ->live(debounce: '500ms')
+                                    ->live(onBlur: true)
                                     ->required(),
                                 TextInput::make('value')
                                     ->label(
@@ -128,7 +133,7 @@ trait InteractsWithDiscountForm
                                     ->numeric()
                                     ->minValue(fn (Get $get): float => $get('type') === DiscountType::FixedAmount->value ? 0.01 : 1)
                                     ->maxValue(fn (Get $get): int => $get('type') === DiscountType::Percentage->value ? 100 : 999_999_999)
-                                    ->live(debounce: '500ms')
+                                    ->live(onBlur: true)
                                     ->required(),
                             ]),
                         Toggle::make('is_active')
@@ -153,14 +158,13 @@ trait InteractsWithDiscountForm
                             ->integer()
                             ->numeric()
                             ->minValue(1)
-                            ->live(debounce: '500ms')
+                            ->live(onBlur: true)
                             ->required(fn (Get $get): bool => (bool) $get('usage_number'))
                             ->visible(
                                 fn (Get $get): bool => $get('usage_number') || $this->discount->usage_limit !== null
                             ),
                         Toggle::make('usage_limit_per_user')
-                            ->label(__('shopper::pages/discounts.limit_one_per_user'))
-                            ->live(),
+                            ->label(__('shopper::pages/discounts.limit_one_per_user')),
                         Grid::make()
                             ->schema([
                                 DateTimePicker::make('start_at')
@@ -168,12 +172,12 @@ trait InteractsWithDiscountForm
                                     ->required()
                                     ->minDate(fn (): ?DateTimeInterface => $this->discount->exists ? null : now())
                                     ->native(false)
-                                    ->live(),
+                                    ->live(onBlur: true),
                                 DateTimePicker::make('end_at')
                                     ->label(__('shopper::pages/discounts.end_date'))
                                     ->afterOrEqual('start_at')
                                     ->native(false)
-                                    ->live(),
+                                    ->live(onBlur: true),
                             ]),
                     ]),
                 Separator::make(),
@@ -189,13 +193,10 @@ trait InteractsWithDiscountForm
                             ->inline()
                             ->required()
                             ->live(),
-                        LivewireComponent::make(ItemsList::class, fn (): array => [
-                            'type' => 'products',
-                            'selected' => (array) data_get($this->data, 'products', []),
-                        ])
+                        SchemaView::make('shopper::livewire.pages.discounts.partials.items-list')
+                            ->viewData(['type' => 'products'])
                             ->visible(
-                                fn (Get $get): bool => $this->shouldShowItemsList()
-                                    && $get('apply_to') === DiscountApplyTo::Products->value
+                                fn (Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value
                             ),
                         Radio::make('eligibility')
                             ->label(__('shopper::pages/discounts.customer_eligibility'))
@@ -203,13 +204,10 @@ trait InteractsWithDiscountForm
                             ->options(DiscountEligibility::options())
                             ->required()
                             ->live(),
-                        LivewireComponent::make(ItemsList::class, fn (): array => [
-                            'type' => 'customers',
-                            'selected' => (array) data_get($this->data, 'customers', []),
-                        ])
+                        SchemaView::make('shopper::livewire.pages.discounts.partials.items-list')
+                            ->viewData(['type' => 'customers'])
                             ->visible(
-                                fn (Get $get): bool => $this->shouldShowItemsList()
-                                    && $get('eligibility') === DiscountEligibility::Customers->value
+                                fn (Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value
                             ),
                         Radio::make('min_required')
                             ->label(__('shopper::pages/discounts.min_requirement'))
@@ -222,7 +220,7 @@ trait InteractsWithDiscountForm
                             ->hiddenLabel()
                             ->numeric()
                             ->minValue(1)
-                            ->live(debounce: '500ms')
+                            ->live(onBlur: true)
                             ->suffix(
                                 fn (Get $get): ?string => match ($get('min_required')) {
                                     DiscountRequirement::Price->value => $this->resolveZoneCurrency($get('zone_id')),
@@ -275,19 +273,6 @@ trait InteractsWithDiscountForm
     /**
      * @param  array<int>  $ids
      */
-    #[On('discount.items.changed')]
-    public function syncDiscountItems(string $type, array $ids): void
-    {
-        if (! in_array($type, ['products', 'customers'], true)) {
-            return;
-        }
-
-        data_set($this->data, $type, array_values(array_map('intval', $ids)));
-    }
-
-    /**
-     * @param  array<int>  $ids
-     */
     #[On('discount.products.added')]
     public function addProductsToDiscount(array $ids): void
     {
@@ -313,6 +298,21 @@ trait InteractsWithDiscountForm
         )));
 
         data_set($this->data, 'customers', $merged);
+    }
+
+    public function toggleShowAllProducts(): void
+    {
+        $this->showAllProducts = ! $this->showAllProducts;
+    }
+
+    public function toggleShowAllCustomers(): void
+    {
+        $this->showAllCustomers = ! $this->showAllCustomers;
+    }
+
+    public function getItemsInlineLimit(): int
+    {
+        return $this->itemsInlineLimit;
     }
 
     public function confirmClearProductsAction(): Action
@@ -464,11 +464,6 @@ trait InteractsWithDiscountForm
             parameters: ['record' => $this->discount->id],
             navigate: true,
         );
-    }
-
-    protected function shouldShowItemsList(): bool
-    {
-        return true;
     }
 
     protected function isZoneFrozen(): bool
