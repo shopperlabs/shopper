@@ -27,7 +27,7 @@ class Permissions extends Component
 
     public function togglePermission(int $id): void
     {
-        $this->authorize('view_users');
+        $this->authorize('access_setting');
 
         $permission = Permission::query()->find($id);
 
@@ -54,7 +54,7 @@ class Permissions extends Component
 
     public function removePermission(int $id): void
     {
-        $this->authorize('view_users');
+        $this->authorize('access_setting');
 
         $permission = Permission::query()->find($id);
 
