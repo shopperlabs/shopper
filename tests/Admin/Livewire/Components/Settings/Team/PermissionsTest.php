@@ -12,7 +12,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('view_users');
+    $this->user->givePermissionTo('view_users', 'access_setting');
     $this->actingAs($this->user);
 
     $this->role = Role::create([
@@ -124,5 +124,35 @@ describe(Permissions::class, function (): void {
         $component->dispatch('permissionAdded');
 
         $component->assertOk();
+    });
+
+    it('blocks `togglePermission` for users without `access_setting`', function (): void {
+        $reader = User::factory()->create();
+        $reader->givePermissionTo('view_users');
+        $this->actingAs($reader);
+
+        Livewire::test(Permissions::class, ['role' => $this->role])
+            ->call('togglePermission', $this->permission->id);
+
+        $this->role->refresh();
+
+        expect($this->role->hasPermissionTo('test.permission'))->toBeFalse();
+    });
+
+    it('blocks `removePermission` for users without `access_setting`', function (): void {
+        $reader = User::factory()->create();
+        $reader->givePermissionTo('view_users');
+        $this->actingAs($reader);
+
+        $permissionToDelete = Permission::create([
+            'name' => 'delete.me',
+            'display_name' => 'Delete Me',
+            'group_name' => 'Test',
+        ]);
+
+        Livewire::test(Permissions::class, ['role' => $this->role])
+            ->call('removePermission', $permissionToDelete->id);
+
+        expect(Permission::query()->find($permissionToDelete->id))->not->toBeNull();
     });
 })->group('livewire', 'components', 'settings');

@@ -14,7 +14,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('view_users');
+    $this->user->givePermissionTo('view_users', 'access_setting');
     $this->actingAs($this->user);
 
     $this->role = Role::query()->where('name', 'manager')->first();
@@ -153,5 +153,19 @@ describe(CreateTeamMember::class, function (): void {
         $newUser = User::query()->where('email', 'role@example.com')->first();
 
         expect($newUser->hasRole($secondRole->name))->toBeTrue();
+    });
+
+    it('blocks `store` for users without `access_setting`', function (): void {
+        $reader = User::factory()->create();
+        $reader->givePermissionTo('view_users');
+        $this->actingAs($reader);
+
+        $initialCount = User::query()->count();
+
+        Livewire::test(CreateTeamMember::class)
+            ->call('store');
+
+        expect(User::query()->count())->toBe($initialCount)
+            ->and(User::query()->where('email', 'denied@example.com')->exists())->toBeFalse();
     });
 })->group('livewire', 'team');

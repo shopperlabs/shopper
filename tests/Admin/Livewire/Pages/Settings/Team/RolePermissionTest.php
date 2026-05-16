@@ -179,4 +179,21 @@ describe(RolePermission::class, function (): void {
 
         expect(Permission::query()->count())->toBe($initialCount + 1);
     });
+
+    it('hides `delete` action for users without `access_setting`', function (): void {
+        $roleToDelete = Role::create([
+            'name' => 'temporary',
+            'display_name' => 'Temporary',
+            'can_be_removed' => true,
+        ]);
+
+        $reader = User::factory()->create();
+        $reader->givePermissionTo('view_users');
+        $this->actingAs($reader);
+
+        Livewire::test(RolePermission::class, ['role' => $roleToDelete])
+            ->assertActionHidden('delete');
+
+        expect(Role::query()->find($roleToDelete->id))->not->toBeNull();
+    });
 })->group('livewire', 'settings', 'team');
