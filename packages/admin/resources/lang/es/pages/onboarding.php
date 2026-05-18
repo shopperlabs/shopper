@@ -30,5 +30,6 @@ return [
     'about_description' => 'Puedes añadir esta información a una página "Acerca de" en tu sitio web.',
     'currencies_description' => 'Estas son las monedas en las que se venderán los productos en tu tienda.',
     'currency_description' => 'Esta es la moneda principal que se mostrará en tu tienda.',
+    'default_currency_must_be_in_currencies' => 'La moneda predeterminada debe ser una de las monedas seleccionadas.',
 
 ];

@@ -24,6 +24,13 @@ class Setting extends Model implements SettingContract
     /** @use HasFactory<SettingFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'value',
+        'display_name',
+        'locked',
+        'key',
+    ];
+
     protected $guarded = [];
 
     protected $hidden = [
