@@ -67,17 +67,17 @@ if (! function_exists('shopper_currency')) {
     {
         $currencyId = shopper_setting('default_currency_id');
 
-        if ($currencyId) {
-            $currency = Cache::remember(
-                'shopper-setting.default_currency',
-                now()->addHour(),
-                fn () => Currency::query()->find($currencyId)
-            );
-
-            return $currency ? $currency->code : 'USD';
+        if (! $currencyId) {
+            return 'USD';
         }
 
-        return 'USD';
+        return Cache::remember(
+            'shopper-setting.default_currency',
+            now()->addHour(),
+            fn (): string => Currency::query()
+                ->where('id', $currencyId)
+                ->value('code') ?? 'USD',
+        );
     }
 }
 
