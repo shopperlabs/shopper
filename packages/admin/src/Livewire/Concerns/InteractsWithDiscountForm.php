@@ -49,6 +49,8 @@ trait InteractsWithDiscountForm
 
     public bool $showAllCustomers = false;
 
+    protected bool $useAside = true;
+
     protected int $itemsInlineLimit = 12;
 
     protected ?Zone $cachedSelectedZone = null;
@@ -60,10 +62,9 @@ trait InteractsWithDiscountForm
         return $schema
             ->components([
                 Section::make(__('shopper::pages/discounts.sections.general'))
-                    ->aside()
-                    ->compact()
+                    ->aside($this->useAside)
+                    ->compact($this->useAside)
                     ->description(__('shopper::pages/discounts.sections.general_description'))
-                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
                         Select::make('zone_id')
                             ->label(__('shopper::pages/settings/zones.single'))
@@ -143,10 +144,9 @@ trait InteractsWithDiscountForm
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/discounts.sections.configuration'))
-                    ->aside()
-                    ->compact()
+                    ->aside($this->useAside)
+                    ->compact($this->useAside)
                     ->description(__('shopper::pages/discounts.sections.configuration_description'))
-                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
                         Toggle::make('usage_number')
                             ->label(__('shopper::pages/discounts.usage_label'))
@@ -182,10 +182,9 @@ trait InteractsWithDiscountForm
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/discounts.sections.targeting'))
-                    ->aside()
-                    ->compact()
+                    ->aside($this->useAside)
+                    ->compact($this->useAside)
                     ->description(__('shopper::pages/discounts.sections.targeting_description'))
-                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
                         Radio::make('apply_to')
                             ->label(__('shopper::pages/discounts.applies_to'))
@@ -257,11 +256,10 @@ trait InteractsWithDiscountForm
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/discounts.sections.advanced'))
-                    ->aside()
-                    ->compact()
+                    ->aside($this->useAside)
+                    ->compact($this->useAside)
                     ->collapsed()
                     ->description(__('shopper::pages/discounts.sections.advanced_description'))
-                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
                         KeyValue::make('metadata')->reorderable(),
                     ]),
@@ -417,6 +415,19 @@ trait InteractsWithDiscountForm
 
     public function save(): void
     {
+        if (! $this->persistDiscount()) {
+            return;
+        }
+
+        $this->redirectRoute(
+            name: 'shopper.discounts.edit',
+            parameters: ['record' => $this->discount->id],
+            navigate: true,
+        );
+    }
+
+    protected function persistDiscount(): bool
+    {
         $this->authorize($this->discount->exists ? 'discounts.edit' : 'discounts.create');
 
         /** @var array<string, mixed> $data */
@@ -433,7 +444,7 @@ trait InteractsWithDiscountForm
                 ->danger()
                 ->send();
 
-            return;
+            return false;
         }
 
         if ($eligibility === DiscountEligibility::Customers->value && $customers === []) {
@@ -442,7 +453,7 @@ trait InteractsWithDiscountForm
                 ->danger()
                 ->send();
 
-            return;
+            return false;
         }
 
         $discountFormValues = Arr::except($data, ['products', 'customers', 'usage_number']);
@@ -459,11 +470,7 @@ trait InteractsWithDiscountForm
             ->success()
             ->send();
 
-        $this->redirectRoute(
-            name: 'shopper.discounts.edit',
-            parameters: ['record' => $this->discount->id],
-            navigate: true,
-        );
+        return true;
     }
 
     protected function isZoneFrozen(): bool

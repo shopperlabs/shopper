@@ -105,7 +105,11 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon(Untitledui::Edit03)
                     ->iconButton()
-                    ->url(fn (Discount $record): string => route('shopper.discounts.edit', $record))
+                    ->action(fn (Discount $record) => $this->dispatch(
+                        'openPanel',
+                        component: 'shopper-slide-overs.discount-form',
+                        arguments: ['discountId' => $record->id],
+                    ))
                     ->authorize('discounts.edit')
                     ->visible($this->getUser()->can('discounts.edit')),
                 Action::make('duplicate')
@@ -144,10 +148,12 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                             ->success()
                             ->send();
 
-                        $this->redirectRoute(
-                            name: 'shopper.discounts.edit',
-                            parameters: ['record' => $clone->id],
-                            navigate: true,
+                        $this->resetTable();
+
+                        $this->dispatch(
+                            'openPanel',
+                            component: 'shopper-slide-overs.discount-form',
+                            arguments: ['discountId' => $clone->id],
                         );
                     })
                     ->authorize('discounts.create')

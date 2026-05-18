@@ -3,9 +3,7 @@
         <x-slot name="action">
             @can('discounts.create')
                 <x-filament::button
-                    tag="a"
-                    :href="route('shopper.discounts.create')"
-                    wire:navigate
+                    wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.discount-form' })"
                 >
                     {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/discounts.single')]) }}
                 </x-filament::button>
