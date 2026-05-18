@@ -43,13 +43,11 @@ if (! function_exists('generate_number')) {
 if (! function_exists('shopper_setting')) {
     function shopper_setting(string $key, bool $withCache = true): mixed
     {
-        $setting = Cache::remember(
+        return Cache::remember(
             "shopper-setting.{$key}",
             $withCache ? 3600 * 24 : 1,
-            fn () => Setting::query()->where('key', $key)->first()
+            fn () => Setting::query()->where('key', $key)->first()?->value,
         );
-
-        return $setting?->value;
     }
 }
 
