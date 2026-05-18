@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Components\OnboardingWizard;
@@ -46,8 +47,17 @@ final class InitializationWizard extends Component implements HasActions, HasSch
     /** @var array<string, mixed>|null */
     public ?array $data = [];
 
+    #[Locked]
+    public array $countryOptions = [];
+
+    #[Locked]
+    public array $currencyOptions = [];
+
     public function mount(): void
     {
+        $this->countryOptions = self::countryOptions();
+        $this->currencyOptions = self::currencyOptions();
+
         /** @var Collection<int, Setting> $settings */
         $settings = Setting::query()
             ->whereIn('key', [
@@ -106,13 +116,13 @@ final class InitializationWizard extends Component implements HasActions, HasSch
                                 ]),
                             Select::make('country_id')
                                 ->label(__('shopper::forms.label.country'))
-                                ->options(fn (): array => self::countryOptions())
+                                ->options($this->countryOptions)
                                 ->searchable()
                                 ->native(false),
                             Select::make('currencies')
                                 ->label(__('shopper::forms.label.currencies'))
                                 ->helperText(__('shopper::pages/onboarding.currencies_description'))
-                                ->options(fn (): array => self::currencyOptions())
+                                ->options($this->currencyOptions)
                                 ->searchable()
                                 ->multiple()
                                 ->minItems(1)
@@ -124,7 +134,7 @@ final class InitializationWizard extends Component implements HasActions, HasSch
                                 ->helperText(__('shopper::pages/onboarding.currency_description'))
                                 ->placeholder(__('shopper::forms.placeholder.select_currencies'))
                                 ->options(
-                                    fn (Get $get): array => collect(self::currencyOptions())
+                                    fn (Get $get): array => collect($this->currencyOptions)
                                         ->only($get('currencies') ?? [])
                                         ->all()
                                 )
@@ -277,7 +287,7 @@ final class InitializationWizard extends Component implements HasActions, HasSch
     private static function countryOptions(): array
     {
         return Cache::remember(
-            'shopper.onboarding.country_options',
+            'shopper.onboarding.country_options.'.app()->getLocale(),
             now()->addDay(),
             fn (): array => Country::query()
                 ->select('name', 'id', 'region', 'cca2')
@@ -296,7 +306,7 @@ final class InitializationWizard extends Component implements HasActions, HasSch
     private static function currencyOptions(): array
     {
         return Cache::remember(
-            'shopper.onboarding.currency_options',
+            'shopper.onboarding.currency_options.'.app()->getLocale(),
             now()->addDay(),
             fn (): array => Currency::query()
                 ->orderBy('name')
@@ -333,19 +343,17 @@ final class InitializationWizard extends Component implements HasActions, HasSch
      */
     private function createDefaultInventory(array $state): void
     {
-        $name = $state['name'] ?? shopper_setting('name');
-
-        Inventory::query()->firstOrCreate(
+        Inventory::query()->updateOrCreate(
             ['is_default' => true],
             [
-                'name' => $name,
-                'code' => Str::slug((string) $name),
-                'email' => $state['email'] ?? shopper_setting('email'),
-                'street_address' => $state['street_address'] ?? shopper_setting('street_address'),
-                'postal_code' => $state['postal_code'] ?? shopper_setting('postal_code'),
-                'city' => $state['city'] ?? shopper_setting('city'),
-                'phone_number' => $state['phone_number'] ?? shopper_setting('phone_number'),
-                'country_id' => $state['country_id'] ?? shopper_setting('country_id'),
+                'name' => $state['name'],
+                'code' => Str::slug((string) $state['name']),
+                'email' => $state['email'],
+                'street_address' => $state['street_address'],
+                'postal_code' => $state['postal_code'],
+                'city' => $state['city'],
+                'phone_number' => $state['phone_number'] ?? null,
+                'country_id' => $state['country_id'] ?? null,
             ]
         );
     }
