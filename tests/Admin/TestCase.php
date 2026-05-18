@@ -30,7 +30,6 @@ use Shopper\Shipping\ShippingServiceProvider;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
 use Shopper\Stripe\StripeServiceProvider;
-use Spatie\LivewireWizard\WizardServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
@@ -91,7 +90,6 @@ abstract class TestCase extends \Tests\TestCase
             RadioDeckServiceProvider::class,
             FilamentSelectTreeServiceProvider::class,
             LivewireSlideOverServiceProvider::class,
-            WizardServiceProvider::class,
         ];
     }
 

@@ -30,5 +30,6 @@ return [
     'about_description' => 'You can add this information to an "About" page on your website.',
     'currencies_description' => 'These are the currencies in which the products will be sold in your store.',
     'currency_description' => 'This is the main currency that will be displayed on your store.',
+    'default_currency_must_be_in_currencies' => 'The default currency must be one of the selected currencies.',
 
 ];

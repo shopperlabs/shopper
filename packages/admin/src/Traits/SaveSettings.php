@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Traits;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Shopper\Core\Models\Setting;
 
 trait SaveSettings
@@ -12,16 +13,18 @@ trait SaveSettings
     /**
      * @param  array<string, mixed>  $keys
      */
-    public function saveSettings(array $keys): void
+    protected function saveSettings(array $keys, bool $locked = true): void
     {
-        foreach ($keys as $key => $value) {
-            Cache::forget('shopper-setting.'.$key);
+        DB::transaction(function () use ($keys, $locked): void {
+            foreach ($keys as $key => $value) {
+                Cache::forget('shopper-setting.'.$key);
 
-            Setting::query()->updateOrCreate(['key' => $key], [
-                'value' => $value,
-                'display_name' => Setting::lockedAttributesDisplayName($key),
-                'locked' => true,
-            ]);
-        }
+                Setting::query()->updateOrCreate(['key' => $key], [
+                    'value' => $value,
+                    'display_name' => Setting::lockedAttributesDisplayName($key),
+                    'locked' => $locked,
+                ]);
+            }
+        });
     }
 }
