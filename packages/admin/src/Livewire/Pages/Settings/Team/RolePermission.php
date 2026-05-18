@@ -104,6 +104,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
         return DeleteAction::make('delete')
             ->label(__('shopper::forms.actions.delete'))
             ->icon(Untitledui::Trash03)
+            ->authorize('system.settings')
             ->visible($this->role->can_be_removed)
             ->record($this->role)
             ->successNotificationTitle(__('shopper::notifications.users_roles.role_deleted'))
