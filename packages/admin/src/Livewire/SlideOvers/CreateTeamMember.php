@@ -50,7 +50,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
 
     public function mount(): void
     {
-        $this->authorize('system.users');
+        $this->authorize('system.settings');
 
         $this->title = __('shopper::pages/settings/staff.add_admin');
 
@@ -121,7 +121,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
 
     public function store(): void
     {
-        $this->authorize('system.users');
+        $this->authorize('system.settings');
 
         $data = $this->form->getState();
         $userModel = config('auth.providers.users.model');

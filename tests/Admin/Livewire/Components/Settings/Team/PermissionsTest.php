@@ -125,4 +125,34 @@ describe(Permissions::class, function (): void {
 
         $component->assertOk();
     });
+
+    it('blocks `togglePermission` for users without `system.settings`', function (): void {
+        $reader = User::factory()->create();
+        $reader->givePermissionTo('system.users');
+        $this->actingAs($reader);
+
+        Livewire::test(Permissions::class, ['role' => $this->role])
+            ->call('togglePermission', $this->permission->id);
+
+        $this->role->refresh();
+
+        expect($this->role->hasPermissionTo('test.permission'))->toBeFalse();
+    });
+
+    it('blocks `removePermission` for users without `system.settings`', function (): void {
+        $reader = User::factory()->create();
+        $reader->givePermissionTo('system.users');
+        $this->actingAs($reader);
+
+        $permissionToDelete = Permission::create([
+            'name' => 'delete.me',
+            'display_name' => 'Delete Me',
+            'group_name' => 'Test',
+        ]);
+
+        Livewire::test(Permissions::class, ['role' => $this->role])
+            ->call('removePermission', $permissionToDelete->id);
+
+        expect(Permission::query()->find($permissionToDelete->id))->not->toBeNull();
+    });
 })->group('livewire', 'components', 'settings');
