@@ -17,6 +17,14 @@ trait SaveSettings
     {
         DB::transaction(function () use ($keys, $locked): void {
             foreach ($keys as $key => $value) {
+                $existingLocked = Setting::query()
+                    ->where('key', $key)
+                    ->value('locked');
+
+                if ($existingLocked && ! $locked) {
+                    continue;
+                }
+
                 Cache::forget('shopper-setting.'.$key);
 
                 Setting::query()->updateOrCreate(['key' => $key], [

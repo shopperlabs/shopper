@@ -26,8 +26,8 @@ final class SetupGuide extends Component
 
     public function mount(): void
     {
-        if ($this->isComplete) {
-            $this->complete();
+        if ($this->isComplete && auth()->user()?->can('access_setting')) {
+            $this->markComplete();
         }
     }
 
@@ -96,13 +96,20 @@ final class SetupGuide extends Component
 
     public function complete(): void
     {
-        $this->saveSettings(['setup_guide_done' => true]);
+        $this->authorize('access_setting');
 
-        $this->dispatch('setup-guide-completed');
+        $this->markComplete();
     }
 
     public function render(): View
     {
         return view('shopper::livewire.components.dashboard.setup-guide');
+    }
+
+    private function markComplete(): void
+    {
+        $this->saveSettings(['setup_guide_done' => true]);
+
+        $this->dispatch('setup-guide-completed');
     }
 }
