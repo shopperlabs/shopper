@@ -76,7 +76,7 @@ export interface TaxRateRule extends Entity {
   /** The morph type of the reference (e.g., product type, category). */
   reference_type: string
   /** The morph ID of the reference. */
-  reference_id: string
+  reference_id: string | number
   /** The tax rate ID. */
   tax_rate_id: number
   /** The tax rate. */
