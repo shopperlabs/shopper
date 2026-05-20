@@ -3,8 +3,16 @@
   "version": "1.0.0",
   "description": "TypeScript types for Shopper",
   "author": "Arthur Monney <monneylobe@gmail.com> (https://arthurmonney.me)",
+  "type": "module",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
