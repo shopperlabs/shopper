@@ -7,6 +7,7 @@ namespace Shopper\Livewire\Pages;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Shopper\Facades\Shopper;
 use Shopper\Models\Contracts\ShopperUser;
 
 #[Layout('shopper::components.layouts.base')]
@@ -14,7 +15,7 @@ final class Initialization extends Component
 {
     public function mount(): void
     {
-        $user = auth()->user();
+        $user = Shopper::auth()->user();
 
         abort_unless(
             $user instanceof ShopperUser

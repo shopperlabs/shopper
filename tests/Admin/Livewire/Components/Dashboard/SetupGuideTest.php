@@ -19,7 +19,7 @@ describe(SetupGuide::class, function (): void {
             'locked' => true,
         ]);
 
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->create(), config('shopper.auth.guard'));
 
         Livewire::test(SetupGuide::class)
             ->assertSet('dismissed', true)
@@ -27,7 +27,7 @@ describe(SetupGuide::class, function (): void {
     });
 
     it('does not auto-mark complete on mount when user lacks `access_setting`', function (): void {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->create(), config('shopper.auth.guard'));
 
         Livewire::test(SetupGuide::class);
 
@@ -35,7 +35,7 @@ describe(SetupGuide::class, function (): void {
     });
 
     it('rejects `complete()` for users without `access_setting`', function (): void {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->create(), config('shopper.auth.guard'));
 
         Livewire::test(SetupGuide::class)
             ->call('complete')
@@ -46,7 +46,7 @@ describe(SetupGuide::class, function (): void {
         $admin = User::factory()->create();
         $admin->assignRole(config('shopper.admin.roles.admin'));
 
-        $this->actingAs($admin);
+        $this->actingAs($admin, config('shopper.auth.guard'));
 
         Livewire::test(SetupGuide::class)
             ->call('complete')

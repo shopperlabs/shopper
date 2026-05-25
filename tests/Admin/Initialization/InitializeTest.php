@@ -232,19 +232,18 @@ it('rejects a malformed social link `URL`', function (): void {
 });
 
 it('forbids a non-admin user from mounting the wizard component', function (): void {
-    $this->actingAs(User::factory()->create());
+    $this->actingAs(User::factory()->create(), config('shopper.auth.guard'));
 
     Livewire::test(InitializationWizard::class)
         ->assertStatus(403);
 });
 
 it('forbids a non-admin user from calling save', function (): void {
-    $admin = $this->makeAdminUser();
-    $this->actingAs($admin);
+    $this->asAdmin();
 
     $component = Livewire::test(InitializationWizard::class);
 
-    $this->actingAs(User::factory()->create());
+    $this->actingAs(User::factory()->create(), config('shopper.auth.guard'));
 
     $component->call('save')->assertStatus(403);
 });
