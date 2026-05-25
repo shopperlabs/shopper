@@ -47,7 +47,7 @@ describe('shopper_setting', function (): void {
 
         expect(shopper_setting('name', withCache: false))->toBe('Original');
 
-        Setting::query()->where('key', 'name')->update(['value' => 'Updated']);
+        Setting::query()->where('key', 'name')->first()->update(['value' => 'Updated']);
 
         $this->travel(2)->seconds();
 
