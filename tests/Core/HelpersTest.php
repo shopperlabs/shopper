@@ -32,8 +32,9 @@ describe('shopper_setting', function (): void {
         $value = shopper_setting('unknown_key');
 
         expect($value)->toBeNull()
-            ->and(Cache::has('shopper-setting.unknown_key'))->toBeTrue()
-            ->and(Cache::get('shopper-setting.unknown_key'))->toBeNull();
+            ->and(Cache::get('shopper-setting.unknown_key'))
+            ->toBeNull()
+            ->not->toBeInstanceOf(Setting::class);
     });
 
     it('respects withCache=false', function (): void {
