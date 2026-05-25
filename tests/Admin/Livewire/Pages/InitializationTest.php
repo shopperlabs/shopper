@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Livewire\Pages\Initialization;
+use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
 
@@ -18,7 +19,7 @@ describe(Initialization::class, function (): void {
 
     it('forbids a non-admin user from rendering the page', function (): void {
         $this->actingAs(
-            \Tests\Core\Stubs\User::factory()->create(),
+            User::factory()->create(),
             config('shopper.auth.guard'),
         );
 

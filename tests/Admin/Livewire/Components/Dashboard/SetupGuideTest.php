@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Livewire\Livewire;
 use Shopper\Core\Models\Setting;
 use Shopper\Livewire\Components\Dashboard\SetupGuide;
-use Shopper\Models\Role;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);

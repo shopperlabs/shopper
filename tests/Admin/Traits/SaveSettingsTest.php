@@ -11,7 +11,8 @@ uses(Tests\Admin\TestCase::class);
 beforeEach(function (): void {
     Cache::flush();
 
-    $this->subject = new class {
+    $this->subject = new class
+    {
         use Shopper\Traits\SaveSettings {
             saveSettings as public;
         }
