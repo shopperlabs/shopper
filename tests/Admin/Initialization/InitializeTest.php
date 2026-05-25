@@ -230,3 +230,49 @@ it('rejects a malformed social link `URL`', function (): void {
         ->call('save')
         ->assertHasFormErrors(['facebook_link' => 'url']);
 });
+
+it('forbids a non-admin user from mounting the wizard component', function (): void {
+    $this->actingAs(User::factory()->create());
+
+    Livewire::test(InitializationWizard::class)
+        ->assertStatus(403);
+});
+
+it('forbids a non-admin user from calling save', function (): void {
+    $admin = $this->makeAdminUser();
+    $this->actingAs($admin);
+
+    $component = Livewire::test(InitializationWizard::class);
+
+    $this->actingAs(User::factory()->create());
+
+    $component->call('save')->assertStatus(403);
+});
+
+it('ignores unknown keys submitted in the form state', function (): void {
+    $this->asAdmin();
+
+    $country = Country::query()->first();
+    [$first, $second] = Currency::query()->orderBy('id')->limit(2)->pluck('id')->all();
+
+    Livewire::test(InitializationWizard::class)
+        ->fillForm([
+            'name' => 'Acme',
+            'email' => 'hello@acme.test',
+            'country_id' => $country->id,
+            'currencies' => [$first, $second],
+            'default_currency_id' => $first,
+            'street_address' => 'Akwa Avenue 34',
+            'postal_code' => '00237',
+            'city' => 'Douala',
+            'phone_number' => '+237600000000',
+        ])
+        ->set('data.is_admin', true)
+        ->set('data.role', 'super-admin')
+        ->call('save')
+        ->assertHasNoErrors();
+
+    expect(Setting::query()->where('key', 'is_admin')->exists())->toBeFalse()
+        ->and(Setting::query()->where('key', 'role')->exists())->toBeFalse()
+        ->and(Setting::query()->where('key', 'name')->value('value'))->toBe('Acme');
+});

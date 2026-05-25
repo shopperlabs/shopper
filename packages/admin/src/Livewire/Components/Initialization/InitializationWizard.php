@@ -33,6 +33,7 @@ use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Setting;
+use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Traits\SaveSettings;
 
 /**
@@ -43,6 +44,22 @@ final class InitializationWizard extends Component implements HasActions, HasSch
     use InteractsWithActions;
     use InteractsWithSchemas;
     use SaveSettings;
+
+    private const array ALLOWED_KEYS = [
+        'name',
+        'email',
+        'country_id',
+        'currencies',
+        'default_currency_id',
+        'street_address',
+        'postal_code',
+        'state',
+        'city',
+        'phone_number',
+        'facebook_link',
+        'instagram_link',
+        'twitter_link',
+    ];
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
@@ -55,6 +72,8 @@ final class InitializationWizard extends Component implements HasActions, HasSch
 
     public function mount(): void
     {
+        $this->authorizeOnboarding();
+
         $this->countryOptions = self::countryOptions();
         $this->currencyOptions = self::currencyOptions();
 
@@ -260,7 +279,12 @@ final class InitializationWizard extends Component implements HasActions, HasSch
 
     public function save(): void
     {
-        $state = $this->form->getState();
+        $this->authorizeOnboarding();
+
+        $state = array_intersect_key(
+            $this->form->getState(),
+            array_flip(self::ALLOWED_KEYS),
+        );
 
         DB::transaction(function () use ($state): void {
             $this->saveSettings($state);
@@ -331,11 +355,24 @@ final class InitializationWizard extends Component implements HasActions, HasSch
      */
     private function persistStep(array $keys): void
     {
+        $allowed = array_intersect($keys, self::ALLOWED_KEYS);
+
         $values = collect($this->data ?? [])
-            ->only($keys)
+            ->only($allowed)
             ->all();
 
         $this->saveSettings($values, locked: false);
+    }
+
+    private function authorizeOnboarding(): void
+    {
+        $user = auth()->user();
+
+        abort_unless(
+            $user instanceof ShopperUser
+                && ($user->isAdmin() || $user->can('access_setting')),
+            403,
+        );
     }
 
     /**
