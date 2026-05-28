@@ -226,40 +226,41 @@ final class StripeDriver extends Driver
             throw StripeException::invalidWebhookPayload($e->getMessage());
         }
 
+        /** @var \Stripe\StripeObject $object */
         $object = $event->data->object; // @phpstan-ignore property.notFound
 
         return match ($event->type) {
             'payment_intent.amount_capturable_updated' => new WebhookResult(
                 action: 'authorized',
                 reference: $object->id,
-                amount: $object->amount_capturable ?? $object->amount,
+                amount: $object->amount_capturable ?? $object->amount, // @phpstan-ignore property.notFound
                 data: ['stripe_event' => $event->type],
             ),
             'payment_intent.succeeded' => new WebhookResult(
                 action: 'captured',
                 reference: $object->id,
-                amount: $object->amount_received ?? $object->amount,
+                amount: $object->amount_received ?? $object->amount, // @phpstan-ignore property.notFound
                 data: ['stripe_event' => $event->type],
             ),
             'payment_intent.payment_failed' => new WebhookResult(
                 action: 'failed',
                 reference: $object->id,
-                amount: $object->amount,
+                amount: $object->amount, // @phpstan-ignore property.notFound
                 data: [
                     'stripe_event' => $event->type,
-                    'failure_message' => $object->last_payment_error?->message,
+                    'failure_message' => $object->last_payment_error?->message, // @phpstan-ignore property.notFound
                 ],
             ),
             'payment_intent.canceled' => new WebhookResult(
                 action: 'canceled',
                 reference: $object->id,
-                amount: $object->amount,
+                amount: $object->amount, // @phpstan-ignore property.notFound
                 data: ['stripe_event' => $event->type],
             ),
             'charge.refunded' => new WebhookResult(
                 action: 'refunded',
-                reference: $object->payment_intent,
-                amount: $object->amount_refunded,
+                reference: $object->payment_intent, // @phpstan-ignore property.notFound
+                amount: $object->amount_refunded, // @phpstan-ignore property.notFound
                 data: ['stripe_event' => $event->type],
             ),
             default => WebhookResult::ignored(),
