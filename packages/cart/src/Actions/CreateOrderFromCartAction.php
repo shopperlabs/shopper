@@ -12,6 +12,7 @@ use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Exceptions\DiscountLimitReachedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartAddress;
+use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Actions\CreateOrderTaxLinesAction;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Core\Models\Discount;
@@ -36,9 +37,9 @@ final readonly class CreateOrderFromCartAction
                 throw new CartCompletedException;
             }
 
-            $discount = $this->reserveDiscount($cart);
-
             $context = $this->cartManager->calculate($cart);
+
+            $discount = $this->reserveDiscount($cart, $context);
 
             $shippingAddress = $this->createOrderAddress($cart->shippingAddress(), $cart->customer_id);
             $billingAddress = $this->createOrderAddress($cart->billingAddress(), $cart->customer_id);
@@ -93,13 +94,14 @@ final readonly class CreateOrderFromCartAction
 
     /**
      * Atomically reserve a usage slot for the cart's discount, if any.
-     * Throws if the global limit was exhausted between validation and commit,
-     * or if the discount is restricted to one use per customer and this
-     * customer has already redeemed it.
+     * Only reserves when the discount actually reduced the cart, so a stale
+     * or inapplicable coupon never burns a usage slot. Throws if the global
+     * limit was exhausted between validation and commit, or if the discount
+     * is restricted to one use per customer and this customer already redeemed it.
      */
-    private function reserveDiscount(Cart $cart): ?Discount
+    private function reserveDiscount(Cart $cart, CartPipelineContext $context): ?Discount
     {
-        if (! $cart->coupon_code) {
+        if (! $cart->coupon_code || $context->discountTotal <= 0) {
             return null;
         }
 

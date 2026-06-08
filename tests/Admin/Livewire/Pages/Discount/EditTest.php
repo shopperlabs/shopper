@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
 use Shopper\Core\Enum\DiscountApplyTo;
+use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
@@ -12,8 +12,6 @@ use Shopper\Core\Exceptions\DiscountZoneFrozenException;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Zone;
-use Shopper\Jobs\AttachedDiscountToCustomers;
-use Shopper\Jobs\AttachedDiscountToProducts;
 use Shopper\Livewire\Pages\Discount\Edit;
 use Tests\Core\Stubs\User;
 
@@ -27,8 +25,6 @@ beforeEach(function (): void {
     $this->customers = User::factory()->count(3)->create()->each(function ($user): void {
         $user->assignRole(config('shopper.admin.roles.user'));
     });
-
-    Queue::fake();
 });
 
 describe(Edit::class, function (): void {
@@ -49,11 +45,10 @@ describe(Edit::class, function (): void {
             ->call('save')
             ->assertHasNoFormErrors();
 
-        Queue::assertPushed(AttachedDiscountToProducts::class);
-        Queue::assertPushed(AttachedDiscountToCustomers::class);
-
         $discount->refresh();
-        expect($discount->code)->toBe($code);
+
+        expect($discount->code)->toBe($code)
+            ->and($discount->items()->where('condition', DiscountCondition::Eligibility)->count())->toBe(3);
     });
 
     it('declares the discount property as Locked', function (): void {

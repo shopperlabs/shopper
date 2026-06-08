@@ -36,7 +36,7 @@
             size="sm"
             color="gray"
             icon="untitledui-plus"
-            wire:click="$dispatch('openPanel', { component: '{{ $pickerComponent }}', arguments: { exceptIds: {{ $exceptIdsJson }} } })"
+            wire:click="$dispatch('openPanel', { component: '{{ $pickerComponent }}', arguments: { exceptIds: {{ $exceptIdsJson }}, editMode: {{ $this->discount->exists ? 'true' : 'false' }} } })"
         >
             {{ $addLabel }}
         </x-filament::button>

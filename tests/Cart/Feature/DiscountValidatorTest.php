@@ -206,6 +206,38 @@ describe(DiscountValidator::class, function (): void {
         expect($result->valid)->toBeFalse();
     });
 
+    it('rejects a fixed-amount discount whose currency differs from the cart currency', function (): void {
+        $euro = Currency::query()->firstOrCreate(
+            ['code' => 'EUR'],
+            ['name' => 'Euro', 'symbol' => '€', 'format' => '1.234,56 €'],
+        );
+        $zone = Zone::factory()->create(['currency_id' => $euro->id]);
+
+        $this->cart->update(['zone_id' => $zone->id]);
+
+        $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
+            'type' => DiscountType::FixedAmount,
+            'value' => 5000,
+            'zone_id' => $zone->id,
+        ]));
+
+        $result = $this->validator->validate($discount, new CartPipelineContext($this->cart->refresh()));
+
+        expect($result->valid)->toBeFalse()
+            ->and($result->failureReason)->toBe(__('shopper-cart::messages.discount.currency_mismatch'));
+    });
+
+    it('accepts a fixed-amount discount whose currency matches the cart currency', function (): void {
+        $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
+            'type' => DiscountType::FixedAmount,
+            'value' => 1000,
+        ]));
+
+        $result = $this->validator->validate($discount, $this->context);
+
+        expect($result->valid)->toBeTrue();
+    });
+
     it('rejects a discount when minimum amount is not reached', function (): void {
         $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
             'min_required' => DiscountRequirement::Price,

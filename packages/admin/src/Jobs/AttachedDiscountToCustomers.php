@@ -32,28 +32,41 @@ class AttachedDiscountToCustomers implements ShouldQueue
 
     public function handle(): void
     {
-        if ($this->eligibility === DiscountEligibility::Customers) {
-            // Remove all the customers that's not been selected that already exist during creation of the discount
+        if ($this->eligibility !== DiscountEligibility::Customers) {
             $this->discount->items()
                 ->where('condition', DiscountCondition::Eligibility)
-                ->whereNotIn('discountable_id', $this->customersIds)
                 ->delete();
 
-            // Create or Update the associate the discount to all the selected users.
-            foreach ($this->customersIds as $customerId) {
-                DiscountDetail::query()->updateOrCreate(
-                    attributes: [
-                        'discount_id' => $this->discount->id,
-                        'discountable_id' => $customerId,
-                        'discountable_type' => config('auth.providers.users.model'),
-                    ],
-                    values: ['condition' => DiscountCondition::Eligibility]
-                );
-            }
-        } else {
-            $this->discount->items()
-                ->where('condition', DiscountCondition::Eligibility)
-                ->delete();
+            return;
         }
+
+        // Drop the customers that are no longer selected.
+        $this->discount->items()
+            ->where('condition', DiscountCondition::Eligibility)
+            ->whereNotIn('discountable_id', $this->customersIds)
+            ->delete();
+
+        if ($this->customersIds === []) {
+            return;
+        }
+
+        // Attach the selected customers in a single statement, preserving the
+        // usage counter of rows that already exist.
+        $type = config('auth.providers.users.model');
+        $now = now();
+
+        DiscountDetail::query()->upsert(
+            array_map(fn (int $customerId): array => [
+                'discount_id' => $this->discount->id,
+                'discountable_id' => $customerId,
+                'discountable_type' => $type,
+                'condition' => DiscountCondition::Eligibility->value,
+                'total_use' => 0,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ], $this->customersIds),
+            uniqueBy: ['discount_id', 'discountable_type', 'discountable_id'],
+            update: ['condition', 'updated_at'],
+        );
     }
 }

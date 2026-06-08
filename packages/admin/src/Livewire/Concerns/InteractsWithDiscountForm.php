@@ -392,6 +392,7 @@ trait InteractsWithDiscountForm
         }
 
         return resolve(Product::class)::query()
+            ->with('media')
             ->whereIn('id', $ids)
             ->get();
     }
@@ -437,8 +438,22 @@ trait InteractsWithDiscountForm
 
         $applyTo = $data['apply_to'] ?? null;
         $eligibility = $data['eligibility'] ?? null;
-        $products = (array) data_get($this->data, 'products', []);
-        $customers = (array) data_get($this->data, 'customers', []);
+
+        $userModel = config('auth.providers.users.model');
+
+        $products = resolve(Product::class)::query()
+            ->scopes('publish')
+            ->whereIn('id', array_map('intval', (array) data_get($this->data, 'products', [])))
+            ->pluck('id')
+            ->map(fn ($id): int => (int) $id)
+            ->all();
+
+        $customers = $userModel::query()
+            ->scopes('customers')
+            ->whereIn('id', array_map('intval', (array) data_get($this->data, 'customers', [])))
+            ->pluck('id')
+            ->map(fn ($id): int => (int) $id)
+            ->all();
 
         if ($applyTo === DiscountApplyTo::Products->value && $products === []) {
             Notification::make()

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountCondition;
@@ -12,8 +11,6 @@ use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\DiscountDetail;
 use Shopper\Core\Models\Product;
-use Shopper\Jobs\AttachedDiscountToCustomers;
-use Shopper\Jobs\AttachedDiscountToProducts;
 use Shopper\Livewire\SlideOvers\DiscountForm;
 use Tests\Core\Stubs\User;
 
@@ -23,8 +20,6 @@ beforeEach(function (): void {
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('discounts.create', 'discounts.edit');
     $this->actingAs($this->user);
-
-    Queue::fake();
 });
 
 describe(DiscountForm::class, function (): void {
@@ -114,9 +109,6 @@ describe(DiscountForm::class, function (): void {
             ->call('store')
             ->assertHasNoFormErrors()
             ->assertRedirect(route('shopper.discounts.index'));
-
-        Queue::assertPushed(AttachedDiscountToProducts::class);
-        Queue::assertPushed(AttachedDiscountToCustomers::class);
 
         $discount->refresh();
         expect($discount->code)->toBe($code);

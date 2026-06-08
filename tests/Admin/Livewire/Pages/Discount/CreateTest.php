@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
 use Shopper\Core\Enum\DiscountApplyTo;
+use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
-use Shopper\Jobs\AttachedDiscountToCustomers;
-use Shopper\Jobs\AttachedDiscountToProducts;
 use Shopper\Livewire\Pages\Discount\Create;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
@@ -23,8 +21,6 @@ beforeEach(function (): void {
     $this->actingAs($this->user);
 
     $this->products = Product::factory()->count(3)->publish()->create();
-
-    Queue::fake();
 });
 
 describe(Create::class, function (): void {
@@ -45,10 +41,10 @@ describe(Create::class, function (): void {
             ->assertHasNoFormErrors()
             ->assertRedirect();
 
-        Queue::assertPushed(AttachedDiscountToProducts::class);
-        Queue::assertPushed(AttachedDiscountToCustomers::class);
+        $discount = Discount::query()->firstOrFail();
 
-        expect(Discount::query()->count())->toBe(1);
+        expect(Discount::query()->count())->toBe(1)
+            ->and($discount->items()->where('condition', DiscountCondition::ApplyTo)->count())->toBe(3);
     });
 
     it('rejects a percentage value above 100', function (): void {

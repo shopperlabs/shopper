@@ -71,6 +71,16 @@ final readonly class DiscountValidator
             return new DiscountValidationResult(false, __('shopper-cart::messages.discount.not_available_in_zone'));
         }
 
+        if ($discount->type === DiscountType::FixedAmount) {
+            $discountCurrency = $discount->zone_id !== null
+                ? $discount->zone->currency_code
+                : shopper_currency();
+
+            if ($discountCurrency !== $context->cart->currency_code) {
+                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.currency_mismatch'));
+            }
+        }
+
         if ($discount->min_required === DiscountRequirement::Price->value) {
             $minAmount = (int) $discount->min_required_value;
 

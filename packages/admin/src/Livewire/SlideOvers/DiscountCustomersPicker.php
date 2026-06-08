@@ -41,9 +41,9 @@ class DiscountCustomersPicker extends SlideOverComponent implements HasActions, 
     /**
      * @param  array<int>  $exceptIds
      */
-    public function mount(array $exceptIds = []): void
+    public function mount(array $exceptIds = [], bool $editMode = false): void
     {
-        $this->authorize('discounts.create');
+        $this->authorize($editMode ? 'discounts.edit' : 'discounts.create');
 
         $this->exceptIds = array_values(array_filter(array_map('intval', $exceptIds)));
     }

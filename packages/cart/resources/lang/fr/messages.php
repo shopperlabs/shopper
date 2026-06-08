@@ -20,6 +20,7 @@ return [
         'requires_login' => 'La réduction nécessite un client connecté.',
         'customer_not_eligible' => 'Le client n\'est pas éligible à cette réduction.',
         'not_available_in_zone' => 'La réduction n\'est pas disponible dans cette zone.',
+        'currency_mismatch' => 'La devise de la réduction ne correspond pas à celle du panier.',
         'min_amount_not_reached' => 'Le montant minimum d\'achat n\'est pas atteint.',
         'min_quantity_not_reached' => 'La quantité minimum n\'est pas atteinte.',
         'invalid_value' => 'La valeur de la réduction doit être supérieure à zéro.',

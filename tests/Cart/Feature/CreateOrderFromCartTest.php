@@ -7,10 +7,10 @@ use Shopper\Cart\Actions\CreateOrderFromCartAction;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Events\CartCompleted;
 use Shopper\Cart\Exceptions\CartCompletedException;
-use Shopper\Cart\Exceptions\DiscountLimitReachedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Enum\DiscountApplyTo;
+use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
@@ -138,8 +138,8 @@ describe(CreateOrderFromCartAction::class, function (): void {
         expect($discount->refresh()->total_use)->toBe(1);
     });
 
-    it('throws and refuses to create the order when the discount global limit is reached', function (): void {
-        Discount::factory()->create([
+    it('creates the order without a discount when the applied coupon is exhausted', function (): void {
+        $discount = Discount::factory()->create([
             'code' => 'LIMITED',
             'is_active' => true,
             'type' => DiscountType::Percentage,
@@ -153,17 +153,41 @@ describe(CreateOrderFromCartAction::class, function (): void {
         $this->cartManager->add($this->cart, $this->product);
         $this->cartManager->applyCoupon($this->cart, 'LIMITED');
 
-        $ordersBefore = Order::query()->count();
+        $order = $this->action->execute($this->cart->refresh());
 
-        try {
-            $this->action->execute($this->cart->refresh());
-            $this->fail('Expected DiscountLimitReachedException was not thrown.');
-        } catch (DiscountLimitReachedException) {
-            // expected
-        }
+        expect($order->discount_id)->toBeNull()
+            ->and($order->discount_code)->toBeNull()
+            ->and($discount->refresh()->total_use)->toBe(5)
+            ->and($this->cart->refresh()->isCompleted())->toBeTrue();
+    });
 
-        expect(Order::query()->count())->toBe($ordersBefore)
-            ->and($this->cart->refresh()->isCompleted())->toBeFalse();
+    it('does not reserve a usage slot when the coupon does not reduce the cart', function (): void {
+        $other = Product::factory()->standard()->create();
+
+        $discount = Discount::factory()->create([
+            'code' => 'PRODUCTS_ONLY',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'total_use' => 0,
+            'usage_limit' => 100,
+            'apply_to' => DiscountApplyTo::Products,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+        ]);
+        $discount->items()->create([
+            'discountable_id' => $other->id,
+            'discountable_type' => $other->getMorphClass(),
+            'condition' => DiscountCondition::ApplyTo,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->applyCoupon($this->cart, 'PRODUCTS_ONLY');
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        expect($order->discount_id)->toBeNull()
+            ->and($discount->refresh()->total_use)->toBe(0);
     });
 
     it('snapshots the discount fields onto the order', function (): void {
@@ -174,6 +198,7 @@ describe(CreateOrderFromCartAction::class, function (): void {
             'value' => 10,
             'total_use' => 0,
             'usage_limit' => null,
+            'apply_to' => DiscountApplyTo::Order,
             'eligibility' => DiscountEligibility::Everyone,
             'min_required' => DiscountRequirement::None,
         ]);
@@ -190,7 +215,7 @@ describe(CreateOrderFromCartAction::class, function (): void {
             ->and($order->discount_currency_code)->toBe('USD');
     });
 
-    it('rejects a second redemption when the discount is limited to one use per customer', function (): void {
+    it('does not let a customer redeem a one-use-per-customer discount twice', function (): void {
         $discount = Discount::factory()->create([
             'code' => 'ONCE',
             'is_active' => true,
@@ -199,6 +224,7 @@ describe(CreateOrderFromCartAction::class, function (): void {
             'total_use' => 0,
             'usage_limit' => null,
             'usage_limit_per_user' => true,
+            'apply_to' => DiscountApplyTo::Order,
             'eligibility' => DiscountEligibility::Everyone,
             'min_required' => DiscountRequirement::None,
         ]);
@@ -215,14 +241,10 @@ describe(CreateOrderFromCartAction::class, function (): void {
         $this->cartManager->add($secondCart, $this->product);
         $this->cartManager->applyCoupon($secondCart, 'ONCE');
 
-        try {
-            $this->action->execute($secondCart->refresh());
-            $this->fail('Expected DiscountLimitReachedException was not thrown.');
-        } catch (DiscountLimitReachedException) {
-            // expected
-        }
+        $secondOrder = $this->action->execute($secondCart->refresh());
 
-        expect($discount->refresh()->total_use)->toBe(1)
+        expect($secondOrder->discount_id)->toBeNull()
+            ->and($discount->refresh()->total_use)->toBe(1)
             ->and(Order::query()->where('discount_id', $discount->id)->count())->toBe(1);
     });
 
