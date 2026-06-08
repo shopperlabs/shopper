@@ -1,0 +1,25 @@
+name: "Shopper Livewire Starter Kit"
+description: "A Livewire and Tailwind storefront starter kit for Shopper."
+version: "1.0.0"
+author: "shopperlabs"
+url: "https://github.com/shopperlabs/livewire-starter-kit"
+shopper: "^3.0"
+php: "^8.3"
+laravel: "^12.0|^13.0"
+
+export_paths:
+  - resources/views
+  - resources/css
+  - routes/storefront.php
+
+dependencies:
+  livewire/livewire: "^3.7"
+  livewire/flux: "^2.0"
+  shopper/stripe: "^3.0"
+
+dev_dependencies:
+  pestphp/pest: "^4.0"
+
+post_install:
+  - php artisan migrate
+  - php artisan storage:link
