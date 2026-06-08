@@ -30,5 +30,6 @@ return [
     'about_description' => 'Vous pouvez rajouter ces informations sur une page "À propos" de votre site web.',
     'currencies_description' => 'Ce sont les devises dans lesquels les produits seront vendus dans votre boutique',
     'currency_description' => "Il s'agit de la devise principale qui sera affiché sur votre boutique.",
+    'default_currency_must_be_in_currencies' => 'La devise par défaut doit faire partie des devises sélectionnées.',
 
 ];

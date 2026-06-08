@@ -205,9 +205,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'dashboard.top-selling-products' => Components\Dashboard\TopSellingProducts::class,
             'initialize' => Pages\Initialization::class,
             'initialize-wizard' => Components\Initialization\InitializationWizard::class,
-            'initialize-store-information' => Components\Initialization\Steps\StoreInformation::class,
-            'initialize-store-address' => Components\Initialization\Steps\StoreAddress::class,
-            'initialize-store-social-link' => Components\Initialization\Steps\StoreSocialLink::class,
         ];
     }
 
