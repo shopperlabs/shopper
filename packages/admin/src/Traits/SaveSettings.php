@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Traits;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Shopper\Core\Models\Setting;
 
 trait SaveSettings
@@ -12,16 +13,39 @@ trait SaveSettings
     /**
      * @param  array<string, mixed>  $keys
      */
-    public function saveSettings(array $keys): void
+    protected function saveSettings(array $keys, bool $locked = true): void
     {
-        foreach ($keys as $key => $value) {
-            Cache::forget('shopper-setting.'.$key);
+        if ($keys === []) {
+            return;
+        }
 
-            Setting::query()->updateOrCreate(['key' => $key], [
-                'value' => $value,
-                'display_name' => Setting::lockedAttributesDisplayName($key),
-                'locked' => true,
-            ]);
+        DB::transaction(function () use ($keys, $locked): void {
+            $existing = Setting::query()
+                ->whereIn('key', array_keys($keys))
+                ->pluck('locked', 'key');
+
+            foreach ($keys as $key => $value) {
+                if (($existing[$key] ?? false) && ! $locked) {
+                    continue;
+                }
+
+                Setting::query()->updateOrCreate(['key' => $key], [
+                    'value' => $value,
+                    'display_name' => Setting::lockedAttributesDisplayName($key),
+                    'locked' => $locked,
+                ]);
+
+                $this->forgetSettingCache($key);
+            }
+        });
+    }
+
+    private function forgetSettingCache(string $key): void
+    {
+        Cache::forget('shopper-setting.'.$key);
+
+        if ($key === 'default_currency_id') {
+            Cache::forget('shopper-setting.default_currency');
         }
     }
 }

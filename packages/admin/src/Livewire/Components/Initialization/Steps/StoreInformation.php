@@ -20,6 +20,7 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
+use Shopper\Traits\AuthorizesSettingsAccess;
 use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 
@@ -28,6 +29,7 @@ use Spatie\LivewireWizard\Components\StepComponent;
  */
 final class StoreInformation extends StepComponent implements HasActions, HasSchemas
 {
+    use AuthorizesSettingsAccess;
     use InteractsWithActions;
     use InteractsWithSchemas;
     use SaveSettings;
@@ -37,6 +39,8 @@ final class StoreInformation extends StepComponent implements HasActions, HasSch
 
     public function mount(): void
     {
+        $this->authorizeSettingsAccess();
+
         /** @var Collection<int, Setting> $settings */
         $settings = Setting::query()->whereIn('key', [
             'name',
@@ -117,6 +121,8 @@ final class StoreInformation extends StepComponent implements HasActions, HasSch
 
     public function save(): void
     {
+        $this->authorizeSettingsAccess();
+
         $this->saveSettings($this->form->getState());
 
         $this->nextStep();

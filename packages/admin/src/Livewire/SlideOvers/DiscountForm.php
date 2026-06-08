@@ -182,6 +182,10 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
                                         return is_no_division_currency($currency) ? (int) $state : (int) round((float) $state * 100);
                                     })
                                     ->numeric()
+                                    ->minValue(fn (Get $get): float => $get('type') === DiscountType::Percentage->value ? 1 : 0.01)
+                                    ->maxValue(
+                                        fn (Get $get): ?int => $get('type') === DiscountType::Percentage->value ? 100 : null
+                                    )
                                     ->required(),
                             ]),
                         Toggle::make('is_active')
@@ -322,6 +326,7 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
                         TextInput::make('min_required_value')
                             ->hiddenLabel()
                             ->numeric()
+                            ->minValue(0)
                             ->suffix(
                                 fn (Get $get): ?string => match ($get('min_required')) {
                                     DiscountRequirement::Price->value => $get('zone_id')

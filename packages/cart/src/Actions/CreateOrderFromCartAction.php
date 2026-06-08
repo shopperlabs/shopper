@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\DB;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Events\CartCompleted;
 use Shopper\Cart\Exceptions\CartCompletedException;
+use Shopper\Cart\Exceptions\DiscountLimitReachedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartAddress;
+use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Actions\CreateOrderTaxLinesAction;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Core\Models\Discount;
@@ -36,6 +38,8 @@ final readonly class CreateOrderFromCartAction
             }
 
             $context = $this->cartManager->calculate($cart);
+
+            $this->reserveDiscount($cart, $context);
 
             $shippingAddress = $this->createOrderAddress($cart->shippingAddress(), $cart->customer_id);
             $billingAddress = $this->createOrderAddress($cart->billingAddress(), $cart->customer_id);
@@ -75,22 +79,40 @@ final readonly class CreateOrderFromCartAction
 
             $order->refresh();
 
-            if ($cart->coupon_code) {
-                Discount::query()
-                    ->where('code', $cart->coupon_code)
-                    ->where(function ($query): void {
-                        $query->whereNull('usage_limit')
-                            ->orWhereColumn('total_use', '<', 'usage_limit');
-                    })
-                    ->increment('total_use');
-            }
-
             $cart->update(['completed_at' => now()]);
 
             CartCompleted::dispatch($cart, $order);
 
             return $order;
         });
+    }
+
+    private function reserveDiscount(Cart $cart, CartPipelineContext $context): void
+    {
+        if (! $cart->coupon_code || $context->discountTotal === 0) {
+            return;
+        }
+
+        $discount = Discount::query()
+            ->where('code', $cart->coupon_code)
+            ->lockForUpdate()
+            ->first();
+
+        if ($discount === null) {
+            return;
+        }
+
+        $affected = Discount::query()
+            ->whereKey($discount->id)
+            ->where(function ($query): void {
+                $query->whereNull('usage_limit')
+                    ->orWhereColumn('total_use', '<', 'usage_limit');
+            })
+            ->increment('total_use');
+
+        if ($affected === 0) {
+            throw DiscountLimitReachedException::global($discount->code);
+        }
     }
 
     private function resolveItemName(Model $purchasable): string

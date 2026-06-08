@@ -22,6 +22,8 @@ return [
         'not_available_in_zone' => 'Discount is not available in this zone.',
         'min_amount_not_reached' => 'Minimum purchase amount not reached.',
         'min_quantity_not_reached' => 'Minimum quantity not reached.',
+        'invalid_value' => 'Discount value must be greater than zero.',
+        'invalid_percentage' => 'Percentage discount cannot exceed 100%.',
     ],
 
 ];

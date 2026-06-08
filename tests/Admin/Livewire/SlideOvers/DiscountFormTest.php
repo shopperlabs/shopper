@@ -56,6 +56,42 @@ describe(DiscountForm::class, function (): void {
         Queue::assertCount(2);
     });
 
+    it('should not create a discount with a negative value', function (): void {
+        Livewire::test(DiscountForm::class)
+            ->fillForm([
+                'code' => 'NEGATIVE',
+                'is_active' => true,
+                'type' => DiscountType::FixedAmount,
+                'value' => -99999999,
+                'apply_to' => DiscountApplyTo::Order,
+                'min_required' => DiscountRequirement::None,
+                'eligibility' => DiscountEligibility::Everyone,
+                'start_at' => now(),
+            ])
+            ->call('store')
+            ->assertHasFormErrors(['value']);
+
+        expect(Discount::query()->count())->toBe(0);
+    });
+
+    it('should not create a percentage discount above 100', function (): void {
+        Livewire::test(DiscountForm::class)
+            ->fillForm([
+                'code' => 'OVER100',
+                'is_active' => true,
+                'type' => DiscountType::Percentage,
+                'value' => 150,
+                'apply_to' => DiscountApplyTo::Order,
+                'min_required' => DiscountRequirement::None,
+                'eligibility' => DiscountEligibility::Everyone,
+                'start_at' => now(),
+            ])
+            ->call('store')
+            ->assertHasFormErrors(['value']);
+
+        expect(Discount::query()->count())->toBe(0);
+    });
+
     it('should not create a discount with a date in the past', function (): void {
         Livewire::test(DiscountForm::class)
             ->fillForm([

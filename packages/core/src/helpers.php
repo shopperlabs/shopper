@@ -43,13 +43,11 @@ if (! function_exists('generate_number')) {
 if (! function_exists('shopper_setting')) {
     function shopper_setting(string $key, bool $withCache = true): mixed
     {
-        $setting = Cache::remember(
+        return Cache::remember(
             "shopper-setting.{$key}",
             $withCache ? 3600 * 24 : 1,
-            fn () => Setting::query()->where('key', $key)->first()
+            fn () => Setting::query()->where('key', $key)->first()?->value,
         );
-
-        return $setting?->value;
     }
 }
 
@@ -69,17 +67,17 @@ if (! function_exists('shopper_currency')) {
     {
         $currencyId = shopper_setting('default_currency_id');
 
-        if ($currencyId) {
-            $currency = Cache::remember(
-                'shopper-setting.default_currency',
-                now()->addHour(),
-                fn () => Currency::query()->find($currencyId)
-            );
-
-            return $currency ? $currency->code : 'USD';
+        if (! $currencyId) {
+            return 'USD';
         }
 
-        return 'USD';
+        return Cache::remember(
+            'shopper-setting.default_currency',
+            now()->addHour(),
+            fn (): string => Currency::query()
+                ->where('id', $currencyId)
+                ->value('code') ?? 'USD',
+        );
     }
 }
 

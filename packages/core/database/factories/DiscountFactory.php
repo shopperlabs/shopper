@@ -25,11 +25,15 @@ class DiscountFactory extends Factory
      */
     public function definition(): array
     {
+        $type = $this->faker->randomElement(DiscountType::values());
+
         return [
             'code' => $this->faker->unique()->regexify('[A-Z0-9]{8}'),
             'is_active' => $this->faker->boolean(),
-            'type' => $this->faker->randomElement(DiscountType::values()),
-            'value' => $this->faker->numberBetween(10, 1000),
+            'type' => $type,
+            'value' => $type === DiscountType::Percentage->value
+                ? $this->faker->numberBetween(1, 100)
+                : $this->faker->numberBetween(100, 100000),
             'apply_to' => $this->faker->randomElement(DiscountApplyTo::values()),
             'min_required' => $this->faker->randomElement(DiscountRequirement::values()),
             'eligibility' => $this->faker->randomElement(DiscountEligibility::values()),
