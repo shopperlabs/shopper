@@ -76,6 +76,38 @@ describe(DiscountValidator::class, function (): void {
             ->and($result->failureReason)->toBeNull();
     });
 
+    it('rejects a discount with a negative value', function (): void {
+        $discount = Discount::factory()->make(array_merge(validDiscountAttributes(), [
+            'type' => DiscountType::FixedAmount,
+            'value' => -5000,
+        ]));
+
+        $result = $this->validator->validate($discount, $this->context);
+
+        expect($result->valid)->toBeFalse();
+    });
+
+    it('rejects a discount with a zero value', function (): void {
+        $discount = Discount::factory()->make(array_merge(validDiscountAttributes(), [
+            'value' => 0,
+        ]));
+
+        $result = $this->validator->validate($discount, $this->context);
+
+        expect($result->valid)->toBeFalse();
+    });
+
+    it('rejects a percentage discount above 100', function (): void {
+        $discount = Discount::factory()->make(array_merge(validDiscountAttributes(), [
+            'type' => DiscountType::Percentage,
+            'value' => 150,
+        ]));
+
+        $result = $this->validator->validate($discount, $this->context);
+
+        expect($result->valid)->toBeFalse();
+    });
+
     it('rejects an inactive discount', function (): void {
         $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
             'is_active' => false,
