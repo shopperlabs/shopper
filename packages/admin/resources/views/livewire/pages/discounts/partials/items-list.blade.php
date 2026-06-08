@@ -21,7 +21,6 @@
         ? __('shopper::pages/discounts.products_picker.empty_field')
         : __('shopper::pages/discounts.customers_picker.empty_field');
     $removeMethod = $isProducts ? 'removeProductFromDiscount' : 'removeCustomerFromDiscount';
-    $thumbnailRadius = $isProducts ? 'rounded-sm' : 'rounded-full';
 @endphp
 
 <div class="min-w-0 space-y-2">
@@ -60,12 +59,12 @@
                 @endphp
                 <li
                     wire:key="discount-{{ $type }}-{{ $item->id }}"
-                    class="bg-sh-surface ring-sh-border inline-flex min-w-0 max-w-56 items-center gap-1.5 rounded-full py-1 pl-1 pr-1.5 ring-1"
+                    class="bg-sh-surface ring-sh-border inline-flex min-w-0 max-w-64 items-center gap-2 rounded-full py-1.5 pl-1.5 pr-2 ring-1"
                 >
                     <img
                         src="{{ $thumbnail }}"
                         alt=""
-                        class="size-5 shrink-0 {{ $thumbnailRadius }} object-cover"
+                        class="size-5 shrink-0 object-cover rounded-full"
                         aria-hidden="true"
                     />
                     <span class="text-sh-fg min-w-0 flex-1 truncate text-xs font-medium" title="{{ $name }}">
@@ -74,10 +73,10 @@
                     <button
                         type="button"
                         wire:click="{{ $removeMethod }}({{ $item->id }})"
-                        class="text-sh-fg-secondary hover:text-danger-600 dark:hover:text-danger-400 shrink-0 rounded-full p-0.5"
+                        class="text-sh-fg-secondary hover:text-danger-600 dark:hover:text-danger-400 -mr-0.5 shrink-0 rounded-full p-0.5"
                         aria-label="{{ __('shopper::forms.actions.remove') }} {{ $name }}"
                     >
-                        <x-untitledui-x-close class="size-3" stroke-width="2.5" aria-hidden="true" />
+                        <x-untitledui-trash-03 class="size-3.5" stroke-width="2" aria-hidden="true" />
                     </button>
                 </li>
             @endforeach

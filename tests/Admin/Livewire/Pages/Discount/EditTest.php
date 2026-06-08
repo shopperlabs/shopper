@@ -87,7 +87,7 @@ describe(Edit::class, function (): void {
 
     it('throws ModelNotFoundException for a non existing discount', function (): void {
         Livewire::test(Edit::class, ['record' => 999_999]);
-    })->throws(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+    })->throws(Illuminate\Database\Eloquent\ModelNotFoundException::class);
 
     it('refuses access without the discounts.edit permission', function (): void {
         $discount = Discount::factory()->create();

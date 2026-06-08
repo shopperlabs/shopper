@@ -1,4 +1,5 @@
 @php
+    $stats = $this->stats;
     $currency = $discount->zone?->currency_code ?? shopper_currency();
     $hasUsage = $stats['usage'] > 0;
     $usagePercent = $stats['usage_limit'] !== null && $stats['usage_limit'] > 0

@@ -49,8 +49,6 @@ trait InteractsWithDiscountForm
 
     public bool $showAllCustomers = false;
 
-    protected bool $useAside = true;
-
     protected int $itemsInlineLimit = 12;
 
     protected ?Zone $cachedSelectedZone = null;
@@ -62,8 +60,9 @@ trait InteractsWithDiscountForm
         return $schema
             ->components([
                 Section::make(__('shopper::pages/discounts.sections.general'))
-                    ->aside($this->useAside)
-                    ->compact($this->useAside)
+                    ->aside()
+                    ->compact()
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->description(__('shopper::pages/discounts.sections.general_description'))
                     ->schema([
                         Select::make('zone_id')
@@ -144,8 +143,9 @@ trait InteractsWithDiscountForm
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/discounts.sections.configuration'))
-                    ->aside($this->useAside)
-                    ->compact($this->useAside)
+                    ->aside()
+                    ->compact()
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->description(__('shopper::pages/discounts.sections.configuration_description'))
                     ->schema([
                         Toggle::make('usage_number')
@@ -182,8 +182,9 @@ trait InteractsWithDiscountForm
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/discounts.sections.targeting'))
-                    ->aside($this->useAside)
-                    ->compact($this->useAside)
+                    ->aside()
+                    ->compact()
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->description(__('shopper::pages/discounts.sections.targeting_description'))
                     ->schema([
                         Radio::make('apply_to')
@@ -256,8 +257,9 @@ trait InteractsWithDiscountForm
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/discounts.sections.advanced'))
-                    ->aside($this->useAside)
-                    ->compact($this->useAside)
+                    ->aside()
+                    ->compact()
+                    ->extraAttributes(['class' => 'sh-section-aside'])
                     ->collapsed()
                     ->description(__('shopper::pages/discounts.sections.advanced_description'))
                     ->schema([
@@ -535,7 +537,7 @@ trait InteractsWithDiscountForm
         $minRequired = $this->coerceEnum($state['min_required'] ?? null, DiscountRequirement::class);
         $zoneId = isset($state['zone_id']) && is_numeric($state['zone_id']) ? (int) $state['zone_id'] : null;
         $zone = $this->getSelectedZone($zoneId);
-        $currency = $zone?->currency_code ?? shopper_currency();
+        $currency = $this->resolveZoneCurrency($zoneId);
         $rawValue = isset($state['value']) && $state['value'] !== '' ? (float) $state['value'] : null;
 
         $typeLabel = null;

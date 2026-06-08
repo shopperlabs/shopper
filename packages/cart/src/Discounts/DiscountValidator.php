@@ -9,8 +9,8 @@ use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
-use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Contracts\Order;
+use Shopper\Core\Models\Discount;
 
 final readonly class DiscountValidator
 {

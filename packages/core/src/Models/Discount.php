@@ -148,6 +148,11 @@ class Discount extends Model implements DiscountContract
                 ->orWhereColumn('total_use', '<', 'usage_limit'));
     }
 
+    protected static function newFactory(): DiscountFactory
+    {
+        return DiscountFactory::new();
+    }
+
     /**
      * @return Attribute<DiscountStatus, never>
      */
@@ -180,11 +185,6 @@ class Discount extends Model implements DiscountContract
 
             return DiscountStatus::Active;
         });
-    }
-
-    protected static function newFactory(): DiscountFactory
-    {
-        return DiscountFactory::new();
     }
 
     protected function casts(): array

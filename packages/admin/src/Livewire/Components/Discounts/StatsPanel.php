@@ -74,8 +74,6 @@ class StatsPanel extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.components.discounts.stats-panel', [
-            'stats' => $this->stats,
-        ]);
+        return view('shopper::livewire.components.discounts.stats-panel');
     }
 }

@@ -166,5 +166,4 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
         return view('shopper::livewire.pages.discounts.edit')
             ->title($this->discount->code);
     }
-
 }
