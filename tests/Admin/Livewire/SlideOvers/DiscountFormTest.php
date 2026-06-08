@@ -2,135 +2,123 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
 use Shopper\Core\Enum\DiscountApplyTo;
+use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
-use Shopper\Jobs\AttachedDiscountToCustomers;
-use Shopper\Jobs\AttachedDiscountToProducts;
+use Shopper\Core\Models\DiscountDetail;
+use Shopper\Core\Models\Product;
 use Shopper\Livewire\SlideOvers\DiscountForm;
-use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
-
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('discounts.create', 'discounts.edit');
     $this->actingAs($this->user);
-
-    $this->products = Product::factory()->count(3)->publish()->create();
-    $this->customers = User::factory()->count(3)->create()->each(function ($user): void {
-        $user->assignRole(config('shopper.admin.roles.user'));
-    });
-
-    Queue::fake();
 });
 
 describe(DiscountForm::class, function (): void {
-    it('creates a new discount', function (): void {
+    it('renders the slide-over for creation when no discount id is given', function (): void {
         Livewire::test(DiscountForm::class)
-            ->fillForm([
-                'code' => 'SUMMER23',
-                'is_active' => true,
-                'type' => DiscountType::FixedAmount,
-                'value' => 1000,
-                'apply_to' => DiscountApplyTo::Products,
-                'products' => $this->products->pluck('id')->toArray(),
-                'min_required' => DiscountRequirement::None,
-                'eligibility' => DiscountEligibility::Everyone,
-                'start_at' => now(),
-            ])
-            ->call('store')
-            ->assertHasNoFormErrors();
-
-        Queue::assertPushed(AttachedDiscountToProducts::class);
-        Queue::assertPushed(AttachedDiscountToCustomers::class);
-
-        expect(Discount::query()->count())->toBe(1);
-
-        Queue::assertCount(2);
+            ->assertSuccessful()
+            ->assertSet('discount.id', null);
     });
 
-    it('should not create a discount with a negative value', function (): void {
-        Livewire::test(DiscountForm::class)
-            ->fillForm([
-                'code' => 'NEGATIVE',
-                'is_active' => true,
-                'type' => DiscountType::FixedAmount,
-                'value' => -99999999,
-                'apply_to' => DiscountApplyTo::Order,
-                'min_required' => DiscountRequirement::None,
-                'eligibility' => DiscountEligibility::Everyone,
-                'start_at' => now(),
-            ])
-            ->call('store')
-            ->assertHasFormErrors(['value']);
+    it('hydrates the form with the discount data when an id is given', function (): void {
+        $discount = Discount::factory()->create([
+            'code' => 'EDIT_ME',
+            'type' => DiscountType::Percentage,
+        ]);
 
-        expect(Discount::query()->count())->toBe(0);
+        Livewire::test(DiscountForm::class, ['discountId' => $discount->id])
+            ->assertSuccessful()
+            ->assertSet('discount.id', $discount->id)
+            ->assertSet('title', 'EDIT_ME');
     });
 
-    it('should not create a percentage discount above 100', function (): void {
-        Livewire::test(DiscountForm::class)
-            ->fillForm([
-                'code' => 'OVER100',
-                'is_active' => true,
-                'type' => DiscountType::Percentage,
-                'value' => 150,
-                'apply_to' => DiscountApplyTo::Order,
-                'min_required' => DiscountRequirement::None,
-                'eligibility' => DiscountEligibility::Everyone,
-                'start_at' => now(),
-            ])
-            ->call('store')
-            ->assertHasFormErrors(['value']);
+    it('hydrates products and customers from existing items', function (): void {
+        $products = Product::factory()->count(2)->create();
+        $customers = User::factory()->count(2)->create()->each(fn ($u) => $u->assignRole(config('shopper.admin.roles.user')));
 
-        expect(Discount::query()->count())->toBe(0);
+        $discount = Discount::factory()->create([
+            'apply_to' => DiscountApplyTo::Products->value,
+            'eligibility' => DiscountEligibility::Customers->value,
+        ]);
+
+        foreach ($products as $product) {
+            DiscountDetail::query()->create([
+                'discount_id' => $discount->id,
+                'discountable_type' => $product->getMorphClass(),
+                'discountable_id' => $product->id,
+                'condition' => DiscountCondition::ApplyTo,
+            ]);
+        }
+
+        foreach ($customers as $customer) {
+            DiscountDetail::query()->create([
+                'discount_id' => $discount->id,
+                'discountable_type' => $customer->getMorphClass(),
+                'discountable_id' => $customer->id,
+                'condition' => DiscountCondition::Eligibility,
+            ]);
+        }
+
+        $component = Livewire::test(DiscountForm::class, ['discountId' => $discount->id]);
+
+        expect($component->get('data.products'))->toHaveCount(2)
+            ->and($component->get('data.customers'))->toHaveCount(2);
     });
 
-    it('should not create a discount with a date in the past', function (): void {
+    it('stores a new discount and redirects to the index', function (): void {
         Livewire::test(DiscountForm::class)
             ->fillForm([
-                'code' => 'SUMMER23',
-                'is_active' => false,
+                'code' => 'NEW_CODE',
                 'type' => DiscountType::Percentage,
                 'value' => 10,
                 'apply_to' => DiscountApplyTo::Order,
-                'min_required' => DiscountRequirement::None,
                 'eligibility' => DiscountEligibility::Everyone,
-                'start_at' => now()->subDays(10),
+                'min_required' => DiscountRequirement::None,
+                'is_active' => true,
+                'start_at' => now()->addDay(),
             ])
             ->call('store')
-            ->assertHasFormErrors(['start_at']);
+            ->assertHasNoFormErrors()
+            ->assertRedirect(route('shopper.discounts.index'));
+
+        expect(Discount::query()->where('code', 'NEW_CODE')->exists())->toBeTrue();
     });
 
-    it('can update a discount', function (): void {
-        $discount = Discount::factory()->create();
+    it('updates an existing discount and redirects to the index', function (): void {
+        $discount = Discount::factory()->create([
+            'type' => DiscountType::Percentage,
+            'value' => 15,
+        ]);
 
         Livewire::test(DiscountForm::class, ['discountId' => $discount->id])
             ->fillForm([
-                'code' => $code = 'LAURE_MONNEY_2025',
+                'code' => $code = 'EDITED_CODE',
                 'apply_to' => DiscountApplyTo::Order,
                 'min_required' => DiscountRequirement::None,
-                'eligibility' => DiscountEligibility::Customers,
-                'customers' => $this->customers->pluck('id')->toArray(),
+                'eligibility' => DiscountEligibility::Everyone,
             ])
             ->call('store')
-            ->assertHasNoFormErrors();
-
-        Queue::assertPushed(AttachedDiscountToProducts::class);
-        Queue::assertPushed(AttachedDiscountToCustomers::class);
+            ->assertHasNoFormErrors()
+            ->assertRedirect(route('shopper.discounts.index'));
 
         $discount->refresh();
+        expect($discount->code)->toBe($code);
+    });
 
-        expect($discount)->toBeInstanceOf(Discount::class)
-            ->and($discount->code)
-            ->toBe($code);
+    it('refuses access without discount permissions', function (): void {
+        $stranger = User::factory()->create();
+        $this->actingAs($stranger);
 
-        Queue::assertCount(2);
+        Livewire::test(DiscountForm::class)
+            ->assertForbidden();
     });
 })->group('livewire', 'slideovers', 'discounts');

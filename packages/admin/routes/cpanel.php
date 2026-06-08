@@ -41,8 +41,9 @@ if (Feature::enabled('collection')) {
 }
 
 if (Feature::enabled('discount')) {
-    Route::get('/discounts', config('shopper.components.discount.pages.discount-index'))
-        ->name('discounts.index');
+    Route::as('discounts.')->prefix('discounts')->group(function (): void {
+        require __DIR__.'/admin/discount.php';
+    });
 }
 
 if (Feature::enabled('review')) {

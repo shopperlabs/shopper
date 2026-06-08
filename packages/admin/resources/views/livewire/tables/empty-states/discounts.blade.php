@@ -3,7 +3,7 @@
     :content="__('shopper::pages/discounts.description')"
     :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/discounts.single')])"
     permission="discounts.create"
-    panel="{ component: 'shopper-slide-overs.discount-form' }"
+    :url="route('shopper.discounts.create')"
 >
     <div class="shrink-0">
         <svg class="h-64 w-auto lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 528 380">

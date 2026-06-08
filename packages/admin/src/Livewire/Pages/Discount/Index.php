@@ -24,7 +24,9 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Actions\Store\DuplicateDiscountAction;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
@@ -103,15 +105,49 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon(Untitledui::Edit03)
                     ->iconButton()
-                    ->action(
-                        fn (Discount $record) => $this->dispatch(
-                            'openPanel',
-                            'shopper-slide-overs.discount-form',
-                            ['discountId' => $record->id]
-                        )
-                    )
+                    ->url(fn (Discount $record): string => route('shopper.discounts.edit', $record))
                     ->authorize('discounts.edit')
                     ->visible($this->getUser()->can('discounts.edit')),
+                Action::make('duplicate')
+                    ->label(__('shopper::pages/discounts.actions.duplicate'))
+                    ->icon(Untitledui::Copy03)
+                    ->iconButton()
+                    ->color('gray')
+                    ->requiresConfirmation()
+                    ->modalHeading(__('shopper::pages/discounts.actions.duplicate_confirm_heading'))
+                    ->modalDescription(__('shopper::pages/discounts.actions.duplicate_confirm_description'))
+                    ->action(function (Discount $record): void {
+                        $this->authorize('discounts.create');
+
+                        $lock = Cache::lock(
+                            "discount:duplicate:{$record->id}:".$this->getUser()->getKey(),
+                            seconds: 5,
+                        );
+
+                        if (! $lock->get()) {
+                            Notification::make()
+                                ->title(__('shopper::pages/discounts.actions.duplicate_in_progress'))
+                                ->warning()
+                                ->send();
+
+                            return;
+                        }
+
+                        try {
+                            $clone = resolve(DuplicateDiscountAction::class)($record);
+                        } finally {
+                            $lock->release();
+                        }
+
+                        Notification::make()
+                            ->title(__('shopper::pages/discounts.actions.duplicate_success', ['code' => $clone->code]))
+                            ->success()
+                            ->send();
+
+                        $this->redirectRoute('shopper.discounts.edit', ['record' => $clone->id], navigate: true);
+                    })
+                    ->authorize('discounts.create')
+                    ->visible($this->getUser()->can('discounts.create')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)

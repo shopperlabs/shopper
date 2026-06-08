@@ -20,6 +20,7 @@ return [
         'requires_login' => 'Discount requires a logged-in customer.',
         'customer_not_eligible' => 'Customer is not eligible for this discount.',
         'not_available_in_zone' => 'Discount is not available in this zone.',
+        'currency_mismatch' => 'Discount currency does not match the cart currency.',
         'min_amount_not_reached' => 'Minimum purchase amount not reached.',
         'min_quantity_not_reached' => 'Minimum quantity not reached.',
         'invalid_value' => 'Discount value must be greater than zero.',

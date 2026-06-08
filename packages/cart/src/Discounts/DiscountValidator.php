@@ -9,6 +9,7 @@ use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Discount;
 
 final readonly class DiscountValidator
@@ -40,13 +41,12 @@ final readonly class DiscountValidator
         }
 
         if ($discount->usage_limit_per_user && $context->cart->customer_id) {
-            $userUses = $discount->items()
-                ->where('condition', DiscountCondition::Eligibility)
-                ->where('discountable_type', config('auth.providers.users.model'))
-                ->where('discountable_id', $context->cart->customer_id)
-                ->value('total_use') ?? 0;
+            $alreadyRedeemed = resolve(Order::class)::query()
+                ->where('discount_id', $discount->id)
+                ->where('customer_id', $context->cart->customer_id)
+                ->exists();
 
-            if ($userUses > 0) {
+            if ($alreadyRedeemed) {
                 return new DiscountValidationResult(false, __('shopper-cart::messages.discount.already_used'));
             }
         }
@@ -69,6 +69,16 @@ final readonly class DiscountValidator
 
         if ($discount->zone_id && $context->cart->zone_id !== $discount->zone_id) {
             return new DiscountValidationResult(false, __('shopper-cart::messages.discount.not_available_in_zone'));
+        }
+
+        if ($discount->type === DiscountType::FixedAmount) {
+            $discountCurrency = $discount->zone_id !== null
+                ? $discount->zone->currency_code
+                : shopper_currency();
+
+            if ($discountCurrency !== $context->cart->currency_code) {
+                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.currency_mismatch'));
+            }
         }
 
         if ($discount->min_required === DiscountRequirement::Price->value) {

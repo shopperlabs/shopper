@@ -5,13 +5,19 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\DiscountFactory;
+use Shopper\Core\Enum\DiscountApplyTo;
+use Shopper\Core\Enum\DiscountCondition;
+use Shopper\Core\Enum\DiscountStatus;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Exceptions\DiscountZoneFrozenException;
 use Shopper\Core\Models\Contracts\Discount as DiscountContract;
 
 /**
@@ -34,7 +40,9 @@ use Shopper\Core\Models\Contracts\Discount as DiscountContract;
  * @property-read CarbonInterface $start_at
  * @property-read ?CarbonInterface $end_at
  * @property-read ?Zone $zone
+ * @property-read DiscountStatus $status
  * @property-read Collection<array-key, DiscountDetail> $items
+ * @property-read Collection<array-key, Order> $orders
  */
 class Discount extends Model implements DiscountContract
 {
@@ -42,6 +50,25 @@ class Discount extends Model implements DiscountContract
     use HasFactory;
 
     protected $guarded = [];
+
+    public static function booted(): void
+    {
+        self::saving(function (self $discount): void {
+            if (! $discount->isDirty('zone_id')) {
+                return;
+            }
+
+            if ($discount->type !== DiscountType::FixedAmount) {
+                return;
+            }
+
+            if (! $discount->exists || $discount->total_use <= 0) {
+                return;
+            }
+
+            throw new DiscountZoneFrozenException;
+        });
+    }
 
     public function getTable(): string
     {
@@ -57,12 +84,41 @@ class Discount extends Model implements DiscountContract
         return false;
     }
 
+    public function isApplicable(): bool
+    {
+        if ($this->apply_to !== DiscountApplyTo::Products->value) {
+            return true;
+        }
+
+        $items = $this->relationLoaded('items')
+            ? $this->items
+            : $this->items()->with('discountable')->get();
+
+        $productItems = $items->where('condition', DiscountCondition::ApplyTo);
+
+        if ($productItems->isEmpty()) {
+            return true;
+        }
+
+        return $productItems->contains(
+            fn (DiscountDetail $item): bool => $item->discountable !== null // @phpstan-ignore notIdentical.alwaysTrue
+        );
+    }
+
     /**
      * @return HasMany<DiscountDetail, $this>
      */
     public function items(): HasMany
     {
         return $this->hasMany(DiscountDetail::class, 'discount_id');
+    }
+
+    /**
+     * @return HasMany<Order, $this>
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'discount_id');
     }
 
     /**
@@ -73,9 +129,62 @@ class Discount extends Model implements DiscountContract
         return $this->belongsTo(Zone::class, 'zone_id');
     }
 
+    /**
+     * @param  Builder<Discount>  $query
+     * @return Builder<Discount>
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        $now = now();
+
+        return $query
+            ->where('is_active', true)
+            ->where('start_at', '<=', $now)
+            ->where(fn (Builder $inner) => $inner
+                ->whereNull('end_at')
+                ->orWhere('end_at', '>', $now))
+            ->where(fn (Builder $inner) => $inner
+                ->whereNull('usage_limit')
+                ->orWhereColumn('total_use', '<', 'usage_limit'));
+    }
+
     protected static function newFactory(): DiscountFactory
     {
         return DiscountFactory::new();
+    }
+
+    /**
+     * @return Attribute<DiscountStatus, never>
+     */
+    protected function status(): Attribute
+    {
+        return Attribute::get(function (): DiscountStatus {
+            if (! $this->exists) {
+                return DiscountStatus::Draft;
+            }
+
+            if (! $this->is_active) {
+                return DiscountStatus::Disabled;
+            }
+
+            if ($this->end_at !== null && $this->end_at->isPast()) {
+                return DiscountStatus::Expired;
+            }
+
+            if ($this->hasReachedLimit()) {
+                return DiscountStatus::LimitReached;
+            }
+
+            if ($this->start_at->isFuture()) {
+                return DiscountStatus::Scheduled;
+            }
+
+            if (! $this->isApplicable()) {
+                return DiscountStatus::Inapplicable;
+            }
+
+            return DiscountStatus::Active;
+        });
     }
 
     protected function casts(): array

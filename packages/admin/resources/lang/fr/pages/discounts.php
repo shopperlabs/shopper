@@ -74,4 +74,101 @@ return [
     'save' => 'Code de réduction :code enregistré avec succès!',
     'total_use' => 'Utilisations',
 
+    'create' => [
+        'description' => 'Configurez un nouveau code de réduction. Le résumé à droite se met à jour pendant que vous remplissez le formulaire pour visualiser exactement ce que vos clients vont recevoir.',
+    ],
+
+    'edit' => [
+        'description' => 'Mettez à jour cette réduction et consultez son utilisation réelle ainsi que son impact sur le revenu.',
+    ],
+
+    'sections' => [
+        'general' => 'Général',
+        'general_description' => 'Code, type et visibilité de la réduction.',
+        'configuration' => 'Configuration',
+        'configuration_description' => 'Combien de fois la réduction peut être utilisée et sa période de validité.',
+        'targeting' => 'Ciblage',
+        'targeting_description' => 'Quels produits et quels clients sont éligibles à cette réduction.',
+        'advanced' => 'Avancé',
+        'advanced_description' => 'Métadonnées personnalisées attachées à la réduction.',
+    ],
+
+    'zone_frozen_helper' => 'La zone ne peut plus être modifiée après la première utilisation d\'une réduction à montant fixe. La cohérence de la devise est ainsi préservée sur les commandes existantes.',
+
+    'summary' => [
+        'title' => 'Résumé de la règle',
+        'empty' => 'Choisissez un type et une valeur pour voir le résumé se mettre à jour en temps réel.',
+        'uses_total' => 'utilisations max',
+        'type_percentage' => ':value % de remise',
+        'type_fixed_amount' => ':amount de remise',
+        'minimum_price' => 'Panier ≥ :amount',
+        'minimum_quantity' => 'Min :count article|Min :count articles',
+        'visibility_public' => 'Public',
+        'visibility_hidden' => 'Masqué',
+        'rows' => [
+            'type' => 'Type',
+            'code' => 'Code',
+            'zone' => 'Zone',
+            'applies' => 'Cible',
+            'for' => 'Pour',
+            'minimum' => 'Minimum',
+            'usage' => 'Utilisations',
+            'usage_value' => '{1} :count utilisation max|[2,*] :count utilisations max',
+            'active' => 'Actif',
+            'visibility' => 'Visibilité',
+        ],
+    ],
+
+    'stats' => [
+        'title' => 'Performance',
+        'usage' => 'Utilisations',
+        'orders' => 'Commandes',
+        'gross_revenue' => 'Revenu brut',
+        'discount_cost' => 'Coût de la réduction',
+        'aov_with' => 'Panier moyen avec ce code',
+        'disclaimer' => 'Les statistiques incluent les commandes payées depuis la migration de suivi des réductions.',
+    ],
+
+    'actions' => [
+        'duplicate' => 'Dupliquer',
+        'duplicate_confirm_heading' => 'Dupliquer cette réduction ?',
+        'duplicate_confirm_description' => 'Une copie sera créée avec un nouveau code suffixé `_COPY`, désactivée et avec un compteur d\'utilisations remis à zéro. Vous serez redirigé vers la nouvelle réduction pour terminer son édition.',
+        'duplicate_in_progress' => 'Une duplication est déjà en cours.',
+        'duplicate_success' => 'Réduction dupliquée sous le code :code.',
+    ],
+
+    'products_picker' => [
+        'title' => 'Sélectionnez les produits concernés par la réduction',
+        'description' => 'Choisissez un ou plusieurs produits. Ils apparaîtront dans le formulaire dès la confirmation.',
+        'button' => 'Parcourir les produits',
+        'bulk_add' => 'Ajouter les produits sélectionnés',
+        'empty' => 'Aucun produit correspondant.',
+        'empty_field' => 'Aucun produit sélectionné. Cliquez sur « Parcourir les produits » pour en ajouter.',
+        'required' => 'Choisissez au moins un produit lorsque la réduction s\'applique à des produits spécifiques.',
+    ],
+
+    'customers_picker' => [
+        'title' => 'Sélectionnez les clients éligibles à la réduction',
+        'description' => 'Choisissez un ou plusieurs clients. Ils apparaîtront dans le formulaire dès la confirmation.',
+        'button' => 'Parcourir les clients',
+        'bulk_add' => 'Ajouter les clients sélectionnés',
+        'empty' => 'Aucun client correspondant.',
+        'empty_field' => 'Aucun client sélectionné. Cliquez sur « Parcourir les clients » pour en ajouter.',
+        'required' => 'Choisissez au moins un client lorsque la réduction cible des clients spécifiques.',
+    ],
+
+    'apply_to_switch' => [
+        'heading' => 'Passer à toute la commande ?',
+        'description' => 'Vous avez choisi des produits spécifiques pour cette réduction. Passer à toute la commande les retirera de la sélection.',
+        'submit' => 'Oui, basculer et vider',
+        'cancel' => 'Garder les produits',
+    ],
+
+    'eligibility_switch' => [
+        'heading' => 'Passer à tout le monde ?',
+        'description' => 'Vous avez choisi des clients spécifiques. Passer à tout le monde les retirera de la sélection.',
+        'submit' => 'Oui, basculer et vider',
+        'cancel' => 'Garder les clients',
+    ],
+
 ];

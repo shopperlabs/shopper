@@ -33,13 +33,13 @@ final readonly class SaveAndDispatchDiscountAction
         $applyTo = data_get($values, 'apply_to');
         $eligibility = data_get($values, 'eligibility');
 
-        AttachedDiscountToProducts::dispatch(
+        AttachedDiscountToProducts::dispatchSync(
             $applyTo instanceof DiscountApplyTo ? $applyTo : DiscountApplyTo::from($applyTo),
             $productsIds,
             $discount,
         );
 
-        AttachedDiscountToCustomers::dispatch(
+        AttachedDiscountToCustomers::dispatchSync(
             $eligibility instanceof DiscountEligibility ? $eligibility : DiscountEligibility::from($eligibility),
             $customersIds,
             $discount,

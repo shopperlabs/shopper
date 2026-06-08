@@ -30,7 +30,7 @@
                     {{ $subHeading }}
                 @endisset
 
-                <main class="sh-main-content flex-1 overflow-y-auto">
+                <main class="sh-main-content relative flex-1 overflow-y-auto">
                     {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::CONTENT_START) }}
 
                     <div {{ $attributes->twMerge(['class' => 'flex-1 min-h-full']) }}>

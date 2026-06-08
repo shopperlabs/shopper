@@ -39,7 +39,7 @@ final readonly class CreateOrderFromCartAction
 
             $context = $this->cartManager->calculate($cart);
 
-            $this->reserveDiscount($cart, $context);
+            $discount = $this->reserveDiscount($cart, $context);
 
             $shippingAddress = $this->createOrderAddress($cart->shippingAddress(), $cart->customer_id);
             $billingAddress = $this->createOrderAddress($cart->billingAddress(), $cart->customer_id);
@@ -54,6 +54,11 @@ final readonly class CreateOrderFromCartAction
                 'zone_id' => $cart->zone_id,
                 'shipping_address_id' => $shippingAddress?->id,
                 'billing_address_id' => $billingAddress?->id,
+                'discount_id' => $discount?->id,
+                'discount_code' => $discount?->code,
+                'discount_type' => $discount?->type->value,
+                'discount_value_at_apply' => $discount?->value,
+                'discount_currency_code' => $discount !== null ? $cart->currency_code : null,
             ]);
 
             $cart->lines->loadMorph('purchasable', [
@@ -87,10 +92,17 @@ final readonly class CreateOrderFromCartAction
         });
     }
 
-    private function reserveDiscount(Cart $cart, CartPipelineContext $context): void
+    /**
+     * Atomically reserve a usage slot for the cart's discount, if any.
+     * Only reserves when the discount actually reduced the cart, so a stale
+     * or inapplicable coupon never burns a usage slot. Throws if the global
+     * limit was exhausted between validation and commit, or if the discount
+     * is restricted to one use per customer and this customer already redeemed it.
+     */
+    private function reserveDiscount(Cart $cart, CartPipelineContext $context): ?Discount
     {
-        if (! $cart->coupon_code || $context->discountTotal === 0) {
-            return;
+        if (! $cart->coupon_code || $context->discountTotal <= 0) {
+            return null;
         }
 
         $discount = Discount::query()
@@ -99,7 +111,18 @@ final readonly class CreateOrderFromCartAction
             ->first();
 
         if ($discount === null) {
-            return;
+            return null;
+        }
+
+        if ($discount->usage_limit_per_user && $cart->customer_id !== null) {
+            $alreadyRedeemed = Order::query()
+                ->where('discount_id', $discount->id)
+                ->where('customer_id', $cart->customer_id)
+                ->exists();
+
+            if ($alreadyRedeemed) {
+                throw DiscountLimitReachedException::perUser($discount->code);
+            }
         }
 
         $affected = Discount::query()
@@ -113,6 +136,10 @@ final readonly class CreateOrderFromCartAction
         if ($affected === 0) {
             throw DiscountLimitReachedException::global($discount->code);
         }
+
+        $discount->refresh();
+
+        return $discount;
     }
 
     private function resolveItemName(Model $purchasable): string

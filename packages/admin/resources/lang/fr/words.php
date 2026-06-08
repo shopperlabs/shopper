@@ -171,5 +171,6 @@ return [
     'manual' => 'Manuel',
     'configured' => 'Configuré',
     'not_configured' => 'Non configuré',
+    'show_less' => 'Réduire',
 
 ];

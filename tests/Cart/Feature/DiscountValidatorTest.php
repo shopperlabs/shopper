@@ -6,14 +6,13 @@ use Shopper\Cart\Discounts\DiscountValidator;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Enum\DiscountApplyTo;
-use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
-use Shopper\Core\Models\DiscountDetail;
 use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\Order;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Zone;
 use Tests\Core\Stubs\User;
@@ -156,12 +155,12 @@ describe(DiscountValidator::class, function (): void {
             'usage_limit_per_user' => true,
         ]));
 
-        DiscountDetail::query()->create([
+        Order::query()->create([
+            'number' => 'TEST-ORDER',
+            'price_amount' => 100,
+            'currency_code' => 'USD',
+            'customer_id' => $this->user->id,
             'discount_id' => $discount->id,
-            'condition' => DiscountCondition::Eligibility,
-            'discountable_type' => $this->user->getMorphClass(),
-            'discountable_id' => $this->user->id,
-            'total_use' => 1,
         ]);
 
         $result = $this->validator->validate($discount, $this->context);
@@ -205,6 +204,38 @@ describe(DiscountValidator::class, function (): void {
         $result = $this->validator->validate($discount, $this->context);
 
         expect($result->valid)->toBeFalse();
+    });
+
+    it('rejects a fixed-amount discount whose currency differs from the cart currency', function (): void {
+        $euro = Currency::query()->firstOrCreate(
+            ['code' => 'EUR'],
+            ['name' => 'Euro', 'symbol' => '€', 'format' => '1.234,56 €'],
+        );
+        $zone = Zone::factory()->create(['currency_id' => $euro->id]);
+
+        $this->cart->update(['zone_id' => $zone->id]);
+
+        $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
+            'type' => DiscountType::FixedAmount,
+            'value' => 5000,
+            'zone_id' => $zone->id,
+        ]));
+
+        $result = $this->validator->validate($discount, new CartPipelineContext($this->cart->refresh()));
+
+        expect($result->valid)->toBeFalse()
+            ->and($result->failureReason)->toBe(__('shopper-cart::messages.discount.currency_mismatch'));
+    });
+
+    it('accepts a fixed-amount discount whose currency matches the cart currency', function (): void {
+        $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
+            'type' => DiscountType::FixedAmount,
+            'value' => 1000,
+        ]));
+
+        $result = $this->validator->validate($discount, $this->context);
+
+        expect($result->valid)->toBeTrue();
     });
 
     it('rejects a discount when minimum amount is not reached', function (): void {

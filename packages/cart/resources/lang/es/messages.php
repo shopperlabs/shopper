@@ -20,6 +20,7 @@ return [
         'requires_login' => 'El descuento requiere un cliente con sesión iniciada.',
         'customer_not_eligible' => 'El cliente no es elegible para este descuento.',
         'not_available_in_zone' => 'El descuento no está disponible en esta zona.',
+        'currency_mismatch' => 'La moneda del descuento no coincide con la del carrito.',
         'min_amount_not_reached' => 'No se ha alcanzado el monto mínimo de compra.',
         'min_quantity_not_reached' => 'No se ha alcanzado la cantidad mínima.',
         'invalid_value' => 'El valor del descuento debe ser mayor que cero.',

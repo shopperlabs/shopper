@@ -29,28 +29,41 @@ class AttachedDiscountToProducts implements ShouldQueue
 
     public function handle(): void
     {
-        if ($this->applyTo === DiscountApplyTo::Products) {
-            // Remove all the products that's not been selected that already exist during creation of the discount
+        if ($this->applyTo !== DiscountApplyTo::Products) {
             $this->discount->items()
                 ->where('condition', DiscountCondition::ApplyTo)
-                ->whereNotIn('discountable_id', $this->productIds)
                 ->delete();
 
-            // Create or Update the associate the discount to all the selected products.
-            foreach ($this->productIds as $productId) {
-                DiscountDetail::query()->updateOrCreate(
-                    attributes: [
-                        'discount_id' => $this->discount->id,
-                        'discountable_id' => $productId,
-                        'discountable_type' => config('shopper.models.product'),
-                    ],
-                    values: ['condition' => DiscountCondition::ApplyTo]
-                );
-            }
-        } else {
-            $this->discount->items()
-                ->where('condition', DiscountCondition::ApplyTo)
-                ->delete();
+            return;
         }
+
+        // Drop the products that are no longer selected.
+        $this->discount->items()
+            ->where('condition', DiscountCondition::ApplyTo)
+            ->whereNotIn('discountable_id', $this->productIds)
+            ->delete();
+
+        if ($this->productIds === []) {
+            return;
+        }
+
+        // Attach the selected products in a single statement, preserving the
+        // usage counter of rows that already exist.
+        $type = config('shopper.models.product');
+        $now = now();
+
+        DiscountDetail::query()->upsert(
+            array_map(fn (int $productId): array => [
+                'discount_id' => $this->discount->id,
+                'discountable_id' => $productId,
+                'discountable_type' => $type,
+                'condition' => DiscountCondition::ApplyTo->value,
+                'total_use' => 0,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ], $this->productIds),
+            uniqueBy: ['discount_id', 'discountable_type', 'discountable_id'],
+            update: ['condition', 'updated_at'],
+        );
     }
 }
