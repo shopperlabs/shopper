@@ -142,14 +142,8 @@ it('parses dependencies in list-of-mappings format', function (): void {
     ]);
 });
 
-it('parses the real livewire starter kit manifest', function (): void {
-    $manifestPath = '/Users/chretiendev/Sites/OSS/shopperlabs/starters/packages/livewire-starter-kit/shopper-kit.yaml';
-
-    if (! file_exists($manifestPath)) {
-        $this->markTestSkipped('Livewire starter kit not available locally.');
-    }
-
-    $manifest = Manifest::fromPath($manifestPath);
+it('parses a starter kit manifest from a file', function (): void {
+    $manifest = Manifest::fromPath(__DIR__.'/fixtures/livewire-starter-kit.yaml');
 
     expect($manifest)
         ->name->toBe('Shopper Livewire Starter Kit')

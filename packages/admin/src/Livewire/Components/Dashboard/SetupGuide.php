@@ -6,12 +6,15 @@ namespace Shopper\Livewire\Components\Dashboard;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Contracts\TaxZone as TaxZoneContract;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Zone;
+use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Traits\AuthorizesSettingsAccess;
 use Shopper\Traits\SaveSettings;
 
 /**
@@ -22,12 +25,24 @@ use Shopper\Traits\SaveSettings;
  */
 final class SetupGuide extends Component
 {
+    use AuthorizesSettingsAccess;
     use SaveSettings;
+
+    #[Locked]
+    public bool $dismissed = false;
 
     public function mount(): void
     {
-        if ($this->isComplete) {
-            $this->complete();
+        $this->dismissed = (bool) shopper_setting('setup_guide_done');
+
+        if ($this->dismissed) {
+            return;
+        }
+
+        $user = shopper()->auth()->user();
+
+        if ($this->isComplete && $user instanceof ShopperUser && ($user->isAdmin() || $user->can('system.settings'))) {
+            $this->markComplete();
         }
     }
 
@@ -37,6 +52,10 @@ final class SetupGuide extends Component
     #[Computed]
     public function steps(): array
     {
+        if ($this->dismissed) {
+            return [];
+        }
+
         return [
             [
                 'key' => 'product.create',
@@ -96,13 +115,22 @@ final class SetupGuide extends Component
 
     public function complete(): void
     {
-        $this->saveSettings(['setup_guide_done' => true]);
+        $this->authorizeSettingsAccess();
 
-        $this->dispatch('setup-guide-completed');
+        $this->markComplete();
     }
 
     public function render(): View
     {
         return view('shopper::livewire.components.dashboard.setup-guide');
+    }
+
+    private function markComplete(): void
+    {
+        $this->saveSettings(['setup_guide_done' => true]);
+
+        $this->dismissed = true;
+
+        $this->dispatch('setup-guide-completed');
     }
 }

@@ -8,6 +8,7 @@ use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
+use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
 
 final readonly class DiscountValidator
@@ -16,6 +17,14 @@ final readonly class DiscountValidator
     {
         if (! $discount->is_active) {
             return new DiscountValidationResult(false, __('shopper-cart::messages.discount.not_active'));
+        }
+
+        if ($discount->value <= 0) {
+            return new DiscountValidationResult(false, __('shopper-cart::messages.discount.invalid_value'));
+        }
+
+        if ($discount->type === DiscountType::Percentage && $discount->value > 100) {
+            return new DiscountValidationResult(false, __('shopper-cart::messages.discount.invalid_percentage'));
         }
 
         if ($discount->start_at->isFuture()) {

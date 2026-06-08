@@ -20,16 +20,27 @@ final class RecentOrders extends Component
     #[Computed]
     public function orders(): Collection
     {
-        return Cache::flexible(
-            'dashboard:recent-orders',
+        /** @var array<int, int> $ids */
+        $ids = Cache::flexible(
+            'dashboard.orders:recent-ids',
             [60, 300],
-            fn (): Collection => resolve(Order::class)::query()
+            fn (): array => resolve(Order::class)::query()
                 ->whereNotIn('status', [OrderStatus::Cancelled, OrderStatus::Archived])
-                ->with(['customer', 'items', 'items.product', 'items.product.media'])
                 ->latest()
                 ->take(7)
-                ->get()
+                ->pluck('id')
+                ->all()
         );
+
+        if ($ids === []) {
+            return new Collection;
+        }
+
+        return resolve(Order::class)::query()
+            ->whereIn('id', $ids)
+            ->with(['customer', 'items', 'items.product', 'items.product.media'])
+            ->latest()
+            ->get();
     }
 
     public function render(): View

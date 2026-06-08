@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Shopper\Core\Models\Inventory;
+use Shopper\Traits\AuthorizesSettingsAccess;
 use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 
@@ -24,6 +25,7 @@ use Spatie\LivewireWizard\Components\StepComponent;
  */
 final class StoreSocialLink extends StepComponent implements HasActions, HasSchemas
 {
+    use AuthorizesSettingsAccess;
     use InteractsWithActions;
     use InteractsWithSchemas;
     use SaveSettings;
@@ -33,6 +35,8 @@ final class StoreSocialLink extends StepComponent implements HasActions, HasSche
 
     public function mount(): void
     {
+        $this->authorizeSettingsAccess();
+
         $this->form->fill();
     }
 
@@ -82,6 +86,8 @@ final class StoreSocialLink extends StepComponent implements HasActions, HasSche
 
     public function save(): void
     {
+        $this->authorizeSettingsAccess();
+
         $this->saveSettings($this->form->getState());
 
         $this->createDefaultInventory();
@@ -96,6 +102,8 @@ final class StoreSocialLink extends StepComponent implements HasActions, HasSche
 
     public function createDefaultInventory(): void
     {
+        $this->authorizeSettingsAccess();
+
         Inventory::query()->create([
             'name' => $name = shopper_setting('name'),
             'code' => Str::slug($name),

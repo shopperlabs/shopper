@@ -23,16 +23,13 @@ class InventoryObserver
      */
     private function ensureOnlyOneIsDefault(Inventory $inventory): void
     {
-        if ($inventory->is_default) {
-            /** @var Inventory|null $defaultInventory */
-            $defaultInventory = resolve(Inventory::class)::query()
-                ->where('id', '!=', $inventory->id)
-                ->where('is_default', false)
-                ->first();
-
-            if ($defaultInventory instanceof Inventory) {
-                $defaultInventory->updateQuietly(['is_default' => false]);
-            }
+        if (! $inventory->is_default) {
+            return;
         }
+
+        resolve(Inventory::class)::query()
+            ->where('id', '!=', $inventory->id)
+            ->where('is_default', true)
+            ->update(['is_default' => false]);
     }
 }

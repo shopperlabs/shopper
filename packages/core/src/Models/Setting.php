@@ -50,8 +50,8 @@ class Setting extends Model implements SettingContract
             'longitude' => __('shopper::forms.label.longitude'),
             'latitude' => __('shopper::forms.label.latitude'),
             'facebook_link' => __('shopper::words.socials.facebook'),
-            'instagram_link' => __('shopper::words.socials.twitter'),
-            'twitter_link' => __('shopper::words.socials.instagram'),
+            'instagram_link' => __('shopper::words.socials.instagram'),
+            'twitter_link' => __('shopper::words.socials.twitter'),
             default => Str::title($key),
         };
     }
