@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -23,6 +25,10 @@ use Shopper\Livewire\Pages\Forbidden;
 use Shopper\Livewire\Pages\Initialization;
 use Shopper\Sidebar\Middleware\ResolveSidebars;
 
+$csrfMiddleware = class_exists(PreventRequestForgery::class)
+    ? PreventRequestForgery::class
+    : VerifyCsrfToken::class;
+
 Route::domain(config('shopper.admin.domain'))
     ->middleware([
         EncryptCookies::class,
@@ -30,7 +36,7 @@ Route::domain(config('shopper.admin.domain'))
         StartSession::class,
         AuthenticateSession::class,
         ShareErrorsFromSession::class,
-        VerifyCsrfToken::class,
+        $csrfMiddleware,
         SubstituteBindings::class,
         DispatchShopper::class,
         SetLocale::class,
@@ -54,6 +60,10 @@ Route::domain(config('shopper.admin.domain'))
 
                 return redirect()->route('shopper.login');
             })->name('shopper.logout');
+
+            Route::get('/csrf-token', fn (): JsonResponse => response()->json([
+                'token' => csrf_token(),
+            ]))->name('shopper.csrf-token');
 
             Route::middleware([
                 Authenticate::class,

@@ -32,12 +32,28 @@
 
 @script
     <script>
+        const refreshCsrfToken = async () => {
+            const response = await fetch(@js(route('shopper.csrf-token')), {
+                headers: { Accept: 'application/json' },
+                credentials: 'same-origin',
+            })
+
+            if (! response.ok) return
+
+            const { token } = await response.json()
+
+            document.querySelector('meta[name="csrf-token"]')?.setAttribute('content', token)
+        }
+
         Livewire.interceptRequest(({ onError }) => {
             onError(({ response, preventDefault }) => {
-                if (response.status === 419) {
-                    preventDefault()
+                if (response.status !== 419) return
+
+                preventDefault()
+
+                refreshCsrfToken().then(() => {
                     Livewire.dispatch('open-modal', { id: 'session-expired' })
-                }
+                })
             })
         })
     </script>

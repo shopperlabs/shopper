@@ -40,11 +40,12 @@ describe(SessionExpired::class, function (): void {
             ->assertHasErrors(['data.password']);
     });
 
-    it('rejects when the user is no longer authenticated', function (): void {
+    it('redirects to login when the user is no longer authenticated', function (): void {
         Livewire::test(SessionExpired::class)
             ->set('data.password', 'anything')
             ->call('attempt')
-            ->assertHasErrors(['data.password']);
+            ->assertHasNoErrors()
+            ->assertRedirect(route('shopper.login'));
     });
 
     it('clears the password field after a successful attempt', function (): void {
