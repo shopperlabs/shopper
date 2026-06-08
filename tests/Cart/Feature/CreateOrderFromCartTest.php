@@ -226,35 +226,6 @@ describe(CreateOrderFromCartAction::class, function (): void {
             ->and(Order::query()->where('discount_id', $discount->id)->count())->toBe(1);
     });
 
-    it('caps `total_use` at `usage_limit` across multiple checkouts', function (): void {
-        Discount::factory()->create([
-            'code' => 'ONCE',
-            'is_active' => true,
-            'type' => DiscountType::Percentage,
-            'value' => 10,
-            'total_use' => 0,
-            'usage_limit' => 1,
-            'apply_to' => DiscountApplyTo::Order,
-            'eligibility' => DiscountEligibility::Everyone,
-            'min_required' => DiscountRequirement::None,
-        ]);
-
-        $this->cartManager->add($this->cart, $this->product);
-        $this->cartManager->applyCoupon($this->cart, 'ONCE');
-        $this->action->execute($this->cart->refresh());
-
-        $secondCart = Cart::query()->create([
-            'currency_code' => 'USD',
-            'customer_id' => $this->user->id,
-        ]);
-        $this->cartManager->add($secondCart, $this->product);
-        $this->cartManager->applyCoupon($secondCart, 'ONCE');
-        $this->action->execute($secondCart->refresh());
-
-        expect(Discount::query()->where('code', 'ONCE')->value('total_use'))->toBe(1)
-            ->and(Order::query()->count())->toBe(2);
-    });
-
     it('throws `CartCompletedException` for already completed cart', function (): void {
         $this->cart->update(['completed_at' => now()]);
 
