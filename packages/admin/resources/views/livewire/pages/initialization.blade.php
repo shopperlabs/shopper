@@ -77,7 +77,7 @@
                                 stroke-width="1.5"
                                 aria-hidden="true"
                             />
-                            <span class="h-3.5 w-1/2 animate-pulse rounded-full bg-sh-muted"></span>
+                            <span class="h-3.5 w-1/2 animate-pulse rounded-full bg-sh-skeleton"></span>
                         </div>
                         <div>
                             <h5
@@ -88,9 +88,9 @@
                             <ul class="mt-5 space-y-8">
                                 @foreach (range(0, 8) as $value)
                                     <li class="flex animate-pulse items-center space-x-2">
-                                        <div class="h-3 w-3 rounded-full bg-sh-muted"></div>
+                                        <div class="h-3 w-3 rounded-full bg-sh-skeleton"></div>
                                         <span
-                                            class="h-3 w-1/2 rounded-full bg-sh-muted"
+                                            class="h-3 w-1/2 rounded-full bg-sh-skeleton"
                                             style="width: {{ collect(range(1, 8))->shuffle()->first() * 10 }}%"
                                         ></span>
                                     </li>

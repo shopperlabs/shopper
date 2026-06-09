@@ -3,7 +3,7 @@
 ])
 
 @php
-    $buckets = resolve(\Shopper\Settings\SettingManager::class)->grouped();
+    $buckets = resolve(\Shopper\Navigation\Setting\SettingManager::class)->grouped();
     $allItems = $buckets->flatMap(fn (array $bucket) => $bucket['items']);
     $navLabel = __('shopper::pages/settings/global.menu');
 @endphp

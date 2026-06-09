@@ -4,21 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Contracts;
 
-use BackedEnum;
-
-interface SettingItem
+interface SettingItem extends NavigationItem
 {
-    public function name(): string;
-
     public function description(): string;
 
-    public function icon(): string|BackedEnum;
-
     public function url(): ?string;
-
-    public function permission(): ?string;
-
-    public function order(): int;
-
-    public function group(): ?string;
 }

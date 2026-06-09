@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
-use Shopper\Livewire\Components\Products\Form\Variants;
+use Shopper\Livewire\Pages\Product\Variants;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Shopper\Settings\Items;
+use Shopper\Navigation\Setting\Items;
 
 return [
 
@@ -14,7 +14,7 @@ return [
     | Register setting pages that appear in the admin settings menu.
     | Each setting class must implement \Shopper\Contracts\SettingItem.
     |
-    | To create a custom setting, create a class extending \Shopper\Settings\Setting
+    | To create a custom setting, create a class extending \Shopper\Navigation\Setting\Setting
     | and add it here with true to enable or false to disable.
     |
     */

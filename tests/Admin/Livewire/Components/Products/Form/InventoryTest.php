@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Livewire\Livewire;
 use Shopper\Core\Models\Inventory as InventoryModel;
-use Shopper\Livewire\Components\Products\Form\Inventory;
+use Shopper\Livewire\Pages\Product\Inventory;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
 

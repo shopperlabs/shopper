@@ -7,7 +7,7 @@ use Livewire\Livewire;
 use Shopper\Core\Events\Products\ProductUpdated;
 use Shopper\Core\Models\Supplier;
 use Shopper\Enum\FeatureState;
-use Shopper\Livewire\Components\Products\Form\Edit;
+use Shopper\Livewire\Pages\Product\Overview;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
 
@@ -22,11 +22,11 @@ beforeEach(function (): void {
     Event::fake();
 });
 
-describe(Edit::class, function (): void {
+describe(Overview::class, function (): void {
     it('can update product information', function (): void {
         $product = Product::factory()->standard()->create();
 
-        Livewire::test(Edit::class, ['product' => $product])
+        Livewire::test(Overview::class, ['product' => $product])
             ->fillForm([
                 'name' => 'Demo product',
             ])
@@ -43,7 +43,7 @@ describe(Edit::class, function (): void {
     it('ensure that external_id field is invisible on non external product', function (): void {
         $product = Product::factory()->virtual()->create();
 
-        Livewire::test(Edit::class, ['product' => $product])
+        Livewire::test(Overview::class, ['product' => $product])
             ->fillForm()
             ->assertFormFieldIsHidden('external_id');
     });
@@ -55,7 +55,7 @@ describe(Edit::class, function (): void {
 
         $product = Product::factory()->standard()->create(['name' => 'Original']);
 
-        Livewire::test(Edit::class, ['product' => $product])
+        Livewire::test(Overview::class, ['product' => $product])
             ->fillForm(['name' => 'Tampered'])
             ->call('store');
 
@@ -69,7 +69,7 @@ describe(Edit::class, function (): void {
         $supplier = Supplier::factory()->create(['is_enabled' => true]);
         $product = Product::factory()->external()->create();
 
-        Livewire::test(Edit::class, ['product' => $product])
+        Livewire::test(Overview::class, ['product' => $product])
             ->fillForm([
                 'external_id' => $uuid = fake()->uuid,
                 'supplier_id' => $supplier->id,

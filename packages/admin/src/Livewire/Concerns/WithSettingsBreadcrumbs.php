@@ -9,7 +9,7 @@ use Filament\Support\Contracts\ScalableIcon;
 use Filament\Support\Enums\IconSize;
 use Illuminate\Support\Facades\Route;
 use Shopper\Contracts\SettingItem;
-use Shopper\Settings\SettingManager;
+use Shopper\Navigation\Setting\SettingManager;
 use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Sidebar\Breadcrumbs\BreadcrumbLink;
 use Shopper\Sidebar\Breadcrumbs\Breadcrumbs;

@@ -44,6 +44,7 @@
 
     --theme-sh-card: var(--color-slate-100);
     --theme-sh-table-header: var(--color-slate-100);
+    --theme-sh-skeleton: var(--color-slate-200);
 }
 
 .dark[data-theme='midnight'] {
@@ -59,4 +60,5 @@
 
     --theme-sh-card: var(--color-slate-950);
     --theme-sh-table-header: var(--color-slate-950);
+    --theme-sh-skeleton: var(--color-slate-800);
 }

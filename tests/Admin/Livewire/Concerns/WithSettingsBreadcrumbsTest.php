@@ -6,7 +6,7 @@ use Filament\Support\Contracts\ScalableIcon;
 use Filament\Support\Enums\IconSize;
 use Shopper\Contracts\SettingItem;
 use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
-use Shopper\Settings\SettingManager;
+use Shopper\Navigation\Setting\SettingManager;
 use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Sidebar\Breadcrumbs\BreadcrumbLink;
 

@@ -3,9 +3,8 @@
         $customer = $order->customer;
     @endphp
 
-
-    <div class="sticky top-0 z-10 bg-sh-body pt-6 backdrop-blur-lg">
-        <x-shopper::container class="border-b space-y-2 pb-4 border-sh-border">
+    <div class="sticky top-0 z-10 bg-sh-surface pt-8 backdrop-blur-lg">
+        <x-shopper::container class="border-b space-y-2 pb-5 border-sh-border">
             <div class="space-y-3 lg:flex lg:items-center justify-between lg:space-y-0">
                 <div class="sm:flex min-w-0 sm:items-center gap-3">
                     <h3

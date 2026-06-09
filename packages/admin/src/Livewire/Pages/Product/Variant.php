@@ -17,6 +17,7 @@ use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rules\Unique;
+use Livewire\Attributes\Layout;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -24,6 +25,7 @@ use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Sidebar\Traits\WithBreadcrumbs;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
+#[Layout('shopper::components.layouts.product')]
 class Variant extends AbstractPageComponent implements HasActions, HasSchemas
 {
     use HandlesAuthorizationExceptions;

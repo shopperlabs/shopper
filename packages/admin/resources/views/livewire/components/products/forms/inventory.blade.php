@@ -1,4 +1,4 @@
-<x-shopper::container>
+<div>
     <form wire:submit="store">
         {{ $this->form }}
 
@@ -26,4 +26,4 @@
             {{ $this->table }}
         </div>
     </section>
-</x-shopper::container>
+</div>
