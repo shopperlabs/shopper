@@ -2,7 +2,7 @@
     <x-shopper::container class="space-y-8 py-5">
         <div class="space-y-2">
             <x-shopper::heading :title="__('shopper::pages/reviews.title')" />
-            <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
+            <p class="max-w-2xl text-sm text-sh-fg-muted">
                 {{ __('shopper::pages/reviews.description') }}
             </p>
         </div>
@@ -34,7 +34,7 @@
                                 @class([
                                     'size-4 shrink-0',
                                     'text-yellow-400' => $stats['average'] >= $star,
-                                    'text-gray-300 dark:text-gray-600' => $stats['average'] < $star,
+                                    'text-sh-fg-muted' => $stats['average'] < $star,
                                 ])
                                 aria-hidden="true"
                             />

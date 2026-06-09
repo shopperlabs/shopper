@@ -21,6 +21,7 @@ return [
 
     'items' => [
         Items\GeneralSetting::class => true,
+        Items\AppearanceSetting::class => true,
         Items\StaffSetting::class => true,
         Items\LocationSetting::class => true,
         Items\PaymentSetting::class => true,

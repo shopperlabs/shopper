@@ -18,11 +18,11 @@
         </form>
 
         <div class="max-w-xl">
-            <h4 class="text-sm leading-5 text-gray-600 dark:text-gray-400">
+            <h4 class="text-sm leading-5 text-sh-fg-secondary">
                 {{ __('shopper::words.seo.sub_description') }}
             </h4>
             <div
-                class="mt-5 flex h-auto flex-col overflow-hidden rounded-xl bg-gray-100 p-1 shadow-sm ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-white/10"
+                class="mt-5 flex h-auto flex-col overflow-hidden rounded-xl bg-sh-muted p-1 shadow-sm ring-1 ring-sh-border"
             >
                 <div class="flex w-full items-center justify-between p-1.5">
                     <div class="flex items-center space-x-2">
@@ -31,13 +31,13 @@
                         <div class="bg-success-500 size-3 rounded-full"></div>
                     </div>
                     <x-untitledui-google-chrome
-                        class="size-5 text-gray-500 dark:text-gray-300"
+                        class="size-5 text-sh-fg-muted"
                         strike-width="1.5"
                         aria-hidden="true"
                     />
                 </div>
                 <div
-                    class="mt-1 size-full overflow-auto rounded-lg bg-white p-4 ring-1 ring-gray-200 dark:bg-gray-950 dark:ring-white/20"
+                    class="mt-1 size-full overflow-auto rounded-lg bg-sh-surface p-4 ring-1 ring-sh-border"
                 >
                     <div class="flex flex-col">
                         <h3 class="text-primary-600 dark:text-primary-500 leading-6 font-medium">
@@ -46,7 +46,7 @@
                         <span class="text-success-600 dark:text-success-400 mt-1 truncate text-sm leading-5">
                             {{ config('app.url') }}/{your-custom-prefix}/{{ $data['slug'] }}
                         </span>
-                        <p class="text-whitespace-no-wrap mt-1 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                        <p class="text-whitespace-no-wrap mt-1 text-sm leading-5 text-sh-fg-muted">
                             {{ $data['seo_description'] }}
                         </p>
                     </div>

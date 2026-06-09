@@ -6,6 +6,8 @@ return [
 
     'general' => 'Général',
     'general_description' => 'Affichez et mettez à jour les informations de votre boutique.',
+    'appearance' => 'Apparence',
+    'appearance_description' => 'Personnalisez les couleurs et l\'apparence du panneau d\'administration.',
     'staff' => 'Personnel et autorisations',
     'staff_description' => 'Affichez et gérez ce que le personnel peut voir ou faire dans votre boutique.',
     'location' => 'Emplacements',

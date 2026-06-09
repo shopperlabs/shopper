@@ -1,7 +1,7 @@
-<x-shopper::slideover-card class="divide-y divide-gray-100 dark:divide-white/10">
+<x-shopper::slideover-card class="divide-y divide-sh-border">
     <header class="p-4">
         <div class="flex items-start justify-between">
-            <h2 class="text-lg font-medium text-gray-900 dark:text-white">
+            <h2 class="text-lg font-medium text-sh-fg">
                 {{ __('shopper::pages/products.attributes.choose') }}
             </h2>
             <x-livewire-slide-over::close-icon />

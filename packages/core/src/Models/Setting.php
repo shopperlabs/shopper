@@ -52,6 +52,7 @@ class Setting extends Model implements SettingContract
             'facebook_link' => __('shopper::words.socials.facebook'),
             'instagram_link' => __('shopper::words.socials.instagram'),
             'twitter_link' => __('shopper::words.socials.twitter'),
+            'admin_theme' => __('shopper::forms.label.admin_theme'),
             default => Str::title($key),
         };
     }

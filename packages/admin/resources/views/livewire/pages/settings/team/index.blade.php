@@ -1,25 +1,25 @@
 <x-shopper::container>
     <x-shopper::heading :title="__('shopper::pages/settings/staff.header_title')" />
 
-    <div class="mt-10 divide-y divide-gray-200 dark:divide-white/20">
+    <div class="mt-10 divide-y divide-sh-border">
         <div class="pb-10">
             <div class="flex items-center gap-3">
-                <h2 class="font-medium text-gray-900 dark:text-white">
+                <h2 class="font-medium text-sh-fg">
                     {{ __('shopper::pages/settings/staff.role_available') }}
                 </h2>
 
                 {{ $this->createRoleAction }}
             </div>
-            <p class="mt-2 max-w-3xl text-sm text-gray-500 dark:text-gray-400">
+            <p class="mt-2 max-w-3xl text-sm text-sh-fg-muted">
                 {{ __('shopper::pages/settings/staff.role_available_summary') }}
             </p>
             <div class="mt-6 grid gap-5 sm:grid-cols-3 lg:grid-cols-4">
                 @foreach ($roles as $role)
-                    <x-shopper::card class="[&>header]:py-2">
+                    <x-shopper::card class="[&>header]:py-2 [&>header]:min-h-10">
                         <x-slot:title>
                             <div class="flex items-center justify-between">
                                 <span
-                                    class="text-xs leading-4 font-semibold tracking-wider text-gray-400 uppercase dark:text-gray-500"
+                                    class="text-xs leading-4 font-semibold tracking-wider text-sh-fg-muted uppercase"
                                 >
                                     {{ $role->users->count() }}
                                     {{ \Illuminate\Support\Str::plural(__('shopper::words.account'), $role->users->count()) }}
@@ -36,7 +36,7 @@
                             </div>
                         </x-slot:title>
                         <div class="relative">
-                            <h3 class="leading-6 font-medium text-gray-900 dark:text-white">
+                            <h3 class="leading-6 font-medium text-sh-fg">
                                 {{ $role->display_name }}
                             </h3>
                             <p
@@ -57,10 +57,10 @@
         <div class="py-10 space-y-6">
             <div class="space-y-3 sm:flex sm:items-center sm:justify-between sm:space-y-0 sm:space-x-4">
                 <div class="max-w-2xl min-w-0 flex-1">
-                    <h2 class="font-medium text-gray-900 dark:text-white">
+                    <h2 class="font-medium text-sh-fg">
                         {{ __('shopper::pages/settings/staff.admin_accounts') }}
                     </h2>
-                    <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                    <p class="mt-3 text-sm text-sh-fg-muted">
                         {{ __('shopper::pages/settings/staff.admin_accounts_summary') }}
                     </p>
                 </div>

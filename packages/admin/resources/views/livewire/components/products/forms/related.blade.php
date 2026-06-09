@@ -26,7 +26,7 @@
                 @foreach ($relatedProducts as $relatedProduct)
                     <div wire:key="{{ $relatedProduct->slug }}" class="group relative">
                         <div class="relative">
-                            <div class="overflow-hidden bg-gray-100 dark:bg-gray-800">
+                            <div class="overflow-hidden bg-sh-muted">
                                 <img
                                     src="{{ $relatedProduct->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
                                     alt="{{ $relatedProduct->name }} Thumbnail"
@@ -49,7 +49,7 @@
                             <div>
                                 <h3 class="text-sm">
                                     <x-shopper::link
-                                        class="font-semibold text-gray-950 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white"
+                                        class="font-semibold text-sh-fg hover:text-sh-fg-secondary"
                                         :href="route('shopper.products.edit', $relatedProduct)"
                                     >
                                         {{ $relatedProduct->name }}

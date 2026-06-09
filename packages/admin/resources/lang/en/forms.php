@@ -90,6 +90,7 @@ return [
         'stock_number_value' => 'Stock number value',
         'add_stock' => 'Add stock',
         'store_name' => 'Store name',
+        'admin_theme' => 'Admin theme',
         'legal_name' => 'Legal name of the company',
         'logo' => 'Logo',
         'cover_photo' => 'Cover photo',

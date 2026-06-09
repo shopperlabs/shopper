@@ -69,7 +69,7 @@
                         class="relative flex size-6 items-center justify-center rounded-full text-xs leading-5"
                         x-bind:class="{
                             'bg-primary-600': getStepIndex(step) > {{ $loop->index }},
-                            'border border-gray-300 bg-white text-gray-500 dark:border-white/10 dark:bg-gray-950 dark:text-gray-400':
+                            'border border-sh-border bg-sh-surface text-sh-fg-muted':
                                 getStepIndex(step) <= {{ $loop->index }},
                         }"
                     >
@@ -93,10 +93,10 @@
                         <span
                             class="ml-2 text-sm leading-6"
                             x-bind:class="{
-                                'text-gray-900 dark:text-white': getStepIndex(step) > {{ $loop->index }},
-                                'font-medium text-gray-900 dark:text-white':
+                                'text-sh-fg': getStepIndex(step) > {{ $loop->index }},
+                                'font-medium text-sh-fg':
                                     getStepIndex(step) === {{ $loop->index }},
-                                'text-gray-500 dark:text-gray-400': getStepIndex(step) < {{ $loop->index }},
+                                'text-sh-fg-muted': getStepIndex(step) < {{ $loop->index }},
                             }"
                         >
                             {{ $step->getLabel() }}
@@ -107,7 +107,7 @@
                 @if (! $loop->last)
                     <div class="ml-5" aria-hidden="true">
                         <x-untitledui-chevron-right
-                            class="size-5 text-gray-400 dark:text-gray-300"
+                            class="size-5 text-sh-fg-muted"
                             stroke-width="1.5"
                             aria-hidden="true"
                         />
@@ -123,7 +123,7 @@
         @endforeach
     </div>
 
-    <div class="mt-8 border-t border-dashed border-gray-200 pt-10 dark:border-white/10">
+    <div class="mt-8 border-t border-dashed border-sh-border pt-10">
         <div class="flex items-center justify-between space-x-4">
             <div
                 x-cloak

@@ -1,7 +1,7 @@
 @can('orders.read')
     <a
         href="{{ route('shopper.orders.show', $row) }}"
-        class="truncate font-medium text-gray-900 hover:text-gray-700 dark:text-white dark:hover:text-gray-300"
+        class="truncate font-medium text-sh-fg hover:text-sh-fg-secondary"
     >
         <span>{{ $row->number }}</span>
     </a>

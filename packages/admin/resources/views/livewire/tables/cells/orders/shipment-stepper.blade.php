@@ -32,8 +32,8 @@
 
         <div @class([
             'flex size-7 items-center justify-center rounded-full',
-            'bg-gray-900 text-white dark:bg-white dark:text-gray-900' => $isCompleted && ! $isError,
-            'bg-gray-200 text-gray-400 dark:bg-white/10 dark:text-gray-500' => ! $isCompleted && ! $isError,
+            'bg-sh-fg text-sh-body' => $isCompleted && ! $isError,
+            'bg-sh-muted text-sh-fg-muted' => ! $isCompleted && ! $isError,
             'bg-danger-100 text-danger-500 dark:bg-danger-500/10 dark:text-danger-400' => $isError,
         ])>
             <x-filament::icon :icon="$step->getIcon()" class="size-3.5" />
@@ -42,8 +42,8 @@
         @if (! $loop->last)
             <div @class([
                 'h-0.5 w-4',
-                'bg-gray-900 dark:bg-white' => $currentIndex >= 0 && $index < $currentIndex && ! $isError,
-                'bg-gray-200 dark:bg-white/10' => $currentIndex < 0 || $index >= $currentIndex || $isError,
+                'bg-sh-fg' => $currentIndex >= 0 && $index < $currentIndex && ! $isError,
+                'bg-sh-muted' => $currentIndex < 0 || $index >= $currentIndex || $isError,
             ])></div>
         @endif
     @endforeach

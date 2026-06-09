@@ -3,7 +3,7 @@
         <header class="px-4 sm:px-6">
             <div class="flex items-start justify-between gap-3">
                 <div>
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-white">
+                    <h2 class="text-lg font-medium text-sh-fg">
                         {{ __('shopper::pages/discounts.customers_picker.title') }}
                     </h2>
                     <p class="text-sh-fg-secondary mt-1 text-sm">

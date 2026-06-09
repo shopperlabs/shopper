@@ -90,6 +90,7 @@ return [
         'stock_number_value' => 'Valeur du numéro de stock',
         'add_stock' => 'Ajouter un stock',
         'store_name' => 'Nom du magasin',
+        'admin_theme' => 'Thème de l\'administration',
         'legal_name' => 'Nom légale de l\'entreprise',
         'logo' => 'Logo',
         'cover_photo' => 'Photo de couverture',

@@ -5,25 +5,25 @@
 >
     @if (count($availableOptions))
         <x-shopper::card class="overflow-hidden [&>div:first-of-type]:p-0">
-            <table class="fi-ta-table w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5">
+            <table class="fi-ta-table w-full table-auto divide-y divide-sh-border text-start">
                 <thead>
                     <tr>
                         <th class="fi-ta-header-cell p-2 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
-                            <span class="fi-ta-header-cell-label text-sm font-semibold text-gray-950 dark:text-white">
+                            <span class="fi-ta-header-cell-label text-sm font-semibold text-sh-fg">
                                 {{ __('shopper::pages/attributes.menu') }}
                             </span>
                         </th>
                         <th class="fi-ta-header-cell p-2 sm:first-of-type:ps-6 sm:last-of-type:pe-6"></th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200 whitespace-nowrap dark:divide-white/10">
+                <tbody class="divide-y divide-sh-border whitespace-nowrap">
                     @foreach (collect($availableOptions) as $attribute)
                         <tr>
                             <td
                                 class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3"
                             >
                                 <div class="grid w-full gap-y-1 p-2">
-                                    <span class="fi-ta-text-item-label text-sm leading-6 text-gray-950 dark:text-white">
+                                    <span class="fi-ta-text-item-label text-sm leading-6 text-sh-fg">
                                         {{ $attribute['name'] }}
                                     </span>
                                 </div>
@@ -47,14 +47,14 @@
     @endif
 
     @if (count($variants))
-        <div class="mt-10 border-t border-gray-200 pt-6 dark:border-white/10">
-            <h4 class="font-heading text-xl font-semibold text-gray-900 dark:text-white">
+        <div class="mt-10 border-t border-sh-border pt-6">
+            <h4 class="font-heading text-xl font-semibold text-sh-fg">
                 {{ __('shopper::pages/products.variants.title') }}
             </h4>
             <div class="mt-5 space-y-4">
                 @foreach ($variants as $index => $variant)
                     <x-shopper::card
-                        class="divide-y divide-gray-200 dark:divide-white/10"
+                        class="divide-y divide-sh-border"
                         x-data="{ expanded: true }"
                         wire:key="variant_{{ $variant['key'] }}"
                     >
@@ -62,7 +62,7 @@
                             <button
                                 @click="expanded = ! expanded"
                                 type="button"
-                                class="flex h-fit w-full flex-1 items-center gap-2 text-sm/5 font-medium text-gray-700 dark:text-gray-300"
+                                class="flex h-fit w-full flex-1 items-center gap-2 text-sm/5 font-medium text-sh-fg-secondary"
                             >
                                 <x-phosphor-swatches-duotone class="size-5" aria-hidden="true" />
                                 {{ $variant['name'] }}

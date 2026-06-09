@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-theme='default'] {
     /* Header */
     --theme-sh-header: var(--color-zinc-900);
     --theme-sh-header-border: oklch(1 0 0 / 0.1); /* white/10 */
@@ -24,7 +25,8 @@
     --theme-sh-table-header: var(--color-zinc-50);
 }
 
-.dark {
+.dark,
+.dark[data-theme='default'] {
     /* Body */
     --theme-sh-body: var(--color-zinc-950);
     --theme-sh-sidebar: var(--color-zinc-950);

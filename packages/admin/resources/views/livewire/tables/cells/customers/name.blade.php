@@ -1,4 +1,4 @@
-<div class="text-sm leading-5 font-medium text-gray-900 dark:text-white">
+<div class="text-sm leading-5 font-medium text-sh-fg">
     <div class="flex items-center space-x-2">
         <img
             class="size-8 rounded-full object-cover"

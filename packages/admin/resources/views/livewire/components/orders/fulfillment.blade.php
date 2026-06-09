@@ -3,9 +3,9 @@
         @if ($shippingAddress)
             <x-slot:title>
                 <div>
-                    <p class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                    <p class="flex items-center gap-2 text-sm text-sh-fg-secondary">
                         <span>{{ __('shopper::pages/orders.expedition_to') }}</span>
-                        <span class="font-semibold text-gray-900 dark:text-white">
+                        <span class="font-semibold text-sh-fg">
                             {{ $shippingAddress->full_name }}
                         </span>
                         @if ($country)
@@ -14,11 +14,11 @@
                                 class="size-4 rounded-full object-cover object-center"
                                 alt="{{ $country->translated_name }}"
                             />
-                            <span class="text-gray-500 dark:text-gray-400">
+                            <span class="text-sh-fg-muted">
                                 {{ $country->cca2 }}, {{ $country->translated_name }}
                             </span>
                         @elseif ($shippingAddress->country_name)
-                            <span class="text-gray-500 dark:text-gray-400">
+                            <span class="text-sh-fg-muted">
                                 {{ $shippingAddress->country_name }}
                             </span>
                         @endif
@@ -39,9 +39,9 @@
                     <div>
                         <div @class([
                             'flex items-center gap-1.5 text-sm',
-                            'font-semibold text-gray-900 dark:text-white' => $isCurrent,
+                            'font-semibold text-sh-fg' => $isCurrent,
                             'font-medium text-success-600 dark:text-success-400' => $isCompleted,
-                            'font-medium text-gray-400 dark:text-gray-500' => ! $isCompleted && ! $isCurrent,
+                            'font-medium text-sh-fg-muted' => ! $isCompleted && ! $isCurrent,
                         ])>
                             @if ($isCompleted)
                                 <x-heroicon-s-check-circle class="size-4 text-success-500" />
@@ -55,8 +55,8 @@
                         <div @class([
                             'mt-4 h-1 w-full rounded-full',
                             'bg-success-500' => $isCompleted,
-                            'bg-gray-900 dark:bg-white' => $isCurrent,
-                            'bg-gray-200 dark:bg-white/10' => ! $isCompleted && ! $isCurrent,
+                            'bg-sh-fg' => $isCurrent,
+                            'bg-sh-muted' => ! $isCompleted && ! $isCurrent,
                         ])></div>
                     </div>
                 @endforeach
@@ -73,7 +73,7 @@
         </div>
     @else
         @if ($currentStep >= 3)
-            <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">
+            <p class="mt-4 text-sm text-sh-fg-muted">
                 {{ __('shopper::pages/orders.all_items_fulfilled') }}
             </p>
         @endif

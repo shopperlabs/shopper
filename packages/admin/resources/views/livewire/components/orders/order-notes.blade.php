@@ -1,18 +1,18 @@
 <div>
-    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+    <h3 class="text-lg leading-6 font-medium text-sh-fg">
         {{ __('shopper::pages/orders.private_notes') }}
     </h3>
     <div class="mt-5 flex space-x-3">
         <div class="shrink-0">
             <img
-                class="flex size-10 items-center justify-center rounded-full bg-gray-400 ring-4 ring-white dark:bg-gray-500 dark:ring-gray-800"
+                class="flex size-10 items-center justify-center rounded-full bg-sh-fg-muted ring-4 ring-sh-surface"
                 src="{{ shopper()->auth()->user()->picture }}"
                 alt="Customer avatar"
             />
         </div>
         <div class="min-w-0 flex-1">
             @if ($order->notes)
-                <p class="text-sm text-gray-500 dark:text-gray-400">
+                <p class="text-sm text-sh-fg-muted">
                     {{ $order->notes }}
                 </p>
             @else

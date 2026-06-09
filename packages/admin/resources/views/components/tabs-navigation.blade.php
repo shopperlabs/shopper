@@ -4,7 +4,7 @@
 ])
 
 @if (count($tabs))
-    <nav class="flex items-center gap-x-1 overflow-x-auto border-b border-gray-200 dark:border-white/10">
+    <nav class="flex items-center gap-x-1 overflow-x-auto border-b border-sh-border">
         @foreach ($tabs as $tab)
             @php
                 $key = $tab['key'];
@@ -20,7 +20,7 @@
                 @class([
                     'group relative flex items-center gap-x-2 whitespace-nowrap px-3 pb-3 pt-1 text-sm font-medium outline-none transition',
                     'text-primary-600 dark:text-primary-400' => $isActive,
-                    'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200' => ! $isActive,
+                    'text-sh-fg-muted hover:text-sh-fg-secondary' => ! $isActive,
                 ])
             >
                 @if ($icon)
@@ -29,7 +29,7 @@
                         @class([
                             'size-5',
                             'text-primary-600 dark:text-primary-400' => $isActive,
-                            'text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-400' => ! $isActive,
+                            'text-sh-fg-muted group-hover:text-sh-fg-secondary' => ! $isActive,
                         ])
                     />
                 @endif

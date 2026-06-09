@@ -18,7 +18,7 @@
             x-transition:leave-end="scale-95 transform opacity-0"
             @click.outside="dropdownOpen = false"
             x-cloak
-            class="absolute top-10 right-2 z-50 w-74 origin-top-right rounded-xl overflow-hidden bg-gray-50 dark:bg-gray-950 shadow-md ring-1 ring-gray-200 dark:ring-white/10"
+            class="absolute top-10 right-2 z-50 w-74 origin-top-right rounded-xl overflow-hidden bg-sh-card shadow-md ring-1 ring-sh-border"
             x-ref="items"
             role="menu"
             aria-orientation="vertical"
@@ -26,26 +26,26 @@
             tabindex="-1"
         >
             <div>
-                <div class="rounded-b-lg ring-1 ring-zinc-200 dark:ring-white/10 bg-white dark:bg-zinc-900 shadow-xs">
+                <div class="rounded-b-lg ring-1 ring-sh-border bg-sh-surface shadow-xs">
                     <div class="flex items-center gap-3 p-3">
                         <img class="size-8 rounded-full" src="{{ $user->picture }}" alt="{{ $user->email }}" />
                         <div class="min-w-0">
-                            <p class="truncate text-sm font-medium text-gray-900 dark:text-white">
+                            <p class="truncate text-sm font-medium text-sh-fg">
                                 {{ $user->full_name }}
                             </p>
-                            <p class="truncate text-xs text-gray-500 dark:text-gray-400">
+                            <p class="truncate text-xs text-sh-fg-muted">
                                 {{ $user->email }}
                             </p>
                         </div>
                     </div>
                     <div class="p-1">
                         <x-shopper::dropdown-link :href="route('shopper.profile')">
-                            <x-phosphor-user-circle class="size-5 text-gray-400" aria-hidden="true" />
+                            <x-phosphor-user-circle class="size-5 text-sh-fg-muted" aria-hidden="true" />
                             {{ __('shopper::layout.account_dropdown.personal_account') }}
                         </x-shopper::dropdown-link>
                         @can('system.users')
                             <x-shopper::dropdown-link :href="route('shopper.settings.users')">
-                                <x-phosphor-users class="size-5 text-gray-400" aria-hidden="true" />
+                                <x-phosphor-users class="size-5 text-sh-fg-muted" aria-hidden="true" />
                                 {{ __('shopper::layout.account_dropdown.manage_users') }}
                             </x-shopper::dropdown-link>
                         @endcan
@@ -54,10 +54,10 @@
                                 @csrf
                                 <button
                                     type="submit"
-                                    class="group flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-white/5"
+                                    class="group flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm leading-5 text-sh-fg-secondary hover:bg-sh-muted"
                                 >
                                     <x-phosphor-sign-out
-                                        class="size-5 text-gray-400"
+                                        class="size-5 text-sh-fg-muted"
                                         aria-hidden="true"
                                     />
                                     {{ __('shopper::layout.account_dropdown.sign_out') }}

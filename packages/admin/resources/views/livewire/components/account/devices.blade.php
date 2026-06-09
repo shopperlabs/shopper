@@ -10,16 +10,16 @@
             @if (count($this->sessions) > 0)
                 <x-shopper::card>
                     <x-slot name="title">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                        <p class="text-sm text-sh-fg-muted">
                             {{ __('shopper::pages/auth.account.empty_device') }}
                         </p>
                     </x-slot>
 
-                    <div class="divide-y divide-gray-200 dark:divide-white/20">
+                    <div class="divide-y divide-sh-border">
                         @foreach ($this->sessions as $session)
                             <div class="flex items-center justify-between py-2">
                                 <div class="flex items-center space-x-3">
-                                    <div class="shrink-0 text-gray-500 dark:text-gray-400">
+                                    <div class="shrink-0 text-sh-fg-muted">
                                         @if ($session->agent->isDesktop())
                                             <x-untitledui-monitor-02 class="size-6" aria-hidden="true" />
                                         @else
@@ -28,7 +28,7 @@
                                     </div>
                                     <div>
                                         <div class="flex items-center">
-                                            <h4 class="text-sm text-gray-500 dark:text-gray-400">
+                                            <h4 class="text-sm text-sh-fg-muted">
                                                 <span class="text-success-600 dark:text-success-400">
                                                     {{
                                                         __('shopper::words.browser_platform', [
@@ -46,13 +46,13 @@
                                                     {{ __('shopper::pages/auth.account.current_device') }}
                                                 </span>
                                             @else
-                                                <span class="ml-2 text-xs text-gray-400 dark:text-gray-500">
+                                                <span class="ml-2 text-xs text-sh-fg-muted">
                                                     {{ __('shopper::pages/auth.account.device_last_activity') }}
                                                     {{ $session->last_active }}
                                                 </span>
                                             @endif
                                         </div>
-                                        <p class="mt-0.5 text-sm leading-4 text-gray-500 dark:text-gray-400">
+                                        <p class="mt-0.5 text-sm leading-4 text-sh-fg-muted">
                                             @if ($session->location)
                                                 {{ $session->location->cityName }},
                                                 {{ $session->location->regionName }},
