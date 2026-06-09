@@ -33,9 +33,10 @@ use Shopper\Http\Middleware\SetLocale;
 use Shopper\Http\Responses\LoginResponse;
 use Shopper\Livewire\Components;
 use Shopper\Livewire\Pages;
+use Shopper\Navigation\Product\ProductSectionManager;
+use Shopper\Navigation\Setting\SettingManager;
 use Shopper\Providers\ComponentsServiceProvider;
 use Shopper\Providers\SidebarServiceProvider;
-use Shopper\Settings\SettingManager;
 use Shopper\Theme\ThemeManager;
 use Shopper\Traits\LoadComponents;
 use Spatie\LaravelPackageTools\Package;
@@ -119,6 +120,10 @@ final class ShopperServiceProvider extends PackageServiceProvider
             config('shopper.settings.items', [])
         ));
 
+        $this->app->singleton(ProductSectionManager::class, fn (): ProductSectionManager => (new ProductSectionManager)->register(
+            config('shopper.components.product.sections', [])
+        ));
+
         $this->app->singleton(ThemeManager::class, fn (): ThemeManager => (new ThemeManager)->registerMany(
             config('shopper.themes.registered', [])
         ));
@@ -173,6 +178,12 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
         if ($settingItems !== []) {
             app(SettingManager::class)->register($settingItems);
+        }
+
+        $productSections = $manager->getProductSections();
+
+        if ($productSections !== []) {
+            app(ProductSectionManager::class)->register($productSections);
         }
     }
 

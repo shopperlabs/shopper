@@ -120,6 +120,16 @@ final class ShopperPanel
     }
 
     /**
+     * @param  array<class-string, bool>  $sections
+     */
+    public function addonProductSections(array $sections): self
+    {
+        $this->addonManager()->addProductSections($sections);
+
+        return $this;
+    }
+
+    /**
      * @param  list<string>  $permissions
      */
     public function addonPermissions(array $permissions): self

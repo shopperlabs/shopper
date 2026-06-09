@@ -1,4 +1,4 @@
-<x-shopper::container class="space-y-8">
+<div class="space-y-8">
     <x-shopper::section-heading
         :title="__('shopper::words.seo.title')"
         :description="__('shopper::words.seo.description', ['name' => __('shopper::pages/products.single')])"
@@ -54,4 +54,4 @@
             </div>
         </div>
     </div>
-</x-shopper::container>
+</div>

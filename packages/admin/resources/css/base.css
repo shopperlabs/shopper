@@ -76,6 +76,7 @@ html {
   --color-sh-accent-fg: var(--theme-sh-accent-fg);
   --color-sh-card: var(--theme-sh-card);
   --color-sh-table-header: var(--theme-sh-table-header);
+  --color-sh-skeleton: var(--theme-sh-skeleton);
 }
 
 .hide-scroll::-webkit-scrollbar {

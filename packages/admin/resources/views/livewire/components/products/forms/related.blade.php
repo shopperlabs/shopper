@@ -1,4 +1,4 @@
-<x-shopper::container>
+<div>
     <div class="sm:flex sm:justify-between">
         <x-shopper::section-heading
             :title="__('shopper::pages/products.related.title')"
@@ -92,4 +92,4 @@
     </x-shopper::card>
 
     <x-filament-actions::modals />
-</x-shopper::container>
+</div>

@@ -45,6 +45,7 @@
 
     --theme-sh-card: var(--color-stone-50);
     --theme-sh-table-header: var(--color-stone-50);
+    --theme-sh-skeleton: var(--color-stone-200);
 }
 
 .dark[data-theme='evergreen'] {
@@ -60,4 +61,5 @@
 
     --theme-sh-card: #15180f;
     --theme-sh-table-header: #15180f;
+    --theme-sh-skeleton: #2f3825;
 }

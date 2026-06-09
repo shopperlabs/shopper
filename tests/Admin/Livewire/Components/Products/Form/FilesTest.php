@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Shopper\Livewire\Components\Products\Form\Files;
+use Shopper\Livewire\Pages\Product\Files;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
 

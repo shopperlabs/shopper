@@ -23,6 +23,7 @@
 
     --theme-sh-card: var(--color-zinc-50);
     --theme-sh-table-header: var(--color-zinc-50);
+    --theme-sh-skeleton: var(--color-zinc-200);
 }
 
 .dark,
@@ -40,4 +41,5 @@
 
     --theme-sh-card: var(--color-zinc-950);
     --theme-sh-table-header: var(--color-zinc-950);
+    --theme-sh-skeleton: var(--color-zinc-800);
 }

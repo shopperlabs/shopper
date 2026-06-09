@@ -30,6 +30,9 @@ final class AddonManager
     /** @var array<class-string, bool> */
     private array $settingItems = [];
 
+    /** @var array<class-string, bool> */
+    private array $productSections = [];
+
     /** @var list<string> */
     private array $permissions = [];
 
@@ -132,6 +135,22 @@ final class AddonManager
     public function getSettingItems(): array
     {
         return $this->settingItems;
+    }
+
+    /**
+     * @param  array<class-string, bool>  $sections
+     */
+    public function addProductSections(array $sections): void
+    {
+        $this->productSections = array_merge($this->productSections, $sections);
+    }
+
+    /**
+     * @return array<class-string, bool>
+     */
+    public function getProductSections(): array
+    {
+        return $this->productSections;
     }
 
     /**

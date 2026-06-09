@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Enum;
 
+use Shopper\Contracts\NavigationGroup;
 use Shopper\Core\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 use Shopper\Core\Traits\HasEnumStaticMethods;
@@ -14,7 +15,7 @@ use Shopper\Core\Traits\HasEnumStaticMethods;
  * @method static string Shipping()
  * @method static string Team()
  */
-enum SettingGroup: string implements HasLabel
+enum SettingGroup: string implements HasLabel, NavigationGroup
 {
     use ArrayableEnum;
     use HasEnumStaticMethods;

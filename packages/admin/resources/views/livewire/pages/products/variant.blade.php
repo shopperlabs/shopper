@@ -1,5 +1,5 @@
-<x-shopper::container class="py-5">
-    <x-shopper::heading :title="$variant->name" class="mt-5" />
+<div>
+    <x-shopper::heading :title="$variant->name" />
 
     {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::VARIANT_HEADER_AFTER) }}
 
@@ -282,4 +282,4 @@
     </div>
 
     <x-filament-actions::modals />
-</x-shopper::container>
+</div>
