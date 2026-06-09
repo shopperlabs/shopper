@@ -5,7 +5,7 @@
             @class([
                 'size-4 shrink-0',
                 'text-yellow-400' => $getState() >= $star,
-                'text-gray-300' => $getState() < $star,
+                'text-sh-fg-muted' => $getState() < $star,
             ])
             aria-hidden="true"
         />

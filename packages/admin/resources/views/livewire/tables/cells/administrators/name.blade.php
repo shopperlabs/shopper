@@ -17,7 +17,7 @@
                 </x-filament::badge>
             @endif
         </div>
-        <div class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+        <div class="text-sm leading-5 text-sh-fg-muted">
             {{ __('shopper::words.registered_on') }}
             <time datetime="{{ $user->created_at->format('Y-m-d') }}" class="capitalize">
                 {{ $user->created_at->translatedFormat('j F Y') }}

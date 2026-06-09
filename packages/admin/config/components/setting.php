@@ -17,6 +17,7 @@ return [
     'pages' => [
         'setting-index' => Pages\Settings\Index::class,
         'general' => Pages\Settings\General::class,
+        'appearance' => Pages\Settings\Appearance::class,
         'location-index' => Pages\Settings\Locations\Index::class,
         'location-create' => Pages\Settings\Locations\Create::class,
         'location-edit' => Pages\Settings\Locations\Edit::class,

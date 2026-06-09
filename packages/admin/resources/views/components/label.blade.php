@@ -5,7 +5,7 @@
     'isRequired' => false,
 ])
 
-<label {{ $attributes->twMerge(['class' => 'block font-medium text-sm text-gray-700 dark:text-gray-300']) }}>
+<label {{ $attributes->twMerge(['class' => 'block font-medium text-sm text-sh-fg-secondary']) }}>
     {{ $value ?? $slot }}
 
     @if ($isRequired)

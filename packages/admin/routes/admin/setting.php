@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', config('shopper.components.setting.pages.setting-index'))->name('index');
 Route::get('/general', config('shopper.components.setting.pages.general'))->name('shop');
+Route::get('/appearance', config('shopper.components.setting.pages.appearance'))->name('appearance');
 
 Route::prefix('locations')->group(function (): void {
     Route::get('/', config('shopper.components.setting.pages.location-index'))->name('locations');

@@ -1,0 +1,63 @@
+[data-theme='evergreen'] {
+    /* Forest / sage primary ramp (no matching Tailwind palette) */
+    --primary-50: #f3f6f1;
+    --primary-100: #e3eadf;
+    --primary-200: #c8d5c1;
+    --primary-300: #a4b69a;
+    --primary-400: #7c9070;
+    --primary-500: #5c7150;
+    --primary-600: #47593d;
+    --primary-700: #3a4a33;
+    --primary-800: #313d2c;
+    --primary-900: #2a3326;
+    --primary-950: #151b12;
+
+    --color-primary-50: #f3f6f1;
+    --color-primary-100: #e3eadf;
+    --color-primary-200: #c8d5c1;
+    --color-primary-300: #a4b69a;
+    --color-primary-400: #7c9070;
+    --color-primary-500: #5c7150;
+    --color-primary-600: #47593d;
+    --color-primary-700: #3a4a33;
+    --color-primary-800: #313d2c;
+    --color-primary-900: #2a3326;
+    --color-primary-950: #151b12;
+
+    /* Header */
+    --theme-sh-header: #3c4a39;
+    --theme-sh-header-fg: var(--color-stone-50);
+    --theme-sh-header-fg-muted: var(--color-stone-400);
+    --theme-sh-header-hover: #46553f;
+
+    /* Body */
+    --theme-sh-body: var(--color-stone-100);
+    --theme-sh-sidebar: var(--color-stone-50);
+    --theme-sh-sidebar-hover: var(--color-stone-200);
+    --theme-sh-muted: var(--color-stone-100);
+    --theme-sh-border: var(--color-stone-200);
+    --theme-sh-fg: var(--color-stone-900);
+    --theme-sh-fg-secondary: var(--color-stone-700);
+    --theme-sh-fg-muted: var(--color-stone-500);
+
+    --theme-sh-accent: #3a4a33;
+    --theme-sh-accent-fg: #f3f6f1;
+
+    --theme-sh-card: var(--color-stone-50);
+    --theme-sh-table-header: var(--color-stone-50);
+}
+
+.dark[data-theme='evergreen'] {
+    --theme-sh-body: #15180f;
+    --theme-sh-sidebar: #15180f;
+    --theme-sh-sidebar-hover: oklch(1 0 0 / 0.05); /* white/5 */
+    --theme-sh-surface: #1e2418;
+    --theme-sh-muted: #2a3122;
+    --theme-sh-border: oklch(1 0 0 / 0.1); /* white/10 */
+    --theme-sh-fg: var(--color-stone-50);
+    --theme-sh-fg-secondary: var(--color-stone-300);
+    --theme-sh-fg-muted: var(--color-stone-400);
+
+    --theme-sh-card: #15180f;
+    --theme-sh-table-header: #15180f;
+}

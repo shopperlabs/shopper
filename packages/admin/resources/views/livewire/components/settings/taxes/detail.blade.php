@@ -13,7 +13,7 @@
                             alt="{{ $taxZone->country->translated_name }}"
                             class="size-6 shrink-0 rounded-full object-cover"
                         />
-                        <x-filament::section.heading class="font-heading font-semibold text-gray-950 dark:text-white">
+                        <x-filament::section.heading class="font-heading font-semibold text-sh-fg">
                             {{ $taxZone->display_name }}
                         </x-filament::section.heading>
                     </div>

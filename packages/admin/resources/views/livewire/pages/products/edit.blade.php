@@ -16,7 +16,7 @@
             activeTab: @entangle('activeTab'),
         }"
     >
-        <div class="sticky top-12 z-10 bg-white pt-8 backdrop-blur-lg dark:bg-gray-900">
+        <div class="sticky top-0 z-10 bg-sh-surface pt-8 backdrop-blur-lg">
             <div class="space-y-4">
                 <x-shopper::container>
                     <x-shopper::heading>
@@ -33,7 +33,7 @@
                                 @endif
 
                                 <h2
-                                    class="font-heading text-2xl font-bold text-gray-950 sm:truncate sm:text-3xl sm:leading-9 dark:text-white"
+                                    class="font-heading text-2xl font-bold text-sh-fg sm:truncate sm:text-3xl sm:leading-9"
                                 >
                                     {{ $product->name }}
                                 </h2>

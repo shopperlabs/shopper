@@ -1,13 +1,13 @@
 <x-shopper::auth-card>
     <div class="space-y-5">
         <header class="flex flex-col items-center justify-center py-3">
-            <div class="flex items-center justify-center space-y-2 rounded-lg bg-white p-2 shadow ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700/80">
+            <div class="flex items-center justify-center space-y-2 rounded-lg bg-sh-surface p-2 shadow ring-1 ring-sh-border">
                 <x-phosphor-key class="size-5" aria-hidden="true" />
             </div>
-            <h1 class="font-heading mt-4 text-lg font-medium text-gray-950 dark:text-white">
+            <h1 class="font-heading mt-4 text-lg font-medium text-sh-fg">
                 {{ __('shopper::pages/auth.email.title') }}
             </h1>
-            <p class="mt-1 text-center text-sm text-gray-500 dark:text-gray-400">
+            <p class="mt-1 text-center text-sm text-sh-fg-muted">
                 {{ __('shopper::pages/auth.email.message') }}
             </p>
         </header>

@@ -67,9 +67,9 @@
                         @if ($prevCustomer) wire:click="goToCustomer({{ $prevCustomer->id }})" @endif
                         type="button"
                         @class([
-                            'focus:shadow-outline-primary focus:border-primary-300 relative inline-flex items-center rounded-l-lg border border-gray-300 px-2 py-2 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
-                            'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $prevCustomer,
-                            'bg-white' => $prevCustomer,
+                            'focus:shadow-outline-primary focus:border-primary-300 relative inline-flex items-center rounded-l-lg border border-sh-border px-2 py-2 text-sm font-medium text-sh-fg-muted transition duration-150 ease-in-out hover:text-sh-fg-muted focus:z-10 focus:outline-none',
+                            'bg-sh-muted disabled:cursor-not-allowed disabled:opacity-50' => ! $prevCustomer,
+                            'bg-sh-surface' => $prevCustomer,
                         ])
                         aria-label="{{ __('shopper::pages/customers.header.previous') }}"
                         @if (! $prevCustomer) disabled @endif
@@ -80,9 +80,9 @@
                         @if ($nextCustomer) wire:click="goToCustomer({{ $nextCustomer->id }})" @endif
                         type="button"
                         @class([
-                            'focus:shadow-outline-primary focus:border-primary-300 relative -ml-px inline-flex items-center rounded-r-lg border border-gray-300 px-2 py-2 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
-                            'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $nextCustomer,
-                            'bg-white' => $nextCustomer,
+                            'focus:shadow-outline-primary focus:border-primary-300 relative -ml-px inline-flex items-center rounded-r-lg border border-sh-border px-2 py-2 text-sm font-medium text-sh-fg-muted transition duration-150 ease-in-out hover:text-sh-fg-muted focus:z-10 focus:outline-none',
+                            'bg-sh-muted disabled:cursor-not-allowed disabled:opacity-50' => ! $nextCustomer,
+                            'bg-sh-surface' => $nextCustomer,
                         ])
                         aria-label="{{ __('shopper::pages/customers.header.next') }}"
                         @if (! $nextCustomer) disabled @endif
@@ -138,7 +138,7 @@
             {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_SIDEBAR_BEFORE) }}
 
             <x-shopper::card class="[&>div:first-of-type]:p-0">
-                <div class="divide-y divide-gray-200 dark:divide-white/10">
+                <div class="divide-y divide-sh-border">
                     <section class="space-y-3 p-4">
                         <h4 class="text-sh-fg text-sm font-semibold">
                             {{ __('shopper::pages/customers.details.title') }}

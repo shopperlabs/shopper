@@ -6,6 +6,8 @@ return [
 
     'general' => 'General',
     'general_description' => 'View and update your store information.',
+    'appearance' => 'Appearance',
+    'appearance_description' => 'Personalize the colors and look of the admin panel.',
     'staff' => 'Staff & permissions',
     'staff_description' => 'View and manage what staff can see or do in your store.',
     'location' => 'Inventories',

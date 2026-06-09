@@ -1,10 +1,10 @@
-<div class="border-t border-gray-100 pt-4 dark:border-white/10">
-    <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
+<div class="border-t border-sh-border pt-4">
+    <h3 class="text-sm font-semibold text-sh-fg">
         {{ __('shopper::pages/orders.shipping_address') }}
     </h3>
     @if ($this->order->shippingAddress)
-        <div class="mt-3 text-sm text-gray-500 dark:text-gray-400">
-            <p class="font-medium text-gray-900 dark:text-white">
+        <div class="mt-3 text-sm text-sh-fg-muted">
+            <p class="font-medium text-sh-fg">
                 {{ $this->order->shippingAddress->full_name }}
             </p>
             <p>{{ $this->order->shippingAddress->street_address }}</p>

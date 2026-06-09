@@ -1,7 +1,7 @@
 @blaze
 
 <dl
-    {{ $attributes->twMerge(['class' => 'divide-y divide-gray-200 dark:divide-white/10']) }}
+    {{ $attributes->twMerge(['class' => 'divide-y divide-sh-border']) }}
     role="list"
 >
     {{ $slot }}

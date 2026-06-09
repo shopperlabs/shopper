@@ -8,8 +8,8 @@
             <x-slot name="title">
                 <div class="flex items-center justify-between gap-2">
                     <div class="flex items-center gap-3">
-                        <x-untitledui-globe-05 class="size-6 text-gray-400 dark:text-gray-500" aria-hidden="true" />
-                        <x-filament::section.heading class="font-heading font-semibold text-gray-950 dark:text-white">
+                        <x-untitledui-globe-05 class="size-6 text-sh-fg-muted" aria-hidden="true" />
+                        <x-filament::section.heading class="font-heading font-semibold text-sh-fg">
                             {{ $zone->name }}
                             @if ($zone->code)
                                 <span>({{ $zone->code }})</span>
@@ -41,7 +41,7 @@
                 >
                     <div class="flex flex-wrap gap-x-3 gap-y-1.5">
                         @foreach ($zone->paymentMethods as $paymentMethod)
-                            <span class="inline-flex ring-1 px-2 py-1 bg-white shadow-xs ring-gray-200 rounded-md dark:bg-gray-900 dark:ring-white/10 items-center gap-1.5">
+                            <span class="inline-flex ring-1 px-2 py-1 bg-sh-muted shadow-xs ring-sh-border rounded-md items-center gap-1.5">
                                 @if ($paymentMethod->logo())
                                     <img
                                         src="{{ $paymentMethod->logo() }}"
@@ -49,7 +49,7 @@
                                         class="size-4 shrink-0 object-contain"
                                     />
                                 @else
-                                    <x-untitledui-credit-card-02 class="size-4 shrink-0 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                                    <x-untitledui-credit-card-02 class="size-4 shrink-0 text-sh-fg-muted" aria-hidden="true" />
                                 @endif
                                 {{ $paymentMethod->title }}
                             </span>
@@ -63,7 +63,7 @@
                 >
                     <div class="flex flex-wrap gap-x-3 gap-y-1.5">
                         @foreach ($zone->carriers as $carrier)
-                            <span class="inline-flex ring-1 px-2 py-1 bg-white shadow-xs ring-gray-200 rounded-md dark:bg-gray-900 dark:ring-white/10 items-center gap-1.5">
+                            <span class="inline-flex ring-1 px-2 py-1 bg-sh-muted shadow-xs ring-sh-border rounded-md items-center gap-1.5">
                                 @if ($carrier->logo())
                                     <img
                                         src="{{ $carrier->logo() }}"
@@ -71,7 +71,7 @@
                                         class="size-4 shrink-0 object-contain"
                                     />
                                 @else
-                                    <x-untitledui-truck class="size-4 shrink-0 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                                    <x-untitledui-truck class="size-4 shrink-0 text-sh-fg-muted" aria-hidden="true" />
                                 @endif
                                 {{ $carrier->name }}
                             </span>

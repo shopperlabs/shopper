@@ -4,12 +4,12 @@
     @endphp
 
 
-    <div class="sticky top-12 z-10 bg-white pt-6 backdrop-blur-lg dark:bg-gray-900">
-        <x-shopper::container class="border-b space-y-2 pb-4 border-gray-200 dark:border-white/10">
+    <div class="sticky top-0 z-10 bg-sh-body pt-6 backdrop-blur-lg">
+        <x-shopper::container class="border-b space-y-2 pb-4 border-sh-border">
             <div class="space-y-3 lg:flex lg:items-center justify-between lg:space-y-0">
                 <div class="sm:flex min-w-0 sm:items-center gap-3">
                     <h3
-                        class="font-heading text-2xl font-bold text-gray-900 uppercase sm:truncate sm:text-3xl dark:text-white"
+                        class="font-heading text-2xl font-bold text-sh-fg uppercase sm:truncate sm:text-3xl"
                     >
                         {{ $order->number }}
                     </h3>
@@ -68,9 +68,9 @@
                             @if($prevOrder) wire:click="goToOrder({{ $prevOrder->id }})" @endif
                             type="button"
                                 @class([
-                                    'focus:shadow-outline-primary focus:border-primary-300 relative inline-flex items-center rounded-l-lg border border-gray-300 px-2 py-2 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
-                                    'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $prevOrder,
-                                    'bg-white' => $prevOrder,
+                                    'focus:shadow-outline-primary focus:border-primary-300 relative inline-flex items-center rounded-l-lg border border-sh-border px-2 py-2 text-sm font-medium text-sh-fg-muted transition duration-150 ease-in-out hover:text-sh-fg focus:z-10 focus:outline-none',
+                                    'bg-sh-muted disabled:cursor-not-allowed disabled:opacity-50' => ! $prevOrder,
+                                    'bg-sh-surface' => $prevOrder,
                                 ])
                                 aria-label="{{ __('Previous order') }}"
                                 @if(! $prevOrder) disabled @endif
@@ -81,9 +81,9 @@
                             @if($nextOrder) wire:click="goToOrder({{ $nextOrder->id }})" @endif
                             type="button"
                                 @class([
-                                    'focus:shadow-outline-primary focus:border-primary-300 relative -ml-px inline-flex items-center rounded-r-lg border border-gray-300 px-2 py-2 text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
-                                    'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $nextOrder,
-                                    'bg-white' => $nextOrder,
+                                    'focus:shadow-outline-primary focus:border-primary-300 relative -ml-px inline-flex items-center rounded-r-lg border border-sh-border px-2 py-2 text-sm font-medium text-sh-fg-muted transition duration-150 ease-in-out hover:text-sh-fg focus:z-10 focus:outline-none',
+                                    'bg-sh-muted disabled:cursor-not-allowed disabled:opacity-50' => ! $nextOrder,
+                                    'bg-sh-surface' => $nextOrder,
                                 ])
                                 aria-label="{{ __('Next order') }}"
                                 @if(! $nextOrder) disabled @endif
@@ -93,25 +93,25 @@
                     </span>
                 </div>
             </div>
-            <div class="flex flex-col sm:flex-row sm:items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2 text-sm text-sh-fg-muted">
                 <time datetime="{{ $order->created_at->format('Y-m-d') }}">
                     {{ __('shopper::pages/orders.order_date', ['date' => '']) }}
-                    <span class="font-medium text-gray-700 dark:text-gray-300">{{ $order->created_at->translatedFormat('M j, Y') }}</span>
+                    <span class="font-medium text-sh-fg-secondary">{{ $order->created_at->translatedFormat('M j, Y') }}</span>
                 </time>
                 @if ($customer)
-                    <span class="max-sm:hidden text-gray-300 dark:text-gray-600">&middot;</span>
+                    <span class="max-sm:hidden text-sh-fg-muted">&middot;</span>
                     <span>
                         {{ __('shopper::pages/orders.order_from', ['name' => '']) }}
                         <x-shopper::link
                             :href="route('shopper.customers.show', $customer)"
-                            class="font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                            class="font-medium text-sh-fg-secondary hover:text-sh-fg"
                         >
                             {{ $customer->full_name }}
                         </x-shopper::link>
                     </span>
                 @endif
                 @if ($order->channel)
-                    <span class="max-sm:hidden text-gray-300 dark:text-gray-600">&middot;</span>
+                    <span class="max-sm:hidden text-sh-fg-muted">&middot;</span>
                     <span class="inline-flex items-center gap-2">
                         {{ __('shopper::pages/orders.purchased_via') }}
                         <x-filament::badge color="gray" icon="phosphor-storefront-duotone">
@@ -129,7 +129,7 @@
         {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_MAIN_BEFORE) }}
 
         <div class="grid sm:grid-cols-6">
-            <div class="sm:col-span-4 divide-y divide-gray-200 pt-2 sm:pr-4 lg:pr-6 dark:divide-white/10">
+            <div class="sm:col-span-4 divide-y divide-sh-border pt-2 sm:pr-4 lg:pr-6">
                 <div class="py-4">
                     <livewire:shopper-order-fulfillment :$order />
                 </div>
@@ -143,7 +143,7 @@
                 {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_MAIN_AFTER) }}
             </div>
 
-            <div class="border-t border-gray-200 py-2 sm:col-span-2 sm:border-t-0 sm:border-l sm:pl-6 dark:border-white/10">
+            <div class="border-t border-sh-border py-2 sm:col-span-2 sm:border-t-0 sm:border-l sm:pl-6">
                 {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_SIDEBAR_BEFORE) }}
 
                 <livewire:shopper-order-customer :$order />

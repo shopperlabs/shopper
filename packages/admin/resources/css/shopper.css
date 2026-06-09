@@ -10,6 +10,7 @@
 @import './components/index.css';
 @import './themes/default.css';
 @import './themes/midnight.css';
+@import './themes/evergreen.css';
 
 @source '../views';
 @source '../../src';

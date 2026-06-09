@@ -2,12 +2,13 @@
     'title' => config('app.name'),
 ])
 
+@php($activeTheme = resolve(\Shopper\Theme\ThemeManager::class)->active())
+
 <!DOCTYPE html>
 <html
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"
     class="sh min-h-screen scroll-smooth antialiased"
-    {{--data-theme="{{ shopper_setting('admin_theme', 'midnight') }}"--}}
-    data-theme="default"
+    data-theme="{{ $activeTheme->id }}"
 >
 <head>
     <meta charset="utf-8" />
@@ -39,6 +40,10 @@
 
     @filamentStyles
     {{ \Shopper\Facades\Shopper::getThemeLink() }}
+
+    @if ($activeTheme->css)
+        <link rel="stylesheet" href="{{ $activeTheme->css }}" />
+    @endif
 
     <script
         defer

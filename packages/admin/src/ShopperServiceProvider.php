@@ -36,6 +36,7 @@ use Shopper\Livewire\Pages;
 use Shopper\Providers\ComponentsServiceProvider;
 use Shopper\Providers\SidebarServiceProvider;
 use Shopper\Settings\SettingManager;
+use Shopper\Theme\ThemeManager;
 use Shopper\Traits\LoadComponents;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -56,6 +57,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
         'models',
         'routes',
         'settings',
+        'themes',
     ];
 
     protected string $root = __DIR__.'/..';
@@ -115,6 +117,10 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
         $this->app->singleton(SettingManager::class, fn (): SettingManager => (new SettingManager)->register(
             config('shopper.settings.items', [])
+        ));
+
+        $this->app->singleton(ThemeManager::class, fn (): ThemeManager => (new ThemeManager)->registerMany(
+            config('shopper.themes.registered', [])
         ));
 
         $this->loadViewsFrom($this->root.'/resources/views', 'shopper');

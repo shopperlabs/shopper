@@ -1,13 +1,13 @@
 <x-shopper::auth-card>
     @if (! $challengedUserId)
         <header class="flex flex-col justify-center items-center py-3">
-            <div class="bg-white dark:bg-gray-800 rounded-lg ring-1 ring-gray-200 dark:ring-gray-700/80 shadow space-y-2 p-2 flex items-center justify-center">
+            <div class="bg-sh-surface rounded-lg ring-1 ring-sh-border shadow space-y-2 p-2 flex items-center justify-center">
                 <x-phosphor-sign-in class="size-5" aria-hidden="true" />
             </div>
-            <h1 class="mt-4 font-heading text-lg font-medium text-gray-950 dark:text-white">
+            <h1 class="mt-4 font-heading text-lg font-medium text-sh-fg">
                 {{ __('shopper::pages/auth.login.title') }}
             </h1>
-            <p class="mt-1 text-center text-sm text-gray-500 dark:text-gray-400">
+            <p class="mt-1 text-center text-sm text-sh-fg-muted">
                 {{ __('shopper::pages/auth.login.subtitle') }}
             </p>
         </header>
@@ -34,13 +34,13 @@
         </form>
     @else
         <header class="flex flex-col justify-center items-center py-3">
-            <div class="bg-white dark:bg-gray-800 rounded-lg ring-1 ring-gray-200 dark:ring-gray-700/80 shadow space-y-2 p-2 flex items-center justify-center">
+            <div class="bg-sh-surface rounded-lg ring-1 ring-sh-border shadow space-y-2 p-2 flex items-center justify-center">
                 <x-phosphor-shield-check class="size-5" aria-hidden="true" />
             </div>
-            <h1 class="mt-4 font-heading text-lg font-medium text-gray-950 dark:text-white">
+            <h1 class="mt-4 font-heading text-lg font-medium text-sh-fg">
                 {{ __('shopper::pages/auth.two_factor.subtitle') }}
             </h1>
-            <p class="mt-1 text-center text-sm text-gray-500 dark:text-gray-400">
+            <p class="mt-1 text-center text-sm text-sh-fg-muted">
                 {{
                     $useRecoveryCode
                         ? __('shopper::pages/auth.two_factor.recovery_code')
@@ -53,10 +53,10 @@
             {{ $this->twoFactorForm }}
 
             <div class="flex items-center justify-between">
-                <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                <p class="text-sm leading-5 text-sh-fg-muted">
                     @if (! $useRecoveryCode)
                         <button
-                            class="cursor-pointer text-sm text-gray-500 underline hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                            class="cursor-pointer text-sm text-sh-fg-muted underline hover:text-sh-fg"
                             type="button"
                             wire:click="$set('useRecoveryCode', true)"
                         >
@@ -64,7 +64,7 @@
                         </button>
                     @else
                         <button
-                            class="cursor-pointer text-sm text-gray-500 underline hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                            class="cursor-pointer text-sm text-sh-fg-muted underline hover:text-sh-fg"
                             type="button"
                             wire:click="$set('useRecoveryCode', false)"
                         >

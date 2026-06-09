@@ -10,7 +10,7 @@
             {{ __('shopper::words.scheduled') }}
         @endif
     </x-filament::badge>
-    <p class="text-sm leading-6 text-gray-500 dark:text-gray-400">
+    <p class="text-sm leading-6 text-sh-fg-muted">
         @if ($discount->end_at)
             <span>{{ $discount->start_at->format('d M, Y') }}</span>
             <span>-</span>

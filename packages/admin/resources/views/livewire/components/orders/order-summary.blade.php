@@ -1,13 +1,13 @@
-<div class="overflow-hidden rounded-lg divide-y divide-gray-200 bg-white ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10 dark:divide-white/10">
-    <div class="p-3 bg-gray-50 dark:bg-gray-950">
-        <h4 class="text-base/5 text-gray-900 font-semibold dark:text-white">
+<div class="overflow-hidden rounded-lg divide-y divide-sh-border bg-sh-surface ring-1 ring-sh-border">
+    <div class="p-3 bg-sh-muted">
+        <h4 class="text-base/5 text-sh-fg font-semibold">
             {{ __('shopper::pages/orders.summary') }}
         </h4>
     </div>
-    <div class="divide-y divide-gray-200 dark:divide-white/10">
+    <div class="divide-y divide-sh-border">
         <div class="space-y-4 p-4">
             <div class="flex items-center justify-between">
-                <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
+                <h3 class="text-sm font-semibold text-sh-fg">
                     {{ __('shopper::pages/orders.payment_details') }}
                 </h3>
                 <x-filament::badge
@@ -21,7 +21,7 @@
 
             <div class="space-y-3">
                 <div class="flex items-start justify-between text-sm">
-                    <span class="text-gray-500 dark:text-gray-400">
+                    <span class="text-sh-fg-muted">
                         {{ __('shopper::words.payment_method') }}
                     </span>
                     @if ($order->paymentMethod)
@@ -33,19 +33,19 @@
                                     alt="{{ $order->paymentMethod->title }}"
                                 />
                             @endif
-                            <span class="font-medium text-gray-900 dark:text-white">
+                            <span class="font-medium text-sh-fg">
                                 {{ $order->paymentMethod->title }}
                             </span>
                         </div>
                     @else
-                        <span class="text-sm text-gray-400 italic dark:text-gray-500">
+                        <span class="text-sm text-sh-fg-muted italic">
                             {{ __('shopper::pages/orders.no_payment_method') }}
                         </span>
                     @endif
                 </div>
 
                 <div class="flex items-center justify-between text-sm">
-                    <span class="text-gray-500 dark:text-gray-400">
+                    <span class="text-sh-fg-muted">
                         {{ __('shopper::words.subtotal') }}
                         <span class="text-xs">
                             ({{ $isTaxInclusive
@@ -53,7 +53,7 @@
                                 : __('shopper::pages/settings/taxes.exclusive') }})
                         </span>
                     </span>
-                    <span class="text-gray-900 dark:text-white">
+                    <span class="text-sh-fg">
                         {{ trans_choice('shopper::words.item_count', $itemsCount, ['count' => $itemsCount]) }}
                         &middot;
                         {{ shopper_money_format($subtotal, $order->currency_code) }}
@@ -62,7 +62,7 @@
 
                 @if ($shippingOption)
                     <div class="flex items-start justify-between text-sm">
-                        <span class="text-gray-500 dark:text-gray-400">
+                        <span class="text-sh-fg-muted">
                             {{ __('shopper::pages/orders.shipping_type') }}
                         </span>
                         <div class="flex items-center gap-2">
@@ -73,28 +73,28 @@
                                     alt="{{ $shippingOption->carrier?->name }}"
                                 />
                             @endif
-                            <span class="text-gray-900 dark:text-white">
-                                {{ $shippingOption->carrier?->name }} &mdash; <span class="text-gray-500 dark:text-gray-400">{{ $shippingOption->name }}</span>
+                            <span class="text-sh-fg">
+                                {{ $shippingOption->carrier?->name }} &mdash; <span class="text-sh-fg-muted">{{ $shippingOption->name }}</span>
                             </span>
                         </div>
                     </div>
                 @endif
 
                 <div class="flex items-center justify-between text-sm">
-                    <span class="text-gray-500 dark:text-gray-400">
+                    <span class="text-sh-fg-muted">
                         {{ __('shopper::pages/orders.shipping_fee') }}
                     </span>
-                    <span class="text-gray-900 dark:text-white">
+                    <span class="text-sh-fg">
                         {{ shopper_money_format($shippingPrice, $order->currency_code) }}
                     </span>
                 </div>
 
                 <div class="flex items-center justify-between text-sm">
-                    <span class="text-gray-500 dark:text-gray-400">
+                    <span class="text-sh-fg-muted">
                         {{ __('shopper::pages/orders.tax') }}
                     </span>
                     @if ($taxAmount > 0)
-                        <span class="text-gray-900 dark:text-white">
+                        <span class="text-sh-fg">
                             {{ shopper_money_format($taxAmount, $order->currency_code) }}
                         </span>
                     @else
@@ -107,10 +107,10 @@
         </div>
 
         <div class="flex items-center justify-between p-4">
-            <span class="text-sm font-semibold text-gray-900 dark:text-white">
+            <span class="text-sm font-semibold text-sh-fg">
                 {{ __('shopper::words.total') }}
             </span>
-            <span class="text-sm font-semibold text-gray-900 dark:text-white">
+            <span class="text-sm font-semibold text-sh-fg">
                 {{ shopper_money_format($total, $order->currency_code) }}
             </span>
         </div>

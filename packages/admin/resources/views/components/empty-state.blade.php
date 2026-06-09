@@ -17,11 +17,11 @@
     <div class="relative mt-10 flex w-full items-center justify-center lg:mt-0 lg:w-1/2 lg:py-20">
         <div class="w-full text-center sm:max-w-md lg:text-left">
             <h3
-                class="font-heading text-lg font-medium text-gray-900 sm:text-lg sm:leading-7 lg:text-2xl dark:text-white"
+                class="font-heading text-lg font-medium text-sh-fg sm:text-lg sm:leading-7 lg:text-2xl"
             >
                 {{ $title }}
             </h3>
-            <p class="mt-4 text-base text-gray-500 dark:text-gray-400">
+            <p class="mt-4 text-base text-sh-fg-muted">
                 {{ $content }}
             </p>
 

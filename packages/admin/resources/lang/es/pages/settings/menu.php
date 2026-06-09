@@ -6,6 +6,8 @@ return [
 
     'general' => 'General',
     'general_description' => 'Ver y actualizar la información de tu tienda.',
+    'appearance' => 'Apariencia',
+    'appearance_description' => 'Personaliza los colores y el aspecto del panel de administración.',
     'staff' => 'Personal y permisos',
     'staff_description' => 'Ver y gestionar lo que el personal puede ver o hacer en tu tienda.',
     'location' => 'Inventarios',

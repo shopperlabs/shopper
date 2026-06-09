@@ -3,7 +3,7 @@
 @endphp
 
 @if ($firstItem === null)
-    <span class="text-sm text-gray-500 dark:text-gray-400">—</span>
+    <span class="text-sm text-sh-fg-muted">—</span>
 @else
     @php
         $label = $order->items->count() > 1
@@ -21,7 +21,7 @@
 
         <span
             @if ($isTruncated) x-data x-tooltip="{{ \Illuminate\Support\Js::from($label) }}" @endif
-            class="max-w-[50ch] truncate font-medium text-gray-700 dark:text-gray-300"
+            class="max-w-[50ch] truncate font-medium text-sh-fg-secondary"
         >
             {{ $label }}
         </span>

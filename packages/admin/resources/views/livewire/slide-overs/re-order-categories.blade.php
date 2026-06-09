@@ -1,10 +1,10 @@
-<x-shopper::slideover-card class="divide-y divide-gray-100 dark:divide-white/10">
+<x-shopper::slideover-card class="divide-y divide-sh-border">
     <div class="h-0 flex-1 overflow-y-auto py-6">
         <header class="px-4 sm:px-6">
             <div class="flex items-start justify-between">
                 <div class="flex items-center gap-2">
-                    <x-untitledui-switch-vertical class="size-5 text-gray-400" aria-hidden="true" />
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-white">
+                    <x-untitledui-switch-vertical class="size-5 text-sh-fg-muted" aria-hidden="true" />
+                    <h2 class="text-lg font-medium text-sh-fg">
                         {{ __('shopper::words.reorder') }}
                     </h2>
                 </div>
@@ -16,7 +16,7 @@
             <div class="flex items-center justify-end gap-2">
                 <button
                     type="button"
-                    class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-white/10 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10"
+                    class="inline-flex items-center gap-1.5 rounded-lg border border-sh-border bg-sh-surface px-3 py-1.5 text-xs font-medium text-sh-fg-secondary hover:bg-sh-muted"
                     x-on:click="allCollapsed = true; document.querySelectorAll('[data-children]').forEach(el => el.classList.add('hidden'))"
                 >
                     <x-untitledui-rows class="size-3" aria-hidden="true" />
@@ -24,7 +24,7 @@
                 </button>
                 <button
                     type="button"
-                    class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-white/10 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10"
+                    class="inline-flex items-center gap-1.5 rounded-lg border border-sh-border bg-sh-surface px-3 py-1.5 text-xs font-medium text-sh-fg-secondary hover:bg-sh-muted"
                     x-on:click="allCollapsed = false; document.querySelectorAll('[data-children]').forEach(el => el.classList.remove('hidden'))"
                 >
                     <x-untitledui-expand-06 class="size-3" aria-hidden="true" />

@@ -1,6 +1,6 @@
 <div>
     <div class="flex items-center justify-between">
-        <h4 class="text-sm leading-5 font-medium text-gray-900 dark:text-white">
+        <h4 class="text-sm leading-5 font-medium text-sh-fg">
             {{ __('shopper::pages/products.quantity_inventory') }}
         </h4>
         <div class="ml-4 flex items-center">
@@ -10,9 +10,9 @@
 
     <x-filament-actions::modals />
 
-    <div class="mt-5 overflow-hidden rounded-xl bg-white ring-1 ring-gray-950/10 dark:bg-gray-900 dark:ring-white/10">
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-white/10">
-            <thead class="bg-gray-50 dark:bg-white/5">
+    <div class="mt-5 overflow-hidden rounded-xl bg-sh-surface ring-1 ring-sh-border">
+        <table class="min-w-full divide-y divide-sh-border">
+            <thead class="bg-sh-muted">
                 <x-shopper::tables.table-head>
                     {{ __('shopper::pages/products.inventory_name') }}
                 </x-shopper::tables.table-head>
@@ -20,7 +20,7 @@
                     {{ __('shopper::words.available') }}
                 </x-shopper::tables.table-head>
             </thead>
-            <tbody class="divide-y divide-gray-100 dark:divide-white/10" x-max="1">
+            <tbody class="divide-y divide-sh-border" x-max="1">
                 @foreach ($this->inventories as $inventory)
                     <tr>
                         <x-shopper::tables.table-cell class="whitespace-no-wrap">
