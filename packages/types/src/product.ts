@@ -4,7 +4,6 @@ import type { Category } from './category'
 import type { Channel } from './channel'
 import type { Collection } from './collection'
 import type {
-  DateEntity,
   Entity,
   Metadata,
   Price,
@@ -51,7 +50,7 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   /** The type of the product. */
   type: ProductType | null
   /** The published at date of the product. */
-  published_at: DateEntity | null
+  published_at: string | null
   /** The external ID of the product. */
   external_id: string | null
   /** The stock quantity of the product. */
@@ -84,6 +83,10 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   relatedProducts?: Product[]
   /** The images of the product. */
   images?: Media[] | null
+  /** The thumbnail of the product. */
+  thumbnail?: Media | null
+  /** The downloadable files of the product. */
+  files?: Media[] | null
   /** The reviews of the product. */
   reviews?: Review[]
   /** The prices of the product. */

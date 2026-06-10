@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\ProductTagFactory;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read ?string $slug
  * @property-read CarbonInterface $created_at
@@ -24,6 +26,7 @@ class ProductTag extends Model
     /** @use HasFactory<ProductTagFactory> */
     use HasFactory;
 
+    use HasPublicId;
     use HasSlug;
 
     protected $guarded = [];

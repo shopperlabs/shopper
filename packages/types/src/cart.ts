@@ -1,5 +1,5 @@
 import type { Channel } from './channel'
-import type { DateEntity, Entity, Metadata } from './common'
+import type { Entity, Metadata } from './common'
 import type { Country } from './country'
 import type { Customer } from './customer'
 import type { Discount } from './discount'
@@ -20,7 +20,7 @@ export interface Cart extends Entity {
   /** The coupon code applied to the cart. */
   coupon_code: string | null
   /** The date the cart was completed (converted to order). */
-  completed_at: DateEntity | null
+  completed_at: string | null
   /** The metadata of the cart. */
   metadata: Metadata
   /** The customer ID. */

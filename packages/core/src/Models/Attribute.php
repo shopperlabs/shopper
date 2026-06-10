@@ -14,10 +14,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\AttributeFactory;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Contracts\Attribute as AttributeContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read string $slug
  * @property-read ?string $description
@@ -36,6 +38,7 @@ class Attribute extends Model implements AttributeContract
     /** @use HasFactory<AttributeFactory> */
     use HasFactory;
 
+    use HasPublicId;
     use HasSlug;
 
     protected $guarded = [];

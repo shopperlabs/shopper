@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Http\Resources;
 
+use Illuminate\Http\Request;
 use TiMacDonald\JsonApi\JsonApiResource as BaseJsonApiResource;
 
 /**
@@ -15,4 +16,15 @@ use TiMacDonald\JsonApi\JsonApiResource as BaseJsonApiResource;
  * `$relationships` properties or by overriding `toAttributes()` /
  * `toRelationships()`.
  */
-abstract class JsonApiResource extends BaseJsonApiResource {}
+abstract class JsonApiResource extends BaseJsonApiResource
+{
+    /**
+     * The external id is the stable, non-sequential public_id (ULID) rather
+     * than the auto-increment primary key. Models without a public_id fall
+     * back to their key so the API never breaks.
+     */
+    public function toId(Request $request): string
+    {
+        return (string) ($this->resource->public_id ?? $this->resource->getKey());
+    }
+}

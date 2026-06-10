@@ -29,6 +29,7 @@ use Shopper\Core\Models\Traits\HasDimensions;
 use Shopper\Core\Models\Traits\HasDiscounts;
 use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasPrices;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasStock;
 use Shopper\Core\Models\Traits\InteractsWithReviews;
@@ -36,6 +37,7 @@ use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read string $slug
  * @property-read ?string $sku
@@ -92,6 +94,7 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
     use HasMediaCollections;
     use HasModelContract;
     use HasPrices;
+    use HasPublicId;
     use HasSlug;
     use HasStock;
     use InteractsWithReviews;

@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Shopper\Core\Database\Factories\CurrencyFactory;
 use Shopper\Core\Models\Contracts\Currency as CurrencyContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read string $code
  * @property-read string $symbol
@@ -25,6 +27,8 @@ class Currency extends Model implements CurrencyContract
 {
     /** @use HasFactory<CurrencyFactory> */
     use HasFactory;
+
+    use HasPublicId;
 
     public $timestamps = false;
 

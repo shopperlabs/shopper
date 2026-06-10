@@ -1,4 +1,4 @@
-import type { DateEntity, Entity, Metadata, SEOFields } from './common'
+import type { Entity, Metadata, SEOFields } from './common'
 import type { Media } from './media'
 import type { Product } from './product'
 import type { Zone } from './zone'
@@ -54,11 +54,11 @@ export interface Collection extends Entity, SEOFields {
   /** The sort order for products. */
   sort: string | null
   /** The published date of the collection. */
-  published_at: DateEntity | null
+  published_at: string | null
   /** The metadata of the collection. */
   metadata: Metadata
-  /** The image of the collection. */
-  image?: Media | null
+  /** The thumbnail of the collection. */
+  thumbnail?: Media | null
   /** The rules for automatic collections. */
   rules?: CollectionRule[]
   /** The zones this collection belongs to. */

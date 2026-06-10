@@ -33,6 +33,8 @@ export interface ProductVariant extends Entity, ShippingFields {
   values?: AttributeValue[]
   /** The images of the product variant. */
   images?: Media[] | null
+  /** The thumbnail of the product variant. */
+  thumbnail?: Media | null
   /** The prices of the product variant. */
   prices?: Price[]
 }

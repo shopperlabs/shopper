@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Database\Factories\CountryFactory;
 use Shopper\Core\Models\Contracts\Country as CountryContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasZones;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read string $name_official
  * @property-read string $region
@@ -32,6 +34,7 @@ class Country extends Model implements CountryContract
     /** @use HasFactory<CountryFactory> */
     use HasFactory;
 
+    use HasPublicId;
     use HasZones;
 
     public $timestamps = false;

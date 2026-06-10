@@ -13,6 +13,8 @@
     "dedoc/scramble": "^0.13",
     "shopper/core": "*",
     "shopper/http": "*",
+    "spatie/laravel-medialibrary": "^11.5",
+    "spatie/laravel-query-builder": "^7.3",
     "timacdonald/json-api": "^1.0@beta"
   },
   "autoload": {

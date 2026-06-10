@@ -1,5 +1,5 @@
 import type { Address } from './address'
-import type { DateEntity, Entity } from './common'
+import type { Entity } from './common'
 
 /**
  * The Gender Type for the customer.
@@ -43,7 +43,7 @@ export interface Customer extends Entity {
   /** Whether the customer has opted in to marketing. */
   opt_in: boolean
   /** The last login date. */
-  last_login_at: DateEntity | null
+  last_login_at: string | null
   /** The last login IP address. */
   last_login_ip?: string | null
   /** The customer's addresses. */

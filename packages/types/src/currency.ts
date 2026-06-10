@@ -15,6 +15,8 @@ export function isNoDivisionCurrency(currency: string): boolean {
  */
 export interface Currency {
   id: number
+  /** The stable public identifier (ULID) exposed by the API. */
+  public_id?: string
   /** The name of the currency. */
   name: string
   /** The code of the currency (e.g., USD, EUR). */

@@ -11,9 +11,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\CarrierOptionFactory;
 use Shopper\Core\Models\Contracts\CarrierOption as CarrierOptionContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read ?string $description
  * @property-read int $price
@@ -30,6 +32,8 @@ class CarrierOption extends Model implements CarrierOptionContract
 {
     /** @use HasFactory<CarrierOptionFactory> */
     use HasFactory;
+
+    use HasPublicId;
 
     protected $guarded = [];
 

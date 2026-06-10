@@ -12,10 +12,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\InventoryFactory;
 use Shopper\Core\Models\Contracts\Inventory as InventoryContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read int $country_id
  * @property-read string $name
  * @property-read string $code
@@ -42,6 +44,7 @@ class Inventory extends Model implements InventoryContract
     use HasFactory;
 
     use HasModelContract;
+    use HasPublicId;
 
     protected $guarded = [];
 

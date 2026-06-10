@@ -12,11 +12,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\CarrierFactory;
 use Shopper\Core\Models\Contracts\Carrier as CarrierContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasZones;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read bool $is_enabled
  * @property-read ?string $slug
@@ -34,6 +36,7 @@ class Carrier extends Model implements CarrierContract
     /** @use HasFactory<CarrierFactory> */
     use HasFactory;
 
+    use HasPublicId;
     use HasSlug;
     use HasZones;
 

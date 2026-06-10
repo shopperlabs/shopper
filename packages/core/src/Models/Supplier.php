@@ -11,11 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\SupplierFactory;
 use Shopper\Core\Models\Contracts\Supplier as SupplierContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read ?string $slug
  * @property-read ?string $email
@@ -36,6 +38,7 @@ class Supplier extends Model implements SupplierContract
     use HasFactory;
 
     use HasModelContract;
+    use HasPublicId;
     use HasSlug;
 
     protected $guarded = [];

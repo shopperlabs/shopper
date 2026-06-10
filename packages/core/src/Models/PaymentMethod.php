@@ -10,11 +10,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Database\Factories\PaymentMethodFactory;
 use Shopper\Core\Models\Contracts\PaymentMethod as PaymentMethodContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasZones;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $title
  * @property-read string $slug
  * @property-read bool $is_enabled
@@ -31,6 +33,7 @@ class PaymentMethod extends Model implements PaymentMethodContract
     /** @use HasFactory<PaymentMethodFactory> */
     use HasFactory;
 
+    use HasPublicId;
     use HasSlug;
     use HasZones;
 

@@ -13,10 +13,12 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Shopper\Core\Database\Factories\OrderShippingFactory;
 use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Models\Contracts\OrderShipping as OrderShippingContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Traits\HasFulfillmentTransitions;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read ?ShipmentStatus $status
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
@@ -40,6 +42,7 @@ class OrderShipping extends Model implements OrderShippingContract
     use HasFactory;
 
     use HasFulfillmentTransitions;
+    use HasPublicId;
 
     protected $guarded = [];
 

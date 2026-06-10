@@ -16,4 +16,53 @@ return [
         'per_page' => (int) env('SHOPPER_API_PER_PAGE', 15),
         'max_per_page' => 100,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Resource query allowlists
+    |--------------------------------------------------------------------------
+    |
+    | Filters, sorts, and includes a client is allowed to request per resource
+    | (spatie/laravel-query-builder). Sparse fieldsets (fields[type]) are handled
+    | on the response side by the JSON:API resources. Extend these to expose more
+    | of your own columns and relations.
+    |
+    */
+    'resources' => [
+        'product' => [
+            'filters' => ['name', 'sku'],
+            'sorts' => ['name', 'created_at', 'published_at'],
+            'includes' => ['brand', 'variants', 'categories', 'collections', 'options'],
+            'include_loads' => [
+                'variants' => ['variants.prices.currency'],
+                'options' => ['options.values'],
+            ],
+        ],
+        'category' => [
+            'filters' => ['name'],
+            'sorts' => ['name', 'position'],
+            'includes' => ['parent', 'children', 'products'],
+            'include_loads' => [
+                'products' => ['products.prices.currency'],
+            ],
+        ],
+        'collection' => [
+            'filters' => ['name'],
+            'sorts' => ['name'],
+            'includes' => [],
+        ],
+        'brand' => [
+            'filters' => ['name'],
+            'sorts' => ['name', 'position'],
+            'includes' => ['products'],
+            'include_loads' => [
+                'products' => ['products.prices.currency'],
+            ],
+        ],
+        'attribute' => [
+            'filters' => ['name'],
+            'sorts' => ['name', 'position'],
+            'includes' => [],
+        ],
+    ],
 ];

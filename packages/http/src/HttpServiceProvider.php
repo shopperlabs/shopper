@@ -5,17 +5,20 @@ declare(strict_types=1);
 namespace Shopper\Http;
 
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\RateLimiter;
 use Shopper\Http\Contracts\ZoneResolver;
 use Shopper\Http\Enum\RateLimit;
+use Shopper\Http\Exceptions\JsonApiErrorRenderer;
 use Shopper\Http\Middleware\EnsureJsonApiResponse;
 use Shopper\Http\Middleware\ResolveCustomer;
 use Shopper\Http\Middleware\ResolveZone;
 use Shopper\Http\Zone\DefaultZoneResolver;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Throwable;
 
 final class HttpServiceProvider extends PackageServiceProvider
 {
@@ -45,6 +48,18 @@ final class HttpServiceProvider extends PackageServiceProvider
 
         $this->registerRateLimiters();
         $this->registerMiddleware();
+        $this->registerExceptionRenderer();
+    }
+
+    private function registerExceptionRenderer(): void
+    {
+        $this->callAfterResolving(ExceptionHandler::class, function (ExceptionHandler $handler): void {
+            $renderer = new JsonApiErrorRenderer;
+
+            $handler->renderable(
+                fn (Throwable $exception, Request $request) => $renderer->render($exception, $request),
+            );
+        });
     }
 
     private function registerRateLimiters(): void

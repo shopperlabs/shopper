@@ -22,7 +22,7 @@ it('serializes a model as a JSON:API document', function (): void {
     $this->getJson('/__test/products/'.$product->getKey())
         ->assertOk()
         ->assertJsonPath('data.type', 'products')
-        ->assertJsonPath('data.id', (string) $product->getKey())
+        ->assertJsonPath('data.id', $product->public_id)
         ->assertJsonPath('data.attributes.name', 'Tee')
         ->assertJsonStructure(['data' => ['type', 'id', 'attributes' => ['name', 'slug']]]);
 });
