@@ -12,11 +12,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\ChannelFactory;
 use Shopper\Core\Models\Contracts\Channel as ChannelContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read ?string $slug
  * @property-read ?string $description
@@ -35,6 +37,7 @@ class Channel extends Model implements ChannelContract
     use HasFactory;
 
     use HasModelContract;
+    use HasPublicId;
     use HasSlug;
 
     protected $guarded = [];

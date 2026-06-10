@@ -11,10 +11,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Models\Contracts\CartLine as CartLineContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read int $cart_id
  * @property-read string $purchasable_type
  * @property-read int $purchasable_id
@@ -31,6 +33,7 @@ use Shopper\Core\Traits\HasModelContract;
 class CartLine extends Model implements CartLineContract
 {
     use HasModelContract;
+    use HasPublicId;
 
     protected $guarded = [];
 

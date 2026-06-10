@@ -19,9 +19,11 @@ use Shopper\Core\Enum\DiscountStatus;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Exceptions\DiscountZoneFrozenException;
 use Shopper\Core\Models\Contracts\Discount as DiscountContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $code
  * @property-read DiscountType $type
  * @property-read int $value
@@ -48,6 +50,8 @@ class Discount extends Model implements DiscountContract
 {
     /** @use HasFactory<DiscountFactory> */
     use HasFactory;
+
+    use HasPublicId;
 
     protected $guarded = [];
 

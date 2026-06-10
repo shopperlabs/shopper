@@ -25,42 +25,38 @@ export enum Volume {
  * Global entity for all the models.
  */
 export interface Entity {
-  /** The id of the entity. */
-  id: number
-  /** The created at of the entity. */
-  created_at?: DateEntity
-  /** The updated at of the entity. */
-  updated_at?: DateEntity
-  /** The deleted at of the entity. */
-  deleted_at?: DateEntity | null
-}
-
-/**
- * A date DTO to manage date format.
- */
-export interface DateEntity {
-  /** The date format of the entity. */
-  date: string
-  /** The human-readable date. Eg: 2 hours ago. */
-  human: string
+  /** The internal id of the entity (admin). */
+  id: string | number
+  /** The stable public identifier (ULID) exposed by the API. */
+  public_id?: string
+  /** The ISO 8601 created at timestamp. */
+  created_at?: string
+  /** The ISO 8601 updated at timestamp. */
+  updated_at?: string
+  /** The ISO 8601 deleted at timestamp. */
+  deleted_at?: string | null
 }
 
 /**
  * Price interface for entity.
  */
 export interface Price {
+  /** The internal id of the entity (admin). */
+  id?: string | number
+  /** The stable public identifier (ULID) exposed by the API. */
+  public_id?: string
   /** The original amount for the entity. */
   amount: number | null
   /** The compare_amount amount for the entity. */
   compare_amount: number | null
   /** The cost_amount for the entity. */
-  cost_amount: number | null
+  cost_amount?: number | null
   /** The currency_id for the entity. */
-  currency_id: number
+  currency_id?: number
   /** The currency_code for the entity. */
   currency_code: string
   /** The currency for the entity. */
-  currency: Currency
+  currency?: Currency
 }
 
 /**

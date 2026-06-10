@@ -16,12 +16,14 @@ use Shopper\Core\Database\Factories\CollectionFactory;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Core\Models\Traits\HasMediaCollections;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Queries\CollectionProductsQuery;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read string $slug
  * @property-read CollectionType $type
@@ -45,6 +47,7 @@ class Collection extends Model implements CollectionContract, ShopperHasMedia
 
     use HasMediaCollections;
     use HasModelContract;
+    use HasPublicId;
     use HasSlug;
 
     protected $guarded = [];

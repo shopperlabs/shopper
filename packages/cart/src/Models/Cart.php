@@ -12,11 +12,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Contracts\Cart as CartContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Zone;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $currency_code
  * @property-read ?string $coupon_code
  * @property-read ?CarbonInterface $completed_at
@@ -35,6 +37,7 @@ use Shopper\Core\Traits\HasModelContract;
 class Cart extends Model implements CartContract
 {
     use HasModelContract;
+    use HasPublicId;
 
     protected $guarded = [];
 

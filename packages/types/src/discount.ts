@@ -1,4 +1,4 @@
-import type { DateEntity, Entity, Metadata } from './common'
+import type { Entity, Metadata } from './common'
 import type { Zone } from './zone'
 
 export enum DiscountType {
@@ -58,9 +58,9 @@ export interface Discount extends Entity {
   /** The metadata of the discount. */
   metadata: Metadata
   /** The start date of the discount. */
-  start_at: DateEntity
+  start_at: string
   /** The end date of the discount. */
-  end_at: DateEntity | null
+  end_at: string | null
   /** The zone of the discount. */
   zone?: Zone
   /** The discount items/details. */

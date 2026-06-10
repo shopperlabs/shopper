@@ -19,6 +19,6 @@ export interface Brand extends Entity, SEOFields {
   is_enabled: boolean
   /** The metadata of the brand. */
   metadata: Metadata
-  /** The image of the brand. */
-  image?: Media | null
+  /** The thumbnail of the brand. */
+  thumbnail?: Media | null
 }

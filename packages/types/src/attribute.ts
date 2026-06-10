@@ -19,17 +19,17 @@ export interface Attribute extends Entity {
   /** The slug of the attribute. */
   slug: string
   /** The type of the attribute field. */
-  type: FieldType
+  type?: FieldType
   /** The icon of the attribute. */
-  icon: string | null
+  icon?: string | null
   /** The description of the attribute. */
-  description: string | null
+  description?: string | null
   /** Whether the attribute is enabled. */
-  is_enabled: boolean
+  is_enabled?: boolean
   /** Whether the attribute is searchable. */
-  is_searchable: boolean
+  is_searchable?: boolean
   /** Whether the attribute is filterable. */
-  is_filterable: boolean
+  is_filterable?: boolean
   /** The computed formatted type. */
   type_formatted?: string
   /** The values of the attribute. */
@@ -40,15 +40,16 @@ export interface Attribute extends Entity {
  * AttributeValue model.
  */
 export interface AttributeValue {
-  id: number
+  /** The internal id (admin contexts only). */
+  id?: number
   /** The display value. */
   value: string
-  /** The key identifier. */
+  /** The key identifier (used as the facet filter value). */
   key: string
   /** The position/order. */
   position: number
-  /** The attribute ID this value belongs to. */
-  attribute_id: number
+  /** The attribute ID this value belongs to (admin contexts only). */
+  attribute_id?: number
   /** The attribute this value belongs to. */
   attribute?: Attribute
 }

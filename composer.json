@@ -43,6 +43,7 @@
     "spatie/laravel-medialibrary": "^11.5",
     "spatie/laravel-package-tools": "^1.9",
     "spatie/laravel-permission": "^7.0",
+    "spatie/laravel-query-builder": "^7.3",
     "staudenmeir/laravel-adjacency-list": "^1.0",
     "stevebauman/location": "^7.2",
     "stripe/stripe-php": "^19.0",

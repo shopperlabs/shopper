@@ -13,9 +13,11 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Database\Factories\PriceFactory;
 use Shopper\Core\Helpers\Price as PriceHelper;
 use Shopper\Core\Models\Contracts\Price as PriceContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read ?int $amount
  * @property-read ?int $compare_amount
  * @property-read ?int $cost_amount
@@ -31,6 +33,8 @@ class Price extends Model implements PriceContract
 {
     /** @use HasFactory<PriceFactory> */
     use HasFactory;
+
+    use HasPublicId;
 
     protected $guarded = [];
 

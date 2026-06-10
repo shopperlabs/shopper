@@ -378,8 +378,8 @@ describe(Product::class, function (): void {
         $product2->channels()->attach($channel2);
         $product3->channels()->attach([$channel1->id, $channel2->id]);
 
-        $resultsChannel1 = Product::forChannel($channel1->id)->get();
-        $resultsChannel2 = Product::forChannel($channel2->id)->get();
+        $resultsChannel1 = Product::channel($channel1->id)->get();
+        $resultsChannel2 = Product::channel($channel2->id)->get();
 
         expect($resultsChannel1->count())->toBe(2)
             ->and($resultsChannel2->count())->toBe(2);

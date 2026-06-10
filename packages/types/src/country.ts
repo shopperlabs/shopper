@@ -5,6 +5,8 @@ import type { Zone } from './zone'
  */
 export interface Country {
   id: number
+  /** The stable public identifier (ULID) exposed by the API. */
+  public_id?: string
   /** The name of the country. */
   name: string
   /** The official name of the country. */

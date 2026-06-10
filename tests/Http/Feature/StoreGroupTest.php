@@ -52,7 +52,10 @@ it('rejects unauthenticated requests on the authenticated group', function (): v
         Route::get('/me', fn () => response()->json(['ok' => true]));
     });
 
-    $this->getJson('/store/me')->assertUnauthorized();
+    $this->getJson('/store/me')
+        ->assertUnauthorized()
+        ->assertHeader('Content-Type', 'application/vnd.api+json')
+        ->assertJsonPath('errors.0.status', '401');
 });
 
 it('binds the authenticated customer onto the request', function (): void {

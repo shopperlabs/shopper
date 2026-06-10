@@ -20,8 +20,8 @@ export interface Category extends Entity, SEOFields {
   parent_id: number | null
   /** The metadata of the category. */
   metadata: Metadata
-  /** The image of the category. */
-  image?: Media | null
+  /** The thumbnail of the category. */
+  thumbnail?: Media | null
   /** The parent category. */
   parent?: Category
   /** The children categories. */

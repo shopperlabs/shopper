@@ -20,11 +20,13 @@ use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Core\Models\Traits\HasDimensions;
 use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasPrices;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasStock;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read ?string $sku
  * @property-read ?string $barcode
@@ -62,6 +64,7 @@ class ProductVariant extends Model implements Priceable, ProductVariantContract,
     use HasMediaCollections;
     use HasModelContract;
     use HasPrices;
+    use HasPublicId;
     use HasStock;
 
     protected $guarded = [];

@@ -1,6 +1,6 @@
 import type { CarrierOption } from './carrier'
 import type { Channel } from './channel'
-import type { DateEntity, Entity, Metadata } from './common'
+import type { Entity, Metadata } from './common'
 import type { Customer } from './customer'
 import type { PaymentMethod } from './payment_method'
 import type { OrderTaxLine } from './tax'
@@ -84,9 +84,9 @@ export interface Order extends Entity {
   /** The shipping status. */
   shipping_status: ShippingStatus
   /** The date the order was cancelled. */
-  cancelled_at: DateEntity | null
+  cancelled_at: string | null
   /** The date the order was archived. */
-  archived_at: DateEntity | null
+  archived_at: string | null
   /** The zone ID. */
   zone_id: number | null
   /** The shipping address ID. */
@@ -206,11 +206,11 @@ export interface OrderShipping extends Entity {
   /** The shipment status. */
   status: ShipmentStatus | null
   /** The date the order was shipped. */
-  shipped_at: DateEntity | null
+  shipped_at: string | null
   /** The date the order was received. */
-  received_at: DateEntity | null
+  received_at: string | null
   /** The date the order was returned. */
-  returned_at: DateEntity | null
+  returned_at: string | null
   /** The tracking number. */
   tracking_number: string | null
   /** The tracking URL. */
@@ -251,9 +251,9 @@ export interface OrderShippingEvent {
   /** The metadata of the event. */
   metadata: Metadata
   /** The date the event occurred. */
-  occurred_at: DateEntity
+  occurred_at: string
   /** The creation date. */
-  created_at?: DateEntity
+  created_at?: string
   /** The order shipping ID. */
   order_shipping_id: number
   /** The shipment this event belongs to. */

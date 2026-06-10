@@ -19,10 +19,12 @@ use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $number
  * @property-read int $price_amount
  * @property-read ?int $tax_amount
@@ -63,6 +65,7 @@ class Order extends Model implements OrderContract
     use HasFactory;
 
     use HasModelContract;
+    use HasPublicId;
     use SoftDeletes;
 
     protected $guarded = [];

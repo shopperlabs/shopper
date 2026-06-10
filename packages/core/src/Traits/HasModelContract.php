@@ -24,6 +24,16 @@ trait HasModelContract
      */
     public static function __callStatic($method, $parameters)
     {
+        // Mirror Laravel 12's native Model::__callStatic: a #[Scope] method is a
+        // real (protected) method, so it must run through the query builder to
+        // receive the Builder. Without this, the override below would call it
+        // directly on the instance with no argument.
+        if (static::isScopeMethodWithAttribute($method)) {
+            return static::isShopperInstance()
+                ? static::query()->$method(...$parameters)
+                : static::configuredClass()::query()->$method(...$parameters);
+        }
+
         if (! static::isShopperInstance()) {
             return (new (static::configuredClass()))->$method(...$parameters);
         }

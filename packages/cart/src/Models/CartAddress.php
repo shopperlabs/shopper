@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Country;
+use Shopper\Core\Models\Traits\HasPublicId;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read int $cart_id
  * @property-read AddressType $type
  * @property-read ?int $country_id
@@ -33,6 +35,8 @@ use Shopper\Core\Models\Country;
  */
 class CartAddress extends Model
 {
+    use HasPublicId;
+
     protected $guarded = [];
 
     public function getTable(): string

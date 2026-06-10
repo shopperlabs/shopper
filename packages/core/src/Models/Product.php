@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,6 +30,7 @@ use Shopper\Core\Models\Traits\HasDimensions;
 use Shopper\Core\Models\Traits\HasDiscounts;
 use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasPrices;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasStock;
 use Shopper\Core\Models\Traits\InteractsWithReviews;
@@ -36,6 +38,7 @@ use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read string $slug
  * @property-read ?string $sku
@@ -92,6 +95,7 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
     use HasMediaCollections;
     use HasModelContract;
     use HasPrices;
+    use HasPublicId;
     use HasSlug;
     use HasStock;
     use InteractsWithReviews;
@@ -147,29 +151,6 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
     public function isPublished(): bool
     {
         return $this->is_visible && $this->published_at && $this->published_at <= now();
-    }
-
-    /**
-     * @param  Builder<Product>  $query
-     */
-    public function scopePublish(Builder $query): void
-    {
-        $query->whereDate('published_at', '<=', now())
-            ->where('is_visible', true);
-    }
-
-    /**
-     * @param  Builder<Product>  $query
-     * @param  string|array<string>  $channel
-     * @return Builder<Product>
-     */
-    public function scopeForChannel(Builder $query, string|array $channel): Builder
-    {
-        $channels = Arr::wrap($channel);
-
-        return $query->whereHas('channels', function (Builder $query) use ($channels): void {
-            $query->whereIn('id', $channels);
-        });
     }
 
     /** @return array<string, MediaCollectionConfig> */
@@ -267,6 +248,94 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
     protected static function newFactory(): ProductFactory
     {
         return ProductFactory::new();
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    #[Scope]
+    protected function collection(Builder $query, string $value): void
+    {
+        $query->whereHas('collections', fn (Builder $query): Builder => $query->where('slug', $value)->orWhere('public_id', $value));
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    #[Scope]
+    protected function byBrand(Builder $query, string $value): void
+    {
+        $query->whereHas('brand', fn (Builder $query): Builder => $query->where('slug', $value)->orWhere('public_id', $value));
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    #[Scope]
+    protected function tag(Builder $query, string $value): void
+    {
+        $query->whereHas('tags', fn (Builder $query): Builder => $query->where('slug', $value)->orWhere('public_id', $value));
+    }
+
+    /**
+     * Products having a variant carrying the given attribute value (by key or
+     * value), e.g. filter[option]=red. Powers faceted listing filters.
+     *
+     * @param  Builder<Product>  $query
+     */
+    #[Scope]
+    protected function option(Builder $query, string $value): void
+    {
+        $query->whereHas('variants.values', fn (Builder $query): Builder => $query->where('key', $value)->orWhere('value', $value));
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    #[Scope]
+    protected function category(Builder $query, string $value): void
+    {
+        $query->whereHas('categories', fn (Builder $query): Builder => $query->where('slug', $value)->orWhere('public_id', $value));
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    #[Scope]
+    protected function publish(Builder $query): void
+    {
+        $query->whereDate('published_at', '<=', now())
+            ->where('is_visible', true);
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     * @param  string|array<string>  $channel
+     * @return Builder<Product>
+     */
+    #[Scope]
+    protected function channel(Builder $query, string|array $channel): Builder
+    {
+        $channels = Arr::wrap($channel);
+
+        return $query->whereHas('channels', function (Builder $query) use ($channels): void {
+            $query->whereIn('id', $channels);
+        });
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    #[Scope]
+    protected function search(Builder $query, string $term): void
+    {
+        $term = '%'.mb_strtolower($term).'%';
+
+        $query->where(function (Builder $query) use ($term): void {
+            $query->whereRaw('LOWER(name) LIKE ?', [$term])
+                ->orWhereRaw('LOWER(description) LIKE ?', [$term])
+                ->orWhereRaw('LOWER(sku) LIKE ?', [$term]);
+        });
     }
 
     protected function variantsStock(): LaravelAttribute
