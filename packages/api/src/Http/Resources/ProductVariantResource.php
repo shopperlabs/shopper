@@ -43,6 +43,13 @@ final class ProductVariantResource extends JsonApiResource
         ];
     }
 
+    public function toRelationships(Request $request): array
+    {
+        return [
+            'product' => fn () => ProductResource::make($this->product),
+        ];
+    }
+
     /**
      * The option values this variant is built from (e.g. Color=Black, Storage=256),
      * so a storefront can match a selected option set to a variant and render swatches.
@@ -64,12 +71,5 @@ final class ProductVariantResource extends JsonApiResource
             ])
             ->values()
             ->all();
-    }
-
-    public function toRelationships(Request $request): array
-    {
-        return [
-            'product' => fn () => ProductResource::make($this->product),
-        ];
     }
 }

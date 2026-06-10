@@ -11,6 +11,7 @@ use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Price;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
+use Shopper\Core\Models\Review;
 
 uses(Tests\Api\TestCase::class);
 
@@ -172,6 +173,28 @@ it('serializes product options as a deduplicated array scoped to the used values
     expect($optionsData)->toBeArray()->toHaveCount(1)
         ->and(array_is_list($optionsData))->toBeTrue()
         ->and($values)->toContain('Red', 'Blue')->not->toContain('Green');
+});
+
+it('exposes the average rating and approved reviews count', function (): void {
+    $product = publishedProduct(['name' => 'Rated']);
+    $reviewable = ['reviewrateable_id' => $product->id, 'reviewrateable_type' => $product->getMorphClass()];
+    Review::factory()->create([...$reviewable, 'rating' => 4, 'approved' => true]);
+    Review::factory()->create([...$reviewable, 'rating' => 5, 'approved' => true]);
+    Review::factory()->create([...$reviewable, 'rating' => 1, 'approved' => false]);
+
+    $attributes = $this->getJson('/store/products/'.$product->slug)->assertOk()->json('data.attributes');
+
+    expect($attributes['reviews_count'])->toBe(2)
+        ->and($attributes['rating'])->toBe(4.5);
+});
+
+it('returns a null rating and zero count without approved reviews', function (): void {
+    $product = publishedProduct(['name' => 'Unrated']);
+
+    $this->getJson('/store/products/'.$product->slug)
+        ->assertOk()
+        ->assertJsonPath('data.attributes.rating', null)
+        ->assertJsonPath('data.attributes.reviews_count', 0);
 });
 
 it('paginates with page[size] and page[number]', function (): void {

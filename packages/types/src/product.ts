@@ -89,6 +89,10 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   files?: Media[] | null
   /** The reviews of the product. */
   reviews?: Review[]
+  /** The average approved rating (null when there are no approved reviews). */
+  rating?: number | null
+  /** The number of approved reviews. */
+  reviews_count?: number
   /** The prices of the product. */
   prices?: Price[]
 }

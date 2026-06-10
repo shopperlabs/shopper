@@ -43,6 +43,8 @@ final class ProductResource extends JsonApiResource
             'images' => $this->imagesPayload(),
             'thumbnail' => $this->thumbnailPayload(),
             'files' => $this->filesPayload(),
+            'rating' => $this->ratingValue(),
+            'reviews_count' => (int) $this->resource->getAttribute('reviews_count'),
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
@@ -58,6 +60,17 @@ final class ProductResource extends JsonApiResource
             'options' => fn () => AttributeResource::collection($this->scopedOptions()),
             'relatedProducts' => fn () => ProductResource::collection($this->relatedProducts),
         ];
+    }
+
+    /**
+     * The average approved rating, rounded to one decimal, or null when the
+     * product has no approved reviews. Read from the withAvg aggregate alias.
+     */
+    private function ratingValue(): ?float
+    {
+        $average = $this->resource->getAttribute('average_rating');
+
+        return $average !== null ? round((float) $average, 1) : null;
     }
 
     /**
