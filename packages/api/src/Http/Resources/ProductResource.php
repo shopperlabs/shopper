@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopper\Api\Http\Resources;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Shopper\Api\Concerns\SerializesMedia;
 use Shopper\Api\Concerns\SerializesPrices;
+use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\Product;
 
 /**
@@ -53,7 +55,32 @@ final class ProductResource extends JsonApiResource
             'variants' => fn () => ProductVariantResource::collection($this->variants),
             'categories' => fn () => CategoryResource::collection($this->categories),
             'collections' => fn () => CollectionResource::collection($this->collections),
-            'options' => fn () => AttributeResource::collection($this->options),
+            'options' => fn () => AttributeResource::collection($this->scopedOptions()),
+            'relatedProducts' => fn () => ProductResource::collection($this->relatedProducts),
         ];
+    }
+
+    /**
+     * The product's option types (Color, Storage, ...), deduplicated, with each
+     * option's values narrowed to the ones this product actually uses (from the
+     * options pivot). A storefront then only renders the relevant swatches and
+     * builds combinations from the selected values, not every global value.
+     *
+     * @return Collection<int, Attribute>
+     */
+    private function scopedOptions(): Collection
+    {
+        $usedValueIds = $this->options
+            ->pluck('pivot.attribute_value_id')
+            ->filter()
+            ->unique();
+
+        return $this->options
+            ->unique('id')
+            ->values()
+            ->each(fn (Attribute $option) => $option->setRelation(
+                'values',
+                $option->values->whereIn('id', $usedValueIds)->values(),
+            ));
     }
 }

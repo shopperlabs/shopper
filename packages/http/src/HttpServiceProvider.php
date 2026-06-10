@@ -6,6 +6,7 @@ namespace Shopper\Http;
 
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\RateLimiter;
@@ -57,7 +58,7 @@ final class HttpServiceProvider extends PackageServiceProvider
             $renderer = new JsonApiErrorRenderer;
 
             $handler->renderable(
-                fn (Throwable $exception, Request $request) => $renderer->render($exception, $request),
+                fn (Throwable $exception, Request $request): ?JsonResponse => $renderer->render($exception, $request),
             );
         });
     }

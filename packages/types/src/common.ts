@@ -50,13 +50,13 @@ export interface Price {
   /** The compare_amount amount for the entity. */
   compare_amount: number | null
   /** The cost_amount for the entity. */
-  cost_amount: number | null
+  cost_amount?: number | null
   /** The currency_id for the entity. */
-  currency_id: number
+  currency_id?: number
   /** The currency_code for the entity. */
   currency_code: string
   /** The currency for the entity. */
-  currency: Currency
+  currency?: Currency
 }
 
 /**

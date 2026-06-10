@@ -7,6 +7,7 @@ namespace Shopper\Api\Concerns;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\QueryBuilderRequest;
 
@@ -27,7 +28,7 @@ trait BuildsApiQueries
         $request = QueryBuilderRequest::fromRequest(request());
 
         $builder = QueryBuilder::for($query, $request)
-            ->allowedFilters(...($allowlist['filters'] ?? []))
+            ->allowedFilters(...$this->allowedFilters((array) ($allowlist['filters'] ?? [])))
             ->allowedSorts(...($allowlist['sorts'] ?? []))
             ->allowedIncludes(...($allowlist['includes'] ?? []));
 
@@ -67,9 +68,6 @@ trait BuildsApiQueries
     }
 
     /**
-     * Eager-load the media relation only when the model supports it (the
-     * default models do; a swapped core-only model may not).
-     *
      * @template TModel of Model
      *
      * @param  Builder<TModel>  $query
@@ -102,5 +100,37 @@ trait BuildsApiQueries
         return $this->apiQuery($resource, $query)
             ->paginate(perPage: $size, pageName: 'page[number]', page: $page)
             ->withQueryString();
+    }
+
+    /**
+     * Build spatie AllowedFilter instances from a config descriptor map.
+     * Each entry is `key => type` where type is 'partial' (default), 'exact',
+     * 'scope', or ['scope', 'internalScopeName']. A plain string entry (no key)
+     * is treated as a partial filter for backward compatibility.
+     *
+     * @param  array<int|string, string|array{0: string, 1?: string}>  $filters
+     * @return array<int, AllowedFilter>
+     */
+    private function allowedFilters(array $filters): array
+    {
+        $allowed = [];
+
+        foreach ($filters as $key => $type) {
+            if (is_int($key)) {
+                $allowed[] = AllowedFilter::partial((string) $type);
+
+                continue;
+            }
+
+            [$kind, $internal] = is_array($type) ? [$type[0], $type[1] ?? null] : [$type, null];
+
+            $allowed[] = match ($kind) {
+                'exact' => AllowedFilter::exact($key),
+                'scope' => $internal !== null ? AllowedFilter::scope($key, $internal) : AllowedFilter::scope($key),
+                default => AllowedFilter::partial($key),
+            };
+        }
+
+        return $allowed;
     }
 }

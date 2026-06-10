@@ -25,6 +25,7 @@ final class AttributeResource extends JsonApiResource
             'slug' => $this->slug,
             'description' => $this->description,
             'type' => $this->type->value,
+            'is_enabled' => $this->is_enabled,
             'is_filterable' => $this->is_filterable,
             'is_searchable' => $this->is_searchable,
             'icon' => $this->icon,

@@ -6,7 +6,7 @@ namespace Shopper\Api\Http\Controllers\Catalog;
 
 use Shopper\Api\Concerns\BuildsApiQueries;
 use Shopper\Api\Http\Resources\ProductResource;
-use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\Product;
 use TiMacDonald\JsonApi\JsonApiResource;
 use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
@@ -16,7 +16,7 @@ final class ProductController
 
     public function index(): JsonApiResourceCollection
     {
-        $query = resolve(ProductContract::class)::query()
+        $query = resolve(Product::class)::query()
             ->publish()
             ->with('prices.currency');
 
@@ -26,7 +26,7 @@ final class ProductController
     public function show(string $slug): JsonApiResource
     {
         $product = $this->withMediaIfSupported(
-            resolve(ProductContract::class)::query()->publish()->with('prices.currency')
+            resolve(Product::class)::query()->publish()->with('prices.currency')
         )
             ->with($this->requestedIncludeLoads('product'))
             ->where('slug', $slug)

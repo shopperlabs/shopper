@@ -17,6 +17,7 @@ trait SerializesPrices
     protected function pricesPayload(): array
     {
         return $this->prices->map(fn (Price $price): array => [
+            'public_id' => $price->public_id,
             'amount' => $price->amount,
             'compare_amount' => $price->compare_amount,
             'currency_code' => $price->currency_code,

@@ -30,16 +30,26 @@ return [
     */
     'resources' => [
         'product' => [
-            'filters' => ['name', 'sku'],
+            'filters' => [
+                'name' => 'partial',
+                'sku' => 'exact',
+                'q' => ['scope', 'search'],
+                'category' => 'scope',
+                'collection' => ['scope', 'collection'],
+                'brand' => ['scope', 'byBrand'],
+                'tag' => ['scope', 'tag'],
+                'option' => ['scope', 'option'],
+            ],
             'sorts' => ['name', 'created_at', 'published_at'],
-            'includes' => ['brand', 'variants', 'categories', 'collections', 'options'],
+            'includes' => ['brand', 'variants', 'categories', 'collections', 'options', 'relatedProducts'],
             'include_loads' => [
-                'variants' => ['variants.prices.currency'],
+                'variants' => ['variants.prices.currency', 'variants.values.attribute'],
                 'options' => ['options.values'],
+                'relatedProducts' => ['relatedProducts.prices.currency'],
             ],
         ],
         'category' => [
-            'filters' => ['name'],
+            'filters' => ['name' => 'partial'],
             'sorts' => ['name', 'position'],
             'includes' => ['parent', 'children', 'products'],
             'include_loads' => [
@@ -47,12 +57,12 @@ return [
             ],
         ],
         'collection' => [
-            'filters' => ['name'],
+            'filters' => ['name' => 'partial'],
             'sorts' => ['name'],
             'includes' => [],
         ],
         'brand' => [
-            'filters' => ['name'],
+            'filters' => ['name' => 'partial'],
             'sorts' => ['name', 'position'],
             'includes' => ['products'],
             'include_loads' => [
@@ -60,7 +70,7 @@ return [
             ],
         ],
         'attribute' => [
-            'filters' => ['name'],
+            'filters' => ['name' => 'partial'],
             'sorts' => ['name', 'position'],
             'includes' => [],
         ],

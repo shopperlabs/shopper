@@ -3,7 +3,10 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\DB;
+use Shopper\Core\Models\Attribute;
+use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Brand;
+use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Price;
 use Shopper\Core\Models\Product;
@@ -92,7 +95,9 @@ it('eager-loads variant prices when including variants, avoiding N+1', function 
 
     expect($variants)->toHaveCount(3)
         ->and($variants->first()['attributes']['prices'])->not->toBeEmpty()
-        ->and($queryCount)->toBeLessThanOrEqual(10);
+        // Bounded and constant regardless of variant count: prices.currency and
+        // values.attribute are eager-loaded once, never per variant.
+        ->and($queryCount)->toBeLessThanOrEqual(13);
 });
 
 it('includes the brand relationship on demand', function (): void {
@@ -104,6 +109,69 @@ it('includes the brand relationship on demand', function (): void {
         ->assertJsonPath('data.relationships.brand.data.type', 'brands')
         ->assertJsonPath('data.relationships.brand.data.id', $brand->public_id)
         ->assertJsonPath('included.0.type', 'brands');
+});
+
+it('filters products by category', function (): void {
+    $category = Category::factory()->create(['name' => 'Phones', 'slug' => 'phones']);
+    $inCategory = publishedProduct(['name' => 'Pixel']);
+    $inCategory->categories()->attach($category);
+    publishedProduct(['name' => 'Sneaker']);
+
+    $names = collect($this->getJson('/store/products?filter[category]=phones')->assertOk()->json('data'))
+        ->pluck('attributes.name');
+
+    expect($names)->toContain('Pixel')->and($names)->not->toContain('Sneaker');
+});
+
+it('searches products by term', function (): void {
+    publishedProduct(['name' => 'Wireless Headphones']);
+    publishedProduct(['name' => 'Running Shoes']);
+
+    $names = collect($this->getJson('/store/products?filter[q]=headphone')->assertOk()->json('data'))
+        ->pluck('attributes.name');
+
+    expect($names)->toContain('Wireless Headphones')->and($names)->not->toContain('Running Shoes');
+});
+
+it('exposes variant option values for option matching', function (): void {
+    $product = publishedProduct(['name' => 'Tee']);
+    $attribute = Attribute::factory()->create(['name' => 'Color']);
+    $value = AttributeValue::factory()->create([
+        'attribute_id' => $attribute->id,
+        'value' => 'Red',
+        'key' => 'red',
+    ]);
+    ProductVariant::factory()->create(['product_id' => $product->id])->values()->attach($value);
+
+    $variant = collect($this->getJson('/store/products/'.$product->slug.'?include=variants')->assertOk()->json('included'))
+        ->firstWhere('type', 'variants');
+
+    expect($variant['attributes']['values'])->toHaveCount(1)
+        ->and($variant['attributes']['values'][0])->toMatchArray([
+            'value' => 'Red',
+            'key' => 'red',
+            'attribute' => 'Color',
+        ]);
+});
+
+it('serializes product options as a deduplicated array scoped to the used values', function (): void {
+    $product = publishedProduct(['name' => 'Phone']);
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => 'red']);
+    $blue = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Blue', 'key' => 'blue']);
+    // A global value the product does NOT use: must be excluded from its options.
+    AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Green', 'key' => 'green']);
+    $product->options()->attach($color->id, ['attribute_value_id' => $red->id]);
+    $product->options()->attach($color->id, ['attribute_value_id' => $blue->id]);
+
+    $response = $this->getJson('/store/products/'.$product->slug.'?include=options')->assertOk();
+    $optionsData = $response->json('data.relationships.options.data');
+    $colorOption = collect($response->json('included'))->firstWhere('type', 'attributes');
+    $values = collect($colorOption['attributes']['values'])->pluck('value');
+
+    expect($optionsData)->toBeArray()->toHaveCount(1)
+        ->and(array_is_list($optionsData))->toBeTrue()
+        ->and($values)->toContain('Red', 'Blue')->not->toContain('Green');
 });
 
 it('paginates with page[size] and page[number]', function (): void {
