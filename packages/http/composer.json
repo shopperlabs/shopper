@@ -1,0 +1,33 @@
+{
+  "name": "shopper/http",
+  "description": "Shopper HTTP infrastructure, shared middleware, route helpers, and API configuration",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Arthur Monney",
+      "email": "monneylobe@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "laravel/sanctum": "^4.0",
+    "shopper/core": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shopper\\Http\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shopper\\Http\\HttpServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
