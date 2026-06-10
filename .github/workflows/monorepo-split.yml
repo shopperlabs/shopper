@@ -13,6 +13,7 @@ jobs:
       matrix:
         package:
           - admin
+          - api
           - cart
           - core
           - http
@@ -25,6 +26,8 @@ jobs:
         include:
           - package: admin
             repository: admin
+          - package: api
+            repository: api
           - package: cart
             repository: cart
           - package: core

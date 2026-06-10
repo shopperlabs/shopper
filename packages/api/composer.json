@@ -1,0 +1,35 @@
+{
+  "name": "shopper/api",
+  "description": "Shopper headless storefront API (JSON:API)",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Arthur Monney",
+      "email": "monneylobe@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "dedoc/scramble": "^0.13",
+    "shopper/core": "*",
+    "shopper/http": "*",
+    "timacdonald/json-api": "^1.0@beta"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shopper\\Api\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shopper\\Api\\ApiServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
