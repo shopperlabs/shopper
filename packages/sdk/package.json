@@ -1,0 +1,49 @@
+{
+  "name": "@shopperlabs/shopper-sdk",
+  "version": "3.0.0",
+  "description": "Official JavaScript SDK for the Shopper headless commerce API.",
+  "author": "Arthur Monney <monneylobe@gmail.com> (https://arthurmonney.me)",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shopperlabs/shopper-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shopperlabs/shopper-sdk/issues"
+  },
+  "homepage": "https://github.com/shopperlabs/shopper-sdk#readme",
+  "keywords": [
+    "shopper",
+    "ecommerce",
+    "headless",
+    "sdk",
+    "json-api",
+    "storefront"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@shopperlabs/shopper-types": "^3.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}

@@ -1,7 +1,12 @@
 {
   "name": "laravel-shopper",
   "license": "MIT",
+  "private": true,
   "type": "module",
+  "workspaces": [
+    "packages/types",
+    "packages/sdk"
+  ],
   "scripts": {
     "dev": "npm-run-all --parallel dev:panel dev:sidebar",
     "dev:panel": "npm-run-all --parallel dev:panel:css dev:panel:js",
