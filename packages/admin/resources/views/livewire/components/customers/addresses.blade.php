@@ -1,4 +1,4 @@
-<x-shopper::container class="space-y-8">
+<div class="space-y-8">
     <section class="space-y-3">
         <h4 class="text-sh-fg text-sm font-semibold">
             {{ __('shopper::pages/customers.addresses.shipping_section') }}
@@ -48,4 +48,4 @@
             </div>
         @endif
     </section>
-</x-shopper::container>
+</div>

@@ -6,4 +6,5 @@ use Shopper\Http\Facades\ShopperApi;
 
 ShopperApi::store(function (): void {
     require __DIR__.'/store/catalog.php';
+    require __DIR__.'/store/geo.php';
 });

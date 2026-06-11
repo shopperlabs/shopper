@@ -10,27 +10,25 @@ export interface Country {
   /** The name of the country. */
   name: string
   /** The official name of the country. */
-  name_official: string
+  name_official?: string
   /** The region of the country. */
   region: string
   /** The subregion of the country. */
   subregion: string
   /** The ISO 3166-1 alpha-3 code. */
-  cca3: string
+  cca3?: string
   /** The ISO 3166-1 alpha-2 code. */
   cca2: string
-  /** The flag emoji of the country. */
-  flag: string
   /** The SVG flag URL of the country. */
-  svg_flag: string
+  flag?: string
   /** The latitude of the country. */
-  latitude: number
+  latitude?: number
   /** The longitude of the country. */
-  longitude: number
+  longitude?: number
   /** The phone calling codes of the country. */
-  phone_calling_code: Record<string, unknown>
+  phone_calling_code?: Record<string, unknown>
   /** The currencies of the country. */
-  currencies: Record<string, unknown>
+  currencies?: Record<string, unknown>
   /** The zones this country belongs to. */
   zones?: Zone[]
 }

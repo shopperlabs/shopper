@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Brand;
@@ -60,19 +61,45 @@ it('hides disabled brands from the listing', function (): void {
     expect($ids)->toContain($enabled->public_id)->and($ids)->not->toContain($disabled->public_id);
 });
 
-it('lists enabled attributes with their embedded values', function (): void {
-    $attribute = Attribute::factory()->create(['name' => 'AttrColor', 'is_enabled' => true]);
+it('lists only filterable facet attributes with their embedded values', function (): void {
+    $attribute = Attribute::factory()->create([
+        'name' => 'AttrColor',
+        'type' => FieldType::ColorPicker,
+        'is_enabled' => true,
+        'is_filterable' => true,
+    ]);
     AttributeValue::factory()->create(['attribute_id' => $attribute->id, 'value' => 'Red', 'key' => 'attr-red']);
 
-    Attribute::factory()->create(['name' => 'AttrHidden', 'is_enabled' => false]);
+    Attribute::factory()->create([
+        'name' => 'AttrDisabled',
+        'type' => FieldType::Select,
+        'is_enabled' => false,
+        'is_filterable' => true,
+    ]);
+    Attribute::factory()->create([
+        'name' => 'AttrInternal',
+        'type' => FieldType::Select,
+        'is_enabled' => true,
+        'is_filterable' => false,
+    ]);
+    Attribute::factory()->create([
+        'name' => 'AttrText',
+        'type' => FieldType::Text,
+        'is_enabled' => true,
+        'is_filterable' => true,
+    ]);
 
     $response = $this->getJson('/store/attributes?filter[name]=Attr')->assertOk();
 
-    $ids = collect($response->json('data'))->pluck('id');
-    expect($ids)->toContain($attribute->public_id);
+    $names = collect($response->json('data'))->pluck('attributes.name');
+    expect($names)->toContain('AttrColor')
+        ->and($names)->not->toContain('AttrDisabled')
+        ->and($names)->not->toContain('AttrInternal')
+        ->and($names)->not->toContain('AttrText');
 
     $row = collect($response->json('data'))->firstWhere('id', $attribute->public_id);
     $value = collect($row['attributes']['values'])->firstWhere('key', 'attr-red');
     expect($value)->not->toBeNull()
-        ->and($value['value'])->toBe('Red');
+        ->and($value['value'])->toBe('Red')
+        ->and($row['attributes'])->not->toHaveKeys(['is_enabled', 'is_filterable', 'is_searchable']);
 });

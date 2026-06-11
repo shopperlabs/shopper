@@ -98,7 +98,7 @@
     {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_HEADER_AFTER) }}
 
     <div class="mt-10 lg:grid lg:grid-cols-3 lg:gap-6">
-        <div class="space-y-4 lg:col-span-2">
+        <div class="space-y-4 lg:col-span-2 lg:space-y-6">
             <div>
                 {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_TABS_BEFORE) }}
 
@@ -117,17 +117,17 @@
                 </x-filament::tabs>
             </div>
 
-            <div>
+            <div class="px-4 lg:pl-6 lg:pr-0">
                 {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_CONTENT_BEFORE) }}
 
                 <div x-show="currentTab === 'profile'">
                     <livewire:shopper-customers.profile :$customer :key="'profile-'.$customer->id" />
                 </div>
-                <div x-cloak x-show="currentTab === 'address'">
-                    <livewire:shopper-customers.addresses :$customer :key="'addresses-'.$customer->id" />
-                </div>
                 <div x-cloak x-show="currentTab === 'orders'">
                     <livewire:shopper-customers.orders :$customer :key="'orders-'.$customer->id" />
+                </div>
+                <div x-cloak x-show="currentTab === 'address'">
+                    <livewire:shopper-customers.addresses :$customer :key="'addresses-'.$customer->id" />
                 </div>
 
                 {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_CONTENT_AFTER) }}

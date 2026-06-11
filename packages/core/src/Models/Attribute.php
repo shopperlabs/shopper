@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -94,33 +95,6 @@ class Attribute extends Model implements AttributeContract
     }
 
     /**
-     * @param  Builder<Attribute>  $query
-     * @return Builder<Attribute>
-     */
-    public function scopeEnabled(Builder $query): Builder
-    {
-        return $query->where('is_enabled', true);
-    }
-
-    /**
-     * @param  Builder<Attribute>  $query
-     * @return Builder<Attribute>
-     */
-    public function scopeIsFilterable(Builder $query): Builder
-    {
-        return $query->where('is_filterable', true);
-    }
-
-    /**
-     * @param  Builder<Attribute>  $query
-     * @return Builder<Attribute>
-     */
-    public function scopeIsSearchable(Builder $query): Builder
-    {
-        return $query->where('is_searchable', true);
-    }
-
-    /**
      * @return HasMany<AttributeValue, $this>
      */
     public function values(): HasMany
@@ -143,6 +117,36 @@ class Attribute extends Model implements AttributeContract
     protected static function newFactory(): AttributeFactory
     {
         return AttributeFactory::new();
+    }
+
+    /**
+     * @param  Builder<Attribute>  $query
+     * @return Builder<Attribute>
+     */
+    #[Scope]
+    protected function enabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
+    }
+
+    /**
+     * @param  Builder<Attribute>  $query
+     * @return Builder<Attribute>
+     */
+    #[Scope]
+    protected function isFilterable(Builder $query): Builder
+    {
+        return $query->where('is_filterable', true);
+    }
+
+    /**
+     * @param  Builder<Attribute>  $query
+     * @return Builder<Attribute>
+     */
+    #[Scope]
+    protected function isSearchable(Builder $query): Builder
+    {
+        return $query->where('is_searchable', true);
     }
 
     protected function casts(): array

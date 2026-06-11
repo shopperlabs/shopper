@@ -15,7 +15,11 @@ final class AttributeController
 
     public function index(): JsonApiResourceCollection
     {
-        $query = Attribute::query()->enabled()->with('values');
+        $query = Attribute::query()
+            ->enabled()
+            ->isFilterable()
+            ->whereIn('type', Attribute::fieldsWithValues())
+            ->with('values');
 
         return AttributeResource::collection($this->paginated('attribute', $query));
     }

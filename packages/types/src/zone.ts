@@ -18,9 +18,9 @@ export interface Zone extends Entity {
   /** Whether the zone is enabled. */
   is_enabled: boolean
   /** The currency ID of the zone. */
-  currency_id: number | null
+  currency_id?: number | null
   /** The metadata of the zone. */
-  metadata: Metadata
+  metadata?: Metadata
   /** Computed: carriers names joined. */
   carriers_name?: string
   /** Computed: countries names joined. */
