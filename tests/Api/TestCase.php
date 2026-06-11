@@ -31,11 +31,6 @@ abstract class TestCase extends \Tests\TestCase
         $this->app->make(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
-    protected function defineDatabaseMigrations(): void
-    {
-        $this->loadMigrationsFrom(__DIR__.'/../../vendor/laravel/sanctum/database/migrations');
-    }
-
     protected function getPackageProviders($app): array
     {
         return [
