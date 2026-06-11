@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f205d55580c336074e0ee423ff66d53b",
+    "content-hash": "ab9960a9ea39c6efa7f67727bf636fd1",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3481,16 +3481,16 @@
         },
         {
             "name": "laravelcm/livewire-slide-overs",
-            "version": "v2.0.3",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravelcm/livewire-slide-overs.git",
-                "reference": "90fca9276f079d502880f773aa0843692c1f1676"
+                "reference": "b4996da0b0f02349f208aab974b30ab095ff16e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravelcm/livewire-slide-overs/zipball/90fca9276f079d502880f773aa0843692c1f1676",
-                "reference": "90fca9276f079d502880f773aa0843692c1f1676",
+                "url": "https://api.github.com/repos/laravelcm/livewire-slide-overs/zipball/b4996da0b0f02349f208aab974b30ab095ff16e3",
+                "reference": "b4996da0b0f02349f208aab974b30ab095ff16e3",
                 "shasum": ""
             },
             "require": {
@@ -3536,7 +3536,7 @@
             ],
             "support": {
                 "issues": "https://github.com/laravelcm/livewire-slide-overs/issues",
-                "source": "https://github.com/laravelcm/livewire-slide-overs/tree/v2.0.3"
+                "source": "https://github.com/laravelcm/livewire-slide-overs/tree/v2.1.0"
             },
             "funding": [
                 {
@@ -3544,7 +3544,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-17T11:58:37+00:00"
+            "time": "2026-05-13T09:37:42+00:00"
         },
         {
             "name": "league/commonmark",
