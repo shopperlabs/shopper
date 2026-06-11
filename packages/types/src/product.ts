@@ -53,10 +53,10 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   published_at: string | null
   /** The external ID of the product. */
   external_id: string | null
-  /** The stock quantity of the product. */
-  stock: number
-  /** The combined stock of all variants. */
-  variants_stock?: number
+  /** The stock quantity of the product (standard and virtual products). */
+  stock?: number
+  /** Whether the product is available for purchase (own or variant stock, or backorderable). */
+  in_stock?: boolean
   /** The supplier ID of the product. */
   supplier_id?: number | null
   /** The brand ID of the product. */

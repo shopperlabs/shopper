@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Concerns;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\Includes\IncludeInterface;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\QueryBuilderRequest;
 
@@ -30,7 +33,7 @@ trait BuildsApiQueries
         $builder = QueryBuilder::for($query, $request)
             ->allowedFilters(...$this->allowedFilters((array) ($allowlist['filters'] ?? [])))
             ->allowedSorts(...($allowlist['sorts'] ?? []))
-            ->allowedIncludes(...($allowlist['includes'] ?? []));
+            ->allowedIncludes(...$this->allowedIncludes((array) ($allowlist['includes'] ?? [])));
 
         $loads = $this->requestedIncludeLoads($resource);
 
@@ -68,6 +71,17 @@ trait BuildsApiQueries
     }
 
     /**
+     * The include names requested on the current request, for endpoints that
+     * apply opt-in behavior (e.g. aggregates) outside the spatie query builder.
+     *
+     * @return Collection<int, string>
+     */
+    protected function requestedIncludes(): Collection
+    {
+        return QueryBuilderRequest::fromRequest(request())->includes();
+    }
+
+    /**
      * @template TModel of Model
      *
      * @param  Builder<TModel>  $query
@@ -100,6 +114,35 @@ trait BuildsApiQueries
         return $this->apiQuery($resource, $query)
             ->paginate(perPage: $size, pageName: 'page[number]', page: $page)
             ->withQueryString();
+    }
+
+    /**
+     * Build the spatie include list from a config descriptor map. A plain
+     * string entry is a relationship include; a `name => class-string` entry
+     * is a custom include (IncludeInterface) applied to the query on demand,
+     * e.g. the opt-in rating aggregates.
+     *
+     * @param  array<int|string, string>  $includes
+     * @return array<int, string|AllowedInclude>
+     */
+    private function allowedIncludes(array $includes): array
+    {
+        $allowed = [];
+
+        foreach ($includes as $key => $value) {
+            if (is_int($key)) {
+                $allowed[] = $value;
+
+                continue;
+            }
+
+            /** @var IncludeInterface $include */
+            $include = resolve($value);
+
+            $allowed[] = AllowedInclude::custom($key, $include);
+        }
+
+        return $allowed;
     }
 
     /**

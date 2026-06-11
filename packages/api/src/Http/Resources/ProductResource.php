@@ -39,12 +39,13 @@ final class ProductResource extends JsonApiResource
             'seo_title' => $this->seo_title,
             'seo_description' => $this->seo_description,
             'metadata' => $this->metadata,
+            ...($this->isExternal() ? ['external_id' => $this->external_id] : []),
+            ...$this->stockPayload(),
             'prices' => $this->pricesPayload(),
             'images' => $this->imagesPayload(),
             'thumbnail' => $this->thumbnailPayload(),
-            'files' => $this->filesPayload(),
-            'rating' => $this->ratingValue(),
-            'reviews_count' => (int) $this->resource->getAttribute('reviews_count'),
+            ...($this->isVirtual() ? ['files' => $this->filesPayload()] : []),
+            ...$this->ratingPayload(),
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
@@ -52,25 +53,78 @@ final class ProductResource extends JsonApiResource
 
     public function toRelationships(Request $request): array
     {
-        return [
+        $relationships = [
             'brand' => fn () => BrandResource::make($this->brand),
-            'variants' => fn () => ProductVariantResource::collection($this->variants),
             'categories' => fn () => CategoryResource::collection($this->categories),
             'collections' => fn () => CollectionResource::collection($this->collections),
-            'options' => fn () => AttributeResource::collection($this->scopedOptions()),
             'relatedProducts' => fn () => ProductResource::collection($this->relatedProducts),
+        ];
+
+        if ($this->canUseVariants()) {
+            $relationships['variants'] = fn () => ProductVariantResource::collection($this->variants);
+        }
+
+        if ($this->canUseAttributes()) {
+            $relationships['options'] = fn () => AttributeResource::collection($this->scopedOptions());
+        }
+
+        return $relationships;
+    }
+
+    /**
+     * @return array<string, int|bool>
+     */
+    private function stockPayload(): array
+    {
+        if ($this->isExternal()) {
+            return [];
+        }
+
+        $raw = $this->resource->getAttributes();
+
+        if ($this->canUseVariants()) {
+            if (! array_key_exists('variants_real_stock', $raw)) {
+                return [];
+            }
+
+            return [
+                'in_stock' => (int) $raw['variants_real_stock'] > 0 || ($raw['variants_allow_backorder'] ?? false),
+            ];
+        }
+
+        if (! array_key_exists('real_stock', $raw)) {
+            return [];
+        }
+
+        $stock = $this->stock;
+
+        return [
+            'stock' => $stock,
+            'in_stock' => $stock > 0 || $this->allow_backorder,
         ];
     }
 
     /**
-     * The average approved rating, rounded to one decimal, or null when the
-     * product has no approved reviews. Read from the withAvg aggregate alias.
+     * Review aggregates only when the client opted in through
+     * `include=rating` (RatingAggregate), never by default. The average is
+     * rounded to one decimal and null without approved reviews.
+     *
+     * @return array<string, int|float|null>
      */
-    private function ratingValue(): ?float
+    private function ratingPayload(): array
     {
-        $average = $this->resource->getAttribute('average_rating');
+        $raw = $this->resource->getAttributes();
 
-        return $average !== null ? round((float) $average, 1) : null;
+        if (! array_key_exists('reviews_count', $raw)) {
+            return [];
+        }
+
+        $average = $raw['average_rating'] ?? null;
+
+        return [
+            'rating' => $average !== null ? round((float) $average, 1) : null,
+            'reviews_count' => (int) $raw['reviews_count'],
+        ];
     }
 
     /**

@@ -33,6 +33,7 @@ final class ProductVariantResource extends JsonApiResource
             'upc' => $this->upc,
             'position' => $this->position,
             'allow_backorder' => $this->allow_backorder,
+            ...$this->stockPayload(),
             'metadata' => $this->metadata,
             'prices' => $this->pricesPayload(),
             'values' => $this->optionValuesPayload(),
@@ -47,6 +48,26 @@ final class ProductVariantResource extends JsonApiResource
     {
         return [
             'product' => fn () => ProductResource::make($this->product),
+        ];
+    }
+
+    /**
+     * Stock fields only when batch-loaded by the controller (LoadsStock):
+     * serializing them lazily would run one stock sum query per variant.
+     *
+     * @return array<string, int|bool>
+     */
+    private function stockPayload(): array
+    {
+        if (! array_key_exists('real_stock', $this->resource->getAttributes())) {
+            return [];
+        }
+
+        $stock = $this->stock;
+
+        return [
+            'stock' => $stock,
+            'in_stock' => $stock > 0 || $this->allow_backorder,
         ];
     }
 

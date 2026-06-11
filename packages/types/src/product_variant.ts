@@ -37,8 +37,10 @@ export interface ProductVariant extends Entity, ShippingFields {
   allow_backorder: boolean
   /** The product ID this variant belongs to. */
   product_id: number
-  /** The stock quantity of the variant (exposed once batched stock loading lands). */
+  /** The stock quantity of the variant. */
   stock?: number
+  /** Whether the variant is available for purchase (in stock or backorderable). */
+  in_stock?: boolean
   /** The metadata of the product variant. */
   metadata: Metadata
   /** The product this variant belongs to. */

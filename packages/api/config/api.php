@@ -41,7 +41,15 @@ return [
                 'option' => ['scope', 'option'],
             ],
             'sorts' => ['name', 'created_at', 'published_at'],
-            'includes' => ['brand', 'variants', 'categories', 'collections', 'options', 'relatedProducts'],
+            'includes' => [
+                'brand',
+                'variants',
+                'categories',
+                'collections',
+                'options',
+                'relatedProducts',
+                'rating' => Shopper\Api\Http\Includes\RatingAggregate::class,
+            ],
             'include_loads' => [
                 'variants' => ['variants.prices.currency', 'variants.values.attribute'],
                 'options' => ['options.values'],
