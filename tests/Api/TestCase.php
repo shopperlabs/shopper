@@ -8,6 +8,7 @@ use Dedoc\Scramble\ScrambleServiceProvider;
 use Laravel\Sanctum\SanctumServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Shopper\Api\ApiServiceProvider;
+use Shopper\Cart\CartServiceProvider;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Http\HttpServiceProvider;
 use Shopper\Payment\PaymentServiceProvider;
@@ -38,6 +39,7 @@ abstract class TestCase extends \Tests\TestCase
             CoreServiceProvider::class,
             ShopperServiceProvider::class,
             SidebarServiceProvider::class,
+            CartServiceProvider::class,
             PaymentServiceProvider::class,
             MediaLibraryServiceProvider::class,
             PermissionServiceProvider::class,

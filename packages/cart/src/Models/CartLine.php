@@ -26,7 +26,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read Cart $cart
- * @property-read Model $purchasable
+ * @property-read ?Model $purchasable
  * @property-read Collection<int, CartLineAdjustment> $adjustments
  * @property-read Collection<int, CartLineTaxLine> $taxLines
  */
