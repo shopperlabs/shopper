@@ -31,8 +31,10 @@ return new class extends Migration
         'prices',
         'inventories',
         'orders',
+        'order_items',
         'order_shipping',
         'suppliers',
+        'user_addresses',
         'zones',
     ];
 

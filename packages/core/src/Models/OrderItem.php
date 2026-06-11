@@ -14,9 +14,11 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Database\Factories\OrderItemFactory;
 use Shopper\Core\Enum\FulfillmentStatus;
 use Shopper\Core\Models\Contracts\OrderItem as OrderItemContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $name
  * @property-read int $quantity
  * @property-read int $unit_price_amount
@@ -40,6 +42,8 @@ class OrderItem extends Model implements OrderItemContract
 {
     /** @use HasFactory<OrderItemFactory> */
     use HasFactory;
+
+    use HasPublicId;
 
     protected $guarded = [];
 

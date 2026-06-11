@@ -103,5 +103,10 @@ return [
             'sorts' => ['name', 'code'],
             'includes' => [],
         ],
+        'order' => [
+            'filters' => ['status' => 'exact'],
+            'sorts' => ['created_at'],
+            'includes' => ['items'],
+        ],
     ],
 ];

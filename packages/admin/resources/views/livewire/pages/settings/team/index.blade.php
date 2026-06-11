@@ -27,7 +27,7 @@
                                 <div class="ml-4 flex overflow-hidden">
                                     @foreach ($role->users as $admin)
                                         <img
-                                            class="{{ $loop->first ? '' : '-ml-1' }} shadow-solid inline-block size-6 rounded-full"
+                                            class="{{ $loop->first ? '' : '-ml-1' }} shadow-solid inline-block size-6 rounded-full object-cover"
                                             src="{{ $admin->picture }}"
                                             alt=""
                                         />

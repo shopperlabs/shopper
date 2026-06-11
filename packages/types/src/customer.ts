@@ -10,15 +10,6 @@ export enum GenderType {
 }
 
 /**
- * The Avatar interface for the customer.
- */
-export interface AvatarType {
-  type: string
-  url: string
-  default: string
-}
-
-/**
  * Customer model.
  */
 export interface Customer extends Entity {
@@ -36,8 +27,12 @@ export interface Customer extends Entity {
   birth_date: Date | null
   /** The date the email was verified. */
   email_verified_at: Date | null
-  /** The avatar of the customer. */
-  avatar: AvatarType
+  /** Whether the email is verified (store API). */
+  email_verified?: boolean
+  /** The avatar URL (uploaded file, or a generated fallback). */
+  avatar: string
+  /** The avatar type: storage|avatar_ui. */
+  avatar_type: string
   /** The timezone of the customer. */
   timezone?: string | null
   /** Whether the customer has opted in to marketing. */

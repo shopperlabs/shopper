@@ -103,7 +103,7 @@ trait BuildsApiQueries
      *
      * @param  Builder<TModel>  $query
      */
-    protected function paginated(string $resource, Builder $query): LengthAwarePaginator
+    protected function paginated(string $resource, Builder $query, ?string $defaultSort = null): LengthAwarePaginator
     {
         $default = (int) config('shopper.api.pagination.per_page', 15);
         $max = (int) config('shopper.api.pagination.max_per_page', 100);
@@ -111,7 +111,13 @@ trait BuildsApiQueries
         $size = min(max((int) request()->input('page.size', $default), 1), $max);
         $page = max((int) request()->input('page.number', 1), 1);
 
-        return $this->apiQuery($resource, $query)
+        $builder = $this->apiQuery($resource, $query);
+
+        if ($defaultSort !== null) {
+            $builder->defaultSort($defaultSort);
+        }
+
+        return $builder
             ->paginate(perPage: $size, pageName: 'page[number]', page: $page)
             ->withQueryString();
     }

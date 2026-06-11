@@ -1,5 +1,4 @@
 import type { Entity } from './common'
-import type { AvatarType } from './customer'
 
 /**
  * Review model.
@@ -33,5 +32,6 @@ export interface Review extends Entity {
 export type ReviewAuthor = {
   last_name: string
   first_name: string
-  avatar: AvatarType
+  /** The avatar URL (uploaded file, or a generated fallback). */
+  avatar: string
 }

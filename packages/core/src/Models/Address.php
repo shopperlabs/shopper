@@ -13,12 +13,14 @@ use Shopper\Core\Database\Factories\AddressFactory;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Contracts\Address as AddressContract;
 use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $last_name
- * @property-read ?string $first_name
+ * @property-read string $first_name
  * @property-read string $full_name
  * @property-read ?string $company_name
  * @property-read string $street_address
@@ -44,6 +46,7 @@ class Address extends Model implements AddressContract
     use HasFactory;
 
     use HasModelContract;
+    use HasPublicId;
 
     protected $guarded = [];
 
