@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\DB;
+use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Brand;
@@ -74,7 +75,7 @@ it('lists only published products', function (): void {
 });
 
 it('eager-loads variant prices when including variants, avoiding N+1', function (): void {
-    $product = publishedProduct(['name' => 'WithVariants']);
+    $product = publishedProduct(['name' => 'WithVariants', 'type' => ProductType::Variant]);
     $currencyId = Currency::query()->value('id');
 
     foreach (range(1, 3) as $i) {
@@ -97,8 +98,9 @@ it('eager-loads variant prices when including variants, avoiding N+1', function 
     expect($variants)->toHaveCount(3)
         ->and($variants->first()['attributes']['prices'])->not->toBeEmpty()
         // Bounded and constant regardless of variant count: prices.currency and
-        // values.attribute are eager-loaded once, never per variant.
-        ->and($queryCount)->toBeLessThanOrEqual(13);
+        // values.attribute are eager-loaded once, never per variant, and stock
+        // is batch-loaded in three queries.
+        ->and($queryCount)->toBeLessThanOrEqual(16);
 });
 
 it('includes the brand relationship on demand', function (): void {
@@ -135,7 +137,7 @@ it('searches products by term', function (): void {
 });
 
 it('exposes variant option values for option matching', function (): void {
-    $product = publishedProduct(['name' => 'Tee']);
+    $product = publishedProduct(['name' => 'Tee', 'type' => ProductType::Variant]);
     $attribute = Attribute::factory()->create(['name' => 'Color']);
     $value = AttributeValue::factory()->create([
         'attribute_id' => $attribute->id,
@@ -156,7 +158,7 @@ it('exposes variant option values for option matching', function (): void {
 });
 
 it('serializes product options as a deduplicated array scoped to the used values', function (): void {
-    $product = publishedProduct(['name' => 'Phone']);
+    $product = publishedProduct(['name' => 'Phone', 'type' => ProductType::Standard]);
     $color = Attribute::factory()->create(['name' => 'Color']);
     $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => 'red']);
     $blue = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Blue', 'key' => 'blue']);
@@ -175,26 +177,74 @@ it('serializes product options as a deduplicated array scoped to the used values
         ->and($values)->toContain('Red', 'Blue')->not->toContain('Green');
 });
 
-it('exposes the average rating and approved reviews count', function (): void {
+it('exposes the review aggregates only when the rating include is requested', function (): void {
     $product = publishedProduct(['name' => 'Rated']);
     $reviewable = ['reviewrateable_id' => $product->id, 'reviewrateable_type' => $product->getMorphClass()];
     Review::factory()->create([...$reviewable, 'rating' => 4, 'approved' => true]);
     Review::factory()->create([...$reviewable, 'rating' => 5, 'approved' => true]);
     Review::factory()->create([...$reviewable, 'rating' => 1, 'approved' => false]);
 
-    $attributes = $this->getJson('/store/products/'.$product->slug)->assertOk()->json('data.attributes');
+    $default = $this->getJson('/store/products/'.$product->slug)->assertOk()->json('data.attributes');
+    $rated = $this->getJson('/store/products/'.$product->slug.'?include=rating')->assertOk()->json('data.attributes');
 
-    expect($attributes['reviews_count'])->toBe(2)
-        ->and($attributes['rating'])->toBe(4.5);
+    expect($default)->not->toHaveKeys(['rating', 'reviews_count'])
+        ->and($rated['reviews_count'])->toBe(2)
+        ->and($rated['rating'])->toBe(4.5);
 });
 
 it('returns a null rating and zero count without approved reviews', function (): void {
     $product = publishedProduct(['name' => 'Unrated']);
 
-    $this->getJson('/store/products/'.$product->slug)
+    $this->getJson('/store/products/'.$product->slug.'?include=rating')
         ->assertOk()
         ->assertJsonPath('data.attributes.rating', null)
         ->assertJsonPath('data.attributes.reviews_count', 0);
+});
+
+it('includes the review aggregates on the product listing', function (): void {
+    $product = publishedProduct(['name' => 'RatedList']);
+    $reviewable = ['reviewrateable_id' => $product->id, 'reviewrateable_type' => $product->getMorphClass()];
+    Review::factory()->create([...$reviewable, 'rating' => 3, 'approved' => true]);
+    Review::factory()->create([...$reviewable, 'rating' => 4, 'approved' => true]);
+
+    $attributes = collect(
+        $this->getJson('/store/products?filter[name]=RatedList&include=rating')->assertOk()->json('data')
+    )->first()['attributes'];
+
+    expect($attributes['rating'])->toBe(3.5)
+        ->and($attributes['reviews_count'])->toBe(2);
+});
+
+it('shapes the payload by product type', function (): void {
+    publishedProduct(['name' => 'ShapeStandard', 'type' => ProductType::Standard]);
+    publishedProduct(['name' => 'ShapeVariant', 'type' => ProductType::Variant]);
+    publishedProduct(['name' => 'ShapeVirtual', 'type' => ProductType::Virtual]);
+    publishedProduct(['name' => 'ShapeExternal', 'type' => ProductType::External, 'external_id' => 'ext-42']);
+
+    $products = collect($this->getJson('/store/products?filter[name]=Shape')->assertOk()->json('data'))
+        ->keyBy('attributes.name')
+        ->map(fn (array $product): array => $product['attributes']);
+
+    expect($products->get('ShapeStandard'))->toHaveKeys(['stock', 'in_stock'])
+        ->not->toHaveKeys(['files', 'variants_stock', 'external_id'])
+        ->and($products->get('ShapeVariant'))->toHaveKey('in_stock')
+        ->not->toHaveKeys(['stock', 'variants_stock', 'files'])
+        ->and($products->get('ShapeVirtual'))->toHaveKeys(['files', 'stock', 'in_stock'])
+        ->and($products->get('ShapeExternal'))->toMatchArray(['external_id' => 'ext-42'])
+        ->not->toHaveKeys(['stock', 'variants_stock', 'in_stock', 'files']);
+});
+
+it('only exposes the variants and options relationships for capable product types', function (): void {
+    publishedProduct(['name' => 'RelVariant', 'type' => ProductType::Variant]);
+    publishedProduct(['name' => 'RelExternal', 'type' => ProductType::External, 'external_id' => 'ext-1']);
+
+    $products = collect(
+        $this->getJson('/store/products?filter[name]=Rel&include=variants,options')->assertOk()->json('data')
+    )->keyBy('attributes.name');
+
+    expect($products->get('RelVariant')['relationships'])->toHaveKey('variants')
+        ->and($products->get('RelExternal')['relationships'] ?? [])->not->toHaveKey('variants')
+        ->not->toHaveKey('options');
 });
 
 it('paginates with page[size] and page[number]', function (): void {
