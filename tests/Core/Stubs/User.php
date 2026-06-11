@@ -7,6 +7,7 @@ namespace Tests\Core\Stubs;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Shopper\Contracts\HasStoreAuthentication;
 use Shopper\Contracts\HasStoreAuthenticationRecovery;
 use Shopper\Models\Contracts\ShopperUser;
@@ -16,6 +17,7 @@ use Shopper\Traits\InteractsWithStoreAuthenticationRecovery;
 
 class User extends Authenticatable implements HasStoreAuthentication, HasStoreAuthenticationRecovery, ShopperUser
 {
+    use HasApiTokens;
     use HasFactory;
     use InteractsWithShopper;
     use InteractsWithStoreAuthentication;

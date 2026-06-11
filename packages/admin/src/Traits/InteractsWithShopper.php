@@ -12,9 +12,11 @@ use Shopper\Core\Enum\GenderType;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\Traits\HasDiscounts;
+use Shopper\Core\Models\Traits\HasPublicId;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
+ * @property-read ?string $public_id
  * @property-read Collection<int, Order> $orders
  * @property-read Collection<int, Address> $addresses
  */
@@ -22,6 +24,7 @@ trait InteractsWithShopper
 {
     use HasDiscounts;
     use HasProfilePhoto;
+    use HasPublicId;
     use HasRoles;
 
     public static function bootInteractsWithShopper(): void

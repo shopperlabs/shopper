@@ -15,9 +15,9 @@ export interface Address extends Entity {
   /** The last name of the address. */
   last_name: string
   /** The full name (first_name + last_name). */
-  full_name: string
+  full_name?: string
   /** The company name of the address. */
-  company_name: string | null
+  company_name?: string | null
   /** The street address. */
   street_address: string
   /** The additional street address. */
@@ -33,15 +33,17 @@ export interface Address extends Entity {
   /** The type of the customer address. */
   type: AddressType
   /** The metadata of the address. */
-  metadata: Metadata
+  metadata?: Metadata
   /** Whether this is the default shipping address. */
   shipping_default: boolean
   /** Whether this is the default billing address. */
   billing_default: boolean
   /** ID of the user this address belongs to. */
-  user_id: number
+  user_id?: number
   /** ID of the country this address belongs to. */
-  country_id: number
+  country_id?: number
+  /** The ISO 3166-1 alpha-2 country code (store API). */
+  country_code?: string
   /** The country of the address. */
   country?: Country
 }
