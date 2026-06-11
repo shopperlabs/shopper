@@ -33,7 +33,7 @@ use Shopper\Core\Models\Traits\HasSlug;
  * @property-read string $countries_name
  * @property-read string $payments_name
  * @property-read string $currency_code
- * @property-read Currency $currency
+ * @property-read ?Currency $currency
  * @property-read EloquentCollection<int, Carrier> $carriers
  * @property-read EloquentCollection<int, CarrierOption> $shippingOptions
  * @property-read EloquentCollection<int, PaymentMethod> $paymentMethods

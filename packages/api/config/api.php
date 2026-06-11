@@ -82,5 +82,26 @@ return [
             'sorts' => ['name', 'position'],
             'includes' => [],
         ],
+        'country' => [
+            'filters' => [
+                'name' => 'partial',
+                'cca2' => 'exact',
+                'cca3' => 'exact',
+                'region' => 'exact',
+                'zone' => ['exact', 'zones.code'],
+            ],
+            'sorts' => ['name'],
+            'includes' => ['zones'],
+        ],
+        'zone' => [
+            'filters' => ['name' => 'partial', 'code' => 'exact'],
+            'sorts' => ['name'],
+            'includes' => ['currency', 'countries'],
+        ],
+        'currency' => [
+            'filters' => ['name' => 'partial', 'code' => 'exact'],
+            'sorts' => ['name', 'code'],
+            'includes' => [],
+        ],
     ],
 ];

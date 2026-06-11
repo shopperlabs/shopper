@@ -1,4 +1,4 @@
-import type { Attribute, Brand, Category, Collection, Product } from '@shopperlabs/shopper-types'
+import type { Attribute, Brand, Category, Collection, Country, Currency, Product, Zone } from '@shopperlabs/shopper-types'
 
 import type { HttpClient } from './client'
 import type { FetchOptions, RequestParams } from './http'
@@ -23,15 +23,18 @@ class CollectionResource<T> {
     return { data: (flatten<T>(document) ?? []) as T[], meta: document.meta, links: document.links }
   }
 
-  public async retrieve(slug: string, params?: RequestParams): Promise<T> {
-    return flatten<T>(await this.client.request(`${this.path}/${slug}`, params)) as T
+  /** Retrieve a single entity by its public identifier (slug for catalog, code for geo). */
+  public async retrieve(identifier: string, params?: RequestParams): Promise<T> {
+    return flatten<T>(await this.client.request(`${this.path}/${identifier}`, params)) as T
   }
 }
 
 /**
- * Store API surface, mirroring the catalog endpoints. Resources are singular
- * (sdk.store.product.list()) like @medusajs/js-sdk. Use `fetch()` for endpoints
- * not yet wrapped, including addon routes registered through shopper/http.
+ * Store API surface, mirroring the catalog and geo endpoints. Resources are
+ * singular (sdk.store.product.list()) like @medusajs/js-sdk. Geo resources
+ * retrieve by code: sdk.store.country.retrieve('US'), sdk.store.zone.retrieve('eu'),
+ * sdk.store.currency.retrieve('EUR'). Use `fetch()` for endpoints not yet
+ * wrapped, including addon routes registered through shopper/http.
  */
 export class StoreModule {
   public readonly product: CollectionResource<Product>
@@ -44,6 +47,12 @@ export class StoreModule {
 
   public readonly attribute: Pick<CollectionResource<Attribute>, 'list'>
 
+  public readonly country: CollectionResource<Country>
+
+  public readonly zone: CollectionResource<Zone>
+
+  public readonly currency: CollectionResource<Currency>
+
   public constructor(private readonly client: HttpClient) {
     const prefix = `/${client.storePrefix}`
 
@@ -52,6 +61,9 @@ export class StoreModule {
     this.collection = new CollectionResource<Collection>(client, `${prefix}/collections`)
     this.brand = new CollectionResource<Brand>(client, `${prefix}/brands`)
     this.attribute = new CollectionResource<Attribute>(client, `${prefix}/attributes`)
+    this.country = new CollectionResource<Country>(client, `${prefix}/countries`)
+    this.zone = new CollectionResource<Zone>(client, `${prefix}/zones`)
+    this.currency = new CollectionResource<Currency>(client, `${prefix}/currencies`)
   }
 
   /**

@@ -148,8 +148,9 @@ trait BuildsApiQueries
     /**
      * Build spatie AllowedFilter instances from a config descriptor map.
      * Each entry is `key => type` where type is 'partial' (default), 'exact',
-     * 'scope', or ['scope', 'internalScopeName']. A plain string entry (no key)
-     * is treated as a partial filter for backward compatibility.
+     * 'scope', or an array carrying the internal name: ['scope', 'internalScopeName']
+     * or ['exact', 'relation.column']. A plain string entry (no key) is treated
+     * as a partial filter for backward compatibility.
      *
      * @param  array<int|string, string|array{0: string, 1?: string}>  $filters
      * @return array<int, AllowedFilter>
@@ -168,7 +169,7 @@ trait BuildsApiQueries
             [$kind, $internal] = is_array($type) ? [$type[0], $type[1] ?? null] : [$type, null];
 
             $allowed[] = match ($kind) {
-                'exact' => AllowedFilter::exact($key),
+                'exact' => AllowedFilter::exact($key, $internal),
                 'scope' => $internal !== null ? AllowedFilter::scope($key, $internal) : AllowedFilter::scope($key),
                 default => AllowedFilter::partial($key),
             };

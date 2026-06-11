@@ -7,6 +7,7 @@ namespace Shopper\Core\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Shopper\Core\Models\Country;
 
 final class CountriesTableSeeder extends Seeder
@@ -17,6 +18,7 @@ final class CountriesTableSeeder extends Seeder
 
         $countries = collect(json_decode(File::get(__DIR__.'/../data/countries.json'), true))
             ->map(fn (array $country): array => [
+                'public_id' => (string) Str::ulid(),
                 'name' => $country['name']['common'],
                 'name_official' => $country['name']['official'],
                 'region' => $country['region'],

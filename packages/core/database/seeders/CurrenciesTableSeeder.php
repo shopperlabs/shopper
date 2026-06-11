@@ -7,6 +7,7 @@ namespace Shopper\Core\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Shopper\Core\Models\Currency;
 
 final class CurrenciesTableSeeder extends Seeder
@@ -17,6 +18,7 @@ final class CurrenciesTableSeeder extends Seeder
 
         $currencies = collect(json_decode(File::get(__DIR__.'/../data/currencies.json'), true))
             ->map(fn (array $currency, string $code): array => [
+                'public_id' => (string) Str::ulid(),
                 'code' => $code,
                 'name' => $currency['name'],
                 'symbol' => $currency['symbol'],
