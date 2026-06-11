@@ -5,7 +5,7 @@
             class="relative inline-flex w-full items-center rounded-full text-sm leading-5"
             type="button"
         >
-            <img class="size-7 rounded-full" src="{{ $user->picture }}" alt="{{ $user->email }}" />
+            <img class="size-7 rounded-full object-cover" src="{{ $user->picture }}" alt="{{ $user->email }}" />
             <span class="sr-only">{{ $user->full_name }}</span>
         </button>
         <div
@@ -28,7 +28,7 @@
             <div>
                 <div class="rounded-b-lg ring-1 ring-sh-border bg-sh-surface shadow-xs">
                     <div class="flex items-center gap-3 p-3">
-                        <img class="size-8 rounded-full" src="{{ $user->picture }}" alt="{{ $user->email }}" />
+                        <img class="size-8 rounded-full object-cover" src="{{ $user->picture }}" alt="{{ $user->email }}" />
                         <div class="min-w-0">
                             <p class="truncate text-sm font-medium text-sh-fg">
                                 {{ $user->full_name }}
