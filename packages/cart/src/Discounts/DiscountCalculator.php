@@ -42,6 +42,11 @@ final readonly class DiscountCalculator
             ->whereIn('cart_line_id', $context->cart->lines->pluck('id'))
             ->delete();
 
+        // The runner eager-loads `lines.adjustments` before the pipeline runs:
+        // without dropping the cached relation, later pipes (tax) would compute
+        // on the adjustments as they were before this rewrite.
+        $context->cart->lines->each(fn (CartLine $line) => $line->unsetRelation('adjustments'));
+
         $applicableLines = $this->getApplicableLines($discount, $context);
 
         if ($applicableLines->isEmpty()) {

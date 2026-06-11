@@ -8,6 +8,7 @@ ShopperApi::store(function (): void {
     require __DIR__.'/store/catalog.php';
     require __DIR__.'/store/geo.php';
     require __DIR__.'/store/auth.php';
+    require __DIR__.'/store/cart.php';
 });
 
 ShopperApi::authenticated(function (): void {

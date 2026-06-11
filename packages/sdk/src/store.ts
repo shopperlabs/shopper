@@ -2,6 +2,7 @@ import type {
   Address,
   Attribute,
   Brand,
+  Cart,
   Category,
   Collection,
   Country,
@@ -65,6 +66,94 @@ class CustomerAddressResource {
 
   public async delete(id: string): Promise<void> {
     await this.client.send('DELETE', `${this.path}/${id}`)
+  }
+}
+
+export type CreateCartPayload = {
+  /** ISO currency code the cart prices in. Defaults to the zone or shop currency. */
+  currency_code?: string
+  metadata?: Record<string, unknown> | null
+}
+
+export type CreateCartLinePayload = {
+  /** Public id of the product or variant to add. */
+  purchasable_id: string
+  purchasable_type: 'product' | 'variant'
+  /** Defaults to 1. Adding the same purchasable again increments the existing line. */
+  quantity?: number
+  metadata?: Record<string, unknown> | null
+}
+
+export type UpdateCartLinePayload = {
+  quantity?: number
+  metadata?: Record<string, unknown> | null
+}
+
+/**
+ * Guest and customer carts. A cart is addressed by its public id: persist it
+ * (cookie, localStorage) to reuse the cart across visits. When a customer
+ * token is set, carts created through create() belong to that customer and
+ * are hidden from anyone else.
+ *
+ * Every call answers with the cart summary and its pipeline-computed totals.
+ * The API keeps lines and addresses behind JSON:API includes; the SDK asks
+ * for `lines` by default so `cart.lines` is always populated. Pass your own
+ * `include` to change that: `[]` for the bare summary (header badge),
+ * `['lines.purchasable']` to also expand products and variants,
+ * `['addresses']` for the checkout addresses.
+ */
+export class CartModule {
+  private readonly path: string
+
+  public constructor(private readonly client: HttpClient) {
+    this.path = `/${client.storePrefix}/carts`
+  }
+
+  public async create(payload: CreateCartPayload = {}, params?: RequestParams): Promise<Cart> {
+    const document = await this.client.send('POST', this.path, payload, this.params(params))
+
+    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+  }
+
+  public async retrieve(id: string, params?: RequestParams): Promise<Cart> {
+    return flatten<Cart>(await this.client.request(`${this.path}/${id}`, this.params(params))) as Cart
+  }
+
+  public async createLineItem(cartId: string, payload: CreateCartLinePayload, params?: RequestParams): Promise<Cart> {
+    const document = await this.client.send('POST', `${this.path}/${cartId}/lines`, payload, this.params(params))
+
+    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+  }
+
+  public async updateLineItem(
+    cartId: string,
+    lineId: string,
+    payload: UpdateCartLinePayload,
+    params?: RequestParams,
+  ): Promise<Cart> {
+    const document = await this.client.send(
+      'PATCH',
+      `${this.path}/${cartId}/lines/${lineId}`,
+      payload,
+      this.params(params),
+    )
+
+    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+  }
+
+  public async deleteLineItem(cartId: string, lineId: string, params?: RequestParams): Promise<Cart> {
+    const document = await this.client.send(
+      'DELETE',
+      `${this.path}/${cartId}/lines/${lineId}`,
+      undefined,
+      this.params(params),
+    )
+
+    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+  }
+
+  private params(params?: RequestParams): RequestParams {
+    return { include: ['lines'], ...params }
   }
 }
 
@@ -139,6 +228,8 @@ export class StoreModule {
 
   public readonly customer: CustomerModule
 
+  public readonly cart: CartModule
+
   public constructor(private readonly client: HttpClient) {
     const prefix = `/${client.storePrefix}`
 
@@ -151,6 +242,7 @@ export class StoreModule {
     this.zone = new CollectionResource<Zone>(client, `${prefix}/zones`)
     this.currency = new CollectionResource<Currency>(client, `${prefix}/currencies`)
     this.customer = new CustomerModule(client)
+    this.cart = new CartModule(client)
   }
 
   /**

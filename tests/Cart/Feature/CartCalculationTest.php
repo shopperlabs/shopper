@@ -170,6 +170,52 @@ describe(CalculateLines::class, function (): void {
             ->and($context->total)->toBe(2750);
     });
 
+    it('taxes the discounted amount when a coupon is applied in the same run', function (): void {
+        $country = Country::query()->where('cca2', 'US')->first()
+            ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
+
+        $taxZone = TaxZone::factory()->create([
+            'country_id' => $country->id,
+            'is_tax_inclusive' => false,
+        ]);
+
+        TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 10.00,
+            'is_default' => true,
+        ]);
+
+        Discount::factory()->create([
+            'code' => 'SAVE20',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 20,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'start_at' => now()->subDay(),
+            'end_at' => now()->addMonth(),
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product, quantity: 2);
+        $this->cartManager->applyCoupon($this->cart, 'SAVE20');
+        $this->cartManager->addAddress($this->cart, AddressType::Shipping, [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'address_1' => '123 Main St',
+            'city' => 'New York',
+            'postal_code' => '10001',
+            'country_id' => $country->id,
+        ]);
+
+        $context = $this->cartManager->calculate($this->cart->refresh());
+
+        expect($context->subtotal)->toBe(5000)
+            ->and($context->discountTotal)->toBe(1000)
+            ->and($context->taxTotal)->toBe(400)
+            ->and($context->total)->toBe(4400);
+    });
+
     it('handles tax inclusive mode', function (): void {
         $country = Country::query()->where('cca2', 'FR')->first()
             ?? Country::factory()->create(['cca2' => 'FR', 'name' => 'France']);

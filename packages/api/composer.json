@@ -11,6 +11,8 @@
   "require": {
     "php": "^8.3",
     "dedoc/scramble": "^0.13",
+    "laravel/prompts": "^0.3.16",
+    "shopper/cart": "*",
     "shopper/core": "*",
     "shopper/http": "*",
     "spatie/laravel-medialibrary": "^11.5",
