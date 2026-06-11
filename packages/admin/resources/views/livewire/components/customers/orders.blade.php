@@ -1,3 +1,3 @@
-<x-shopper::container>
+<div>
     {{ $this->table }}
-</x-shopper::container>
+</div>

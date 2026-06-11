@@ -70,7 +70,6 @@ class Overview extends Component implements HasActions, HasSchemas
                             ->description($this->product->type?->getDescription())
                             ->icon($this->product->type?->getIcon())
                             ->iconSize(IconSize::Large)
-                            ->extraAttributes([])
                             ->schema([
                                 TextInput::make('name')
                                     ->label(__('shopper::forms.label.name'))
