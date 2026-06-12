@@ -18,6 +18,14 @@ export interface FetchOptions extends RequestParams {
   query?: Record<string, string | number | boolean>
 }
 
+/** Full request options for `store.fetch()`: query params plus method and body for write calls. */
+export interface FetchRequestOptions extends FetchOptions {
+  /** HTTP method. Defaults to GET. */
+  method?: 'GET' | 'POST' | 'PATCH' | 'DELETE'
+  /** JSON payload, or a FormData for file uploads. */
+  body?: Record<string, unknown> | FormData
+}
+
 export function buildQuery(options?: FetchOptions): string {
   if (! options) {
     return ''

@@ -31,9 +31,15 @@ export default class Shopper {
 export type { ShopperConfig, TokenStorage } from './client'
 export { AuthModule } from './auth'
 export type { RegisterPayload, LoginPayload, ResetPasswordPayload } from './auth'
-export { StoreModule, CustomerModule, type Paginated } from './store'
+export { StoreModule, CustomerModule, CartModule, type Paginated } from './store'
+export type {
+  CreateCartPayload,
+  CreateCartLinePayload,
+  UpdateCartLinePayload,
+  ShippingOptionList,
+} from './store'
 export { ShopperApiError, buildQuery } from './http'
-export type { RequestParams, FetchOptions } from './http'
+export type { RequestParams, FetchOptions, FetchRequestOptions } from './http'
 export { flatten } from './json-api'
 export type {
   JsonApiDocument,

@@ -1,11 +1,29 @@
-# @shopperlabs/shopper-sdk
+<p align="center">
+  <img src="https://github.com/shopperlabs/art/blob/main/logomark.svg" alt="Shopper Logo" height="150" />
+</p>
 
-Official JavaScript SDK for the [Shopper](https://shopper.cloud) headless commerce API.
+# Shopper JavaScript SDK
 
-The SDK talks to the Shopper Store API (JSON:API) and returns the plain, nested
-shapes declared by [`@shopperlabs/shopper-types`](https://www.npmjs.com/package/@shopperlabs/shopper-types).
-You work with `product.variants` as an array of full variants — the SDK handles
-the JSON:API normalization (relationships + `included`) for you.
+<p>
+  <a href="https://www.npmjs.com/package/@shopperlabs/shopper-sdk">
+    <img src="https://img.shields.io/npm/v/@shopperlabs/shopper-sdk" alt="Latest Version" />
+  </a>
+  <a href="https://www.npmjs.com/package/@shopperlabs/shopper-sdk">
+    <img src="https://img.shields.io/npm/dm/@shopperlabs/shopper-sdk" alt="Downloads" />
+  </a>
+  <a href="https://www.npmjs.com/package/@shopperlabs/shopper-sdk">
+    <img src="https://img.shields.io/npm/l/@shopperlabs/shopper-sdk" alt="License" />
+  </a>
+  <a href="https://www.typescriptlang.org">
+    <img src="https://img.shields.io/badge/types-included-blue" alt="Types Included" />
+  </a>
+</p>
+
+Official JavaScript SDK for the [Shopper](https://laravelshopper.dev) headless commerce API.
+
+The SDK talks to the Shopper API (JSON:API) and returns the plain, nested shapes declared by [`@shopperlabs/shopper-types`](https://www.npmjs.com/package/@shopperlabs/shopper-types).
+You work with `product.variants` as an array of full variants the SDK handles the JSON:API normalization (relationships + `included`) for you. It runs in any
+environment with a `fetch` implementation: browsers, Node.js 18+, React Native, edge runtimes.
 
 ## Installation
 
@@ -13,7 +31,7 @@ the JSON:API normalization (relationships + `included`) for you.
 npm install @shopperlabs/shopper-sdk
 ```
 
-## Usage
+## Quick start
 
 ```ts
 import Shopper from '@shopperlabs/shopper-sdk'
@@ -35,30 +53,10 @@ const product = await sdk.store.product.retrieve('sony-wh-1000xm5', {
 product.variants?.forEach((variant) => console.log(variant.name, variant.prices))
 ```
 
-## Custom & addon endpoints
+## Documentation
 
-Use `store.fetch()` for any endpoint not yet wrapped, including addon routes
-registered through `shopper/http`. The JSON:API payload is flattened the same way:
+The full SDK documentation — configuration, authentication, cart and checkout, custom endpoints, error handling lives at [docs.laravelshopper.dev](https://docs.laravelshopper.dev).
 
-```ts
-const { data } = await sdk.store.fetch('/store/best-sellers', { query: { limit: 10 } })
-```
+## License
 
-## Errors
-
-Non-2xx responses throw a `ShopperApiError` carrying the HTTP status and the
-JSON:API error objects:
-
-```ts
-import Shopper, { ShopperApiError } from '@shopperlabs/shopper-sdk'
-
-const sdk = new Shopper({ baseUrl: 'https://my-store.com' })
-
-try {
-  await sdk.store.product.retrieve('missing')
-} catch (error) {
-  if (error instanceof ShopperApiError) {
-    console.error(error.status, error.errors)
-  }
-}
-```
+Shopper SDK is open-sourced software licensed under the [MIT license](https://github.com/shopperlabs/shopper/blob/2.x/LICENSE.md).
