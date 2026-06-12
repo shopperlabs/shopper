@@ -59,7 +59,7 @@ final class CurrenciesField
                     TextEntry::make('placeholder')
                         ->hiddenLabel()
                         ->state(new HtmlString(
-                            "<div class='py-2'><div class='border-t border-gray-100 dark:border-white/10'></div></div>"
+                            "<div class='py-2'><div class='border-t border-sh-border'></div></div>"
                         ))
                         ->visible($index + 1 !== count(shopper_setting('currencies'))),
                 ]))

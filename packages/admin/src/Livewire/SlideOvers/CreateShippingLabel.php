@@ -99,7 +99,7 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasS
         return $schema
             ->components([
                 Grid::make(5)
-                    ->extraAttributes(['class' => '[&>div]:divide-x [&>div]:divide-gray-100 dark:[&>div]:divide-white/10'])
+                    ->extraAttributes(['class' => '[&>div]:divide-x [&>div]:divide-sh-border'])
                     ->schema([
                         Group::make()
                             ->columnSpan(3)
@@ -156,7 +156,7 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasS
                                 return new HtmlString(
                                     $url
                                         ? '<img src="'.e($url).'" class="size-8 rounded-lg object-cover" />'
-                                        : '<span class="size-8 rounded-lg bg-gray-100 dark:bg-gray-800"></span>'
+                                        : '<span class="size-8 rounded-lg bg-sh-skeleton"></span>'
                                 );
                             }),
                         Select::make('item_id')

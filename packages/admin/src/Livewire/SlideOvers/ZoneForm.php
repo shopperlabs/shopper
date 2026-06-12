@@ -156,7 +156,7 @@ class ZoneForm extends SlideOverComponent implements HasActions, HasSchemas, Sli
                         TextEntry::make('providers')
                             ->label(__('shopper::pages/settings/zones.providers'))
                             ->state(new HtmlString(Blade::render(<<<'Blade'
-                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                <p class="text-sm text-sh-fg-muted">
                                     {{ __('shopper::pages/settings/zones.providers_description') }}
                                 </p>
                             Blade))),

@@ -75,7 +75,7 @@ final class CarrierRateService
 
         return $logo
             ? '<img src="'.e($logo).'" alt="'.e($carrier->name).'" class="size-5 rounded object-contain" />'
-            : '<span class="size-5 rounded bg-gray-200 dark:bg-white/30"></span>';
+            : '<span class="size-5 rounded bg-sh-skeleton"></span>';
     }
 
     /**

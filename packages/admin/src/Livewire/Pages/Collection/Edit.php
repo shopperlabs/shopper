@@ -126,7 +126,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
                                 TextEntry::make(__('shopper::words.seo.slug'))
                                     ->label(__('shopper::words.seo.title'))
                                     ->state(new HtmlString(Blade::render(<<<'BLADE'
-                                        <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
+                                        <p class="max-w-2xl text-sm text-sh-fg-muted">
                                             {{ __('shopper::words.seo.description', ['name' => __('shopper::pages/collections.single')]) }}
                                         </p>
                                     BLADE))),
