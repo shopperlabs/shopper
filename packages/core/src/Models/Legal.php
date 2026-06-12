@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Models\Contracts\Legal as LegalContract;
@@ -34,7 +35,8 @@ class Legal extends Model implements LegalContract
      * @param  Builder<Legal>  $query
      * @return Builder<Legal>
      */
-    public function scopeEnabled(Builder $query): Builder
+    #[Scope]
+    protected function enabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
     }

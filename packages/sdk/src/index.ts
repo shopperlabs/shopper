@@ -20,20 +20,37 @@ export default class Shopper {
 
   public readonly auth: AuthModule
 
-  public constructor(config: ShopperConfig) {
-    const client = new HttpClient(config)
+  private readonly client: HttpClient
 
-    this.store = new StoreModule(client)
-    this.auth = new AuthModule(client)
+  public constructor(config: ShopperConfig) {
+    this.client = new HttpClient(config)
+
+    this.store = new StoreModule(this.client)
+    this.auth = new AuthModule(this.client)
+  }
+
+  /** Switch the language of subsequent calls; null reverts to the shop default. */
+  public setLocale(locale: string | null): void {
+    this.client.setLocale(locale)
+  }
+
+  public getLocale(): string | null {
+    return this.client.getLocale()
   }
 }
 
 export type { ShopperConfig, TokenStorage } from './client'
 export { AuthModule } from './auth'
 export type { RegisterPayload, LoginPayload, ResetPasswordPayload } from './auth'
-export { StoreModule, CustomerModule, type Paginated } from './store'
+export { StoreModule, CustomerModule, CartModule, type Paginated } from './store'
+export type {
+  CreateCartPayload,
+  CreateCartLinePayload,
+  UpdateCartLinePayload,
+  ShippingOptionList,
+} from './store'
 export { ShopperApiError, buildQuery } from './http'
-export type { RequestParams, FetchOptions } from './http'
+export type { RequestParams, FetchOptions, FetchRequestOptions } from './http'
 export { flatten } from './json-api'
 export type {
   JsonApiDocument,

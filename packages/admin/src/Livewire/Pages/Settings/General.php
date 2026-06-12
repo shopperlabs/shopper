@@ -213,7 +213,7 @@ class General extends Component implements HasActions, HasSchemas
                             ->prefix(
                                 fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                                     <x-shopper::icons.facebook
-                                        class="size-5 text-gray-400 dark:text-gray-500"
+                                        class="size-5 text-sh-fg-muted"
                                         aria-hidden="true"
                                     />
                                 Blade))
@@ -227,7 +227,7 @@ class General extends Component implements HasActions, HasSchemas
                                     ->prefix(
                                         fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                                             <x-shopper::icons.instagram
-                                                class="size-5 text-gray-400 dark:text-gray-500"
+                                                class="size-5 text-sh-fg-muted"
                                                 aria-hidden="true"
                                             />
                                         Blade))
@@ -239,7 +239,7 @@ class General extends Component implements HasActions, HasSchemas
                                     ->prefix(
                                         fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                                             <x-shopper::icons.twitter
-                                                class="size-4 text-gray-400 dark:text-gray-500"
+                                                class="size-4 text-sh-fg-muted"
                                                 aria-hidden="true"
                                             />
                                         Blade))

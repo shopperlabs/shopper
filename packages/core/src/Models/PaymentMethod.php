@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,15 +45,6 @@ class PaymentMethod extends Model implements PaymentMethodContract
         return shopper_table('payment_methods');
     }
 
-    /**
-     * @param  Builder<PaymentMethod>  $query
-     * @return Builder<PaymentMethod>
-     */
-    public function scopeEnabled(Builder $query): Builder
-    {
-        return $query->where('is_enabled', true);
-    }
-
     public function logo(): ?string
     {
         if (! app()->bound('shopper.payment.logo')) {
@@ -68,6 +60,16 @@ class PaymentMethod extends Model implements PaymentMethodContract
     protected static function newFactory(): PaymentMethodFactory
     {
         return PaymentMethodFactory::new();
+    }
+
+    /**
+     * @param  Builder<PaymentMethod>  $query
+     * @return Builder<PaymentMethod>
+     */
+    #[Scope]
+    protected function enabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
     }
 
     protected function casts(): array

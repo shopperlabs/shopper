@@ -83,3 +83,26 @@ it('lists only enabled currencies and retrieves one by code', function (): void 
 
     $this->getJson('/store/currencies/ZZZ')->assertNotFound();
 });
+
+it('translates country names through the `Accept-Language` header', function (): void {
+    $this->getJson('/store/countries/DE', ['Accept-Language' => 'fr'])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.name', 'Germany')
+        ->assertJsonPath('data.attributes.translated_name', 'Allemagne');
+
+    $this->getJson('/store/countries/DE', ['Accept-Language' => 'fr-FR,fr;q=0.9,en;q=0.8'])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.translated_name', 'Allemagne');
+
+    $this->getJson('/store/countries/DE')
+        ->assertOk()
+        ->assertJsonPath('data.attributes.translated_name', 'Germany');
+});
+
+it('falls back to a supported locale when the requested one is not offered', function (): void {
+    $this->getJson('/store/countries/DE', ['Accept-Language' => '../../etc/passwd'])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.translated_name', 'Germany');
+
+    expect(app()->getLocale())->toBeIn(array_keys(config('shopper.admin.locales')));
+});

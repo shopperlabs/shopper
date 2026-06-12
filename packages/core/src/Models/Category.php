@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -87,15 +88,6 @@ class Category extends Model implements CategoryContract, ShopperHasMedia
     }
 
     /**
-     * @param  Builder<Category>  $query
-     * @return Builder<Category>
-     */
-    public function scopeEnabled(Builder $query): Builder
-    {
-        return $query->where('is_enabled', true);
-    }
-
-    /**
      * @return HasManyOfDescendants<static, $this>
      */
     public function descendantCategories(): HasManyOfDescendants
@@ -114,6 +106,16 @@ class Category extends Model implements CategoryContract, ShopperHasMedia
     protected static function newFactory(): CategoryFactory
     {
         return CategoryFactory::new();
+    }
+
+    /**
+     * @param  Builder<Category>  $query
+     * @return Builder<Category>
+     */
+    #[Scope]
+    protected function enabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
     }
 
     protected function casts(): array

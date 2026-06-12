@@ -132,7 +132,7 @@ class UpdateVariant extends SlideOverComponent implements HasActions, HasSchemas
                             ->label(__('shopper::pages/products.shipping.package_dimension'))
                             ->content(
                                 new HtmlString(Blade::render(<<<'BLADE'
-                                    <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
+                                    <p class="max-w-2xl text-sm text-sh-fg-muted">
                                         {{ __('shopper::pages/products.shipping.package_dimension_description') }}
                                     </p>
                                 BLADE))

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -61,15 +62,6 @@ class Brand extends Model implements BrandContract, ShopperHasMedia
     }
 
     /**
-     * @param  Builder<Brand>  $query
-     * @return Builder<Brand>
-     */
-    public function scopeEnabled(Builder $query): Builder
-    {
-        return $query->where('is_enabled', true);
-    }
-
-    /**
      * @return HasMany<Product, $this>
      */
     public function products(): HasMany
@@ -80,6 +72,16 @@ class Brand extends Model implements BrandContract, ShopperHasMedia
     protected static function newFactory(): BrandFactory
     {
         return BrandFactory::new();
+    }
+
+    /**
+     * @param  Builder<Brand>  $query
+     * @return Builder<Brand>
+     */
+    #[Scope]
+    protected function enabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
     }
 
     protected function casts(): array

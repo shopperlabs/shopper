@@ -345,7 +345,7 @@ final class InitializationWizard extends Component implements HasActions, HasSch
         return new HtmlString(Blade::render(<<<'Blade'
             <x-dynamic-component
                 :component="'shopper::icons.' . $name"
-                class="size-5 text-gray-400 dark:text-gray-500"
+                class="size-5 text-sh-fg-muted"
                 aria-hidden="true"
             />
         Blade, ['name' => $name]));

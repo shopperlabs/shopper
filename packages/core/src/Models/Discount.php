@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
@@ -133,11 +134,17 @@ class Discount extends Model implements DiscountContract
         return $this->belongsTo(Zone::class, 'zone_id');
     }
 
+    protected static function newFactory(): DiscountFactory
+    {
+        return DiscountFactory::new();
+    }
+
     /**
      * @param  Builder<Discount>  $query
      * @return Builder<Discount>
      */
-    public function scopeActive(Builder $query): Builder
+    #[Scope]
+    protected function active(Builder $query): Builder
     {
         $now = now();
 
@@ -150,11 +157,6 @@ class Discount extends Model implements DiscountContract
             ->where(fn (Builder $inner) => $inner
                 ->whereNull('usage_limit')
                 ->orWhereColumn('total_use', '<', 'usage_limit'));
-    }
-
-    protected static function newFactory(): DiscountFactory
-    {
-        return DiscountFactory::new();
     }
 
     /**

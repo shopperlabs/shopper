@@ -198,7 +198,7 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
                         TextEntry::make('configuration')
                             ->label(__('shopper::words.configuration'))
                             ->state(new HtmlString(Blade::render(<<<'Blade'
-                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                <p class="text-sm text-sh-fg-muted">
                                     {{ __('shopper::pages/discounts.configuration_description') }}
                                 </p>
                             Blade))),
@@ -220,7 +220,7 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
                         TextEntry::make('dates')
                             ->label(__('shopper::pages/discounts.active_dates'))
                             ->state(new HtmlString(Blade::render(<<<'Blade'
-                                <p class="text-sm leading-6 text-gray-500 dark:text-gray-400">
+                                <p class="text-sm leading-6 text-sh-fg-muted">
                                     {{ __('shopper::pages/discounts.active_dates_description') }}
                                 </p>
                             Blade))),
@@ -243,7 +243,7 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
                         TextEntry::make('conditions')
                             ->label(__('shopper::words.conditions'))
                             ->state(new HtmlString(Blade::render(<<<'Blade'
-                                <p class="text-sm leading-6 text-gray-500 dark:text-gray-400">
+                                <p class="text-sm leading-6 text-sh-fg-muted">
                                     {{ __('shopper::pages/discounts.condition_description') }}
                                 </p>
                             Blade))),

@@ -14,6 +14,7 @@ final readonly class ShippingRate
         public string $carrierCode,
         public ?string $estimatedDays = null,
         public ?string $estimatedDelivery = null,
+        public string $priceType = 'calculated',
     ) {}
 
     public function formattedAmount(): string
@@ -34,6 +35,7 @@ final readonly class ShippingRate
             'carrier_code' => $this->carrierCode,
             'estimated_days' => $this->estimatedDays,
             'estimated_delivery' => $this->estimatedDelivery,
+            'price_type' => $this->priceType,
         ];
     }
 }

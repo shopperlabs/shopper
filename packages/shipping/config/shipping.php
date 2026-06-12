@@ -85,4 +85,17 @@ return [
 
     'units' => env('SHIPPING_UNITS', 'metric'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Live Rates Cache
+    |--------------------------------------------------------------------------
+    |
+    | Quotes returned by carrier APIs (UPS, FedEx, ...) are cached for this
+    | many seconds, keyed by addresses and packages. Set to 0 to call the
+    | carrier API on every rate request. Manual rates are never cached.
+    |
+    */
+
+    'rates_cache_ttl' => env('SHIPPING_RATES_CACHE_TTL', 600),
+
 ];

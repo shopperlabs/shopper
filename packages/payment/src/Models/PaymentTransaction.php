@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Payment\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -46,33 +47,6 @@ class PaymentTransaction extends Model
     }
 
     /**
-     * @param  Builder<PaymentTransaction>  $query
-     * @return Builder<PaymentTransaction>
-     */
-    public function scopeSuccessful(Builder $query): Builder
-    {
-        return $query->where('status', TransactionStatus::Success);
-    }
-
-    /**
-     * @param  Builder<PaymentTransaction>  $query
-     * @return Builder<PaymentTransaction>
-     */
-    public function scopeForDriver(Builder $query, string $driver): Builder
-    {
-        return $query->where('driver', $driver);
-    }
-
-    /**
-     * @param  Builder<PaymentTransaction>  $query
-     * @return Builder<PaymentTransaction>
-     */
-    public function scopeOfType(Builder $query, TransactionType $type): Builder
-    {
-        return $query->where('type', $type);
-    }
-
-    /**
      * @return BelongsTo<Order, $this>
      */
     public function order(): BelongsTo
@@ -86,6 +60,36 @@ class PaymentTransaction extends Model
     public function paymentMethod(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
+    }
+
+    /**
+     * @param  Builder<PaymentTransaction>  $query
+     * @return Builder<PaymentTransaction>
+     */
+    #[Scope]
+    protected function successful(Builder $query): Builder
+    {
+        return $query->where('status', TransactionStatus::Success);
+    }
+
+    /**
+     * @param  Builder<PaymentTransaction>  $query
+     * @return Builder<PaymentTransaction>
+     */
+    #[Scope]
+    protected function forDriver(Builder $query, string $driver): Builder
+    {
+        return $query->where('driver', $driver);
+    }
+
+    /**
+     * @param  Builder<PaymentTransaction>  $query
+     * @return Builder<PaymentTransaction>
+     */
+    #[Scope]
+    protected function ofType(Builder $query, TransactionType $type): Builder
+    {
+        return $query->where('type', $type);
     }
 
     protected function casts(): array

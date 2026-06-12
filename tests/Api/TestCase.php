@@ -12,6 +12,7 @@ use Shopper\Cart\CartServiceProvider;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Http\HttpServiceProvider;
 use Shopper\Payment\PaymentServiceProvider;
+use Shopper\Shipping\ShippingServiceProvider;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
@@ -41,6 +42,7 @@ abstract class TestCase extends \Tests\TestCase
             SidebarServiceProvider::class,
             CartServiceProvider::class,
             PaymentServiceProvider::class,
+            ShippingServiceProvider::class,
             MediaLibraryServiceProvider::class,
             PermissionServiceProvider::class,
             ScrambleServiceProvider::class,

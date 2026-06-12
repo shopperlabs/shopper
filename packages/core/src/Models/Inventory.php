@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -59,15 +60,6 @@ class Inventory extends Model implements InventoryContract
     }
 
     /**
-     * @param  Builder<Inventory>  $query
-     * @return Builder<Inventory>
-     */
-    public function scopeDefault(Builder $query): Builder
-    {
-        return $query->where('is_default', true);
-    }
-
-    /**
      * @return BelongsTo<Country, $this>
      */
     public function country(): BelongsTo
@@ -86,6 +78,16 @@ class Inventory extends Model implements InventoryContract
     protected static function newFactory(): InventoryFactory
     {
         return InventoryFactory::new();
+    }
+
+    /**
+     * @param  Builder<Inventory>  $query
+     * @return Builder<Inventory>
+     */
+    #[Scope]
+    protected function default(Builder $query): Builder
+    {
+        return $query->where('is_default', true);
     }
 
     protected function casts(): array
