@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -277,27 +278,29 @@ class Order extends Model implements OrderContract
         return $this->belongsTo(CarrierOption::class, 'shipping_option_id');
     }
 
-    /**
-     * @param  Builder<Order>  $query
-     * @return Builder<Order>
-     */
-    public function scopeArchived(Builder $query): Builder
+    protected static function newFactory(): OrderFactory
     {
-        return $query->where('status', OrderStatus::Archived);
+        return OrderFactory::new();
     }
 
     /**
      * @param  Builder<Order>  $query
      * @return Builder<Order>
      */
-    public function scopeNotArchived(Builder $query): Builder
+    #[Scope]
+    protected function notArchived(Builder $query): Builder
     {
         return $query->where('status', '!=', OrderStatus::Archived);
     }
 
-    protected static function newFactory(): OrderFactory
+    /**
+     * @param  Builder<Order>  $query
+     * @return Builder<Order>
+     */
+    #[Scope]
+    protected function archived(Builder $query): Builder
     {
-        return OrderFactory::new();
+        return $query->where('status', OrderStatus::Archived);
     }
 
     protected function casts(): array

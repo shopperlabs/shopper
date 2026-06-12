@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -53,24 +54,6 @@ class Channel extends Model implements ChannelContract
     }
 
     /**
-     * @param  Builder<Channel>  $query
-     * @return Builder<Channel>
-     */
-    public function scopeDefault(Builder $query): Builder
-    {
-        return $query->where('is_default', true);
-    }
-
-    /**
-     * @param  Builder<Channel>  $query
-     * @return Builder<Channel>
-     */
-    public function scopeEnabled(Builder $query): Builder
-    {
-        return $query->where('is_enabled', true);
-    }
-
-    /**
      * @return MorphToMany<Product, $this>
      */
     public function products(): MorphToMany
@@ -85,6 +68,26 @@ class Channel extends Model implements ChannelContract
     protected static function newFactory(): ChannelFactory
     {
         return ChannelFactory::new();
+    }
+
+    /**
+     * @param  Builder<Channel>  $query
+     * @return Builder<Channel>
+     */
+    #[Scope]
+    protected function default(Builder $query): Builder
+    {
+        return $query->where('is_default', true);
+    }
+
+    /**
+     * @param  Builder<Channel>  $query
+     * @return Builder<Channel>
+     */
+    #[Scope]
+    protected function enabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
     }
 
     protected function casts(): array

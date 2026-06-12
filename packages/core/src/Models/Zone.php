@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -99,15 +100,6 @@ class Zone extends Model implements ZoneContract
     }
 
     /**
-     * @param  Builder<Zone>  $query
-     * @return Builder<Zone>
-     */
-    public function scopeEnabled(Builder $query): Builder
-    {
-        return $query->where('is_enabled', true);
-    }
-
-    /**
      * @return BelongsTo<Currency, $this>
      */
     public function currency(): BelongsTo
@@ -158,6 +150,16 @@ class Zone extends Model implements ZoneContract
     protected static function newFactory(): ZoneFactory
     {
         return ZoneFactory::new();
+    }
+
+    /**
+     * @param  Builder<Zone>  $query
+     * @return Builder<Zone>
+     */
+    #[Scope]
+    protected function enabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
     }
 
     protected function casts(): array

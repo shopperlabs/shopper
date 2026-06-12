@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -48,15 +49,6 @@ class CarrierOption extends Model implements CarrierOptionContract
     }
 
     /**
-     * @param  Builder<CarrierOption>  $query
-     * @return Builder<CarrierOption>
-     */
-    public function scopeEnabled(Builder $query): Builder
-    {
-        return $query->where('is_enabled', true);
-    }
-
-    /**
      * @return BelongsTo<Carrier, $this>
      */
     public function carrier(): BelongsTo
@@ -75,6 +67,16 @@ class CarrierOption extends Model implements CarrierOptionContract
     protected static function newFactory(): CarrierOptionFactory
     {
         return CarrierOptionFactory::new();
+    }
+
+    /**
+     * @param  Builder<CarrierOption>  $query
+     * @return Builder<CarrierOption>
+     */
+    #[Scope]
+    protected function enabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
     }
 
     protected function casts(): array
