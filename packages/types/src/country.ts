@@ -9,6 +9,8 @@ export interface Country {
   public_id?: string
   /** The name of the country. */
   name: string
+  /** The country name translated in the negotiated locale (Accept-Language). */
+  translated_name?: string
   /** The official name of the country. */
   name_official?: string
   /** The region of the country. */

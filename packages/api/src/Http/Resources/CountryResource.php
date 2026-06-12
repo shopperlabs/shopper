@@ -21,6 +21,7 @@ final class CountryResource extends JsonApiResource
     {
         return [
             'name' => $this->name,
+            'translated_name' => $this->translated_name,
             'name_official' => $this->name_official,
             'region' => $this->region,
             'subregion' => $this->subregion,

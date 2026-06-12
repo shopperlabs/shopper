@@ -20,11 +20,22 @@ export default class Shopper {
 
   public readonly auth: AuthModule
 
-  public constructor(config: ShopperConfig) {
-    const client = new HttpClient(config)
+  private readonly client: HttpClient
 
-    this.store = new StoreModule(client)
-    this.auth = new AuthModule(client)
+  public constructor(config: ShopperConfig) {
+    this.client = new HttpClient(config)
+
+    this.store = new StoreModule(this.client)
+    this.auth = new AuthModule(this.client)
+  }
+
+  /** Switch the language of subsequent calls; null reverts to the shop default. */
+  public setLocale(locale: string | null): void {
+    this.client.setLocale(locale)
+  }
+
+  public getLocale(): string | null {
+    return this.client.getLocale()
   }
 }
 

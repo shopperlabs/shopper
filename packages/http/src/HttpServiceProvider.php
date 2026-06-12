@@ -14,6 +14,7 @@ use Shopper\Http\Contracts\ZoneResolver;
 use Shopper\Http\Enum\RateLimit;
 use Shopper\Http\Exceptions\JsonApiErrorRenderer;
 use Shopper\Http\Middleware\EnsureJsonApiResponse;
+use Shopper\Http\Middleware\NegotiateLocale;
 use Shopper\Http\Middleware\ResolveCustomer;
 use Shopper\Http\Middleware\ResolveZone;
 use Shopper\Http\Zone\DefaultZoneResolver;
@@ -93,12 +94,14 @@ final class HttpServiceProvider extends PackageServiceProvider
         $router->middlewareGroup('shopper:store', array_merge([
             'throttle:'.RateLimit::Default->value,
             EnsureJsonApiResponse::class,
+            NegotiateLocale::class,
             ResolveZone::class,
         ], (array) config('shopper.http.middleware.store', [])));
 
         $router->middlewareGroup('shopper:store-auth', array_merge([
             'throttle:'.RateLimit::Default->value,
             EnsureJsonApiResponse::class,
+            NegotiateLocale::class,
             ResolveZone::class,
             'auth:sanctum',
             ResolveCustomer::class,

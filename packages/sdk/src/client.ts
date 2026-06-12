@@ -33,6 +33,12 @@ export interface ShopperConfig {
   baseUrl: string
   /** Store route prefix used by the resource accessors. Defaults to "store". */
   storePrefix?: string
+  /**
+   * Locale sent as the Accept-Language header on every request. The API
+   * negotiates it against the locales the shop supports and answers with
+   * translated content (country names, translatable addons, ...).
+   */
+  locale?: string
   /** Extra headers merged into every request (auth tokens, locale, ...). */
   headers?: Record<string, string>
   /** Custom fetch implementation (defaults to the global fetch). */
@@ -58,13 +64,25 @@ export class HttpClient {
 
   private readonly fetchImpl: typeof globalThis.fetch
 
+  private locale: string | null
+
   public constructor(config: ShopperConfig) {
     this.baseUrl = config.baseUrl.replace(/\/$/, '')
     this.storePrefix = (config.storePrefix ?? 'store').replace(/^\/|\/$/g, '')
+    this.locale = config.locale ?? null
     this.headers = config.headers ?? {}
     this.tokens = config.tokenStorage ?? new MemoryTokenStorage()
     // Bind to the global so the browser fetch keeps `this === window`
     this.fetchImpl = (config.fetch ?? globalThis.fetch).bind(globalThis)
+  }
+
+  /** Switch the language of subsequent calls; null reverts to the shop default. */
+  public setLocale(locale: string | null): void {
+    this.locale = locale
+  }
+
+  public getLocale(): string | null {
+    return this.locale
   }
 
   public async request(path: string, options?: FetchOptions): Promise<JsonApiDocument> {
@@ -92,6 +110,7 @@ export class HttpClient {
         Accept: 'application/vnd.api+json',
         ...(body !== undefined && ! isForm ? { 'Content-Type': 'application/json' } : {}),
         ...(token !== null ? { Authorization: `Bearer ${token}` } : {}),
+        ...(this.locale !== null ? { 'Accept-Language': this.locale } : {}),
         ...this.headers,
       },
       ...(body !== undefined ? { body: isForm ? (body as FormData) : JSON.stringify(body) } : {}),
