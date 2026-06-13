@@ -3,13 +3,6 @@
 @endphp
 
 <div class="flex shrink-0 items-center gap-3">
-    <x-filament::badge :color="$discount->start_at <= now() ? 'success' : 'warning'">
-        @if ($discount->start_at <= now())
-            {{ __('shopper::words.active_for_users') }}
-        @else
-            {{ __('shopper::words.scheduled') }}
-        @endif
-    </x-filament::badge>
     <p class="text-sm leading-6 text-sh-fg-muted">
         @if ($discount->end_at)
             <span>{{ $discount->start_at->format('d M, Y') }}</span>

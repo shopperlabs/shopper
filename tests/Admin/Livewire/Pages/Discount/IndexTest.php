@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
+use Shopper\Core\Enum\DiscountApplyTo;
+use Shopper\Core\Enum\DiscountStatus;
 use Shopper\Core\Models\Discount;
 use Shopper\Livewire\Pages\Discount\Index;
 use Tests\Core\Stubs\User;
@@ -38,5 +40,33 @@ describe(Index::class, function (): void {
         Livewire::test(Index::class)
             ->filterTable('is_active', true)
             ->assertCountTableRecords(2);
+    });
+
+    it('shows the derived `Expired` status for an enabled discount past its end date', function (): void {
+        $discount = Discount::factory()->create([
+            'is_active' => true,
+            'apply_to' => DiscountApplyTo::Order(),
+            'start_at' => now()->subMonth(),
+            'end_at' => now()->subDay(),
+        ]);
+
+        Livewire::test(Index::class)
+            ->loadTable()
+            ->assertTableColumnStateSet('status', DiscountStatus::Expired, $discount);
+    });
+
+    it('shows the derived `LimitReached` status when usage has hit its limit', function (): void {
+        $discount = Discount::factory()->create([
+            'is_active' => true,
+            'apply_to' => DiscountApplyTo::Order(),
+            'start_at' => now()->subDay(),
+            'end_at' => now()->addMonth(),
+            'usage_limit' => 100,
+            'total_use' => 100,
+        ]);
+
+        Livewire::test(Index::class)
+            ->loadTable()
+            ->assertTableColumnStateSet('status', DiscountStatus::LimitReached, $discount);
     });
 })->group('livewire', 'discounts');
