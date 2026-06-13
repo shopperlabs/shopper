@@ -343,3 +343,50 @@ it('exposes discounts and taxes computed by the cart pipelines', function (): vo
         ->and($line['attributes']['tax_lines'][0]['rate'])->toEqual(10)
         ->and($line['attributes']['tax_lines'][0]['amount'])->toBe(400);
 });
+
+it('transfers a guest cart to the authenticated customer', function (): void {
+    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $customer = User::factory()->create();
+
+    Sanctum::actingAs($customer, ['store']);
+
+    $this->postJson("/store/carts/{$cart->public_id}/transfer")
+        ->assertOk()
+        ->assertJsonPath('data.id', (string) $cart->public_id);
+
+    expect($cart->refresh()->customer_id)->toBe($customer->id);
+});
+
+it('is idempotent when transferring an already owned cart', function (): void {
+    $customer = User::factory()->create();
+    $cart = Cart::query()->create(['currency_code' => 'USD', 'customer_id' => $customer->id]);
+
+    Sanctum::actingAs($customer, ['store']);
+
+    $this->postJson("/store/carts/{$cart->public_id}/transfer")->assertOk();
+
+    expect($cart->refresh()->customer_id)->toBe($customer->id);
+});
+
+it('refuses to transfer a cart owned by another customer', function (): void {
+    $owner = User::factory()->create();
+    $cart = Cart::query()->create(['currency_code' => 'USD', 'customer_id' => $owner->id]);
+
+    Sanctum::actingAs(User::factory()->create(), ['store']);
+
+    $this->postJson("/store/carts/{$cart->public_id}/transfer")->assertForbidden();
+
+    expect($cart->refresh()->customer_id)->toBe($owner->id);
+});
+
+it('requires authentication to transfer a cart', function (): void {
+    $cart = Cart::query()->create(['currency_code' => 'USD']);
+
+    $this->postJson("/store/carts/{$cart->public_id}/transfer")->assertUnauthorized();
+});
+
+it('returns 404 when transferring an unknown cart', function (): void {
+    Sanctum::actingAs(User::factory()->create(), ['store']);
+
+    $this->postJson('/store/carts/01JUNKNOWNCARTIDENTIFIER00/transfer')->assertNotFound();
+});

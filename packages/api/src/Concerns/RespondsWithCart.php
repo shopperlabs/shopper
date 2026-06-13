@@ -34,6 +34,23 @@ trait RespondsWithCart
     }
 
     /**
+     * Resolve a cart by its public id without enforcing ownership, so the
+     * caller decides how a foreign owner is handled (a guest cart transfer
+     * answers 403, not 404, when the cart belongs to another customer).
+     */
+    protected function findCartOrFail(string $publicId): Cart
+    {
+        /** @var Cart|null $cart */
+        $cart = resolve(CartContract::class)::query()->wherePublicId($publicId)->first();
+
+        if (! $cart) {
+            throw (new ModelNotFoundException)->setModel(Cart::class, [$publicId]);
+        }
+
+        return $cart;
+    }
+
+    /**
      * Every cart response carries the totals computed by the cart pipelines,
      * so a single GET is enough to render the cart. Relations are reloaded
      * after the run because the pipelines rewrite adjustments and tax lines;
