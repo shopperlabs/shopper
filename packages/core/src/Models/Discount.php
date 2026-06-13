@@ -18,6 +18,7 @@ use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountStatus;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Exceptions\DiscountTermsFrozenException;
 use Shopper\Core\Exceptions\DiscountZoneFrozenException;
 use Shopper\Core\Models\Contracts\Discount as DiscountContract;
 use Shopper\Core\Models\Traits\HasPublicId;
@@ -74,6 +75,16 @@ class Discount extends Model implements DiscountContract
             }
 
             throw new DiscountZoneFrozenException;
+        });
+
+        self::saving(function (self $discount): void {
+            if (! $discount->exists || $discount->total_use <= 0) {
+                return;
+            }
+
+            if ($discount->isDirty(['code', 'type', 'value'])) {
+                throw new DiscountTermsFrozenException;
+            }
         });
     }
 

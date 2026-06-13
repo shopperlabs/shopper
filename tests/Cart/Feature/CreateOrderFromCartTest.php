@@ -14,6 +14,9 @@ use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Exceptions\CampaignBudgetExceededException;
+use Shopper\Core\Models\Campaign;
+use Shopper\Core\Models\CampaignBudgetMovement;
 use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Country;
@@ -249,6 +252,64 @@ describe(CreateOrderFromCartAction::class, function (): void {
         expect($secondOrder->discount_id)->toBeNull()
             ->and($discount->refresh()->total_use)->toBe(1)
             ->and(Order::query()->where('discount_id', $discount->id)->count())->toBe(1);
+    });
+
+    it('draws down the parent campaign budget when a campaign-backed coupon is redeemed', function (): void {
+        $campaign = Campaign::factory()->withSpendBudget(amount: 1_000)->create(['currency_code' => 'USD']);
+
+        Discount::factory()->create([
+            'code' => 'CAMP10',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'total_use' => 0,
+            'usage_limit' => null,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'campaign_id' => $campaign->id,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->applyCoupon($this->cart, 'CAMP10');
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        $campaign->refresh();
+
+        expect($campaign->used_count)->toBe(1)
+            ->and($campaign->spent_amount)->toBeGreaterThan(0)
+            ->and(CampaignBudgetMovement::query()->where('order_id', $order->id)->count())->toBe(1);
+    });
+
+    it('blocks checkout and rolls everything back when the campaign budget is exhausted', function (): void {
+        $campaign = Campaign::factory()
+            ->withSpendBudget(amount: 1)
+            ->create(['currency_code' => 'USD', 'spent_amount' => 1]);
+
+        $discount = Discount::factory()->create([
+            'code' => 'CAMPFULL',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'total_use' => 0,
+            'usage_limit' => null,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'campaign_id' => $campaign->id,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->applyCoupon($this->cart, 'CAMPFULL');
+
+        expect(fn () => $this->action->execute($this->cart->refresh()))
+            ->toThrow(CampaignBudgetExceededException::class);
+
+        expect($discount->refresh()->total_use)->toBe(0)
+            ->and($this->cart->refresh()->isCompleted())->toBeFalse()
+            ->and(Order::query()->count())->toBe(0)
+            ->and(CampaignBudgetMovement::query()->count())->toBe(0);
     });
 
     it('throws `CartCompletedException` for already completed cart', function (): void {

@@ -16,24 +16,29 @@ use Shopper\Cart\Models\CartAddress;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Actions\CreateOrderTaxLinesAction;
+use Shopper\Core\Actions\ReserveCampaignBudget;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\OrderAddress;
 use Shopper\Core\Models\ProductVariant as ProductVariantModel;
+use Throwable;
 
 final readonly class CreateOrderFromCartAction
 {
     public function __construct(
         private CartManager $cartManager,
         private CreateOrderTaxLinesAction $createOrderTaxLines,
+        private ReserveCampaignBudget $reserveCampaignBudget,
     ) {}
 
     /**
      * @param  Closure(CartPipelineContext): void|null  $assertTotals  Runs against
      *                                                                 the totals computed under the cart lock, right before the order
      *                                                                 freezes them. Throw to abort: the transaction rolls back.
+     *
+     * @throws Throwable
      */
     public function execute(Cart $cart, ?Closure $assertTotals = null): Order
     {
@@ -97,6 +102,8 @@ final readonly class CreateOrderFromCartAction
             }
 
             $this->createOrderTaxLines->execute($order);
+
+            $this->reserveCampaignBudgetFor($discount, $context, $order->id);
 
             $order->refresh();
 
@@ -176,6 +183,27 @@ final readonly class CreateOrderFromCartAction
         $discount->refresh();
 
         return $discount;
+    }
+
+    /**
+     * Draw down the parent campaign budget once the order exists, so the
+     * movement is keyed to the order and a retried checkout cannot double
+     * spend (the cart lock and completed_at guard above already wrap this).
+     * Campaigns without caps still record the movement for analytics.
+     */
+    private function reserveCampaignBudgetFor(?Discount $discount, CartPipelineContext $context, int $orderId): void
+    {
+        if ($discount === null || $discount->campaign_id === null) {
+            return;
+        }
+
+        $campaign = $discount->campaign;
+
+        if ($campaign === null) {
+            return;
+        }
+
+        $this->reserveCampaignBudget->execute($campaign, $context->discountTotal, $orderId);
     }
 
     private function resolveItemName(Model $purchasable): string
