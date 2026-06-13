@@ -84,6 +84,17 @@ export class CartModule {
     return flatten<Cart>(await this.client.request(`${this.path}/${id}`, this.params(params))) as Cart
   }
 
+  /**
+   * Attach a guest cart to the authenticated customer, used when a guest signs
+   * in mid-checkout. Requires a customer token. Idempotent for a cart they
+   * already own; rejected for a cart that belongs to another customer.
+   */
+  public async transfer(cartId: string, params?: RequestParams): Promise<Cart> {
+    const document = await this.client.send('POST', `${this.path}/${cartId}/transfer`, undefined, this.params(params))
+
+    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+  }
+
   public async createLineItem(cartId: string, payload: CreateCartLinePayload, params?: RequestParams): Promise<Cart> {
     const document = await this.client.send('POST', `${this.path}/${cartId}/lines`, payload, this.params(params))
 
