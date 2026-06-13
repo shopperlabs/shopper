@@ -15,17 +15,21 @@ import { flatten } from '../json-api'
 import { CartModule } from './cart'
 import { CollectionResource } from './collection'
 import { CustomerModule } from './customer'
+import { OrderModule } from './order'
 
 export { CartModule } from './cart'
 export type {
+  CartAddressPayload,
   CreateCartLinePayload,
   CreateCartPayload,
+  SetCartAddressesPayload,
   ShippingOptionList,
   UpdateCartLinePayload,
 } from './cart'
 export { CollectionResource } from './collection'
 export type { Paginated } from './collection'
 export { CustomerModule } from './customer'
+export { OrderModule } from './order'
 
 /**
  * Store API surface, mirroring the catalog and geo endpoints. Resources are
@@ -55,6 +59,8 @@ export class StoreModule {
 
   public readonly cart: CartModule
 
+  public readonly order: OrderModule
+
   public constructor(private readonly client: HttpClient) {
     const prefix = `/${client.storePrefix}`
 
@@ -68,6 +74,7 @@ export class StoreModule {
     this.currency = new CollectionResource<Currency>(client, `${prefix}/currencies`)
     this.customer = new CustomerModule(client)
     this.cart = new CartModule(client)
+    this.order = new OrderModule(client)
   }
 
   /**

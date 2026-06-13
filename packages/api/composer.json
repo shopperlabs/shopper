@@ -15,6 +15,8 @@
     "shopper/cart": "*",
     "shopper/core": "*",
     "shopper/http": "*",
+    "shopper/payment": "*",
+    "shopper/shipping": "*",
     "spatie/laravel-medialibrary": "^11.5",
     "spatie/laravel-query-builder": "^7.3",
     "timacdonald/json-api": "^1.0@beta"

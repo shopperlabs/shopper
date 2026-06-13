@@ -10,9 +10,13 @@ final class Calculate
 {
     public function handle(CartPipelineContext $context, Closure $next): mixed
     {
-        $context->total = max(0, $context->taxInclusive
+        $context->shippingTotal = $context->cart->shipping_amount ?? 0;
+
+        $goodsTotal = max(0, $context->taxInclusive
             ? $context->subtotal - $context->discountTotal
             : $context->subtotal - $context->discountTotal + $context->taxTotal);
+
+        $context->total = $goodsTotal + $context->shippingTotal;
 
         return $next($context);
     }

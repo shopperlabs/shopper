@@ -39,14 +39,19 @@ class CustomerAddressResource {
 export class CustomerModule {
   public readonly address: CustomerAddressResource
 
-  public readonly order: Pick<CollectionResource<Order>, 'list'>
+  /**
+   * The customer's orders. list() answers a summary per order (number,
+   * statuses, totals); retrieve() is the full account view, expandable with
+   * `include: ['items', 'shipping_address', 'billing_address', 'payment_method', 'shippings', 'shippings.events', 'refund']`.
+   */
+  public readonly orders: CollectionResource<Order>
 
   private readonly path: string
 
   public constructor(private readonly client: HttpClient) {
     this.path = `/${client.storePrefix}/customers/me`
     this.address = new CustomerAddressResource(client, `${this.path}/addresses`)
-    this.order = new CollectionResource<Order>(client, `${this.path}/orders`)
+    this.orders = new CollectionResource<Order>(client, `${this.path}/orders`)
   }
 
   public async me(params?: RequestParams): Promise<Customer> {

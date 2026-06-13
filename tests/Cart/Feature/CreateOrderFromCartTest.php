@@ -14,11 +14,14 @@ use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Models\Carrier;
+use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\OrderAddress;
 use Shopper\Core\Models\Product;
 use Tests\Core\Stubs\User;
@@ -254,3 +257,37 @@ describe(CreateOrderFromCartAction::class, function (): void {
         $this->action->execute($this->cart->refresh());
     })->throws(CartCompletedException::class);
 })->group('cart', 'cart-order');
+
+it('copies the checkout selections from the cart onto the order', function (): void {
+    $method = PaymentMethod::factory()->create();
+    $carrier = Carrier::factory()->create(['slug' => 'main-carrier', 'is_enabled' => true]);
+    $option = CarrierOption::factory()->create(['carrier_id' => $carrier->id, 'price' => 950]);
+
+    $this->cartManager->add($this->cart, $this->product);
+    $this->cart->update([
+        'payment_method_id' => $method->id,
+        'shipping_option_id' => "main-carrier:{$option->public_id}",
+        'shipping_amount' => 950,
+    ]);
+
+    $order = $this->action->execute($this->cart->refresh());
+
+    expect($order->payment_method_id)->toBe($method->id)
+        ->and($order->shipping_amount)->toBe(950)
+        ->and($order->shipping_option_id)->toBe($option->id)
+        ->and($order->price_amount)->toBe(25 + 950);
+});
+
+it('leaves `shipping_option_id` empty for live-carrier rates and still freezes the amount', function (): void {
+    $this->cartManager->add($this->cart, $this->product);
+    $this->cart->update([
+        'shipping_option_id' => 'ups:express-03',
+        'shipping_amount' => 1295,
+    ]);
+
+    $order = $this->action->execute($this->cart->refresh());
+
+    expect($order->shipping_option_id)->toBeNull()
+        ->and($order->shipping_amount)->toBe(1295)
+        ->and($order->price_amount)->toBe(25 + 1295);
+});

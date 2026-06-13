@@ -19,7 +19,6 @@ use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
-use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Traits\HasModelContract;
 
@@ -29,6 +28,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read string $number
  * @property-read int $price_amount
  * @property-read ?int $tax_amount
+ * @property-read ?int $shipping_amount
  * @property-read string $notes
  * @property-read string $currency_code
  * @property-read ?int $zone_id
@@ -51,11 +51,12 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?CarrierOption $shippingOption
  * @property-read ?OrderAddress $shippingAddress
  * @property-read ?OrderAddress $billingAddress
+ * @property-read ?OrderRefund $refund
  * @property-read ?PaymentMethod $paymentMethod
  * @property-read ?Zone $zone
  * @property-read ?Channel $channel
  * @property-read ?static $parent
- * @property-read Model&ShopperUser $customer
+ * @property-read Model $customer
  * @property-read Collection<int, OrderItem> $items
  * @property-read Collection<int, OrderShipping> $shippings
  * @property-read Collection<int, Order> $children
@@ -199,7 +200,7 @@ class Order extends Model implements OrderContract
     }
 
     /**
-     * @return BelongsTo<Model&ShopperUser, $this>
+     * @return BelongsTo<Model, $this>
      */
     public function customer(): BelongsTo
     {

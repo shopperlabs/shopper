@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Requests\Cart\CreateCartRequest;
 use Shopper\Cart\Models\Cart;
-use Shopper\Core\Models\Contracts\Cart as CartContract;
+use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Core\Models\Zone;
 use Symfony\Component\HttpFoundation\Response;
 use TiMacDonald\JsonApi\JsonApiResource;

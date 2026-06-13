@@ -7,6 +7,7 @@ namespace Shopper\Cart;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Session\SessionManager;
 use Shopper\Cart\Models\Cart;
+use Shopper\Cart\Models\Contracts\Cart as CartContract;
 
 final class CartSessionManager
 {
@@ -19,7 +20,8 @@ final class CartSessionManager
         $cartId = $this->session->get($this->sessionKey());
 
         if ($cartId) {
-            $cart = Cart::query()->find($cartId);
+            /** @var Cart|null $cart */
+            $cart = resolve(CartContract::class)::query()->find($cartId);
 
             if ($cart && ! $cart->isCompleted()) {
                 return $cart;
@@ -38,7 +40,8 @@ final class CartSessionManager
      */
     public function create(array $attributes = []): Cart
     {
-        $cart = Cart::query()->create(array_merge([
+        /** @var Cart $cart */
+        $cart = resolve(CartContract::class)::query()->create(array_merge([
             'currency_code' => shopper_currency(),
         ], $attributes));
 

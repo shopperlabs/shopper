@@ -17,12 +17,12 @@ use Shopper\Shipping\DataTransferObjects\ShippingRate;
 use Shopper\Shipping\Services\CarrierRateService;
 use Symfony\Component\HttpFoundation\Response;
 
-final class GetCartShippingOptionsAction
+final readonly class GetCartShippingOptionsAction
 {
     public function __construct(
-        private readonly CarrierRateService $rateService,
-        private readonly ShippingAddressFactory $addressFactory,
-        private readonly CartPackagesBuilder $packagesBuilder,
+        private CarrierRateService $rateService,
+        private ShippingAddressFactory $addressFactory,
+        private CartPackagesBuilder $packagesBuilder,
     ) {}
 
     /**
@@ -39,7 +39,7 @@ final class GetCartShippingOptionsAction
         $zone = $cart->zone;
 
         if (! $zone) {
-            abort(Response::HTTP_UNPROCESSABLE_ENTITY, __('The cart has no shipping zone, so no shipping option applies to it.'));
+            abort(Response::HTTP_UNPROCESSABLE_ENTITY, __('shopper-api::messages.cart.no_zone'));
         }
 
         $lines = $this->shippableLines($cart);
@@ -58,7 +58,7 @@ final class GetCartShippingOptionsAction
             $origin = $this->addressFactory->origin();
 
             if (! $origin) {
-                $warnings[] = __('Live carrier rates are unavailable: no inventory location can act as the shipment origin.');
+                $warnings[] = __('shopper-api::messages.shipping.origin_missing');
             }
         }
 
@@ -70,7 +70,7 @@ final class GetCartShippingOptionsAction
         );
 
         foreach ($result->failedCarriers as $carrierName) {
-            $warnings[] = __('Rates from ":carrier" are temporarily unavailable.', ['carrier' => $carrierName]);
+            $warnings[] = __('shopper-api::messages.shipping.carrier_unavailable', ['carrier' => $carrierName]);
         }
 
         $carrierNames = $zone->carriers
@@ -95,13 +95,22 @@ final class GetCartShippingOptionsAction
             ->values();
 
         foreach (array_unique($droppedCurrencies) as $currency) {
-            $warnings[] = __('Options priced in :currency were removed: the cart is priced in :cart_currency.', [
+            $warnings[] = __('shopper-api::messages.shipping.currency_mismatch', [
                 'currency' => $currency,
                 'cart_currency' => $cart->currency_code,
             ]);
         }
 
         return ['options' => $options, 'warnings' => $warnings];
+    }
+
+    /**
+     * Whether the cart holds at least one line that physically ships, and so
+     * cannot complete without a delivery choice.
+     */
+    public function requiresShipping(Cart $cart): bool
+    {
+        return $this->shippableLines($cart)->isNotEmpty();
     }
 
     /**

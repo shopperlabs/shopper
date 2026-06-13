@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Cart\Actions;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Shopper\Cart\CartManager;
@@ -12,11 +13,13 @@ use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Exceptions\DiscountLimitReachedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartAddress;
+use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Actions\CreateOrderTaxLinesAction;
+use Shopper\Core\Models\CarrierOption;
+use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Core\Models\Discount;
-use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderAddress;
 use Shopper\Core\Models\ProductVariant as ProductVariantModel;
 
@@ -27,11 +30,16 @@ final readonly class CreateOrderFromCartAction
         private CreateOrderTaxLinesAction $createOrderTaxLines,
     ) {}
 
-    public function execute(Cart $cart): Order
+    /**
+     * @param  Closure(CartPipelineContext): void|null  $assertTotals  Runs against
+     *         the totals computed under the cart lock, right before the order
+     *         freezes them. Throw to abort: the transaction rolls back.
+     */
+    public function execute(Cart $cart, ?Closure $assertTotals = null): Order
     {
-        return DB::transaction(function () use ($cart): Order {
+        return DB::transaction(function () use ($cart, $assertTotals): Order {
             /** @var Cart $cart */
-            $cart = Cart::query()->lockForUpdate()->findOrFail($cart->id);
+            $cart = resolve(CartContract::class)::query()->lockForUpdate()->findOrFail($cart->id);
 
             if ($cart->isCompleted()) {
                 throw new CartCompletedException;
@@ -39,19 +47,26 @@ final readonly class CreateOrderFromCartAction
 
             $context = $this->cartManager->calculate($cart);
 
+            if ($assertTotals) {
+                $assertTotals($context);
+            }
+
             $discount = $this->reserveDiscount($cart, $context);
 
             $shippingAddress = $this->createOrderAddress($cart->shippingAddress(), $cart->customer_id);
             $billingAddress = $this->createOrderAddress($cart->billingAddress(), $cart->customer_id);
 
-            $order = Order::query()->create([
+            $order = resolve(Order::class)::query()->create([
                 'number' => generate_number(),
                 'price_amount' => $context->total,
                 'tax_amount' => $context->taxTotal,
+                'shipping_amount' => $cart->shipping_amount,
                 'currency_code' => $cart->currency_code,
                 'customer_id' => $cart->customer_id,
                 'channel_id' => $cart->channel_id,
                 'zone_id' => $cart->zone_id,
+                'payment_method_id' => $cart->payment_method_id,
+                'shipping_option_id' => $this->resolveCarrierOptionId($cart->shipping_option_id),
                 'shipping_address_id' => $shippingAddress?->id,
                 'billing_address_id' => $billingAddress?->id,
                 'discount_id' => $discount?->id,
@@ -84,12 +99,32 @@ final readonly class CreateOrderFromCartAction
 
             $order->refresh();
 
-            $cart->update(['completed_at' => now()]);
+            $cart->update([
+                'completed_at' => now(),
+                'order_id' => $order->id,
+            ]);
 
             CartCompleted::dispatch($cart, $order);
 
             return $order;
         });
+    }
+
+    /**
+     * A flat-rate option id is `{carrier_code}:{carrier_option_public_id}`,
+     * so the carrier option row can be linked back on the order. Live carrier
+     * rates have no local row and leave the foreign key empty; the frozen
+     * shipping_amount remains the source of truth for what was charged.
+     */
+    private function resolveCarrierOptionId(?string $shippingOptionId): ?int
+    {
+        if (! $shippingOptionId || ! str_contains($shippingOptionId, ':')) {
+            return null;
+        }
+
+        [, $serviceCode] = explode(':', $shippingOptionId, 2);
+
+        return CarrierOption::query()->where('public_id', $serviceCode)->value('id');
     }
 
     /**
@@ -115,7 +150,7 @@ final readonly class CreateOrderFromCartAction
         }
 
         if ($discount->usage_limit_per_user && $cart->customer_id !== null) {
-            $alreadyRedeemed = Order::query()
+            $alreadyRedeemed = resolve(Order::class)::query()
                 ->where('discount_id', $discount->id)
                 ->where('customer_id', $cart->customer_id)
                 ->exists();

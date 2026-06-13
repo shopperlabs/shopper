@@ -247,6 +247,41 @@ describe(CalculateLines::class, function (): void {
             ->and($context->total)->toBe($context->subtotal);
     });
 
+    it('adds shipping on top of the goods total in tax-inclusive mode', function (): void {
+        $country = Country::query()->where('cca2', 'FR')->first()
+            ?? Country::factory()->create(['cca2' => 'FR', 'name' => 'France']);
+
+        $taxZone = TaxZone::factory()->create([
+            'country_id' => $country->id,
+            'is_tax_inclusive' => true,
+        ]);
+
+        TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 20.00,
+            'is_default' => true,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product, quantity: 1);
+        $this->cartManager->addAddress($this->cart, AddressType::Shipping, [
+            'first_name' => 'Jean',
+            'last_name' => 'Dupont',
+            'address_1' => '1 Rue de Paris',
+            'city' => 'Paris',
+            'postal_code' => '75001',
+            'country_id' => $country->id,
+        ]);
+        $this->cart->update(['shipping_amount' => 800]);
+
+        $context = $this->cartManager->calculate($this->cart->refresh());
+
+        // The inclusive tax lives inside the goods prices and must never
+        // apply to the shipping amount stacked on top.
+        expect($context->taxInclusive)->toBeTrue()
+            ->and($context->shippingTotal)->toBe(800)
+            ->and($context->total)->toBe($context->subtotal + 800);
+    });
+
     it('skips tax calculation when no shipping address', function (): void {
         $this->cartManager->add($this->cart, $this->product, quantity: 1);
 
