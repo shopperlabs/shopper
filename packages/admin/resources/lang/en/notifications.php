@@ -32,6 +32,7 @@ return [
 
     'inventory' => [
         'removed' => 'Inventory Successfully removed.',
+        'updated' => 'Stock successfully updated.',
     ],
 
     'initialize' => 'Store successfully setup, you can now manage everything.',
@@ -70,6 +71,10 @@ return [
 
     'products' => [
         'remove' => 'The :item has been correctly removed.',
+    ],
+
+    'shipments' => [
+        'label_created' => 'Shipping label created',
     ],
 
     'unauthorized' => [

@@ -71,7 +71,7 @@
                                     'bg-sh-muted disabled:cursor-not-allowed disabled:opacity-50' => ! $prevOrder,
                                     'bg-sh-surface' => $prevOrder,
                                 ])
-                                aria-label="{{ __('Previous order') }}"
+                                aria-label="{{ __('shopper::words.previous_order') }}"
                                 @if(! $prevOrder) disabled @endif
                         >
                             <x-untitledui-chevron-left class="size-5" stroke-width="1.5" aria-hidden="true" />
@@ -84,7 +84,7 @@
                                     'bg-sh-muted disabled:cursor-not-allowed disabled:opacity-50' => ! $nextOrder,
                                     'bg-sh-surface' => $nextOrder,
                                 ])
-                                aria-label="{{ __('Next order') }}"
+                                aria-label="{{ __('shopper::words.next_order') }}"
                                 @if(! $nextOrder) disabled @endif
                             >
                             <x-untitledui-chevron-right class="size-5" stroke-width="1.5" aria-hidden="true" />

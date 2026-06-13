@@ -22,19 +22,19 @@ final class ResolvePurchasableAction
 
         if (! $purchasable instanceof Priceable) {
             throw ValidationException::withMessages([
-                'purchasable_id' => __('This product is not available for purchase.'),
+                'purchasable_id' => __('shopper-api::messages.purchasable.not_available'),
             ]);
         }
 
         if ($purchasable instanceof Product && $purchasable->canUseVariants()) {
             throw ValidationException::withMessages([
-                'purchasable_id' => __('This product is sold through its variants, add one of them instead.'),
+                'purchasable_id' => __('shopper-api::messages.purchasable.sold_through_variants'),
             ]);
         }
 
         if (! $purchasable->getPrice($currencyCode) instanceof Price) {
             throw ValidationException::withMessages([
-                'purchasable_id' => __('This product has no price for the :currency currency.', ['currency' => $currencyCode]),
+                'purchasable_id' => __('shopper-api::messages.purchasable.missing_price', ['currency' => $currencyCode]),
             ]);
         }
 

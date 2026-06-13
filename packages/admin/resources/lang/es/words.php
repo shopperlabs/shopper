@@ -58,6 +58,9 @@ return [
     'overview' => 'Resumen',
     'in_stock' => 'en stock',
     'out_stock' => 'agotado',
+    'in_stock_variants' => 'en stock para :count variante(s)',
+    'previous_order' => 'Pedido anterior',
+    'next_order' => 'Pedido siguiente',
     'event' => 'Evento',
     'adjustment' => 'Ajuste',
     'is_enabled' => 'Habilitado',
@@ -171,5 +174,6 @@ return [
     'manual' => 'Manual',
     'configured' => 'Configurado',
     'not_configured' => 'No configurado',
+    'show_less' => 'Mostrar menos',
 
 ];

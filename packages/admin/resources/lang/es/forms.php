@@ -71,6 +71,8 @@ return [
         'compare_price' => 'Precio de comparación',
         'cost_per_item' => 'Costo por artículo',
         'sku' => 'SKU (Unidad de mantenimiento de stock)',
+        'ean' => 'EAN',
+        'upc' => 'UPC',
         'barcode' => 'Código de barras (ISBN, UPC, GTIN, etc.)',
         'safety_stock' => 'Stock de seguridad',
         'width_unit' => 'Unidad de ancho',

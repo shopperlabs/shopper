@@ -26,12 +26,12 @@ final class AdminSendCredentials extends Notification
     public function toMail(ShopperUser&Model $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(__('Welcome to Shopper'))
-            ->greeting(__('Hello :name', ['name' => $notifiable->full_name]))
-            ->line(__('An account has been created for you as Administrator on the website :website', ['website' => config('app.url')]))
-            ->line(__('Email: :email - Password: :password', ['email' => $notifiable->email, 'password' => $this->password]))
-            ->line(__('You can use the following link to login:'))
-            ->action(__('Login'), route('shopper.login'))
-            ->line(__('After logging in you need to change your password by clicking on your name in the upper right corner of the admin area'));
+            ->subject(__('shopper::mails.admin.subject'))
+            ->greeting(__('shopper::mails.admin.greeting', ['name' => $notifiable->full_name]))
+            ->line(__('shopper::mails.admin.account_created', ['website' => config('app.url')]))
+            ->line(__('shopper::mails.admin.credentials', ['email' => $notifiable->email, 'password' => $this->password]))
+            ->line(__('shopper::mails.admin.login_link'))
+            ->action(__('shopper::mails.admin.action'), route('shopper.login'))
+            ->line(__('shopper::mails.admin.change_password'));
     }
 }

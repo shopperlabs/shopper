@@ -10,17 +10,11 @@ final class DiscountLimitReachedException extends RuntimeException
 {
     public static function global(string $code): self
     {
-        return new self(
-            "The discount [{$code}] reached its global usage limit between cart validation and order commit. "
-            .'No order was created.'
-        );
+        return new self(__('shopper-cart::exceptions.discount_limit.global', ['code' => $code]));
     }
 
     public static function perUser(string $code): self
     {
-        return new self(
-            "The discount [{$code}] has already been redeemed by this customer and is limited to one use per customer. "
-            .'No order was created.'
-        );
+        return new self(__('shopper-cart::exceptions.discount_limit.per_user', ['code' => $code]));
     }
 }

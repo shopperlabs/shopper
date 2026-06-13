@@ -1,7 +1,7 @@
 @component('shopper::mails.html.layout')
     {{-- Header --}}
     @slot('header')
-        @component('shopper::mails.html.header', ['url' => config('app.url'), 'description' => __('Online Shopping tool')])
+        @component('shopper::mails.html.header', ['url' => config('app.url'), 'description' => __('shopper::mails.tagline')])
             {{ config('app.name') }}
         @endcomponent
     @endslot

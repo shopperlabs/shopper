@@ -32,6 +32,7 @@ return [
 
     'inventory' => [
         'removed' => 'Inventaire supprimé avec succès',
+        'updated' => 'Stock mis à jour avec succès.',
     ],
 
     'initialize' => 'Le magasin ayant été configuré avec succès, vous pouvez maintenant tout gérer',
@@ -70,6 +71,10 @@ return [
 
     'products' => [
         'remove' => ':item a été correctement supprimé',
+    ],
+
+    'shipments' => [
+        'label_created' => 'Étiquette d\'expédition créée',
     ],
 
     'unauthorized' => [

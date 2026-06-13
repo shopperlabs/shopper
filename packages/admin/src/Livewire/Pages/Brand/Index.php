@@ -117,7 +117,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                         $records->each->updateStatus(false); // @phpstan-ignore-line
 
                         Notification::make()
-                            ->title(__('shopper::components.tables.status.updated'))
+                            ->title(__('shopper::layout.status.updated'))
                             ->body(
                                 __('shopper::notifications.disabled', [
                                     'item' => __('shopper::pages/brands.single'),
