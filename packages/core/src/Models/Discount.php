@@ -36,6 +36,7 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read ?int $usage_limit
  * @property-read bool $usage_limit_per_user
  * @property-read bool $is_active
+ * @property-read ?int $campaign_id
  * @property-read ?int $zone_id
  * @property-read array<string, mixed>|null $metadata
  * @property-read CarbonInterface $created_at
@@ -43,6 +44,7 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read CarbonInterface $start_at
  * @property-read ?CarbonInterface $end_at
  * @property-read ?Zone $zone
+ * @property-read ?Campaign $campaign
  * @property-read DiscountStatus $status
  * @property-read Collection<array-key, DiscountDetail> $items
  * @property-read Collection<array-key, Order> $orders
@@ -123,7 +125,7 @@ class Discount extends Model implements DiscountContract
      */
     public function orders(): HasMany
     {
-        return $this->hasMany(Order::class, 'discount_id');
+        return $this->hasMany(config('shopper.models.order'), 'discount_id');
     }
 
     /**
@@ -132,6 +134,14 @@ class Discount extends Model implements DiscountContract
     public function zone(): BelongsTo
     {
         return $this->belongsTo(Zone::class, 'zone_id');
+    }
+
+    /**
+     * @return BelongsTo<Campaign, $this>
+     */
+    public function campaign(): BelongsTo
+    {
+        return $this->belongsTo(config('shopper.models.campaign'), 'campaign_id');
     }
 
     protected static function newFactory(): DiscountFactory
