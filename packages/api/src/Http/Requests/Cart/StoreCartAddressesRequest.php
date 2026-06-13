@@ -22,6 +22,7 @@ final class StoreCartAddressesRequest extends FormRequest
         return [
             'shipping_address' => ['required_without:billing_address', 'array'],
             'billing_address' => ['required_without:shipping_address', 'array'],
+            'email' => ['nullable', 'email', 'max:255'],
             ...$this->addressRules('shipping_address'),
             ...$this->addressRules('billing_address'),
         ];
@@ -29,6 +30,10 @@ final class StoreCartAddressesRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        if ($this->filled('email')) {
+            $this->merge(['email' => mb_strtolower((string) $this->string('email'))]);
+        }
+
         foreach (['shipping_address', 'billing_address'] as $key) {
             $code = $this->input("{$key}.country_code");
 

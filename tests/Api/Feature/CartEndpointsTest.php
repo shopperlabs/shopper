@@ -73,6 +73,19 @@ it('rejects a currency the shop does not sell in', function (): void {
     $this->postJson('/store/carts', ['currency_code' => 'XXX'])->assertUnprocessable();
 });
 
+it('stores the contact email given at creation', function (): void {
+    $cartId = $this->postJson('/store/carts', ['email' => 'Guest@Example.com'])
+        ->assertCreated()
+        ->assertJsonPath('data.attributes.email', 'guest@example.com')
+        ->json('data.id');
+
+    expect(Cart::query()->where('public_id', $cartId)->value('email'))->toBe('guest@example.com');
+});
+
+it('rejects a malformed email at creation', function (): void {
+    $this->postJson('/store/carts', ['email' => 'not-an-email'])->assertUnprocessable();
+});
+
 it('retrieves a cart by its public id', function (): void {
     $cart = Cart::query()->create(['currency_code' => 'USD']);
 

@@ -62,6 +62,7 @@ final readonly class CreateOrderFromCartAction
                 'tax_amount' => $context->taxTotal,
                 'shipping_amount' => $cart->shipping_amount,
                 'currency_code' => $cart->currency_code,
+                'email' => $cart->email,
                 'customer_id' => $cart->customer_id,
                 'channel_id' => $cart->channel_id,
                 'zone_id' => $cart->zone_id,

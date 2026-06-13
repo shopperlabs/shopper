@@ -81,6 +81,8 @@ export interface Order extends Entity {
   notes: string | null
   /** The currency code for the order. */
   currency_code: string
+  /** The contact email of the order (store API). */
+  email?: string | null
   /** The order status. */
   status: OrderStatus
   /** The payment status. */

@@ -40,7 +40,7 @@ final readonly class CompleteCartAction
             return $order;
         }
 
-        $cart->load(['zone.currency', 'zone.carriers', 'lines.purchasable', 'addresses.country']);
+        $cart->load(['zone.currency', 'zone.carriers', 'lines.purchasable', 'addresses.country', 'customer']);
 
         if ($cart->lines->isEmpty()) {
             throw ValidationException::withMessages([
@@ -53,6 +53,8 @@ final readonly class CompleteCartAction
                 'payment_method' => __('shopper-api::messages.payment.method_required'),
             ]);
         }
+
+        $this->ensureEmail($cart);
 
         $this->refreshShipping($cart);
 
@@ -75,6 +77,28 @@ final readonly class CompleteCartAction
         $this->recordInitiatedPayment($cart, $order);
 
         return $order;
+    }
+
+    /**
+     * Freeze the contact email on the cart so the order can be confirmed and
+     * looked up. A customer cart falls back to the customer's own email; a
+     * guest cart must carry one, set at creation or with the checkout address.
+     */
+    private function ensureEmail(Cart $cart): void
+    {
+        if ($cart->email !== null) {
+            return;
+        }
+
+        $email = $cart->customer?->getAttribute('email');
+
+        if (! is_string($email)) {
+            throw ValidationException::withMessages([
+                'email' => __('shopper-api::messages.cart.email_required'),
+            ]);
+        }
+
+        $this->cartManager->setEmail($cart, $email);
     }
 
     /**
