@@ -39,4 +39,9 @@ return [
         'restricted_includes' => 'Solo `items` puede incluirse en la consulta de confirmación del pedido. Usa el endpoint de pedidos de la cuenta para el pedido completo.',
     ],
 
+    'promotion' => [
+        'not_found' => 'Este código promocional no es válido.',
+        'not_applicable' => 'Este código promocional no se aplica a tu carrito.',
+    ],
+
 ];

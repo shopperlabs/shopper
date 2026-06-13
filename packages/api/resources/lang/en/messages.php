@@ -39,4 +39,9 @@ return [
         'restricted_includes' => 'Only `items` can be included on the order confirmation lookup. Use the account order endpoint for the full order.',
     ],
 
+    'promotion' => [
+        'not_found' => 'This promotion code is invalid.',
+        'not_applicable' => 'This promotion code does not apply to your cart.',
+    ],
+
 ];

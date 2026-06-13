@@ -181,6 +181,34 @@ export class CartModule {
   }
 
   /**
+   * Apply a promotion code to the cart. An unknown, expired or non applicable
+   * code is rejected and the cart is left unchanged; on success the discount
+   * is folded into the cart totals (`cart.discount_total`).
+   */
+  public async applyPromotion(cartId: string, code: string, params?: RequestParams): Promise<Cart> {
+    const document = await this.client.send(
+      'POST',
+      `${this.path}/${cartId}/promotion`,
+      { code },
+      this.params(params),
+    )
+
+    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+  }
+
+  /** Remove the promotion code applied to the cart. */
+  public async removePromotion(cartId: string, params?: RequestParams): Promise<Cart> {
+    const document = await this.client.send(
+      'DELETE',
+      `${this.path}/${cartId}/promotion`,
+      undefined,
+      this.params(params),
+    )
+
+    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+  }
+
+  /**
    * Open a payment session with the driver of the cart's payment method
    * (a Stripe payment intent, ...). The response carries what the storefront
    * needs to confirm the payment: client secret, publishable key, redirect
