@@ -21,7 +21,7 @@ final class SettingsSidebar extends AbstractAdminSidebar
             $group->item(__('shopper::pages/settings/global.site'), function (Item $item): void {
                 $item->weight(1);
                 $item->setAuthorized($this->user->hasPermissionTo('system.settings'));
-                $item->route('shopper.settings.index');
+                $item->route('shopper.settings.shop');
                 $item->useSpa();
                 $item->setIcon('phosphor-faders');
             });

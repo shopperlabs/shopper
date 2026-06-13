@@ -15,7 +15,6 @@ return [
     */
 
     'pages' => [
-        'setting-index' => Pages\Settings\Index::class,
         'general' => Pages\Settings\General::class,
         'appearance' => Pages\Settings\Appearance::class,
         'location-index' => Pages\Settings\Locations\Index::class,

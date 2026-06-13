@@ -37,8 +37,4 @@ final class LayoutRenderHook
     public const string ACCOUNT_START = 'shopper::account.start';
 
     public const string ACCOUNT_END = 'shopper::account.end';
-
-    public const string SETTINGS_INDEX_START = 'shopper::settings.index.start';
-
-    public const string SETTINGS_INDEX_END = 'shopper::settings.index.end';
 }

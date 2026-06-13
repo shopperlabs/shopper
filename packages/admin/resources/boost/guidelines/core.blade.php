@@ -91,9 +91,9 @@ Use `{{ $assist->artisanCommand('make:shopper-page {PageName}') }}` to create a 
     <code-snippet name="Blade view for custom page" lang="blade">
     {{-- resources/views/livewire/shopper/shipping.blade.php --}}
     <x-shopper::container>
-        <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('Shipping Methods')">
+        <x-shopper::breadcrumb :back="route('shopper.settings.shop')" :current="__('Shipping Methods')">
             <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
-            <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('Settings')" />
+            <x-shopper::breadcrumb.link :link="route('shopper.settings.shop')" :title="__('Settings')" />
         </x-shopper::breadcrumb>
 
         <x-shopper::heading class="my-6" :title="__('Shipping Methods')" />

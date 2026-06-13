@@ -50,8 +50,8 @@ trait WithSettingsBreadcrumbs
     {
         return new Breadcrumb(
             text: __('shopper::pages/settings/global.menu'),
-            url: Route::has('shopper.settings.index')
-                ? route('shopper.settings.index')
+            url: Route::has('shopper.settings.shop')
+                ? route('shopper.settings.shop')
                 : null,
             icon: 'phosphor-faders',
             links: $this->settingsDropdownLinks(),
