@@ -25,6 +25,7 @@ export type {
   SetCartAddressesPayload,
   ShippingOptionList,
   UpdateCartLinePayload,
+  UpdateCartPayload,
 } from './cart'
 export { CollectionResource } from './collection'
 export type { Paginated } from './collection'

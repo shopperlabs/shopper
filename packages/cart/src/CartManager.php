@@ -15,6 +15,7 @@ use Shopper\Cart\Exceptions\InsufficientStockException;
 use Shopper\Cart\Exceptions\InvalidDiscountException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
+use Shopper\Cart\Models\CartLineAdjustment;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Cart\Pipelines\CartPipelineRunner;
 use Shopper\Core\Contracts\Priceable;
@@ -154,6 +155,45 @@ final readonly class CartManager
         $cart->update(['email' => $email]);
     }
 
+    /**
+     * @param  array<string, mixed>|null  $metadata
+     */
+    public function setMetadata(Cart $cart, ?array $metadata): void
+    {
+        $this->guardCompleted($cart);
+
+        $cart->update(['metadata' => $metadata]);
+    }
+
+    /**
+     * Re-price the cart in another currency. Each line's unit price is resolved
+     * again from its purchasable, and the frozen checkout choices that are
+     * bound to the old currency (shipping price, payment session) are dropped
+     * so they are quoted again against the new total.
+     */
+    public function changeCurrency(Cart $cart, string $currencyCode): void
+    {
+        $this->guardCompleted($cart);
+
+        DB::transaction(function () use ($cart, $currencyCode): void {
+            $cart->loadMissing('lines.purchasable.prices');
+
+            foreach ($cart->lines as $line) {
+                $purchasable = $line->purchasable;
+                $price = $purchasable instanceof Priceable ? $purchasable->getPrice($currencyCode) : null;
+
+                $line->update(['unit_price_amount' => $price ? $price->amount : 0]);
+            }
+
+            $cart->update([
+                'currency_code' => $currencyCode,
+                'shipping_option_id' => null,
+                'shipping_amount' => null,
+                'payment_session' => null,
+            ]);
+        });
+    }
+
     public function applyCoupon(Cart $cart, string $code): void
     {
         $this->guardCompleted($cart);
@@ -175,9 +215,9 @@ final readonly class CartManager
 
         $cart->update(['coupon_code' => null]);
 
-        foreach ($cart->lines as $line) {
-            $line->adjustments()->delete();
-        }
+        CartLineAdjustment::query()
+            ->whereIn('cart_line_id', $cart->lines()->select('id'))
+            ->delete();
 
         CouponRemoved::dispatch($cart);
     }

@@ -11,13 +11,13 @@ use Shopper\Cart\Models\Cart;
 use Shopper\Payment\Contracts\PaymentDriver;
 use Shopper\Payment\Exceptions\PaymentException;
 use Shopper\Payment\PaymentManager;
-use Throwable;
 
 final readonly class CreateCartPaymentSessionAction
 {
     public function __construct(
         private PaymentManager $paymentManager,
         private CartManager $cartManager,
+        private CancelPaymentSessionAction $cancelSession,
     ) {}
 
     /**
@@ -60,7 +60,7 @@ final readonly class CreateCartPaymentSessionAction
             return $existing;
         }
 
-        $this->cancelReplacedSession($cart->payment_session);
+        $this->cancelSession->execute($cart->payment_session);
 
         // The idempotency key is versioned per attempt, never derived from the
         // amount: providers cache responses by key (Stripe: 24h), so an
@@ -88,28 +88,6 @@ final readonly class CreateCartPaymentSessionAction
         ]);
 
         return new PaymentSession($cart, $driverCode, $result);
-    }
-
-    /**
-     * A replaced session leaves an open intent at the provider; cancel it
-     * best-effort so abandoned intents do not pile up in the provider
-     * dashboard. Failures are swallowed: the intent may already be cancelled
-     * or confirmed, or the driver may not support cancellation at all.
-     *
-     * @param  array<string, mixed>|null  $session
-     */
-    private function cancelReplacedSession(?array $session): void
-    {
-        if (! $session || ! isset($session['reference'])) {
-            return;
-        }
-
-        try {
-            $this->paymentManager
-                ->driver($session['driver'] ?? 'manual')
-                ->cancelPayment($session['reference']);
-        } catch (Throwable) {
-        }
     }
 
     /**

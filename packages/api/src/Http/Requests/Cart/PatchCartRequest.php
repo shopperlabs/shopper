@@ -7,7 +7,7 @@ namespace Shopper\Api\Http\Requests\Cart;
 use Illuminate\Foundation\Http\FormRequest;
 use Shopper\Api\Concerns\NormalizesCartInput;
 
-final class CreateCartRequest extends FormRequest
+final class PatchCartRequest extends FormRequest
 {
     use NormalizesCartInput;
 
@@ -22,9 +22,9 @@ final class CreateCartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'currency_code' => ['nullable', 'string', $this->currencyExistsRule()],
-            'email' => ['nullable', 'email', 'max:255'],
-            'metadata' => ['nullable', ...$this->metadataRules()],
+            'currency_code' => ['sometimes', 'required', 'string', $this->currencyExistsRule()],
+            'email' => ['sometimes', 'nullable', 'email', 'max:255'],
+            'metadata' => ['sometimes', 'nullable', ...$this->metadataRules()],
         ];
     }
 }

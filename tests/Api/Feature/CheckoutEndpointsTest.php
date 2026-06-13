@@ -738,3 +738,43 @@ it('rejects a promotion change on a completed cart', function (): void {
     $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])
         ->assertConflict();
 });
+
+it('rejects an expired promotion code', function (): void {
+    orderDiscount(['end_at' => now()->subDay()]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.source.pointer', '/data/attributes/code');
+
+    expect($this->cart->refresh()->coupon_code)->toBeNull();
+});
+
+it('removing a promotion from a cart without a coupon is a no-op', function (): void {
+    $this->deleteJson("/store/carts/{$this->cart->public_id}/promotion")
+        ->assertOk()
+        ->assertJsonPath('data.attributes.coupon_code', null);
+});
+
+it('hides the order email from the unauthenticated lookup', function (): void {
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")->json('data.id');
+
+    $this->getJson("/store/orders/{$orderId}")
+        ->assertOk()
+        ->assertJsonPath('data.attributes.email', null);
+});
+
+it('exposes the order email to the authenticated owner', function (): void {
+    $customer = User::factory()->create(['email' => 'owner@example.com']);
+    $this->cart->update(['customer_id' => $customer->id, 'email' => null]);
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+
+    Sanctum::actingAs($customer, ['store']);
+
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")->json('data.id');
+
+    $this->getJson("/store/customers/me/orders/{$orderId}")
+        ->assertOk()
+        ->assertJsonPath('data.attributes.email', 'owner@example.com');
+});

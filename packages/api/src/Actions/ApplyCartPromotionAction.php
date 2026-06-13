@@ -4,28 +4,30 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Actions;
 
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Validation\ValidationException;
 use Shopper\Cart\CartManager;
-use Shopper\Cart\Discounts\DiscountValidator;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Models\Discount;
 
 final readonly class ApplyCartPromotionAction
 {
     public function __construct(
+        private DatabaseManager $database,
         private CartManager $cartManager,
-        private DiscountValidator $validator,
+        private RevalidateCartCouponAction $revalidateCoupon,
     ) {}
 
     /**
-     * Apply a promotion code to the cart. The code is validated against the
-     * cart before it is persisted, so an invalid, expired or non applicable
-     * code is rejected with its reason and leaves the cart untouched.
+     * Apply a promotion code to the cart. The apply-then-verify runs under a
+     * row lock inside a transaction: a concurrent apply cannot interleave, and
+     * a code that does not reduce the cart (unknown reason, currency, zone,
+     * eligibility, expiry, or products not in the cart) rolls back so the cart
+     * is left untouched. The failure reason is never disclosed to the client,
+     * to keep the codes from being enumerated.
      */
     public function execute(Cart $cart, string $code): void
     {
-        $cart->load(['lines.purchasable']);
-
         $discount = Discount::query()->where('code', $code)->first();
 
         if (! $discount instanceof Discount || ! $discount->is_active) {
@@ -34,24 +36,16 @@ final readonly class ApplyCartPromotionAction
             ]);
         }
 
-        $result = $this->validator->validate($discount, $this->cartManager->calculate($cart));
+        $this->database->transaction(function () use ($cart, $code): void {
+            $cart->newQuery()->lockForUpdate()->whereKey($cart->getKey())->first();
 
-        if (! $result->valid) {
-            throw ValidationException::withMessages([
-                'code' => $result->failureReason ?? __('shopper-api::messages.promotion.not_applicable'),
-            ]);
-        }
+            $this->cartManager->applyCoupon($cart, $code);
 
-        $this->cartManager->applyCoupon($cart, $code);
-
-        // The code is valid in itself, but it may target products this cart
-        // does not hold: confirm it actually reduces the total before keeping it.
-        if ($this->cartManager->calculate($cart)->discountTotal <= 0) {
-            $this->cartManager->removeCoupon($cart);
-
-            throw ValidationException::withMessages([
-                'code' => __('shopper-api::messages.promotion.not_applicable'),
-            ]);
-        }
+            if (! $this->revalidateCoupon->execute($cart)) {
+                throw ValidationException::withMessages([
+                    'code' => __('shopper-api::messages.promotion.not_applicable'),
+                ]);
+            }
+        });
     }
 }

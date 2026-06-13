@@ -9,6 +9,7 @@ return [
         'nothing_to_collect' => 'El carrito no tiene ningún importe que cobrar.',
         'no_zone' => 'El carrito no tiene zona de envío, ninguna opción de envío se le aplica.',
         'email_required' => 'Indica una dirección de correo electrónico antes de finalizar el carrito.',
+        'metadata_too_large' => 'Los metadatos son demasiado grandes.',
     ],
 
     'purchasable' => [
