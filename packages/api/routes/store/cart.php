@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Shopper\Api\Http\Controllers\Cart\CartAddressController;
-use Shopper\Http\Enum\RateLimit;
 use Shopper\Api\Http\Controllers\Cart\CartController;
 use Shopper\Api\Http\Controllers\Cart\CartLineController;
 use Shopper\Api\Http\Controllers\Cart\CartPaymentMethodController;
@@ -12,6 +11,7 @@ use Shopper\Api\Http\Controllers\Cart\CartShippingMethodController;
 use Shopper\Api\Http\Controllers\Cart\CompleteCartController;
 use Shopper\Api\Http\Controllers\Cart\PaymentSessionController;
 use Shopper\Api\Http\Controllers\Cart\ShippingOptionController;
+use Shopper\Http\Enum\RateLimit;
 
 Route::post('/carts', [CartController::class, 'store']);
 Route::get('/carts/{cartId}', [CartController::class, 'show']);

@@ -32,8 +32,8 @@ final readonly class CreateOrderFromCartAction
 
     /**
      * @param  Closure(CartPipelineContext): void|null  $assertTotals  Runs against
-     *         the totals computed under the cart lock, right before the order
-     *         freezes them. Throw to abort: the transaction rolls back.
+     *                                                                 the totals computed under the cart lock, right before the order
+     *                                                                 freezes them. Throw to abort: the transaction rolls back.
      */
     public function execute(Cart $cart, ?Closure $assertTotals = null): Order
     {

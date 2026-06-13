@@ -21,8 +21,8 @@ use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
-use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\OrderAddress;
+use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Product;
 use Tests\Core\Stubs\User;
 

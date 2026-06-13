@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 return [
 
-
     'discount' => [
         'not_active' => 'Discount is not active.',
         'not_started' => 'Discount has not started yet.',
