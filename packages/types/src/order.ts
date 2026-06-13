@@ -73,6 +73,10 @@ export interface Order extends Entity {
   price_amount: number
   /** The tax amount (in cents). */
   tax_amount: number | null
+  /** The frozen shipping price charged on the order (in cents). */
+  shipping_amount?: number | null
+  /** The items total in cents ((unit price * qty) - discount, store API). */
+  total?: number
   /** The notes for the order. */
   notes: string | null
   /** The currency code for the order. */
@@ -102,7 +106,7 @@ export interface Order extends Entity {
   /** The parent order ID (for split orders). */
   parent_order_id: number | null
   /** The metadata of the order. */
-  metadata: Metadata
+  metadata?: Metadata
   /** The shipping option ID. */
   shipping_option_id?: number | null
   /** The shipping option. */
@@ -113,6 +117,12 @@ export interface Order extends Entity {
   billingAddress?: OrderAddress | null
   /** The payment method. */
   paymentMethod?: PaymentMethod | null
+  /** The shipping address, when expanded through `include=shipping_address` (store API). */
+  shipping_address?: OrderAddress | null
+  /** The billing address, when expanded through `include=billing_address` (store API). */
+  billing_address?: OrderAddress | null
+  /** The payment method, when expanded through `include=payment_method` (store API). */
+  payment_method?: PaymentMethod | null
   /** The zone. */
   zone?: Zone | null
   /** The channel. */
@@ -205,6 +215,8 @@ export interface OrderAddress extends Entity {
 export interface OrderShipping extends Entity {
   /** The shipment status. */
   status: ShipmentStatus | null
+  /** The display name of the carrier (store API). */
+  carrier_name?: string | null
   /** The date the order was shipped. */
   shipped_at: string | null
   /** The date the order was received. */
@@ -237,7 +249,7 @@ export interface OrderShipping extends Entity {
  * OrderShippingEvent model.
  */
 export interface OrderShippingEvent {
-  id: number
+  id?: number | string
   /** The event status. */
   status: ShipmentStatus
   /** The description of the event. */
@@ -245,17 +257,17 @@ export interface OrderShippingEvent {
   /** The location of the event. */
   location: string | null
   /** The latitude of the event. */
-  latitude: number | null
+  latitude?: number | null
   /** The longitude of the event. */
-  longitude: number | null
+  longitude?: number | null
   /** The metadata of the event. */
-  metadata: Metadata
+  metadata?: Metadata
   /** The date the event occurred. */
   occurred_at: string
   /** The creation date. */
   created_at?: string
   /** The order shipping ID. */
-  order_shipping_id: number
+  order_shipping_id?: number
   /** The shipment this event belongs to. */
   shipment?: OrderShipping
 }

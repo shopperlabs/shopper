@@ -4,14 +4,7 @@ declare(strict_types=1);
 
 return [
 
-    'exceptions' => [
-        'cart_completed' => 'El carrito ya ha sido completado.',
-        'cart_not_found' => 'Carrito no encontrado.',
-        'insufficient_stock' => 'Stock insuficiente para este artículo.',
-    ],
-
     'discount' => [
-        'not_found' => 'Código de descuento no encontrado.',
         'not_active' => 'El descuento no está activo.',
         'not_started' => 'El descuento aún no ha comenzado.',
         'expired' => 'El descuento ha expirado.',

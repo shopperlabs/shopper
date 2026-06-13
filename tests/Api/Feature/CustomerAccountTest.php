@@ -5,10 +5,15 @@ declare(strict_types=1);
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\Sanctum;
+use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\OrderAddress;
 use Shopper\Core\Models\OrderItem;
+use Shopper\Core\Models\OrderShipping;
+use Shopper\Core\Models\OrderShippingEvent;
+use Shopper\Core\Models\PaymentMethod;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Api\TestCase::class);
@@ -174,4 +179,67 @@ it('lists only the customer orders with computed totals', function (): void {
         ->and($row['attributes']['status'])->toBe($order->status->value);
 
     expect(collect($response->json('included'))->pluck('type'))->toContain('order-items');
+});
+
+it('retrieves a customer order with its full account detail', function (): void {
+    $order = Order::factory()->create([
+        'customer_id' => $this->customer->id,
+        'shipping_address_id' => OrderAddress::factory()->create(['city' => 'Paris'])->id,
+        'billing_address_id' => OrderAddress::factory()->create(['city' => 'Lyon'])->id,
+        'payment_method_id' => PaymentMethod::factory()->create(['title' => 'Card', 'driver' => 'manual'])->id,
+    ]);
+
+    OrderItem::factory()->create([
+        'order_id' => $order->id,
+        'quantity' => 2,
+        'unit_price_amount' => 1500,
+        'discount_amount' => 0,
+    ]);
+
+    $shipping = OrderShipping::factory()->create([
+        'order_id' => $order->id,
+        'tracking_number' => '1Z999',
+        'status' => ShipmentStatus::InTransit,
+    ]);
+    OrderShippingEvent::factory()->create([
+        'order_shipping_id' => $shipping->id,
+        'status' => ShipmentStatus::InTransit,
+        'location' => 'Roissy Hub',
+    ]);
+
+    Sanctum::actingAs($this->customer, ['store']);
+
+    $response = $this->getJson(
+        "/store/customers/me/orders/{$order->public_id}"
+        .'?include=items,shipping_address,billing_address,payment_method,shippings,shippings.events'
+    )
+        ->assertOk()
+        ->assertJsonPath('data.id', $order->public_id)
+        ->assertJsonPath('data.attributes.total', 3000);
+
+    $included = collect($response->json('included'));
+
+    expect($included->pluck('type'))->toContain('order-items', 'order-addresses', 'payment-methods', 'order-shippings', 'order-shipping-events')
+        ->and($included->where('type', 'order-addresses')->pluck('attributes.city')->all())->toContain('Paris', 'Lyon')
+        ->and($included->firstWhere('type', 'payment-methods')['attributes']['title'])->toBe('Card');
+
+    $shipment = $included->firstWhere('type', 'order-shippings');
+
+    expect($shipment['attributes']['tracking_number'])->toBe('1Z999')
+        ->and($shipment['attributes']['status'])->toBe(ShipmentStatus::InTransit->value)
+        ->and($shipment['attributes'])->not->toHaveKey('events');
+
+    $events = $included->where('type', 'order-shipping-events')->values();
+
+    expect($events)->toHaveCount(1)
+        ->and($events[0]['attributes']['location'])->toBe('Roissy Hub')
+        ->and($events[0]['attributes']['status'])->toBe(ShipmentStatus::InTransit->value);
+});
+
+it('hides another customer order from the account detail endpoint', function (): void {
+    $foreign = Order::factory()->create(['customer_id' => User::factory()->create()->id]);
+
+    Sanctum::actingAs($this->customer, ['store']);
+
+    $this->getJson("/store/customers/me/orders/{$foreign->public_id}")->assertNotFound();
 });

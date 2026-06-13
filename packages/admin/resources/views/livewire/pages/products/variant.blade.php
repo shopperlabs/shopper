@@ -35,7 +35,7 @@
                             </div>
                             <div>
                                 <dt class="text-sm/6 font-medium text-sh-fg-secondary">
-                                    {{ __('Ean') }}
+                                    {{ __('shopper::forms.label.ean') }}
                                 </dt>
                                 <dd class="mt-2 text-sm/5 text-sh-fg-muted sm:mt-3">
                                     {{ $variant->ean ?? '-' }}
@@ -43,7 +43,7 @@
                             </div>
                             <div>
                                 <dt class="text-sm/6 font-medium text-sh-fg-secondary">
-                                    {{ __('Upc') }}
+                                    {{ __('shopper::forms.label.upc') }}
                                 </dt>
                                 <dd class="mt-2 text-sm/5 text-sh-fg-muted sm:mt-3">
                                     {{ $variant->upc ?? '-' }}

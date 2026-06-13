@@ -14,6 +14,6 @@ final class InsufficientStockException extends RuntimeException
         public readonly int $available,
         public readonly int $requested,
     ) {
-        parent::__construct(__('shopper-cart::messages.exceptions.insufficient_stock'));
+        parent::__construct(__('shopper-cart::exceptions.insufficient_stock'));
     }
 }

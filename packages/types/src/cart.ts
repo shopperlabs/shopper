@@ -3,6 +3,7 @@ import type { Entity, Metadata } from './common'
 import type { Country } from './country'
 import type { Customer } from './customer'
 import type { Discount } from './discount'
+import type { PaymentMethod } from './payment_method'
 import type { Product } from './product'
 import type { ProductVariant } from './product_variant'
 import type { TaxRate } from './tax'
@@ -24,7 +25,7 @@ export interface Cart extends Entity {
   /** The date the cart was completed (converted to order). */
   completed_at: string | null
   /** The metadata of the cart. */
-  metadata: Metadata
+  metadata?: Metadata
   /** The number of lines in the cart (store API). */
   lines_count?: number
   /** The sum of the line quantities (store API). */
@@ -35,10 +36,14 @@ export interface Cart extends Entity {
   discount_total?: number
   /** The tax total in cents, computed by the cart pipelines (store API). */
   tax_total?: number
+  /** The frozen price of the selected shipping option in cents (store API). */
+  shipping_total?: number
   /** The cart total in cents, computed by the cart pipelines (store API). */
   total?: number
   /** Whether taxes are already included in the prices (store API). */
   tax_inclusive?: boolean
+  /** The composite id `{carrier_code}:{service_code}` of the selected shipping option. */
+  shipping_option_id?: string | null
   /** The customer ID. */
   customer_id: number | null
   /** The channel ID. */
@@ -55,6 +60,8 @@ export interface Cart extends Entity {
   channel?: Channel | null
   /** The zone. */
   zone?: Zone | null
+  /** The selected payment method, when expanded through `include=payment_method`. */
+  payment_method?: PaymentMethod | null
 }
 
 /**

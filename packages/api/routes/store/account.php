@@ -21,4 +21,5 @@ Route::prefix('customers/me')->group(function (): void {
     Route::patch('/addresses/{address}', [AddressController::class, 'update']);
     Route::delete('/addresses/{address}', [AddressController::class, 'destroy']);
     Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/orders/{orderId}', [OrderController::class, 'show']);
 });

@@ -117,10 +117,34 @@ final readonly class CartManager
      */
     public function addAddress(Cart $cart, AddressType $type, array $data): void
     {
+        $this->guardCompleted($cart);
+
         $cart->addresses()->updateOrCreate(
             ['type' => $type],
             array_merge($data, ['type' => $type]),
         );
+    }
+
+    /**
+     * Bind a delivery choice to the cart. The option id is the composite
+     * `{carrier_code}:{service_code}` quoted by the shipping options endpoint
+     * and the amount is the server-resolved price, never a client value.
+     */
+    public function setShippingMethod(Cart $cart, string $optionId, int $amount): void
+    {
+        $this->guardCompleted($cart);
+
+        $cart->update([
+            'shipping_option_id' => $optionId,
+            'shipping_amount' => $amount,
+        ]);
+    }
+
+    public function setPaymentMethod(Cart $cart, int $paymentMethodId): void
+    {
+        $this->guardCompleted($cart);
+
+        $cart->update(['payment_method_id' => $paymentMethodId]);
     }
 
     public function applyCoupon(Cart $cart, string $code): void
@@ -130,7 +154,7 @@ final readonly class CartManager
         $discount = Discount::query()->where('code', $code)->first();
 
         if (! $discount instanceof Discount) {
-            throw new InvalidDiscountException(__('shopper-cart::messages.discount.not_found'));
+            throw new InvalidDiscountException(__('shopper-cart::exceptions.discount_not_found'));
         }
 
         $cart->update(['coupon_code' => $code]);
@@ -161,7 +185,7 @@ final readonly class CartManager
     private function guardQuantity(int $quantity): void
     {
         if ($quantity < 1) {
-            throw new InvalidArgumentException(__('Quantity must be at least 1.'));
+            throw new InvalidArgumentException(__('shopper-cart::exceptions.quantity_minimum'));
         }
     }
 

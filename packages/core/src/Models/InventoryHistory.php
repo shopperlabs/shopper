@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Database\Factories\InventoryHistoryFactory;
 use Shopper\Core\Models\Contracts\InventoryHistory as InventoryHistoryContract;
-use Shopper\Core\Models\Contracts\ShopperUser;
 
 /**
  * @property-read int $id
@@ -30,7 +29,7 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read Inventory $inventory
- * @property-read Model&ShopperUser $user
+ * @property-read Model $user
  */
 class InventoryHistory extends Model implements InventoryHistoryContract
 {
@@ -53,7 +52,7 @@ class InventoryHistory extends Model implements InventoryHistoryContract
     }
 
     /**
-     * @return BelongsTo<Model&ShopperUser, $this>
+     * @return BelongsTo<Model, $this>
      */
     public function user(): BelongsTo
     {

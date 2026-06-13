@@ -14,6 +14,8 @@ final class CartPipelineContext
 
     public int $taxTotal = 0;
 
+    public int $shippingTotal = 0;
+
     public int $total = 0;
 
     public bool $taxInclusive = false;

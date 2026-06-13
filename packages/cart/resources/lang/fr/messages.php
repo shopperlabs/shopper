@@ -4,14 +4,7 @@ declare(strict_types=1);
 
 return [
 
-    'exceptions' => [
-        'cart_completed' => 'Le panier a déjà été finalisé.',
-        'cart_not_found' => 'Panier introuvable.',
-        'insufficient_stock' => 'Stock insuffisant pour cet article.',
-    ],
-
     'discount' => [
-        'not_found' => 'Code de réduction introuvable.',
         'not_active' => 'La réduction n\'est pas active.',
         'not_started' => 'La réduction n\'a pas encore commencé.',
         'expired' => 'La réduction a expiré.',

@@ -176,7 +176,7 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
                         }
 
                         Notification::make()
-                            ->title(__('Stock successfully Updated'))
+                            ->title(__('shopper::notifications.inventory.updated'))
                             ->success()
                             ->send();
 

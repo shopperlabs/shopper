@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Cart\Console;
 
 use Illuminate\Console\Command;
-use Shopper\Cart\Models\Cart;
+use Shopper\Cart\Models\Contracts\Cart as CartContract;
 
 final class PruneCartsCommand extends Command
 {
@@ -18,7 +18,7 @@ final class PruneCartsCommand extends Command
     {
         $days = (int) ($this->option('days') ?? config('shopper.cart.prune_after_days', 30));
 
-        $count = Cart::query()
+        $count = resolve(CartContract::class)::query()
             ->whereNull('completed_at')
             ->where('updated_at', '<', now()->subDays($days))
             ->delete();

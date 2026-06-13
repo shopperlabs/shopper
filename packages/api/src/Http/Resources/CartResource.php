@@ -40,8 +40,10 @@ final class CartResource extends JsonApiResource
             'subtotal' => $this->totals->subtotal ?? 0,
             'discount_total' => $this->totals->discountTotal ?? 0,
             'tax_total' => $this->totals->taxTotal ?? 0,
+            'shipping_total' => $this->totals->shippingTotal ?? 0,
             'total' => $this->totals->total ?? 0,
             'tax_inclusive' => $this->totals->taxInclusive ?? false,
+            'shipping_option_id' => $this->shipping_option_id,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
@@ -52,6 +54,9 @@ final class CartResource extends JsonApiResource
         return [
             'lines' => fn (): JsonApiResourceCollection => CartLineResource::collection($this->lines),
             'addresses' => fn (): JsonApiResourceCollection => CartAddressResource::collection($this->addresses),
+            'payment_method' => fn (): ?PaymentMethodResource => $this->paymentMethod
+                ? PaymentMethodResource::make($this->paymentMethod)
+                : null,
         ];
     }
 }

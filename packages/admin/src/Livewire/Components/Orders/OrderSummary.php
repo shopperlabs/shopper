@@ -28,7 +28,7 @@ class OrderSummary extends Component
         $carrier = $shippingOption?->carrier;
         $paymentMethod = $this->order->paymentMethod;
         $subtotal = $this->order->total();
-        $shippingPrice = $shippingOption?->price ?? 0; // @phpstan-ignore nullsafe.neverNull
+        $shippingPrice = $this->order->shipping_amount ?? $shippingOption?->price ?? 0; // @phpstan-ignore nullsafe.neverNull
         $taxAmount = $this->order->tax_amount ?? 0;
         $isTaxInclusive = $this->resolveTaxInclusivity();
 

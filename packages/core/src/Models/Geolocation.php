@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Core\Database\Factories\GeolocationFactory;
 use Shopper\Core\Models\Contracts\Geolocation as GeolocationContract;
-use Shopper\Core\Models\Contracts\ShopperUser;
 
 /**
  * @property-read int $id
@@ -21,7 +20,7 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read array<string, mixed>|null $extreme_ip_lookup
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
- * @property-read Model&ShopperUser $user
+ * @property-read Model $user
  * @property-read Order $order
  */
 class Geolocation extends Model implements GeolocationContract
@@ -39,7 +38,7 @@ class Geolocation extends Model implements GeolocationContract
     }
 
     /**
-     * @return BelongsTo<Model&ShopperUser, $this>
+     * @return BelongsTo<Model, $this>
      */
     public function user(): BelongsTo
     {

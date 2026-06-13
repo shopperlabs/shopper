@@ -4,14 +4,7 @@ declare(strict_types=1);
 
 return [
 
-    'exceptions' => [
-        'cart_completed' => 'Cart has already been completed.',
-        'cart_not_found' => 'Cart not found.',
-        'insufficient_stock' => 'Insufficient stock for this item.',
-    ],
-
     'discount' => [
-        'not_found' => 'Discount code not found.',
         'not_active' => 'Discount is not active.',
         'not_started' => 'Discount has not started yet.',
         'expired' => 'Discount has expired.',

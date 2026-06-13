@@ -12,6 +12,7 @@ final class ApiServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package->name('shopper-api')
+            ->hasTranslations()
             ->hasRoutes(['store'])
             ->hasCommands([
                 Console\InstallCommand::class,

@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Http\Controllers\Cart;
 
-use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Shopper\Api\Actions\ResolvePurchasableAction;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Requests\Cart\StoreCartLineRequest;
 use Shopper\Api\Http\Requests\Cart\UpdateCartLineRequest;
 use Shopper\Cart\CartManager;
-use Shopper\Cart\Exceptions\CartCompletedException;
-use Shopper\Cart\Exceptions\InsufficientStockException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
-use Symfony\Component\HttpFoundation\Response;
 use TiMacDonald\JsonApi\JsonApiResource;
 
 final class CartLineController
@@ -90,21 +85,5 @@ final class CartLineController
     {
         /** @var CartLine */
         return $cart->lines()->wherePublicId($publicId)->firstOrFail();
-    }
-
-    /**
-     * Domain failures from the cart manager become HTTP semantics: a stock
-     * shortage is a validation error on the quantity, touching a completed
-     * cart is a conflict.
-     */
-    private function mutateCart(Closure $operation): void
-    {
-        try {
-            $operation();
-        } catch (InsufficientStockException $exception) {
-            throw ValidationException::withMessages(['quantity' => $exception->getMessage()]);
-        } catch (CartCompletedException $exception) {
-            abort(Response::HTTP_CONFLICT, $exception->getMessage());
-        }
     }
 }

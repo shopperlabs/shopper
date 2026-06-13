@@ -12,10 +12,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\OrderAddressFactory;
 use Shopper\Core\Models\Contracts\OrderAddress as OrderAddressContract;
-use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Core\Models\Traits\HasPublicId;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read string $last_name
  * @property-read string $first_name
  * @property-read string $full_name
@@ -30,12 +31,14 @@ use Shopper\Core\Models\Contracts\ShopperUser;
  * @property-read ?string $country_name
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
- * @property-read Model&ShopperUser $customer
+ * @property-read Model $customer
  */
 class OrderAddress extends Model implements OrderAddressContract
 {
     /** @use HasFactory<OrderAddressFactory> */
     use HasFactory;
+
+    use HasPublicId;
 
     protected $guarded = [];
 
@@ -53,7 +56,7 @@ class OrderAddress extends Model implements OrderAddressContract
     }
 
     /**
-     * @return BelongsTo<Model&ShopperUser, $this>
+     * @return BelongsTo<Model, $this>
      */
     public function customer(): BelongsTo
     {

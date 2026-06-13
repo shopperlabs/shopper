@@ -18,11 +18,11 @@ class Dashboard
         /** @var ShopperUser&Permission $user */
         $user = Shopper::auth()->user();
 
-        abort_if(! $user->isAdmin() && ! $user->hasPermissionTo('system.dashboard'), 403, __('Unauthorized'));
+        abort_if(! $user->isAdmin() && ! $user->hasPermissionTo('system.dashboard'), 403, __('shopper::notifications.unauthorized.title'));
 
         if (blank(shopper_setting('email')) || blank(shopper_setting('street_address'))) {
             if ($request->ajax() || $request->wantsJson()) {
-                return response(__('Unauthorized'), Response::HTTP_UNAUTHORIZED);
+                return response(__('shopper::notifications.unauthorized.title'), Response::HTTP_UNAUTHORIZED);
             }
 
             return redirect()->route('shopper.initialize');

@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Channel;
-use Shopper\Core\Models\Contracts\Cart as CartContract;
+use Shopper\Core\Models\Order;
+use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Zone;
 use Shopper\Core\Traits\HasModelContract;
@@ -26,6 +28,11 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?int $customer_id
  * @property-read ?int $channel_id
  * @property-read ?int $zone_id
+ * @property-read ?int $payment_method_id
+ * @property-read ?int $order_id
+ * @property-read ?string $shipping_option_id
+ * @property-read ?int $shipping_amount
+ * @property-read ?array<string, mixed> $payment_session
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read Collection<int, CartLine> $lines
@@ -33,6 +40,8 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?Model $customer
  * @property-read ?Channel $channel
  * @property-read ?Zone $zone
+ * @property-read ?PaymentMethod $paymentMethod
+ * @property-read ?Order $order
  */
 class Cart extends Model implements CartContract
 {
@@ -106,11 +115,28 @@ class Cart extends Model implements CartContract
         return $this->belongsTo(Zone::class);
     }
 
+    /**
+     * @return BelongsTo<PaymentMethod, $this>
+     */
+    public function paymentMethod(): BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
+    }
+
+    /**
+     * @return BelongsTo<Order, $this>
+     */
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class, 'order_id');
+    }
+
     protected function casts(): array
     {
         return [
             'completed_at' => 'datetime',
             'metadata' => 'array',
+            'payment_session' => 'array',
         ];
     }
 }

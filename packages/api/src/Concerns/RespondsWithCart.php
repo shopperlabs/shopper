@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Concerns;
 
+use Closure;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Shopper\Api\Http\Resources\CartResource;
 use Shopper\Cart\CartManager;
+use Shopper\Cart\Exceptions\CartCompletedException;
+use Shopper\Cart\Exceptions\InsufficientStockException;
 use Shopper\Cart\Models\Cart;
-use Shopper\Core\Models\Contracts\Cart as CartContract;
+use Shopper\Cart\Models\Contracts\Cart as CartContract;
+use Symfony\Component\HttpFoundation\Response;
 
 trait RespondsWithCart
 {
@@ -41,5 +46,21 @@ trait RespondsWithCart
         $cart->load(['lines.purchasable', 'lines.adjustments', 'lines.taxLines', 'addresses.country']);
 
         return CartResource::make($cart)->withTotals($context);
+    }
+
+    /**
+     * Domain failures from the cart manager become HTTP semantics: a stock
+     * shortage is a validation error on the quantity, touching a completed
+     * cart is a conflict.
+     */
+    protected function mutateCart(Closure $operation): mixed
+    {
+        try {
+            return $operation();
+        } catch (InsufficientStockException $exception) {
+            throw ValidationException::withMessages(['quantity' => $exception->getMessage()]);
+        } catch (CartCompletedException $exception) {
+            abort(Response::HTTP_CONFLICT, $exception->getMessage());
+        }
     }
 }

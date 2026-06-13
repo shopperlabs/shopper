@@ -203,7 +203,7 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasS
         ]);
 
         $shipment->logEvent(ShipmentStatus::Pending, [
-            'description' => __('Shipping label created'),
+            'description' => __('shopper::notifications.shipments.label_created'),
         ]);
 
         $this->order->items()

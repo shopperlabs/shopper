@@ -48,7 +48,7 @@ class Devices extends Component implements HasActions, HasSchemas
                     ->label(__('shopper::forms.label.password'))
                     ->password()
                     ->required()
-                    ->placeholder(__('Enter your password')),
+                    ->placeholder(__('shopper::forms.placeholder.password')),
             ])
             ->action(function (array $data): void {
                 // @phpstan-ignore-next-line

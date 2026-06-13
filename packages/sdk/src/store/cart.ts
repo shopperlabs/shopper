@@ -1,4 +1,4 @@
-import type { Cart, ShippingOption } from '@shopperlabs/shopper-types'
+import type { Cart, Order, PaymentMethod, PaymentSession, ShippingOption } from '@shopperlabs/shopper-types'
 
 import type { HttpClient } from '../client'
 import type { RequestParams } from '../http'
@@ -22,6 +22,25 @@ export type CreateCartLinePayload = {
 export type UpdateCartLinePayload = {
   quantity?: number
   metadata?: Record<string, unknown> | null
+}
+
+export type CartAddressPayload = {
+  first_name?: string | null
+  last_name: string
+  company?: string | null
+  address_1: string
+  address_2?: string | null
+  city: string
+  state?: string | null
+  postal_code: string
+  phone?: string | null
+  /** ISO 3166-1 alpha-2 country code. */
+  country_code: string
+}
+
+export type SetCartAddressesPayload = {
+  shipping_address?: CartAddressPayload
+  billing_address?: CartAddressPayload
 }
 
 /** Delivery choices for a cart plus the non-fatal notices raised while quoting. */
@@ -107,6 +126,80 @@ export class CartModule {
       data: (flatten<ShippingOption>(document) ?? []) as ShippingOption[],
       warnings: (document.meta?.warnings as string[] | undefined) ?? [],
     }
+  }
+
+  /**
+   * Set the checkout addresses of the cart. Send `shipping_address`,
+   * `billing_address` or both; each one replaces the address of its type.
+   * The shipping address unlocks live carrier rates in shippingOptions().
+   */
+  public async setAddresses(cartId: string, payload: SetCartAddressesPayload, params?: RequestParams): Promise<Cart> {
+    const document = await this.client.send('POST', `${this.path}/${cartId}/addresses`, payload, this.params(params))
+
+    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+  }
+
+  /**
+   * Pick a delivery choice from the ids quoted by shippingOptions(). The
+   * price is re-resolved server-side and folded into the cart totals.
+   */
+  public async setShippingMethod(cartId: string, optionId: string, params?: RequestParams): Promise<Cart> {
+    const document = await this.client.send(
+      'POST',
+      `${this.path}/${cartId}/shipping-method`,
+      { option_id: optionId },
+      this.params(params),
+    )
+
+    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+  }
+
+  /**
+   * List the payment methods available for the cart: enabled methods with a
+   * configured driver, restricted to the cart zone when it has one.
+   */
+  public async paymentMethods(cartId: string, params?: RequestParams): Promise<PaymentMethod[]> {
+    const document = await this.client.request(`${this.path}/${cartId}/payment-methods`, params)
+
+    return (flatten<PaymentMethod>(document) ?? []) as PaymentMethod[]
+  }
+
+  /** Set the payment method of the cart by the id listed in paymentMethods(). */
+  public async setPaymentMethod(cartId: string, paymentMethodId: string, params?: RequestParams): Promise<Cart> {
+    const document = await this.client.send(
+      'POST',
+      `${this.path}/${cartId}/payment-method`,
+      { payment_method_id: paymentMethodId },
+      this.params(params),
+    )
+
+    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+  }
+
+  /**
+   * Open a payment session with the driver of the cart's payment method
+   * (a Stripe payment intent, ...). The response carries what the storefront
+   * needs to confirm the payment: client secret, publishable key, redirect
+   * url. Calling it again while the total is unchanged resumes the same
+   * session; after the cart moved it opens a fresh one.
+   */
+  public async createPaymentSession(cartId: string, params?: RequestParams): Promise<PaymentSession> {
+    const document = await this.client.send('POST', `${this.path}/${cartId}/payment-session`, undefined, params)
+
+    return flatten<PaymentSession>(document as NonNullable<typeof document>) as PaymentSession
+  }
+
+  /**
+   * Place the order. The cart must carry a payment method, and a shipping
+   * method when it holds shippable lines. Completion is idempotent: retrying
+   * a timed-out call answers with the order already placed instead of
+   * duplicating it. Persist the returned order id: it is the key to the
+   * order confirmation lookup (sdk.store.order.retrieve()).
+   */
+  public async complete(cartId: string, params?: RequestParams): Promise<Order> {
+    const document = await this.client.send('POST', `${this.path}/${cartId}/complete`, undefined, params)
+
+    return flatten<Order>(document as NonNullable<typeof document>) as Order
   }
 
   private params(params?: RequestParams): RequestParams {

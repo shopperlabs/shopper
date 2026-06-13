@@ -10,6 +10,6 @@ final class CartCompletedException extends RuntimeException
 {
     public function __construct()
     {
-        parent::__construct(__('shopper-cart::messages.exceptions.cart_completed'));
+        parent::__construct(__('shopper-cart::exceptions.cart_completed'));
     }
 }

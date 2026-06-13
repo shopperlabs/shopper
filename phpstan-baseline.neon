@@ -49,12 +49,6 @@ parameters:
 			path: packages/admin/src/Livewire/Modals/ConfirmPassword.php
 
 		-
-			message: '#^Parameter \#2 \$user of callable Shopper\\Actions\\Auth\\ConfirmPassword expects Shopper\\Core\\Models\\Contracts\\ShopperUser, Shopper\\Livewire\\Modals\\User given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Modals/ConfirmPassword.php
-
-		-
 			message: '#^Called ''except'' on Laravel collection, but could have been retrieved as a query\.$#'
 			identifier: larastan.noUnnecessaryCollectionCall
 			count: 1
@@ -118,12 +112,6 @@ parameters:
 			message: '#^Anonymous function never returns null so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
-			path: packages/admin/src/Livewire/Pages/Settings/Team/Index.php
-
-		-
-			message: '#^PHPDoc tag @var with type Illuminate\\Database\\Eloquent\\Model is not subtype of native type Shopper\\Core\\Models\\Contracts\\ShopperUser\.$#'
-			identifier: varTag.nativeType
-			count: 2
 			path: packages/admin/src/Livewire/Pages/Settings/Team/Index.php
 
 		-
@@ -217,36 +205,6 @@ parameters:
 			path: packages/admin/src/Notifications/CustomerSendCredentials.php
 
 		-
-			message: '#^PHPDoc tag @var with type Illuminate\\Database\\Eloquent\\Model is not subtype of native type Shopper\\Core\\Models\\Contracts\\ShopperUser\.$#'
-			identifier: varTag.nativeType
-			count: 1
-			path: packages/admin/src/Notifications/CustomerSendCredentials.php
-
-		-
-			message: '#^Type \$this\(Shopper\\Core\\Models\\Contracts\\ShopperUser\) in generic type Illuminate\\Database\\Eloquent\\Relations\\HasMany\<Shopper\\Core\\Models\\Address, \$this\(Shopper\\Core\\Models\\Contracts\\ShopperUser\)\> in PHPDoc tag @return is not subtype of template type TDeclaringModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\HasMany\.$#'
-			identifier: generics.notSubtype
-			count: 1
-			path: packages/core/src/Models/Contracts/ShopperUser.php
-
-		-
-			message: '#^Type \$this\(Shopper\\Core\\Models\\Contracts\\ShopperUser\) in generic type Illuminate\\Database\\Eloquent\\Relations\\HasMany\<Shopper\\Core\\Models\\Order, \$this\(Shopper\\Core\\Models\\Contracts\\ShopperUser\)\> in PHPDoc tag @return is not subtype of template type TDeclaringModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\HasMany\.$#'
-			identifier: generics.notSubtype
-			count: 1
-			path: packages/core/src/Models/Contracts/ShopperUser.php
-
-		-
-			message: '#^Type static\(Shopper\\Core\\Models\\Contracts\\ShopperUser\) in generic type Illuminate\\Database\\Eloquent\\Builder\<static\(Shopper\\Core\\Models\\Contracts\\ShopperUser\)\> in PHPDoc tag @param for parameter \$query is not subtype of template type TModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Builder\.$#'
-			identifier: generics.notSubtype
-			count: 2
-			path: packages/core/src/Models/Contracts/ShopperUser.php
-
-		-
-			message: '#^Type static\(Shopper\\Core\\Models\\Contracts\\ShopperUser\) in generic type Illuminate\\Database\\Eloquent\\Builder\<static\(Shopper\\Core\\Models\\Contracts\\ShopperUser\)\> in PHPDoc tag @return is not subtype of template type TModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Builder\.$#'
-			identifier: generics.notSubtype
-			count: 2
-			path: packages/core/src/Models/Contracts/ShopperUser.php
-
-		-
 			message: '#^Type \$this\(Shopper\\Core\\Models\\Contracts\\Stockable\) in generic type Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Shopper\\Core\\Models\\InventoryHistory, \$this\(Shopper\\Core\\Models\\Contracts\\Stockable\)\> in PHPDoc tag @return is not subtype of template type TDeclaringModel of Illuminate\\Database\\Eloquent\\Model of class Illuminate\\Database\\Eloquent\\Relations\\MorphMany\.$#'
 			identifier: generics.notSubtype
 			count: 1
@@ -287,9 +245,3 @@ parameters:
 			identifier: trait.unused
 			count: 1
 			path: packages/core/src/Models/Traits/HasProfilePhoto.php
-
-		-
-			message: '#^Trait Shopper\\Core\\Traits\\ShopperUser is used zero times and is not analysed\.$#'
-			identifier: trait.unused
-			count: 1
-			path: packages/core/src/Traits/ShopperUser.php

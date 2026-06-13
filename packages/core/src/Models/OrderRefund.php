@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\OrderRefundFactory;
 use Shopper\Core\Enum\OrderRefundStatus;
 use Shopper\Core\Models\Contracts\OrderRefund as OrderRefundContract;
-use Shopper\Core\Models\Contracts\ShopperUser;
+use Shopper\Core\Models\Traits\HasPublicId;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read ?string $refund_reason
  * @property-read ?int $refund_amount
  * @property-read OrderRefundStatus $status
@@ -32,6 +33,8 @@ class OrderRefund extends Model implements OrderRefundContract
 {
     /** @use HasFactory<OrderRefundFactory> */
     use HasFactory;
+
+    use HasPublicId;
 
     protected $guarded = [];
 
@@ -64,7 +67,7 @@ class OrderRefund extends Model implements OrderRefundContract
     }
 
     /**
-     * @return BelongsTo<Model&ShopperUser, $this>
+     * @return BelongsTo<Model, $this>
      */
     public function customer(): BelongsTo
     {

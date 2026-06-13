@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Cart\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
-use Shopper\Cart\Models\Cart;
+use Shopper\Cart\Models\Contracts\Cart;
 
 final readonly class CouponApplied
 {

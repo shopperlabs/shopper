@@ -10,6 +10,6 @@ final class CartNotFoundException extends RuntimeException
 {
     public function __construct()
     {
-        parent::__construct(__('shopper-cart::messages.exceptions.cart_not_found'));
+        parent::__construct(__('shopper-cart::exceptions.cart_not_found'));
     }
 }

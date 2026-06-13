@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\AddressFactory;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Contracts\Address as AddressContract;
-use Shopper\Core\Models\Contracts\ShopperUser;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Traits\HasModelContract;
 
@@ -36,7 +35,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read int $user_id
  * @property-read int $country_id
  * @property-read Country $country
- * @property-read Model&ShopperUser $user
+ * @property-read Model $user
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
@@ -71,7 +70,7 @@ class Address extends Model implements AddressContract
     }
 
     /**
-     * @return BelongsTo<Model&ShopperUser, $this>
+     * @return BelongsTo<Model, $this>
      */
     public function user(): BelongsTo
     {

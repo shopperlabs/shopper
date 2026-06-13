@@ -10,9 +10,6 @@ final class DiscountZoneFrozenException extends RuntimeException
 {
     public function __construct()
     {
-        parent::__construct(
-            'Cannot change zone on a fixed-amount discount that has already been used. '
-            .'Currency consistency requires the zone to remain frozen after first usage.'
-        );
+        parent::__construct(__('shopper-core::exceptions.discount_zone_frozen'));
     }
 }
