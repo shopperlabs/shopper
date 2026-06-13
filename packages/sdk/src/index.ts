@@ -47,6 +47,7 @@ export type {
   CreateCartPayload,
   CreateCartLinePayload,
   UpdateCartLinePayload,
+  UpdateCartPayload,
   ShippingOptionList,
 } from './store'
 export { ShopperApiError, buildQuery } from './http'

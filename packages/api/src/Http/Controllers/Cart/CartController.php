@@ -6,8 +6,10 @@ namespace Shopper\Api\Http\Controllers\Cart;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Shopper\Api\Actions\UpdateCartAction;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Requests\Cart\CreateCartRequest;
+use Shopper\Api\Http\Requests\Cart\PatchCartRequest;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Core\Models\Zone;
@@ -17,6 +19,10 @@ use TiMacDonald\JsonApi\JsonApiResource;
 final class CartController
 {
     use RespondsWithCart;
+
+    public function __construct(
+        private readonly UpdateCartAction $updateCart,
+    ) {}
 
     /**
      * Create a cart.
@@ -56,5 +62,21 @@ final class CartController
     public function show(Request $request, string $cartId): JsonApiResource
     {
         return $this->cartResource($this->findCart($request, $cartId));
+    }
+
+    /**
+     * Update a cart.
+     *
+     * Patches the currency, contact email or metadata. Switching the currency
+     * re-prices the lines and drops the shipping and payment choices bound to
+     * the old currency; it is rejected when a line has no price in the target.
+     */
+    public function update(PatchCartRequest $request, string $cartId): JsonApiResource
+    {
+        $cart = $this->findCart($request, $cartId);
+
+        $this->mutateCart(fn () => $this->updateCart->execute($cart, $request->validated()));
+
+        return $this->cartResource($cart->refresh());
     }
 }

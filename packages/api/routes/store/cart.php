@@ -16,6 +16,7 @@ use Shopper\Http\Enum\RateLimit;
 
 Route::post('/carts', [CartController::class, 'store']);
 Route::get('/carts/{cartId}', [CartController::class, 'show']);
+Route::patch('/carts/{cartId}', [CartController::class, 'update']);
 Route::post('/carts/{cartId}/lines', [CartLineController::class, 'store']);
 Route::patch('/carts/{cartId}/lines/{lineId}', [CartLineController::class, 'update']);
 Route::delete('/carts/{cartId}/lines/{lineId}', [CartLineController::class, 'destroy']);

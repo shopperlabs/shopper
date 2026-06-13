@@ -12,6 +12,14 @@ export type CreateCartPayload = {
   metadata?: Record<string, unknown> | null
 }
 
+export type UpdateCartPayload = {
+  /** Re-price the cart in another currency. Drops the shipping and payment choices bound to the old one. */
+  currency_code?: string
+  /** Contact email frozen on the order at completion. */
+  email?: string | null
+  metadata?: Record<string, unknown> | null
+}
+
 export type CreateCartLinePayload = {
   /** Public id of the product or variant to add. */
   purchasable_id: string
@@ -82,6 +90,17 @@ export class CartModule {
 
   public async retrieve(id: string, params?: RequestParams): Promise<Cart> {
     return flatten<Cart>(await this.client.request(`${this.path}/${id}`, this.params(params))) as Cart
+  }
+
+  /**
+   * Patch the cart currency, contact email or metadata. Switching the currency
+   * re-prices the lines and drops the shipping and payment choices bound to the
+   * old currency; it is rejected when a line has no price in the target.
+   */
+  public async update(id: string, payload: UpdateCartPayload, params?: RequestParams): Promise<Cart> {
+    const document = await this.client.send('PATCH', `${this.path}/${id}`, payload, this.params(params))
+
+    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
   }
 
   /**

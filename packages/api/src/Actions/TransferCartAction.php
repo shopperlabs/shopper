@@ -9,10 +9,16 @@ use Shopper\Cart\Models\Cart;
 
 final readonly class TransferCartAction
 {
+    public function __construct(
+        private RevalidateCartCouponAction $revalidateCoupon,
+    ) {}
+
     /**
      * Attach a guest cart to a customer. Transferring a cart the customer
      * already owns is a no-op, so a retried login never fails; a cart owned
-     * by another customer is refused.
+     * by another customer is refused. Once the cart belongs to the customer,
+     * an applied coupon is re-validated against their redemption history and
+     * dropped if a per-customer limit now rejects it.
      *
      * @throws AuthorizationException
      */
@@ -27,5 +33,7 @@ final readonly class TransferCartAction
         }
 
         $cart->update(['customer_id' => $customerId]);
+
+        $this->revalidateCoupon->execute($cart);
     }
 }

@@ -344,6 +344,184 @@ it('exposes discounts and taxes computed by the cart pipelines', function (): vo
         ->and($line['attributes']['tax_lines'][0]['amount'])->toBe(400);
 });
 
+it('updates the cart metadata', function (): void {
+    $cart = Cart::query()->create(['currency_code' => 'USD']);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['metadata' => ['note' => 'gift']])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.metadata.note', 'gift');
+
+    expect($cart->refresh()->metadata)->toBe(['note' => 'gift']);
+});
+
+it('updates the cart contact email', function (): void {
+    $cart = Cart::query()->create(['currency_code' => 'USD']);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['email' => 'Buyer@Example.com'])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.email', 'buyer@example.com');
+
+    expect($cart->refresh()->email)->toBe('buyer@example.com');
+});
+
+it('changes the cart currency and re-prices the lines', function (): void {
+    setupCurrencies(['USD', 'EUR']);
+    Currency::query()->where('code', 'EUR')->update(['is_enabled' => true]);
+
+    $eur = Currency::query()->where('code', 'EUR')->first();
+    $this->product->prices()->create(['amount' => 3000, 'currency_id' => $eur->id]);
+
+    $cart = Cart::query()->create([
+        'currency_code' => 'USD',
+        'shipping_option_id' => 'main-carrier:standard',
+        'shipping_amount' => 700,
+    ]);
+    $cart->lines()->create([
+        'purchasable_type' => $this->product->getMorphClass(),
+        'purchasable_id' => $this->product->id,
+        'quantity' => 2,
+        'unit_price_amount' => 2500,
+    ]);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'eur'])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.currency_code', 'EUR')
+        ->assertJsonPath('data.attributes.subtotal', 6000);
+
+    $cart->refresh();
+
+    expect($cart->lines()->first()->unit_price_amount)->toBe(3000)
+        ->and($cart->shipping_option_id)->toBeNull()
+        ->and($cart->shipping_amount)->toBeNull();
+});
+
+it('rejects a currency the shop does not sell in on update', function (): void {
+    $cart = Cart::query()->create(['currency_code' => 'USD']);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'XXX'])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.source.pointer', '/data/attributes/currency_code');
+});
+
+it('rejects a currency that is enabled but not configured for the shop', function (): void {
+    // The shop sells in USD only (beforeEach). EUR exists and is enabled, but it
+    // is not among the configured currencies, so it must not be accepted.
+    $cart = Cart::query()->create(['currency_code' => 'USD']);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'EUR'])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.source.pointer', '/data/attributes/currency_code');
+
+    expect($cart->refresh()->currency_code)->toBe('USD');
+});
+
+it('rejects a currency change when a line has no price in it', function (): void {
+    setupCurrencies(['USD', 'EUR']);
+    Currency::query()->where('code', 'EUR')->update(['is_enabled' => true]);
+
+    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart->lines()->create([
+        'purchasable_type' => $this->product->getMorphClass(),
+        'purchasable_id' => $this->product->id,
+        'quantity' => 1,
+        'unit_price_amount' => 2500,
+    ]);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'EUR'])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.source.pointer', '/data/attributes/currency_code');
+
+    expect($cart->refresh()->currency_code)->toBe('USD');
+});
+
+it('rejects an update on a completed cart', function (): void {
+    $cart = Cart::query()->create(['currency_code' => 'USD', 'completed_at' => now()]);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['metadata' => ['note' => 'late']])
+        ->assertConflict();
+});
+
+it('clears the payment session when the currency changes', function (): void {
+    setupCurrencies(['USD', 'EUR']);
+
+    $eur = Currency::query()->where('code', 'EUR')->first();
+    $this->product->prices()->create(['amount' => 3000, 'currency_id' => $eur->id]);
+
+    $cart = Cart::query()->create([
+        'currency_code' => 'USD',
+        'payment_session' => ['driver' => 'manual', 'reference' => 'ref_1', 'amount' => 2500, 'currency' => 'USD'],
+    ]);
+    $cart->lines()->create([
+        'purchasable_type' => $this->product->getMorphClass(),
+        'purchasable_id' => $this->product->id,
+        'quantity' => 1,
+        'unit_price_amount' => 2500,
+    ]);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'EUR'])->assertOk();
+
+    expect($cart->refresh()->payment_session)->toBeNull();
+});
+
+it('drops a coupon that no longer applies after a currency change', function (): void {
+    setupCurrencies(['USD', 'EUR']);
+
+    $eur = Currency::query()->where('code', 'EUR')->first();
+    $this->product->prices()->create(['amount' => 3000, 'currency_id' => $eur->id]);
+
+    Discount::factory()->create([
+        'code' => 'FLAT5',
+        'is_active' => true,
+        'type' => DiscountType::FixedAmount,
+        'value' => 500,
+        'apply_to' => DiscountApplyTo::Order,
+        'eligibility' => DiscountEligibility::Everyone,
+        'min_required' => DiscountRequirement::None,
+        'start_at' => now()->subDay(),
+        'end_at' => now()->addMonth(),
+    ]);
+
+    $cart = Cart::query()->create(['currency_code' => 'USD', 'coupon_code' => 'FLAT5']);
+    $cart->lines()->create([
+        'purchasable_type' => $this->product->getMorphClass(),
+        'purchasable_id' => $this->product->id,
+        'quantity' => 1,
+        'unit_price_amount' => 2500,
+    ]);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'EUR'])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.coupon_code', null);
+
+    expect($cart->refresh()->coupon_code)->toBeNull();
+});
+
+it('rejects metadata that exceeds the size limit', function (): void {
+    $cart = Cart::query()->create(['currency_code' => 'USD']);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['metadata' => ['blob' => str_repeat('x', 5000)]])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.source.pointer', '/data/attributes/metadata');
+});
+
+it('clears the metadata when null is sent', function (): void {
+    $cart = Cart::query()->create(['currency_code' => 'USD', 'metadata' => ['note' => 'gift']]);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['metadata' => null])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.metadata', null);
+
+    expect($cart->refresh()->metadata)->toBeNull();
+});
+
+it('keeps the existing email when null is sent', function (): void {
+    $cart = Cart::query()->create(['currency_code' => 'USD', 'email' => 'keep@example.com']);
+
+    $this->patchJson("/store/carts/{$cart->public_id}", ['email' => null])->assertOk();
+
+    expect($cart->refresh()->email)->toBe('keep@example.com');
+});
+
 it('transfers a guest cart to the authenticated customer', function (): void {
     $cart = Cart::query()->create(['currency_code' => 'USD']);
     $customer = User::factory()->create();

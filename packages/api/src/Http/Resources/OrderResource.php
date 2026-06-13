@@ -29,7 +29,8 @@ final class OrderResource extends JsonApiResource
             'shipping_amount' => $this->shipping_amount,
             'price_amount' => $this->price_amount,
             'currency_code' => $this->currency_code,
-            'email' => $this->email,
+            // the buyer email is only exposed to the authenticated owner.
+            'email' => $request->user('sanctum') ? $this->email : null,
             'created_at' => $this->created_at->toIso8601String(),
         ];
     }
