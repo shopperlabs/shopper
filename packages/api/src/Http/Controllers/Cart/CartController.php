@@ -35,6 +35,7 @@ final class CartController
         $cart = resolve(CartContract::class)::query()->create([
             'currency_code' => $request->validated('currency_code')
                 ?? ($zone?->currency_id ? $zone->currency_code : shopper_currency()),
+            'email' => $request->validated('email'),
             'customer_id' => $request->user('sanctum')?->getAuthIdentifier(),
             'zone_id' => $zone?->id,
             'metadata' => $request->validated('metadata'),

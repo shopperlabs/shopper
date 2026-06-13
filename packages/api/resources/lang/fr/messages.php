@@ -8,6 +8,7 @@ return [
         'empty' => 'Le panier est vide.',
         'nothing_to_collect' => 'Le panier n\'a aucun montant à encaisser.',
         'no_zone' => 'Le panier n\'a pas de zone de livraison, aucune option de livraison ne s\'y applique.',
+        'email_required' => 'Renseignez une adresse e-mail avant de finaliser le panier.',
     ],
 
     'purchasable' => [

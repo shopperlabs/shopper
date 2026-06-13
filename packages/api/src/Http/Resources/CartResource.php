@@ -32,6 +32,7 @@ final class CartResource extends JsonApiResource
     {
         return [
             'currency_code' => $this->currency_code,
+            'email' => $this->email,
             'coupon_code' => $this->coupon_code,
             'completed_at' => $this->completed_at?->toIso8601String(),
             'metadata' => $this->metadata,

@@ -29,6 +29,7 @@ function checkoutCart(Zone $zone, Product $product, int $quantity = 1): Cart
 {
     $cart = Cart::query()->create([
         'currency_code' => 'USD',
+        'email' => 'john@example.com',
         'zone_id' => $zone->id,
     ]);
 
@@ -591,4 +592,52 @@ it('opens a fresh session when the provider reports the stored one unusable', fu
 
     expect($driver->retrievals)->toBe(1)
         ->and($driver->initiations)->toBe(2);
+});
+
+it('sets the contact email with the checkout addresses', function (): void {
+    $this->postJson("/store/carts/{$this->cart->public_id}/addresses", [
+        'email' => 'Buyer@Example.com',
+        'shipping_address' => checkoutAddressPayload(),
+    ])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.email', 'buyer@example.com');
+
+    expect($this->cart->refresh()->email)->toBe('buyer@example.com');
+});
+
+it('requires an email to complete a guest cart', function (): void {
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+    $this->cart->update(['email' => null]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.source.pointer', '/data/attributes/email');
+
+    expect($this->cart->refresh()->isCompleted())->toBeFalse();
+});
+
+it('freezes the cart email on the order', function (): void {
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+    $this->cart->update(['email' => 'guest@example.com']);
+
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertCreated()
+        ->json('data.id');
+
+    expect(Order::query()->where('public_id', $orderId)->value('email'))->toBe('guest@example.com');
+});
+
+it('falls back to the customer email when the cart has none', function (): void {
+    $customer = User::factory()->create(['email' => 'member@example.com']);
+    $this->cart->update(['customer_id' => $customer->id, 'email' => null]);
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+
+    Sanctum::actingAs($customer, ['store']);
+
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertCreated()
+        ->json('data.id');
+
+    expect(Order::query()->where('public_id', $orderId)->value('email'))->toBe('member@example.com')
+        ->and($this->cart->refresh()->email)->toBe('member@example.com');
 });

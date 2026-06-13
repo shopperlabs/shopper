@@ -22,6 +22,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read int $id
  * @property-read ?string $public_id
  * @property-read string $currency_code
+ * @property-read ?string $email
  * @property-read ?string $coupon_code
  * @property-read ?CarbonInterface $completed_at
  * @property-read ?array<string, mixed> $metadata

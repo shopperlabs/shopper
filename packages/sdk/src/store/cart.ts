@@ -7,6 +7,8 @@ import { flatten } from '../json-api'
 export type CreateCartPayload = {
   /** ISO currency code the cart prices in. Defaults to the zone or shop currency. */
   currency_code?: string
+  /** Contact email frozen on the order at completion. Required for a guest cart, set here or with the checkout addresses. */
+  email?: string
   metadata?: Record<string, unknown> | null
 }
 
@@ -41,6 +43,8 @@ export type CartAddressPayload = {
 export type SetCartAddressesPayload = {
   shipping_address?: CartAddressPayload
   billing_address?: CartAddressPayload
+  /** Contact email frozen on the order at completion. Required for a guest cart when not set at creation. */
+  email?: string
 }
 
 /** Delivery choices for a cart plus the non-fatal notices raised while quoting. */

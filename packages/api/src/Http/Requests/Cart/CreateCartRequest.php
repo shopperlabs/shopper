@@ -25,6 +25,7 @@ final class CreateCartRequest extends FormRequest
                 'string',
                 Rule::exists(shopper_table('currencies'), 'code')->where('is_enabled', true),
             ],
+            'email' => ['nullable', 'email', 'max:255'],
             'metadata' => ['nullable', 'array'],
         ];
     }
@@ -33,6 +34,10 @@ final class CreateCartRequest extends FormRequest
     {
         if ($this->filled('currency_code')) {
             $this->merge(['currency_code' => mb_strtoupper((string) $this->string('currency_code'))]);
+        }
+
+        if ($this->filled('email')) {
+            $this->merge(['email' => mb_strtolower((string) $this->string('email'))]);
         }
     }
 }

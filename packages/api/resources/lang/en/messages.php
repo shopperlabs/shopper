@@ -8,6 +8,7 @@ return [
         'empty' => 'The cart is empty.',
         'nothing_to_collect' => 'The cart has no amount to collect.',
         'no_zone' => 'The cart has no shipping zone, so no shipping option applies to it.',
+        'email_required' => 'Provide an email address before completing the cart.',
     ],
 
     'purchasable' => [

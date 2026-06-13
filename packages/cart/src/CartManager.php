@@ -147,6 +147,13 @@ final readonly class CartManager
         $cart->update(['payment_method_id' => $paymentMethodId]);
     }
 
+    public function setEmail(Cart $cart, string $email): void
+    {
+        $this->guardCompleted($cart);
+
+        $cart->update(['email' => $email]);
+    }
+
     public function applyCoupon(Cart $cart, string $code): void
     {
         $this->guardCompleted($cart);

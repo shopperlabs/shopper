@@ -31,6 +31,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?int $shipping_amount
  * @property-read string $notes
  * @property-read string $currency_code
+ * @property-read ?string $email
  * @property-read ?int $zone_id
  * @property-read ?int $shipping_address_id
  * @property-read ?int $shipping_option_id

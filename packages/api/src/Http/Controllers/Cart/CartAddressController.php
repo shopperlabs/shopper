@@ -40,7 +40,13 @@ final class CartAddressController
             ->whereIn('cca2', collect($addresses)->filter()->pluck('country_code')->unique())
             ->pluck('id', 'cca2');
 
-        $this->mutateCart(function () use ($cart, $addresses, $countryIds): void {
+        $email = $request->validated('email');
+
+        $this->mutateCart(function () use ($cart, $addresses, $countryIds, $email): void {
+            if ($email !== null) {
+                $this->cartManager->setEmail($cart, $email);
+            }
+
             foreach ($addresses as $type => $address) {
                 if (! $address) {
                     continue;

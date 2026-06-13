@@ -20,6 +20,8 @@ export enum CartAddressType {
 export interface Cart extends Entity {
   /** The currency code for the cart. */
   currency_code: string
+  /** The contact email frozen on the order at completion (store API). */
+  email?: string | null
   /** The coupon code applied to the cart. */
   coupon_code: string | null
   /** The date the cart was completed (converted to order). */
