@@ -7,10 +7,12 @@ namespace Shopper\Payment\Models;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
+use Shopper\Payment\Database\Factories\PaymentTransactionFactory;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
 
@@ -34,11 +36,19 @@ use Shopper\Payment\Enum\TransactionType;
  */
 class PaymentTransaction extends Model
 {
+    /** @use HasFactory<PaymentTransactionFactory> */
+    use HasFactory;
+
     protected $guarded = [];
 
     public function getTable(): string
     {
         return shopper_table('payment_transactions');
+    }
+
+    protected static function newFactory(): PaymentTransactionFactory
+    {
+        return PaymentTransactionFactory::new();
     }
 
     public function isSuccessful(): bool
