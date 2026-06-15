@@ -20,6 +20,7 @@ use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Cart\Pipelines\CartPipelineRunner;
 use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Enum\AddressType;
+use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Models\Contracts\Stockable;
 use Shopper\Core\Models\Discount;
 use Throwable;
@@ -204,7 +205,15 @@ final readonly class CartManager
             throw new InvalidDiscountException(__('shopper-cart::exceptions.discount_not_found'));
         }
 
-        $cart->update(['coupon_code' => $code]);
+        // A cart carries a single code-sourced promotion for now; re-applying or
+        // switching codes replaces it, so the unique (cart_id, discount_id) row
+        // can never produce a doubled discount.
+        $cart->promotions()->where('source', PromotionSource::Code->value)->delete();
+        $cart->promotions()->create([
+            'discount_id' => $discount->id,
+            'source' => PromotionSource::Code->value,
+            'code' => $code,
+        ]);
 
         CouponApplied::dispatch($cart, $code);
     }
@@ -213,7 +222,7 @@ final readonly class CartManager
     {
         $this->guardCompleted($cart);
 
-        $cart->update(['coupon_code' => null]);
+        $cart->promotions()->where('source', PromotionSource::Code->value)->delete();
 
         CartLineAdjustment::query()
             ->whereIn('cart_line_id', $cart->lines()->select('id'))

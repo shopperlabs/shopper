@@ -1,6 +1,6 @@
 # Shopper API
 
-The headless Store API for [Shopper](https://laravelshopper.me). It exposes the catalog, geo data,
+The headless Store API for [Shopper](https://laravelshopper.dev). It exposes the catalog, geo data,
 cart, customer authentication and account endpoints as a [JSON:API](https://jsonapi.org) under
 the `/store` prefix, ready to be consumed by any storefront or by the official
 [`@shopperlabs/shopper-sdk`](https://www.npmjs.com/package/@shopperlabs/shopper-sdk) JavaScript client.
@@ -64,13 +64,13 @@ customer columns, the avatar accessor, and the `public_id` ULID exposed as the J
 All routes live under the configurable `/store` prefix (`SHOPPER_API_PREFIX`), are throttled,
 and answer in `application/vnd.api+json`.
 
-| Area | Endpoints |
-|---|---|
-| Catalog | `GET /store/products[/{slug}]`, `categories`, `collections`, `brands`, `attributes` |
-| Geo | `GET /store/countries[/{code}]`, `zones[/{code}]`, `currencies[/{code}]` |
-| Cart | `POST /store/carts`, `GET /store/carts/{id}`, `POST /store/carts/{id}/lines`, `PATCH/DELETE /store/carts/{id}/lines/{lineId}` |
-| Auth | `POST /store/auth/register`, `login`, `logout`, `forgot-password`, `reset-password` |
-| Account | `GET/PATCH /store/customers/me`, `POST/DELETE /store/customers/me/avatar`, addresses CRUD, `GET /store/customers/me/orders` |
+| Area    | Endpoints                                                                                                                     |
+|---------|-------------------------------------------------------------------------------------------------------------------------------|
+| Catalog | `GET /store/products[/{slug}]`, `categories`, `collections`, `brands`, `attributes`                                           |
+| Geo     | `GET /store/countries[/{code}]`, `zones[/{code}]`, `currencies[/{code}]`                                                      |
+| Cart    | `POST /store/carts`, `GET /store/carts/{id}`, `POST /store/carts/{id}/lines`, `PATCH/DELETE /store/carts/{id}/lines/{lineId}` |
+| Auth    | `POST /store/auth/register`, `login`, `logout`, `forgot-password`, `reset-password`                                           |
+| Account | `GET/PATCH /store/customers/me`, `POST/DELETE /store/customers/me/avatar`, addresses CRUD, `GET /store/customers/me/orders`   |
 
 Lists support the JSON:API query family: `filter[...]`, `sort`, `include`,
 `page[number]`/`page[size]` and sparse fieldsets via `fields[type]`. The allowed filters,
@@ -91,7 +91,7 @@ This publishes `config/shopper/api.php` (pagination, per-resource query allowlis
 Prices are scoped by zone. The storefront pins one by sending its code on every request:
 
 ```
-X-Shopper-Zone: eu
+X-Shopper-Zone: af
 ```
 
 The resolver is swappable through `shopper.http.zone.resolver` if you prefer resolving the
@@ -121,7 +121,7 @@ totals. All amounts are integers in cents.
     "id": "01jxd9se2cd6kr925vqgve46rb",
     "attributes": {
       "currency_code": "USD",
-      "coupon_code": "SAVE20",
+      "promotions": [{ "code": "SAVE20", "amount": 1000 }],
       "lines_count": 1,
       "lines_quantity": 2,
       "subtotal": 5000,
@@ -139,11 +139,11 @@ totals. All amounts are integers in cents.
 The cart document is partitioned: the attributes above are the cheap summary (enough for a
 header badge), everything heavier is an opt-in [JSON:API include](https://jsonapi.org/format/#fetching-includes):
 
-| Include | Expands |
-|---|---|
-| `lines` | The cart lines with their computed amounts (`subtotal`, `discount_total`, `tax_total`), applied `adjustments` and `tax_lines` |
-| `lines.purchasable` | The full product or variant behind each line, typed by the line's `purchasable_type` |
-| `addresses` | The shipping and billing addresses attached to the cart |
+| Include             | Expands                                                                                                                       |
+|---------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `lines`             | The cart lines with their computed amounts (`subtotal`, `discount_total`, `tax_total`), applied `adjustments` and `tax_lines` |
+| `lines.purchasable` | The full product or variant behind each line, typed by the line's `purchasable_type`                                          |
+| `addresses`         | The shipping and billing addresses attached to the cart                                                                       |
 
 ```
 GET /store/carts/{id}?include=lines.purchasable,addresses

@@ -23,14 +23,13 @@ final readonly class DiscountCalculator
 
     public function apply(CartPipelineContext $context): void
     {
-        $discount = Discount::query()
-            ->where('code', $context->cart->coupon_code)
-            ->where('is_active', true)
-            ->first();
+        $promotion = $context->cart->promotions->first();
 
-        if (! $discount) {
+        if ($promotion === null || ! $promotion->discount instanceof Discount || ! $promotion->discount->is_active) {
             return;
         }
+
+        $discount = $promotion->discount;
 
         $result = $this->validator->validate($discount, $context);
 
@@ -53,11 +52,12 @@ final readonly class DiscountCalculator
             return;
         }
 
-        if ($discount->type === DiscountType::Percentage) {
-            $context->discountTotal = $this->applyPercentage($discount, $applicableLines, $context);
-        } elseif ($discount->type === DiscountType::FixedAmount) {
-            $context->discountTotal = $this->applyFixedAmount($discount, $applicableLines, $context);
-        }
+        $amount = $discount->type === DiscountType::Percentage
+            ? $this->applyPercentage($discount, $promotion->id, $applicableLines, $context)
+            : $this->applyFixedAmount($discount, $promotion->id, $applicableLines, $context);
+
+        $context->discountTotal = $amount;
+        $promotion->update(['computed_amount' => $amount]);
     }
 
     /**
@@ -97,7 +97,7 @@ final readonly class DiscountCalculator
     /**
      * @param  Collection<int, CartLine>  $lines
      */
-    private function applyPercentage(Discount $discount, Collection $lines, CartPipelineContext $context): int
+    private function applyPercentage(Discount $discount, int $cartPromotionId, Collection $lines, CartPipelineContext $context): int
     {
         $percentage = $discount->value;
         $total = 0;
@@ -109,6 +109,7 @@ final readonly class DiscountCalculator
 
             $adjustments[] = [
                 'cart_line_id' => $line->id,
+                'cart_promotion_id' => $cartPromotionId,
                 'amount' => $amount,
                 'code' => $discount->code,
                 'discount_id' => $discount->id,
@@ -127,7 +128,7 @@ final readonly class DiscountCalculator
     /**
      * @param  Collection<int, CartLine>  $lines
      */
-    private function applyFixedAmount(Discount $discount, Collection $lines, CartPipelineContext $context): int
+    private function applyFixedAmount(Discount $discount, int $cartPromotionId, Collection $lines, CartPipelineContext $context): int
     {
         $fixedAmount = $discount->value;
         $applicableSubtotal = $lines->sum(fn (CartLine $line): int => $context->lineSubtotals[$line->id] ?? 0);
@@ -154,6 +155,7 @@ final readonly class DiscountCalculator
 
             $adjustments[] = [
                 'cart_line_id' => $line->id,
+                'cart_promotion_id' => $cartPromotionId,
                 'amount' => $amount,
                 'code' => $discount->code,
                 'discount_id' => $discount->id,

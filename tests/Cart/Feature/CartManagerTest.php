@@ -8,7 +8,12 @@ use Shopper\Cart\Exceptions\InsufficientStockException;
 use Shopper\Cart\Exceptions\InvalidDiscountException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
+use Shopper\Core\Enum\DiscountApplyTo;
+use Shopper\Core\Enum\DiscountEligibility;
+use Shopper\Core\Enum\DiscountRequirement;
+use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Currency;
+use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
@@ -32,7 +37,7 @@ beforeEach(function (): void {
     $this->product->load('prices');
     $this->product->mutateStock($this->inventory->id, 50);
 
-    $this->cart = Cart::query()->create([
+    $this->cart = Cart::factory()->create([
         'currency_code' => 'USD',
         'customer_id' => $this->user->id,
     ]);
@@ -188,6 +193,68 @@ describe(CartManager::class, function (): void {
     it('throws `InvalidDiscountException` when coupon code does not exist', function (): void {
         $this->cartManager->applyCoupon($this->cart, 'FAKE_CODE');
     })->throws(InvalidDiscountException::class);
+
+    it('records a single code promotion when a coupon is applied', function (): void {
+        $discount = Discount::factory()->create(['code' => 'SAVE', 'is_active' => true]);
+
+        $this->cartManager->applyCoupon($this->cart, 'SAVE');
+
+        expect($this->cart->promotions)->toHaveCount(1)
+            ->and($this->cart->promotions->first()->code)->toBe('SAVE')
+            ->and($this->cart->promotions->first()->discount_id)->toBe($discount->id);
+    });
+
+    it('replaces the code promotion instead of stacking a second one when re-applied', function (): void {
+        Discount::factory()->create(['code' => 'FIRST', 'is_active' => true]);
+        Discount::factory()->create(['code' => 'SECOND', 'is_active' => true]);
+
+        $this->cartManager->applyCoupon($this->cart, 'FIRST');
+        $this->cartManager->applyCoupon($this->cart, 'SECOND');
+
+        expect($this->cart->refresh()->promotions)->toHaveCount(1)
+            ->and($this->cart->promotions->first()->code)->toBe('SECOND');
+    });
+
+    it('clears applied promotions when the coupon is removed', function (): void {
+        Discount::factory()->create(['code' => 'SAVE', 'is_active' => true]);
+        $this->cartManager->applyCoupon($this->cart, 'SAVE');
+
+        $this->cartManager->removeCoupon($this->cart);
+
+        expect($this->cart->refresh()->promotions)->toBeEmpty();
+    });
+
+    it('clears the line adjustments when the coupon is removed', function (): void {
+        Discount::factory()->create([
+            'code' => 'PCT20',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 20,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product, quantity: 1);
+        $this->cartManager->applyCoupon($this->cart, 'PCT20');
+        $this->cartManager->calculate($this->cart->refresh());
+
+        expect($this->cart->refresh()->lines->first()->adjustments)->not->toBeEmpty();
+
+        $this->cartManager->removeCoupon($this->cart->refresh());
+
+        expect($this->cart->refresh()->lines->first()->adjustments)->toBeEmpty();
+    });
+
+    it('throws `CartCompletedException` when applying a coupon to a completed cart', function (): void {
+        Discount::factory()->create(['code' => 'SAVE', 'is_active' => true]);
+        $this->cart->update(['completed_at' => now()]);
+
+        expect(fn () => $this->cartManager->applyCoupon($this->cart->refresh(), 'SAVE'))
+            ->toThrow(CartCompletedException::class);
+
+        expect($this->cart->refresh()->promotions)->toBeEmpty();
+    });
 
     it('throws `InsufficientStockException` when updating quantity exceeds stock', function (): void {
         $product = Product::factory()->standard()->create();

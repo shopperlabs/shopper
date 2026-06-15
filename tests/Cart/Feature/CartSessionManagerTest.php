@@ -74,7 +74,7 @@ describe(CartSessionManager::class, function (): void {
 
     it('switches to another cart via `use()`', function (): void {
         $this->sessionManager->create(['currency_code' => 'USD']);
-        $cart2 = Cart::query()->create(['currency_code' => 'USD']);
+        $cart2 = Cart::factory()->create(['currency_code' => 'USD']);
 
         $this->sessionManager->use($cart2);
 

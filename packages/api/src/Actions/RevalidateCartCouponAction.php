@@ -25,7 +25,7 @@ final readonly class RevalidateCartCouponAction
      */
     public function execute(Cart $cart): bool
     {
-        if (! $cart->coupon_code) {
+        if (! $cart->promotions()->exists()) {
             return false;
         }
 

@@ -144,12 +144,18 @@ final readonly class CreateOrderFromCartAction
      */
     private function reserveDiscount(Cart $cart, CartPipelineContext $context): ?Discount
     {
-        if (! $cart->coupon_code || $context->discountTotal <= 0) {
+        if ($context->discountTotal <= 0) {
+            return null;
+        }
+
+        $promotion = $cart->promotions()->first();
+
+        if ($promotion === null || $promotion->discount_id === null) {
             return null;
         }
 
         $discount = Discount::query()
-            ->where('code', $cart->coupon_code)
+            ->whereKey($promotion->discount_id)
             ->lockForUpdate()
             ->first();
 

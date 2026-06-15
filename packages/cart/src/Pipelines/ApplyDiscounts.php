@@ -15,7 +15,7 @@ final readonly class ApplyDiscounts
 
     public function handle(CartPipelineContext $context, Closure $next): mixed
     {
-        if ($context->cart->coupon_code) {
+        if ($context->cart->promotions->isNotEmpty()) {
             $this->calculator->apply($context);
         }
 

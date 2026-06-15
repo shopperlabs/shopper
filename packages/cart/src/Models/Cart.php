@@ -6,9 +6,11 @@ namespace Shopper\Cart\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Cart\Database\Factories\CartFactory;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Channel;
@@ -23,7 +25,6 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?string $public_id
  * @property-read string $currency_code
  * @property-read ?string $email
- * @property-read ?string $coupon_code
  * @property-read ?CarbonInterface $completed_at
  * @property-read ?array<string, mixed> $metadata
  * @property-read ?int $customer_id
@@ -37,6 +38,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read Collection<int, CartLine> $lines
+ * @property-read Collection<int, CartPromotion> $promotions
  * @property-read Collection<int, CartAddress> $addresses
  * @property-read ?Model $customer
  * @property-read ?Channel $channel
@@ -46,6 +48,9 @@ use Shopper\Core\Traits\HasModelContract;
  */
 class Cart extends Model implements CartContract
 {
+    /** @use HasFactory<CartFactory> */
+    use HasFactory;
+
     use HasModelContract;
     use HasPublicId;
 
@@ -82,6 +87,14 @@ class Cart extends Model implements CartContract
     public function lines(): HasMany
     {
         return $this->hasMany(config('shopper.cart.models.cart_line', CartLine::class));
+    }
+
+    /**
+     * @return HasMany<CartPromotion, $this>
+     */
+    public function promotions(): HasMany
+    {
+        return $this->hasMany(CartPromotion::class, 'cart_id');
     }
 
     /**
@@ -130,6 +143,11 @@ class Cart extends Model implements CartContract
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class, 'order_id');
+    }
+
+    protected static function newFactory(): CartFactory
+    {
+        return CartFactory::new();
     }
 
     protected function casts(): array

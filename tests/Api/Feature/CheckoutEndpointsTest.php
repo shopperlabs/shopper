@@ -27,7 +27,7 @@ uses(Tests\Api\TestCase::class);
 
 function checkoutCart(Zone $zone, Product $product, int $quantity = 1): Cart
 {
-    $cart = Cart::query()->create([
+    $cart = Cart::factory()->create([
         'currency_code' => 'USD',
         'email' => 'john@example.com',
         'zone_id' => $zone->id,
@@ -344,7 +344,7 @@ it('requires a payment method to complete the cart', function (): void {
 });
 
 it('rejects the completion of an empty cart', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD', 'zone_id' => $this->zone->id]);
+    $cart = Cart::factory()->create(['currency_code' => 'USD', 'zone_id' => $this->zone->id]);
 
     $this->postJson("/store/carts/{$cart->public_id}/complete")
         ->assertUnprocessable()
@@ -518,7 +518,7 @@ it('answers the existing order when a concurrent completion already closed the c
 });
 
 it('creates an order with price_amount = discounted items + shipping', function (): void {
-    Discount::factory()->create([
+    $discount = Discount::factory()->create([
         'code' => 'SAVE20',
         'is_active' => true,
         'type' => DiscountType::Percentage,
@@ -531,7 +531,11 @@ it('creates an order with price_amount = discounted items + shipping', function 
     ]);
 
     readyCart($this->cart, $this->option, $this->paymentMethod);
-    $this->cart->update(['coupon_code' => 'SAVE20']);
+    $this->cart->promotions()->create([
+        'discount_id' => $discount->id,
+        'source' => 'code',
+        'code' => 'SAVE20',
+    ]);
 
     // items 2500 - 20% discount (500) + shipping 700 = 2700
     $this->postJson("/store/carts/{$this->cart->public_id}/complete")
@@ -663,11 +667,11 @@ it('applies a promotion code and folds the discount into the totals', function (
 
     $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])
         ->assertOk()
-        ->assertJsonPath('data.attributes.coupon_code', 'SAVE20')
+        ->assertJsonPath('data.attributes.promotions.0.code', 'SAVE20')
         ->assertJsonPath('data.attributes.discount_total', 500)
         ->assertJsonPath('data.attributes.total', 2000);
 
-    expect($this->cart->refresh()->coupon_code)->toBe('SAVE20');
+    expect($this->cart->refresh()->promotions->first()->code)->toBe('SAVE20');
 });
 
 it('rejects an unknown promotion code', function (): void {
@@ -675,7 +679,7 @@ it('rejects an unknown promotion code', function (): void {
         ->assertUnprocessable()
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/code');
 
-    expect($this->cart->refresh()->coupon_code)->toBeNull();
+    expect($this->cart->refresh()->promotions)->toBeEmpty();
 });
 
 it('rejects an inactive promotion code', function (): void {
@@ -685,7 +689,7 @@ it('rejects an inactive promotion code', function (): void {
         ->assertUnprocessable()
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/code');
 
-    expect($this->cart->refresh()->coupon_code)->toBeNull();
+    expect($this->cart->refresh()->promotions)->toBeEmpty();
 });
 
 it('rejects a promotion below its minimum amount', function (): void {
@@ -698,7 +702,7 @@ it('rejects a promotion below its minimum amount', function (): void {
         ->assertUnprocessable()
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/code');
 
-    expect($this->cart->refresh()->coupon_code)->toBeNull();
+    expect($this->cart->refresh()->promotions)->toBeEmpty();
 });
 
 it('rejects a promotion that does not apply to the cart products', function (): void {
@@ -708,7 +712,7 @@ it('rejects a promotion that does not apply to the cart products', function (): 
         ->assertUnprocessable()
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/code');
 
-    expect($this->cart->refresh()->coupon_code)->toBeNull();
+    expect($this->cart->refresh()->promotions)->toBeEmpty();
 });
 
 it('requires a code to apply a promotion', function (): void {
@@ -724,10 +728,10 @@ it('removes an applied promotion code', function (): void {
 
     $this->deleteJson("/store/carts/{$this->cart->public_id}/promotion")
         ->assertOk()
-        ->assertJsonPath('data.attributes.coupon_code', null)
+        ->assertJsonPath('data.attributes.promotions', [])
         ->assertJsonPath('data.attributes.discount_total', 0);
 
-    expect($this->cart->refresh()->coupon_code)->toBeNull();
+    expect($this->cart->refresh()->promotions)->toBeEmpty();
 });
 
 it('rejects a promotion change on a completed cart', function (): void {
@@ -746,13 +750,13 @@ it('rejects an expired promotion code', function (): void {
         ->assertUnprocessable()
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/code');
 
-    expect($this->cart->refresh()->coupon_code)->toBeNull();
+    expect($this->cart->refresh()->promotions)->toBeEmpty();
 });
 
 it('removing a promotion from a cart without a coupon is a no-op', function (): void {
     $this->deleteJson("/store/carts/{$this->cart->public_id}/promotion")
         ->assertOk()
-        ->assertJsonPath('data.attributes.coupon_code', null);
+        ->assertJsonPath('data.attributes.promotions', []);
 });
 
 it('hides the order email from the unauthenticated lookup', function (): void {
