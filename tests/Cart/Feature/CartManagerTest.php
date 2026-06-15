@@ -204,15 +204,36 @@ describe(CartManager::class, function (): void {
             ->and($this->cart->promotions->first()->discount_id)->toBe($discount->id);
     });
 
-    it('replaces the code promotion instead of stacking a second one when re-applied', function (): void {
+    it('accumulates distinct code promotions on the cart', function (): void {
         Discount::factory()->create(['code' => 'FIRST', 'is_active' => true]);
         Discount::factory()->create(['code' => 'SECOND', 'is_active' => true]);
 
         $this->cartManager->applyCoupon($this->cart, 'FIRST');
         $this->cartManager->applyCoupon($this->cart, 'SECOND');
 
-        expect($this->cart->refresh()->promotions)->toHaveCount(1)
-            ->and($this->cart->promotions->first()->code)->toBe('SECOND');
+        expect($this->cart->refresh()->promotions->pluck('code')->all())
+            ->toMatchArray(['FIRST', 'SECOND']);
+    });
+
+    it('treats re-applying the same code as a no-op', function (): void {
+        Discount::factory()->create(['code' => 'SAVE', 'is_active' => true]);
+
+        $this->cartManager->applyCoupon($this->cart, 'SAVE');
+        $this->cartManager->applyCoupon($this->cart, 'SAVE');
+
+        expect($this->cart->refresh()->promotions)->toHaveCount(1);
+    });
+
+    it('removes only the targeted code when a code is given', function (): void {
+        Discount::factory()->create(['code' => 'KEEP', 'is_active' => true]);
+        Discount::factory()->create(['code' => 'DROP', 'is_active' => true]);
+
+        $this->cartManager->applyCoupon($this->cart, 'KEEP');
+        $this->cartManager->applyCoupon($this->cart, 'DROP');
+
+        $this->cartManager->removeCoupon($this->cart->refresh(), 'DROP');
+
+        expect($this->cart->refresh()->promotions->pluck('code')->all())->toBe(['KEEP']);
     });
 
     it('clears applied promotions when the coupon is removed', function (): void {

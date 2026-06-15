@@ -662,6 +662,54 @@ function orderDiscount(array $attributes = []): Discount
     ]);
 }
 
+it('stacks two combinable codes and removes one by code', function (): void {
+    orderDiscount(['code' => 'TEN', 'value' => 10, 'combinable' => true, 'priority' => 20]);
+    orderDiscount(['code' => 'FIVE', 'value' => 5, 'combinable' => true, 'priority' => 10]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'TEN'])->assertOk();
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'FIVE'])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.promotions', [
+            ['code' => 'TEN', 'amount' => 250, 'status' => 'applied'],
+            ['code' => 'FIVE', 'amount' => 125, 'status' => 'applied'],
+        ]);
+
+    $this->deleteJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'TEN'])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.promotions', [
+            ['code' => 'FIVE', 'amount' => 125, 'status' => 'applied'],
+        ]);
+
+    expect($this->cart->refresh()->promotions->pluck('code')->all())->toBe(['FIVE']);
+});
+
+it('accepts a valid code suppressed by an exclusive one and keeps it on the cart', function (): void {
+    orderDiscount(['code' => 'EXCL', 'value' => 30, 'combinable' => false, 'priority' => 30]);
+    orderDiscount(['code' => 'SUPP', 'value' => 10, 'combinable' => true, 'priority' => 10]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'EXCL'])->assertOk();
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SUPP'])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.discount_total', 750); // only EXCL (30% of 2500) counts
+
+    expect($this->cart->refresh()->promotions->pluck('code')->all())->toContain('EXCL', 'SUPP');
+});
+
+it('drops only the expired promotion on revalidation and keeps the valid one', function (): void {
+    $expiring = orderDiscount(['code' => 'EXPIRING', 'value' => 10, 'combinable' => true, 'priority' => 20]);
+    orderDiscount(['code' => 'VALID', 'value' => 5, 'combinable' => true, 'priority' => 10]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'EXPIRING'])->assertOk();
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'VALID'])->assertOk();
+
+    $expiring->update(['end_at' => now()->subMinute()]);
+
+    resolve(Shopper\Api\Actions\RevalidateCartCouponAction::class)->execute($this->cart->refresh());
+
+    expect($this->cart->refresh()->promotions->pluck('code')->all())->toBe(['VALID']);
+});
+
 it('applies a promotion code and folds the discount into the totals', function (): void {
     orderDiscount();
 

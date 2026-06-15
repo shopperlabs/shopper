@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
-use Shopper\Core\Traits\ArrayableEnum;
 use Shopper\Core\Traits\HasEnumStaticMethods;
 
 /**
@@ -13,7 +12,6 @@ use Shopper\Core\Traits\HasEnumStaticMethods;
  */
 enum CampaignBudgetDirection: string
 {
-    use ArrayableEnum;
     use HasEnumStaticMethods;
 
     case Reserve = 'reserve';

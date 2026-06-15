@@ -18,6 +18,7 @@ use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountStatus;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Enum\ExclusivityClass;
 use Shopper\Core\Exceptions\DiscountTermsFrozenException;
 use Shopper\Core\Exceptions\DiscountZoneFrozenException;
 use Shopper\Core\Models\Contracts\Discount as DiscountContract;
@@ -38,6 +39,9 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read bool $usage_limit_per_user
  * @property-read bool $is_active
  * @property-read ?int $campaign_id
+ * @property-read ExclusivityClass $exclusivity_class
+ * @property-read bool $combinable
+ * @property-read int $priority
  * @property-read ?int $zone_id
  * @property-read array<string, mixed>|null $metadata
  * @property-read CarbonInterface $created_at
@@ -219,10 +223,13 @@ class Discount extends Model implements DiscountContract
         return [
             'is_active' => 'boolean',
             'usage_limit_per_user' => 'boolean',
+            'combinable' => 'boolean',
+            'priority' => 'integer',
             'start_at' => 'datetime',
             'end_at' => 'datetime',
             'metadata' => 'array',
             'type' => DiscountType::class,
+            'exclusivity_class' => ExclusivityClass::class,
         ];
     }
 }

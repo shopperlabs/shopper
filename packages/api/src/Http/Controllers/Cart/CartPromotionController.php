@@ -40,13 +40,18 @@ final class CartPromotionController
     }
 
     /**
-     * Remove the promotion code applied to a cart.
+     * Remove a promotion from a cart. With a `code` it drops that promotion;
+     * without one it clears every applied code.
      */
     public function destroy(Request $request, string $cartId): JsonApiResource
     {
         $cart = $this->findCart($request, $cartId);
+        $code = $request->input('code');
 
-        $this->mutateCart(fn () => $this->cartManager->removeCoupon($cart));
+        $this->mutateCart(fn () => $this->cartManager->removeCoupon(
+            $cart,
+            is_string($code) ? $code : null,
+        ));
 
         return $this->cartResource($cart->refresh());
     }

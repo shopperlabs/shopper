@@ -58,5 +58,7 @@ interface Order
 
     public function items(): HasMany;
 
+    public function promotions(): HasMany;
+
     public function shippingOption(): BelongsTo;
 }

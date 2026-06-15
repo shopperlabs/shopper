@@ -60,6 +60,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?static $parent
  * @property-read Model $customer
  * @property-read Collection<int, OrderItem> $items
+ * @property-read Collection<int, OrderPromotion> $promotions
  * @property-read Collection<int, OrderShipping> $shippings
  * @property-read Collection<int, Order> $children
  */
@@ -263,6 +264,14 @@ class Order extends Model implements OrderContract
     public function discount(): BelongsTo
     {
         return $this->belongsTo(Discount::class, 'discount_id');
+    }
+
+    /**
+     * @return HasMany<OrderPromotion, $this>
+     */
+    public function promotions(): HasMany
+    {
+        return $this->hasMany(OrderPromotion::class, 'order_id');
     }
 
     /**

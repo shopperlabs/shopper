@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopper\Cart;
 
 use Shopper\Cart\Console\PruneCartsCommand;
-use Shopper\Cart\Discounts\DiscountCalculator;
 use Shopper\Cart\Discounts\DiscountValidator;
+use Shopper\Cart\Discounts\PromotionResolver;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
@@ -42,7 +42,7 @@ final class CartServiceProvider extends PackageServiceProvider
 
         $this->app->singleton(CartPipelineRunner::class);
         $this->app->singleton(DiscountValidator::class);
-        $this->app->singleton(DiscountCalculator::class);
+        $this->app->singleton(PromotionResolver::class);
         $this->app->singleton(CartManager::class);
         $this->app->singleton(CartSessionManager::class);
     }

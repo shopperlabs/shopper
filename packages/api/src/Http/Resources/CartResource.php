@@ -38,6 +38,7 @@ final class CartResource extends JsonApiResource
                 ->map(fn (CartPromotion $promotion): array => [
                     'code' => $promotion->code,
                     'amount' => $promotion->computed_amount,
+                    'status' => $promotion->computed_amount > 0 ? 'applied' : 'suppressed',
                 ])
                 ->values()
                 ->all(),

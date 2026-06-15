@@ -14,6 +14,7 @@ use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\OrderPromotion;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Zone;
 use Tests\Core\Stubs\User;
@@ -156,12 +157,21 @@ describe(DiscountValidator::class, function (): void {
             'usage_limit_per_user' => true,
         ]));
 
-        Order::query()->create([
+        $order = Order::query()->create([
             'number' => 'TEST-ORDER',
             'price_amount' => 100,
             'currency_code' => 'USD',
             'customer_id' => $this->user->id,
             'discount_id' => $discount->id,
+        ]);
+        OrderPromotion::query()->create([
+            'order_id' => $order->id,
+            'discount_id' => $discount->id,
+            'code' => $discount->code,
+            'type' => $discount->type->value,
+            'value_at_apply' => $discount->value,
+            'amount' => 100,
+            'currency_code' => 'USD',
         ]);
 
         $result = $this->validator->validate($discount, $this->context);
