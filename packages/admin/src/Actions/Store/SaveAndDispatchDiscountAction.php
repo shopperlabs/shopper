@@ -24,7 +24,7 @@ final readonly class SaveAndDispatchDiscountAction
         array $productsIds = [],
         array $customersIds = []
     ): Discount {
-        $values = Arr::except($values, ['total_use', 'campaign_id', 'public_id']);
+        $values = Arr::except($values, ['total_use', 'campaign_id', 'public_id', 'trigger']);
 
         if ($discountId) {
             $discount = Discount::query()->findOrFail($discountId);

@@ -19,6 +19,7 @@ return [
     'pipelines' => [
         'cart' => [
             Pipelines\CalculateLines::class,
+            Pipelines\ApplyAutomaticPromotions::class,
             Pipelines\ApplyDiscounts::class,
             Pipelines\CalculateTax::class,
             Pipelines\Calculate::class,

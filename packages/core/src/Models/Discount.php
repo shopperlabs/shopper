@@ -19,6 +19,7 @@ use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountStatus;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Enum\ExclusivityClass;
+use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Exceptions\DiscountTermsFrozenException;
 use Shopper\Core\Exceptions\DiscountZoneFrozenException;
 use Shopper\Core\Models\Contracts\Discount as DiscountContract;
@@ -27,7 +28,8 @@ use Shopper\Core\Models\Traits\HasPublicId;
 /**
  * @property-read int $id
  * @property-read ?string $public_id
- * @property-read string $code
+ * @property-read ?string $code
+ * @property-read PromotionSource $trigger
  * @property-read DiscountType $type
  * @property-read int $value
  * @property-read string $apply_to
@@ -230,6 +232,7 @@ class Discount extends Model implements DiscountContract
             'metadata' => 'array',
             'type' => DiscountType::class,
             'exclusivity_class' => ExclusivityClass::class,
+            'trigger' => PromotionSource::class,
         ];
     }
 }

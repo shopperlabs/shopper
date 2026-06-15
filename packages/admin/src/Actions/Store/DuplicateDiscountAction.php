@@ -26,7 +26,7 @@ final readonly class DuplicateDiscountAction
             $clone->forceFill([
                 'total_use' => 0,
                 'is_active' => false,
-                'code' => $this->resolveUniqueCode($original->code),
+                'code' => $original->code !== null ? $this->resolveUniqueCode($original->code) : null,
             ])->save();
 
             $original->items->each(function (DiscountDetail $item) use ($clone): void {

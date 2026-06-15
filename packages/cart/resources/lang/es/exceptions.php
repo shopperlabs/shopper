@@ -13,6 +13,7 @@ return [
     'discount_limit' => [
         'global' => 'El descuento «:code» alcanzó su límite de uso y ya no puede aplicarse.',
         'per_user' => 'Ya has usado el descuento «:code», limitado a un uso por cliente.',
+        'automatic' => 'promoción automática',
     ],
 
 ];

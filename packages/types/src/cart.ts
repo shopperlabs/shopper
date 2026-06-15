@@ -23,8 +23,12 @@ export enum CartAddressType {
 export interface AppliedCartPromotion {
   /** The promotion code applied, or null for an automatic promotion. */
   code: string | null
+  /** Whether the promotion was applied via a code or triggered automatically. */
+  source: 'code' | 'automatic'
   /** The discount amount this promotion contributes, in cents. */
   amount: number
+  /** `applied` when it reduces the cart, `suppressed` when stacked out by another promotion. */
+  status: 'applied' | 'suppressed'
 }
 
 export interface Cart extends Entity {

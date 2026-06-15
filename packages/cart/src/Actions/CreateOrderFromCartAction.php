@@ -170,7 +170,8 @@ final readonly class CreateOrderFromCartAction
                 ->whereKey($promotion->discount_id)
                 ->first();
 
-            if ($discount === null) {
+            // Deactivated between the locked recalculation and here: do not charge it.
+            if ($discount === null || ! $discount->is_active) {
                 continue;
             }
 

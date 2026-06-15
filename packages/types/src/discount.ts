@@ -27,12 +27,19 @@ export enum DiscountCondition {
   ELIGIBILITY = 'eligibility',
 }
 
+export enum PromotionSource {
+  CODE = 'code',
+  AUTOMATIC = 'automatic',
+}
+
 /**
  * Discount model.
  */
 export interface Discount extends Entity {
-  /** The discount code. */
-  code: string
+  /** The discount code, or null for an automatic promotion. */
+  code: string | null
+  /** Whether the discount is applied via a code or triggered automatically. */
+  trigger: PromotionSource
   /** The type of discount. */
   type: DiscountType
   /** The value of the discount. */

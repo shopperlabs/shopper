@@ -670,14 +670,14 @@ it('stacks two combinable codes and removes one by code', function (): void {
     $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'FIVE'])
         ->assertOk()
         ->assertJsonPath('data.attributes.promotions', [
-            ['code' => 'TEN', 'amount' => 250, 'status' => 'applied'],
-            ['code' => 'FIVE', 'amount' => 125, 'status' => 'applied'],
+            ['code' => 'TEN', 'source' => 'code', 'amount' => 250, 'status' => 'applied'],
+            ['code' => 'FIVE', 'source' => 'code', 'amount' => 125, 'status' => 'applied'],
         ]);
 
     $this->deleteJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'TEN'])
         ->assertOk()
         ->assertJsonPath('data.attributes.promotions', [
-            ['code' => 'FIVE', 'amount' => 125, 'status' => 'applied'],
+            ['code' => 'FIVE', 'source' => 'code', 'amount' => 125, 'status' => 'applied'],
         ]);
 
     expect($this->cart->refresh()->promotions->pluck('code')->all())->toBe(['FIVE']);
