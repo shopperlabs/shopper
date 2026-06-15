@@ -30,4 +30,17 @@ describe(ReleaseCampaignBudgetListener::class, function (): void {
 
         resolve(ReleaseCampaignBudgetListener::class)->handle(new OrderCancelled($order));
     })->throwsNoExceptions();
+
+    it('releases the budget when the OrderCancelled event is dispatched', function (): void {
+        $campaign = Campaign::factory()->withSpendBudget(amount: 100_000)->create();
+        $discount = Discount::factory()->create(['campaign_id' => $campaign->id]);
+        $order = Order::factory()->create(['discount_id' => $discount->id]);
+
+        resolve(ReserveCampaignBudget::class)->execute($campaign, spend: 25_000, orderId: $order->id);
+
+        event(new OrderCancelled($order));
+
+        // Proves the listener is wired to the event, not just correct in isolation.
+        expect($campaign->fresh()->spent_amount)->toBe(0);
+    });
 })->group('listeners', 'campaigns');
