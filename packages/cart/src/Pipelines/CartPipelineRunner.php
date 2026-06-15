@@ -16,6 +16,7 @@ final class CartPipelineRunner
             'lines.adjustments',
             'lines.taxLines',
             'addresses.country',
+            'promotions.discount.campaign',
         ]);
 
         $context = new CartPipelineContext($cart);

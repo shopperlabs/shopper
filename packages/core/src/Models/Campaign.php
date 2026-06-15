@@ -15,7 +15,6 @@ use Shopper\Core\Enum\CampaignBudgetType;
 use Shopper\Core\Enum\CampaignStatus;
 use Shopper\Core\Models\Contracts\Campaign as CampaignContract;
 use Shopper\Core\Models\Traits\HasPublicId;
-use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
@@ -41,15 +40,9 @@ class Campaign extends Model implements CampaignContract
     /** @use HasFactory<CampaignFactory> */
     use HasFactory;
 
-    use HasModelContract;
     use HasPublicId;
 
     protected $guarded = [];
-
-    public static function configuredClass(): string
-    {
-        return config('shopper.models.campaign', static::class);
-    }
 
     public function getTable(): string
     {
@@ -58,8 +51,13 @@ class Campaign extends Model implements CampaignContract
 
     public function hasReachedBudget(): bool
     {
-        $spendReached = $this->budget_amount !== null && $this->spent_amount >= $this->budget_amount;
-        $countReached = $this->budget_count !== null && $this->used_count >= $this->budget_count;
+        $spendReached = $this->budget_type->hasSpendCap()
+            && $this->budget_amount !== null
+            && $this->spent_amount >= $this->budget_amount;
+
+        $countReached = $this->budget_type->hasCountCap()
+            && $this->budget_count !== null
+            && $this->used_count >= $this->budget_count;
 
         return $spendReached || $countReached;
     }

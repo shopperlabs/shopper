@@ -27,6 +27,8 @@ return new class extends Migration
 
             $table->dateTime('starts_at');
             $table->dateTime('ends_at')->nullable();
+
+            $table->index(['is_active', 'starts_at', 'ends_at']);
         });
     }
 

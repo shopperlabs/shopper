@@ -21,8 +21,10 @@ Route::post('/carts/{cartId}/lines', [CartLineController::class, 'store']);
 Route::patch('/carts/{cartId}/lines/{lineId}', [CartLineController::class, 'update']);
 Route::delete('/carts/{cartId}/lines/{lineId}', [CartLineController::class, 'destroy']);
 Route::post('/carts/{cartId}/addresses', [CartAddressController::class, 'store']);
-Route::post('/carts/{cartId}/promotion', [CartPromotionController::class, 'store']);
-Route::delete('/carts/{cartId}/promotion', [CartPromotionController::class, 'destroy']);
+Route::post('/carts/{cartId}/promotion', [CartPromotionController::class, 'store'])
+    ->middleware('throttle:'.RateLimit::Checkout->value);
+Route::delete('/carts/{cartId}/promotion', [CartPromotionController::class, 'destroy'])
+    ->middleware('throttle:'.RateLimit::Checkout->value);
 Route::get('/carts/{cartId}/shipping-options', ShippingOptionController::class);
 Route::post('/carts/{cartId}/shipping-method', [CartShippingMethodController::class, 'store']);
 Route::get('/carts/{cartId}/payment-methods', [CartPaymentMethodController::class, 'index']);

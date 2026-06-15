@@ -7,11 +7,13 @@ namespace Shopper\Core\Models;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Core\Enum\CampaignBudgetDirection;
 
 /**
  * @property-read int $id
  * @property-read int $campaign_id
  * @property-read ?int $order_id
+ * @property-read CampaignBudgetDirection $direction
  * @property-read int $amount
  * @property-read int $balance_after
  * @property-read ?string $actor
@@ -33,12 +35,13 @@ class CampaignBudgetMovement extends Model
      */
     public function campaign(): BelongsTo
     {
-        return $this->belongsTo(config('shopper.models.campaign'), 'campaign_id');
+        return $this->belongsTo(Campaign::class, 'campaign_id');
     }
 
     protected function casts(): array
     {
         return [
+            'direction' => CampaignBudgetDirection::class,
             'amount' => 'integer',
             'balance_after' => 'integer',
         ];

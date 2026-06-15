@@ -74,4 +74,35 @@ describe(SaveAndDispatchDiscountAction::class, function (): void {
             ->and($discount->items()->where('condition', DiscountCondition::ApplyTo)->count())->toBe(1)
             ->and($discount->items()->where('condition', DiscountCondition::Eligibility)->count())->toBe(3);
     });
+
+    it('never lets the form write the redemption counter or the campaign link', function (): void {
+        $discount = Discount::factory()->create([
+            'code' => 'KEEPME',
+            'type' => DiscountType::FixedAmount,
+            'value' => 1000,
+            'apply_to' => DiscountApplyTo::Order,
+            'total_use' => 4,
+        ]);
+
+        app()->call(SaveAndDispatchDiscountAction::class, [
+            'values' => [
+                'code' => 'KEEPME',
+                'is_active' => true,
+                'type' => DiscountType::FixedAmount,
+                'value' => 1000,
+                'apply_to' => DiscountApplyTo::Order,
+                'min_required' => DiscountRequirement::None,
+                'eligibility' => DiscountEligibility::Everyone,
+                'start_at' => now(),
+                'total_use' => 0,
+                'campaign_id' => 999,
+            ],
+            'discountId' => $discount->id,
+        ]);
+
+        $discount->refresh();
+
+        expect($discount->total_use)->toBe(4)
+            ->and($discount->campaign_id)->toBeNull();
+    });
 })->group('discount');

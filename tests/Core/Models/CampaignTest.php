@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 use Shopper\Core\Enum\CampaignBudgetType;
 use Shopper\Core\Models\Campaign;
-use Shopper\Core\Models\Contracts\Campaign as CampaignContract;
 use Shopper\Core\Models\Discount;
 
 uses(Tests\Core\TestCase::class);
 
 describe(Campaign::class, function (): void {
-    it('resolves the configured class through the container', function (): void {
-        expect(resolve(CampaignContract::class))->toBeInstanceOf(Campaign::class);
-    });
-
     it('uses the prefixed campaigns table', function (): void {
         expect((new Campaign)->getTable())->toBe(shopper_table('campaigns'));
     });

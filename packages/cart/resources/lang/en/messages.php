@@ -9,6 +9,7 @@ return [
         'not_started' => 'Discount has not started yet.',
         'expired' => 'Discount has expired.',
         'usage_limit_reached' => 'Discount usage limit reached.',
+        'campaign_budget_reached' => 'This promotion is no longer available.',
         'already_used' => 'Discount already used by this customer.',
         'requires_login' => 'Discount requires a logged-in customer.',
         'customer_not_eligible' => 'Customer is not eligible for this discount.',

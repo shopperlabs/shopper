@@ -100,7 +100,6 @@ final class CoreServiceProvider extends PackageServiceProvider
         $models = [
             'address' => Models\Contracts\Address::class,
             'brand' => Models\Contracts\Brand::class,
-            'campaign' => Models\Contracts\Campaign::class,
             'category' => Models\Contracts\Category::class,
             'collection' => Models\Contracts\Collection::class,
             'product' => Models\Contracts\Product::class,
@@ -135,7 +134,6 @@ final class CoreServiceProvider extends PackageServiceProvider
         Relation::morphMap([
             'address' => config('shopper.models.address'),
             'brand' => config('shopper.models.brand'),
-            'campaign' => config('shopper.models.campaign'),
             'category' => config('shopper.models.category'),
             'collection' => config('shopper.models.collection'),
             'product' => config('shopper.models.product'),

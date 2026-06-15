@@ -32,7 +32,7 @@ final readonly class ApplyCartPromotionAction
 
         if (! $discount instanceof Discount || ! $discount->is_active) {
             throw ValidationException::withMessages([
-                'code' => __('shopper-api::messages.promotion.not_found'),
+                'code' => __('shopper-api::messages.promotion.not_applicable'),
             ]);
         }
 

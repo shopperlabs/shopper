@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Actions\Store;
 
+use Illuminate\Support\Arr;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
@@ -23,6 +24,8 @@ final readonly class SaveAndDispatchDiscountAction
         array $productsIds = [],
         array $customersIds = []
     ): Discount {
+        $values = Arr::except($values, ['total_use', 'campaign_id', 'public_id']);
+
         if ($discountId) {
             $discount = Discount::query()->findOrFail($discountId);
             $discount->update($values);

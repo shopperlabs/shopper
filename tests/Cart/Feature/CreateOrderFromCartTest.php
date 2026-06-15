@@ -14,7 +14,6 @@ use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
-use Shopper\Core\Exceptions\CampaignBudgetExceededException;
 use Shopper\Core\Models\Campaign;
 use Shopper\Core\Models\CampaignBudgetMovement;
 use Shopper\Core\Models\Carrier;
@@ -48,7 +47,7 @@ beforeEach(function (): void {
     $this->product->load('prices');
     $this->product->mutateStock($this->inventory->id, 100);
 
-    $this->cart = Cart::query()->create([
+    $this->cart = Cart::factory()->create([
         'currency_code' => 'USD',
         'customer_id' => $this->user->id,
     ]);
@@ -240,7 +239,7 @@ describe(CreateOrderFromCartAction::class, function (): void {
 
         $this->action->execute($this->cart->refresh());
 
-        $secondCart = Cart::query()->create([
+        $secondCart = Cart::factory()->create([
             'currency_code' => 'USD',
             'customer_id' => $this->user->id,
         ]);
@@ -282,7 +281,7 @@ describe(CreateOrderFromCartAction::class, function (): void {
             ->and(CampaignBudgetMovement::query()->where('order_id', $order->id)->count())->toBe(1);
     });
 
-    it('blocks checkout and rolls everything back when the campaign budget is exhausted', function (): void {
+    it('completes checkout without the discount when the campaign budget is already exhausted', function (): void {
         $campaign = Campaign::factory()
             ->withSpendBudget(amount: 1)
             ->create(['currency_code' => 'USD', 'spent_amount' => 1]);
@@ -303,12 +302,13 @@ describe(CreateOrderFromCartAction::class, function (): void {
         $this->cartManager->add($this->cart, $this->product);
         $this->cartManager->applyCoupon($this->cart, 'CAMPFULL');
 
-        expect(fn () => $this->action->execute($this->cart->refresh()))
-            ->toThrow(CampaignBudgetExceededException::class);
+        // The validator strips the exhausted-campaign discount at calculation time,
+        // so checkout succeeds at full price instead of throwing mid-transaction.
+        $order = $this->action->execute($this->cart->refresh());
 
-        expect($discount->refresh()->total_use)->toBe(0)
-            ->and($this->cart->refresh()->isCompleted())->toBeFalse()
-            ->and(Order::query()->count())->toBe(0)
+        expect($order->discount_id)->toBeNull()
+            ->and($discount->refresh()->total_use)->toBe(0)
+            ->and($campaign->refresh()->spent_amount)->toBe(1)
             ->and(CampaignBudgetMovement::query()->count())->toBe(0);
     });
 

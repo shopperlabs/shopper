@@ -30,6 +30,17 @@ describe('Discount terms freeze after redemption', function (): void {
             ->toThrow(DiscountTermsFrozenException::class);
     });
 
+    it('freezes the type once the discount has been redeemed', function (): void {
+        $discount = Discount::factory()->create([
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'total_use' => 3,
+        ]);
+
+        expect(fn () => $discount->update(['type' => DiscountType::FixedAmount]))
+            ->toThrow(DiscountTermsFrozenException::class);
+    });
+
     it('allows editing the terms while the discount has no redemptions', function (): void {
         $discount = Discount::factory()->create([
             'type' => DiscountType::Percentage,

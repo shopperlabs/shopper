@@ -40,6 +40,16 @@ final readonly class DiscountValidator
             return new DiscountValidationResult(false, __('shopper-cart::messages.discount.usage_limit_reached'));
         }
 
+        if ($discount->campaign !== null) {
+            if ($discount->campaign->currency_code !== $context->cart->currency_code) {
+                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.currency_mismatch'));
+            }
+
+            if ($discount->campaign->hasReachedBudget()) {
+                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.campaign_budget_reached'));
+            }
+        }
+
         if ($discount->usage_limit_per_user && $context->cart->customer_id) {
             $alreadyRedeemed = resolve(Order::class)::query()
                 ->where('discount_id', $discount->id)

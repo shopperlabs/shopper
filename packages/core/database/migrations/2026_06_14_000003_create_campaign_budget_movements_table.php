@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Shopper\Core\Enum\CampaignBudgetDirection;
 use Shopper\Core\Helpers\Migration;
 
 return new class extends Migration
@@ -15,11 +16,13 @@ return new class extends Migration
 
             $this->addForeignKey($table, 'campaign_id', $this->getTableName('campaigns'), false);
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'));
+
+            $table->string('direction')->default(CampaignBudgetDirection::Reserve->value);
             $table->bigInteger('amount');
             $table->unsignedBigInteger('balance_after');
             $table->string('actor')->nullable();
 
-            $table->unique(['campaign_id', 'order_id']);
+            $table->unique(['campaign_id', 'order_id', 'direction']);
         });
     }
 

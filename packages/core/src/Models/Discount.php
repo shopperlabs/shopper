@@ -152,7 +152,7 @@ class Discount extends Model implements DiscountContract
      */
     public function campaign(): BelongsTo
     {
-        return $this->belongsTo(config('shopper.models.campaign'), 'campaign_id');
+        return $this->belongsTo(Campaign::class, 'campaign_id');
     }
 
     protected static function newFactory(): DiscountFactory
