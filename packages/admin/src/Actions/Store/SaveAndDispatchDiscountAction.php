@@ -7,6 +7,7 @@ namespace Shopper\Actions\Store;
 use Illuminate\Support\Arr;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
+use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Models\Discount;
 use Shopper\Jobs\AttachedDiscountToCustomers;
 use Shopper\Jobs\AttachedDiscountToProducts;
@@ -22,7 +23,9 @@ final readonly class SaveAndDispatchDiscountAction
         array $values,
         ?int $discountId = null,
         array $productsIds = [],
-        array $customersIds = []
+        array $customersIds = [],
+        ?string $trigger = null,
+        ?int $campaignId = null
     ): Discount {
         $values = Arr::except($values, ['total_use', 'campaign_id', 'public_id', 'trigger']);
 
@@ -31,6 +34,20 @@ final readonly class SaveAndDispatchDiscountAction
             $discount->update($values);
         } else {
             $discount = Discount::query()->create($values);
+        }
+
+        if ($trigger !== null) {
+            $discount->trigger = PromotionSource::from($trigger);
+        }
+
+        if ($campaignId !== null) {
+            $discount->campaign_id = $campaignId;
+        } elseif ($discount->campaign_id !== null && $discount->total_use === 0) {
+            $discount->campaign_id = null;
+        }
+
+        if ($discount->isDirty(['trigger', 'campaign_id'])) {
+            $discount->save();
         }
 
         $applyTo = data_get($values, 'apply_to');

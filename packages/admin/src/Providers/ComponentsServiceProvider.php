@@ -15,6 +15,7 @@ final class ComponentsServiceProvider extends ServiceProvider
     protected array $componentsConfig = [
         'account',
         'brand',
+        'campaign',
         'category',
         'collection',
         'customer',

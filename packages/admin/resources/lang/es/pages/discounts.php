@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
 
-    'menu' => 'Descuentos',
+    'menu' => 'Promociones',
     'single' => 'descuento',
     'title' => 'Gestionar descuentos y promociones',
     'description' => 'Crea y gestiona códigos de descuento y promociones que se apliquen al finalizar la compra o en los pedidos de los clientes.',
@@ -12,6 +12,42 @@ return [
     'empty_message' => 'No se encontró ningún descuento...',
     'search' => 'Buscar código de descuento',
     'name_helptext' => 'Los clientes ingresarán este código de descuento al finalizar la compra.',
+
+    'method' => 'Método',
+    'method_code' => 'Código de descuento',
+    'method_code_description' => 'Los clientes ingresan un código al finalizar la compra para usar este descuento.',
+    'method_automatic' => 'Automático',
+    'method_automatic_description' => 'Se aplica automáticamente cuando el carrito coincide, sin código.',
+
+    'type_percentage_description' => 'Un porcentaje de descuento sobre el pedido o los productos seleccionados.',
+    'type_fixed_description' => 'Un importe fijo de descuento sobre el pedido o los productos seleccionados.',
+    'apply_to_order_description' => 'Descuenta el total del pedido completo.',
+    'apply_to_products_description' => 'Descuenta solo los productos seleccionados.',
+    'eligibility_everyone_description' => 'Cualquiera puede usar esta promoción.',
+    'eligibility_customers_description' => 'Solo los clientes seleccionados pueden usarla.',
+
+    'exclusivity_class' => 'Clase de exclusividad',
+    'exclusivity_class_helptext' => 'Los descuentos de la misma clase nunca se acumulan entre sí.',
+    'exclusivity_order' => 'Pedido',
+    'exclusivity_product' => 'Producto',
+    'exclusivity_shipping' => 'Envío',
+    'combinable' => 'Combinable con otros descuentos',
+    'combinable_helptext' => 'Permitir que este descuento se acumule con descuentos de otras clases de exclusividad.',
+    'priority' => 'Prioridad',
+    'priority_helptext' => 'Los números más bajos se evalúan primero cuando varios descuentos compiten.',
+
+    'campaign' => 'Campaña',
+    'campaign_description' => 'Asocia este descuento a una campaña para compartir su presupuesto y límites de uso.',
+    'campaign_helptext' => 'Los descuentos de una campaña comparten el mismo presupuesto y límites de canje.',
+    'campaign_locked_helper' => 'La campaña no puede modificarse una vez que la promoción ha sido utilizada, para mantener la coherencia del seguimiento del presupuesto de la campaña.',
+    'campaign_none' => 'Sin campaña',
+
+    'wizard' => [
+        'type' => 'Tipo',
+        'details' => 'Detalles',
+        'campaign' => 'Campaña',
+    ],
+
     'percentage' => 'Porcentaje',
     'percentage_description' => 'Descuento aplicado en %',
     'fixed_amount' => 'Monto fijo',
@@ -89,6 +125,8 @@ return [
         'configuration_description' => 'Cuántas veces se puede usar el descuento y cuándo está activo.',
         'targeting' => 'Segmentación',
         'targeting_description' => 'Qué productos y clientes son elegibles para este descuento.',
+        'combinations' => 'Combinaciones',
+        'combinations_description' => 'Controla cómo se acumula este descuento con otros y su prioridad de evaluación.',
         'advanced' => 'Avanzado',
         'advanced_description' => 'Metadatos personalizados adjuntos al descuento.',
     ],

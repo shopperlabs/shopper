@@ -59,6 +59,16 @@ final class SalesSidebar extends AbstractAdminSidebar
                     $item->setIcon('phosphor-seal-percent');
                 });
             }
+
+            if (Feature::enabled('campaign')) {
+                $group->item(__('shopper::pages/campaigns.menu'), function (Item $item): void {
+                    $item->weight(3);
+                    $item->setAuthorized($this->user->hasPermissionTo('campaigns.browse'));
+                    $item->useSpa();
+                    $item->route('shopper.campaigns.index');
+                    $item->setIcon('phosphor-megaphone');
+                });
+            }
         });
 
         return $menu;

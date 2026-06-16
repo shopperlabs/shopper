@@ -29,7 +29,7 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read int $id
  * @property-read ?string $public_id
  * @property-read ?string $code
- * @property-read PromotionSource $trigger
+ * @property PromotionSource $trigger
  * @property-read DiscountType $type
  * @property-read int $value
  * @property-read string $apply_to
@@ -40,7 +40,7 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read ?int $usage_limit
  * @property-read bool $usage_limit_per_user
  * @property-read bool $is_active
- * @property-read ?int $campaign_id
+ * @property ?int $campaign_id
  * @property-read ExclusivityClass $exclusivity_class
  * @property-read bool $combinable
  * @property-read int $priority

@@ -8,6 +8,8 @@ use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Enum\PromotionSource;
+use Shopper\Core\Models\Campaign;
 use Shopper\Core\Models\Discount;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
@@ -104,5 +106,61 @@ describe(SaveAndDispatchDiscountAction::class, function (): void {
 
         expect($discount->total_use)->toBe(4)
             ->and($discount->campaign_id)->toBeNull();
+    });
+
+    it('persists the `trigger` from the explicit parameter, ignoring `values`', function (): void {
+        $discount = app()->call(SaveAndDispatchDiscountAction::class, [
+            'values' => array_merge($this->formValues, [
+                'trigger' => PromotionSource::Automatic->value,
+            ]),
+            'trigger' => PromotionSource::Code->value,
+        ]);
+
+        expect($discount->trigger)->toBe(PromotionSource::Code);
+    });
+
+    it('persists the `campaign_id` from the explicit parameter, ignoring `values`', function (): void {
+        $campaign = Campaign::factory()->create();
+
+        $discount = app()->call(SaveAndDispatchDiscountAction::class, [
+            'values' => array_merge($this->formValues, [
+                'campaign_id' => 999,
+            ]),
+            'campaignId' => $campaign->id,
+        ]);
+
+        expect($discount->campaign_id)->toBe($campaign->id);
+    });
+
+    it('detaches the campaign from an unused discount when none is provided', function (): void {
+        $campaign = Campaign::factory()->create();
+        $discount = Discount::factory()->create([
+            'campaign_id' => $campaign->id,
+            'total_use' => 0,
+        ]);
+
+        app()->call(SaveAndDispatchDiscountAction::class, [
+            'values' => $this->formValues,
+            'discountId' => $discount->id,
+            'campaignId' => null,
+        ]);
+
+        expect($discount->refresh()->campaign_id)->toBeNull();
+    });
+
+    it('keeps the campaign attached when the discount has already been used', function (): void {
+        $campaign = Campaign::factory()->create();
+        $discount = Discount::factory()->create(array_merge($this->formValues, [
+            'campaign_id' => $campaign->id,
+            'total_use' => 3,
+        ]));
+
+        app()->call(SaveAndDispatchDiscountAction::class, [
+            'values' => $this->formValues,
+            'discountId' => $discount->id,
+            'campaignId' => null,
+        ]);
+
+        expect($discount->refresh()->campaign_id)->toBe($campaign->id);
     });
 })->group('discount');

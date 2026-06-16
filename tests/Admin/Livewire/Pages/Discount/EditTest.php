@@ -8,7 +8,10 @@ use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Enum\ExclusivityClass;
+use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Exceptions\DiscountZoneFrozenException;
+use Shopper\Core\Models\Campaign;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Zone;
@@ -49,6 +52,34 @@ describe(Edit::class, function (): void {
 
         expect($discount->code)->toBe($code)
             ->and($discount->items()->where('condition', DiscountCondition::Eligibility)->count())->toBe(3);
+    });
+
+    it('updates the combination settings and campaign link', function (): void {
+        $campaign = Campaign::factory()->create();
+        $discount = Discount::factory()->create([
+            'type' => DiscountType::Percentage,
+            'value' => 15,
+        ]);
+
+        Livewire::test(Edit::class, ['record' => $discount->id])
+            ->fillForm([
+                'apply_to' => DiscountApplyTo::Order,
+                'min_required' => DiscountRequirement::None,
+                'eligibility' => DiscountEligibility::Everyone,
+                'exclusivity_class' => ExclusivityClass::Shipping->value,
+                'combinable' => true,
+                'priority' => 7,
+                'campaign_id' => $campaign->id,
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $discount->refresh();
+
+        expect($discount->exclusivity_class)->toBe(ExclusivityClass::Shipping)
+            ->and($discount->combinable)->toBeTrue()
+            ->and($discount->priority)->toBe(7)
+            ->and($discount->campaign_id)->toBe($campaign->id);
     });
 
     it('declares the discount property as Locked', function (): void {
@@ -92,5 +123,15 @@ describe(Edit::class, function (): void {
 
         Livewire::test(Edit::class, ['record' => $discount->id])
             ->assertForbidden();
+    });
+
+    it('renders the edit page for an automatic discount without a code', function (): void {
+        $discount = Discount::factory()->create([
+            'trigger' => PromotionSource::Automatic->value,
+            'code' => null,
+        ]);
+
+        Livewire::test(Edit::class, ['record' => $discount->id])
+            ->assertOk();
     });
 })->group('livewire', 'pages', 'discounts');

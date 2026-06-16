@@ -80,7 +80,7 @@ return [
     'once_per_user' => 'Une fois par utilisateur',
     'scheduled' => 'Programmé',
     'active_for_users' => 'Actif Pour les utilisateurs',
-    'from_date' => 'From :date',
+    'from_date' => 'Depuis le :date',
     'summary' => 'Résumé',
     'everyone' => 'Pour tout le monde',
     'for_name' => 'Pour :name',

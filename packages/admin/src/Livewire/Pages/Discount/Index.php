@@ -29,6 +29,7 @@ use Shopper\Actions\Store\DuplicateDiscountAction;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountStatus;
+use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Models\Discount;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -50,13 +51,25 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
     public function table(Table $table): Table
     {
         return $table
-            ->query(Discount::with('zone', 'zone.currency')->latest())
+            ->query(Discount::with('zone', 'campaign')->latest())
             ->columns([
                 TextColumn::make('code')
                     ->label(__('shopper::forms.label.code'))
                     ->badge()
+                    ->placeholder('N/A')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('trigger')
+                    ->label(__('shopper::pages/discounts.method'))
+                    ->badge()
+                    ->formatStateUsing(fn (PromotionSource $state): string => match ($state) {
+                        PromotionSource::Code => __('shopper::pages/discounts.method_code'),
+                        PromotionSource::Automatic => __('shopper::pages/discounts.method_automatic'),
+                    })
+                    ->color(fn (PromotionSource $state): string => match ($state) {
+                        PromotionSource::Code => 'gray',
+                        PromotionSource::Automatic => 'info',
+                    }),
                 TextColumn::make('type')
                     ->label(__('shopper::forms.label.type'))
                     ->searchable()
@@ -101,6 +114,13 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->sortable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
+                TextColumn::make('campaign.name')
+                    ->label(__('shopper::pages/discounts.campaign'))
+                    ->placeholder('—')
+                    ->toggleable()
+                    ->url(fn (Discount $record): ?string => $record->campaign_id !== null
+                        ? route('shopper.campaigns.edit', $record->campaign_id)
+                        : null),
             ])
             ->recordActions([
                 Action::make('edit')
@@ -184,6 +204,15 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
             ])
             ->filters([
                 TernaryFilter::make('is_active'),
+                SelectFilter::make('trigger')
+                    ->label(__('shopper::pages/discounts.method'))
+                    ->options([
+                        PromotionSource::Code->value => __('shopper::pages/discounts.method_code'),
+                        PromotionSource::Automatic->value => __('shopper::pages/discounts.method_automatic'),
+                    ]),
+                SelectFilter::make('campaign_id')
+                    ->label(__('shopper::pages/discounts.campaign'))
+                    ->relationship('campaign', 'name'),
                 SelectFilter::make('apply_to')
                     ->options(DiscountApplyTo::options()),
                 SelectFilter::make('eligibility')

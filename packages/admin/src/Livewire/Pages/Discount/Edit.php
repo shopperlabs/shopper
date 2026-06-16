@@ -38,8 +38,13 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
     public function getBreadcrumbs(): array
     {
         return [
-            new Breadcrumb(text: $this->discount->code),
+            new Breadcrumb(text: $this->discountLabel()),
         ];
+    }
+
+    public function discountLabel(): string
+    {
+        return $this->discount->code ?? __('shopper::pages/discounts.method_automatic');
     }
 
     public function mount(int $record): void
@@ -49,6 +54,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
         $this->discount = Discount::query()
             ->with([
                 'zone',
+                'campaign',
                 'items:id,discount_id,discountable_type,discountable_id,condition',
             ])
             ->findOrFail($record);
@@ -58,6 +64,11 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
         $this->form->fill([
             'zone_id' => $this->discount->zone_id,
             'code' => $this->discount->code,
+            'trigger' => $this->discount->trigger->value,
+            'exclusivity_class' => $this->discount->exclusivity_class->value,
+            'combinable' => $this->discount->combinable,
+            'priority' => $this->discount->priority,
+            'campaign_id' => $this->discount->campaign_id,
             'type' => $this->discount->type->value,
             'value' => $this->discount->value,
             'apply_to' => $this->discount->apply_to,
@@ -164,6 +175,6 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
     public function render(): View
     {
         return view('shopper::livewire.pages.discounts.edit')
-            ->title($this->discount->code);
+            ->title($this->discountLabel());
     }
 }

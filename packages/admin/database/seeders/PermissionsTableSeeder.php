@@ -51,6 +51,7 @@ final class PermissionsTableSeeder extends Seeder
 
         Permission::generate('orders', 'sales');
         Permission::generate('discounts', 'sales');
+        Permission::generate('campaigns', 'sales');
 
         Permission::generate('customers');
 

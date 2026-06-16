@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
 
-    'menu' => 'Réductions',
+    'menu' => 'Promotions',
     'single' => 'réduction',
     'title' => 'Gérer les remises et les promotions',
     'description' => 'Créez et gérez les codes de réduction et de promotion qui s\'appliquent à la caisse ou aux commandes des clients.',
@@ -12,6 +12,42 @@ return [
     'empty_message' => 'Aucune réduction trouvée...',
     'search' => 'Rechercher un code de réduction',
     'name_helptext' => 'Les clients saisiront ce code de réduction lors du paiement.',
+
+    'method' => 'Méthode',
+    'method_code' => 'Code de réduction',
+    'method_code_description' => 'Les clients saisissent un code au paiement pour utiliser cette réduction.',
+    'method_automatic' => 'Automatique',
+    'method_automatic_description' => 'Appliquée automatiquement lorsque le panier correspond, sans code.',
+
+    'type_percentage_description' => 'Un pourcentage de réduction sur la commande ou les produits sélectionnés.',
+    'type_fixed_description' => 'Un montant fixe de réduction sur la commande ou les produits sélectionnés.',
+    'apply_to_order_description' => 'Réduit le total de la commande entière.',
+    'apply_to_products_description' => 'Réduit uniquement les produits sélectionnés.',
+    'eligibility_everyone_description' => 'Tout le monde peut utiliser cette promotion.',
+    'eligibility_customers_description' => 'Seuls les clients sélectionnés peuvent l\'utiliser.',
+
+    'exclusivity_class' => 'Classe d\'exclusivité',
+    'exclusivity_class_helptext' => 'Les réductions d\'une même classe ne se cumulent jamais entre elles.',
+    'exclusivity_order' => 'Commande',
+    'exclusivity_product' => 'Produit',
+    'exclusivity_shipping' => 'Livraison',
+    'combinable' => 'Cumulable avec d\'autres réductions',
+    'combinable_helptext' => 'Autoriser cette réduction à se cumuler avec des réductions d\'autres classes d\'exclusivité.',
+    'priority' => 'Priorité',
+    'priority_helptext' => 'Les nombres les plus petits sont évalués en premier lorsque plusieurs réductions s\'appliquent.',
+
+    'campaign' => 'Campagne',
+    'campaign_description' => 'Rattachez cette réduction à une campagne pour partager son budget et ses limites d\'utilisation.',
+    'campaign_helptext' => 'Les réductions d\'une campagne partagent le même budget et les mêmes limites d\'utilisation.',
+    'campaign_locked_helper' => 'La campagne ne peut plus être modifiée après la première utilisation de la promotion, afin de préserver la cohérence du suivi de budget de la campagne.',
+    'campaign_none' => 'Aucune campagne',
+
+    'wizard' => [
+        'type' => 'Type',
+        'details' => 'Détails',
+        'campaign' => 'Campagne',
+    ],
+
     'percentage' => 'Pourcentage',
     'percentage_description' => 'Remise appliquée en %',
     'fixed_amount' => 'Montant fixe',
@@ -89,6 +125,8 @@ return [
         'configuration_description' => 'Combien de fois la réduction peut être utilisée et sa période de validité.',
         'targeting' => 'Ciblage',
         'targeting_description' => 'Quels produits et quels clients sont éligibles à cette réduction.',
+        'combinations' => 'Combinaisons',
+        'combinations_description' => 'Contrôlez le cumul de cette réduction avec les autres et sa priorité d\'évaluation.',
         'advanced' => 'Avancé',
         'advanced_description' => 'Métadonnées personnalisées attachées à la réduction.',
     ],

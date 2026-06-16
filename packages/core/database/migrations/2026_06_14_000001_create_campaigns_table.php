@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create($this->getTableName('campaigns'), function (Blueprint $table): void {
             $this->addCommonFields($table);
-
             $table->ulid('public_id')->nullable()->unique();
+
             $table->boolean('is_active')->default(true);
             $table->string('name');
             $table->string('currency_code');
