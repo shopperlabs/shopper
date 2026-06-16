@@ -95,6 +95,23 @@ Search for these patterns:
 grep -rn "ShopperUser.*2fa\|TwoFactorAuthenticatable\|two_factor_secret\|two_factor_recovery" app/ --include="*.php"
 ```
 
-### Step 3: Verify database columns
+### Step 3: Database columns are renamed
 
-The database columns remain the same (`two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`). No migration needed.
+The `two_factor_secret` and `two_factor_recovery_codes` columns are renamed to avoid colliding with Laravel Fortify, which uses the unprefixed names:
+
+| 2.x column | 3.x column |
+|---|---|
+| `two_factor_secret` | `store_two_factor_secret` |
+| `two_factor_recovery_codes` | `store_two_factor_recovery_codes` |
+
+`two_factor_confirmed_at` is unchanged.
+
+The rename is handled automatically by the migration `2026_03_10_000000_rename_two_factor_columns_on_users_table.php` when you run `php artisan migrate`. The migration is idempotent — it is a no-op once the columns already use the `store_` prefix.
+
+Any code that reads or writes the old column names directly must be updated:
+
+```bash
+grep -rn "two_factor_secret\|two_factor_recovery_codes" app/ --include="*.php"
+```
+
+Replace `$user->two_factor_secret` with `$user->store_two_factor_secret` (and the recovery codes equivalent). Code going through the `InteractsWithStoreAuthentication` trait methods needs no change.
