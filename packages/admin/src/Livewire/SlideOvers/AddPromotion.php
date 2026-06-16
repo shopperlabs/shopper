@@ -157,7 +157,7 @@ class AddPromotion extends SlideOverComponent implements HasActions, HasSchemas
                                 ->hintAction(
                                     Action::make(__('shopper::words.generate'))
                                         ->color('info')
-                                        ->action(fn (Set $set) => $set('code', mb_substr(mb_strtoupper(uniqid(Str::random(10))), 0, 10))),
+                                        ->action(fn (Set $set): mixed => $set('code', mb_substr(mb_strtoupper(uniqid(Str::random(10))), 0, 10))),
                                 )
                                 ->unique(table: Discount::class, column: 'code', ignoreRecord: true)
                                 ->required(fn (Get $get): bool => $get('trigger') !== PromotionSource::Automatic->value)

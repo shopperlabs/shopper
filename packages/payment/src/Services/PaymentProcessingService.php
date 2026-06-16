@@ -150,26 +150,6 @@ final class PaymentProcessingService
     }
 
     /**
-     * Give the campaign budget back once an order is fully refunded, so a
-     * reversed redemption stops counting against the cap. Partial refunds keep
-     * the reservation, and the release action is idempotent on retries.
-     */
-    private function releaseCampaignBudget(Order $order): void
-    {
-        if ($order->refresh()->payment_status !== PaymentStatus::Refunded) {
-            return;
-        }
-
-        $campaign = $order->discount?->campaign;
-
-        if ($campaign === null) {
-            return;
-        }
-
-        resolve(ReleaseCampaignBudget::class)->execute($campaign, $order->getKey(), actor: 'order-refunded');
-    }
-
-    /**
      * Cancel a non-captured payment.
      */
     public function cancel(Order $order, string $reference): PaymentResult
@@ -216,6 +196,26 @@ final class PaymentProcessingService
             ->successful()
             ->latest()
             ->value('reference');
+    }
+
+    /**
+     * Give the campaign budget back once an order is fully refunded, so a
+     * reversed redemption stops counting against the cap. Partial refunds keep
+     * the reservation, and the release action is idempotent on retries.
+     */
+    private function releaseCampaignBudget(Order $order): void
+    {
+        if ($order->refresh()->payment_status !== PaymentStatus::Refunded) {
+            return;
+        }
+
+        $campaign = $order->discount?->campaign;
+
+        if ($campaign === null) {
+            return;
+        }
+
+        resolve(ReleaseCampaignBudget::class)->execute($campaign, $order->getKey(), actor: 'order-refunded');
     }
 
     private function resolveDriver(PaymentMethod $method): PaymentDriver

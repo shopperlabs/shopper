@@ -46,11 +46,6 @@ class PaymentTransaction extends Model
         return shopper_table('payment_transactions');
     }
 
-    protected static function newFactory(): PaymentTransactionFactory
-    {
-        return PaymentTransactionFactory::new();
-    }
-
     public function isSuccessful(): bool
     {
         return $this->status === TransactionStatus::Success;
@@ -70,6 +65,11 @@ class PaymentTransaction extends Model
     public function paymentMethod(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
+    }
+
+    protected static function newFactory(): PaymentTransactionFactory
+    {
+        return PaymentTransactionFactory::new();
     }
 
     /**

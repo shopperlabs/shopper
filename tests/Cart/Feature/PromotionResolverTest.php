@@ -36,19 +36,17 @@ beforeEach(function (): void {
     ]);
     $this->cartManager->add($this->cart, $this->product, quantity: 2); // subtotal 5000
 
-    $this->makeDiscount = function (string $code, array $overrides = []): Discount {
-        return Discount::factory()->create(array_merge([
-            'code' => $code,
-            'is_active' => true,
-            'type' => DiscountType::Percentage,
-            'apply_to' => DiscountApplyTo::Order,
-            'eligibility' => DiscountEligibility::Everyone,
-            'min_required' => DiscountRequirement::None,
-            'exclusivity_class' => ExclusivityClass::Order,
-            'start_at' => now()->subDay(),
-            'end_at' => now()->addMonth(),
-        ], $overrides));
-    };
+    $this->makeDiscount = fn (string $code, array $overrides = []): Discount => Discount::factory()->create(array_merge([
+        'code' => $code,
+        'is_active' => true,
+        'type' => DiscountType::Percentage,
+        'apply_to' => DiscountApplyTo::Order,
+        'eligibility' => DiscountEligibility::Everyone,
+        'min_required' => DiscountRequirement::None,
+        'exclusivity_class' => ExclusivityClass::Order,
+        'start_at' => now()->subDay(),
+        'end_at' => now()->addMonth(),
+    ], $overrides));
 });
 
 describe('PromotionResolver', function (): void {

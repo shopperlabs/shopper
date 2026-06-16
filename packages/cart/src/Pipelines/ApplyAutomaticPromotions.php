@@ -7,7 +7,6 @@ namespace Shopper\Cart\Pipelines;
 use Closure;
 use Shopper\Cart\Discounts\DiscountValidator;
 use Shopper\Cart\Discounts\PromotionResolver;
-use Shopper\Cart\Models\CartPromotion;
 use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Models\Discount;
 

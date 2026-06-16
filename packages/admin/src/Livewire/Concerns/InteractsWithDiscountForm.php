@@ -61,6 +61,53 @@ trait InteractsWithDiscountForm
             ->model($this->discount);
     }
 
+    public function confirmClearProductsAction(): Action
+    {
+        return Action::make('confirmClearProducts')
+            ->modalHeading(__('shopper::pages/discounts.apply_to_switch.heading'))
+            ->modalDescription(__('shopper::pages/discounts.apply_to_switch.description'))
+            ->modalSubmitActionLabel(__('shopper::pages/discounts.apply_to_switch.submit'))
+            ->modalCancelActionLabel(__('shopper::pages/discounts.apply_to_switch.cancel'))
+            ->modalWidth(Width::Medium)
+            ->color('danger')
+            ->action(function (array $arguments): void {
+                $target = (string) ($arguments['target'] ?? DiscountApplyTo::Order->value);
+
+                data_set($this->data, 'apply_to', $target);
+                data_set($this->data, 'products', []);
+            });
+    }
+
+    public function confirmClearCustomersAction(): Action
+    {
+        return Action::make('confirmClearCustomers')
+            ->modalHeading(__('shopper::pages/discounts.eligibility_switch.heading'))
+            ->modalDescription(__('shopper::pages/discounts.eligibility_switch.description'))
+            ->modalSubmitActionLabel(__('shopper::pages/discounts.eligibility_switch.submit'))
+            ->modalCancelActionLabel(__('shopper::pages/discounts.eligibility_switch.cancel'))
+            ->modalWidth(Width::Medium)
+            ->color('danger')
+            ->action(function (array $arguments): void {
+                $target = (string) ($arguments['target'] ?? DiscountEligibility::Everyone->value);
+
+                data_set($this->data, 'eligibility', $target);
+                data_set($this->data, 'customers', []);
+            });
+    }
+
+    public function save(): void
+    {
+        if (! $this->persistDiscount()) {
+            return;
+        }
+
+        $this->redirectRoute(
+            name: 'shopper.discounts.edit',
+            parameters: ['record' => $this->discount->id],
+            navigate: true,
+        );
+    }
+
     /**
      * @return array<Component>
      */
@@ -435,53 +482,6 @@ trait InteractsWithDiscountForm
     protected function isCampaignLocked(): bool
     {
         return $this->discount->exists && $this->discount->total_use > 0;
-    }
-
-    public function confirmClearProductsAction(): Action
-    {
-        return Action::make('confirmClearProducts')
-            ->modalHeading(__('shopper::pages/discounts.apply_to_switch.heading'))
-            ->modalDescription(__('shopper::pages/discounts.apply_to_switch.description'))
-            ->modalSubmitActionLabel(__('shopper::pages/discounts.apply_to_switch.submit'))
-            ->modalCancelActionLabel(__('shopper::pages/discounts.apply_to_switch.cancel'))
-            ->modalWidth(Width::Medium)
-            ->color('danger')
-            ->action(function (array $arguments): void {
-                $target = (string) ($arguments['target'] ?? DiscountApplyTo::Order->value);
-
-                data_set($this->data, 'apply_to', $target);
-                data_set($this->data, 'products', []);
-            });
-    }
-
-    public function confirmClearCustomersAction(): Action
-    {
-        return Action::make('confirmClearCustomers')
-            ->modalHeading(__('shopper::pages/discounts.eligibility_switch.heading'))
-            ->modalDescription(__('shopper::pages/discounts.eligibility_switch.description'))
-            ->modalSubmitActionLabel(__('shopper::pages/discounts.eligibility_switch.submit'))
-            ->modalCancelActionLabel(__('shopper::pages/discounts.eligibility_switch.cancel'))
-            ->modalWidth(Width::Medium)
-            ->color('danger')
-            ->action(function (array $arguments): void {
-                $target = (string) ($arguments['target'] ?? DiscountEligibility::Everyone->value);
-
-                data_set($this->data, 'eligibility', $target);
-                data_set($this->data, 'customers', []);
-            });
-    }
-
-    public function save(): void
-    {
-        if (! $this->persistDiscount()) {
-            return;
-        }
-
-        $this->redirectRoute(
-            name: 'shopper.discounts.edit',
-            parameters: ['record' => $this->discount->id],
-            navigate: true,
-        );
     }
 
     protected function persistDiscount(): bool

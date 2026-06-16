@@ -8,8 +8,8 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Shopper\Core\Events\Orders\OrderCancelled;
 use Shopper\Core\Events\Orders\OrderItemCreated;
 use Shopper\Core\Listeners\Orders\ReleaseCampaignBudgetListener;
-use Shopper\Core\Listeners\Orders\RestoreOrderStockListener;
 use Shopper\Core\Listeners\Orders\ReserveOrderItemStockListener;
+use Shopper\Core\Listeners\Orders\RestoreOrderStockListener;
 
 final class EventServiceProvider extends ServiceProvider
 {
