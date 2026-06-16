@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('balance_after');
             $table->string('actor')->nullable();
 
-            $table->unique(['campaign_id', 'order_id', 'direction']);
+            $table->unique(['campaign_id', 'order_id', 'direction'], 'campaign_movements_unique');
         });
     }
 
