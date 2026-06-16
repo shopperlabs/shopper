@@ -6,6 +6,7 @@ namespace Shopper\Upgrade;
 
 use Shopper\Upgrade\Console\FixZeroDecimalCurrency;
 use Shopper\Upgrade\Console\MigratePermissions;
+use Shopper\Upgrade\Console\RunRector;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -18,6 +19,7 @@ final class UpgradeServiceProvider extends PackageServiceProvider
             ->hasCommands([
                 FixZeroDecimalCurrency::class,
                 MigratePermissions::class,
+                RunRector::class,
             ]);
     }
 }
