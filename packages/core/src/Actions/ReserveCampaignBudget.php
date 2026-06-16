@@ -39,9 +39,9 @@ final class ReserveCampaignBudget
                 $query->whereColumn('used_count', '<', 'budget_count');
             }
 
-            $affected = $query->incrementEach([
-                'spent_amount' => $spend,
-                'used_count' => 1,
+            $affected = $query->update([
+                'spent_amount' => DB::raw('spent_amount + '.$spend),
+                'used_count' => DB::raw('used_count + 1'),
             ]);
 
             if ($affected === 0) {
