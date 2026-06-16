@@ -1,6 +1,7 @@
 export * from './address'
 export * from './attribute'
 export * from './brand'
+export * from './campaign'
 export * from './carrier'
 export * from './cart'
 export * from './category'

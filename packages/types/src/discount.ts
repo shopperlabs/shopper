@@ -1,3 +1,4 @@
+import type { Campaign } from './campaign'
 import type { Entity, Metadata } from './common'
 import type { Zone } from './zone'
 
@@ -32,6 +33,12 @@ export enum PromotionSource {
   AUTOMATIC = 'automatic',
 }
 
+export enum ExclusivityClass {
+  ORDER = 'order',
+  PRODUCT = 'product',
+  SHIPPING = 'shipping',
+}
+
 /**
  * Discount model.
  */
@@ -60,6 +67,14 @@ export interface Discount extends Entity {
   usage_limit_per_user: boolean
   /** Whether the discount is active. */
   is_active: boolean
+  /** The exclusivity class used when stacking promotions. */
+  exclusivity_class: ExclusivityClass
+  /** Whether the discount can be combined with other discounts. */
+  combinable: boolean
+  /** The resolution priority when stacking promotions. */
+  priority: number
+  /** The campaign ID this discount belongs to, or null when standalone. */
+  campaign_id: number | null
   /** The zone ID this discount belongs to. */
   zone_id: number | null
   /** The metadata of the discount. */
@@ -70,6 +85,8 @@ export interface Discount extends Entity {
   end_at: string | null
   /** The zone of the discount. */
   zone?: Zone
+  /** The campaign the discount belongs to. */
+  campaign?: Campaign
   /** The discount items/details. */
   items?: DiscountDetail[]
 }
