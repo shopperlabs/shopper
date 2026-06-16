@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Livewire\Pages\Discount;
+namespace Shopper\Livewire\Pages\Campaign;
 
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -11,8 +11,8 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
-use Shopper\Core\Models\Discount;
-use Shopper\Livewire\Concerns\InteractsWithDiscountForm;
+use Shopper\Core\Models\Campaign;
+use Shopper\Livewire\Concerns\InteractsWithCampaignForm;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Sidebar\Traits\WithBreadcrumbs;
@@ -25,7 +25,7 @@ class Create extends AbstractPageComponent implements HasActions, HasSchemas
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
-    use InteractsWithDiscountForm;
+    use InteractsWithCampaignForm;
     use InteractsWithSchemas;
     use WithBreadcrumbs;
 
@@ -38,9 +38,9 @@ class Create extends AbstractPageComponent implements HasActions, HasSchemas
 
     public function mount(): void
     {
-        $this->authorize('discounts.create');
+        $this->authorize('campaigns.create');
 
-        $this->discount = new Discount;
+        $this->campaign = new Campaign;
         $this->form->fill();
     }
 
@@ -52,7 +52,7 @@ class Create extends AbstractPageComponent implements HasActions, HasSchemas
 
     public function render(): View
     {
-        return view('shopper::livewire.pages.discounts.create')
-            ->title(__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/discounts.single')]));
+        return view('shopper::livewire.pages.campaigns.create')
+            ->title(__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/campaigns.single')]));
     }
 }

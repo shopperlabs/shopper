@@ -5,7 +5,7 @@
                 <x-slot name="title">
                     <div class="flex items-center flex-wrap gap-2">
                         <h2 class="font-heading text-2xl font-bold text-sh-fg sm:truncate sm:text-3xl">
-                            {{ $discount->code }}
+                            {{ $discount->code ?? __('shopper::pages/discounts.method_automatic') }}
                         </h2>
                         <x-filament::badge :color="$discount->status->getColor()" :icon="$discount->status->getIcon()">
                             {{ $discount->status->getLabel() }}

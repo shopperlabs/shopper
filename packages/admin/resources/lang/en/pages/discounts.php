@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
 
-    'menu' => 'Discounts',
+    'menu' => 'Promotions',
     'single' => 'discount',
     'title' => 'Manage discounts and promotions',
     'description' => 'Create & Manage discount and promotions codes that apply at checkout or customers orders.',
@@ -12,6 +12,42 @@ return [
     'empty_message' => 'No discount found...',
     'search' => 'Search discount code',
     'name_helptext' => 'Customers will enter this discount code at checkout.',
+
+    'method' => 'Method',
+    'method_code' => 'Discount code',
+    'method_code_description' => 'Customers enter a code at checkout to redeem this discount.',
+    'method_automatic' => 'Automatic',
+    'method_automatic_description' => 'Applied automatically when the cart matches, without a code.',
+
+    'type_percentage_description' => 'A percentage off the order or selected products.',
+    'type_fixed_description' => 'A fixed amount off the order or selected products.',
+    'apply_to_order_description' => 'Discounts the entire order total.',
+    'apply_to_products_description' => 'Discounts only the selected products.',
+    'eligibility_everyone_description' => 'Anyone can use this promotion.',
+    'eligibility_customers_description' => 'Only the selected customers can use it.',
+
+    'exclusivity_class' => 'Exclusivity class',
+    'exclusivity_class_helptext' => 'Discounts in the same class never stack with each other.',
+    'exclusivity_order' => 'Order',
+    'exclusivity_product' => 'Product',
+    'exclusivity_shipping' => 'Shipping',
+    'combinable' => 'Combinable with other discounts',
+    'combinable_helptext' => 'Allow this discount to stack with discounts from other exclusivity classes.',
+    'priority' => 'Priority',
+    'priority_helptext' => 'Lower numbers are evaluated first when several discounts compete.',
+
+    'campaign' => 'Campaign',
+    'campaign_description' => 'Attach this discount to a campaign to share its budget and usage caps.',
+    'campaign_helptext' => 'Discounts in a campaign share the same budget and redemption limits.',
+    'campaign_locked_helper' => 'The campaign cannot be changed once the promotion has been used, to keep campaign budget tracking consistent.',
+    'campaign_none' => 'No campaign',
+
+    'wizard' => [
+        'type' => 'Type',
+        'details' => 'Details',
+        'campaign' => 'Campaign',
+    ],
+
     'percentage' => 'Percentage',
     'percentage_description' => 'Discount applied in %',
     'fixed_amount' => 'Fixed amount',
@@ -89,6 +125,8 @@ return [
         'configuration_description' => 'How many times the discount can be used and when it is active.',
         'targeting' => 'Targeting',
         'targeting_description' => 'Which products and customers are eligible for this discount.',
+        'combinations' => 'Combinations',
+        'combinations_description' => 'Control how this discount stacks with others and its evaluation priority.',
         'advanced' => 'Advanced',
         'advanced_description' => 'Custom metadata attached to the discount.',
     ],

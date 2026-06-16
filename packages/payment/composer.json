@@ -8,7 +8,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Shopper\\Payment\\": "src/"
+      "Shopper\\Payment\\": "src/",
+      "Shopper\\Payment\\Database\\Factories\\": "database/factories"
     }
   },
   "extra": {

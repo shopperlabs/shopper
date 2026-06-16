@@ -61,6 +61,25 @@ describe('StockRestorationTest', function (): void {
         expect($this->product->getStock())->toBe(50);
     });
 
+    it('restores stock when the OrderCancelled event is dispatched', function (): void {
+        $item = OrderItem::factory()->create([
+            'order_id' => $this->order->id,
+            'product_type' => $this->product->getMorphClass(),
+            'product_id' => $this->product->id,
+            'quantity' => 8,
+        ]);
+
+        resolve(ReserveOrderItemStockListener::class)->handle(new OrderItemCreated($item));
+        expect($this->product->getStock())->toBe(42);
+
+        $this->order->update(['status' => OrderStatus::Cancelled, 'cancelled_at' => now()]);
+
+        // Proves the listener is wired to the event, not just correct in isolation.
+        event(new OrderCancelled($this->order));
+
+        expect($this->product->getStock())->toBe(50);
+    });
+
     it('restores stock for all items in a cancelled order', function (): void {
         $productA = Product::factory()->standard()->create();
         $productA->mutateStock($this->inventory->id, 30, event: 'Initial');

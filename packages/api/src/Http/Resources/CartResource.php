@@ -6,6 +6,7 @@ namespace Shopper\Api\Http\Resources;
 
 use Illuminate\Http\Request;
 use Shopper\Cart\Models\Cart;
+use Shopper\Cart\Models\CartPromotion;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
@@ -33,7 +34,15 @@ final class CartResource extends JsonApiResource
         return [
             'currency_code' => $this->currency_code,
             'email' => $this->email,
-            'coupon_code' => $this->coupon_code,
+            'promotions' => $this->promotions
+                ->map(fn (CartPromotion $promotion): array => [
+                    'code' => $promotion->code,
+                    'source' => $promotion->source->value,
+                    'amount' => $promotion->computed_amount,
+                    'status' => $promotion->computed_amount > 0 ? 'applied' : 'suppressed',
+                ])
+                ->values()
+                ->all(),
             'completed_at' => $this->completed_at?->toIso8601String(),
             'metadata' => $this->metadata,
             'lines_count' => $this->lines->count(),

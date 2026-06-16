@@ -53,12 +53,14 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?OrderAddress $shippingAddress
  * @property-read ?OrderAddress $billingAddress
  * @property-read ?OrderRefund $refund
+ * @property-read ?Discount $discount
  * @property-read ?PaymentMethod $paymentMethod
  * @property-read ?Zone $zone
  * @property-read ?Channel $channel
  * @property-read ?static $parent
  * @property-read Model $customer
  * @property-read Collection<int, OrderItem> $items
+ * @property-read Collection<int, OrderPromotion> $promotions
  * @property-read Collection<int, OrderShipping> $shippings
  * @property-read Collection<int, Order> $children
  */
@@ -254,6 +256,22 @@ class Order extends Model implements OrderContract
     public function refund(): HasOne
     {
         return $this->hasOne(OrderRefund::class);
+    }
+
+    /**
+     * @return BelongsTo<Discount, $this>
+     */
+    public function discount(): BelongsTo
+    {
+        return $this->belongsTo(Discount::class, 'discount_id');
+    }
+
+    /**
+     * @return HasMany<OrderPromotion, $this>
+     */
+    public function promotions(): HasMany
+    {
+        return $this->hasMany(OrderPromotion::class, 'order_id');
     }
 
     /**

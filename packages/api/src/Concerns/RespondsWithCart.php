@@ -60,7 +60,7 @@ trait RespondsWithCart
     {
         $context = resolve(CartManager::class)->calculate($cart);
 
-        $cart->load(['lines.purchasable', 'lines.adjustments', 'lines.taxLines', 'addresses.country']);
+        $cart->load(['lines.purchasable', 'lines.adjustments', 'lines.taxLines', 'addresses.country', 'promotions']);
 
         return CartResource::make($cart)->withTotals($context);
     }

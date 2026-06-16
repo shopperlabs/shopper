@@ -6,6 +6,10 @@ return [
 
     'discount_zone_frozen' => 'Cannot change the zone of a fixed-amount discount that has already been used. The zone stays frozen to keep the currency consistent.',
 
+    'discount_terms_frozen' => 'Cannot change the code, type or value of a discount that has already been used. These terms stay frozen to keep past redemptions accurate.',
+
+    'campaign_budget_exceeded' => 'The campaign ":name" has reached its budget and can no longer be applied.',
+
     'discount_value' => [
         'not_positive' => 'The discount value must be greater than zero.',
         'percentage_out_of_range' => 'A percentage discount cannot exceed 100%.',

@@ -14,6 +14,8 @@ use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Models\Campaign;
+use Shopper\Core\Models\CampaignBudgetMovement;
 use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Country;
@@ -45,7 +47,7 @@ beforeEach(function (): void {
     $this->product->load('prices');
     $this->product->mutateStock($this->inventory->id, 100);
 
-    $this->cart = Cart::query()->create([
+    $this->cart = Cart::factory()->create([
         'currency_code' => 'USD',
         'customer_id' => $this->user->id,
     ]);
@@ -237,7 +239,7 @@ describe(CreateOrderFromCartAction::class, function (): void {
 
         $this->action->execute($this->cart->refresh());
 
-        $secondCart = Cart::query()->create([
+        $secondCart = Cart::factory()->create([
             'currency_code' => 'USD',
             'customer_id' => $this->user->id,
         ]);
@@ -249,6 +251,138 @@ describe(CreateOrderFromCartAction::class, function (): void {
         expect($secondOrder->discount_id)->toBeNull()
             ->and($discount->refresh()->total_use)->toBe(1)
             ->and(Order::query()->where('discount_id', $discount->id)->count())->toBe(1);
+    });
+
+    it('draws down the parent campaign budget when a campaign-backed coupon is redeemed', function (): void {
+        $campaign = Campaign::factory()->withSpendBudget(amount: 1_000)->create(['currency_code' => 'USD']);
+
+        Discount::factory()->create([
+            'code' => 'CAMP10',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'total_use' => 0,
+            'usage_limit' => null,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'campaign_id' => $campaign->id,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->applyCoupon($this->cart, 'CAMP10');
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        $campaign->refresh();
+
+        expect($campaign->used_count)->toBe(1)
+            ->and($campaign->spent_amount)->toBeGreaterThan(0)
+            ->and(CampaignBudgetMovement::query()->where('order_id', $order->id)->count())->toBe(1);
+    });
+
+    it('snapshots every applied promotion onto the order and mirrors the largest on discount_*', function (): void {
+        Discount::factory()->create([
+            'code' => 'TEN', 'is_active' => true, 'type' => DiscountType::Percentage, 'value' => 10,
+            'total_use' => 0, 'apply_to' => DiscountApplyTo::Order, 'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None, 'combinable' => true, 'priority' => 20,
+        ]);
+        $five = Discount::factory()->create([
+            'code' => 'FIVE', 'is_active' => true, 'type' => DiscountType::Percentage, 'value' => 5,
+            'total_use' => 0, 'apply_to' => DiscountApplyTo::Order, 'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None, 'combinable' => true, 'priority' => 10,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product, quantity: 2);
+        $this->cartManager->applyCoupon($this->cart, 'TEN');
+        $this->cartManager->applyCoupon($this->cart, 'FIVE');
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        expect($order->promotions)->toHaveCount(2)
+            ->and($order->discount_code)->toBe('TEN')
+            ->and($order->promotions->firstWhere('code', 'FIVE')->amount)->toBeGreaterThan(0)
+            ->and($five->refresh()->total_use)->toBe(1);
+    });
+
+    it('reserves the parent campaign budget once for two promotions of the same campaign', function (): void {
+        $campaign = Campaign::factory()->withSpendBudget(amount: 1_000_000)->create(['currency_code' => 'USD']);
+
+        foreach (['CA' => 20, 'CB' => 10] as $code => $priority) {
+            Discount::factory()->create([
+                'code' => $code, 'is_active' => true, 'type' => DiscountType::Percentage, 'value' => 5,
+                'total_use' => 0, 'apply_to' => DiscountApplyTo::Order, 'eligibility' => DiscountEligibility::Everyone,
+                'min_required' => DiscountRequirement::None, 'combinable' => true, 'priority' => $priority,
+                'campaign_id' => $campaign->id,
+            ]);
+        }
+
+        $this->cartManager->add($this->cart, $this->product, quantity: 2);
+        $this->cartManager->applyCoupon($this->cart, 'CA');
+        $this->cartManager->applyCoupon($this->cart, 'CB');
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        // One movement for the campaign, summing both promotions' amounts.
+        expect(CampaignBudgetMovement::query()->where('order_id', $order->id)->count())->toBe(1)
+            ->and($campaign->refresh()->used_count)->toBe(1)
+            ->and($campaign->spent_amount)->toBe((int) $order->promotions->sum('amount'));
+    });
+
+    it('does not snapshot or burn the usage of a suppressed promotion', function (): void {
+        Discount::factory()->create([
+            'code' => 'EXCL30', 'is_active' => true, 'type' => DiscountType::Percentage, 'value' => 30,
+            'total_use' => 0, 'usage_limit' => 100, 'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone, 'min_required' => DiscountRequirement::None,
+            'combinable' => false, 'priority' => 30,
+        ]);
+        $suppressed = Discount::factory()->create([
+            'code' => 'SUPP10', 'is_active' => true, 'type' => DiscountType::Percentage, 'value' => 10,
+            'total_use' => 0, 'usage_limit' => 100, 'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone, 'min_required' => DiscountRequirement::None,
+            'combinable' => true, 'priority' => 10,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product, quantity: 2);
+        $this->cartManager->applyCoupon($this->cart, 'EXCL30');
+        $this->cartManager->applyCoupon($this->cart, 'SUPP10');
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        expect($order->promotions)->toHaveCount(1)
+            ->and($order->promotions->first()->code)->toBe('EXCL30')
+            ->and($suppressed->refresh()->total_use)->toBe(0);
+    });
+
+    it('completes checkout without the discount when the campaign budget is already exhausted', function (): void {
+        $campaign = Campaign::factory()
+            ->withSpendBudget(amount: 1)
+            ->create(['currency_code' => 'USD', 'spent_amount' => 1]);
+
+        $discount = Discount::factory()->create([
+            'code' => 'CAMPFULL',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'total_use' => 0,
+            'usage_limit' => null,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'campaign_id' => $campaign->id,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->applyCoupon($this->cart, 'CAMPFULL');
+
+        // The validator strips the exhausted-campaign discount at calculation time,
+        // so checkout succeeds at full price instead of throwing mid-transaction.
+        $order = $this->action->execute($this->cart->refresh());
+
+        expect($order->discount_id)->toBeNull()
+            ->and($discount->refresh()->total_use)->toBe(0)
+            ->and($campaign->refresh()->spent_amount)->toBe(1)
+            ->and(CampaignBudgetMovement::query()->count())->toBe(0);
     });
 
     it('throws `CartCompletedException` for already completed cart', function (): void {

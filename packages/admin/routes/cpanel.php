@@ -40,6 +40,12 @@ if (Feature::enabled('collection')) {
     });
 }
 
+if (Feature::enabled('campaign')) {
+    Route::as('campaigns.')->prefix('campaigns')->group(function (): void {
+        require __DIR__.'/admin/campaign.php';
+    });
+}
+
 if (Feature::enabled('discount')) {
     Route::as('discounts.')->prefix('discounts')->group(function (): void {
         require __DIR__.'/admin/discount.php';

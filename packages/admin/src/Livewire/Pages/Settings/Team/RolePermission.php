@@ -142,7 +142,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
                         $badges = collect(['browse', 'read', 'edit', 'add', 'delete'])
                             ->map(fn (string $prefix): string => Blade::render(
                                 '<x-filament::badge color="gray">{{ $name }}</x-filament::badge>',
-                                ['name' => "{$prefix}_{$resource}"],
+                                ['name' => "{$resource}.{$prefix}"],
                             ))
                             ->implode('');
 

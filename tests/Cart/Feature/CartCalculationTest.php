@@ -39,7 +39,7 @@ beforeEach(function (): void {
     $this->product->load('prices');
     $this->product->mutateStock($this->inventory->id, 100);
 
-    $this->cart = Cart::query()->create([
+    $this->cart = Cart::factory()->create([
         'currency_code' => 'USD',
         'customer_id' => $this->user->id,
     ]);
@@ -103,6 +103,30 @@ describe(CalculateLines::class, function (): void {
         expect($context->subtotal)->toBe(5000)
             ->and($context->discountTotal)->toBe(1000)
             ->and($context->total)->toBe(4000);
+    });
+
+    it('attributes each line adjustment to the applied cart promotion', function (): void {
+        Discount::factory()->create([
+            'code' => 'PCT20',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 20,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'start_at' => now()->subDay(),
+            'end_at' => now()->addMonth(),
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product, quantity: 2);
+        $this->cartManager->applyCoupon($this->cart, 'PCT20');
+        $this->cartManager->calculate($this->cart->refresh());
+
+        $promotion = $this->cart->refresh()->promotions->first();
+        $adjustment = $this->cart->refresh()->lines->first()->adjustments->first();
+
+        expect($promotion->computed_amount)->toBe(1000)
+            ->and($adjustment->cart_promotion_id)->toBe($promotion->id);
     });
 
     it('applies fixed amount discount distributed across lines', function (): void {

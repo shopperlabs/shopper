@@ -20,6 +20,7 @@ use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Cart\Pipelines\CartPipelineRunner;
 use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Enum\AddressType;
+use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Models\Contracts\Stockable;
 use Shopper\Core\Models\Discount;
 use Throwable;
@@ -204,16 +205,29 @@ final readonly class CartManager
             throw new InvalidDiscountException(__('shopper-cart::exceptions.discount_not_found'));
         }
 
-        $cart->update(['coupon_code' => $code]);
+        // A cart can carry several code promotions; the resolver decides which
+        // actually apply. The unique (cart_id, discount_id) row keeps re-applying
+        // the same code a no-op instead of a doubled discount.
+        $cart->promotions()->firstOrCreate(
+            ['discount_id' => $discount->id],
+            ['source' => PromotionSource::Code->value, 'code' => $code],
+        );
 
         CouponApplied::dispatch($cart, $code);
     }
 
-    public function removeCoupon(Cart $cart): void
+    /**
+     * Remove a code promotion from the cart. A null code clears every applied
+     * code promotion; a given code removes only that one.
+     */
+    public function removeCoupon(Cart $cart, ?string $code = null): void
     {
         $this->guardCompleted($cart);
 
-        $cart->update(['coupon_code' => null]);
+        $cart->promotions()
+            ->where('source', PromotionSource::Code->value)
+            ->when($code !== null, fn ($query) => $query->where('code', $code))
+            ->delete();
 
         CartLineAdjustment::query()
             ->whereIn('cart_line_id', $cart->lines()->select('id'))

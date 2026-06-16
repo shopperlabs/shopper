@@ -19,11 +19,25 @@ return [
     'pipelines' => [
         'cart' => [
             Pipelines\CalculateLines::class,
+            Pipelines\ApplyAutomaticPromotions::class,
             Pipelines\ApplyDiscounts::class,
             Pipelines\CalculateTax::class,
             Pipelines\Calculate::class,
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Maximum Stacked Promotions
+    |--------------------------------------------------------------------------
+    |
+    | The highest number of promotions that may apply to a single cart at once.
+    | After the deterministic resolution order, only the first N promotions are
+    | applied; the rest are kept on the cart but contribute nothing.
+    |
+    */
+
+    'max_promotions' => 5,
 
     /*
     |--------------------------------------------------------------------------

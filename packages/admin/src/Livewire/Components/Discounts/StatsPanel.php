@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Discounts;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Discount;
+use Shopper\Core\Models\OrderPromotion;
 
 class StatsPanel extends Component
 {
@@ -40,24 +41,19 @@ class StatsPanel extends Component
     {
         $paidStatuses = [OrderStatus::Processing, OrderStatus::Completed];
 
-        $ordersQuery = fn (): HasMany => $this->discount->orders()
-            ->whereIn('status', $paidStatuses)
-            ->where('payment_status', PaymentStatus::Paid);
+        $promotions = fn (): Builder => OrderPromotion::query()
+            ->where('discount_id', $this->discount->id)
+            ->whereHas('order', fn (Builder $query): Builder => $query
+                ->whereIn('status', $paidStatuses)
+                ->where('payment_status', PaymentStatus::Paid));
 
-        $ordersCount = $ordersQuery()->count();
-        $grossRevenue = (int) $ordersQuery()->sum('price_amount');
+        $orderIds = $promotions()->pluck('order_id');
+        $ordersCount = $orderIds->count();
+        $grossRevenue = (int) resolve(OrderContract::class)::query()
+            ->whereKey($orderIds)
+            ->sum('price_amount');
 
-        $discountCost = (int) DB::table(shopper_table('order_items'))
-            ->join(
-                shopper_table('orders'),
-                shopper_table('orders').'.id',
-                '=',
-                shopper_table('order_items').'.order_id',
-            )
-            ->where(shopper_table('orders').'.discount_id', $this->discount->id)
-            ->whereIn(shopper_table('orders').'.status', array_map(fn (OrderStatus $s) => $s->value, $paidStatuses))
-            ->where(shopper_table('orders').'.payment_status', PaymentStatus::Paid->value)
-            ->sum(shopper_table('order_items').'.discount_amount');
+        $discountCost = (int) $promotions()->sum('amount');
 
         return [
             'usage' => $this->discount->total_use,

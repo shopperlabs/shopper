@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Livewire\Livewire;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountStatus;
+use Shopper\Core\Enum\PromotionSource;
+use Shopper\Core\Models\Campaign;
 use Shopper\Core\Models\Discount;
 use Shopper\Livewire\Pages\Discount\Index;
 use Tests\Core\Stubs\User;
@@ -39,6 +41,42 @@ describe(Index::class, function (): void {
 
         Livewire::test(Index::class)
             ->filterTable('is_active', true)
+            ->assertCountTableRecords(2);
+    });
+
+    it('filters discounts by the promotion method', function (): void {
+        Discount::factory()->count(2)->create(['trigger' => PromotionSource::Automatic->value]);
+        Discount::factory()->create(['trigger' => PromotionSource::Code->value]);
+
+        Livewire::test(Index::class)
+            ->filterTable('trigger', PromotionSource::Automatic->value)
+            ->assertCountTableRecords(2);
+    });
+
+    it('exposes the campaign column', function (): void {
+        Discount::factory()->create();
+
+        Livewire::test(Index::class)
+            ->loadTable()
+            ->assertTableColumnExists('campaign.name');
+    });
+
+    it('exposes the method column', function (): void {
+        Discount::factory()->create();
+
+        Livewire::test(Index::class)
+            ->loadTable()
+            ->assertTableColumnExists('trigger');
+    });
+
+    it('filters discounts by campaign', function (): void {
+        $campaign = Campaign::factory()->create(['currency_code' => 'USD']);
+
+        Discount::factory()->count(2)->create(['campaign_id' => $campaign->id]);
+        Discount::factory()->create();
+
+        Livewire::test(Index::class)
+            ->filterTable('campaign_id', $campaign->id)
             ->assertCountTableRecords(2);
     });
 

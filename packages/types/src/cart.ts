@@ -17,13 +17,27 @@ export enum CartAddressType {
 /**
  * Cart model.
  */
+/**
+ * A promotion applied to a cart (store API).
+ */
+export interface AppliedCartPromotion {
+  /** The promotion code applied, or null for an automatic promotion. */
+  code: string | null
+  /** Whether the promotion was applied via a code or triggered automatically. */
+  source: 'code' | 'automatic'
+  /** The discount amount this promotion contributes, in cents. */
+  amount: number
+  /** `applied` when it reduces the cart, `suppressed` when stacked out by another promotion. */
+  status: 'applied' | 'suppressed'
+}
+
 export interface Cart extends Entity {
   /** The currency code for the cart. */
   currency_code: string
   /** The contact email frozen on the order at completion (store API). */
   email?: string | null
-  /** The coupon code applied to the cart. */
-  coupon_code: string | null
+  /** The promotions applied to the cart (store API). */
+  promotions?: AppliedCartPromotion[]
   /** The date the cart was completed (converted to order). */
   completed_at: string | null
   /** The metadata of the cart. */

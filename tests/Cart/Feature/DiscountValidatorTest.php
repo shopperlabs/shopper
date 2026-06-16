@@ -9,10 +9,12 @@ use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Models\Campaign;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\OrderPromotion;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Zone;
 use Tests\Core\Stubs\User;
@@ -35,7 +37,7 @@ beforeEach(function (): void {
     $this->product->load('prices');
     $this->product->mutateStock($inventory->id, 100);
 
-    $this->cart = Cart::query()->create([
+    $this->cart = Cart::factory()->create([
         'currency_code' => 'USD',
         'customer_id' => $this->user->id,
     ]);
@@ -155,12 +157,21 @@ describe(DiscountValidator::class, function (): void {
             'usage_limit_per_user' => true,
         ]));
 
-        Order::query()->create([
+        $order = Order::query()->create([
             'number' => 'TEST-ORDER',
             'price_amount' => 100,
             'currency_code' => 'USD',
             'customer_id' => $this->user->id,
             'discount_id' => $discount->id,
+        ]);
+        OrderPromotion::query()->create([
+            'order_id' => $order->id,
+            'discount_id' => $discount->id,
+            'code' => $discount->code,
+            'type' => $discount->type->value,
+            'value_at_apply' => $discount->value,
+            'amount' => 100,
+            'currency_code' => 'USD',
         ]);
 
         $result = $this->validator->validate($discount, $this->context);
@@ -169,7 +180,7 @@ describe(DiscountValidator::class, function (): void {
     });
 
     it('rejects a discount requiring login when no customer', function (): void {
-        $guestCart = Cart::query()->create([
+        $guestCart = Cart::factory()->create([
             'currency_code' => 'USD',
             'customer_id' => null,
         ]);
@@ -258,5 +269,33 @@ describe(DiscountValidator::class, function (): void {
         $result = $this->validator->validate($discount, $this->context);
 
         expect($result->valid)->toBeFalse();
+    });
+
+    it('rejects a discount whose campaign budget is exhausted', function (): void {
+        $campaign = Campaign::factory()
+            ->withSpendBudget(amount: 10_000)
+            ->create(['currency_code' => 'USD', 'spent_amount' => 10_000]);
+
+        $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
+            'campaign_id' => $campaign->id,
+        ]));
+
+        $result = $this->validator->validate($discount, $this->context);
+
+        expect($result->valid)->toBeFalse()
+            ->and($result->failureReason)->toBe(__('shopper-cart::messages.discount.campaign_budget_reached'));
+    });
+
+    it('rejects a discount whose campaign currency differs from the cart currency', function (): void {
+        $campaign = Campaign::factory()->create(['currency_code' => 'EUR']);
+
+        $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
+            'campaign_id' => $campaign->id,
+        ]));
+
+        $result = $this->validator->validate($discount, $this->context);
+
+        expect($result->valid)->toBeFalse()
+            ->and($result->failureReason)->toBe(__('shopper-cart::messages.discount.currency_mismatch'));
     });
 })->group('cart', 'cart-discount-validator');

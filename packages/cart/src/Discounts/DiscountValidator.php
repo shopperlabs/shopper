@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Cart\Discounts;
 
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
-use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Discount;
+use Shopper\Core\Models\OrderPromotion;
 
 final readonly class DiscountValidator
 {
@@ -40,10 +41,22 @@ final readonly class DiscountValidator
             return new DiscountValidationResult(false, __('shopper-cart::messages.discount.usage_limit_reached'));
         }
 
+        if ($discount->campaign !== null) {
+            if ($discount->campaign->currency_code !== $context->cart->currency_code) {
+                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.currency_mismatch'));
+            }
+
+            if ($discount->campaign->hasReachedBudget()) {
+                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.campaign_budget_reached'));
+            }
+        }
+
         if ($discount->usage_limit_per_user && $context->cart->customer_id) {
-            $alreadyRedeemed = resolve(Order::class)::query()
+            // Counts redemptions through order_promotions (the per-discount
+            // snapshot), since a stacked code may never land on orders.discount_id.
+            $alreadyRedeemed = OrderPromotion::query()
                 ->where('discount_id', $discount->id)
-                ->where('customer_id', $context->cart->customer_id)
+                ->whereHas('order', fn (Builder $query) => $query->where('customer_id', $context->cart->customer_id))
                 ->exists();
 
             if ($alreadyRedeemed) {

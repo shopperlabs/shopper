@@ -9,6 +9,7 @@ return [
         'not_started' => 'El descuento aún no ha comenzado.',
         'expired' => 'El descuento ha expirado.',
         'usage_limit_reached' => 'Se ha alcanzado el límite de uso del descuento.',
+        'campaign_budget_reached' => 'Esta promoción ya no está disponible.',
         'already_used' => 'El descuento ya ha sido utilizado por este cliente.',
         'requires_login' => 'El descuento requiere un cliente con sesión iniciada.',
         'customer_not_eligible' => 'El cliente no es elegible para este descuento.',

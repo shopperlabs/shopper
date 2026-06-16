@@ -6,10 +6,12 @@ namespace Shopper\Cart\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Shopper\Cart\Database\Factories\CartLineFactory;
 use Shopper\Cart\Models\Contracts\CartLine as CartLineContract;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Traits\HasModelContract;
@@ -32,6 +34,9 @@ use Shopper\Core\Traits\HasModelContract;
  */
 class CartLine extends Model implements CartLineContract
 {
+    /** @use HasFactory<CartLineFactory> */
+    use HasFactory;
+
     use HasModelContract;
     use HasPublicId;
 
@@ -77,6 +82,11 @@ class CartLine extends Model implements CartLineContract
     public function taxLines(): HasMany
     {
         return $this->hasMany(CartLineTaxLine::class);
+    }
+
+    protected static function newFactory(): CartLineFactory
+    {
+        return CartLineFactory::new();
     }
 
     protected function casts(): array

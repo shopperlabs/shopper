@@ -18,6 +18,9 @@ use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountStatus;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Enum\ExclusivityClass;
+use Shopper\Core\Enum\PromotionSource;
+use Shopper\Core\Exceptions\DiscountTermsFrozenException;
 use Shopper\Core\Exceptions\DiscountZoneFrozenException;
 use Shopper\Core\Models\Contracts\Discount as DiscountContract;
 use Shopper\Core\Models\Traits\HasPublicId;
@@ -25,7 +28,8 @@ use Shopper\Core\Models\Traits\HasPublicId;
 /**
  * @property-read int $id
  * @property-read ?string $public_id
- * @property-read string $code
+ * @property-read ?string $code
+ * @property PromotionSource $trigger
  * @property-read DiscountType $type
  * @property-read int $value
  * @property-read string $apply_to
@@ -36,6 +40,10 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read ?int $usage_limit
  * @property-read bool $usage_limit_per_user
  * @property-read bool $is_active
+ * @property ?int $campaign_id
+ * @property-read ExclusivityClass $exclusivity_class
+ * @property-read bool $combinable
+ * @property-read int $priority
  * @property-read ?int $zone_id
  * @property-read array<string, mixed>|null $metadata
  * @property-read CarbonInterface $created_at
@@ -43,6 +51,7 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read CarbonInterface $start_at
  * @property-read ?CarbonInterface $end_at
  * @property-read ?Zone $zone
+ * @property-read ?Campaign $campaign
  * @property-read DiscountStatus $status
  * @property-read Collection<array-key, DiscountDetail> $items
  * @property-read Collection<array-key, Order> $orders
@@ -72,6 +81,16 @@ class Discount extends Model implements DiscountContract
             }
 
             throw new DiscountZoneFrozenException;
+        });
+
+        self::saving(function (self $discount): void {
+            if (! $discount->exists || $discount->total_use <= 0) {
+                return;
+            }
+
+            if ($discount->isDirty(['code', 'type', 'value'])) {
+                throw new DiscountTermsFrozenException;
+            }
         });
     }
 
@@ -123,7 +142,7 @@ class Discount extends Model implements DiscountContract
      */
     public function orders(): HasMany
     {
-        return $this->hasMany(Order::class, 'discount_id');
+        return $this->hasMany(config('shopper.models.order'), 'discount_id');
     }
 
     /**
@@ -132,6 +151,14 @@ class Discount extends Model implements DiscountContract
     public function zone(): BelongsTo
     {
         return $this->belongsTo(Zone::class, 'zone_id');
+    }
+
+    /**
+     * @return BelongsTo<Campaign, $this>
+     */
+    public function campaign(): BelongsTo
+    {
+        return $this->belongsTo(Campaign::class, 'campaign_id');
     }
 
     protected static function newFactory(): DiscountFactory
@@ -198,10 +225,14 @@ class Discount extends Model implements DiscountContract
         return [
             'is_active' => 'boolean',
             'usage_limit_per_user' => 'boolean',
+            'combinable' => 'boolean',
+            'priority' => 'integer',
             'start_at' => 'datetime',
             'end_at' => 'datetime',
             'metadata' => 'array',
             'type' => DiscountType::class,
+            'exclusivity_class' => ExclusivityClass::class,
+            'trigger' => PromotionSource::class,
         ];
     }
 }

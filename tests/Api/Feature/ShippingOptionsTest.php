@@ -20,7 +20,7 @@ uses(Tests\Api\TestCase::class);
 
 function createCartWithLine(Zone $zone, Product $product, int $quantity = 1): Cart
 {
-    $cart = Cart::query()->create([
+    $cart = Cart::factory()->create([
         'currency_code' => 'USD',
         'zone_id' => $zone->id,
     ]);
@@ -273,7 +273,7 @@ it('caches live carrier quotes until the cart content changes', function (): voi
 });
 
 it('rejects a cart that has no zone', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
 
     $cart->lines()->create([
         'purchasable_type' => $this->product->getMorphClass(),
@@ -293,7 +293,7 @@ it('returns 404 for an unknown cart', function (): void {
 
 it('hides a customer cart from guests', function (): void {
     $customer = User::factory()->create();
-    $cart = Cart::query()->create([
+    $cart = Cart::factory()->create([
         'currency_code' => 'USD',
         'zone_id' => $this->zone->id,
         'customer_id' => $customer->id,

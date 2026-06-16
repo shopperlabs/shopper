@@ -11,6 +11,7 @@ use Shopper\Cart\CartManager;
 use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Pipelines\CartPipelineContext;
+use Shopper\Core\Exceptions\CampaignBudgetExceededException;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
@@ -72,6 +73,13 @@ final readonly class CompleteCartAction
             $order = $cart->refresh()->order()->firstOrFail();
 
             return $order;
+        } catch (CampaignBudgetExceededException) {
+            // A concurrent checkout tipped the campaign over its budget after we
+            // validated the cart. Surface a clean 422 so the storefront can drop
+            // the promotion and let the customer retry, rather than a raw 500.
+            throw ValidationException::withMessages([
+                'promotion' => __('shopper-cart::messages.discount.campaign_budget_reached'),
+            ]);
         }
 
         $this->recordInitiatedPayment($cart, $order);
@@ -189,9 +197,6 @@ final readonly class CompleteCartAction
             'payment_method_id' => $cart->payment_method_id,
             'driver' => $session['driver'] ?? 'manual',
             'type' => TransactionType::Initiate,
-            // The intent is opened, not collected: Success on this row would
-            // make abandoned intents look like revenue in any aggregation.
-            // The webhook moves the payment forward.
             'status' => TransactionStatus::Pending,
             'amount' => $session['amount'] ?? $order->price_amount,
             'currency_code' => $order->currency_code,

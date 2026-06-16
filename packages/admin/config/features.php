@@ -21,6 +21,7 @@ return [
 
     'attribute' => FeatureState::Enabled,
     'brand' => FeatureState::Enabled,
+    'campaign' => FeatureState::Enabled,
     'category' => FeatureState::Enabled,
     'collection' => FeatureState::Enabled,
     'discount' => FeatureState::Enabled,

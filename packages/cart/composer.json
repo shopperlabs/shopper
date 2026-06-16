@@ -8,7 +8,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Shopper\\Cart\\": "src/"
+      "Shopper\\Cart\\": "src/",
+      "Shopper\\Cart\\Database\\Factories\\": "database/factories"
     }
   },
   "extra": {

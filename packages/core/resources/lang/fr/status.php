@@ -70,4 +70,13 @@ return [
         'limit_reached' => 'Limite atteinte',
         'inapplicable' => 'Inapplicable',
     ],
+
+    'campaign' => [
+        'draft' => 'Brouillon',
+        'scheduled' => 'Programmée',
+        'active' => 'Active',
+        'disabled' => 'Désactivée',
+        'expired' => 'Expirée',
+        'budget_exhausted' => 'Budget épuisé',
+    ],
 ];

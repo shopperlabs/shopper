@@ -5,36 +5,50 @@ declare(strict_types=1);
 namespace Shopper\Api\Actions;
 
 use Shopper\Cart\CartManager;
+use Shopper\Cart\Discounts\DiscountValidator;
 use Shopper\Cart\Models\Cart;
+use Shopper\Core\Models\Discount;
 
 final readonly class RevalidateCartCouponAction
 {
     public function __construct(
         private CartManager $cartManager,
+        private DiscountValidator $validator,
     ) {}
 
     /**
-     * Drop the cart coupon when it no longer reduces the cart. The discount
-     * pipeline re-validates the code on every calculation (currency, zone,
-     * eligibility, expiry, per-customer limit), so a zero discount means the
-     * coupon stopped applying after a context change (currency switch, cart
-     * transfer to a customer who already redeemed it, ...). Keeping a coupon
-     * that contributes nothing would advertise a stale code to the storefront.
+     * Drop the promotions that stopped applying after a context change (currency
+     * switch, cart transfer to a customer who already redeemed a code, ...). Each
+     * promotion is revalidated independently and only the genuinely invalid ones
+     * are removed; a valid promotion the resolver merely suppresses is kept.
      *
-     * Returns whether a coupon is still applied.
+     * Returns whether any promotion is still applied.
      */
     public function execute(Cart $cart): bool
     {
-        if (! $cart->coupon_code) {
+        $promotions = $cart->promotions()->with('discount')->get();
+
+        if ($promotions->isEmpty()) {
             return false;
         }
 
-        if ($this->cartManager->calculate($cart)->discountTotal <= 0) {
-            $this->cartManager->removeCoupon($cart);
+        $context = $this->cartManager->calculate($cart);
 
-            return false;
+        foreach ($promotions as $promotion) {
+            $discount = $promotion->discount;
+
+            if ($discount instanceof Discount
+                && $discount->is_active
+                && $promotion->code !== null
+                && $this->validator->validate($discount, $context)->valid) {
+                continue;
+            }
+
+            if ($promotion->code !== null) {
+                $this->cartManager->removeCoupon($cart, $promotion->code);
+            }
         }
 
-        return true;
+        return $cart->promotions()->exists();
     }
 }

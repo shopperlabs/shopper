@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Payment\Services;
 
 use Illuminate\Support\Collection;
+use Shopper\Core\Actions\ReleaseCampaignBudget;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\PaymentMethod;
@@ -143,6 +144,8 @@ final class PaymentProcessingService
 
         $this->syncPaymentStatus($order, TransactionType::Refund, $result);
 
+        $this->releaseCampaignBudget($order);
+
         return $result;
     }
 
@@ -193,6 +196,26 @@ final class PaymentProcessingService
             ->successful()
             ->latest()
             ->value('reference');
+    }
+
+    /**
+     * Give the campaign budget back once an order is fully refunded, so a
+     * reversed redemption stops counting against the cap. Partial refunds keep
+     * the reservation, and the release action is idempotent on retries.
+     */
+    private function releaseCampaignBudget(Order $order): void
+    {
+        if ($order->refresh()->payment_status !== PaymentStatus::Refunded) {
+            return;
+        }
+
+        $campaign = $order->discount?->campaign;
+
+        if ($campaign === null) {
+            return;
+        }
+
+        resolve(ReleaseCampaignBudget::class)->execute($campaign, $order->getKey(), actor: 'order-refunded');
     }
 
     private function resolveDriver(PaymentMethod $method): PaymentDriver

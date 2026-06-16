@@ -87,7 +87,7 @@ it('rejects a malformed email at creation', function (): void {
 });
 
 it('retrieves a cart by its public id', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
 
     $this->getJson('/store/carts/'.$cart->public_id)
         ->assertOk()
@@ -99,7 +99,7 @@ it('retrieves a cart by its public id', function (): void {
 
 it('hides a customer cart from guests and other customers', function (): void {
     $owner = User::factory()->create();
-    $cart = Cart::query()->create(['currency_code' => 'USD', 'customer_id' => $owner->id]);
+    $cart = Cart::factory()->create(['currency_code' => 'USD', 'customer_id' => $owner->id]);
 
     $this->getJson('/store/carts/'.$cart->public_id)->assertNotFound();
 
@@ -255,7 +255,7 @@ it('updates the quantity of a line and removes it', function (): void {
 });
 
 it('returns a conflict when mutating a completed cart', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD', 'completed_at' => now()]);
+    $cart = Cart::factory()->create(['currency_code' => 'USD', 'completed_at' => now()]);
 
     $this->postJson("/store/carts/{$cart->public_id}/lines", [
         'purchasable_type' => 'product',
@@ -267,7 +267,7 @@ it('exposes the cart addresses as an include', function (): void {
     $country = Country::query()->where('cca2', 'US')->first()
         ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
 
-    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
     $cart->addresses()->create([
         'type' => AddressType::Shipping,
         'first_name' => 'John',
@@ -288,7 +288,7 @@ it('exposes the cart addresses as an include', function (): void {
 });
 
 it('exposes discounts and taxes computed by the cart pipelines', function (): void {
-    Discount::factory()->create([
+    $discount = Discount::factory()->create([
         'code' => 'SAVE20',
         'is_active' => true,
         'type' => DiscountType::Percentage,
@@ -314,7 +314,12 @@ it('exposes discounts and taxes computed by the cart pipelines', function (): vo
         'is_default' => true,
     ]);
 
-    $cart = Cart::query()->create(['currency_code' => 'USD', 'coupon_code' => 'SAVE20']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
+    $cart->promotions()->create([
+        'discount_id' => $discount->id,
+        'source' => 'code',
+        'code' => 'SAVE20',
+    ]);
     $cart->addresses()->create([
         'type' => AddressType::Shipping,
         'first_name' => 'John',
@@ -345,7 +350,7 @@ it('exposes discounts and taxes computed by the cart pipelines', function (): vo
 });
 
 it('updates the cart metadata', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['metadata' => ['note' => 'gift']])
         ->assertOk()
@@ -355,7 +360,7 @@ it('updates the cart metadata', function (): void {
 });
 
 it('updates the cart contact email', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['email' => 'Buyer@Example.com'])
         ->assertOk()
@@ -371,7 +376,7 @@ it('changes the cart currency and re-prices the lines', function (): void {
     $eur = Currency::query()->where('code', 'EUR')->first();
     $this->product->prices()->create(['amount' => 3000, 'currency_id' => $eur->id]);
 
-    $cart = Cart::query()->create([
+    $cart = Cart::factory()->create([
         'currency_code' => 'USD',
         'shipping_option_id' => 'main-carrier:standard',
         'shipping_amount' => 700,
@@ -396,7 +401,7 @@ it('changes the cart currency and re-prices the lines', function (): void {
 });
 
 it('rejects a currency the shop does not sell in on update', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'XXX'])
         ->assertUnprocessable()
@@ -406,7 +411,7 @@ it('rejects a currency the shop does not sell in on update', function (): void {
 it('rejects a currency that is enabled but not configured for the shop', function (): void {
     // The shop sells in USD only (beforeEach). EUR exists and is enabled, but it
     // is not among the configured currencies, so it must not be accepted.
-    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'EUR'])
         ->assertUnprocessable()
@@ -419,7 +424,7 @@ it('rejects a currency change when a line has no price in it', function (): void
     setupCurrencies(['USD', 'EUR']);
     Currency::query()->where('code', 'EUR')->update(['is_enabled' => true]);
 
-    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
     $cart->lines()->create([
         'purchasable_type' => $this->product->getMorphClass(),
         'purchasable_id' => $this->product->id,
@@ -435,7 +440,7 @@ it('rejects a currency change when a line has no price in it', function (): void
 });
 
 it('rejects an update on a completed cart', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD', 'completed_at' => now()]);
+    $cart = Cart::factory()->create(['currency_code' => 'USD', 'completed_at' => now()]);
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['metadata' => ['note' => 'late']])
         ->assertConflict();
@@ -447,7 +452,7 @@ it('clears the payment session when the currency changes', function (): void {
     $eur = Currency::query()->where('code', 'EUR')->first();
     $this->product->prices()->create(['amount' => 3000, 'currency_id' => $eur->id]);
 
-    $cart = Cart::query()->create([
+    $cart = Cart::factory()->create([
         'currency_code' => 'USD',
         'payment_session' => ['driver' => 'manual', 'reference' => 'ref_1', 'amount' => 2500, 'currency' => 'USD'],
     ]);
@@ -469,7 +474,7 @@ it('drops a coupon that no longer applies after a currency change', function ():
     $eur = Currency::query()->where('code', 'EUR')->first();
     $this->product->prices()->create(['amount' => 3000, 'currency_id' => $eur->id]);
 
-    Discount::factory()->create([
+    $discount = Discount::factory()->create([
         'code' => 'FLAT5',
         'is_active' => true,
         'type' => DiscountType::FixedAmount,
@@ -481,7 +486,12 @@ it('drops a coupon that no longer applies after a currency change', function ():
         'end_at' => now()->addMonth(),
     ]);
 
-    $cart = Cart::query()->create(['currency_code' => 'USD', 'coupon_code' => 'FLAT5']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
+    $cart->promotions()->create([
+        'discount_id' => $discount->id,
+        'source' => 'code',
+        'code' => 'FLAT5',
+    ]);
     $cart->lines()->create([
         'purchasable_type' => $this->product->getMorphClass(),
         'purchasable_id' => $this->product->id,
@@ -491,13 +501,13 @@ it('drops a coupon that no longer applies after a currency change', function ():
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'EUR'])
         ->assertOk()
-        ->assertJsonPath('data.attributes.coupon_code', null);
+        ->assertJsonPath('data.attributes.promotions', []);
 
-    expect($cart->refresh()->coupon_code)->toBeNull();
+    expect($cart->promotions()->count())->toBe(0);
 });
 
 it('rejects metadata that exceeds the size limit', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['metadata' => ['blob' => str_repeat('x', 5000)]])
         ->assertUnprocessable()
@@ -505,7 +515,7 @@ it('rejects metadata that exceeds the size limit', function (): void {
 });
 
 it('clears the metadata when null is sent', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD', 'metadata' => ['note' => 'gift']]);
+    $cart = Cart::factory()->create(['currency_code' => 'USD', 'metadata' => ['note' => 'gift']]);
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['metadata' => null])
         ->assertOk()
@@ -515,7 +525,7 @@ it('clears the metadata when null is sent', function (): void {
 });
 
 it('keeps the existing email when null is sent', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD', 'email' => 'keep@example.com']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD', 'email' => 'keep@example.com']);
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['email' => null])->assertOk();
 
@@ -523,7 +533,7 @@ it('keeps the existing email when null is sent', function (): void {
 });
 
 it('transfers a guest cart to the authenticated customer', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
     $customer = User::factory()->create();
 
     Sanctum::actingAs($customer, ['store']);
@@ -537,7 +547,7 @@ it('transfers a guest cart to the authenticated customer', function (): void {
 
 it('is idempotent when transferring an already owned cart', function (): void {
     $customer = User::factory()->create();
-    $cart = Cart::query()->create(['currency_code' => 'USD', 'customer_id' => $customer->id]);
+    $cart = Cart::factory()->create(['currency_code' => 'USD', 'customer_id' => $customer->id]);
 
     Sanctum::actingAs($customer, ['store']);
 
@@ -548,7 +558,7 @@ it('is idempotent when transferring an already owned cart', function (): void {
 
 it('refuses to transfer a cart owned by another customer', function (): void {
     $owner = User::factory()->create();
-    $cart = Cart::query()->create(['currency_code' => 'USD', 'customer_id' => $owner->id]);
+    $cart = Cart::factory()->create(['currency_code' => 'USD', 'customer_id' => $owner->id]);
 
     Sanctum::actingAs(User::factory()->create(), ['store']);
 
@@ -558,7 +568,7 @@ it('refuses to transfer a cart owned by another customer', function (): void {
 });
 
 it('requires authentication to transfer a cart', function (): void {
-    $cart = Cart::query()->create(['currency_code' => 'USD']);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
 
     $this->postJson("/store/carts/{$cart->public_id}/transfer")->assertUnauthorized();
 });

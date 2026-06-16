@@ -8,13 +8,18 @@ use RuntimeException;
 
 final class DiscountLimitReachedException extends RuntimeException
 {
-    public static function global(string $code): self
+    public static function global(?string $code): self
     {
-        return new self(__('shopper-cart::exceptions.discount_limit.global', ['code' => $code]));
+        return new self(__('shopper-cart::exceptions.discount_limit.global', ['code' => $code ?? self::automaticLabel()]));
     }
 
-    public static function perUser(string $code): self
+    public static function perUser(?string $code): self
     {
-        return new self(__('shopper-cart::exceptions.discount_limit.per_user', ['code' => $code]));
+        return new self(__('shopper-cart::exceptions.discount_limit.per_user', ['code' => $code ?? self::automaticLabel()]));
+    }
+
+    private static function automaticLabel(): string
+    {
+        return __('shopper-cart::exceptions.discount_limit.automatic');
     }
 }
