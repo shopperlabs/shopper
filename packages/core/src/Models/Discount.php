@@ -76,6 +76,11 @@ class Discount extends Model implements DiscountContract
         return $this->belongsTo(Zone::class, 'zone_id');
     }
 
+    protected static function newFactory(): DiscountFactory
+    {
+        return DiscountFactory::new();
+    }
+
     /**
      * @return Attribute<DiscountStatus, never>
      */
@@ -104,11 +109,6 @@ class Discount extends Model implements DiscountContract
 
             return DiscountStatus::Active;
         });
-    }
-
-    protected static function newFactory(): DiscountFactory
-    {
-        return DiscountFactory::new();
     }
 
     protected function casts(): array
