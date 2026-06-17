@@ -4,7 +4,7 @@
 
 <div class="flex items-center">
     <div class="size-10 shrink-0">
-        <img class="size-10 rounded-full" src="{{ $user->picture }}" alt="{{ $user->last_name }} avatar" />
+        <img class="size-10 rounded-full object-cover" src="{{ $user->picture }}" alt="{{ $user->last_name }} avatar" />
     </div>
     <div class="ml-4">
         <div class="flex items-center gap-2">
@@ -12,7 +12,7 @@
                 {{ $user->full_name }}
             </span>
             @if ($user->id ===shopper()->auth()->id())
-                <x-filament::badge icon="untitledui-user-circle" color="gray" size="sm">
+                <x-filament::badge color="gray" size="sm">
                     {{ __('shopper::words.me') }}
                 </x-filament::badge>
             @endif

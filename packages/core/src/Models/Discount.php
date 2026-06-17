@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\DiscountFactory;
+use Shopper\Core\Enum\DiscountStatus;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Contracts\Discount as DiscountContract;
 
@@ -27,6 +29,7 @@ use Shopper\Core\Models\Contracts\Discount as DiscountContract;
  * @property-read ?int $usage_limit
  * @property-read bool $usage_limit_per_user
  * @property-read bool $is_active
+ * @property-read DiscountStatus $status
  * @property-read ?int $zone_id
  * @property-read array<string, mixed>|null $metadata
  * @property-read CarbonInterface $created_at
@@ -76,6 +79,36 @@ class Discount extends Model implements DiscountContract
     protected static function newFactory(): DiscountFactory
     {
         return DiscountFactory::new();
+    }
+
+    /**
+     * @return Attribute<DiscountStatus, never>
+     */
+    protected function status(): Attribute
+    {
+        return Attribute::get(function (): DiscountStatus {
+            if (! $this->exists) {
+                return DiscountStatus::Draft;
+            }
+
+            if (! $this->is_active) {
+                return DiscountStatus::Disabled;
+            }
+
+            if ($this->end_at !== null && $this->end_at->isPast()) {
+                return DiscountStatus::Expired;
+            }
+
+            if ($this->hasReachedLimit()) {
+                return DiscountStatus::LimitReached;
+            }
+
+            if ($this->start_at->isFuture()) {
+                return DiscountStatus::Scheduled;
+            }
+
+            return DiscountStatus::Active;
+        });
     }
 
     protected function casts(): array
