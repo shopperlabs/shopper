@@ -5,7 +5,7 @@
             class="focus:ring-primary-500 relative inline-flex w-full items-center rounded-full text-sm leading-5 focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
             type="button"
         >
-            <img class="size-8 rounded-full" src="{{ $user->picture }}" alt="{{ $user->email }}" />
+            <img class="size-8 rounded-full object-cover" src="{{ $user->picture }}" alt="{{ $user->email }}" />
             <span class="sr-only">{{ $user->full_name }}</span>
             <span
                 class="bg-success-400 absolute right-0 bottom-0 block size-2.5 rounded-full ring-2 ring-white dark:ring-white/10"
