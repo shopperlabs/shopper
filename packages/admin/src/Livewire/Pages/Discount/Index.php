@@ -12,7 +12,6 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -27,6 +26,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
+use Shopper\Core\Enum\DiscountStatus;
 use Shopper\Core\Models\Discount;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -74,10 +74,12 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->toggledHiddenByDefault()
                     ->color('gray')
                     ->badge(),
-                IconColumn::make('is_active')
+                TextColumn::make('status')
                     ->label(__('shopper::forms.label.status'))
-                    ->boolean()
-                    ->sortable(),
+                    ->badge()
+                    ->formatStateUsing(fn (DiscountStatus $state): string => $state->getLabel())
+                    ->icon(fn (DiscountStatus $state): string => $state->getIcon())
+                    ->color(fn (DiscountStatus $state): string => $state->getColor()),
                 ViewColumn::make('start_at')
                     ->label(__('shopper::words.date'))
                     ->toggleable()
