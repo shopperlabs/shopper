@@ -58,7 +58,7 @@ final class SetupGuide extends Component
 
         return [
             [
-                'key' => 'product.create',
+                'key' => 'add_product',
                 'completed' => resolve(ProductContract::class)::query()->exists(),
                 'icon' => 'untitledui-package',
                 'route' => 'shopper.products.index',

@@ -8,40 +8,34 @@
 ])
 
 <div
-    {{ $attributes->twMerge(['class' => 'relative w-full lg:flex lg:items-center py-8 lg:py-12']) }}
+    {{ $attributes->twMerge(['class' => 'relative mx-auto flex w-full max-w-md flex-col items-center py-12 text-center']) }}
 >
-    <div class="relative flex w-full justify-center lg:block lg:w-1/2">
+    <div class="flex justify-center">
         {{ $slot }}
     </div>
 
-    <div class="relative mt-10 flex w-full items-center justify-center lg:mt-0 lg:w-1/2 lg:py-20">
-        <div class="w-full text-center sm:max-w-md lg:text-left">
-            <h3
-                class="font-heading text-lg font-medium text-sh-fg sm:text-lg sm:leading-7 lg:text-2xl"
-            >
-                {{ $title }}
-            </h3>
-            <p class="mt-4 text-base text-sh-fg-muted">
-                {{ $content }}
-            </p>
+    <h3 class="font-heading mt-8 text-xl font-semibold text-sh-fg">
+        {{ $title }}
+    </h3>
+    <p class="mt-2 max-w-sm text-base text-sh-fg-muted">
+        {{ $content }}
+    </p>
 
-            @if ($permission)
-                @can($permission)
-                    @if ($url)
-                        <x-filament::button tag="a" :href="$url" wire:navigate class="mt-5">
-                            {{ $button }}
-                        </x-filament::button>
-                    @elseif ($panel)
-                        <x-filament::button
-                            type="button"
-                            wire:click="$dispatch('openPanel', {{ $panel }})"
-                            class="mt-5"
-                        >
-                            {{ $button }}
-                        </x-filament::button>
-                    @endif
-                @endcan
+    @if ($permission)
+        @can($permission)
+            @if ($url)
+                <x-filament::button tag="a" :href="$url" wire:navigate class="mt-6">
+                    {{ $button }}
+                </x-filament::button>
+            @elseif ($panel)
+                <x-filament::button
+                    type="button"
+                    wire:click="$dispatch('openPanel', {{ $panel }})"
+                    class="mt-6"
+                >
+                    {{ $button }}
+                </x-filament::button>
             @endif
-        </div>
-    </div>
+        @endcan
+    @endif
 </div>

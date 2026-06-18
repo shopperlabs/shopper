@@ -33,7 +33,7 @@
             >
                 <circle cx="4" cy="4" r="3" />
             </svg>
-            {{ __('shopper::layout.soon') }}
+            {{ __('shopper::words.soon') }}
         </span>
     @endif
 </a>

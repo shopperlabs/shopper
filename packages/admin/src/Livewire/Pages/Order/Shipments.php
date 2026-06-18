@@ -210,7 +210,8 @@ class Shipments extends AbstractPageComponent implements HasActions, HasSchemas,
                     ->relationship('carrier', 'name')
                     ->searchable()
                     ->preload(),
-            ]);
+            ])
+            ->emptyState(view('shopper::livewire.tables.empty-states.shipments'));
     }
 
     public function render(): View

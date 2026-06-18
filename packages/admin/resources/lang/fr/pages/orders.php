@@ -55,6 +55,8 @@ return [
 
     'shipment' => [
         'detail_title' => "Détail de l'expédition",
+        'empty' => 'Aucune expédition',
+        'empty_description' => 'Les expéditions apparaissent ici une fois les commandes préparées et confiées à un transporteur.',
         'shipping_from' => 'Expéditeur',
         'shipping_to' => 'Destinataire',
         'timeline' => 'Suivi de livraison',

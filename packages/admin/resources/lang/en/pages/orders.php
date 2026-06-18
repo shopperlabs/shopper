@@ -55,6 +55,8 @@ return [
 
     'shipment' => [
         'detail_title' => 'Shipment Detail',
+        'empty' => 'No shipments yet',
+        'empty_description' => 'Shipments appear here once orders are packed and handed to a carrier.',
         'shipping_from' => 'From',
         'shipping_to' => 'To',
         'timeline' => 'Shipment Timeline',

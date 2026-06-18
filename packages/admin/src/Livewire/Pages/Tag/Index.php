@@ -106,7 +106,8 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                             ->send();
                     })
                     ->deselectRecordsAfterCompletion(),
-            ]);
+            ])
+            ->emptyState(view('shopper::livewire.tables.empty-states.tags'));
     }
 
     public function tagForm(Schema $schema): Schema

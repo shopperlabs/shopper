@@ -1,5 +1,5 @@
 <x-shopper::container class="py-5">
-    <x-shopper::heading class="mt-5" :title="__('shopper::pages/orders.shipments')" />
+    <x-shopper::heading :title="__('shopper::pages/orders.shipments')" />
 
     <div class="mt-8 space-y-4">
         <x-shopper::tabs-navigation

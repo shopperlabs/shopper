@@ -21,6 +21,30 @@
     --theme-sh-accent: var(--color-primary-500);
     --theme-sh-accent-fg: var(--color-primary-50);
 
+    --primary-50: var(--color-blue-50);
+    --primary-100: var(--color-blue-100);
+    --primary-200: var(--color-blue-200);
+    --primary-300: var(--color-blue-300);
+    --primary-400: var(--color-blue-400);
+    --primary-500: var(--color-blue-500);
+    --primary-600: var(--color-blue-600);
+    --primary-700: var(--color-blue-700);
+    --primary-800: var(--color-blue-800);
+    --primary-900: var(--color-blue-900);
+    --primary-950: var(--color-blue-950);
+
+    --color-primary-50: var(--color-blue-50);
+    --color-primary-100: var(--color-blue-100);
+    --color-primary-200: var(--color-blue-200);
+    --color-primary-300: var(--color-blue-300);
+    --color-primary-400: var(--color-blue-400);
+    --color-primary-500: var(--color-blue-500);
+    --color-primary-600: var(--color-blue-600);
+    --color-primary-700: var(--color-blue-700);
+    --color-primary-800: var(--color-blue-800);
+    --color-primary-900: var(--color-blue-900);
+    --color-primary-950: var(--color-blue-950);
+
     --theme-sh-card: var(--color-zinc-50);
     --theme-sh-table-header: var(--color-zinc-50);
     --theme-sh-skeleton: var(--color-zinc-200);
