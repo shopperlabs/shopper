@@ -120,9 +120,7 @@ class AbandonedCarts extends AbstractPageComponent implements HasActions, HasSch
                     ->searchable()
                     ->preload(),
             ])
-            ->emptyStateHeading(__('shopper::pages/orders.abandoned_carts.empty'))
-            ->emptyStateDescription(__('shopper::pages/orders.abandoned_carts.empty_description'))
-            ->emptyStateIcon(Untitledui::ShoppingBag02);
+            ->emptyState(view('shopper::livewire.tables.empty-states.abandoned-carts'));
     }
 
     public function render(): View

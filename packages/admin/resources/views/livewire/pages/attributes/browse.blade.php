@@ -1,5 +1,5 @@
 <x-shopper::container class="py-5">
-    <x-shopper::heading class="mt-5" :title="__('shopper::pages/attributes.menu')">
+    <x-shopper::heading :title="__('shopper::pages/attributes.menu')">
         <x-slot name="action">
             @can('attributes.create')
                 <x-filament::button
