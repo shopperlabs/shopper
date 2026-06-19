@@ -23,6 +23,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\Url;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
@@ -39,6 +40,9 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
     use InteractsWithActions;
     use InteractsWithSchemas;
     use InteractsWithTable;
+
+    #[Url(as: 'tab', except: 'all')]
+    public ?string $activeTab = null;
 
     public function mount(): void
     {

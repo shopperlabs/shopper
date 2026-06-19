@@ -32,4 +32,15 @@ describe(Index::class, function (): void {
             ->loadTable()
             ->assertCanSeeTableRecords($orders);
     });
+
+    it('defaults the active tab to `all`', function (): void {
+        Livewire::test(Index::class)
+            ->assertSet('activeTab', 'all');
+    });
+
+    it('hydrates the active tab from the URL query string', function (): void {
+        Livewire::withQueryParams(['tab' => 'paid'])
+            ->test(Index::class)
+            ->assertSet('activeTab', 'paid');
+    });
 })->group('livewire', 'orders');
