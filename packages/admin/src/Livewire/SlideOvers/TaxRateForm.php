@@ -120,6 +120,6 @@ class TaxRateForm extends SlideOverComponent implements HasActions, HasSchemas, 
             ->success()
             ->send();
 
-        $this->redirectRoute('shopper.settings.taxes', ['zone' => $this->taxZoneId]);
+        $this->redirectRoute('shopper.settings.taxes', ['zone' => $this->taxZoneId], navigate: true);
     }
 }

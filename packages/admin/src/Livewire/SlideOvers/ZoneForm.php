@@ -210,6 +210,6 @@ class ZoneForm extends SlideOverComponent implements HasActions, HasSchemas, Sli
             ->success()
             ->send();
 
-        $this->redirectRoute('shopper.settings.zones', ['zone' => $this->zone->id]);
+        $this->redirectRoute('shopper.settings.zones', ['zone' => $this->zone->id], navigate: true);
     }
 }
