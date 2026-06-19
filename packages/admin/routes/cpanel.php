@@ -5,8 +5,8 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Shopper\Feature;
 
-Route::get('/dashboard', config('shopper.components.dashboard.pages.dashboard'))->name('dashboard');
-Route::get('/profile', config('shopper.components.account.pages.account-index'))->name('profile');
+Route::livewire('/dashboard', config('shopper.components.dashboard.pages.dashboard'))->name('dashboard');
+Route::livewire('/profile', config('shopper.components.account.pages.account-index'))->name('profile');
 
 Route::prefix('setting')->as('settings.')->group(function (): void {
     require __DIR__.'/admin/setting.php';
@@ -25,12 +25,12 @@ Route::prefix('products')->group(function (): void {
 });
 
 if (Feature::enabled('brand')) {
-    Route::get('/brands', config('shopper.components.brand.pages.brand-index'))
+    Route::livewire('/brands', config('shopper.components.brand.pages.brand-index'))
         ->name('brands.index');
 }
 
 if (Feature::enabled('category')) {
-    Route::get('/categories', config('shopper.components.category.pages.category-index'))
+    Route::livewire('/categories', config('shopper.components.category.pages.category-index'))
         ->name('categories.index');
 }
 
@@ -53,6 +53,6 @@ if (Feature::enabled('discount')) {
 }
 
 if (Feature::enabled('review')) {
-    Route::get('/reviews', config('shopper.components.review.pages.review-index'))
+    Route::livewire('/reviews', config('shopper.components.review.pages.review-index'))
         ->name('reviews.index');
 }
