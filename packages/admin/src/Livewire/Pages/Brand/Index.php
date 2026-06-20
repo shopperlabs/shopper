@@ -95,6 +95,8 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
             ])
             ->groupedBulkActions([
                 BulkAction::make('enabled')
+                    ->authorize('brands.edit')
+                    ->visible(Shopper::auth()->user()->can('brands.edit'))
                     ->label(__('shopper::forms.actions.enable'))
                     ->icon(Untitledui::CheckVerified)
                     ->action(function (Collection $records): void {
@@ -111,6 +113,8 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     })
                     ->deselectRecordsAfterCompletion(),
                 BulkAction::make('disabled')
+                    ->authorize('brands.edit')
+                    ->visible(Shopper::auth()->user()->can('brands.edit'))
                     ->label(__('shopper::forms.actions.disable'))
                     ->icon(Untitledui::SlashCircle01)
                     ->action(function (Collection $records): void {
