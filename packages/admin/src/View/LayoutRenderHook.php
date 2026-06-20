@@ -30,6 +30,8 @@ final class LayoutRenderHook
 
     public const string CONTENT_END = 'shopper::content.end';
 
+    public const string CONTENT_ASIDE = 'shopper::content.aside';
+
     public const string DASHBOARD_START = 'shopper::dashboard.start';
 
     public const string DASHBOARD_END = 'shopper::dashboard.end';

@@ -40,6 +40,8 @@
                     {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::CONTENT_END) }}
                 </main>
             </div>
+
+            {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::CONTENT_ASIDE) }}
         </div>
 
         <livewire:shopper-session-expired />

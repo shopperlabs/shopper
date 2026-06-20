@@ -34,6 +34,11 @@ final class StatCards extends Component
         });
     }
 
+    public function placeholder(): View
+    {
+        return view('shopper::livewire.components.dashboard.placeholders.stat-cards');
+    }
+
     public function render(): View
     {
         return view('shopper::livewire.components.dashboard.stat-cards');

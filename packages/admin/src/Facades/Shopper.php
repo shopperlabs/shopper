@@ -15,6 +15,7 @@ use Shopper\ShopperPanel;
 /**
  * @method static AddonManager addonManager()
  * @method static ShopperPanel addon(ShopperAddon $addon)
+ * @method static ShopperPanel addons(array $addons)
  * @method static bool hasAddon(string $id)
  * @method static ShopperAddon getAddon(string $id)
  * @method static ShopperPanel addonRoutes(Closure $routes)

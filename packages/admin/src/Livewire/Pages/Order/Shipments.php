@@ -24,6 +24,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Actions\MarkShipmentDeliveredAction;
 use Shopper\Core\Enum\ShipmentStatus;
@@ -39,6 +40,9 @@ class Shipments extends AbstractPageComponent implements HasActions, HasSchemas,
     use InteractsWithActions;
     use InteractsWithSchemas;
     use InteractsWithTable;
+
+    #[Url(as: 'tab', except: 'all')]
+    public ?string $activeTab = null;
 
     public function mount(): void
     {

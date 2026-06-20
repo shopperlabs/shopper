@@ -43,6 +43,11 @@ final class RecentOrders extends Component
             ->get();
     }
 
+    public function placeholder(): View
+    {
+        return view('shopper::livewire.components.dashboard.placeholders.recent-orders');
+    }
+
     public function render(): View
     {
         return view('shopper::livewire.components.dashboard.recent-orders');

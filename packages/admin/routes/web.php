@@ -69,12 +69,16 @@ Route::domain(config('shopper.admin.domain'))
                 Authenticate::class,
                 HasConfiguration::class,
                 ResolveSidebars::class,
-            ])->get('/initialize', Initialization::class)->name('shopper.initialize');
+            ])->group(function (): void {
+                Route::livewire('/initialize', Initialization::class)->name('shopper.initialize');
+            });
 
             Route::middleware([
                 Authenticate::class,
                 ResolveSidebars::class,
-            ])->get('/forbidden', Forbidden::class)->name('shopper.forbidden');
+            ])->group(function (): void {
+                Route::livewire('/forbidden', Forbidden::class)->name('shopper.forbidden');
+            });
 
             Route::middleware(array_merge([
                 Authenticate::class,

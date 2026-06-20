@@ -9,9 +9,9 @@ use Shopper\Livewire\Pages\Auth\ResetPassword;
 
 Route::redirect('/', shopper()->prefix().'/login', 301);
 
-Route::get('/login', Login::class)->name('login');
+Route::livewire('/login', Login::class)->name('login');
 
 if (config('shopper.auth.password_reset', true)) {
-    Route::get('/password/reset', ForgotPassword::class)->name('password.request');
-    Route::get('/password/reset/{token}', ResetPassword::class)->name('password.reset');
+    Route::livewire('/password/reset', ForgotPassword::class)->name('password.request');
+    Route::livewire('/password/reset/{token}', ResetPassword::class)->name('password.reset');
 }

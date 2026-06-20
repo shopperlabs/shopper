@@ -105,6 +105,8 @@ class Browse extends AbstractPageComponent implements HasActions, HasSchemas, Ha
             ])
             ->groupedBulkActions([
                 DeleteBulkAction::make()
+                    ->authorize('attributes.delete')
+                    ->visible(shopper()->auth()->user()->can('attributes.delete'))
                     ->label(__('shopper::forms.actions.delete'))
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
@@ -121,6 +123,8 @@ class Browse extends AbstractPageComponent implements HasActions, HasSchemas, Ha
                     })
                     ->deselectRecordsAfterCompletion(),
                 BulkAction::make('enabled')
+                    ->authorize('attributes.edit')
+                    ->visible(shopper()->auth()->user()->can('attributes.edit'))
                     ->label(__('shopper::forms.actions.enable'))
                     ->icon(Untitledui::CheckVerified)
                     ->action(function (Collection $records): void {
@@ -137,6 +141,8 @@ class Browse extends AbstractPageComponent implements HasActions, HasSchemas, Ha
                     })
                     ->deselectRecordsAfterCompletion(),
                 BulkAction::make('disabled')
+                    ->authorize('attributes.edit')
+                    ->visible(shopper()->auth()->user()->can('attributes.edit'))
                     ->label(__('shopper::forms.actions.disable'))
                     ->icon(Untitledui::SlashCircle01)
                     ->action(function (Collection $records): void {

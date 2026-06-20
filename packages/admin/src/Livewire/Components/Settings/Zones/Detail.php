@@ -48,6 +48,7 @@ class Detail extends Component implements HasActions, HasSchemas
     public function deleteAction(): Action
     {
         return DeleteAction::make('delete')
+            ->authorize('system.settings')
             ->record($this->zone)
             ->icon(Untitledui::Trash03)
             ->iconButton()

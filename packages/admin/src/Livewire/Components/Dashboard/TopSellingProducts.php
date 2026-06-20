@@ -30,6 +30,11 @@ final class TopSellingProducts extends Component
         return collect($cached);
     }
 
+    public function placeholder(): View
+    {
+        return view('shopper::livewire.components.dashboard.placeholders.top-selling-products');
+    }
+
     public function render(): View
     {
         return view('shopper::livewire.components.dashboard.top-selling-products');
