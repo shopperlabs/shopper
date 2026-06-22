@@ -10,6 +10,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\ImageEntry;
+use Filament\Notifications\Livewire\DatabaseNotifications;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
 use Filament\Support\Facades\FilamentView;
@@ -113,6 +114,10 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
         $this->app->register(SidebarServiceProvider::class);
         $this->app->register(ComponentsServiceProvider::class);
+
+        if (config('shopper.admin.notifications.database.enabled')) {
+            $this->app->register(EventServiceProvider::class);
+        }
 
         $this->app->scoped('shopper', fn (): ShopperPanel => new ShopperPanel);
 
@@ -228,6 +233,12 @@ final class ShopperServiceProvider extends PackageServiceProvider
     protected function registerCustomFilamentItems(): void
     {
         FilamentView::spa();
+
+        if (config('shopper.admin.notifications.database.enabled')) {
+            DatabaseNotifications::trigger('shopper::components.notifications.database-notifications-trigger');
+            DatabaseNotifications::pollingInterval(config('shopper.admin.notifications.database.polling_interval'));
+            DatabaseNotifications::authGuard(config('shopper.auth.guard'));
+        }
 
         FilamentColor::register([
             'primary' => config('shopper.admin.primary_color'),

@@ -82,4 +82,25 @@ return [
         'body' => 'Vous n\'avez pas la permission d\'effectuer cette action.',
     ],
 
+    'database' => [
+        'open' => 'Ouvrir les notifications',
+        'view_order' => 'Voir la commande',
+        'order_created' => [
+            'title' => 'Nouvelle commande reçue',
+            'body' => 'La commande :number vient d\'être passée.',
+        ],
+        'order_paid' => [
+            'title' => 'Commande payée',
+            'body' => 'Le paiement de la commande :number a été reçu.',
+        ],
+        'payment_failed' => [
+            'title' => 'Échec du paiement',
+            'body' => 'Une tentative de paiement pour la commande :number a échoué.',
+        ],
+        'refund_failed' => [
+            'title' => 'Échec du remboursement',
+            'body' => 'Une tentative de remboursement pour la commande :number a échoué.',
+        ],
+    ],
+
 ];

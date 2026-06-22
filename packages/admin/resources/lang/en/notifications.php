@@ -82,4 +82,25 @@ return [
         'body' => 'You do not have permission to perform this action.',
     ],
 
+    'database' => [
+        'open' => 'Open notifications',
+        'view_order' => 'View order',
+        'order_created' => [
+            'title' => 'New order received',
+            'body' => 'Order :number has just been placed.',
+        ],
+        'order_paid' => [
+            'title' => 'Order paid',
+            'body' => 'Payment for order :number has been received.',
+        ],
+        'payment_failed' => [
+            'title' => 'Payment failed',
+            'body' => 'A payment attempt for order :number has failed.',
+        ],
+        'refund_failed' => [
+            'title' => 'Refund failed',
+            'body' => 'A refund attempt for order :number has failed.',
+        ],
+    ],
+
 ];

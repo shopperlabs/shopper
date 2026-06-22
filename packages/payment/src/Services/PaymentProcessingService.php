@@ -14,6 +14,7 @@ use Shopper\Payment\Contracts\PaymentDriver;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Events\PaymentFailed;
 use Shopper\Payment\Facades\Payment;
 use Shopper\Payment\Models\PaymentTransaction;
 
@@ -226,6 +227,10 @@ final class PaymentProcessingService
     private function syncPaymentStatus(Order $order, TransactionType $type, PaymentResult $result): void
     {
         if (! $result->success) {
+            if (in_array($type, [TransactionType::Authorize, TransactionType::Capture, TransactionType::Refund], strict: true)) {
+                event(new PaymentFailed($order, $type, $result->message));
+            }
+
             return;
         }
 
