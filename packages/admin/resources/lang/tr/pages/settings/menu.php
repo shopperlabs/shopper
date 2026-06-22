@@ -15,7 +15,7 @@ return [
     'payment' => 'Ödeme yöntemleri',
     'payment_description' => 'Müşterileriniz için farklı ödeme yöntemleri ekleyin.',
     'legal' => 'Yasal',
-    'legal_description' => "Mağazanızın gizlilik, koşullar gibi yasal sayfalarını yönetin.",
+    'legal_description' => 'Mağazanızın gizlilik, koşullar gibi yasal sayfalarını yönetin.',
     'carrier' => 'Kargo Şirketleri',
     'carrier_description' => 'Kargo şirketlerini ve teslimat sağlayıcılarını yönetin.',
     'zone' => 'Bölgeler',
