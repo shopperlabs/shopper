@@ -151,4 +151,26 @@ return [
         'duration' => '7 days',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Database Notifications
+    |--------------------------------------------------------------------------
+    |
+    | In-app notifications displayed in the admin topbar bell. When enabled,
+    | domain events (new order, paid order, failed payment, ...) are persisted
+    | for administrators and surfaced in real time.
+    |
+    | The "polling_interval" controls how often the bell refreshes its content.
+    | Set it to null to disable polling entirely and rely solely on broadcasting
+    | through Laravel Echo (see the broadcast notifications documentation).
+    |
+    */
+
+    'notifications' => [
+        'database' => [
+            'enabled' => false,
+            'polling_interval' => '30s',
+        ],
+    ],
+
 ];

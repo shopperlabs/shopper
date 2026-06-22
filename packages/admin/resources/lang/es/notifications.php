@@ -82,4 +82,25 @@ return [
         'body' => 'No tienes permiso para realizar esta acción.',
     ],
 
+    'database' => [
+        'open' => 'Abrir notificaciones',
+        'view_order' => 'Ver pedido',
+        'order_created' => [
+            'title' => 'Nuevo pedido recibido',
+            'body' => 'El pedido :number acaba de realizarse.',
+        ],
+        'order_paid' => [
+            'title' => 'Pedido pagado',
+            'body' => 'Se ha recibido el pago del pedido :number.',
+        ],
+        'payment_failed' => [
+            'title' => 'Pago fallido',
+            'body' => 'Un intento de pago para el pedido :number ha fallado.',
+        ],
+        'refund_failed' => [
+            'title' => 'Reembolso fallido',
+            'body' => 'Un intento de reembolso para el pedido :number ha fallado.',
+        ],
+    ],
+
 ];

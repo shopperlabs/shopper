@@ -46,6 +46,10 @@
 
         {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEADER_END) }}
 
+        @if (config('shopper.admin.notifications.database.enabled'))
+            <livewire:database-notifications />
+        @endif
+
         <a
             href="{{ url('/') }}"
             target="_blank"
