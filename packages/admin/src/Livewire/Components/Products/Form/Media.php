@@ -63,6 +63,8 @@ class Media extends Component implements HasSchemas
 
     public function store(): void
     {
+        $this->authorize('edit_products');
+
         $this->validate();
 
         $this->product->update($this->form->getState());

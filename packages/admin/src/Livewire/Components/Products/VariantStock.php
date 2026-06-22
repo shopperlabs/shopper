@@ -16,6 +16,7 @@ use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Inventory;
@@ -31,11 +32,13 @@ class VariantStock extends Component implements HasActions, HasSchemas
     use InteractsWithActions;
     use InteractsWithSchemas;
 
+    #[Locked]
     public $variant;
 
     public function stockAction(): Action
     {
         return Action::make('stock')
+            ->authorize('edit_product_variants')
             ->label(__('shopper::forms.actions.update'))
             ->color('gray')
             ->icon(Untitledui::Package)

@@ -95,6 +95,8 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
             ])
             ->groupedBulkActions([
                 DeleteBulkAction::make()
+                    ->authorize('delete_tags')
+                    ->visible(shopper()->auth()->user()->can('delete_tags'))
                     ->label(__('shopper::forms.actions.delete'))
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {

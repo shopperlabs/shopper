@@ -47,12 +47,16 @@ class ZoneShippingOptions extends Component implements HasActions, HasSchemas
     public function deleteAction(): Action
     {
         return Action::make('delete')
+            ->authorize('access_setting')
             ->requiresConfirmation()
             ->icon(Untitledui::Trash03)
             ->color('danger')
             ->iconButton()
             ->action(function (array $arguments): void {
-                CarrierOption::query()->find($arguments['id'])->delete();
+                CarrierOption::query()
+                    ->where('zone_id', $this->selectedZoneId)
+                    ->findOrFail($arguments['id'])
+                    ->delete();
 
                 Notification::make()
                     ->title(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/zones.shipping_options.single')]))

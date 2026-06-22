@@ -20,6 +20,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
@@ -37,6 +38,7 @@ class CollectionProducts extends Component implements HasActions, HasSchemas, Ha
     use InteractsWithSchemas;
     use InteractsWithTable;
 
+    #[Locked]
     public Collection $collection;
 
     /**
@@ -71,6 +73,7 @@ class CollectionProducts extends Component implements HasActions, HasSchemas, Ha
             ])
             ->recordActions([
                 Action::make('delete')
+                    ->authorize('delete_collections')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
                     ->iconButton()
@@ -89,6 +92,7 @@ class CollectionProducts extends Component implements HasActions, HasSchemas, Ha
             ])
             ->groupedBulkActions([
                 DeleteBulkAction::make()
+                    ->authorize('delete_collections')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
                     ->requiresConfirmation()
