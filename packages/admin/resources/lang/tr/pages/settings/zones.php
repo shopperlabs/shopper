@@ -13,7 +13,7 @@ return [
     'providers_description' => 'Bu alanda bulunması gereken teslimat ve ödeme yöntemlerini ekleyin.',
     'currency_help' => 'Mağazanızı oluştururken yapılandırdığınız para birimleri listesinden bu bölgenin ana para birimi.',
     'empty_detail_heading' => 'Bölge seçilmedi',
-    'empty_detail_description' => "Bir bölge seçtiğinizde, tüm bilgileri burada görüntülenecektir",
+    'empty_detail_description' => 'Bir bölge seçtiğinizde, tüm bilgileri burada görüntülenecektir',
 
     'shipping_options' => [
         'title' => 'Kargo Seçenekleri',
