@@ -35,7 +35,7 @@ return [
         'detail' => 'Detaylar',
         'detail_summary' => 'Bu konuma tanımlamayı kolaylaştıracak kısa bir ad verin. Bu adı ürünler gibi alanlarda göreceksiniz.',
         'address' => 'Konum adresi',
-        'address_summary' => "Konumunuzun eksiksiz bilgileri. Lütfen geçerli bilgiler girin, müşterileriniz için erişilebilir olabilir.",
+        'address_summary' => 'Konumunuzun eksiksiz bilgileri. Lütfen geçerli bilgiler girin, müşterileriniz için erişilebilir olabilir.',
         'set_default' => 'Varsayılan konum olarak ayarla',
         'set_default_summary' => 'Bu konumdaki envanter çevrimiçi satışa uygundur ve varsayılan olarak kullanılacaktır',
         'priority_summary' => 'Stok birden fazla konuma tahsis edilirken düşük değerler önce karşılanır.',

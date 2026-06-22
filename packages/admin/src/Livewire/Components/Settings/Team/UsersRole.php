@@ -66,6 +66,7 @@ class UsersRole extends Component implements HasActions, HasSchemas, HasTable
             ])
             ->recordActions([
                 DeleteAction::make('delete')
+                    ->authorize('access_setting')
                     ->label(__('shopper::forms.actions.delete'))
                     ->visible(fn (ShopperUser $record): bool => shopper()->auth()->user()->isAdmin() && ! $record->isAdmin()) // @phpstan-ignore-line
                     ->successNotificationTitle(__('shopper::notifications.users_roles.admin_deleted')),
