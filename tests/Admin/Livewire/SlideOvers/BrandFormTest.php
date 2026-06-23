@@ -56,24 +56,18 @@ describe(BrandForm::class, function (): void {
             ->toBe('nike-1');
     });
 
-    it('dispatches unauthorized notification when user lacks `add_brands` permission', function (): void {
-        $user = User::factory()->create();
-        $this->actingAs($user);
+    it('blocks opening the create form for users without `add_brands`', function (): void {
+        $this->actingAs(User::factory()->create());
 
         Livewire::test(BrandForm::class)
-            ->fillForm(['name' => 'Nike'])
-            ->call('save')
-            ->assertNotified(__('shopper::notifications.unauthorized.title'));
+            ->assertForbidden();
     });
 
-    it('dispatches unauthorized notification when user lacks `edit_brands` permission', function (): void {
+    it('blocks opening the edit form for users without `edit_brands`', function (): void {
         $brand = Brand::factory()->create();
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $this->actingAs(User::factory()->create());
 
         Livewire::test(BrandForm::class, ['brand' => $brand])
-            ->fillForm(['name' => 'Nike Updated'])
-            ->call('save')
-            ->assertNotified(__('shopper::notifications.unauthorized.title'));
+            ->assertForbidden();
     });
 })->group('livewire', 'slideovers', 'brands');

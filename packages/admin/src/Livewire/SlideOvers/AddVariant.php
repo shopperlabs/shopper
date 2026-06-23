@@ -63,7 +63,7 @@ class AddVariant extends SlideOverComponent implements HasActions, HasSchemas
 
     public function mount(): void
     {
-        $this->authorize('add_products');
+        $this->authorize('add_product_variants');
 
         $this->form->fill();
     }
@@ -204,6 +204,8 @@ class AddVariant extends SlideOverComponent implements HasActions, HasSchemas
 
     public function save(): void
     {
+        $this->authorize('add_product_variants');
+
         $data = $this->form->getState();
 
         if (isset($data['values']) && $this->variantAlreadyExist($data['values'])) {

@@ -131,6 +131,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
     public function createAction(): Action
     {
         return Action::make('create')
+            ->authorize('add_tags')
             ->label(__('shopper::forms.actions.create'))
             ->schema($this->tagForm(...))
             ->modalWidth(Width::Medium)

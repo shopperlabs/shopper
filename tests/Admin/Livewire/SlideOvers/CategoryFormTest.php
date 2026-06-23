@@ -18,6 +18,13 @@ beforeEach(function (): void {
 });
 
 describe(CategoryForm::class, function (): void {
+    it('blocks opening the form for users without category permissions', function (): void {
+        $this->actingAs(User::factory()->create());
+
+        Livewire::test(CategoryForm::class)
+            ->assertForbidden();
+    });
+
     it('can validate required fields on add category form', function (): void {
         Livewire::test(CategoryForm::class)
             ->fillForm()

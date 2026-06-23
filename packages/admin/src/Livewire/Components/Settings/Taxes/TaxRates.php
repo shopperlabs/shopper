@@ -95,6 +95,7 @@ class TaxRates extends Component implements HasActions, HasSchemas, HasTable
                         arguments: ['taxZoneId' => $this->selectedTaxZoneId, 'taxRateId' => $record->id]
                     )),
                 DeleteAction::make('delete')
+                    ->authorize('access_setting')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
                     ->iconButton(),

@@ -78,6 +78,23 @@ describe(AttributeForm::class, function (): void {
             ->assertHasFormErrors(['slug' => 'unique']);
     });
 
+    it('blocks editing an existing attribute for users without `edit_attributes`', function (): void {
+        $attribute = Attribute::factory()->create([
+            'name' => 'Old Name',
+            'description' => 'Short description',
+        ]);
+
+        Livewire::test(AttributeForm::class, ['attributeId' => $attribute->id])
+            ->fillForm([
+                'name' => 'Hacked Name',
+                'type' => FieldType::Select(),
+                'description' => 'Updated description',
+            ])
+            ->call('store');
+
+        expect($attribute->refresh()->name)->toBe('Old Name');
+    });
+
     it('can edit existing attribute', function (): void {
         $this->user->givePermissionTo('edit_attributes');
 
