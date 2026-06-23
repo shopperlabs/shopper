@@ -245,6 +245,8 @@ class General extends Component implements HasActions, HasSchemas
 
     public function store(): void
     {
+        $this->authorize('access_setting');
+
         $this->saveSettings($this->form->getState());
 
         Notification::make()

@@ -17,6 +17,28 @@ beforeEach(function (): void {
 });
 
 describe(Index::class, function (): void {
+    it('blocks reordering brands for users without `edit_brands`', function (): void {
+        $a = Brand::factory()->create(['position' => 1]);
+        $b = Brand::factory()->create(['position' => 2]);
+
+        Livewire::test(Index::class)->call('reorderTable', [$b->getKey(), $a->getKey()]);
+
+        expect($a->refresh()->position)->toBe(1)
+            ->and($b->refresh()->position)->toBe(2);
+    });
+
+    it('allows reordering brands for users with `edit_brands`', function (): void {
+        $this->user->givePermissionTo('edit_brands');
+
+        $a = Brand::factory()->create(['position' => 1]);
+        $b = Brand::factory()->create(['position' => 2]);
+
+        Livewire::test(Index::class)->call('reorderTable', [$b->getKey(), $a->getKey()]);
+
+        expect($a->refresh()->position)->toBe(2)
+            ->and($b->refresh()->position)->toBe(1);
+    });
+
     it('can render brands index component', function (): void {
         Livewire::test(Index::class)
             ->assertOk()

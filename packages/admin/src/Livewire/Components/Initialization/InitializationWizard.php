@@ -33,7 +33,6 @@ use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Setting;
-use Shopper\Facades\Shopper;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Traits\SaveSettings;
 
@@ -356,6 +355,8 @@ final class InitializationWizard extends Component implements HasActions, HasSch
      */
     private function persistStep(array $keys): void
     {
+        $this->authorizeOnboarding();
+
         $allowed = array_intersect($keys, self::ALLOWED_KEYS);
 
         $values = collect($this->data ?? [])
@@ -367,7 +368,7 @@ final class InitializationWizard extends Component implements HasActions, HasSch
 
     private function authorizeOnboarding(): void
     {
-        $user = Shopper::auth()->user();
+        $user = shopper()->auth()->user();
 
         abort_unless(
             $user instanceof ShopperUser

@@ -49,6 +49,8 @@ class ProductTypeConfiguration extends Component implements HasActions, HasSchem
                     ->debounce()
                     ->live()
                     ->afterStateUpdated(function (bool $state): void {
+                        $this->authorize('access_setting');
+
                         $this->saveSettings(['default_product_type' => $state ? $this->defaultProductType?->value : null]);
 
                         $this->dispatch('product-type.updated');
