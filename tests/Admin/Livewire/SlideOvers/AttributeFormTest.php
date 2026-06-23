@@ -17,6 +17,23 @@ beforeEach(function (): void {
 });
 
 describe(AttributeForm::class, function (): void {
+    it('blocks editing an existing attribute for users without `attributes.edit`', function (): void {
+        $attribute = Attribute::factory()->create([
+            'name' => 'Old Name',
+            'description' => 'Short description',
+        ]);
+
+        Livewire::test(AttributeForm::class, ['attributeId' => $attribute->id])
+            ->fillForm([
+                'name' => 'Hacked Name',
+                'type' => FieldType::Select(),
+                'description' => 'Updated description',
+            ])
+            ->call('store');
+
+        expect($attribute->refresh()->name)->toBe('Old Name');
+    });
+
     it('can render attribute form component', function (): void {
         Livewire::test(AttributeForm::class)
             ->assertOk();

@@ -46,6 +46,7 @@ class Related extends Component implements HasActions, HasSchemas
     public function removeAction(): Action
     {
         return Action::make('remove')
+            ->authorize('products.edit')
             ->label(__('shopper::forms.actions.remove'))
             ->icon(Untitledui::Trash03)
             ->color('danger')

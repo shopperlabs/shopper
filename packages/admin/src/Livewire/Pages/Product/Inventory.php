@@ -131,6 +131,7 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
             ])
             ->headerActions([
                 Action::make('stock')
+                    ->authorize('products.edit')
                     ->label(__('shopper::forms.label.add_stock'))
                     ->icon(Untitledui::Package)
                     ->color('gray')

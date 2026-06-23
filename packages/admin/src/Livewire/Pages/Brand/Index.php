@@ -23,7 +23,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Brand as BrandContract;
-use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
@@ -68,6 +67,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->sortable(),
             ])
             ->reorderable('position')
+            ->authorizeReorder(shopper()->auth()->user()->can('brands.edit'))
             ->recordActions([
                 Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
@@ -81,7 +81,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                         )
                     )
                     ->authorize('brands.edit')
-                    ->visible(Shopper::auth()->user()->can('brands.edit')),
+                    ->visible(shopper()->auth()->user()->can('brands.edit')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
@@ -91,12 +91,12 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->requiresConfirmation()
                     ->action(fn (BrandContract $record) => $record->delete())
                     ->authorize('brands.delete')
-                    ->visible(Shopper::auth()->user()->can('brands.delete')),
+                    ->visible(shopper()->auth()->user()->can('brands.delete')),
             ])
             ->groupedBulkActions([
                 BulkAction::make('enabled')
                     ->authorize('brands.edit')
-                    ->visible(Shopper::auth()->user()->can('brands.edit'))
+                    ->visible(shopper()->auth()->user()->can('brands.edit'))
                     ->label(__('shopper::forms.actions.enable'))
                     ->icon(Untitledui::CheckVerified)
                     ->action(function (Collection $records): void {
@@ -114,7 +114,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->deselectRecordsAfterCompletion(),
                 BulkAction::make('disabled')
                     ->authorize('brands.edit')
-                    ->visible(Shopper::auth()->user()->can('brands.edit'))
+                    ->visible(shopper()->auth()->user()->can('brands.edit'))
                     ->label(__('shopper::forms.actions.disable'))
                     ->icon(Untitledui::SlashCircle01)
                     ->action(function (Collection $records): void {
@@ -148,7 +148,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                             ->send();
                     })
                     ->authorize('brands.delete')
-                    ->visible(Shopper::auth()->user()->can('brands.delete'))
+                    ->visible(shopper()->auth()->user()->can('brands.delete'))
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([

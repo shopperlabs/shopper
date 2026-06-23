@@ -90,6 +90,7 @@ class RelatedProductsList extends SlideOverComponent implements HasActions, HasS
             ->selectable()
             ->toolbarActions([
                 BulkAction::make('add')
+                    ->authorize('products.edit')
                     ->label(__('shopper::pages/collections.modal.action'))
                     ->icon(Untitledui::Plus)
                     ->action(function (Collection $records): void {
