@@ -177,6 +177,8 @@ describe(AttributeValues::class, function (): void {
     });
 
     it('can remove value via method', function (): void {
+        $this->user->givePermissionTo('attributes.delete');
+
         $value = AttributeValue::factory()->create([
             'attribute_id' => $this->attribute->id,
         ]);
@@ -186,6 +188,17 @@ describe(AttributeValues::class, function (): void {
             ->assertDispatched('updateValues');
 
         expect(AttributeValue::query()->find($value->id))->toBeNull();
+    });
+
+    it('blocks removing a value via method for users without `attributes.delete`', function (): void {
+        $value = AttributeValue::factory()->create([
+            'attribute_id' => $this->attribute->id,
+        ]);
+
+        Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
+            ->call('removeValue', $value->id);
+
+        expect(AttributeValue::query()->find($value->id))->not->toBeNull();
     });
 
     it('updates values list when updateValues event is dispatched', function (): void {

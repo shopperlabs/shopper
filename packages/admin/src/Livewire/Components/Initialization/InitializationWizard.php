@@ -356,6 +356,8 @@ final class InitializationWizard extends Component implements HasActions, HasSch
      */
     private function persistStep(array $keys): void
     {
+        $this->authorizeSettingsAccess();
+
         $allowed = array_intersect($keys, self::ALLOWED_KEYS);
 
         $values = collect($this->data ?? [])

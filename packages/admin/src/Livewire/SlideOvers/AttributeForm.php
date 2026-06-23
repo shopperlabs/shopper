@@ -114,8 +114,12 @@ class AttributeForm extends SlideOverComponent implements HasActions, HasSchemas
     public function store(): void
     {
         if ($this->attribute) {
+            $this->authorize('attributes.edit');
+
             $this->attribute->update($this->form->getState());
         } else {
+            $this->authorize('attributes.create');
+
             Attribute::query()->create($this->form->getState());
         }
 

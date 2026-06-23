@@ -20,15 +20,24 @@ beforeEach(function (): void {
     setupCurrencies();
 
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('products.create');
+    $this->user->givePermissionTo('products.variants.create');
     $this->actingAs($this->user);
 
     $this->product = Product::factory()->create(['type' => ProductType::Variant]);
 });
 
 describe(AddVariant::class, function (): void {
-    it('requires add_products permission', function (): void {
+    it('forbids users without any variant permission', function (): void {
         $user = User::factory()->create();
+        $this->actingAs($user);
+
+        Livewire::test(AddVariant::class, ['product' => $this->product])
+            ->assertForbidden();
+    });
+
+    it('forbids users with `products.create` but not `products.variants.create`', function (): void {
+        $user = User::factory()->create();
+        $user->givePermissionTo('products.create');
         $this->actingAs($user);
 
         Livewire::test(AddVariant::class, ['product' => $this->product])
