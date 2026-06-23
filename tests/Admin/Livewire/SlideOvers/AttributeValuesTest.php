@@ -133,6 +133,8 @@ describe(AttributeValues::class, function (): void {
     });
 
     it('can delete attribute value via action', function (): void {
+        $this->user->givePermissionTo('attributes.delete');
+
         $value = AttributeValue::factory()->create([
             'attribute_id' => $this->attribute->id,
         ]);
@@ -144,6 +146,8 @@ describe(AttributeValues::class, function (): void {
     });
 
     it('can bulk delete attribute values', function (): void {
+        $this->user->givePermissionTo('attributes.delete');
+
         $values = AttributeValue::factory()->count(3)->create([
             'attribute_id' => $this->attribute->id,
         ]);
@@ -152,6 +156,24 @@ describe(AttributeValues::class, function (): void {
             ->callTableBulkAction('delete', $values);
 
         expect(AttributeValue::query()->whereIn('id', $values->pluck('id'))->count())->toBe(0);
+    });
+
+    it('hides the delete action for users without `attributes.delete`', function (): void {
+        $value = AttributeValue::factory()->create([
+            'attribute_id' => $this->attribute->id,
+        ]);
+
+        Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
+            ->assertTableActionHidden('delete', $value);
+    });
+
+    it('hides the bulk delete action for users without `attributes.delete`', function (): void {
+        AttributeValue::factory()->count(3)->create([
+            'attribute_id' => $this->attribute->id,
+        ]);
+
+        Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
+            ->assertTableBulkActionHidden('delete');
     });
 
     it('can remove value via method', function (): void {

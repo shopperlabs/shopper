@@ -117,6 +117,7 @@ class AttributeValues extends SlideOverComponent implements HasActions, HasSchem
                         $this->dispatch('$refresh');
                     }),
                 Action::make('delete')
+                    ->authorize('attributes.delete')
                     ->icon(Untitledui::Trash03)
                     ->color('danger')
                     ->iconButton()
@@ -125,6 +126,7 @@ class AttributeValues extends SlideOverComponent implements HasActions, HasSchem
             ])
             ->toolbarActions([
                 BulkAction::make('delete')
+                    ->authorize('attributes.delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
                     ->color('danger')

@@ -120,6 +120,7 @@ class Variants extends Component implements HasActions, HasSchemas, HasTable
                         ),
                     ),
                 DeleteAction::make()
+                    ->authorize('products.variants.delete')
                     ->icon(Untitledui::Trash03)
                     ->iconButton()
                     ->modalIcon(Untitledui::Trash03)
@@ -127,6 +128,7 @@ class Variants extends Component implements HasActions, HasSchemas, HasTable
             ])
             ->groupedBulkActions([
                 DeleteBulkAction::make()
+                    ->authorize('products.variants.delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
