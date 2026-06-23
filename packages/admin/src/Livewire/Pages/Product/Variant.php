@@ -110,6 +110,7 @@ class Variant extends AbstractPageComponent implements HasActions, HasSchemas
     public function mediaAction(): Action
     {
         return Action::make('media')
+            ->authorize('products.variants.edit')
             ->label(__('shopper::forms.actions.edit'))
             ->color('gray')
             ->record($this->variant) // @phpstan-ignore-line

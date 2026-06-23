@@ -105,11 +105,21 @@ describe(Variant::class, function (): void {
             ->assertHasActionErrors(['barcode' => 'unique']);
     });
 
-    it('has media action', function (): void {
+    it('hides the media action for users without `products.variants.edit`', function (): void {
         Livewire::test(Variant::class, [
             'product' => $this->product,
             'variant' => $this->variant,
         ])
-            ->assertActionExists('media');
+            ->assertActionHidden('media');
+    });
+
+    it('shows the media action for users with `products.variants.edit`', function (): void {
+        $this->user->givePermissionTo('products.variants.edit');
+
+        Livewire::test(Variant::class, [
+            'product' => $this->product,
+            'variant' => $this->variant,
+        ])
+            ->assertActionVisible('media');
     });
 })->group('livewire', 'products');

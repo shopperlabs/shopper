@@ -6,11 +6,13 @@ use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Livewire\Pages\Product\Variants;
 use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\ProductVariant;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
+    Livewire::withoutLazyLoading();
 
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
@@ -38,4 +40,32 @@ describe(Variants::class, function (): void {
 
         expect($component->get('product')->id)->toBe($this->product->id);
     });
-})->group('livewire', 'components', 'products');
+
+    it('hides the delete action for users without `products.variants.delete`', function (): void {
+        $variant = ProductVariant::factory()->create(['product_id' => $this->product->id]);
+
+        Livewire::test(Variants::class, ['product' => $this->product])
+            ->loadTable()
+            ->assertTableActionHidden('delete', $variant);
+    });
+
+    it('hides the bulk delete action for users without `products.variants.delete`', function (): void {
+        ProductVariant::factory()->count(3)->create(['product_id' => $this->product->id]);
+
+        Livewire::test(Variants::class, ['product' => $this->product])
+            ->loadTable()
+            ->assertTableBulkActionHidden('delete');
+    });
+
+    it('allows deleting a variant with `products.variants.delete`', function (): void {
+        $this->user->givePermissionTo('products.variants.delete');
+
+        $variant = ProductVariant::factory()->create(['product_id' => $this->product->id]);
+
+        Livewire::test(Variants::class, ['product' => $this->product])
+            ->loadTable()
+            ->callTableAction('delete', $variant);
+
+        expect(ProductVariant::query()->find($variant->id))->toBeNull();
+    });
+})->group('livewire', 'components', 'products', 'security');
