@@ -5,6 +5,9 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: read
+
 jobs:
   split-monorepo:
     runs-on: ubuntu-latest
@@ -18,6 +21,7 @@ jobs:
           - core
           - http
           - payment
+          - sdk
           - sidebar
           - shipping
           - stripe
@@ -36,6 +40,8 @@ jobs:
             repository: http
           - package: payment
             repository: payment
+          - package: sdk
+            repository: shopper-sdk
           - package: sidebar
             repository: sidebar
           - package: shipping
@@ -48,6 +54,8 @@ jobs:
             repository: upgrade
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Monorepo Split of ${{ matrix.package }}
         uses: danharrin/monorepo-split-github-action@v2.4.2
         env:
