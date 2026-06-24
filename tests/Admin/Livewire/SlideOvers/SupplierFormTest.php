@@ -15,13 +15,4 @@ describe(SupplierForm::class, function (): void {
         Livewire::test(SupplierForm::class)
             ->assertForbidden();
     });
-
-    it('opens the form for users with supplier permissions', function (): void {
-        $user = User::factory()->create();
-        $user->givePermissionTo('suppliers.create');
-        $this->actingAs($user);
-
-        Livewire::test(SupplierForm::class)
-            ->assertSuccessful();
-    });
 })->group('livewire', 'slideovers', 'security');

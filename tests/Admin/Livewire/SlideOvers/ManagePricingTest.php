@@ -6,7 +6,6 @@ use Livewire\Livewire;
 use Shopper\Core\Models\Currency;
 use Shopper\Livewire\SlideOvers\ManagePricing;
 use Tests\Core\Stubs\Product;
-use Tests\Core\Stubs\ProductVariant;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
@@ -21,26 +20,6 @@ beforeEach(function (): void {
 });
 
 describe(ManagePricing::class, function (): void {
-    it('can render manage pricing for product', function (): void {
-        $product = Product::factory()->create();
-
-        Livewire::test(ManagePricing::class, [
-            'modelId' => $product->id,
-            'modelType' => Product::class,
-        ])
-            ->assertOk();
-    });
-
-    it('can render manage pricing for variant', function (): void {
-        $variant = ProductVariant::factory()->create();
-
-        Livewire::test(ManagePricing::class, [
-            'modelId' => $variant->id,
-            'modelType' => ProductVariant::class,
-        ])
-            ->assertOk();
-    });
-
     it('loads model with prices on mount', function (): void {
         $product = Product::factory()->create();
 

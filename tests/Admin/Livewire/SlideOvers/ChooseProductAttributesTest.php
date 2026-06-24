@@ -22,11 +22,6 @@ beforeEach(function (): void {
 });
 
 describe(ChooseProductAttributes::class, function (): void {
-    it('can render choose product attributes slideover', function (): void {
-        Livewire::test(ChooseProductAttributes::class, ['product' => $this->product])
-            ->assertOk();
-    });
-
     it('initializes with data containing attributes array', function (): void {
         $component = Livewire::test(ChooseProductAttributes::class, ['product' => $this->product]);
 

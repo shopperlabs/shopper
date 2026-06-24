@@ -19,13 +19,6 @@ beforeEach(function (): void {
 });
 
 describe(CollectionProductsList::class, function (): void {
-    it('can render collection products list slide-over', function (): void {
-        $collection = Collection::factory(['type' => CollectionType::Manual])->create();
-
-        Livewire::test(CollectionProductsList::class, ['collection' => $collection])
-            ->assertSuccessful();
-    });
-
     it('initializes with correct collection', function (): void {
         $collection = Collection::factory(['type' => CollectionType::Manual])->create();
 

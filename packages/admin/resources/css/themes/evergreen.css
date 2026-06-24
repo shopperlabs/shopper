@@ -35,6 +35,7 @@
     --theme-sh-sidebar: var(--color-stone-50);
     --theme-sh-sidebar-hover: var(--color-stone-100);
     --theme-sh-muted: var(--color-stone-100);
+    --theme-sh-muted-strong: var(--color-stone-200);
     --theme-sh-border: var(--color-stone-200);
     --theme-sh-fg: var(--color-stone-900);
     --theme-sh-fg-secondary: var(--color-stone-700);
@@ -54,6 +55,7 @@
     --theme-sh-sidebar-hover: oklch(1 0 0 / 0.05); /* white/5 */
     --theme-sh-surface: #1e2418;
     --theme-sh-muted: #2a3122;
+    --theme-sh-muted-strong: #3a4230;
     --theme-sh-border: oklch(1 0 0 / 0.1); /* white/10 */
     --theme-sh-fg: var(--color-stone-50);
     --theme-sh-fg-secondary: var(--color-stone-300);

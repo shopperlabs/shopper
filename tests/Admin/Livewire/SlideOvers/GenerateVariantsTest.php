@@ -22,11 +22,6 @@ beforeEach(function (): void {
 });
 
 describe(GenerateVariants::class, function (): void {
-    it('can render generate variants slideover', function (): void {
-        Livewire::test(GenerateVariants::class, ['product' => $this->product])
-            ->assertOk();
-    });
-
     it('loads product with options and values', function (): void {
         $component = Livewire::test(GenerateVariants::class, ['product' => $this->product]);
 

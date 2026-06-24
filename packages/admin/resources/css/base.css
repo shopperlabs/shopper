@@ -68,6 +68,7 @@ html {
   --color-sh-sidebar-hover: var(--theme-sh-sidebar-hover);
   --color-sh-surface: var(--theme-sh-surface);
   --color-sh-muted: var(--theme-sh-muted);
+  --color-sh-muted-strong: var(--theme-sh-muted-strong);
   --color-sh-border: var(--theme-sh-border);
   --color-sh-fg: var(--theme-sh-fg);
   --color-sh-fg-secondary: var(--theme-sh-fg-secondary);

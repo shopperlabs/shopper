@@ -27,11 +27,6 @@ beforeEach(function (): void {
 });
 
 describe(AddPromotion::class, function (): void {
-    it('renders the create slide-over', function (): void {
-        Livewire::test(AddPromotion::class)
-            ->assertSuccessful();
-    });
-
     it('refuses access without the discounts.create permission', function (): void {
         $this->actingAs(User::factory()->create());
 

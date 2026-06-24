@@ -50,7 +50,7 @@ class ShipmentAddEvent extends SlideOverComponent implements HasActions, HasSche
 
     public static function panelMaxWidth(): string
     {
-        return '3xl';
+        return '2xl';
     }
 
     public static function destroyOnClose(): bool

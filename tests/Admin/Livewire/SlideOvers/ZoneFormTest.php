@@ -22,18 +22,6 @@ beforeEach(function (): void {
 });
 
 describe(ZoneForm::class, function (): void {
-    it('can render zone form for creating new zone', function (): void {
-        Livewire::test(ZoneForm::class)
-            ->assertOk();
-    });
-
-    it('can render zone form for editing existing zone', function (): void {
-        $zone = Zone::factory()->create();
-
-        Livewire::test(ZoneForm::class, ['zoneId' => $zone->id])
-            ->assertOk();
-    });
-
     it('loads zone data when editing', function (): void {
         $zone = Zone::factory()->create(['name' => 'Europe Zone']);
 

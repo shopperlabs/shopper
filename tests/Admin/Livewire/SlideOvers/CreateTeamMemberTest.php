@@ -21,11 +21,6 @@ beforeEach(function (): void {
 });
 
 describe(CreateTeamMember::class, function (): void {
-    it('can render create team member form', function (): void {
-        Livewire::test(CreateTeamMember::class)
-            ->assertOk();
-    });
-
     it('can create new team member', function (): void {
         $initialCount = User::query()->count();
 

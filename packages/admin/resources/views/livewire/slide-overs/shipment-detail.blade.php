@@ -58,13 +58,12 @@
                         @endif
                         <span>
                             {{ __('shopper::pages/orders.single') }}
-                            <a
-                                href="{{ route('shopper.orders.detail', $order) }}"
+                            <x-shopper::link
+                                :href="route('shopper.orders.detail', $order)"
                                 class="text-primary-600 hover:text-primary-500 font-medium underline"
-                                wire:navigate
                             >
                                 {{ $order->number }}
-                            </a>
+                            </x-shopper::link>
                         </span>
                     </p>
                 </div>
@@ -115,7 +114,7 @@
                             <div @class([
                                 'flex size-9 items-center justify-center rounded-full',
                                 'bg-sh-fg text-sh-body' => $isCompleted && ! $isError,
-                                'bg-sh-muted text-sh-fg-muted' => ! $isCompleted && ! $isError,
+                                'bg-sh-muted-strong text-sh-fg-muted' => ! $isCompleted && ! $isError,
                                 'bg-danger-100 text-danger-500 dark:bg-danger-500/10 dark:text-danger-400' => $isError,
                             ])>
                                 <x-filament::icon :icon="$step->getIcon()" class="size-4" aria-hidden="true" />
@@ -134,7 +133,7 @@
                             <div @class([
                                 'mb-5 h-0.5 w-8',
                                 'bg-sh-fg' => $currentIndex >= 0 && $index < $currentIndex && ! $isError,
-                                'bg-sh-muted' => $currentIndex < 0 || $index >= $currentIndex || $isError,
+                                'bg-sh-muted-strong' => $currentIndex < 0 || $index >= $currentIndex || $isError,
                             ])></div>
                         @endif
                     @endforeach
@@ -222,7 +221,16 @@
                     <h3 class="text-sm font-medium text-sh-fg">
                         {{ __('shopper::pages/orders.shipment.timeline') }}
                     </h3>
-                    {{ $this->addEventAction }}
+                    @if (count($this->shipment->allowedTransitions()) > 0)
+                        <x-filament::button
+                            wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.shipment-add-event', arguments: { shipment: {{ $this->shipment->id }} } })"
+                            size="sm"
+                            color="gray"
+                            icon="untitledui-plus"
+                        >
+                            {{ __('shopper::pages/orders.shipment.add_event') }}
+                        </x-filament::button>
+                    @endif
                 </div>
 
                 <div class="mt-4 pl-2">
