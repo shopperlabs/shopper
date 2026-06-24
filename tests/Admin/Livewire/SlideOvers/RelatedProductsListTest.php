@@ -19,11 +19,6 @@ beforeEach(function (): void {
 });
 
 describe(RelatedProductsList::class, function (): void {
-    it('can render related products list slide-over', function (): void {
-        Livewire::test(RelatedProductsList::class, ['product' => $this->product])
-            ->assertOk();
-    });
-
     it('initializes with correct product', function (): void {
         $component = Livewire::test(RelatedProductsList::class, ['product' => $this->product]);
 

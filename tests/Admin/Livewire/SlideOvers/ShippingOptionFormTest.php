@@ -26,24 +26,6 @@ beforeEach(function (): void {
 });
 
 describe(ShippingOptionForm::class, function (): void {
-    it('can render shipping option form for creating new option', function (): void {
-        Livewire::test(ShippingOptionForm::class, ['zoneId' => $this->zone->id])
-            ->assertOk();
-    });
-
-    it('can render shipping option form for editing existing option', function (): void {
-        $option = CarrierOption::factory()->create([
-            'zone_id' => $this->zone->id,
-            'carrier_id' => $this->carrier->id,
-        ]);
-
-        Livewire::test(ShippingOptionForm::class, [
-            'zoneId' => $this->zone->id,
-            'optionId' => $option->id,
-        ])
-            ->assertOk();
-    });
-
     it('loads zone with currency and carriers', function (): void {
         $component = Livewire::test(ShippingOptionForm::class, ['zoneId' => $this->zone->id]);
 

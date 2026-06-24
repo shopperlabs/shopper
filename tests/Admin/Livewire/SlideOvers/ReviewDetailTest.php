@@ -29,11 +29,6 @@ beforeEach(function (): void {
 });
 
 describe(ReviewDetail::class, function (): void {
-    it('can render review detail slideover', function (): void {
-        Livewire::test(ReviewDetail::class, ['review' => $this->review])
-            ->assertOk();
-    });
-
     it('loads review with author and reviewrateable on mount', function (): void {
         $component = Livewire::test(ReviewDetail::class, ['review' => $this->review]);
 

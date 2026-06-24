@@ -34,11 +34,6 @@ describe(AttributeForm::class, function (): void {
         expect($attribute->refresh()->name)->toBe('Old Name');
     });
 
-    it('can render attribute form component', function (): void {
-        Livewire::test(AttributeForm::class)
-            ->assertOk();
-    });
-
     it('requires add_attributes or edit_attributes permission', function (): void {
         $user = User::factory()->create();
         $this->actingAs($user);

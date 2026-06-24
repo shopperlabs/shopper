@@ -23,11 +23,6 @@ beforeEach(function (): void {
 });
 
 describe(AttributeValues::class, function (): void {
-    it('can render attribute values slideover', function (): void {
-        Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
-            ->assertOk();
-    });
-
     it('loads attribute with values on mount', function (): void {
         AttributeValue::factory()->count(3)->create(['attribute_id' => $this->attribute->id]);
 

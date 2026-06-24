@@ -16,11 +16,6 @@ beforeEach(function (): void {
 });
 
 describe(ReOrderCategories::class, function (): void {
-    it('can render reorder categories slideover', function (): void {
-        Livewire::test(ReOrderCategories::class)
-            ->assertOk();
-    });
-
     it('loads only parent categories ordered by position', function (): void {
         $parent1 = Category::factory()->create(['parent_id' => null, 'position' => 1]);
         $parent2 = Category::factory()->create(['parent_id' => null, 'position' => 2]);

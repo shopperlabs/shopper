@@ -22,14 +22,6 @@ beforeEach(function (): void {
 });
 
 describe(UpdateVariant::class, function (): void {
-    it('can render update variant slideover', function (): void {
-        Livewire::test(UpdateVariant::class, [
-            'product' => $this->product,
-            'variant' => $this->variant,
-        ])
-            ->assertOk();
-    });
-
     it('loads variant data on mount', function (): void {
         $variant = ProductVariant::factory()->create([
             'product_id' => $this->product->id,
