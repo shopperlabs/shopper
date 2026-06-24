@@ -20,6 +20,7 @@ use Shopper\Core\Models\Contracts\AttributeValue as AttributeValueContract;
  * @property-read int $attribute_id
  * @property-read Attribute $attribute
  * @property-read Collection<int, ProductVariant> $variants
+ * @property ?string $swatch_url Transient per-product swatch image URL, set by the API when serializing a product's options.
  */
 class AttributeValue extends Model implements AttributeValueContract
 {
@@ -48,7 +49,7 @@ class AttributeValue extends Model implements AttributeValueContract
      */
     public function attributeProduct(): BelongsTo
     {
-        return $this->belongsTo(AttributeProduct::class, 'attribute_value_id');
+        return $this->belongsTo(config('shopper.models.attribute_product'), 'attribute_value_id');
     }
 
     /**

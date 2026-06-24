@@ -110,6 +110,13 @@ return [
         'empty_title' => 'Sin atributos habilitados',
         'empty_values' => 'Los atributos asociados con este producto se listan aquí.',
 
+        'swatch' => [
+            'action' => 'Imagen del valor',
+            'label' => 'Imagen',
+            'help_text' => 'Imagen opcional que se muestra en lugar del color hexadecimal para este valor, específica de este producto (por ejemplo, una foto del producto en este color o material).',
+            'updated' => 'Imagen del valor actualizada',
+        ],
+
         'session' => [
             'delete' => 'Atributo eliminado',
             'delete_message' => '¡Has eliminado exitosamente este atributo del producto!',

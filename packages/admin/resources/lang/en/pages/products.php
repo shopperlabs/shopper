@@ -110,6 +110,13 @@ return [
         'empty_title' => 'No enabled Attributes',
         'empty_values' => 'The attributes associated with this product are listed here.',
 
+        'swatch' => [
+            'action' => 'Swatch image',
+            'label' => 'Image',
+            'help_text' => 'Optional image shown instead of the hex color for this value, scoped to this product (e.g. a photo of the product in this color or material).',
+            'updated' => 'Swatch image updated',
+        ],
+
         'session' => [
             'delete' => 'Attribute removed',
             'delete_message' => 'You have successfully removed this attribute to product!',

@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
+use Shopper\Core\Models\Contracts\AttributeProduct as AttributeProductContract;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Price;
 use Shopper\Core\Models\Product;
@@ -175,6 +178,35 @@ it('serializes product options as a deduplicated array scoped to the used values
     expect($optionsData)->toBeArray()->toHaveCount(1)
         ->and(array_is_list($optionsData))->toBeTrue()
         ->and($values)->toContain('Red', 'Blue')->not->toContain('Green');
+});
+
+it('exposes a per-product swatch image url on option values when one is attached', function (): void {
+    Storage::fake('public');
+
+    $product = publishedProduct(['name' => 'Tee', 'type' => ProductType::Standard]);
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => '#ff0000']);
+    $blue = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Blue', 'key' => '#0000ff']);
+    $product->options()->attach($color->id, ['attribute_value_id' => $red->id]);
+    $product->options()->attach($color->id, ['attribute_value_id' => $blue->id]);
+
+    $redRow = resolve(AttributeProductContract::class)
+        ->newQuery()
+        ->where('product_id', $product->id)
+        ->where('attribute_value_id', $red->id)
+        ->firstOrFail();
+
+    $file = UploadedFile::fake()->image('red.png', 10, 10);
+    $redRow->addMedia($file)
+        ->usingFileName('red.png')
+        ->toMediaCollection('swatch');
+
+    $colorOption = collect($this->getJson('/store/products/'.$product->slug.'?include=options')->assertOk()->json('included'))
+        ->firstWhere('type', 'attributes');
+    $values = collect($colorOption['attributes']['values'])->keyBy('value');
+
+    expect($values['Red']['swatch_url'])->toBeString()->toContain('red.png')
+        ->and($values['Blue']['swatch_url'])->toBeNull();
 });
 
 it('exposes the review aggregates only when the rating include is requested', function (): void {

@@ -86,6 +86,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Attribute Product Model
+    |--------------------------------------------------------------------------
+    |
+    | Eloquent model used for the pivot linking a product to its attribute
+    | values. It carries the per-product swatch image for each value.
+    | If you want to use a custom model, your model needs to extends the
+    | \Shopper\Models\AttributeProduct Model.
+    |
+    */
+
+    'attribute_product' => Models\AttributeProduct::class,
+
+    /*
+    |--------------------------------------------------------------------------
     | Channel Model
     |--------------------------------------------------------------------------
     |

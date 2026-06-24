@@ -110,6 +110,13 @@ return [
         'empty_title' => 'Aucun attribut activé',
         'empty_values' => 'Les attributs associés a ce produit seront listés ici.',
 
+        'swatch' => [
+            'action' => 'Image de la valeur',
+            'label' => 'Image',
+            'help_text' => 'Image optionnelle affichée à la place du code hexadécimal pour cette valeur, propre à ce produit (par exemple une photo du produit dans cette couleur ou ce matériau).',
+            'updated' => 'Image de la valeur mise à jour',
+        ],
+
         'session' => [
             'delete' => 'Attribut supprimé',
             'delete_message' => 'Vous avez supprimé avec succès cet attribut du produit!',

@@ -16,6 +16,11 @@ class AttributeProductFactory extends Factory
 {
     protected $model = AttributeProduct::class;
 
+    public function modelName(): string
+    {
+        return config('shopper.models.attribute_product', AttributeProduct::class);
+    }
+
     /**
      * Define the model's default state.
      *

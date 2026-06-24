@@ -41,13 +41,20 @@ export interface Attribute extends Entity {
  */
 export interface AttributeValue {
   /** The internal id (admin contexts only). */
-  id?: number
+  id?: number | string
   /** The display value. */
-  value: string
+  value: string | number
   /** The key identifier (used as the facet filter value). */
   key: string
   /** The position/order. */
   position: number
+  /**
+   * Per-product swatch image URL for this value, shown instead of (or alongside)
+   * the hex `key`. Present on a product's `options` include; null when the value
+   * has no image for that product. The same value can carry a different image
+   * per product.
+   */
+  swatch_url?: string | null
   /** The attribute ID this value belongs to (admin contexts only). */
   attribute_id?: number
   /** The attribute this value belongs to. */
