@@ -10,6 +10,7 @@
     --theme-sh-sidebar: var(--color-slate-50);
     --theme-sh-sidebar-hover: var(--color-slate-100);
     --theme-sh-muted: var(--color-slate-100);
+    --theme-sh-muted-strong: var(--color-slate-200);
     --theme-sh-border: var(--color-slate-200);
     --theme-sh-fg: var(--color-slate-900);
     --theme-sh-fg-secondary: var(--color-slate-700);
@@ -53,6 +54,7 @@
     --theme-sh-sidebar-hover: var(--color-slate-800);
     --theme-sh-surface: var(--color-slate-900);
     --theme-sh-muted: var(--color-slate-800);
+    --theme-sh-muted-strong: var(--color-slate-700);
     --theme-sh-border: var(--color-slate-800);
     --theme-sh-fg: var(--color-slate-50);
     --theme-sh-fg-secondary: var(--color-slate-300);

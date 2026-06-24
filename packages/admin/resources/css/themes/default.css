@@ -13,6 +13,7 @@
     --theme-sh-sidebar-hover: var(--color-zinc-100);
     --theme-sh-surface: var(--color-white);
     --theme-sh-muted: var(--color-zinc-100);
+    --theme-sh-muted-strong: var(--color-zinc-200);
     --theme-sh-border: var(--color-zinc-200);
     --theme-sh-fg: var(--color-zinc-900);
     --theme-sh-fg-secondary: var(--color-zinc-700);
@@ -58,6 +59,7 @@
     --theme-sh-sidebar-hover: oklch(1 0 0 / 0.05); /* white/5 */
     --theme-sh-surface: var(--color-zinc-900);
     --theme-sh-muted: var(--color-zinc-800);
+    --theme-sh-muted-strong: var(--color-zinc-700);
     --theme-sh-border: oklch(1 0 0 / 0.1); /* white/10 */
     --theme-sh-fg: var(--color-zinc-50);
     --theme-sh-fg-secondary: var(--color-zinc-300);
