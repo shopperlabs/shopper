@@ -6,7 +6,6 @@ use Livewire\Livewire;
 use Shopper\Core\Models\Currency;
 use Shopper\Livewire\SlideOvers\ManagePricing;
 use Tests\Core\Stubs\Product;
-use Tests\Core\Stubs\ProductVariant;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
