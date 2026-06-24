@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Core\Contracts\Media\HasMedia as ShopperHasMedia;
 use Shopper\Core\Database\Factories\AttributeProductFactory;
+use Shopper\Core\Media\MediaCollectionConfig;
 use Shopper\Core\Models\Contracts\AttributeProduct as AttributeProductContract;
+use Shopper\Core\Traits\HasModelContract;
 
 /**
  * @property-read int $id
@@ -22,18 +25,38 @@ use Shopper\Core\Models\Contracts\AttributeProduct as AttributeProductContract;
  * @property-read Product $product
  * @property-read Attribute $attribute
  */
-class AttributeProduct extends Model implements AttributeProductContract
+class AttributeProduct extends Model implements AttributeProductContract, ShopperHasMedia
 {
     /** @use HasFactory<AttributeProductFactory> */
     use HasFactory;
+
+    use HasModelContract;
 
     public $timestamps = false;
 
     protected $guarded = [];
 
+    public static function configuredClass(): string
+    {
+        return config('shopper.models.attribute_product', static::class);
+    }
+
     public function getTable(): string
     {
         return shopper_table('attribute_product');
+    }
+
+    /** @return array<string, MediaCollectionConfig> */
+    public function getMediaCollections(): array
+    {
+        return [
+            'swatch' => new MediaCollectionConfig(
+                name: 'swatch',
+                disk: config('shopper.media.storage.disk_name', 'public'),
+                singleFile: true,
+                acceptsMimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
+            ),
+        ];
     }
 
     /**

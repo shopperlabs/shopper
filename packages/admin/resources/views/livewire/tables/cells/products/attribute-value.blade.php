@@ -1,5 +1,6 @@
 @php
     $record = $getRecord();
+    $swatch = $record->getFirstMediaUrl('swatch');
 @endphp
 
 <div>
@@ -9,7 +10,13 @@
         @endphp
 
         <span class="inline-flex items-center gap-2 text-sm leading-6 text-sh-fg-muted">
-            @if ($attributeValue->attribute->type === \Shopper\Core\Enum\FieldType::ColorPicker)
+            @if ($swatch)
+                <img
+                    src="{{ $swatch }}"
+                    alt="{{ $attributeValue->value }}"
+                    class="size-6 rounded-md object-cover ring-1 ring-sh-border ring-inset"
+                />
+            @elseif ($attributeValue->attribute->type === \Shopper\Core\Enum\FieldType::ColorPicker)
                 <span
                     class="inline-flex items-center rounded-full p-1 ring-1 ring-sh-border ring-inset"
                 >
@@ -22,6 +29,15 @@
             @endif
 
             {{ $attributeValue->value }}
+        </span>
+    @elseif ($swatch)
+        <span class="inline-flex items-center gap-2 text-sm leading-6 text-sh-fg-muted">
+            <img
+                src="{{ $swatch }}"
+                alt="{{ $record->attribute_custom_value }}"
+                class="size-6 rounded-md object-cover ring-1 ring-sh-border ring-inset"
+            />
+            {{ $record->attribute_custom_value }}
         </span>
     @else
         <span class="text-sh-fg-muted">--</span>

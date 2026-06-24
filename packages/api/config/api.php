@@ -52,7 +52,7 @@ return [
             ],
             'include_loads' => [
                 'variants' => ['variants.prices.currency', 'variants.values.attribute'],
-                'options' => ['options.values'],
+                'options' => ['options.values', 'attributeProducts.media'],
                 'relatedProducts' => ['relatedProducts.prices.currency'],
             ],
         ],

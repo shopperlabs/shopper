@@ -110,6 +110,13 @@ return [
         'empty_title' => 'Etkin Özellik Yok',
         'empty_values' => 'Bu ürünle ilişkili özellikler burada listelenir.',
 
+        'swatch' => [
+            'action' => 'Değer görseli',
+            'label' => 'Görsel',
+            'help_text' => 'Bu değer için onaltılık renk kodu yerine gösterilen, bu ürüne özel isteğe bağlı görsel (örneğin ürünün bu renkteki veya malzemedeki bir fotoğrafı).',
+            'updated' => 'Değer görseli güncellendi',
+        ],
+
         'session' => [
             'delete' => 'Özellik kaldırıldı',
             'delete_message' => 'Bu özelliği üründen başarıyla kaldırdınız!',

@@ -9,7 +9,11 @@ use Illuminate\Support\Collection;
 use Shopper\Api\Concerns\SerializesMedia;
 use Shopper\Api\Concerns\SerializesPrices;
 use Shopper\Core\Models\Attribute;
+use Shopper\Core\Models\AttributeProduct;
+use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Product;
+use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * @mixin Product
@@ -142,12 +146,48 @@ final class ProductResource extends JsonApiResource
             ->filter()
             ->unique();
 
+        $swatches = $this->swatchUrlMap();
+
         return $this->options
             ->unique('id')
             ->values()
             ->each(fn (Attribute $option) => $option->setRelation(
                 'values',
-                $option->values->whereIn('id', $usedValueIds)->values(),
+                $option->values
+                    ->whereIn('id', $usedValueIds)
+                    ->each(function (AttributeValue $value) use ($swatches): void {
+                        $value->swatch_url = $swatches[$value->id] ?? null;
+                    })
+                    ->values(),
             ));
+    }
+
+    /**
+     * Per-product swatch image URL for each attribute value, read from the
+     * product's `attribute_product` rows. Empty unless `attributeProducts.media`
+     * was eager-loaded (the `options` include), keeping listings N+1 free.
+     *
+     * @return array<int, string>
+     */
+    private function swatchUrlMap(): array
+    {
+        if (! $this->resource->relationLoaded('attributeProducts')) {
+            return [];
+        }
+
+        return $this->attributeProducts
+            ->filter(fn (AttributeProduct $attributeProduct): bool => $attributeProduct->attribute_value_id !== null)
+            ->mapWithKeys(function (AttributeProduct $attributeProduct): array {
+                $url = '';
+
+                if ($attributeProduct instanceof SpatieHasMedia) {
+                    $media = $attributeProduct->getMedia('swatch')->first();
+                    $url = $media instanceof Media ? $media->getFullUrl() : '';
+                }
+
+                return [$attributeProduct->attribute_value_id => $url];
+            })
+            ->filter(fn (string $url): bool => $url !== '')
+            ->all();
     }
 }

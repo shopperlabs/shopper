@@ -7,8 +7,10 @@ namespace Shopper\Livewire\Pages\Product;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -25,6 +27,7 @@ use Shopper\Actions\Store\Product\DetachAttributesToProductAction;
 use Shopper\Components\Tables\IconColumn;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
+use Shopper\Core\Models\Contracts\AttributeProduct as AttributeProductContract;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
@@ -51,7 +54,9 @@ class Attributes extends Component implements HasActions, HasSchemas, HasTable
             ->heading(__('shopper::pages/attributes.menu'))
             ->description(__('shopper::pages/attributes.description'))
             ->query(
-                AttributeProduct::with(['attribute', 'value', 'value.attribute'])
+                resolve(AttributeProductContract::class)
+                    ->newQuery()
+                    ->with(['attribute', 'value', 'value.attribute', 'media'])
                     ->where('product_id', $this->product->id)
             )
             ->columns([
@@ -86,6 +91,25 @@ class Attributes extends Component implements HasActions, HasSchemas, HasTable
                     ->visible(Attribute::query()->count() > 0),
             ])
             ->recordActions([
+                Action::make('swatch')
+                    ->authorize('products.edit')
+                    ->label(__('shopper::pages/products.attributes.swatch.action'))
+                    ->icon(Untitledui::Image)
+                    ->iconButton()
+                    ->color('gray')
+                    ->modalWidth(Width::Large)
+                    ->fillForm(fn (AttributeProduct $record): array => $record->toArray())
+                    ->schema([
+                        SpatieMediaLibraryFileUpload::make('swatch')
+                            ->collection('swatch')
+                            ->label(__('shopper::pages/products.attributes.swatch.label'))
+                            ->helperText(__('shopper::pages/products.attributes.swatch.help_text'))
+                            ->image()
+                            ->imageEditor()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/avif'])
+                            ->maxSize(config('shopper.media.max_size.thumbnail')),
+                    ])
+                    ->successNotificationTitle(__('shopper::pages/products.attributes.swatch.updated')),
                 Action::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)

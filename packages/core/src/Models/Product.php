@@ -81,6 +81,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductVariant> $variants
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Product> $relatedProducts
  * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductTag> $tags
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, AttributeProduct> $attributeProducts
  *
  * @implements Priceable<Product>
  */
@@ -243,6 +244,14 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
                 'attribute_value_id',
                 'attribute_custom_value',
             ]);
+    }
+
+    /**
+     * @return HasMany<AttributeProduct, $this>
+     */
+    public function attributeProducts(): HasMany
+    {
+        return $this->hasMany(config('shopper.models.attribute_product'), 'product_id');
     }
 
     protected static function newFactory(): ProductFactory
