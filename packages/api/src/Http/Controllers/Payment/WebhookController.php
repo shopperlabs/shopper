@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Http\Controllers\Payment;
 
-use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
@@ -48,8 +47,10 @@ final class WebhookController
     }
 
     /**
-     * Record the event id once. A duplicate delivery hits the unique constraint
-     * and reports false so the caller can acknowledge without reprocessing.
+     * Record the event id once. A duplicate delivery is ignored at the database
+     * level and reports false so the caller can acknowledge without
+     * reprocessing. insertOrIgnore avoids the failed-INSERT that would abort the
+     * surrounding transaction on Postgres.
      */
     private function firstDelivery(string $driver, WebhookResult $result): bool
     {
@@ -57,19 +58,19 @@ final class WebhookController
             return true;
         }
 
-        try {
-            PaymentWebhookEvent::query()->create([
-                'driver' => $driver,
-                'event_id' => $result->eventId,
-                'type' => $result->action,
-                'payload' => $result->toArray(),
-                'processed_at' => now(),
-            ]);
-        } catch (QueryException) {
-            return false;
-        }
+        $now = now();
 
-        return true;
+        $inserted = PaymentWebhookEvent::query()->insertOrIgnore([
+            'driver' => $driver,
+            'event_id' => $result->eventId,
+            'type' => $result->action,
+            'payload' => json_encode($result->toArray()),
+            'processed_at' => $now,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        return $inserted > 0;
     }
 
     /**
