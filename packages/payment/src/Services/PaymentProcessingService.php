@@ -6,12 +6,15 @@ namespace Shopper\Payment\Services;
 
 use Illuminate\Support\Collection;
 use Shopper\Core\Actions\ReleaseCampaignBudget;
+use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Events\Orders\OrderCancelled;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Zone;
 use Shopper\Payment\Contracts\PaymentDriver;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
+use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
 use Shopper\Payment\Events\PaymentFailed;
@@ -174,6 +177,28 @@ final class PaymentProcessingService
         return $result;
     }
 
+    public function processWebhook(string $driver, WebhookResult $result): void
+    {
+        if ($result->isIgnored() || $result->reference === null) {
+            return;
+        }
+
+        $order = $this->findOrderByReference($result->reference);
+
+        if ($order === null) {
+            return;
+        }
+
+        match ($result->action) {
+            'authorized' => $this->recordWebhookOutcome($order, $driver, TransactionType::Authorize, $result),
+            'captured' => $this->recordWebhookOutcome($order, $driver, TransactionType::Capture, $result),
+            'refunded' => $this->processWebhookRefund($order, $driver, $result),
+            'canceled' => $this->processWebhookCancellation($order, $driver, $result),
+            'failed' => $this->processWebhookFailure($order, $driver, $result),
+            default => null,
+        };
+    }
+
     /**
      * Get all transactions for an order.
      *
@@ -280,5 +305,90 @@ final class PaymentProcessingService
             'data' => $result->data ?: null,
             'notes' => $result->message,
         ]);
+    }
+
+    private function findOrderByReference(string $reference): ?Order
+    {
+        return PaymentTransaction::query()
+            ->where('reference', $reference)
+            ->latest()
+            ->first()?->order;
+    }
+
+    private function recordWebhookOutcome(Order $order, string $driver, TransactionType $type, WebhookResult $result): void
+    {
+        $paymentResult = new PaymentResult(
+            success: true,
+            status: $result->action,
+            reference: $result->reference,
+            amount: $result->amount,
+            data: $result->data,
+        );
+
+        $this->recordTransaction(
+            order: $order,
+            paymentMethod: $order->paymentMethod,
+            driverCode: $driver,
+            type: $type,
+            result: $paymentResult,
+            amount: $result->amount ?? $order->price_amount,
+        );
+
+        $this->syncPaymentStatus($order, $type, $paymentResult);
+    }
+
+    private function processWebhookRefund(Order $order, string $driver, WebhookResult $result): void
+    {
+        $this->recordWebhookOutcome($order, $driver, TransactionType::Refund, $result);
+        $this->releaseCampaignBudget($order);
+    }
+
+    private function processWebhookCancellation(Order $order, string $driver, WebhookResult $result): void
+    {
+        $this->recordWebhookOutcome($order, $driver, TransactionType::Cancel, $result);
+        $this->cancelOrder($order);
+    }
+
+    private function processWebhookFailure(Order $order, string $driver, WebhookResult $result): void
+    {
+        $message = $result->data['failure_message'] ?? null;
+
+        $paymentResult = PaymentResult::failed(
+            is_string($message) ? $message : 'Payment failed.',
+            $result->reference,
+        );
+
+        $this->recordTransaction(
+            order: $order,
+            paymentMethod: $order->paymentMethod,
+            driverCode: $driver,
+            type: TransactionType::Capture,
+            result: $paymentResult,
+            amount: $result->amount ?? $order->price_amount,
+        );
+
+        // Emits PaymentFailed; the failed result leaves the payment status
+        // untouched, then the order is cancelled to release reserved stock.
+        $this->syncPaymentStatus($order, TransactionType::Capture, $paymentResult);
+        $this->cancelOrder($order);
+    }
+
+    /**
+     * Cancel an order whose payment fell through, releasing the stock reserved
+     * at checkout via the OrderCancelled listener. A paid or already-cancelled
+     * order is left untouched.
+     */
+    private function cancelOrder(Order $order): void
+    {
+        if ($order->payment_status === PaymentStatus::Paid || ! $order->canBeCancelled()) {
+            return;
+        }
+
+        $order->update([
+            'status' => OrderStatus::Cancelled,
+            'cancelled_at' => now(),
+        ]);
+
+        event(new OrderCancelled($order));
     }
 }

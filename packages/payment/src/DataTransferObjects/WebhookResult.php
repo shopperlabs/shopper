@@ -14,6 +14,7 @@ final readonly class WebhookResult
         public ?string $reference = null,
         public ?int $amount = null,
         public array $data = [],
+        public ?string $eventId = null,
     ) {}
 
     public static function ignored(): self
@@ -36,6 +37,7 @@ final readonly class WebhookResult
             'reference' => $this->reference,
             'amount' => $this->amount,
             'data' => $this->data,
+            'event_id' => $this->eventId,
         ];
     }
 }
