@@ -12,7 +12,7 @@
 @endphp
 
 <x-shopper::layouts.app :title="$title">
-    <div class="sticky top-0 z-10 bg-sh-surface border-b border-sh-border py-8 backdrop-blur-lg">
+    <div class="sticky top-0 z-10 bg-sh-surface border-b border-sh-border py-8">
         <x-shopper::container>
             <x-shopper::heading>
                 <x-slot:title>

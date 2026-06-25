@@ -94,7 +94,7 @@ class CollectionProductsList extends SlideOverComponent implements HasActions, H
                     ->icon(Untitledui::Plus)
                     ->action(function (EloquentCollection $records): void {
                         /** @var array<int> $currentProducts */
-                        $currentProducts = $this->collection->products->pluck('id')->toArray();
+                        $currentProducts = $this->collection->products()->pluck('id')->toArray();
 
                         $this->collection->products()->sync(
                             array_merge($records->pluck('id')->toArray(), $currentProducts)

@@ -65,6 +65,11 @@ class ChooseProductAttributes extends SlideOverComponent implements HasActions, 
 
     public function form(Schema $schema): Schema
     {
+        $attributes = Attribute::query()
+            ->scopes('enabled')
+            ->select('id', 'name', 'description', 'icon')
+            ->get();
+
         return $schema
             ->components([
                 SlideOverWizard::make([
@@ -72,26 +77,9 @@ class ChooseProductAttributes extends SlideOverComponent implements HasActions, 
                         ->icon(Untitledui::PuzzlePiece)
                         ->schema([
                             RadioDeck::make('attributes')
-                                ->options(
-                                    Attribute::query()
-                                        ->scopes('enabled')
-                                        ->select('id', 'name')
-                                        ->pluck('name', 'id')
-                                )
-                                ->descriptions(
-                                    Attribute::query()
-                                        ->scopes('enabled')
-                                        ->select('id', 'description')
-                                        ->pluck('description', 'id')
-                                        ->toArray()
-                                )
-                                ->icons(
-                                    Attribute::query()
-                                        ->scopes('enabled')
-                                        ->select('id', 'icon')
-                                        ->pluck('icon', 'id')
-                                        ->toArray()
-                                )
+                                ->options($attributes->pluck('name', 'id'))
+                                ->descriptions($attributes->pluck('description', 'id')->toArray())
+                                ->icons($attributes->pluck('icon', 'id')->toArray())
                                 ->alignment(Alignment::Start)
                                 ->iconSize(IconSize::Small)
                                 ->color('primary')
