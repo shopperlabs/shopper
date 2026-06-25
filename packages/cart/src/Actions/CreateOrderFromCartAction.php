@@ -69,8 +69,6 @@ final readonly class CreateOrderFromCartAction
                 ->sortBy('sequence')
                 ->values();
 
-            // The largest applied promotion is mirrored on the legacy order
-            // discount_* columns; order_promotions carries the full set.
             $primary = $applied->sortByDesc('computed_amount')->first();
             $primaryDiscount = $primary?->discount;
 
@@ -78,7 +76,6 @@ final readonly class CreateOrderFromCartAction
             $billingAddress = $this->createOrderAddress($cart->billingAddress(), $cart->customer_id);
 
             $order = resolve(Order::class)::query()->create([
-                'number' => generate_number(),
                 'price_amount' => $context->total,
                 'tax_amount' => $context->taxTotal,
                 'shipping_amount' => $cart->shipping_amount,
