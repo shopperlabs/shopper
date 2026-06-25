@@ -32,6 +32,25 @@ enum OrderStatus: string implements HasColor, HasIcon, HasLabel
 
     case Archived = 'archived';
 
+    /**
+     * @return array<string, list<self>>
+     */
+    public static function transitions(): array
+    {
+        return [
+            self::New->value => [self::Processing, self::Completed, self::Cancelled, self::Archived],
+            self::Processing->value => [self::Completed, self::Cancelled, self::Archived],
+            self::Completed->value => [self::Cancelled, self::Archived],
+            self::Cancelled->value => [self::Archived],
+            self::Archived->value => [],
+        ];
+    }
+
+    public function canTransitionTo(self $status): bool
+    {
+        return in_array($status, self::transitions()[$this->value] ?? [], strict: true);
+    }
+
     public function getColor(): string
     {
         return match ($this) {

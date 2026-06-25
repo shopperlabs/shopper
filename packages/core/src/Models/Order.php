@@ -21,6 +21,7 @@ use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Traits\HasModelContract;
+use Shopper\Core\Traits\HasOrderStatusTransitions;
 
 /**
  * @property-read int $id
@@ -70,6 +71,7 @@ class Order extends Model implements OrderContract
     use HasFactory;
 
     use HasModelContract;
+    use HasOrderStatusTransitions;
     use HasPublicId;
     use SoftDeletes;
 
