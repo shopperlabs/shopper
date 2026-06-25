@@ -300,6 +300,15 @@ class Order extends Model implements OrderContract
         return $this->belongsTo(CarrierOption::class, 'shipping_option_id');
     }
 
+    protected static function booted(): void
+    {
+        static::creating(function (Order $order): void {
+            if (blank($order->getAttribute('number'))) {
+                $order->setAttribute('number', generate_number());
+            }
+        });
+    }
+
     protected static function newFactory(): OrderFactory
     {
         return OrderFactory::new();
