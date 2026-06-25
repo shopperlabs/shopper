@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Cart\Discounts;
 
 use Illuminate\Database\Eloquent\Builder;
+use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Enum\DiscountCondition;
 use Shopper\Core\Enum\DiscountEligibility;
@@ -51,17 +52,8 @@ final readonly class DiscountValidator
             }
         }
 
-        if ($discount->usage_limit_per_user && $context->cart->customer_id) {
-            // Counts redemptions through order_promotions (the per-discount
-            // snapshot), since a stacked code may never land on orders.discount_id.
-            $alreadyRedeemed = OrderPromotion::query()
-                ->where('discount_id', $discount->id)
-                ->whereHas('order', fn (Builder $query) => $query->where('customer_id', $context->cart->customer_id))
-                ->exists();
-
-            if ($alreadyRedeemed) {
-                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.already_used'));
-            }
+        if ($discount->usage_limit_per_user && $this->customerAlreadyRedeemed($discount, $context->cart)) {
+            return new DiscountValidationResult(false, __('shopper-cart::messages.discount.already_used'));
         }
 
         if ($discount->eligibility === DiscountEligibility::Customers->value) {
@@ -112,5 +104,20 @@ final readonly class DiscountValidator
         }
 
         return new DiscountValidationResult(true);
+    }
+
+    private function customerAlreadyRedeemed(Discount $discount, Cart $cart): bool
+    {
+        $column = $cart->customer_id !== null ? 'customer_id' : 'email';
+        $value = $cart->customer_id ?? $cart->email;
+
+        if ($value === null) {
+            return false;
+        }
+
+        return OrderPromotion::query()
+            ->where('discount_id', $discount->id)
+            ->whereHas('order', fn (Builder $query) => $query->where($column, $value))
+            ->exists();
     }
 }

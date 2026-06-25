@@ -54,7 +54,10 @@ class Cart extends Model implements CartContract
     use HasModelContract;
     use HasPublicId;
 
-    protected $guarded = [];
+    /**
+     * @var list<string>
+     */
+    protected $guarded = ['payment_session'];
 
     public static function configuredClass(): string
     {

@@ -195,10 +195,13 @@ final readonly class CreateOrderFromCartAction
                 continue;
             }
 
-            if ($discount->usage_limit_per_user && $cart->customer_id !== null) {
-                $alreadyRedeemed = OrderPromotion::query()
+            if ($discount->usage_limit_per_user) {
+                $column = $cart->customer_id !== null ? 'customer_id' : 'email';
+                $value = $cart->customer_id ?? $cart->email;
+
+                $alreadyRedeemed = $value !== null && OrderPromotion::query()
                     ->where('discount_id', $discount->id)
-                    ->whereHas('order', fn (Builder $query) => $query->where('customer_id', $cart->customer_id))
+                    ->whereHas('order', fn (Builder $query) => $query->where($column, $value))
                     ->exists();
 
                 if ($alreadyRedeemed) {
