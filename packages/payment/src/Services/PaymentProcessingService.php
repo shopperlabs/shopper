@@ -373,21 +373,16 @@ final class PaymentProcessingService
         $this->cancelOrder($order);
     }
 
-    /**
-     * Cancel an order whose payment fell through, releasing the stock reserved
-     * at checkout via the OrderCancelled listener. A paid or already-cancelled
-     * order is left untouched.
-     */
     private function cancelOrder(Order $order): void
     {
-        if ($order->payment_status === PaymentStatus::Paid || ! $order->canBeCancelled()) {
+        if ($order->payment_status === PaymentStatus::Paid
+            || ! $order->canBeCancelled()
+            || ! $order->canTransitionTo(OrderStatus::Cancelled)
+        ) {
             return;
         }
 
-        $order->update([
-            'status' => OrderStatus::Cancelled,
-            'cancelled_at' => now(),
-        ]);
+        $order->transitionTo(OrderStatus::Cancelled);
 
         event(new OrderCancelled($order));
     }

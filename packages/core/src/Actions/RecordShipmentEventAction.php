@@ -62,7 +62,7 @@ final class RecordShipmentEventAction
         $order = $shipment->order;
 
         if ($order->status === OrderStatus::New) {
-            $order->update(['status' => OrderStatus::Processing]);
+            $order->transitionTo(OrderStatus::Processing);
         }
 
         (new SyncOrderShippingStatusAction)->execute($order);
@@ -85,7 +85,7 @@ final class RecordShipmentEventAction
             ->doesntExist();
 
         if ($allDelivered && $order->status === OrderStatus::Processing) {
-            $order->update(['status' => OrderStatus::Completed]);
+            $order->transitionTo(OrderStatus::Completed);
         }
     }
 

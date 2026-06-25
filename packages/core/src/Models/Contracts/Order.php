@@ -7,12 +7,17 @@ namespace Shopper\Core\Models\Contracts;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Shopper\Core\Enum\OrderStatus;
 
 interface Order
 {
     public function setDefaultOrderStatus(): void;
 
     public function total(): float|int;
+
+    public function canTransitionTo(OrderStatus $status): bool;
+
+    public function transitionTo(OrderStatus $status): void;
 
     public function canBeCancelled(): bool;
 

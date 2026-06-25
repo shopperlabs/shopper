@@ -63,10 +63,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->authorize('orders.edit')
             ->visible($this->order->canBeCancelled())
             ->action(function (): void {
-                $this->order->update([
-                    'status' => OrderStatus::Cancelled,
-                    'cancelled_at' => now(),
-                ]);
+                $this->order->transitionTo(OrderStatus::Cancelled);
 
                 $this->order->refresh();
                 $this->dispatch('order.updated');
@@ -87,7 +84,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->authorize('orders.edit')
             ->visible($this->order->isNew())
             ->action(function (): void {
-                $this->order->update(['status' => OrderStatus::Processing]);
+                $this->order->transitionTo(OrderStatus::Processing);
 
                 $this->order->refresh();
                 $this->dispatch('order.updated');
@@ -106,13 +103,11 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->authorize('orders.edit')
             ->visible($this->order->isPaymentPending() || $this->order->isPaymentAuthorized())
             ->action(function (): void {
-                $data = ['payment_status' => PaymentStatus::Paid];
+                $this->order->update(['payment_status' => PaymentStatus::Paid]);
 
                 if ($this->order->isNew()) {
-                    $data['status'] = OrderStatus::Processing;
+                    $this->order->transitionTo(OrderStatus::Processing);
                 }
-
-                $this->order->update($data);
 
                 $this->order->refresh();
                 $this->dispatch('order.updated');
@@ -133,7 +128,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->authorize('orders.edit')
             ->visible($this->order->isProcessing() && $this->order->isPaid())
             ->action(function (): void {
-                $this->order->update(['status' => OrderStatus::Completed]);
+                $this->order->transitionTo(OrderStatus::Completed);
 
                 $this->order->refresh();
                 $this->dispatch('order.updated');
@@ -206,10 +201,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->modalDescription(__('shopper::pages/orders.modals.archived_notice'))
             ->modalSubmitActionLabel(__('shopper::forms.actions.confirm'))
             ->action(function (): void {
-                $this->order->update([
-                    'status' => OrderStatus::Archived,
-                    'archived_at' => now(),
-                ]);
+                $this->order->transitionTo(OrderStatus::Archived);
 
                 event(new OrderArchived($this->order));
 
