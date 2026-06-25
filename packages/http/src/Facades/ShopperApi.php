@@ -11,6 +11,7 @@ use Shopper\Http\ShopperApiRouter;
 /**
  * @method static RouteRegistrar store(\Closure $routes)
  * @method static RouteRegistrar authenticated(\Closure $routes)
+ * @method static RouteRegistrar webhooks(\Closure $routes)
  * @method static string prefix()
  *
  * @see ShopperApiRouter

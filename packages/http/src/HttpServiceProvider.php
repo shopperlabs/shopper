@@ -106,5 +106,9 @@ final class HttpServiceProvider extends PackageServiceProvider
             'auth:sanctum',
             ResolveCustomer::class,
         ], (array) config('shopper.http.middleware.authenticated', [])));
+
+        $router->middlewareGroup('shopper:store-webhook', array_merge([
+            'throttle:'.RateLimit::Webhook->value,
+        ], (array) config('shopper.http.middleware.webhook', [])));
     }
 }

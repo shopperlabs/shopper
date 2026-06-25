@@ -24,6 +24,13 @@ final class ShopperApiRouter
             ->group($routes);
     }
 
+    public function webhooks(Closure $routes): RouteRegistrar
+    {
+        return Route::prefix($this->prefix())
+            ->middleware('shopper:store-webhook')
+            ->group($routes);
+    }
+
     public function prefix(): string
     {
         return (string) config('shopper.http.prefix', 'store');

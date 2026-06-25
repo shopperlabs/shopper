@@ -244,12 +244,14 @@ final class StripeDriver extends Driver
                 reference: $object->id,
                 amount: $object->amount_capturable ?? $object->amount,
                 data: ['stripe_event' => $event->type],
+                eventId: $event->id,
             ),
             'payment_intent.succeeded' => new WebhookResult(
                 action: 'captured',
                 reference: $object->id,
                 amount: $object->amount_received ?? $object->amount,
                 data: ['stripe_event' => $event->type],
+                eventId: $event->id,
             ),
             'payment_intent.payment_failed' => new WebhookResult(
                 action: 'failed',
@@ -259,18 +261,21 @@ final class StripeDriver extends Driver
                     'stripe_event' => $event->type,
                     'failure_message' => $object->last_payment_error?->message,
                 ],
+                eventId: $event->id,
             ),
             'payment_intent.canceled' => new WebhookResult(
                 action: 'canceled',
                 reference: $object->id,
                 amount: $object->amount,
                 data: ['stripe_event' => $event->type],
+                eventId: $event->id,
             ),
             'charge.refunded' => new WebhookResult(
                 action: 'refunded',
                 reference: $object->payment_intent,
                 amount: $object->amount_refunded,
                 data: ['stripe_event' => $event->type],
+                eventId: $event->id,
             ),
             default => WebhookResult::ignored(),
         };

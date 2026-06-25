@@ -15,3 +15,7 @@ ShopperApi::store(function (): void {
 ShopperApi::authenticated(function (): void {
     require __DIR__.'/store/account.php';
 });
+
+ShopperApi::webhooks(function (): void {
+    require __DIR__.'/store/payment.php';
+});

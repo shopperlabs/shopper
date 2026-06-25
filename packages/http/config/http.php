@@ -65,5 +65,6 @@ return [
     'middleware' => [
         'store' => [],
         'authenticated' => [],
+        'webhook' => [],
     ],
 ];

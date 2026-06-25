@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Api\Stubs;
 
+use RuntimeException;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
+use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Drivers\Driver;
 
 final class FakePaymentDriver extends Driver
@@ -68,6 +70,21 @@ final class FakePaymentDriver extends Driver
             success: true,
             status: 'cancelled',
             reference: $reference,
+        );
+    }
+
+    public function handleWebhook(array $payload, array $headers = []): WebhookResult
+    {
+        // Simulate signature verification failure for a malformed payload.
+        if (($payload['action'] ?? null) === 'invalid') {
+            throw new RuntimeException('Invalid webhook signature.');
+        }
+
+        return new WebhookResult(
+            action: (string) ($payload['action'] ?? 'ignored'),
+            reference: isset($payload['reference']) ? (string) $payload['reference'] : null,
+            amount: isset($payload['amount']) ? (int) $payload['amount'] : null,
+            eventId: isset($payload['event_id']) ? (string) $payload['event_id'] : null,
         );
     }
 
