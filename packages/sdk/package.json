@@ -1,6 +1,6 @@
 {
   "name": "@shopperlabs/shopper-sdk",
-  "version": "3.0.0",
+  "version": "1.0.0-beta.2",
   "description": "Official JavaScript SDK for the Shopper headless commerce API.",
   "author": "Arthur Monney <monneylobe@gmail.com> (https://arthurmonney.me)",
   "type": "module",
@@ -41,7 +41,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@shopperlabs/shopper-types": "^3.0.0"
+    "@shopperlabs/shopper-types": "^3.0.0-beta.1"
   },
   "devDependencies": {
     "typescript": "^5.2.2"
