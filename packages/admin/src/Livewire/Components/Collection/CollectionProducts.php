@@ -47,7 +47,7 @@ class CollectionProducts extends Component implements HasActions, HasSchemas, Ha
     #[Computed]
     public function productsIds(): array
     {
-        return $this->collection->products->pluck('id')->toArray();
+        return $this->collection->products()->pluck('id')->toArray();
     }
 
     public function table(Table $table): Table
