@@ -81,7 +81,22 @@ abstract class TestCase extends BaseTestCase
         $app['config']->set('database.default', $connection);
         $app['config']->set('database.connections.testing', $app['config']->get('database.connections.sqlite'));
 
+        $this->registerPackageMigrations($app);
         $this->replaceModelsForTesting();
+    }
+
+    protected function registerPackageMigrations($app): void
+    {
+        $app->afterResolving('migrator', function ($migrator): void {
+            foreach ([
+                __DIR__.'/../packages/core/database/migrations',
+                __DIR__.'/../packages/admin/database/migrations',
+                __DIR__.'/../packages/cart/database/migrations',
+                __DIR__.'/../packages/payment/database/migrations',
+            ] as $path) {
+                $migrator->path($path);
+            }
+        });
     }
 
     protected function replaceModelsForTesting(): void
