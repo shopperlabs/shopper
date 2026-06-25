@@ -6,9 +6,13 @@ namespace Shopper\Core\Contracts;
 
 interface TaxableItem
 {
-    public function getTaxableAmount(): int;
-
-    public function getQuantity(): int;
+    /**
+     * The exact taxable total for the whole line. Returning the total, rather
+     * than a per-unit amount the provider multiplies back by quantity, keeps
+     * the tax base free of the rounding drift a divide-then-multiply round trip
+     * introduces when a line discount is not divisible by the quantity.
+     */
+    public function getTaxableTotal(): int;
 
     public function getProductType(): ?string;
 

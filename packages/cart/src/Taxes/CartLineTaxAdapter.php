@@ -16,14 +16,9 @@ final readonly class CartLineTaxAdapter implements TaxableItem
         private int $taxableTotal,
     ) {}
 
-    public function getTaxableAmount(): int
+    public function getTaxableTotal(): int
     {
-        return (int) round($this->taxableTotal / $this->line->quantity);
-    }
-
-    public function getQuantity(): int
-    {
-        return $this->line->quantity;
+        return $this->taxableTotal;
     }
 
     public function getProductType(): ?string
