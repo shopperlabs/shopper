@@ -9,6 +9,7 @@ use Shopper\Api\Support\ShippingOption;
 use Shopper\Cart\Actions\CreateOrderFromCartAction;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Exceptions\CartCompletedException;
+use Shopper\Cart\Exceptions\InsufficientStockException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Exceptions\CampaignBudgetExceededException;
@@ -74,11 +75,12 @@ final readonly class CompleteCartAction
 
             return $order;
         } catch (CampaignBudgetExceededException) {
-            // A concurrent checkout tipped the campaign over its budget after we
-            // validated the cart. Surface a clean 422 so the storefront can drop
-            // the promotion and let the customer retry, rather than a raw 500.
             throw ValidationException::withMessages([
                 'promotion' => __('shopper-cart::messages.discount.campaign_budget_reached'),
+            ]);
+        } catch (InsufficientStockException $exception) {
+            throw ValidationException::withMessages([
+                'cart' => $exception->getMessage(),
             ]);
         }
 

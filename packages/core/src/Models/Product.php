@@ -149,6 +149,11 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
         return $this->type === ProductType::Standard;
     }
 
+    public function tracksInventory(): bool
+    {
+        return $this->isStandard() || $this->isVariant();
+    }
+
     public function isPublished(): bool
     {
         return $this->is_visible && $this->published_at && $this->published_at <= now();
