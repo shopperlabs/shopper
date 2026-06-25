@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
@@ -10,7 +11,6 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Product;
-use Shopper\Core\Contracts\StockReserver;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
