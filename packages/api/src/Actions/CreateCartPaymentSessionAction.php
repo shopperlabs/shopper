@@ -20,13 +20,6 @@ final readonly class CreateCartPaymentSessionAction
         private CancelPaymentSessionAction $cancelSession,
     ) {}
 
-    /**
-     * Start (or resume) a payment session for the cart with the driver of its
-     * payment method. The amount is always the pipeline-computed total, never
-     * a client value. Posting again with an unchanged total resumes the
-     * existing session instead of opening a duplicate intent at the provider;
-     * a total that moved (line added, shipping picked) opens a fresh one.
-     */
     public function execute(Cart $cart): PaymentSession
     {
         $method = $cart->paymentMethod;
@@ -77,14 +70,12 @@ final readonly class CreateCartPaymentSessionAction
             ],
         );
 
-        $cart->update([
-            'payment_session' => [
-                'driver' => $driverCode,
-                'reference' => $result->reference,
-                'amount' => $amount,
-                'currency' => $cart->currency_code,
-                'version' => $version,
-            ],
+        $this->cartManager->setPaymentSession($cart, [
+            'driver' => $driverCode,
+            'reference' => $result->reference,
+            'amount' => $amount,
+            'currency' => $cart->currency_code,
+            'version' => $version,
         ]);
 
         return new PaymentSession($cart, $driverCode, $result);

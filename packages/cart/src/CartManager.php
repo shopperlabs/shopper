@@ -157,6 +157,15 @@ final readonly class CartManager
     }
 
     /**
+     * @param  array<string, mixed>|null  $session
+     */
+    public function setPaymentSession(Cart $cart, ?array $session): void
+    {
+        $cart->setAttribute('payment_session', $session);
+        $cart->save();
+    }
+
+    /**
      * @param  array<string, mixed>|null  $metadata
      */
     public function setMetadata(Cart $cart, ?array $metadata): void
@@ -190,8 +199,9 @@ final readonly class CartManager
                 'currency_code' => $currencyCode,
                 'shipping_option_id' => null,
                 'shipping_amount' => null,
-                'payment_session' => null,
             ]);
+
+            $this->setPaymentSession($cart, null);
         });
     }
 

@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Shopper\Components\Form\ShippingField;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
@@ -45,8 +46,10 @@ class UpdateVariant extends SlideOverComponent implements HasActions, HasSchemas
     use InteractsWithSchemas;
     use InteractsWithSlideOverForm;
 
+    #[Locked]
     public ?ProductVariant $variant = null;
 
+    #[Locked]
     public ?Product $product = null;
 
     public string $action = 'save';

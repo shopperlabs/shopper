@@ -179,6 +179,74 @@ describe(DiscountValidator::class, function (): void {
         expect($result->valid)->toBeFalse();
     });
 
+    it('rejects a per-user discount already used by a guest with the same email', function (): void {
+        $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
+            'usage_limit_per_user' => true,
+        ]));
+
+        $order = Order::query()->create([
+            'number' => 'GUEST-USED',
+            'price_amount' => 100,
+            'currency_code' => 'USD',
+            'customer_id' => null,
+            'email' => 'guest@example.com',
+            'discount_id' => $discount->id,
+        ]);
+        OrderPromotion::query()->create([
+            'order_id' => $order->id,
+            'discount_id' => $discount->id,
+            'code' => $discount->code,
+            'type' => $discount->type->value,
+            'value_at_apply' => $discount->value,
+            'amount' => 100,
+            'currency_code' => 'USD',
+        ]);
+
+        $guestCart = Cart::factory()->create([
+            'currency_code' => 'USD',
+            'customer_id' => null,
+            'email' => 'guest@example.com',
+        ]);
+
+        $result = $this->validator->validate($discount, new CartPipelineContext($guestCart));
+
+        expect($result->valid)->toBeFalse();
+    });
+
+    it('allows a per-user discount for a guest with a different email', function (): void {
+        $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
+            'usage_limit_per_user' => true,
+        ]));
+
+        $order = Order::query()->create([
+            'number' => 'GUEST-OTHER',
+            'price_amount' => 100,
+            'currency_code' => 'USD',
+            'customer_id' => null,
+            'email' => 'used@example.com',
+            'discount_id' => $discount->id,
+        ]);
+        OrderPromotion::query()->create([
+            'order_id' => $order->id,
+            'discount_id' => $discount->id,
+            'code' => $discount->code,
+            'type' => $discount->type->value,
+            'value_at_apply' => $discount->value,
+            'amount' => 100,
+            'currency_code' => 'USD',
+        ]);
+
+        $guestCart = Cart::factory()->create([
+            'currency_code' => 'USD',
+            'customer_id' => null,
+            'email' => 'fresh@example.com',
+        ]);
+
+        $result = $this->validator->validate($discount, new CartPipelineContext($guestCart));
+
+        expect($result->valid)->toBeTrue();
+    });
+
     it('rejects a discount requiring login when no customer', function (): void {
         $guestCart = Cart::factory()->create([
             'currency_code' => 'USD',

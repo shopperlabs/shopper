@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Collection;
 use Illuminate\Testing\TestResponse;
 use Laravel\Sanctum\Sanctum;
+use Shopper\Cart\CartManager;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Enum\DiscountApplyTo;
@@ -452,10 +453,9 @@ it('clears the payment session when the currency changes', function (): void {
     $eur = Currency::query()->where('code', 'EUR')->first();
     $this->product->prices()->create(['amount' => 3000, 'currency_id' => $eur->id]);
 
-    $cart = Cart::factory()->create([
-        'currency_code' => 'USD',
-        'payment_session' => ['driver' => 'manual', 'reference' => 'ref_1', 'amount' => 2500, 'currency' => 'USD'],
-    ]);
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
+    resolve(CartManager::class)->setPaymentSession($cart, ['driver' => 'manual', 'reference' => 'ref_1', 'amount' => 2500, 'currency' => 'USD']);
+
     $cart->lines()->create([
         'purchasable_type' => $this->product->getMorphClass(),
         'purchasable_id' => $this->product->id,
