@@ -13,6 +13,7 @@ use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Discount;
+use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Product;
@@ -103,7 +104,13 @@ beforeEach(function (): void {
     ]);
     $this->paymentMethod->zones()->attach($this->zone);
 
+    $this->inventory = Inventory::factory()->create([
+        'is_default' => true,
+        'priority' => 0,
+    ]);
+
     $this->product = Product::factory()->standard()->publish()->create();
+    $this->product->mutateStock($this->inventory->id, 100);
 
     $this->cart = checkoutCart($this->zone, $this->product);
 });
@@ -279,6 +286,19 @@ it('completes the cart into an order', function (): void {
         ->and($order->items()->count())->toBe(1)
         ->and($cart->isCompleted())->toBeTrue()
         ->and($cart->order_id)->toBe($order->id);
+});
+
+it('rejects checkout with a 422 when stock is drained after the line is added', function (): void {
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+
+    // Another customer grabs the units between add-to-cart and placement.
+    $this->product->decreaseStock($this->inventory->id, 100);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertUnprocessable();
+
+    expect(Order::query()->count())->toBe(0)
+        ->and($this->product->getStock())->toBe(0);
 });
 
 it('answers the same order when the cart is completed twice', function (): void {

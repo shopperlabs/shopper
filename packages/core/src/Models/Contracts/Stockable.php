@@ -14,6 +14,12 @@ use Shopper\Core\Models\InventoryHistory;
  */
 interface Stockable
 {
+    /**
+     * Whether this stockable manages inventory. Virtual and external products
+     * carry no stock, so they are never reserved or oversold.
+     */
+    public function tracksInventory(): bool;
+
     public function inStock(int $quantity = 1): bool;
 
     public function getStock(string|DateTimeInterface|null $date = null): int;

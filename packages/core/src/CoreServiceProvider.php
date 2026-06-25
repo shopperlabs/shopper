@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Shopper\Core\Console\SyncCollectionsCommand;
 use Shopper\Core\Contracts\InventoryResolver;
 use Shopper\Core\Contracts\StockAllocator;
+use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Contracts\TaxCalculationProvider;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Attribute;
@@ -31,6 +32,7 @@ use Shopper\Core\Observers\OrderObserver;
 use Shopper\Core\Observers\ProductObserver;
 use Shopper\Core\Observers\ProductVariantObserver;
 use Shopper\Core\Stock\DefaultInventoryResolver;
+use Shopper\Core\Stock\LockingStockReserver;
 use Shopper\Core\Stock\PriorityStockAllocator;
 use Shopper\Core\Taxes\SystemTaxProvider;
 use Shopper\Core\Taxes\TaxCalculator;
@@ -122,6 +124,7 @@ final class CoreServiceProvider extends PackageServiceProvider
     {
         $this->app->bind(InventoryResolver::class, DefaultInventoryResolver::class);
         $this->app->bind(StockAllocator::class, PriorityStockAllocator::class);
+        $this->app->bind(StockReserver::class, LockingStockReserver::class);
     }
 
     protected function registerTaxCalculator(): void
