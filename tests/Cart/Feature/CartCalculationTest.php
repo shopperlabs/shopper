@@ -194,6 +194,62 @@ describe(CalculateLines::class, function (): void {
             ->and($context->total)->toBe(2750);
     });
 
+    it('taxes the exact line total when a line discount is not divisible by quantity', function (): void {
+        $country = Country::query()->where('cca2', 'US')->first()
+            ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
+
+        $taxZone = TaxZone::factory()->create([
+            'country_id' => $country->id,
+            'is_tax_inclusive' => false,
+        ]);
+
+        TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 20.00,
+            'is_default' => true,
+        ]);
+
+        $product = Product::factory()->standard()->create();
+        $product->prices()->create([
+            'amount' => 750,
+            'currency_id' => $this->currency->id,
+        ]);
+        $product->load('prices');
+        $product->mutateStock($this->inventory->id, 100);
+
+        Discount::factory()->create([
+            'code' => 'FLAT98',
+            'is_active' => true,
+            'type' => DiscountType::FixedAmount,
+            'value' => 98,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'start_at' => now()->subDay(),
+            'end_at' => now()->addMonth(),
+        ]);
+
+        $this->cartManager->add($this->cart, $product, quantity: 4);
+        $this->cartManager->applyCoupon($this->cart, 'FLAT98');
+        $this->cartManager->addAddress($this->cart, AddressType::Shipping, [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'address_1' => '123 Main St',
+            'city' => 'New York',
+            'postal_code' => '10001',
+            'country_id' => $country->id,
+        ]);
+
+        $context = $this->cartManager->calculate($this->cart->refresh());
+
+        // Subtotal 3000, discount 98 -> taxable 2902. 20% exclusive = round(2902 * 0.20) = 580.
+        // The per-unit round trip would tax round(2902 / 4) * 4 = 2904 -> 581, a 1 cent overcharge.
+        expect($context->subtotal)->toBe(3000)
+            ->and($context->discountTotal)->toBe(98)
+            ->and($context->taxTotal)->toBe(580)
+            ->and($context->total)->toBe(3482);
+    });
+
     it('taxes the discounted amount when a coupon is applied in the same run', function (): void {
         $country = Country::query()->where('cca2', 'US')->first()
             ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
