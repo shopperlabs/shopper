@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - '*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g. 3.0.0-beta.1)'
+        required: true
 
 jobs:
   publish:
@@ -20,14 +25,23 @@ jobs:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Update npm for OIDC trusted publishing
+        run: npm install -g npm@latest
+
       - name: Install dependencies
         run: npm ci
 
       - name: Build
         run: npm run build
 
-      - name: Set version from tag
-        run: npm version ${{ github.ref_name }} --no-git-tag-version --allow-same-version
+      - name: Set version
+        run: npm version ${{ github.event.inputs.version || github.ref_name }} --no-git-tag-version --allow-same-version
 
       - name: Publish to npm
-        run: npm publish --access public --provenance
+        run: |
+          VERSION="${{ github.event.inputs.version || github.ref_name }}"
+          if [[ "$VERSION" == *-* ]]; then
+            npm publish --access public --provenance --tag beta
+          else
+            npm publish --access public --provenance
+          fi
