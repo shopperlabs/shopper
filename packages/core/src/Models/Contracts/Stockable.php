@@ -14,6 +14,8 @@ use Shopper\Core\Models\InventoryHistory;
  */
 interface Stockable
 {
+    public function tracksInventory(): bool;
+
     public function inStock(int $quantity = 1): bool;
 
     public function getStock(string|DateTimeInterface|null $date = null): int;

@@ -10,11 +10,14 @@ use Shopper\Cart\CartManager;
 use Shopper\Cart\Events\CartCompleted;
 use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Exceptions\DiscountLimitReachedException;
+use Shopper\Cart\Exceptions\InsufficientStockException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartAddress;
 use Shopper\Core\Actions\CreateOrderTaxLinesAction;
+use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Contracts\ProductVariant;
+use Shopper\Core\Models\Contracts\Stockable;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderAddress;
@@ -25,6 +28,7 @@ final readonly class CreateOrderFromCartAction
     public function __construct(
         private CartManager $cartManager,
         private CreateOrderTaxLinesAction $createOrderTaxLines,
+        private StockReserver $stockReserver,
     ) {}
 
     public function execute(Cart $cart): Order
@@ -78,6 +82,19 @@ final readonly class CreateOrderFromCartAction
                     'product_type' => $line->purchasable_type,
                     'product_id' => $line->purchasable_id,
                 ]);
+
+                if ($purchasable instanceof Stockable && $purchasable->tracksInventory()) {
+                    $reserved = $this->stockReserver->reserve(
+                        $purchasable,
+                        $line->quantity,
+                        $order,
+                        $cart->customer_id,
+                    );
+
+                    if ($reserved < $line->quantity) {
+                        throw new InsufficientStockException($purchasable, $reserved, $line->quantity);
+                    }
+                }
             }
 
             $this->createOrderTaxLines->execute($order);
