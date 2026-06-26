@@ -168,6 +168,23 @@ describe(DiscountValidator::class, function (): void {
         expect($result->valid)->toBeFalse();
     });
 
+    it('rejects a per-user discount for a guest cart with no customer', function (): void {
+        $guestCart = Cart::query()->create([
+            'currency_code' => 'USD',
+            'customer_id' => null,
+        ]);
+        $guestContext = new CartPipelineContext($guestCart);
+
+        $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
+            'usage_limit_per_user' => true,
+        ]));
+
+        $result = $this->validator->validate($discount, $guestContext);
+
+        expect($result->valid)->toBeFalse()
+            ->and($result->failureReason)->toBe(__('shopper-cart::messages.discount.requires_login'));
+    });
+
     it('rejects a discount requiring login when no customer', function (): void {
         $guestCart = Cart::query()->create([
             'currency_code' => 'USD',

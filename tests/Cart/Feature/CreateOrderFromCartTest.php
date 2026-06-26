@@ -224,6 +224,37 @@ describe(CreateOrderFromCartAction::class, function (): void {
             ->and(Order::query()->where('discount_id', $discount->id)->count())->toBe(1);
     });
 
+    it('rejects a per-user discount on a guest checkout with no customer', function (): void {
+        $discount = Discount::factory()->create([
+            'code' => 'GUESTONCE',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'total_use' => 0,
+            'usage_limit' => null,
+            'usage_limit_per_user' => true,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+        ]);
+
+        $guestCart = Cart::query()->create([
+            'currency_code' => 'USD',
+            'customer_id' => null,
+        ]);
+        $this->cartManager->add($guestCart, $this->product);
+        $this->cartManager->applyCoupon($guestCart, 'GUESTONCE');
+
+        try {
+            $this->action->execute($guestCart->refresh());
+            $this->fail('Expected DiscountLimitReachedException was not thrown.');
+        } catch (DiscountLimitReachedException) {
+            // expected
+        }
+
+        expect(Order::query()->where('discount_id', $discount->id)->count())->toBe(0)
+            ->and($discount->refresh()->total_use)->toBe(0);
+    });
+
     it('throws `CartCompletedException` for already completed cart', function (): void {
         $this->cart->update(['completed_at' => now()]);
 
