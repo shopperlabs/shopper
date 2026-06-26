@@ -40,7 +40,11 @@ final readonly class DiscountValidator
             return new DiscountValidationResult(false, __('shopper-cart::messages.discount.usage_limit_reached'));
         }
 
-        if ($discount->usage_limit_per_user && $context->cart->customer_id) {
+        if ($discount->usage_limit_per_user) {
+            if (! $context->cart->customer_id) {
+                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.requires_login'));
+            }
+
             $alreadyRedeemed = resolve(OrderContract::class)::query()
                 ->where('discount_id', $discount->id)
                 ->where('customer_id', $context->cart->customer_id)

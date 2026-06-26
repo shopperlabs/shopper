@@ -107,7 +107,11 @@ final readonly class CreateOrderFromCartAction
             return null;
         }
 
-        if ($discount->usage_limit_per_user && $cart->customer_id !== null) {
+        if ($discount->usage_limit_per_user) {
+            if ($cart->customer_id === null) {
+                throw DiscountLimitReachedException::perUser($discount->code);
+            }
+
             $alreadyRedeemed = resolve(OrderContract::class)::query()
                 ->where('discount_id', $discount->id)
                 ->where('customer_id', $cart->customer_id)
