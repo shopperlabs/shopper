@@ -76,6 +76,11 @@ class ProductVariant extends Model implements Priceable, ProductVariantContract,
         return shopper_table('product_variants');
     }
 
+    public function tracksInventory(): bool
+    {
+        return true;
+    }
+
     /**
      * @return BelongsTo<Product, $this>
      */

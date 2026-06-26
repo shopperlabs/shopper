@@ -167,7 +167,7 @@ final readonly class CartManager
 
     private function guardStock(Model $purchasable, int $quantity): void
     {
-        if (! $purchasable instanceof Stockable) {
+        if (! $purchasable instanceof Stockable || ! $purchasable->tracksInventory()) {
             return;
         }
 

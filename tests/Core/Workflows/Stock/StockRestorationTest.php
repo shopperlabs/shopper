@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
+use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Events\Orders\OrderCancelled;
-use Shopper\Core\Events\Orders\OrderItemCreated;
-use Shopper\Core\Listeners\Orders\ReserveOrderItemStockListener;
 use Shopper\Core\Listeners\Orders\RestoreOrderStockListener;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
@@ -20,8 +19,6 @@ uses(Tests\Core\TestCase::class);
 beforeEach(function (): void {
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
-
-    Event::fake([OrderItemCreated::class]);
 
     $this->inventory = Inventory::factory()->create([
         'is_default' => true,
@@ -37,19 +34,20 @@ beforeEach(function (): void {
         'payment_status' => PaymentStatus::Pending,
         'shipping_status' => ShippingStatus::Unfulfilled,
     ]);
+
+    $this->reserver = resolve(StockReserver::class);
 });
 
 describe('StockRestorationTest', function (): void {
     it('restores stock when an order is cancelled', function (): void {
-        $item = OrderItem::factory()->create([
+        OrderItem::factory()->create([
             'order_id' => $this->order->id,
             'product_type' => $this->product->getMorphClass(),
             'product_id' => $this->product->id,
             'quantity' => 8,
         ]);
 
-        $reserveListener = resolve(ReserveOrderItemStockListener::class);
-        $reserveListener->handle(new OrderItemCreated($item));
+        $this->reserver->reserve($this->product, 8, $this->order, $this->user->id);
 
         expect($this->product->getStock())->toBe(42);
 
@@ -68,23 +66,22 @@ describe('StockRestorationTest', function (): void {
         $productB = Product::factory()->standard()->create();
         $productB->mutateStock($this->inventory->id, 15, event: 'Initial');
 
-        $itemA = OrderItem::factory()->create([
+        OrderItem::factory()->create([
             'order_id' => $this->order->id,
             'product_type' => $productA->getMorphClass(),
             'product_id' => $productA->id,
             'quantity' => 5,
         ]);
 
-        $itemB = OrderItem::factory()->create([
+        OrderItem::factory()->create([
             'order_id' => $this->order->id,
             'product_type' => $productB->getMorphClass(),
             'product_id' => $productB->id,
             'quantity' => 10,
         ]);
 
-        $reserveListener = resolve(ReserveOrderItemStockListener::class);
-        $reserveListener->handle(new OrderItemCreated($itemA));
-        $reserveListener->handle(new OrderItemCreated($itemB));
+        $this->reserver->reserve($productA, 5, $this->order, $this->user->id);
+        $this->reserver->reserve($productB, 10, $this->order, $this->user->id);
 
         expect($productA->getStock())->toBe(25)
             ->and($productB->getStock())->toBe(5);
@@ -99,15 +96,14 @@ describe('StockRestorationTest', function (): void {
     });
 
     it('creates restoration `InventoryHistory` records with order reference', function (): void {
-        $item = OrderItem::factory()->create([
+        OrderItem::factory()->create([
             'order_id' => $this->order->id,
             'product_type' => $this->product->getMorphClass(),
             'product_id' => $this->product->id,
             'quantity' => 6,
         ]);
 
-        $reserveListener = resolve(ReserveOrderItemStockListener::class);
-        $reserveListener->handle(new OrderItemCreated($item));
+        $this->reserver->reserve($this->product, 6, $this->order, $this->user->id);
 
         $this->order->update(['status' => OrderStatus::Cancelled, 'cancelled_at' => now()]);
 
@@ -120,7 +116,6 @@ describe('StockRestorationTest', function (): void {
             ->orderBy('id')
             ->get();
 
-        // One reservation (-6) + one restoration (+6)
         expect($histories)->toHaveCount(2)
             ->and($histories[0]->quantity)->toBe(-6)
             ->and($histories[0]->user_id)->toBe($this->user->id)
@@ -143,21 +138,18 @@ describe('StockRestorationTest', function (): void {
             'shipping_status' => ShippingStatus::Unfulfilled,
         ]);
 
-        $item = OrderItem::factory()->create([
+        OrderItem::factory()->create([
             'order_id' => $order->id,
             'product_type' => $product->getMorphClass(),
             'product_id' => $product->id,
             'quantity' => 4,
         ]);
 
-        // Reserve — should split: Lyon=2, Paris=2
-        $reserveListener = resolve(ReserveOrderItemStockListener::class);
-        $reserveListener->handle(new OrderItemCreated($item));
+        $this->reserver->reserve($product, 4, $order, $this->user->id);
 
         expect($product->stockInventory($lyon->id))->toBe(0)
             ->and($product->stockInventory($paris->id))->toBe(1);
 
-        // Cancel — should restore to the same inventories
         $order->update(['status' => OrderStatus::Cancelled, 'cancelled_at' => now()]);
 
         $restoreListener = resolve(RestoreOrderStockListener::class);
