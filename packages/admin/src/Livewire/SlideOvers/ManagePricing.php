@@ -35,6 +35,7 @@ class ManagePricing extends SlideOverComponent implements HasActions, HasSchemas
     use InteractsWithSlideOverForm;
 
     /** @var (Model&Priceable<Model>) */
+    #[Locked]
     public Model&Priceable $model;
 
     #[Locked]
