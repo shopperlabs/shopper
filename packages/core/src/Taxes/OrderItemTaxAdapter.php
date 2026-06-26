@@ -15,14 +15,9 @@ final readonly class OrderItemTaxAdapter implements TaxableItem
         private OrderItem $item,
     ) {}
 
-    public function getTaxableAmount(): int
+    public function getTaxableTotal(): int
     {
-        return $this->item->unit_price_amount;
-    }
-
-    public function getQuantity(): int
-    {
-        return $this->item->quantity;
+        return $this->item->unit_price_amount * $this->item->quantity;
     }
 
     public function getProductType(): ?string
