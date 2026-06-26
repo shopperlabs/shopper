@@ -39,7 +39,7 @@ final class SystemTaxProvider implements TaxCalculationProvider
         }
 
         $amount = $this->calculateTaxAmount(
-            $item->getTaxableAmount() * $item->getQuantity(),
+            $item->getTaxableTotal(),
             $taxRate->rate,
             $taxZone->is_tax_inclusive,
         );

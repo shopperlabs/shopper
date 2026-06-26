@@ -6,9 +6,7 @@ namespace Shopper\Core\Contracts;
 
 interface TaxableItem
 {
-    public function getTaxableAmount(): int;
-
-    public function getQuantity(): int;
+    public function getTaxableTotal(): int;
 
     public function getProductType(): ?string;
 

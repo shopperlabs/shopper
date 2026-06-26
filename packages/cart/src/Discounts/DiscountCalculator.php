@@ -53,6 +53,8 @@ final readonly class DiscountCalculator
         } elseif ($discount->type === DiscountType::FixedAmount) {
             $context->discountTotal = $this->applyFixedAmount($discount, $applicableLines, $context);
         }
+
+        $context->cart->lines->load('adjustments');
     }
 
     /**

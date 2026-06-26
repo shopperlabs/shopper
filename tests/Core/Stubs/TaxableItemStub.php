@@ -19,14 +19,9 @@ final readonly class TaxableItemStub implements TaxableItem
         private array $categoryIds = [],
     ) {}
 
-    public function getTaxableAmount(): int
+    public function getTaxableTotal(): int
     {
-        return $this->amount;
-    }
-
-    public function getQuantity(): int
-    {
-        return $this->quantity;
+        return $this->amount * $this->quantity;
     }
 
     public function getProductType(): ?string
