@@ -46,6 +46,7 @@ class Files extends Component implements HasSchemas
                     ->collection('files')
                     ->label(__('shopper::words.files'))
                     ->helperText(__('shopper::pages/products.files_helpText'))
+                    ->acceptedFileTypes(config('shopper.media.accepts_file_types', []))
                     ->multiple()
                     ->panelLayout('grid')
                     ->columnSpan(['lg' => 2]),
