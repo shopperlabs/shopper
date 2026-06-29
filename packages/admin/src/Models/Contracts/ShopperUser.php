@@ -36,6 +36,8 @@ interface ShopperUser extends Authenticatable
 
     public function isManager(): bool;
 
+    public function canAccessDashboard(): bool;
+
     public function isVerified(): bool;
 
     /**
