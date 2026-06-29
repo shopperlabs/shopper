@@ -123,12 +123,12 @@ class General extends Component implements HasActions, HasSchemas
                             ->avatar()
                             ->image()
                             ->maxSize(1024)
-                            ->disk(config('shopper.media.storage.collection_name')),
+                            ->disk(config('shopper.media.storage.disk_name')),
                         FileUpload::make('cover')
                             ->label(__('shopper::forms.label.cover_photo'))
                             ->image()
                             ->maxSize(1024)
-                            ->disk(config('shopper.media.storage.collection_name')),
+                            ->disk(config('shopper.media.storage.disk_name')),
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/settings/global.general.store_address'))
