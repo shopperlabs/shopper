@@ -168,6 +168,7 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
                 'files' => new MediaCollectionConfig(
                     name: 'files',
                     disk: config('shopper.media.storage.disk_name', 'public'),
+                    acceptsMimeTypes: config('shopper.media.accepts_file_types', []),
                 ),
             ]
         );

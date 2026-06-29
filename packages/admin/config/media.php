@@ -38,6 +38,30 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Downloadable File Types
+    |--------------------------------------------------------------------------
+    |
+    | Mime types accepted by the product "files" collection used for
+    | downloadable goods. Executable types (HTML, SVG, JavaScript) are
+    | deliberately excluded to prevent stored XSS from same-origin media.
+    |
+    */
+
+    'accepts_file_types' => [
+        'application/pdf',
+        'application/zip',
+        'application/x-rar-compressed',
+        'application/x-7z-compressed',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'text/plain',
+        'text/csv',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Media Filesize
     |--------------------------------------------------------------------------
     |
