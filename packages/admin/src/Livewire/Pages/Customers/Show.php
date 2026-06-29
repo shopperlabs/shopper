@@ -39,7 +39,10 @@ class Show extends AbstractPageComponent implements HasActions, HasSchemas
         $userModel = config('auth.providers.users.model');
 
         /** @var ShopperUser $customer */
-        $customer = $userModel::query()->with(['addresses', 'orders'])->findOrFail($user);
+        $customer = $userModel::query()
+            ->customers()
+            ->with(['addresses', 'orders'])
+            ->findOrFail($user);
 
         $this->customer = $customer;
     }
