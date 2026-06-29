@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Shopper\Core\Models\Address;
+use Shopper\Models\Permission;
 use Shopper\Models\Role;
 use Tests\Core\Stubs\User;
 
@@ -52,6 +53,29 @@ describe(User::class, function (): void {
         $user = User::factory()->create();
 
         expect($user->isManager())->toBeFalse();
+    });
+
+    it('grants dashboard access to admin, manager, and holders of the `system.dashboard` permission', function (): void {
+        $admin = User::factory()->create();
+        $admin->assignRole(Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.admin')]));
+
+        $manager = User::factory()->create();
+        $manager->assignRole(Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.manager')]));
+
+        $staff = User::factory()->create();
+        Permission::query()->firstOrCreate(['name' => 'system.dashboard']);
+        $staff->givePermissionTo('system.dashboard');
+
+        expect($admin->canAccessDashboard())->toBeTrue()
+            ->and($manager->canAccessDashboard())->toBeTrue()
+            ->and($staff->canAccessDashboard())->toBeTrue();
+    });
+
+    it('denies dashboard access to customers without the `system.dashboard` permission', function (): void {
+        $customer = User::factory()->create();
+        $customer->assignRole(Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.user')]));
+
+        expect($customer->canAccessDashboard())->toBeFalse();
     });
 
     it('checks if user email is verified', function (): void {

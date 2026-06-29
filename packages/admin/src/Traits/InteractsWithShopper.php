@@ -56,6 +56,13 @@ trait InteractsWithShopper
         return $this->hasRole(config('shopper.admin.roles.manager'));
     }
 
+    public function canAccessDashboard(): bool
+    {
+        return $this->isAdmin()
+            || $this->isManager()
+            || $this->hasPermissionTo('system.dashboard');
+    }
+
     public function isVerified(): bool
     {
         return $this->email_verified_at !== null;
