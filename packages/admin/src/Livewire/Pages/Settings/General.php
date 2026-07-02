@@ -132,11 +132,13 @@ class General extends Component implements HasActions, HasSchemas
                             ->label(__('shopper::forms.label.logo'))
                             ->avatar()
                             ->image()
+                            ->acceptedFileTypes(config('shopper.media.accepts_mime_types'))
                             ->maxSize(1024)
                             ->disk(config('shopper.media.storage.disk_name')),
                         FileUpload::make('cover')
                             ->label(__('shopper::forms.label.cover_photo'))
                             ->image()
+                            ->acceptedFileTypes(config('shopper.media.accepts_mime_types'))
                             ->maxSize(1024)
                             ->disk(config('shopper.media.storage.disk_name')),
                     ]),
