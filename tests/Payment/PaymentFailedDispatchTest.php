@@ -42,7 +42,7 @@ beforeEach(function (): void {
             return PaymentResult::failed('card_declined', $reference);
         }
 
-        public function refundPayment(string $reference, int $amount, ?string $reason = null): PaymentResult
+        public function refundPayment(string $reference, int $amount, ?string $reason = null, array $context = []): PaymentResult
         {
             return PaymentResult::failed('insufficient_funds', $reference);
         }

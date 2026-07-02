@@ -43,7 +43,7 @@ final class StripeDriver extends Driver
 
     public function isConfigured(): bool
     {
-        return filled($this->secretKey);
+        return filled($this->secretKey) && filled($this->webhookSecret);
     }
 
     public function mode(): ?PaymentMode
@@ -151,7 +151,7 @@ final class StripeDriver extends Driver
         }
     }
 
-    public function refundPayment(string $reference, int $amount, ?string $reason = null): PaymentResult
+    public function refundPayment(string $reference, int $amount, ?string $reason = null, array $context = []): PaymentResult
     {
         try {
             $params = [
@@ -164,7 +164,7 @@ final class StripeDriver extends Driver
             }
 
             $refund = $this->getClient()->refunds->create($params, [
-                'idempotency_key' => Str::uuid()->toString(),
+                'idempotency_key' => $context['idempotency_key'] ?? Str::uuid()->toString(),
             ]);
 
             return new PaymentResult(
@@ -223,6 +223,10 @@ final class StripeDriver extends Driver
 
     public function handleWebhook(array $payload, array $headers = []): WebhookResult
     {
+        if (! filled($this->webhookSecret)) {
+            throw StripeException::invalidWebhookPayload('The webhook secret is not configured.');
+        }
+
         $rawBody = $payload['_raw_body'] ?? '';
         $signature = $headers['stripe-signature'] ?? $headers['Stripe-Signature'] ?? '';
 

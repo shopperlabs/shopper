@@ -89,6 +89,10 @@ describe(StripeDriver::class, function (): void {
             expect(createDriver(secretKey: '')->isConfigured())->toBeFalse();
         });
 
+        it('is not configured when webhook secret is empty', function (): void {
+            expect(createDriver(webhookSecret: '')->isConfigured())->toBeFalse();
+        });
+
         it('reports test mode when secret key starts with `sk_test_`', function (): void {
             expect(createDriver(secretKey: 'sk_test_abcdef')->mode())->toBe(PaymentMode::Test);
         });
@@ -398,6 +402,27 @@ describe(StripeDriver::class, function (): void {
                 ->and($result->data['payment_intent'])->toBe('pi_test_123');
         });
 
+        it('forwards the caller idempotency key so a retried refund collapses at Stripe', function (): void {
+            $driver = createDriver();
+            $mocks = injectMockClient($driver);
+
+            $refund = Refund::constructFrom([
+                'id' => 're_test_123',
+                'status' => 'succeeded',
+                'amount' => 5000,
+            ]);
+
+            $mocks->refunds->shouldReceive('create')
+                ->twice()
+                ->with(Mockery::type('array'), Mockery::on(
+                    fn (array $opts): bool => $opts['idempotency_key'] === 'refund:1:pi_test_123:5000:0'
+                ))
+                ->andReturn($refund);
+
+            $driver->refundPayment('pi_test_123', 5000, null, ['idempotency_key' => 'refund:1:pi_test_123:5000:0']);
+            $driver->refundPayment('pi_test_123', 5000, null, ['idempotency_key' => 'refund:1:pi_test_123:5000:0']);
+        });
+
         it('creates a partial refund with reason', function (): void {
             $driver = createDriver();
             $mocks = injectMockClient($driver);
@@ -609,6 +634,20 @@ describe(StripeDriver::class, function (): void {
     });
 
     describe('`handleWebhook()` method', function (): void {
+        it('rejects a webhook forged against an empty webhook secret', function (): void {
+            $driver = createDriver(webhookSecret: '');
+
+            $forged = webhookPayload('payment_intent.succeeded', [
+                'id' => 'pi_test_123',
+                'object' => 'payment_intent',
+                'amount' => 5000,
+                'amount_received' => 5000,
+            ], secret: '');
+
+            expect(fn () => $driver->handleWebhook($forged['payload'], $forged['headers']))
+                ->toThrow(StripeException::class);
+        });
+
         it('handles `payment_intent.succeeded` event', function (): void {
             $driver = createDriver();
             $webhook = webhookPayload('payment_intent.succeeded', [

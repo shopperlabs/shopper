@@ -50,9 +50,13 @@ interface PaymentDriver
     public function capturePayment(string $reference, ?int $amount = null): PaymentResult;
 
     /**
-     * Refund a captured payment (full or partial).
+     * Refund a captured payment (full or partial). A caller-supplied
+     * `idempotency_key` in the context must make a retried refund collapse
+     * into a single refund at the gateway.
+     *
+     * @param  array<string, mixed>  $context
      */
-    public function refundPayment(string $reference, int $amount, ?string $reason = null): PaymentResult;
+    public function refundPayment(string $reference, int $amount, ?string $reason = null, array $context = []): PaymentResult;
 
     /**
      * Cancel a non-captured payment.
