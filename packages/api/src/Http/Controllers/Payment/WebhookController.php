@@ -20,7 +20,7 @@ final class WebhookController
 
     public function __invoke(Request $request, string $driver): JsonResponse
     {
-        if (! in_array($driver, Payment::availableDrivers(), strict: true)) {
+        if (! in_array($driver, Payment::availableDrivers(), strict: true) || ! Payment::isConfigured($driver)) {
             abort(404);
         }
 

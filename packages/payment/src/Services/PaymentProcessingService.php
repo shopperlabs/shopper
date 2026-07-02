@@ -135,7 +135,9 @@ final class PaymentProcessingService
         $paymentMethod = $order->paymentMethod;
         $driver = $this->resolveDriver($paymentMethod);
 
-        $result = $driver->refundPayment($reference, $amount, $reason);
+        $result = $driver->refundPayment($reference, $amount, $reason, [
+            'idempotency_key' => $this->refundIdempotencyKey($order, $reference, $amount),
+        ]);
 
         $this->recordTransaction(
             order: $order,
@@ -247,6 +249,22 @@ final class PaymentProcessingService
     private function resolveDriver(PaymentMethod $method): PaymentDriver
     {
         return Payment::driver($method->driver ?? 'manual');
+    }
+
+    /**
+     * A retried refund reuses the same key so the gateway collapses it into
+     * one refund: a timed-out attempt is never journalized, so the sequence
+     * is unchanged on retry, while every journalized attempt (successful or
+     * declined) moves the sequence forward for the next distinct refund.
+     */
+    private function refundIdempotencyKey(Order $order, string $reference, int $amount): string
+    {
+        $sequence = PaymentTransaction::query()
+            ->where('order_id', $order->getKey())
+            ->where('type', TransactionType::Refund)
+            ->count();
+
+        return "refund:{$order->getKey()}:{$reference}:{$amount}:{$sequence}";
     }
 
     private function syncPaymentStatus(Order $order, TransactionType $type, PaymentResult $result): void

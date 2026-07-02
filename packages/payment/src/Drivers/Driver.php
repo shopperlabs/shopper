@@ -42,7 +42,7 @@ abstract class Driver implements PaymentDriver
         throw PaymentException::notSupported('capturePayment', $this->code());
     }
 
-    public function refundPayment(string $reference, int $amount, ?string $reason = null): PaymentResult
+    public function refundPayment(string $reference, int $amount, ?string $reason = null, array $context = []): PaymentResult
     {
         throw PaymentException::notSupported('refundPayment', $this->code());
     }

@@ -44,6 +44,13 @@ it('returns 404 for an unknown driver', function (): void {
         ->assertNotFound();
 });
 
+it('returns 404 for a registered driver that is not configured', function (): void {
+    Payment::extend('unconfigured', fn (): FakePaymentDriver => new FakePaymentDriver(configured: false));
+
+    $this->postJson('/store/webhooks/unconfigured', ['action' => 'captured'])
+        ->assertNotFound();
+});
+
 it('rejects an unverified payload with a 400', function (): void {
     $this->postJson('/store/webhooks/fake', ['action' => 'invalid'])
         ->assertStatus(400);

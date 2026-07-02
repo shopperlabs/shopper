@@ -37,15 +37,23 @@ describe(StripeServiceProvider::class, function (): void {
         expect(Payment::isConfigured('stripe'))->toBeFalse();
     });
 
-    it('is configured when secret key is set', function (): void {
-        config()->set('shopper.stripe.secret_key', 'sk_test_123');
-
+    it('is configured when the secret key and the webhook secret are set', function (): void {
         $driver = new StripeDriver(
-            secretKey: (string) config('shopper.stripe.secret_key'),
+            secretKey: 'sk_test_123',
+            publishableKey: '',
+            webhookSecret: 'whsec_test_123',
+        );
+
+        expect($driver->isConfigured())->toBeTrue();
+    });
+
+    it('is not configured when the webhook secret is missing', function (): void {
+        $driver = new StripeDriver(
+            secretKey: 'sk_test_123',
             publishableKey: '',
             webhookSecret: '',
         );
 
-        expect($driver->isConfigured())->toBeTrue();
+        expect($driver->isConfigured())->toBeFalse();
     });
 })->group('stripe', 'payment');

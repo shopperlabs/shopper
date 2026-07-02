@@ -29,6 +29,10 @@ final class FakePaymentDriver extends Driver
     /** @var array<int, string> */
     public array $idempotencyKeys = [];
 
+    public function __construct(
+        private readonly bool $configured = true,
+    ) {}
+
     public function code(): string
     {
         return 'fake';
@@ -41,7 +45,7 @@ final class FakePaymentDriver extends Driver
 
     public function isConfigured(): bool
     {
-        return true;
+        return $this->configured;
     }
 
     public function initiatePayment(int $amount, string $currency, array $context = []): PaymentResult
