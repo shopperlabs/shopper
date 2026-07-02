@@ -7,6 +7,7 @@ namespace Shopper\Core\Traits;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Enum\ShipmentStatus;
+use Shopper\Core\Exceptions\InvalidShipmentStatusTransitionException;
 use Shopper\Core\Models\OrderShippingEvent;
 
 trait HasFulfillmentTransitions
@@ -95,7 +96,7 @@ trait HasFulfillmentTransitions
     public function transitionTo(ShipmentStatus $status, array $context = []): void
     {
         if (! $this->canTransitionTo($status)) {
-            return;
+            throw InvalidShipmentStatusTransitionException::between($this->status, $status);
         }
 
         $this->update(['status' => $status]);

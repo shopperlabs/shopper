@@ -7,6 +7,7 @@ use Shopper\Core\Enum\FulfillmentStatus;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Enum\ShippingStatus;
+use Shopper\Core\Exceptions\InvalidShipmentStatusTransitionException;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\OrderShipping;
@@ -104,6 +105,32 @@ describe('Shipment state machine — invalid transitions', function (): void {
         expect($shipment->refresh()->items)->each(
             fn ($item) => $item->fulfillment_status->toBe(FulfillmentStatus::Pending)
         );
+    });
+    it('throws on an invalid explicit transition instead of silently no-oping', function (): void {
+        $shipment = OrderShipping::query()->create([
+            'order_id' => Order::factory()->create()->id,
+            'status' => ShipmentStatus::Pending,
+            'shipped_at' => now(),
+        ]);
+
+        expect(fn () => $shipment->transitionTo(ShipmentStatus::Delivered))
+            ->toThrow(InvalidShipmentStatusTransitionException::class);
+
+        expect($shipment->refresh()->status)->toBe(ShipmentStatus::Pending)
+            ->and($shipment->events()->count())->toBe(0);
+    });
+
+    it('performs a valid explicit transition and logs the event', function (): void {
+        $shipment = OrderShipping::query()->create([
+            'order_id' => Order::factory()->create()->id,
+            'status' => ShipmentStatus::Pending,
+            'shipped_at' => now(),
+        ]);
+
+        $shipment->transitionTo(ShipmentStatus::PickedUp, ['location' => 'Douala hub']);
+
+        expect($shipment->refresh()->status)->toBe(ShipmentStatus::PickedUp)
+            ->and($shipment->events()->latest('id')->first()->location)->toBe('Douala hub');
     });
 })
     ->group('workflows', 'order-fulfillment');
