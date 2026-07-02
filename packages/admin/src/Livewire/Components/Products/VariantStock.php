@@ -20,7 +20,6 @@ use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Inventory;
-use Shopper\Core\Models\InventoryHistory;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
@@ -59,29 +58,23 @@ class VariantStock extends Component implements HasActions, HasSchemas
             ->action(function (array $data): void {
                 $inventoryId = (int) $data['inventory'];
                 $quantity = (int) $data['quantity'];
+                $currentStock = $this->variant->stockInventory($inventoryId);
 
-                $currentStock = InventoryHistory::query()
-                    ->where('inventory_id', $inventoryId)
-                    ->where('stockable_id', $this->variant->id)
-                    ->where('stockable_type', config('shopper.models.variant'))
-                    ->get()
-                    ->sum('quantity');
-
-                $realTimeStock = $currentStock + $quantity;
-
-                if ($realTimeStock >= $currentStock) {
+                if ($quantity >= 0) {
                     $this->variant->mutateStock(
                         inventoryId: $inventoryId,
                         quantity: $quantity,
-                        oldQuantity: $quantity,
+                        oldQuantity: $currentStock,
                         event: __('shopper::pages/products.inventory.add'),
+                        userId: auth()->id(),
                     );
                 } else {
                     $this->variant->decreaseStock(
                         inventoryId: $inventoryId,
                         quantity: $quantity,
-                        oldQuantity: $quantity,
+                        oldQuantity: $currentStock,
                         event: __('shopper::pages/products.inventory.remove'),
+                        userId: auth()->id(),
                     );
                 }
 

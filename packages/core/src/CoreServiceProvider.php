@@ -6,6 +6,7 @@ namespace Shopper\Core;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Shopper\Core\Console\ReconcileStockLevelsCommand;
 use Shopper\Core\Console\SyncCollectionsCommand;
 use Shopper\Core\Contracts\InventoryResolver;
 use Shopper\Core\Contracts\StockAllocator;
@@ -58,6 +59,7 @@ final class CoreServiceProvider extends PackageServiceProvider
             ->name('shopper-core')
             ->hasTranslations()
             ->hasCommands([
+                ReconcileStockLevelsCommand::class,
                 SyncCollectionsCommand::class,
             ]);
     }

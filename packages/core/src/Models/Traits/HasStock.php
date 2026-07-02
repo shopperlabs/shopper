@@ -9,9 +9,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Shopper\Core\Exceptions\LazyStockLoadingException;
 use Shopper\Core\Models\InventoryHistory;
+use Shopper\Core\Models\StockLevel;
 
 trait HasStock
 {
@@ -36,11 +39,10 @@ trait HasStock
 
         $first = $models->first();
 
-        $stocks = InventoryHistory::query()
+        $stocks = StockLevel::query()
             ->selectRaw('stockable_id, SUM(quantity) as aggregate')
             ->where('stockable_type', $first->getMorphClass())
             ->whereIn('stockable_id', $models->pluck($first->getKeyName()))
-            ->where('created_at', '<=', Carbon::now())
             ->groupBy('stockable_id')
             ->pluck('aggregate', 'stockable_id');
 
@@ -62,14 +64,11 @@ trait HasStock
 
         $first = $models->first();
 
-        $stocks = InventoryHistory::query()
-            ->selectRaw('stockable_id, SUM(quantity) as aggregate')
+        $stocks = StockLevel::query()
             ->where('stockable_type', $first->getMorphClass())
             ->whereIn('stockable_id', $models->pluck($first->getKeyName()))
             ->where('inventory_id', $inventoryId)
-            ->where('created_at', '<=', Carbon::now())
-            ->groupBy('stockable_id')
-            ->pluck('aggregate', 'stockable_id');
+            ->pluck('quantity', 'stockable_id');
 
         $models->each(function (Model $model) use ($stocks): void {
             $model->setAttribute('real_stock', (int) ($stocks[$model->getKey()] ?? 0));
@@ -81,9 +80,16 @@ trait HasStock
         return $this->stock > 0 && $this->stock >= $quantity;
     }
 
+    /**
+     * The current stock is a single indexed read on the snapshot; the ledger
+     * is only replayed for point-in-time queries, so the cost of a stock read
+     * stays flat no matter how much movement history a product accumulates.
+     */
     public function getStock(string|DateTimeInterface|null $date = null): int
     {
-        $date = $date ?: Carbon::now();
+        if ($date === null) {
+            return (int) $this->stockLevels()->sum('quantity');
+        }
 
         if (! $date instanceof DateTimeInterface) {
             $date = Carbon::create($date);
@@ -96,14 +102,14 @@ trait HasStock
 
     public function stockInventory(int $inventoryId, ?string $date = null): int
     {
-        $date = $date ?: Carbon::now();
-
-        if (! $date instanceof DateTimeInterface) {
-            $date = Carbon::create($date);
+        if ($date === null) {
+            return (int) $this->stockLevels()
+                ->where('inventory_id', $inventoryId)
+                ->value('quantity');
         }
 
         return (int) $this->inventoryHistories()
-            ->where('created_at', '<=', $date->format('Y-m-d H:i:s'))
+            ->where('created_at', '<=', Carbon::create($date)->format('Y-m-d H:i:s'))
             ->where('inventory_id', $inventoryId)
             ->sum('quantity');
     }
@@ -142,6 +148,7 @@ trait HasStock
         ?Model $reference = null,
     ): bool {
         $this->inventoryHistories()->delete();
+        $this->stockLevels()->delete();
 
         if ($inventoryId && $newQuantity) {
             $this->createStockMutation($newQuantity, $inventoryId, $oldQuantity, $event, $description, $userId, $reference);
@@ -192,7 +199,13 @@ trait HasStock
             $createArguments['reference_id'] = $reference->getKey();
         }
 
-        return $this->inventoryHistories()->create($createArguments);
+        return DB::transaction(function () use ($createArguments, $inventoryId, $quantity): InventoryHistory {
+            $history = $this->inventoryHistories()->create($createArguments);
+
+            $this->applyToStockLevel($inventoryId, $quantity);
+
+            return $history;
+        });
     }
 
     /**
@@ -201,6 +214,40 @@ trait HasStock
     public function inventoryHistories(): MorphMany
     {
         return $this->morphMany(InventoryHistory::class, 'stockable');
+    }
+
+    /**
+     * @return MorphMany<StockLevel, $this>
+     */
+    public function stockLevels(): MorphMany
+    {
+        return $this->morphMany(StockLevel::class, 'stockable');
+    }
+
+    /**
+     * The snapshot moves with every ledger write, atomically: an increment on
+     * the existing row, or an insert raced against the unique index with one
+     * increment retry when another writer created the row first.
+     */
+    protected function applyToStockLevel(int $inventoryId, int $delta): void
+    {
+        $constraint = [
+            'stockable_type' => $this->getMorphClass(),
+            'stockable_id' => $this->getKey(),
+            'inventory_id' => $inventoryId,
+        ];
+
+        $updated = StockLevel::query()->where($constraint)->increment('quantity', $delta);
+
+        if ($updated > 0) {
+            return;
+        }
+
+        try {
+            StockLevel::query()->create([...$constraint, 'quantity' => $delta]);
+        } catch (QueryException) {
+            StockLevel::query()->where($constraint)->increment('quantity', $delta);
+        }
     }
 
     protected function stock(): Attribute
