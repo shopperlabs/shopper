@@ -64,12 +64,9 @@ final readonly class CompleteCartAction
             $order = $this->createOrderFromCart->execute(
                 $cart,
                 fn (CartPipelineContext $context) => $this->guardPaymentSession($cart, $context->total),
+                fn (Order $order) => $this->recordInitiatedPayment($cart, $order),
             );
         } catch (CartCompletedException) {
-            // A concurrent completion won the cart lock between our staleness
-            // check and the transaction: answer with the order it placed, the
-            // same way a sequential retry does. No payment is journalized
-            // here, the winning request already did it.
             /** @var Order $order */
             $order = $cart->refresh()->order()->firstOrFail();
 
@@ -83,8 +80,6 @@ final readonly class CompleteCartAction
                 'cart' => $exception->getMessage(),
             ]);
         }
-
-        $this->recordInitiatedPayment($cart, $order);
 
         return $order;
     }
