@@ -217,18 +217,17 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->schema([
                         TextInput::make('number')
                             ->label(__('shopper::words.number'))
-                            ->placeholder('SHP-XXXXX'),
+                            ->placeholder('ORD-XXXXX'),
                     ])
                     ->query(fn (Builder $query, array $data): Builder => $query
                         ->when(
                             $data['number'],
-                            fn (Builder $query, string $number): Builder => $query->where('number', 'like', "%{$number}%"),
+                            fn (Builder $query, string $number): Builder => $query->where('number', 'like', "{$number}%"),
                         )),
                 SelectFilter::make('customer_id')
                     ->label(__('shopper::words.customer'))
                     ->relationship('customer', 'first_name')
-                    ->searchable()
-                    ->preload(),
+                    ->searchable(),
                 SelectFilter::make('status')
                     ->label(__('shopper::forms.label.status'))
                     ->options(OrderStatus::options())

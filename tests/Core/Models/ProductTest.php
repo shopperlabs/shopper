@@ -366,6 +366,16 @@ describe(Product::class, function (): void {
             ->and($results->first()->id)->toBe($publishedProduct->id);
     });
 
+    it('keeps a product scheduled for later today out of the publish scope', function (): void {
+        $scheduled = Product::factory()->create([
+            'published_at' => now()->addHour(),
+            'is_visible' => true,
+        ]);
+
+        expect(Product::publish()->whereKey($scheduled->id)->exists())->toBeFalse()
+            ->and($scheduled->isPublished())->toBeFalse();
+    });
+
     it('filters products by channel scope', function (): void {
         $channel1 = Channel::factory()->create();
         $channel2 = Channel::factory()->create();
