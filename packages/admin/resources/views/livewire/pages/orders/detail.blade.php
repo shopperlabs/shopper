@@ -125,6 +125,8 @@
     {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_HEADER_AFTER) }}
 
     <x-shopper::container>
+        {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_CONTENT_BEFORE) }}
+
         {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_MAIN_BEFORE) }}
 
         <div class="grid sm:grid-cols-6">
@@ -150,6 +152,8 @@
                 {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_SIDEBAR_AFTER) }}
             </div>
         </div>
+
+        {{ shopper()->getRenderHook(\Shopper\View\OrderRenderHook::DETAIL_CONTENT_AFTER) }}
     </x-shopper::container>
 
     <x-filament-actions::modals />

@@ -34,9 +34,6 @@ final class AddonManager
     private array $productSections = [];
 
     /** @var list<string> */
-    private array $permissions = [];
-
-    /** @var list<string> */
     private array $styles = [];
 
     /** @var list<string> */
@@ -151,22 +148,6 @@ final class AddonManager
     public function getProductSections(): array
     {
         return $this->productSections;
-    }
-
-    /**
-     * @param  list<string>  $permissions
-     */
-    public function addPermissions(array $permissions): void
-    {
-        $this->permissions = array_merge($this->permissions, $permissions);
-    }
-
-    /**
-     * @return list<string>
-     */
-    public function getPermissions(): array
-    {
-        return $this->permissions;
     }
 
     /**

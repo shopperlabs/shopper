@@ -28,6 +28,7 @@ use Shopper\Components\Form\GenderField;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
 use Shopper\Core\Enum\AddressType;
+use Shopper\Core\Events\Customers\CustomerRegistered;
 use Shopper\Core\Models\Country;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Models\Contracts\ShopperUser;
@@ -183,6 +184,8 @@ class Create extends AbstractPageComponent implements HasActions, HasSchemas
 
         $customer->assignRole(config('shopper.admin.roles.user'));
         $customer->addresses()->create($address);
+
+        event(new CustomerRegistered($customer));
 
         if ($sendMail) {
             $customer->notify(new CustomerSendCredentials($password));

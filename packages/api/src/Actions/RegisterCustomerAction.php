@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Shopper\Core\Events\Customers\CustomerRegistered;
 
 final class RegisterCustomerAction
 {
@@ -36,6 +37,8 @@ final class RegisterCustomerAction
             if (method_exists($user, 'assignRole')) {
                 $user->assignRole((string) config('shopper.admin.roles.user', 'user'));
             }
+
+            event(new CustomerRegistered($user));
 
             return $user;
         });
