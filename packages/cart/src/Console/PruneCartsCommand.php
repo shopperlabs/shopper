@@ -18,10 +18,17 @@ final class PruneCartsCommand extends Command
     {
         $days = (int) ($this->option('days') ?? config('shopper.cart.prune_after_days', 30));
 
-        $count = resolve(CartContract::class)::query()
-            ->whereNull('completed_at')
-            ->where('updated_at', '<', now()->subDays($days))
-            ->delete();
+        $count = 0;
+
+        do {
+            $deleted = resolve(CartContract::class)::query()
+                ->whereNull('completed_at')
+                ->where('updated_at', '<', now()->subDays($days))
+                ->limit(1000)
+                ->delete();
+
+            $count += $deleted;
+        } while ($deleted > 0);
 
         $this->components->info("{$count} abandoned cart(s) pruned.");
 
