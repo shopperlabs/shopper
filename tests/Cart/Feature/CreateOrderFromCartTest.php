@@ -24,8 +24,11 @@ use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderAddress;
+use Shopper\Core\Models\OrderTaxLine;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Product;
+use Shopper\Core\Models\TaxRate;
+use Shopper\Core\Models\TaxZone;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Cart\TestCase::class);
@@ -102,6 +105,292 @@ describe(CreateOrderFromCartAction::class, function (): void {
             ->and($order->shippingAddress->first_name)->toBe('John')
             ->and($order->shippingAddress->city)->toBe('New York')
             ->and($order->shippingAddress->country_name)->toBe('United States');
+    });
+
+    it('freezes the cart tax on the order so a discounted invoice always reconciles', function (): void {
+        $country = Country::query()->where('cca2', 'US')->first()
+            ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
+
+        $taxZone = TaxZone::factory()->create([
+            'country_id' => $country->id,
+            'is_tax_inclusive' => false,
+        ]);
+
+        TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 20.00,
+            'is_default' => true,
+        ]);
+
+        $product = Product::factory()->standard()->create();
+        $product->prices()->create([
+            'amount' => 10000,
+            'currency_id' => $this->currency->id,
+        ]);
+        $product->load('prices');
+        $product->mutateStock($this->inventory->id, 100);
+
+        Discount::factory()->create([
+            'code' => 'TEN',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'start_at' => now()->subDay(),
+            'end_at' => now()->addMonth(),
+        ]);
+
+        $this->cartManager->add($this->cart, $product);
+        $this->cartManager->addAddress($this->cart, AddressType::Shipping, [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'address_1' => '123 Main St',
+            'city' => 'New York',
+            'postal_code' => '10001',
+            'country_id' => $country->id,
+        ]);
+        $this->cartManager->applyCoupon($this->cart, 'TEN');
+
+        $order = $this->action->execute($this->cart->refresh());
+        $orderItem = $order->items->first();
+
+        $taxLines = OrderTaxLine::query()
+            ->where('taxable_type', $orderItem->getMorphClass())
+            ->where('taxable_id', $orderItem->id)
+            ->get();
+
+        expect($order->tax_amount)->toBe(1800)
+            ->and($orderItem->tax_amount)->toBe(1800)
+            ->and($taxLines->sum('amount'))->toBe(1800)
+            ->and($order->price_amount)->toBe(10800);
+    });
+
+    it('does not freeze stale tax lines onto an item that became fully discounted after a recalculation', function (): void {
+        $country = Country::query()->where('cca2', 'US')->first()
+            ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
+
+        $taxZone = TaxZone::factory()->create([
+            'country_id' => $country->id,
+            'is_tax_inclusive' => false,
+        ]);
+
+        TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 20.00,
+            'is_default' => true,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->addAddress($this->cart, AddressType::Shipping, [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'address_1' => '123 Main St',
+            'city' => 'New York',
+            'postal_code' => '10001',
+            'country_id' => $country->id,
+        ]);
+
+        $this->cartManager->calculate($this->cart->refresh());
+
+        $discount = Discount::factory()->create([
+            'code' => 'FREE100',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 100,
+            'apply_to' => DiscountApplyTo::Products,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'start_at' => now()->subDay(),
+            'end_at' => now()->addMonth(),
+        ]);
+        $discount->items()->create([
+            'discountable_id' => $this->product->id,
+            'discountable_type' => $this->product->getMorphClass(),
+            'condition' => DiscountCondition::ApplyTo,
+        ]);
+        $this->cartManager->applyCoupon($this->cart, 'FREE100');
+
+        $order = $this->action->execute($this->cart->refresh());
+        $orderItem = $order->items->first();
+
+        $taxLines = OrderTaxLine::query()
+            ->where('taxable_type', $orderItem->getMorphClass())
+            ->where('taxable_id', $orderItem->id)
+            ->get();
+
+        expect($orderItem->tax_amount)->toBe(0)
+            ->and($taxLines)->toHaveCount(0)
+            ->and($order->tax_amount)->toBe(0);
+    });
+
+    it('attributes the tax lines of each cart line to its own order item when rates differ', function (): void {
+        $country = Country::query()->where('cca2', 'US')->first()
+            ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
+
+        $taxZone = TaxZone::factory()->create([
+            'country_id' => $country->id,
+            'is_tax_inclusive' => false,
+        ]);
+
+        TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 20.00,
+            'is_default' => true,
+        ]);
+
+        $virtualRate = TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 5.00,
+            'is_default' => false,
+        ]);
+        $virtualRate->rules()->create([
+            'reference_type' => 'product_type',
+            'reference_id' => 'virtual',
+        ]);
+
+        $virtualProduct = Product::factory()->virtual()->create();
+        $virtualProduct->prices()->create([
+            'amount' => 1000,
+            'currency_id' => $this->currency->id,
+        ]);
+        $virtualProduct->load('prices');
+        $virtualProduct->mutateStock($this->inventory->id, 100);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->add($this->cart, $virtualProduct);
+        $this->cartManager->addAddress($this->cart, AddressType::Shipping, [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'address_1' => '123 Main St',
+            'city' => 'New York',
+            'postal_code' => '10001',
+            'country_id' => $country->id,
+        ]);
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        $standardItem = $order->items->firstWhere('product_id', $this->product->id);
+        $virtualItem = $order->items->firstWhere('product_id', $virtualProduct->id);
+
+        $standardLines = OrderTaxLine::query()
+            ->where('taxable_type', $standardItem->getMorphClass())
+            ->where('taxable_id', $standardItem->id)
+            ->get();
+        $virtualLines = OrderTaxLine::query()
+            ->where('taxable_type', $virtualItem->getMorphClass())
+            ->where('taxable_id', $virtualItem->id)
+            ->get();
+
+        expect((float) $standardLines->sole()->rate)->toBe(20.0)
+            ->and($standardItem->tax_amount)->toBe(5)
+            ->and((float) $virtualLines->sole()->rate)->toBe(5.0)
+            ->and($virtualItem->tax_amount)->toBe(50)
+            ->and($order->tax_amount)->toBe(55);
+    });
+
+    it('keeps the tax invariant when one line is fully discounted and another is fully taxed', function (): void {
+        $country = Country::query()->where('cca2', 'US')->first()
+            ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
+
+        $taxZone = TaxZone::factory()->create([
+            'country_id' => $country->id,
+            'is_tax_inclusive' => false,
+        ]);
+
+        TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 20.00,
+            'is_default' => true,
+        ]);
+
+        $freeProduct = Product::factory()->standard()->create();
+        $freeProduct->prices()->create([
+            'amount' => 500,
+            'currency_id' => $this->currency->id,
+        ]);
+        $freeProduct->load('prices');
+        $freeProduct->mutateStock($this->inventory->id, 100);
+
+        $discount = Discount::factory()->create([
+            'code' => 'FREEITEM',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 100,
+            'apply_to' => DiscountApplyTo::Products,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'start_at' => now()->subDay(),
+            'end_at' => now()->addMonth(),
+        ]);
+        $discount->items()->create([
+            'discountable_id' => $freeProduct->id,
+            'discountable_type' => $freeProduct->getMorphClass(),
+            'condition' => DiscountCondition::ApplyTo,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->add($this->cart, $freeProduct);
+        $this->cartManager->applyCoupon($this->cart, 'FREEITEM');
+        $this->cartManager->addAddress($this->cart, AddressType::Shipping, [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'address_1' => '123 Main St',
+            'city' => 'New York',
+            'postal_code' => '10001',
+            'country_id' => $country->id,
+        ]);
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        $freeItem = $order->items->firstWhere('product_id', $freeProduct->id);
+        $allTaxLines = OrderTaxLine::query()
+            ->whereIn('taxable_id', $order->items->pluck('id'))
+            ->get();
+
+        expect($freeItem->tax_amount)->toBe(0)
+            ->and(OrderTaxLine::query()->where('taxable_id', $freeItem->id)->count())->toBe(0)
+            ->and($order->tax_amount)->toBe($allTaxLines->sum('amount'));
+    });
+
+    it('freezes the tax lines without stacking tax on the total for a tax-inclusive zone', function (): void {
+        $country = Country::query()->where('cca2', 'FR')->first()
+            ?? Country::factory()->create(['cca2' => 'FR', 'name' => 'France']);
+
+        $taxZone = TaxZone::factory()->create([
+            'country_id' => $country->id,
+            'is_tax_inclusive' => true,
+        ]);
+
+        TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 20.00,
+            'is_default' => true,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->addAddress($this->cart, AddressType::Shipping, [
+            'first_name' => 'Jean',
+            'last_name' => 'Dupont',
+            'address_1' => '1 Rue de Paris',
+            'city' => 'Paris',
+            'postal_code' => '75001',
+            'country_id' => $country->id,
+        ]);
+
+        $order = $this->action->execute($this->cart->refresh());
+        $orderItem = $order->items->first();
+
+        $taxLines = OrderTaxLine::query()
+            ->where('taxable_type', $orderItem->getMorphClass())
+            ->where('taxable_id', $orderItem->id)
+            ->get();
+
+        expect($order->price_amount)->toBe(25)
+            ->and($order->tax_amount)->toBe($taxLines->sum('amount'))
+            ->and($orderItem->tax_amount)->toBe($taxLines->sum('amount'))
+            ->and((float) $taxLines->sole()->rate)->toBe(20.0);
     });
 
     it('marks the cart as completed after order creation', function (): void {

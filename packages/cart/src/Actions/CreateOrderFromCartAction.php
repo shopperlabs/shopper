@@ -19,7 +19,6 @@ use Shopper\Cart\Models\CartAddress;
 use Shopper\Cart\Models\CartPromotion;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Cart\Pipelines\CartPipelineContext;
-use Shopper\Core\Actions\CreateOrderTaxLinesAction;
 use Shopper\Core\Actions\ReserveCampaignBudget;
 use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Models\CarrierOption;
@@ -29,6 +28,7 @@ use Shopper\Core\Models\Contracts\Stockable;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\OrderAddress;
 use Shopper\Core\Models\OrderPromotion;
+use Shopper\Core\Models\OrderTaxLine;
 use Shopper\Core\Models\ProductVariant as ProductVariantModel;
 use Throwable;
 
@@ -36,7 +36,6 @@ final readonly class CreateOrderFromCartAction
 {
     public function __construct(
         private CartManager $cartManager,
-        private CreateOrderTaxLinesAction $createOrderTaxLines,
         private ReserveCampaignBudget $reserveCampaignBudget,
         private StockReserver $stockReserver,
     ) {}
@@ -99,19 +98,41 @@ final readonly class CreateOrderFromCartAction
                 ProductVariantModel::class => ['product'],
             ]);
 
+            $cart->lines->load('taxLines');
+            $orderTaxLines = [];
+
             foreach ($cart->lines as $line) {
                 $discountAmount = $line->adjustments->sum('amount');
                 $purchasable = $line->purchasable;
+                $taxLines = $line->taxLines;
 
-                $order->items()->create([
+                $item = $order->items()->create([
                     'name' => $this->resolveItemName($purchasable),
                     'sku' => $purchasable->sku ?? '',
                     'quantity' => $line->quantity,
                     'unit_price_amount' => $line->unit_price_amount,
                     'discount_amount' => $discountAmount,
+                    'tax_amount' => (int) $taxLines->sum('amount'),
                     'product_type' => $line->purchasable_type,
                     'product_id' => $line->purchasable_id,
                 ]);
+
+                // The order's tax lines are the exact rows the pipelines wrote
+                // under the cart lock, never a recomputation: the invoice
+                // breakdown always reconciles with the total charged.
+                foreach ($taxLines as $taxLine) {
+                    $orderTaxLines[] = [
+                        'taxable_type' => $item->getMorphClass(),
+                        'taxable_id' => $item->id,
+                        'code' => $taxLine->code,
+                        'name' => $taxLine->name,
+                        'rate' => $taxLine->rate,
+                        'amount' => $taxLine->amount,
+                        'tax_rate_id' => $taxLine->tax_rate_id,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
 
                 // Reserve stock under a row lock inside the order transaction:
                 // a shortfall aborts the whole checkout so two buyers can never
@@ -130,7 +151,9 @@ final readonly class CreateOrderFromCartAction
                 }
             }
 
-            $this->createOrderTaxLines->execute($order);
+            if ($orderTaxLines !== []) {
+                OrderTaxLine::query()->insert($orderTaxLines);
+            }
 
             $this->reservePromotions($applied, $cart, $order);
 
