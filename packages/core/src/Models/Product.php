@@ -319,7 +319,7 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
     #[Scope]
     protected function publish(Builder $query): void
     {
-        $query->whereDate('published_at', '<=', now())
+        $query->where('published_at', '<=', now())
             ->where('is_visible', true);
     }
 
