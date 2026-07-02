@@ -85,6 +85,51 @@ describe(AdministratorsList::class, function (): void {
             ->assertTableActionHidden('delete', $this->adminUser);
     });
 
+    it('denies the delete action for a non-admin even when mounted directly', function (): void {
+        $manager = User::factory()->create();
+        $manager->assignRole(config('shopper.admin.roles.manager'));
+        $manager->givePermissionTo('system.users');
+        $this->actingAs($manager);
+
+        Livewire::test(AdministratorsList::class)
+            ->loadTable()
+            ->call('mountAction', 'delete', [], ['table' => true, 'recordKey' => $this->adminUser->getKey()]);
+
+        expect(User::query()->find($this->adminUser->id))->not->toBeNull();
+    });
+
+    it('denies the delete action on the last remaining admin even when mounted directly', function (): void {
+        $secondAdmin = User::factory()->create();
+        $secondAdmin->assignRole(config('shopper.admin.roles.admin'));
+        $this->actingAs($secondAdmin);
+
+        $this->adminUser->delete();
+
+        Livewire::test(AdministratorsList::class)
+            ->loadTable()
+            ->call('mountAction', 'delete', [], ['table' => true, 'recordKey' => $secondAdmin->getKey()]);
+
+        expect(User::query()->find($secondAdmin->id))->not->toBeNull();
+    });
+
+    it('denies the bulk delete action for a non-admin even when mounted directly', function (): void {
+        $manager = User::factory()->create();
+        $manager->assignRole(config('shopper.admin.roles.manager'));
+        $manager->givePermissionTo('system.users');
+        $this->actingAs($manager);
+
+        $editorRole = Role::create(['name' => 'editor', 'display_name' => 'Editor']);
+        $editor = User::factory()->create();
+        $editor->assignRole($editorRole->name);
+
+        Livewire::test(AdministratorsList::class)
+            ->loadTable()
+            ->set('selectedTableRecords', [(string) $editor->getKey()])
+            ->call('mountAction', 'delete', [], ['table' => true, 'bulk' => true]);
+
+        expect(User::query()->find($editor->id))->not->toBeNull();
+    });
+
     it('sends notification when copyUserId action is triggered', function (): void {
         $manager = User::factory()->create();
         $manager->assignRole(config('shopper.admin.roles.manager'));

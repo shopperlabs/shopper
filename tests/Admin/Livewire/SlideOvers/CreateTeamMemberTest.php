@@ -150,9 +150,9 @@ describe(CreateTeamMember::class, function (): void {
         expect($newUser->hasRole($secondRole->name))->toBeTrue();
     });
 
-    it('blocks `store` for users without `system.settings`', function (): void {
+    it('blocks `store` for users without `system.users`', function (): void {
         $reader = User::factory()->create();
-        $reader->givePermissionTo('system.users');
+        $reader->givePermissionTo('system.settings');
         $this->actingAs($reader);
 
         $initialCount = User::query()->count();
