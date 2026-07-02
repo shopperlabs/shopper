@@ -51,14 +51,14 @@ trait RespondsWithCart
     }
 
     /**
-     * Every cart response carries the totals computed by the cart pipelines,
-     * so a single GET is enough to render the cart. Relations are reloaded
-     * after the run because the pipelines rewrite adjustments and tax lines;
-     * whether they are serialized is up to the client through `include`.
+     * Every cart response carries the cart totals, so a single GET is enough
+     * to render the cart. A fresh cart is served from its persisted rows with
+     * zero writes; a mutated or aged cart runs the pipelines once, in which
+     * case the reload below picks up the rewritten adjustments and tax lines.
      */
     protected function cartResource(Cart $cart): CartResource
     {
-        $context = resolve(CartManager::class)->calculate($cart);
+        $context = resolve(CartManager::class)->totals($cart);
 
         $cart->load(['lines.purchasable', 'lines.adjustments', 'lines.taxLines', 'addresses.country', 'promotions']);
 

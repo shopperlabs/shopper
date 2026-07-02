@@ -64,6 +64,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Totals Freshness
+    |--------------------------------------------------------------------------
+    |
+    | How many minutes the persisted cart totals stay fresh. Reads within the
+    | window are served from the stored lines without running the calculation
+    | pipeline; older or invalidated carts are recalculated once on read.
+    |
+    */
+
+    'totals_ttl_minutes' => 15,
+
+    /*
+    |--------------------------------------------------------------------------
     | Cart Pruning
     |--------------------------------------------------------------------------
     |
