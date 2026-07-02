@@ -95,7 +95,7 @@ class AdministratorsList extends Component implements HasActions, HasSchemas, Ha
                         ->label(__('shopper::pages/settings/staff.delete_user'))
                         ->icon(Untitledui::Trash03)
                         ->color('danger')
-                        ->visible(fn (ShopperUser $record): bool => $this->canDelete($record))
+                        ->authorize(fn (ShopperUser $record): bool => $this->canDelete($record))
                         ->successNotificationTitle(__('shopper::notifications.users_roles.admin_deleted')),
                 ])
                     ->tooltip(__('shopper::words.actions')),
@@ -108,7 +108,7 @@ class AdministratorsList extends Component implements HasActions, HasSchemas, Ha
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
                     ->requiresConfirmation()
-                    ->visible(fn (): bool => shopper()->auth()->user()->isAdmin()) // @phpstan-ignore-line
+                    ->authorize(fn (): bool => shopper()->auth()->user()->isAdmin()) // @phpstan-ignore-line
                     ->action(function (Collection $records): void {
                         $records->each->delete();
 
