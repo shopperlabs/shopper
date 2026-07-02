@@ -34,6 +34,11 @@ final readonly class CalculateTax
             $discountAmount = (int) $line->adjustments->sum('amount');
             $taxableAmount = ($context->lineSubtotals[$line->id] ?? 0) - $discountAmount;
 
+            // Clear before the taxable guard: a line discounted to zero since
+            // the last run must not keep stale tax lines behind, they would
+            // otherwise be frozen onto the order.
+            $line->taxLines()->delete();
+
             if ($taxableAmount <= 0) {
                 continue;
             }
@@ -41,7 +46,6 @@ final readonly class CalculateTax
             $adapter = new CartLineTaxAdapter($line, $taxableAmount);
             $taxLines = $this->calculator->calculate($adapter, $taxContext);
 
-            $line->taxLines()->delete();
             $lineTaxTotal = 0;
 
             foreach ($taxLines as $taxLine) {
