@@ -26,6 +26,7 @@ use Shopper\Core\Models\Contracts\InventoryHistory as InventoryHistoryContract;
  * @property-read int $stockable_id
  * @property-read string $reference_type
  * @property-read int $reference_id
+ * @property-read ?CarbonInterface $released_at
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read Inventory $inventory

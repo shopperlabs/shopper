@@ -135,12 +135,12 @@ describe('StockRestorationTest', function (): void {
             ->orderBy('id')
             ->get();
 
-        // One reservation (-6) + one restoration (+6)
+        // One reservation (-6) by the customer + one system restoration (+6)
         expect($histories)->toHaveCount(2)
             ->and($histories[0]->quantity)->toBe(-6)
             ->and($histories[0]->user_id)->toBe($this->user->id)
             ->and($histories[1]->quantity)->toBe(6)
-            ->and($histories[1]->user_id)->toBe($this->user->id);
+            ->and($histories[1]->user_id)->toBeNull();
     });
 
     it('restores stock to the correct inventories after a split reservation is cancelled', function (): void {
