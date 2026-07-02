@@ -14,12 +14,14 @@ use Shopper\Cart\Events\CartCompleted;
 use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Exceptions\DiscountLimitReachedException;
 use Shopper\Cart\Exceptions\InsufficientStockException;
+use Shopper\Cart\Exceptions\PriceChangedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartAddress;
 use Shopper\Cart\Models\CartPromotion;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Actions\ReserveCampaignBudget;
+use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Contracts\Order;
@@ -60,6 +62,8 @@ final readonly class CreateOrderFromCartAction
             if ($cart->isCompleted()) {
                 throw new CartCompletedException;
             }
+
+            $this->revalidatePrices($cart);
 
             $context = $this->cartManager->calculate($cart);
 
@@ -175,6 +179,41 @@ final readonly class CreateOrderFromCartAction
 
             return $order;
         });
+    }
+
+    private function revalidatePrices(Cart $cart): void
+    {
+        $cart->loadMissing('lines.purchasable.prices');
+
+        foreach ($cart->lines as $line) {
+            $purchasable = $line->purchasable;
+
+            if (! $purchasable instanceof Priceable) {
+                continue;
+            }
+
+            $price = $purchasable->getPrice($cart->currency_code);
+
+            // No resolvable live price means the price cannot be revalidated,
+            // not that it dropped to zero: keep the frozen amount. A genuinely
+            // free item carries a zero-amount price row and is revalidated.
+            if ($price === null) {
+                continue;
+            }
+
+            $live = (int) $price->amount;
+            $frozen = (int) $line->unit_price_amount;
+
+            if ($live === $frozen) {
+                continue;
+            }
+
+            if ($live > $frozen) {
+                throw new PriceChangedException($purchasable, $frozen, $live);
+            }
+
+            $line->update(['unit_price_amount' => $live]);
+        }
     }
 
     /**
