@@ -21,15 +21,15 @@ final class CartTransferController
      * Transfer a guest cart to the authenticated customer.
      *
      * Used when a guest signs in mid checkout: the cart they built is attached
-     * to their account. Idempotent for a cart they already own, refused for a
-     * cart that belongs to another customer.
+     * to their account, and folded into the cart they already owned when one
+     * exists. The response carries the resulting cart; persist its id, the
+     * guest id is gone after a merge. Idempotent for a cart they already own,
+     * refused for a cart that belongs to another customer.
      */
     public function __invoke(Request $request, string $cartId): JsonApiResource
     {
-        $cart = $this->findCartOrFail($cartId);
-
-        $this->action->execute(
-            cart: $cart,
+        $cart = $this->action->execute(
+            cart: $this->findCartOrFail($cartId),
             customerId: (int) $request->user()->getAuthIdentifier(),
         );
 

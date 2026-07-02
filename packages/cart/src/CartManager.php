@@ -260,6 +260,65 @@ final readonly class CartManager
         });
     }
 
+    /**
+     * Fold a guest cart into the cart a customer already owns, the standard
+     * expectation when signing in mid shopping. Quantities of the same
+     * purchasable are summed, other lines move over re-priced in the target
+     * currency, applied code promotions carry over without duplicating, and
+     * the emptied source cart is deleted. Stock is not guarded here: the
+     * checkout reservation remains the gate, exactly as for a stale cart.
+     *
+     * @throws Throwable
+     */
+    public function merge(Cart $source, Cart $target): Cart
+    {
+        $this->guardCompleted($source);
+        $this->guardCompleted($target);
+        $this->invalidateTotals($target);
+
+        return DB::transaction(function () use ($source, $target): Cart {
+            $source->loadMissing(['lines.purchasable.prices', 'promotions']);
+
+            foreach ($source->lines as $line) {
+                $existing = $target->lines()
+                    ->where('purchasable_type', $line->purchasable_type)
+                    ->where('purchasable_id', $line->purchasable_id)
+                    ->lockForUpdate()
+                    ->first();
+
+                if ($existing) {
+                    $existing->update(['quantity' => $existing->quantity + $line->quantity]);
+                    $line->delete();
+
+                    continue;
+                }
+
+                $purchasable = $line->purchasable;
+                $price = $source->currency_code === $target->currency_code
+                    ? null
+                    : ($purchasable instanceof Priceable ? $purchasable->getPrice($target->currency_code) : null);
+
+                $line->update([
+                    'cart_id' => $target->id,
+                    ...($source->currency_code === $target->currency_code
+                        ? []
+                        : ['unit_price_amount' => $price ? $price->amount : 0]),
+                ]);
+            }
+
+            foreach ($source->promotions as $promotion) {
+                $target->promotions()->firstOrCreate(
+                    ['discount_id' => $promotion->discount_id],
+                    ['source' => $promotion->source, 'code' => $promotion->code],
+                );
+            }
+
+            $source->delete();
+
+            return $target;
+        });
+    }
+
     public function applyCoupon(Cart $cart, string $code): void
     {
         $this->guardCompleted($cart);
