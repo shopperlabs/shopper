@@ -5,21 +5,19 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Number;
 use Shopper\Core\Models\Currency;
-use Shopper\Core\Models\Order;
 use Shopper\Core\Models\Setting;
 
 if (! function_exists('generate_number')) {
-    function generate_number(): string
+    /**
+     * Formats an order number from a caller-supplied sequence. The sequence
+     * must come from a source that is unique under concurrency, such as the
+     * order's own auto-increment id, never from a max-plus-one read.
+     */
+    function generate_number(int $sequence): string
     {
-        /** @var ?Order $lastOrder */
-        $lastOrder = Order::query()->orderBy('id', 'desc')
-            ->limit(1)
-            ->first();
-
         $generator = config('shopper.orders.generator');
 
-        $last = $lastOrder ? $lastOrder->id : 0;
-        $next = $generator['start_sequence_from'] + $last;
+        $next = $generator['start_sequence_from'] + $sequence;
 
         $separator = $generator['separator'];
         $sequence = mb_str_pad((string) $next, $generator['pad_length'], $generator['pad_string'], \STR_PAD_LEFT);
