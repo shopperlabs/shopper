@@ -199,9 +199,10 @@ class Create extends AbstractPageComponent implements HasActions, HasSchemas
     public function render(): View
     {
         return view('shopper::livewire.pages.customers.create', [
-            'countries' => Cache::get(
+            'countries' => Cache::remember(
                 key: 'countries-settings',
-                default: fn (): Collection => Country::query()->orderBy('name')->get()
+                ttl: now()->addDay(),
+                callback: fn (): Collection => Country::query()->orderBy('name')->get()
             ),
         ])
             ->title(__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')]));

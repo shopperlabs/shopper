@@ -54,6 +54,7 @@ final class TopSellingProducts extends Component
                     ->where('oi.product_type', '=', $variantClass);
             })
             ->where('o.payment_status', PaymentStatus::Paid->value)
+            ->where('o.created_at', '>=', now()->subDays(90))
             ->selectRaw('COALESCE(pv.product_id, oi.product_id) as parent_product_id, SUM(oi.quantity) as total_sales')
             ->groupBy('parent_product_id')
             ->orderByDesc('total_sales')

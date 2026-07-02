@@ -52,15 +52,13 @@ final class StatCards extends Component
         $currentMonth = (int) resolve(Order::class)::query()
             ->where('payment_status', PaymentStatus::Paid)
             ->where('currency_code', $currency)
-            ->whereMonth('created_at', $now->month)
-            ->whereYear('created_at', $now->year)
+            ->whereBetween('created_at', $this->monthRange($now))
             ->sum('price_amount');
 
         $lastMonth = (int) resolve(Order::class)::query()
             ->where('payment_status', PaymentStatus::Paid)
             ->where('currency_code', $currency)
-            ->whereMonth('created_at', $now->copy()->subMonth()->month)
-            ->whereYear('created_at', $now->copy()->subMonth()->year)
+            ->whereBetween('created_at', $this->monthRange($now->copy()->subMonth()))
             ->sum('price_amount');
 
         return [
@@ -78,13 +76,11 @@ final class StatCards extends Component
     private function buildProductsCard(Carbon $now): array
     {
         $current = resolve(ProductContract::class)::query()
-            ->whereMonth('created_at', $now->month)
-            ->whereYear('created_at', $now->year)
+            ->whereBetween('created_at', $this->monthRange($now))
             ->count();
 
         $previous = resolve(ProductContract::class)::query()
-            ->whereMonth('created_at', $now->copy()->subMonth()->month)
-            ->whereYear('created_at', $now->copy()->subMonth()->year)
+            ->whereBetween('created_at', $this->monthRange($now->copy()->subMonth()))
             ->count();
 
         return [
@@ -103,14 +99,12 @@ final class StatCards extends Component
     {
         $current = resolve(Order::class)::query()
             ->where('payment_status', PaymentStatus::Paid)
-            ->whereMonth('created_at', $now->month)
-            ->whereYear('created_at', $now->year)
+            ->whereBetween('created_at', $this->monthRange($now))
             ->count();
 
         $previous = resolve(Order::class)::query()
             ->where('payment_status', PaymentStatus::Paid)
-            ->whereMonth('created_at', $now->copy()->subMonth()->month)
-            ->whereYear('created_at', $now->copy()->subMonth()->year)
+            ->whereBetween('created_at', $this->monthRange($now->copy()->subMonth()))
             ->count();
 
         return [
@@ -133,14 +127,12 @@ final class StatCards extends Component
 
         $current = $userModel::query()
             ->scopes('customers')
-            ->whereMonth('created_at', $now->month)
-            ->whereYear('created_at', $now->year)
+            ->whereBetween('created_at', $this->monthRange($now))
             ->count();
 
         $previous = $userModel::query()
             ->scopes('customers')
-            ->whereMonth('created_at', $now->copy()->subMonth()->month)
-            ->whereYear('created_at', $now->copy()->subMonth()->year)
+            ->whereBetween('created_at', $this->monthRange($now->copy()->subMonth()))
             ->count();
 
         return [
@@ -170,5 +162,13 @@ final class StatCards extends Component
             'change' => abs($change),
             'trend' => $change > 0 ? 'up' : ($change < 0 ? 'down' : 'neutral'),
         ];
+    }
+
+    /**
+     * @return array{0: Carbon, 1: Carbon}
+     */
+    private function monthRange(Carbon $month): array
+    {
+        return [$month->copy()->startOfMonth(), $month->copy()->endOfMonth()];
     }
 }

@@ -23,6 +23,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Url;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\OrderStatus;
@@ -56,20 +57,13 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
      */
     public function getTabs(): array
     {
-        $orderModel = resolve(Order::class);
-
         return [
             'all' => Tab::make(__('shopper::words.all'))
                 ->icon(Untitledui::LayersThree)
-                ->badge(fn (): int => $orderModel::query()->count()),
+                ->badge(fn (): int => $this->tabCounts()['all']),
             'open' => Tab::make(__('shopper::words.open'))
                 ->icon(OrderStatus::New->getIcon())
-                ->badge(
-                    fn (): int => $orderModel::query()
-                        ->whereIn('status', [OrderStatus::New, OrderStatus::Processing])
-                        ->where('shipping_status', ShippingStatus::Unfulfilled)
-                        ->count()
-                )
+                ->badge(fn (): int => $this->tabCounts()['open'])
                 ->badgeColor('success')
                 ->query(
                     fn (Builder $query): Builder => $query
@@ -78,11 +72,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                 ),
             'paid' => Tab::make(PaymentStatus::Paid->getLabel())
                 ->icon(PaymentStatus::Paid->getIcon())
-                ->badge(
-                    fn (): int => $orderModel::query()
-                        ->where('payment_status', PaymentStatus::Paid)
-                        ->count()
-                )
+                ->badge(fn (): int => $this->tabCounts()['paid'])
                 ->badgeColor('success')
                 ->query(
                     fn (Builder $query): Builder => $query
@@ -90,11 +80,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                 ),
             'fulfilled' => Tab::make(__('shopper::words.fulfilled'))
                 ->icon(ShippingStatus::Shipped->getIcon())
-                ->badge(
-                    fn (): int => $orderModel::query()
-                        ->whereIn('shipping_status', [ShippingStatus::Shipped, ShippingStatus::PartiallyShipped])
-                        ->count()
-                )
+                ->badge(fn (): int => $this->tabCounts()['fulfilled'])
                 ->badgeColor('info')
                 ->query(
                     fn (Builder $query): Builder => $query
@@ -102,11 +88,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                 ),
             'cancelled' => Tab::make(OrderStatus::Cancelled->getLabel())
                 ->icon(OrderStatus::Cancelled->getIcon())
-                ->badge(
-                    fn (): int => $orderModel::query()
-                        ->where('status', OrderStatus::Cancelled)
-                        ->count()
-                )
+                ->badge(fn (): int => $this->tabCounts()['cancelled'])
                 ->badgeColor('danger')
                 ->query(
                     fn (Builder $query): Builder => $query
@@ -114,17 +96,45 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                 ),
             'archived' => Tab::make(OrderStatus::Archived->getLabel())
                 ->icon(OrderStatus::Archived->getIcon())
-                ->badge(
-                    fn (): int => $orderModel::query()
-                        ->where('status', OrderStatus::Archived)
-                        ->count()
-                )
+                ->badge(fn (): int => $this->tabCounts()['archived'])
                 ->badgeColor('gray')
                 ->query(
                     fn (Builder $query): Builder => $query
                         ->where('status', OrderStatus::Archived)
                 ),
         ];
+    }
+
+    /**
+     * One cached aggregate for every tab badge, instead of six live counts
+     * (one of them unfiltered) on every page load.
+     *
+     * @return array{all: int, open: int, paid: int, fulfilled: int, cancelled: int, archived: int}
+     */
+    public function tabCounts(): array
+    {
+        return Cache::flexible('admin:orders:tab-counts', [60, 300], function (): array {
+            $orders = resolve(Order::class)::query()
+                ->toBase()
+                ->select(['status', 'payment_status', 'shipping_status'])
+                ->selectRaw('COUNT(*) as aggregate')
+                ->groupBy('status', 'payment_status', 'shipping_status')
+                ->get();
+
+            $sum = fn (callable $matches): int => (int) $orders
+                ->filter(fn (object $row): bool => $matches($row))
+                ->sum('aggregate');
+
+            return [
+                'all' => (int) $orders->sum('aggregate'),
+                'open' => $sum(fn (object $row): bool => in_array($row->status, [OrderStatus::New->value, OrderStatus::Processing->value], true)
+                    && $row->shipping_status === ShippingStatus::Unfulfilled->value),
+                'paid' => $sum(fn (object $row): bool => $row->payment_status === PaymentStatus::Paid->value),
+                'fulfilled' => $sum(fn (object $row): bool => in_array($row->shipping_status, [ShippingStatus::Shipped->value, ShippingStatus::PartiallyShipped->value], true)),
+                'cancelled' => $sum(fn (object $row): bool => $row->status === OrderStatus::Cancelled->value),
+                'archived' => $sum(fn (object $row): bool => $row->status === OrderStatus::Archived->value),
+            ];
+        });
     }
 
     public function table(Table $table): Table

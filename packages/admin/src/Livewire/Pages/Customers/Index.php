@@ -19,6 +19,7 @@ use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Computed;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\OrderStatus;
@@ -44,58 +45,15 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
     }
 
     /**
+     * `#[Computed]` only memoizes within one Livewire lifecycle: the shared
+     * cache below is what keeps the full-table aggregate off every page view.
+     *
      * @return array{total: int, new_count: int, active_count: int, active_percent: int, avg_ltv: int}
      */
     #[Computed]
     public function stats(): array
     {
-        $userModel = config('auth.providers.users.model');
-        $usersTable = (new $userModel)->getTable();
-
-        $activeOrders = resolve(Order::class)::query()
-            ->select('customer_id')
-            ->whereIn('status', [
-                OrderStatus::Processing,
-                OrderStatus::Completed,
-            ])
-            ->where('payment_status', PaymentStatus::Paid)
-            ->groupBy('customer_id');
-
-        $currencyOrders = resolve(Order::class)::query()
-            ->select('customer_id')
-            ->selectRaw('SUM(price_amount) as per_customer_total')
-            ->whereIn('status', [
-                OrderStatus::Processing,
-                OrderStatus::Completed,
-            ])
-            ->where('payment_status', PaymentStatus::Paid)
-            ->where('currency_code', shopper_currency())
-            ->groupBy('customer_id');
-
-        /** @var object{total: int, new_count: int, active_count: int, avg_ltv: float|string|null}|null $row */
-        $row = $userModel::query()
-            ->customers()
-            ->leftJoinSub($activeOrders, 'active_orders', 'active_orders.customer_id', '=', "{$usersTable}.id")
-            ->leftJoinSub($currencyOrders, 'currency_orders', 'currency_orders.customer_id', '=', "{$usersTable}.id")
-            ->selectRaw(
-                "COUNT(DISTINCT {$usersTable}.id) as total,
-                 COUNT(DISTINCT CASE WHEN {$usersTable}.created_at >= ? THEN {$usersTable}.id END) as new_count,
-                 COUNT(DISTINCT CASE WHEN active_orders.customer_id IS NOT NULL THEN {$usersTable}.id END) as active_count,
-                 COALESCE(AVG(currency_orders.per_customer_total), 0) as avg_ltv",
-                [now()->subDays(30)->toDateTimeString()]
-            )
-            ->first();
-
-        $total = (int) ($row->total ?? 0);
-        $active = (int) ($row->active_count ?? 0);
-
-        return [
-            'total' => $total,
-            'new_count' => (int) ($row->new_count ?? 0),
-            'active_count' => $active,
-            'active_percent' => $total > 0 ? (int) round(($active / $total) * 100) : 0,
-            'avg_ltv' => (int) round((float) ($row->avg_ltv ?? 0)),
-        ];
+        return Cache::flexible('admin:customers:stats:'.shopper_currency(), [300, 1800], fn (): array => $this->computeStats());
     }
 
     public function table(Table $table): Table
@@ -180,5 +138,59 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
     {
         return view('shopper::livewire.pages.customers.index')
             ->title(__('shopper::pages/customers.menu'));
+    }
+
+    /**
+     * @return array{total: int, new_count: int, active_count: int, active_percent: int, avg_ltv: int}
+     */
+    private function computeStats(): array
+    {
+        $userModel = config('auth.providers.users.model');
+        $usersTable = (new $userModel)->getTable();
+
+        $activeOrders = resolve(Order::class)::query()
+            ->select('customer_id')
+            ->whereIn('status', [
+                OrderStatus::Processing,
+                OrderStatus::Completed,
+            ])
+            ->where('payment_status', PaymentStatus::Paid)
+            ->groupBy('customer_id');
+
+        $currencyOrders = resolve(Order::class)::query()
+            ->select('customer_id')
+            ->selectRaw('SUM(price_amount) as per_customer_total')
+            ->whereIn('status', [
+                OrderStatus::Processing,
+                OrderStatus::Completed,
+            ])
+            ->where('payment_status', PaymentStatus::Paid)
+            ->where('currency_code', shopper_currency())
+            ->groupBy('customer_id');
+
+        /** @var object{total: int, new_count: int, active_count: int, avg_ltv: float|string|null}|null $row */
+        $row = $userModel::query()
+            ->customers()
+            ->leftJoinSub($activeOrders, 'active_orders', 'active_orders.customer_id', '=', "{$usersTable}.id")
+            ->leftJoinSub($currencyOrders, 'currency_orders', 'currency_orders.customer_id', '=', "{$usersTable}.id")
+            ->selectRaw(
+                "COUNT(DISTINCT {$usersTable}.id) as total,
+                 COUNT(DISTINCT CASE WHEN {$usersTable}.created_at >= ? THEN {$usersTable}.id END) as new_count,
+                 COUNT(DISTINCT CASE WHEN active_orders.customer_id IS NOT NULL THEN {$usersTable}.id END) as active_count,
+                 COALESCE(AVG(currency_orders.per_customer_total), 0) as avg_ltv",
+                [now()->subDays(30)->toDateTimeString()]
+            )
+            ->first();
+
+        $total = (int) ($row->total ?? 0);
+        $active = (int) ($row->active_count ?? 0);
+
+        return [
+            'total' => $total,
+            'new_count' => (int) ($row->new_count ?? 0),
+            'active_count' => $active,
+            'active_percent' => $total > 0 ? (int) round(($active / $total) * 100) : 0,
+            'avg_ltv' => (int) round((float) ($row->avg_ltv ?? 0)),
+        ];
     }
 }
