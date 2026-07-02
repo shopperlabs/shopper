@@ -545,6 +545,28 @@ it('transfers a guest cart to the authenticated customer', function (): void {
     expect($cart->refresh()->customer_id)->toBe($customer->id);
 });
 
+it('folds the guest cart into the cart the customer already owns on transfer', function (): void {
+    $customer = User::factory()->create();
+
+    $guestCart = Cart::factory()->create(['currency_code' => 'USD']);
+    $ownedCart = Cart::factory()->create(['currency_code' => 'USD', 'customer_id' => $customer->id]);
+
+    $cartManager = resolve(CartManager::class);
+    $cartManager->add($guestCart, $this->product, quantity: 2);
+    $cartManager->add($ownedCart, $this->product, quantity: 1);
+
+    Sanctum::actingAs($customer, ['store']);
+
+    $this->postJson("/store/carts/{$guestCart->public_id}/transfer")
+        ->assertOk()
+        ->assertJsonPath('data.id', (string) $ownedCart->public_id);
+
+    expect($ownedCart->lines()->first()->quantity)->toBe(3)
+        ->and(Cart::query()->find($guestCart->id))->toBeNull();
+
+    $this->getJson("/store/carts/{$guestCart->public_id}")->assertNotFound();
+});
+
 it('is idempotent when transferring an already owned cart', function (): void {
     $customer = User::factory()->create();
     $cart = Cart::factory()->create(['currency_code' => 'USD', 'customer_id' => $customer->id]);
