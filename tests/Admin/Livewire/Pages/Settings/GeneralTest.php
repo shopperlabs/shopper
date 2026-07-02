@@ -74,4 +74,21 @@ describe(General::class, function (): void {
 
         Storage::disk($disk)->assertExists($logo);
     });
+
+    it('rejects an SVG file for the logo and cover uploads', function (): void {
+        Storage::fake(config('shopper.media.storage.disk_name'));
+
+        $svg = UploadedFile::fake()->createWithContent(
+            'payload.svg',
+            '<svg xmlns="http://www.w3.org/2000/svg" onload="alert(1)"></svg>'
+        );
+
+        Livewire::test(General::class)
+            ->fillForm([
+                'logo' => $svg,
+                'cover' => $svg,
+            ])
+            ->call('store')
+            ->assertHasFormErrors(['logo', 'cover']);
+    });
 })->group('livewire', 'settings');
