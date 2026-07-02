@@ -23,12 +23,15 @@ use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Models\Contracts\Stockable;
 use Shopper\Core\Models\Discount;
+use Shopper\Core\Taxes\TaxCalculationContext;
+use Shopper\Core\Taxes\TaxCalculator;
 use Throwable;
 
 final readonly class CartManager
 {
     public function __construct(
         private CartPipelineRunner $pipelineRunner,
+        private TaxCalculator $taxCalculator,
     ) {}
 
     /**
@@ -40,6 +43,7 @@ final readonly class CartManager
     {
         $this->guardQuantity($quantity);
         $this->guardCompleted($cart);
+        $this->invalidateTotals($cart);
 
         return DB::transaction(function () use ($cart, $purchasable, $quantity, $metadata): CartLine {
             $existing = $cart->lines()
@@ -79,6 +83,7 @@ final readonly class CartManager
     public function update(Cart $cart, int $lineId, array $data): CartLine
     {
         $this->guardCompleted($cart);
+        $this->invalidateTotals($cart);
 
         return DB::transaction(function () use ($cart, $lineId, $data): CartLine {
             /** @var CartLine $line */
@@ -98,6 +103,7 @@ final readonly class CartManager
     public function remove(Cart $cart, int $lineId): void
     {
         $this->guardCompleted($cart);
+        $this->invalidateTotals($cart);
 
         $cart->lines()->findOrFail($lineId)->delete();
     }
@@ -105,13 +111,59 @@ final readonly class CartManager
     public function clear(Cart $cart): void
     {
         $this->guardCompleted($cart);
+        $this->invalidateTotals($cart);
 
         $cart->lines()->delete();
     }
 
     public function calculate(Cart $cart): CartPipelineContext
     {
-        return $this->pipelineRunner->run($cart);
+        $context = $this->pipelineRunner->run($cart);
+
+        $cart->updateQuietly(['calculated_at' => now()]);
+
+        return $context;
+    }
+
+    /**
+     * The read path of the cart totals: rebuilds the pipeline context from the
+     * rows the last calculation persisted, without a single write. A cart that
+     * was mutated since (invalidated) or whose totals aged past the freshness
+     * window is recalculated once, so a time-bound automatic promotion can
+     * never stay displayed forever. Checkout never uses this path: the money
+     * charged is always recomputed under the cart lock.
+     */
+    public function totals(Cart $cart): CartPipelineContext
+    {
+        $ttl = (int) config('shopper.cart.totals_ttl_minutes', 15);
+
+        if ($cart->calculated_at === null || $cart->calculated_at->lt(now()->subMinutes($ttl))) {
+            return $this->calculate($cart);
+        }
+
+        $cart->loadMissing(['lines.adjustments', 'lines.taxLines', 'addresses.country']);
+
+        $context = new CartPipelineContext($cart);
+
+        foreach ($cart->lines as $line) {
+            $lineSubtotal = $line->unit_price_amount * $line->quantity;
+
+            $context->lineSubtotals[$line->id] = $lineSubtotal;
+            $context->subtotal += $lineSubtotal;
+            $context->discountTotal += (int) $line->adjustments->sum('amount');
+            $context->taxTotal += (int) $line->taxLines->sum('amount');
+        }
+
+        $context->taxInclusive = $this->resolveTaxInclusive($cart);
+        $context->shippingTotal = $cart->shipping_amount ?? 0;
+
+        $goodsTotal = max(0, $context->taxInclusive
+            ? $context->subtotal - $context->discountTotal
+            : $context->subtotal - $context->discountTotal + $context->taxTotal);
+
+        $context->total = $goodsTotal + $context->shippingTotal;
+
+        return $context;
     }
 
     /**
@@ -120,6 +172,7 @@ final readonly class CartManager
     public function addAddress(Cart $cart, AddressType $type, array $data): void
     {
         $this->guardCompleted($cart);
+        $this->invalidateTotals($cart);
 
         $cart->addresses()->updateOrCreate(
             ['type' => $type],
@@ -135,6 +188,7 @@ final readonly class CartManager
     public function setShippingMethod(Cart $cart, string $optionId, int $amount): void
     {
         $this->guardCompleted($cart);
+        $this->invalidateTotals($cart);
 
         $cart->update([
             'shipping_option_id' => $optionId,
@@ -184,6 +238,7 @@ final readonly class CartManager
     public function changeCurrency(Cart $cart, string $currencyCode): void
     {
         $this->guardCompleted($cart);
+        $this->invalidateTotals($cart);
 
         DB::transaction(function () use ($cart, $currencyCode): void {
             $cart->loadMissing('lines.purchasable.prices');
@@ -208,6 +263,7 @@ final readonly class CartManager
     public function applyCoupon(Cart $cart, string $code): void
     {
         $this->guardCompleted($cart);
+        $this->invalidateTotals($cart);
 
         $discount = Discount::query()->where('code', $code)->first();
 
@@ -215,9 +271,6 @@ final readonly class CartManager
             throw new InvalidDiscountException(__('shopper-cart::exceptions.discount_not_found'));
         }
 
-        // A cart can carry several code promotions; the resolver decides which
-        // actually apply. The unique (cart_id, discount_id) row keeps re-applying
-        // the same code a no-op instead of a doubled discount.
         $cart->promotions()->firstOrCreate(
             ['discount_id' => $discount->id],
             ['source' => PromotionSource::Code->value, 'code' => $code],
@@ -233,6 +286,7 @@ final readonly class CartManager
     public function removeCoupon(Cart $cart, ?string $code = null): void
     {
         $this->guardCompleted($cart);
+        $this->invalidateTotals($cart);
 
         $cart->promotions()
             ->where('source', PromotionSource::Code->value)
@@ -251,6 +305,29 @@ final readonly class CartManager
         if ($cart->isCompleted()) {
             throw new CartCompletedException;
         }
+    }
+
+    private function invalidateTotals(Cart $cart): void
+    {
+        $cart->updateQuietly(['calculated_at' => null]);
+    }
+
+    private function resolveTaxInclusive(Cart $cart): bool
+    {
+        $shippingAddress = $cart->shippingAddress();
+        $countryCode = $shippingAddress?->country?->cca2;
+
+        if (! $countryCode) {
+            return false;
+        }
+
+        $zone = $this->taxCalculator->resolveZone(new TaxCalculationContext(
+            countryCode: $countryCode,
+            provinceCode: $shippingAddress->state,
+            customerId: $cart->customer_id,
+        ));
+
+        return $zone->is_tax_inclusive ?? false;
     }
 
     private function guardQuantity(int $quantity): void

@@ -25,6 +25,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?string $public_id
  * @property-read string $currency_code
  * @property-read ?string $email
+ * @property-read ?CarbonInterface $calculated_at
  * @property-read ?CarbonInterface $completed_at
  * @property-read ?array<string, mixed> $metadata
  * @property-read ?int $customer_id
@@ -156,6 +157,7 @@ class Cart extends Model implements CartContract
     protected function casts(): array
     {
         return [
+            'calculated_at' => 'datetime',
             'completed_at' => 'datetime',
             'metadata' => 'array',
             'payment_session' => 'array',
