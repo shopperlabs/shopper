@@ -22,6 +22,7 @@ use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Traits\HasModelContract;
 use Shopper\Core\Traits\HasOrderStatusTransitions;
+use Shopper\Core\Traits\HasPaymentStatusTransitions;
 
 /**
  * @property-read int $id
@@ -72,6 +73,7 @@ class Order extends Model implements OrderContract
 
     use HasModelContract;
     use HasOrderStatusTransitions;
+    use HasPaymentStatusTransitions;
     use HasPublicId;
     use SoftDeletes;
 

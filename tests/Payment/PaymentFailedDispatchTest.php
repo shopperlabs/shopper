@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Event;
+use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
@@ -53,7 +54,10 @@ it('dispatches `PaymentFailed` when a capture fails', function (): void {
     Event::fake([PaymentFailed::class]);
 
     $method = PaymentMethod::factory()->create(['driver' => 'failing']);
-    $order = Order::factory()->create(['payment_method_id' => $method->id]);
+    $order = Order::factory()->create([
+        'payment_method_id' => $method->id,
+        'payment_status' => PaymentStatus::Authorized,
+    ]);
 
     resolve(PaymentProcessingService::class)->capture($order, 'ref_123', amount: 1000);
 
@@ -67,7 +71,11 @@ it('dispatches `PaymentFailed` when a refund fails', function (): void {
     Event::fake([PaymentFailed::class]);
 
     $method = PaymentMethod::factory()->create(['driver' => 'failing']);
-    $order = Order::factory()->create(['payment_method_id' => $method->id]);
+    $order = Order::factory()->create([
+        'payment_method_id' => $method->id,
+        'price_amount' => 5000,
+        'payment_status' => PaymentStatus::Paid,
+    ]);
 
     resolve(PaymentProcessingService::class)->refund($order, 'ref_123', amount: 1000);
 

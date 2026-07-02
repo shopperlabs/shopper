@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Event;
 use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
+use Shopper\Core\Events\Orders\OrderPaid;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
@@ -82,6 +84,13 @@ describe('PaymentWebhookProcessingTest', function (): void {
 
     it('marks the order `PartiallyRefunded` then `Refunded` as refunds accumulate', function (): void {
         $this->service->processWebhook('fake', new WebhookResult(
+            action: 'captured',
+            reference: 'pi_123',
+            amount: 5000,
+            eventId: 'evt_capture',
+        ));
+
+        $this->service->processWebhook('fake', new WebhookResult(
             action: 'refunded',
             reference: 'pi_123',
             amount: 2000,
@@ -139,6 +148,83 @@ describe('PaymentWebhookProcessingTest', function (): void {
 
         expect($this->order->refresh()->status)->toBe(OrderStatus::Cancelled)
             ->and($product->getStock())->toBe(10);
+    });
+
+    it('keeps a refunded order refunded when a late captured event arrives', function (): void {
+        $this->service->processWebhook('fake', new WebhookResult(
+            action: 'captured',
+            reference: 'pi_123',
+            amount: 5000,
+            eventId: 'evt_late_1',
+        ));
+
+        $this->service->processWebhook('fake', new WebhookResult(
+            action: 'refunded',
+            reference: 'pi_123',
+            amount: 5000,
+            eventId: 'evt_late_2',
+        ));
+
+        expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::Refunded);
+
+        $this->service->processWebhook('fake', new WebhookResult(
+            action: 'captured',
+            reference: 'pi_123',
+            amount: 5000,
+            eventId: 'evt_late_3',
+        ));
+
+        expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::Refunded);
+    });
+
+    it('keeps a paid order paid when a late failed event arrives', function (): void {
+        $inventory = Inventory::factory()->create(['is_default' => true, 'priority' => 0]);
+        $product = Product::factory()->standard()->create();
+        $product->mutateStock($inventory->id, 10, event: 'Initial');
+
+        OrderItem::factory()->create([
+            'order_id' => $this->order->id,
+            'product_type' => $product->getMorphClass(),
+            'product_id' => $product->id,
+            'quantity' => 3,
+        ]);
+
+        resolve(StockReserver::class)->reserve($product, 3, $this->order, $this->user->id);
+
+        $this->service->processWebhook('fake', new WebhookResult(
+            action: 'captured',
+            reference: 'pi_123',
+            amount: 5000,
+            eventId: 'evt_ooo_1',
+        ));
+
+        $this->service->processWebhook('fake', new WebhookResult(
+            action: 'failed',
+            reference: 'pi_123',
+            amount: 5000,
+            data: ['failure_message' => 'late failure'],
+            eventId: 'evt_ooo_2',
+        ));
+
+        expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::Paid)
+            ->and($this->order->status)->not->toBe(OrderStatus::Cancelled)
+            ->and($product->getStock())->toBe(7);
+    });
+
+    it('dispatches `OrderPaid` when a captured webhook marks the order paid', function (): void {
+        Event::fake([OrderPaid::class]);
+
+        $this->service->processWebhook('fake', new WebhookResult(
+            action: 'captured',
+            reference: 'pi_123',
+            amount: 5000,
+            eventId: 'evt_paid_event',
+        ));
+
+        Event::assertDispatched(
+            OrderPaid::class,
+            fn (OrderPaid $event): bool => $event->order->getKey() === $this->order->getKey(),
+        );
     });
 
     it('does nothing when no order matches the reference', function (): void {

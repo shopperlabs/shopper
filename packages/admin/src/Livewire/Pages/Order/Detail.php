@@ -19,7 +19,6 @@ use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Events\Orders\OrderArchived;
 use Shopper\Core\Events\Orders\OrderCancelled;
 use Shopper\Core\Events\Orders\OrderCompleted;
-use Shopper\Core\Events\Orders\OrderPaid;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Payment\Services\PaymentProcessingService;
@@ -103,7 +102,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->authorize('orders.edit')
             ->visible($this->order->isPaymentPending() || $this->order->isPaymentAuthorized())
             ->action(function (): void {
-                $this->order->update(['payment_status' => PaymentStatus::Paid]);
+                $this->order->transitionPaymentTo(PaymentStatus::Paid);
 
                 if ($this->order->isNew()) {
                     $this->order->transitionTo(OrderStatus::Processing);
@@ -111,8 +110,6 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
 
                 $this->order->refresh();
                 $this->dispatch('order.updated');
-
-                event(new OrderPaid($this->order));
 
                 Notification::make()
                     ->title(__('shopper::pages/orders.notifications.paid'))
