@@ -6,6 +6,8 @@ namespace Shopper\Api\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\Cursor;
+use Illuminate\Pagination\CursorPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -99,23 +101,43 @@ trait BuildsApiQueries
     /**
      * Apply the resource allowlist then paginate with the configured page size.
      *
+     * Offset pagination stays the default for classic paged storefronts, with
+     * the page number capped so a deep page can never scan the whole table.
+     * A `page[cursor]` parameter switches to cursor pagination, whose cost is
+     * flat at any depth: the way to walk a very large catalog.
+     *
      * @template TModel of Model
      *
      * @param  Builder<TModel>  $query
      */
-    protected function paginated(string $resource, Builder $query, ?string $defaultSort = null): LengthAwarePaginator
+    protected function paginated(string $resource, Builder $query, ?string $defaultSort = null): CursorPaginator|LengthAwarePaginator
     {
         $default = (int) config('shopper.api.pagination.per_page', 15);
         $max = (int) config('shopper.api.pagination.max_per_page', 100);
+        $maxPage = (int) config('shopper.api.pagination.max_page', 100);
 
         $size = min(max((int) request()->input('page.size', $default), 1), $max);
-        $page = max((int) request()->input('page.number', 1), 1);
 
         $builder = $this->apiQuery($resource, $query);
 
         if ($defaultSort !== null) {
             $builder->defaultSort($defaultSort);
         }
+
+        if (request()->has('page.cursor')) {
+            $encoded = (string) request()->input('page.cursor');
+
+            return $builder
+                ->orderBy($query->getModel()->getKeyName())
+                ->cursorPaginate(
+                    perPage: $size,
+                    cursorName: 'page[cursor]',
+                    cursor: $encoded !== '' ? Cursor::fromEncoded($encoded) : null,
+                )
+                ->withQueryString();
+        }
+
+        $page = min(max((int) request()->input('page.number', 1), 1), $maxPage);
 
         return $builder
             ->paginate(perPage: $size, pageName: 'page[number]', page: $page)

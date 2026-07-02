@@ -3,13 +3,13 @@ import type { JsonApiErrorDocument } from './json-api'
 /**
  * Structured JSON:API query parameters understood by every list/retrieve call,
  * mapped to the query family the Shopper API expects (filter[], sort, include,
- * page[number], page[size], fields[type]).
+ * page[number], page[size], page[cursor], fields[type]).
  */
 export interface RequestParams {
   include?: string[]
   filter?: Record<string, string | number | boolean>
   sort?: string[]
-  page?: { number?: number; size?: number }
+  page?: { number?: number; size?: number; cursor?: string }
   fields?: Record<string, string[]>
 }
 
@@ -51,6 +51,10 @@ export function buildQuery(options?: FetchOptions): string {
 
   if (options.page?.size) {
     search.set('page[size]', String(options.page.size))
+  }
+
+  if (options.page?.cursor !== undefined) {
+    search.set('page[cursor]', options.page.cursor)
   }
 
   for (const [type, list] of Object.entries(options.fields ?? {})) {

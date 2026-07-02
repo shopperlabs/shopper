@@ -300,6 +300,39 @@ it('caps page[size] at the configured maximum', function (): void {
     expect($response->json('data'))->toHaveCount(1);
 });
 
+it('caps page[number] at the configured maximum page', function (): void {
+    config()->set('shopper.api.pagination.max_page', 2);
+    publishedProduct(['name' => 'DeepA']);
+    publishedProduct(['name' => 'DeepB']);
+    publishedProduct(['name' => 'DeepC']);
+
+    $capped = $this->getJson('/store/products?filter[name]=Deep&sort=name&page[size]=1&page[number]=500')->assertOk();
+
+    expect($capped->json('data'))->toHaveCount(1)
+        ->and($capped->json('data.0.attributes.name'))->toBe('DeepB');
+});
+
+it('walks the whole catalog through cursor pagination without overlap', function (): void {
+    publishedProduct(['name' => 'CursorA']);
+    publishedProduct(['name' => 'CursorB']);
+    publishedProduct(['name' => 'CursorC']);
+
+    $names = [];
+    $url = '/store/products?filter[name]=Cursor&sort=name&page[size]=2&page[cursor]=';
+
+    do {
+        $response = $this->getJson($url)->assertOk();
+
+        foreach ($response->json('data') as $product) {
+            $names[] = $product['attributes']['name'];
+        }
+
+        $url = $response->json('links.next');
+    } while ($url !== null);
+
+    expect($names)->toBe(['CursorA', 'CursorB', 'CursorC']);
+});
+
 it('filters and sorts the product list through the allowlist', function (): void {
     publishedProduct(['name' => 'ZzzCatalogBeta']);
     publishedProduct(['name' => 'ZzzCatalogAlpha']);
