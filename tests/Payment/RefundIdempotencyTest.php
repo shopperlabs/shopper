@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
@@ -59,7 +60,11 @@ beforeEach(function (): void {
     });
 
     $method = PaymentMethod::factory()->create(['driver' => 'recording']);
-    $this->order = Order::factory()->create(['payment_method_id' => $method->id, 'price_amount' => 5000]);
+    $this->order = Order::factory()->create([
+        'payment_method_id' => $method->id,
+        'price_amount' => 5000,
+        'payment_status' => PaymentStatus::Paid,
+    ]);
     $this->service = resolve(PaymentProcessingService::class);
 });
 

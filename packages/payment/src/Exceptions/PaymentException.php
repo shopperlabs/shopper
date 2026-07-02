@@ -32,4 +32,14 @@ class PaymentException extends Exception
     {
         return new self("Webhook signature verification failed for [{$driver}].");
     }
+
+    public static function refundNotAllowed(string $status): self
+    {
+        return new self("Cannot refund an order whose payment is [{$status}].");
+    }
+
+    public static function refundExceedsRefundable(int $requested, int $refundable): self
+    {
+        return new self("Cannot refund {$requested}: only {$refundable} remains refundable on this order.");
+    }
 }

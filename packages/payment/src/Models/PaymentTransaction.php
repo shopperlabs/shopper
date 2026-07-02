@@ -29,6 +29,7 @@ use Shopper\Payment\Enum\TransactionType;
  * @property-read array<string, mixed>|null $metadata
  * @property-read ?int $order_id
  * @property-read ?int $payment_method_id
+ * @property-read ?int $user_id
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read ?Order $order

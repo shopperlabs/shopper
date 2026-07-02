@@ -18,6 +18,7 @@ use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
 use Shopper\Payment\Events\PaymentFailed;
+use Shopper\Payment\Exceptions\PaymentException;
 use Shopper\Payment\Facades\Payment;
 use Shopper\Payment\Models\PaymentTransaction;
 
@@ -108,6 +109,15 @@ final class PaymentProcessingService
      */
     public function capture(Order $order, string $reference, ?int $amount = null): PaymentResult
     {
+        if ($order->payment_status === PaymentStatus::Paid) {
+            return new PaymentResult(
+                success: true,
+                status: 'captured',
+                reference: $reference,
+                amount: $amount ?? $order->price_amount,
+            );
+        }
+
         $paymentMethod = $order->paymentMethod;
         $driver = $this->resolveDriver($paymentMethod);
 
@@ -132,6 +142,8 @@ final class PaymentProcessingService
      */
     public function refund(Order $order, string $reference, int $amount, ?string $reason = null): PaymentResult
     {
+        $this->assertRefundable($order, $amount);
+
         $paymentMethod = $order->paymentMethod;
         $driver = $this->resolveDriver($paymentMethod);
 
@@ -285,22 +297,58 @@ final class PaymentProcessingService
             default => null,
         };
 
-        if ($newPaymentStatus !== null) {
-            $order->update(['payment_status' => $newPaymentStatus]);
+        // An invalid transition is skipped, not thrown: webhooks arrive out of
+        // order, and a late `captured` must never pull a refunded order back
+        // to paid. The transaction row above keeps the full audit trail.
+        if ($newPaymentStatus !== null && $order->canTransitionPaymentTo($newPaymentStatus)) {
+            $order->transitionPaymentTo($newPaymentStatus);
         }
     }
 
     private function determineRefundStatus(Order $order): PaymentStatus
     {
-        $totalRefunded = PaymentTransaction::query()
-            ->where('order_id', $order->id)
-            ->where('type', TransactionType::Refund)
+        return $this->refundedTotal($order) >= $this->capturedTotal($order)
+            ? PaymentStatus::Refunded
+            : PaymentStatus::PartiallyRefunded;
+    }
+
+    /**
+     * The domain guard on outgoing refunds, independent of any gateway-side
+     * backstop: the payment must be in a refundable state, and the cumulative
+     * refunds can never exceed what was captured. Orders marked paid manually
+     * carry no capture transaction, so the order total is the ceiling there.
+     */
+    private function assertRefundable(Order $order, int $amount): void
+    {
+        if (! in_array($order->payment_status, [PaymentStatus::Paid, PaymentStatus::PartiallyRefunded], strict: true)) {
+            throw PaymentException::refundNotAllowed($order->payment_status->value);
+        }
+
+        $refundable = $this->capturedTotal($order) - $this->refundedTotal($order);
+
+        if ($amount > $refundable) {
+            throw PaymentException::refundExceedsRefundable($amount, $refundable);
+        }
+    }
+
+    private function capturedTotal(Order $order): int
+    {
+        $captured = (int) PaymentTransaction::query()
+            ->where('order_id', $order->getKey())
+            ->where('type', TransactionType::Capture)
             ->where('status', TransactionStatus::Success)
             ->sum('amount');
 
-        return $totalRefunded >= $order->price_amount
-            ? PaymentStatus::Refunded
-            : PaymentStatus::PartiallyRefunded;
+        return $captured ?: $order->price_amount;
+    }
+
+    private function refundedTotal(Order $order): int
+    {
+        return (int) PaymentTransaction::query()
+            ->where('order_id', $order->getKey())
+            ->where('type', TransactionType::Refund)
+            ->where('status', TransactionStatus::Success)
+            ->sum('amount');
     }
 
     private function recordTransaction(
@@ -314,6 +362,7 @@ final class PaymentProcessingService
         PaymentTransaction::query()->create([
             'order_id' => $order->id,
             'payment_method_id' => $paymentMethod->id,
+            'user_id' => auth()->id(),
             'driver' => $driverCode,
             'type' => $type,
             'status' => $result->success ? TransactionStatus::Success : TransactionStatus::Failed,

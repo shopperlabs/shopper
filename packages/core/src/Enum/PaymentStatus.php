@@ -35,6 +35,26 @@ enum PaymentStatus: string implements HasColor, HasIcon, HasLabel
 
     case Voided = 'voided';
 
+    /**
+     * @return array<string, array<int, self>>
+     */
+    public static function transitions(): array
+    {
+        return [
+            self::Pending->value => [self::Authorized, self::Paid, self::Voided],
+            self::Authorized->value => [self::Paid, self::Voided],
+            self::Paid->value => [self::PartiallyRefunded, self::Refunded],
+            self::PartiallyRefunded->value => [self::PartiallyRefunded, self::Refunded],
+            self::Refunded->value => [],
+            self::Voided->value => [],
+        ];
+    }
+
+    public function canTransitionTo(self $status): bool
+    {
+        return in_array($status, self::transitions()[$this->value] ?? [], strict: true);
+    }
+
     public function getColor(): string
     {
         return match ($this) {

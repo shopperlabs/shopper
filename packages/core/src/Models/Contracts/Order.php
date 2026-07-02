@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Enum\PaymentStatus;
 
 interface Order
 {
@@ -18,6 +19,10 @@ interface Order
     public function canTransitionTo(OrderStatus $status): bool;
 
     public function transitionTo(OrderStatus $status): void;
+
+    public function canTransitionPaymentTo(PaymentStatus $status): bool;
+
+    public function transitionPaymentTo(PaymentStatus $status): void;
 
     public function canBeCancelled(): bool;
 
