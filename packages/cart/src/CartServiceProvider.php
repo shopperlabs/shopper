@@ -12,6 +12,7 @@ use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Cart\Models\Contracts\CartLine as CartLineContract;
+use Shopper\Cart\Pipelines\CartPipeline;
 use Shopper\Cart\Pipelines\CartPipelineRunner;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Spatie\LaravelPackageTools\Package;
@@ -48,6 +49,7 @@ final class CartServiceProvider extends PackageServiceProvider
         $this->registerDatabase();
         $this->registerModelBindings();
 
+        $this->app->singleton(CartPipeline::class);
         $this->app->singleton(CartPipelineRunner::class);
         $this->app->singleton(DiscountValidator::class);
         $this->app->singleton(PromotionResolver::class);

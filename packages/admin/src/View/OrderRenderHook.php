@@ -12,6 +12,10 @@ final class OrderRenderHook
 
     public const string DETAIL_HEADER_AFTER = 'shopper::order.detail.header.after';
 
+    public const string DETAIL_CONTENT_BEFORE = 'shopper::order.detail.content.before';
+
+    public const string DETAIL_CONTENT_AFTER = 'shopper::order.detail.content.after';
+
     public const string DETAIL_MAIN_BEFORE = 'shopper::order.detail.main.before';
 
     public const string DETAIL_MAIN_AFTER = 'shopper::order.detail.main.after';

@@ -142,16 +142,6 @@ final class ShopperPanel
     }
 
     /**
-     * @param  list<string>  $permissions
-     */
-    public function addonPermissions(array $permissions): self
-    {
-        $this->addonManager()->addPermissions($permissions);
-
-        return $this;
-    }
-
-    /**
      * @param  list<string>  $styles
      */
     public function addonStyles(array $styles): self

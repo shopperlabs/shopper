@@ -7,8 +7,12 @@ namespace Shopper\Cart\Pipelines;
 use Illuminate\Pipeline\Pipeline;
 use Shopper\Cart\Models\Cart;
 
-final class CartPipelineRunner
+final readonly class CartPipelineRunner
 {
+    public function __construct(
+        private CartPipeline $pipeline,
+    ) {}
+
     public function run(Cart $cart): CartPipelineContext
     {
         $cart->loadMissing([
@@ -22,9 +26,12 @@ final class CartPipelineRunner
 
         $context = new CartPipelineContext($cart);
 
+        /** @var list<class-string> $base */
+        $base = config('shopper.cart.pipelines.cart', []);
+
         app(Pipeline::class)
             ->send($context)
-            ->through(config('shopper.cart.pipelines.cart'))
+            ->through($this->pipeline->build($base))
             ->thenReturn();
 
         return $context;

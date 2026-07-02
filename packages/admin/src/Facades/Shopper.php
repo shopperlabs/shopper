@@ -23,7 +23,6 @@ use Shopper\ShopperPanel;
  * @method static ShopperPanel addonLivewireComponents(array $components)
  * @method static ShopperPanel addonViews(string $namespace, string $path)
  * @method static ShopperPanel addonSettingItems(array $items)
- * @method static ShopperPanel addonPermissions(array $permissions)
  * @method static ShopperPanel addonStyles(array $styles)
  * @method static ShopperPanel addonScripts(array $scripts)
  * @method static StatefulGuard auth()

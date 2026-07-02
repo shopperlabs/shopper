@@ -47,3 +47,20 @@ it('throws when the same addon is registered twice', function (): void {
         new FakeFirstAddon,
     ]))->toThrow(LogicException::class);
 });
+
+it('registers the routes an addon declares', function (): void {
+    $provider = app()->getProvider(Shopper\ShopperServiceProvider::class);
+
+    $consume = (new ReflectionMethod($provider, 'registerAddonRoutes'))
+        ->getClosure($provider);
+
+    $consume([function (): void {
+        Illuminate\Support\Facades\Route::get('/addon-probe', fn (): string => 'ok')->name('shopper.addon-probe');
+    }]);
+
+    $registered = collect(app('router')->getRoutes()->getRoutes())
+        ->contains(fn ($route): bool => $route->getName() === 'shopper.addon-probe'
+            && str_starts_with($route->uri(), shopper()->prefix()));
+
+    expect($registered)->toBeTrue();
+});
