@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Cart;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Shopper\Cart\Console\PruneCartsCommand;
 use Shopper\Cart\Discounts\DiscountValidator;
 use Shopper\Cart\Discounts\PromotionResolver;
@@ -32,6 +33,13 @@ final class CartServiceProvider extends PackageServiceProvider
         $package->name('shopper-cart')
             ->hasTranslations()
             ->hasCommand(PruneCartsCommand::class);
+    }
+
+    public function packageBooted(): void
+    {
+        $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
+            $schedule->command('shopper:prune-carts')->daily();
+        });
     }
 
     public function packageRegistered(): void

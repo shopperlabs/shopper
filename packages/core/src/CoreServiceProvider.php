@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopper\Core;
 
 use Carbon\Carbon;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Shopper\Core\Console\ReclaimPendingOrdersCommand;
 use Shopper\Core\Console\SyncCollectionsCommand;
 use Shopper\Core\Contracts\InventoryResolver;
 use Shopper\Core\Contracts\StockAllocator;
@@ -58,6 +60,7 @@ final class CoreServiceProvider extends PackageServiceProvider
             ->name('shopper-core')
             ->hasTranslations()
             ->hasCommands([
+                ReclaimPendingOrdersCommand::class,
                 SyncCollectionsCommand::class,
             ]);
     }
@@ -70,6 +73,7 @@ final class CoreServiceProvider extends PackageServiceProvider
         $this->registerModelBindings();
         $this->bootModelRelationName();
         $this->registerObservers();
+        $this->scheduleCommands();
     }
 
     public function packageRegistered(): void
@@ -80,6 +84,15 @@ final class CoreServiceProvider extends PackageServiceProvider
         $this->registerDatabase();
         $this->registerStockAllocator();
         $this->registerTaxCalculator();
+    }
+
+    protected function scheduleCommands(): void
+    {
+        $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
+            if (config('shopper.orders.reclaim_pending_after_hours')) {
+                $schedule->command('shopper:orders:reclaim')->hourly();
+            }
+        });
     }
 
     protected function registerObservers(): void

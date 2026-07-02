@@ -30,4 +30,18 @@ return [
         'pad_string' => '0',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Pending Order Reclaim
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define the number of hours after which unpaid pending
+    | orders are automatically cancelled and their reserved stock released.
+    | When set, the `shopper:orders:reclaim` command runs hourly. Use null
+    | to disable. Orders paid offline (manual driver) are never reclaimed.
+    |
+    */
+
+    'reclaim_pending_after_hours' => null,
+
 ];
