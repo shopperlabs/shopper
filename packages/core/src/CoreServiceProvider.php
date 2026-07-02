@@ -24,6 +24,7 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
+use Shopper\Core\Models\TaxZone;
 use Shopper\Core\Observers\AddressObserver;
 use Shopper\Core\Observers\AttributeObserver;
 use Shopper\Core\Observers\CategoryObserver;
@@ -34,6 +35,7 @@ use Shopper\Core\Observers\OrderItemObserver;
 use Shopper\Core\Observers\OrderObserver;
 use Shopper\Core\Observers\ProductObserver;
 use Shopper\Core\Observers\ProductVariantObserver;
+use Shopper\Core\Observers\TaxZoneObserver;
 use Shopper\Core\Stock\DefaultInventoryResolver;
 use Shopper\Core\Stock\LockingStockReserver;
 use Shopper\Core\Stock\PriorityStockAllocator;
@@ -106,6 +108,7 @@ final class CoreServiceProvider extends PackageServiceProvider
         Order::observeUsingConfiguredClass(OrderObserver::class);
         Product::observeUsingConfiguredClass(ProductObserver::class);
         ProductVariant::observeUsingConfiguredClass(ProductVariantObserver::class);
+        TaxZone::observeUsingConfiguredClass(TaxZoneObserver::class);
 
         Attribute::observe(AttributeObserver::class);
         Discount::observe(DiscountObserver::class);

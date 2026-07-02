@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Taxes;
 
+use Illuminate\Support\Facades\Cache;
 use Shopper\Core\Contracts\TaxableItem;
 use Shopper\Core\Contracts\TaxCalculationProvider;
 use Shopper\Core\Models\Contracts\TaxZone;
@@ -50,6 +51,12 @@ final class TaxCalculator
         );
     }
 
+    /**
+     * Zone resolution is memoized for the request, then shared across
+     * requests through a versioned cache: tax zones almost never change,
+     * yet every cart calculation used to re-run this lookup. Saving or
+     * deleting a zone bumps the version and orphans every cached entry.
+     */
     public function resolveZone(TaxCalculationContext $context): ?TaxZone
     {
         $key = $context->cacheKey();
@@ -58,6 +65,20 @@ final class TaxCalculator
             return $this->zoneCache[$key];
         }
 
+        $version = (int) Cache::get('shopper.tax-zones.version', 0);
+
+        /** @var array{zone: ?TaxZone} $cached */
+        $cached = Cache::flexible(
+            "shopper.tax-zone.{$version}.{$key}",
+            [3600, 86400],
+            fn (): array => ['zone' => $this->lookupZone($context)],
+        );
+
+        return $this->zoneCache[$key] = $cached['zone'];
+    }
+
+    private function lookupZone(TaxCalculationContext $context): ?TaxZone
+    {
         if ($context->provinceCode) {
             $zone = resolve(TaxZone::class)::query()
                 ->whereHas('country', fn ($q) => $q->where('cca2', $context->countryCode))
@@ -65,11 +86,11 @@ final class TaxCalculator
                 ->first();
 
             if ($zone) {
-                return $this->zoneCache[$key] = $zone;
+                return $zone;
             }
         }
 
-        return $this->zoneCache[$key] = resolve(TaxZone::class)::query()
+        return resolve(TaxZone::class)::query()
             ->whereHas('country', fn ($q) => $q->where('cca2', $context->countryCode))
             ->whereNull('province_code')
             ->first();
