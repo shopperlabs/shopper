@@ -393,6 +393,21 @@ describe(CreateOrderFromCartAction::class, function (): void {
             ->and((float) $taxLines->sole()->rate)->toBe(20.0);
     });
 
+    it('rolls back the whole order when the after-create hook fails', function (): void {
+        $this->cartManager->add($this->cart, $this->product, quantity: 2);
+
+        expect(fn () => $this->action->execute(
+            $this->cart,
+            afterCreate: function (): void {
+                throw new RuntimeException('payment journal failed');
+            },
+        ))->toThrow(RuntimeException::class);
+
+        expect(Order::query()->count())->toBe(0)
+            ->and($this->cart->refresh()->isCompleted())->toBeFalse()
+            ->and($this->product->refresh()->getStock())->toBe(100);
+    });
+
     it('marks the cart as completed after order creation', function (): void {
         $this->cartManager->add($this->cart, $this->product);
 

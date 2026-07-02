@@ -44,12 +44,16 @@ final readonly class CreateOrderFromCartAction
      * @param  Closure(CartPipelineContext): void|null  $assertTotals  Runs against
      *                                                                 the totals computed under the cart lock, right before the order
      *                                                                 freezes them. Throw to abort: the transaction rolls back.
+     * @param  Closure(Order): void|null  $afterCreate  Runs on the created order inside
+     *                                                  the same transaction, so anything it persists
+     *                                                  (like the payment reference) commits or rolls
+     *                                                  back atomically with the order.
      *
      * @throws Throwable
      */
-    public function execute(Cart $cart, ?Closure $assertTotals = null): Order
+    public function execute(Cart $cart, ?Closure $assertTotals = null, ?Closure $afterCreate = null): Order
     {
-        return DB::transaction(function () use ($cart, $assertTotals): Order {
+        return DB::transaction(function () use ($cart, $assertTotals, $afterCreate): Order {
             /** @var Cart $cart */
             $cart = resolve(CartContract::class)::query()->lockForUpdate()->findOrFail($cart->id);
 
@@ -157,6 +161,10 @@ final readonly class CreateOrderFromCartAction
             $this->reservePromotions($applied, $cart, $order);
 
             $order->refresh();
+
+            if ($afterCreate) {
+                $afterCreate($order);
+            }
 
             $cart->update([
                 'completed_at' => now(),
