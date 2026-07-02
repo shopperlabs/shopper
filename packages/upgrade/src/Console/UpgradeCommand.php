@@ -41,17 +41,20 @@ final class UpgradeCommand extends Command
             }
         }
 
-        info('Step 1/4 — Running database migrations');
+        info('Step 1/5 — Running database migrations');
         $this->call('migrate', ['--force' => true]);
 
-        info('Step 2/4 — Renaming classes with Rector');
+        info('Step 2/5 — Renaming classes with Rector');
         $this->runRector();
 
-        info('Step 3/4 — Migrating permissions to dot notation');
+        info('Step 3/5 — Migrating permissions to dot notation');
         $this->call('shopper:upgrade:permissions', ['--force' => true]);
 
-        info('Step 4/4 — Fixing zero-decimal currency amounts');
+        info('Step 4/5 — Fixing zero-decimal currency amounts');
         $this->call('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true]);
+
+        info('Step 5/5 — Reconciling the stock snapshot against the inventory ledger');
+        $this->call('shopper:stock:reconcile', ['--fix' => true]);
 
         $this->printNextSteps();
 

@@ -101,7 +101,12 @@ final readonly class CreateOrderFromCartAction
             $cart->lines->load('taxLines');
             $orderTaxLines = [];
 
-            foreach ($cart->lines as $line) {
+            $lines = $cart->lines->sortBy([
+                ['purchasable_type', 'asc'],
+                ['purchasable_id', 'asc'],
+            ])->values();
+
+            foreach ($lines as $line) {
                 $discountAmount = $line->adjustments->sum('amount');
                 $purchasable = $line->purchasable;
                 $taxLines = $line->taxLines;
@@ -117,9 +122,6 @@ final readonly class CreateOrderFromCartAction
                     'product_id' => $line->purchasable_id,
                 ]);
 
-                // The order's tax lines are the exact rows the pipelines wrote
-                // under the cart lock, never a recomputation: the invoice
-                // breakdown always reconciles with the total charged.
                 foreach ($taxLines as $taxLine) {
                     $orderTaxLines[] = [
                         'taxable_type' => $item->getMorphClass(),
@@ -134,9 +136,6 @@ final readonly class CreateOrderFromCartAction
                     ];
                 }
 
-                // Reserve stock under a row lock inside the order transaction:
-                // a shortfall aborts the whole checkout so two buyers can never
-                // both claim the last unit. Back-ordered lines always reserve.
                 if ($purchasable instanceof Stockable && $purchasable->tracksInventory()) {
                     $reserved = $this->stockReserver->reserve(
                         $purchasable,

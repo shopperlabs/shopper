@@ -151,28 +151,23 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
                     ->action(function (array $data): void {
                         $inventoryId = (int) $data['inventory'];
                         $quantity = (int) $data['quantity'];
-                        $currentStock = InventoryHistory::query()
-                            ->where('inventory_id', $inventoryId)
-                            ->where('stockable_id', $this->product->id)
-                            ->where('stockable_type', 'product')
-                            ->get()
-                            ->sum('quantity');
+                        $currentStock = $this->product->stockInventory($inventoryId);
 
-                        $realTimeStock = $currentStock + $quantity;
-
-                        if ($realTimeStock >= $currentStock) {
+                        if ($quantity >= 0) {
                             $this->product->mutateStock(
                                 inventoryId: $inventoryId,
                                 quantity: $quantity,
-                                oldQuantity: $quantity,
+                                oldQuantity: $currentStock,
                                 event: __('shopper::pages/products.inventory.add'),
+                                userId: auth()->id(),
                             );
                         } else {
                             $this->product->decreaseStock(
                                 inventoryId: $inventoryId,
                                 quantity: $quantity,
-                                oldQuantity: $quantity,
+                                oldQuantity: $currentStock,
                                 event: __('shopper::pages/products.inventory.remove'),
+                                userId: auth()->id(),
                             );
                         }
 

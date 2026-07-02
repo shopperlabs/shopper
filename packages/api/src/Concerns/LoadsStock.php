@@ -7,7 +7,6 @@ namespace Shopper\Api\Concerns;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\JoinClause;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Contracts\ProductVariant;
@@ -85,19 +84,18 @@ trait LoadsStock
         /** @var Model $variant */
         $variant = resolve(ProductVariant::class);
         $variantsTable = $variant->getTable();
-        $historiesTable = shopper_table('inventory_histories');
+        $levelsTable = shopper_table('stock_levels');
 
         $aggregates = $variant->newQuery()
             ->toBase()
-            ->leftJoin($historiesTable, function (JoinClause $join) use ($historiesTable, $variantsTable, $variant): void {
-                $join->on($historiesTable.'.stockable_id', '=', $variantsTable.'.id')
-                    ->where($historiesTable.'.stockable_type', $variant->getMorphClass())
-                    ->where($historiesTable.'.created_at', '<=', Carbon::now());
+            ->leftJoin($levelsTable, function (JoinClause $join) use ($levelsTable, $variantsTable, $variant): void {
+                $join->on($levelsTable.'.stockable_id', '=', $variantsTable.'.id')
+                    ->where($levelsTable.'.stockable_type', $variant->getMorphClass());
             })
             ->whereIn($variantsTable.'.product_id', $products->map(fn (Model $product) => $product->getKey()))
             ->groupBy($variantsTable.'.product_id')
             ->selectRaw($variantsTable.'.product_id as product_id')
-            ->selectRaw('COALESCE(SUM('.$historiesTable.'.quantity), 0) as variants_stock')
+            ->selectRaw('COALESCE(SUM('.$levelsTable.'.quantity), 0) as variants_stock')
             ->selectRaw('MAX(CASE WHEN '.$variantsTable.'.allow_backorder THEN 1 ELSE 0 END) as variants_allow_backorder')
             ->get()
             ->keyBy('product_id');
