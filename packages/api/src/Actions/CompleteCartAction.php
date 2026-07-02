@@ -10,6 +10,7 @@ use Shopper\Cart\Actions\CreateOrderFromCartAction;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Exceptions\InsufficientStockException;
+use Shopper\Cart\Exceptions\PriceChangedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Exceptions\CampaignBudgetExceededException;
@@ -75,7 +76,7 @@ final readonly class CompleteCartAction
             throw ValidationException::withMessages([
                 'promotion' => __('shopper-cart::messages.discount.campaign_budget_reached'),
             ]);
-        } catch (InsufficientStockException $exception) {
+        } catch (InsufficientStockException|PriceChangedException $exception) {
             throw ValidationException::withMessages([
                 'cart' => $exception->getMessage(),
             ]);

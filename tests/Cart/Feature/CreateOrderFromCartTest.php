@@ -7,6 +7,7 @@ use Shopper\Cart\Actions\CreateOrderFromCartAction;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Events\CartCompleted;
 use Shopper\Cart\Exceptions\CartCompletedException;
+use Shopper\Cart\Exceptions\PriceChangedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Enum\DiscountApplyTo;
@@ -391,6 +392,31 @@ describe(CreateOrderFromCartAction::class, function (): void {
             ->and($order->tax_amount)->toBe($taxLines->sum('amount'))
             ->and($orderItem->tax_amount)->toBe($taxLines->sum('amount'))
             ->and((float) $taxLines->sole()->rate)->toBe(20.0);
+    });
+
+    it('passes a price drop since add-to-cart on to the customer', function (): void {
+        $this->cartManager->add($this->cart, $this->product, quantity: 2);
+
+        $this->product->prices()->first()->update(['amount' => 20]);
+        $this->product->load('prices');
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        expect($order->items->first()->unit_price_amount)->toBe(20)
+            ->and($order->price_amount)->toBe(40);
+    });
+
+    it('refuses to place the order when a line price increased since add-to-cart', function (): void {
+        $this->cartManager->add($this->cart, $this->product, quantity: 2);
+
+        $this->product->prices()->first()->update(['amount' => 30]);
+        $this->product->load('prices');
+
+        expect(fn () => $this->action->execute($this->cart->refresh()))
+            ->toThrow(PriceChangedException::class);
+
+        expect(Order::query()->count())->toBe(0)
+            ->and($this->cart->refresh()->isCompleted())->toBeFalse();
     });
 
     it('rolls back the whole order when the after-create hook fails', function (): void {
