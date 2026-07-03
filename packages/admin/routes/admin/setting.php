@@ -20,6 +20,7 @@ Route::livewire('/carriers', config('shopper.components.setting.pages.carriers')
 Route::livewire('/zones', config('shopper.components.setting.pages.zones'))->name('zones');
 Route::livewire('/taxes', config('shopper.components.setting.pages.taxes'))->name('taxes');
 Route::livewire('/currencies', config('shopper.components.setting.pages.currencies'))->name('currencies');
+Route::livewire('/webhooks', config('shopper.components.setting.pages.webhooks'))->name('webhooks');
 
 Route::prefix('team')->group(function (): void {
     Route::livewire('/', config('shopper.components.setting.pages.team-index'))->name('users');

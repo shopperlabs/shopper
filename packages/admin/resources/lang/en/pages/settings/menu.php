@@ -28,5 +28,7 @@ return [
     'currency_description' => 'Enable currencies and manage exchange rates.',
     'sales' => 'Sales channels',
     'sales_description' => 'Manage the online and offline channels you sell products on.',
+    'webhooks' => 'Webhooks',
+    'webhooks_description' => 'Notify external systems when events happen in your store.',
 
 ];
