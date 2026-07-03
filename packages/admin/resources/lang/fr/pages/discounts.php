@@ -209,4 +209,7 @@ return [
         'cancel' => 'Garder les clients',
     ],
 
+    'eligibility_picker' => [
+        'required' => 'Veuillez sélectionner au moins une cible pour ce mode d\'éligibilité.',
+    ],
 ];

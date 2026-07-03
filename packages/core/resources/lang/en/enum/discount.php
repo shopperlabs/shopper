@@ -16,7 +16,9 @@ return [
 
     'eligibility' => [
         'everyone' => 'Everyone',
+        'everyone_description' => 'Anyone can use this promotion.',
         'specific_customers' => 'Specific customers',
+        'customers_description' => 'Only the selected customers can use it.',
     ],
 
     'requirement' => [

@@ -6,7 +6,10 @@ namespace Shopper\Cart;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Shopper\Cart\Console\PruneCartsCommand;
+use Shopper\Cart\Discounts\DiscountEligibilityManager;
 use Shopper\Cart\Discounts\DiscountValidator;
+use Shopper\Cart\Discounts\Eligibility\CustomersEligibilityRule;
+use Shopper\Cart\Discounts\Eligibility\EveryoneEligibilityRule;
 use Shopper\Cart\Discounts\PromotionResolver;
 use Shopper\Cart\Events\CartCompleted;
 use Shopper\Cart\Models\Cart;
@@ -62,6 +65,14 @@ final class CartServiceProvider extends PackageServiceProvider
         $this->app->singleton(PromotionResolver::class);
         $this->app->singleton(CartManager::class);
         $this->app->singleton(CartSessionManager::class);
+
+        $this->app->singleton(DiscountEligibilityManager::class, function (): DiscountEligibilityManager {
+            $manager = new DiscountEligibilityManager;
+            $manager->register(new EveryoneEligibilityRule);
+            $manager->register(new CustomersEligibilityRule);
+
+            return $manager;
+        });
     }
 
     protected function registerModelBindings(): void

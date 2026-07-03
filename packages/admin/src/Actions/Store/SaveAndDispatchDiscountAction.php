@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopper\Actions\Store;
 
 use Illuminate\Support\Arr;
+use Shopper\Cart\Discounts\SyncDiscountEligibilityAction;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Models\Discount;
-use Shopper\Jobs\AttachedDiscountToCustomers;
 use Shopper\Jobs\AttachedDiscountToProducts;
 
 final readonly class SaveAndDispatchDiscountAction
@@ -17,13 +17,13 @@ final readonly class SaveAndDispatchDiscountAction
     /**
      * @param  array<string, mixed>  $values
      * @param  array<int>  $productsIds
-     * @param  array<int>  $customersIds
+     * @param  array<int>  $eligibilityIds
      */
     public function __invoke(
         array $values,
         ?int $discountId = null,
         array $productsIds = [],
-        array $customersIds = [],
+        array $eligibilityIds = [],
         ?string $trigger = null,
         ?int $campaignId = null
     ): Discount {
@@ -59,10 +59,10 @@ final readonly class SaveAndDispatchDiscountAction
             $discount,
         );
 
-        AttachedDiscountToCustomers::dispatchSync(
-            $eligibility instanceof DiscountEligibility ? $eligibility : DiscountEligibility::from($eligibility),
-            $customersIds,
+        resolve(SyncDiscountEligibilityAction::class)->execute(
             $discount,
+            $eligibility instanceof DiscountEligibility ? $eligibility->value : (string) $eligibility,
+            $eligibilityIds,
         );
 
         return $discount;

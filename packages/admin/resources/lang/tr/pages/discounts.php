@@ -74,4 +74,7 @@ return [
     'save' => 'İndirim kodu :code başarıyla kaydedildi!',
     'total_use' => 'Kullanım Sayısı',
 
+    'eligibility_picker' => [
+        'required' => 'Bu uygunluk modu için en az bir hedef seçin.',
+    ],
 ];

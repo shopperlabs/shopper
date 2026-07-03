@@ -16,7 +16,9 @@ return [
 
     'eligibility' => [
         'everyone' => 'Herkes',
+        'everyone_description' => 'Bu promosyonu herkes kullanabilir.',
         'specific_customers' => 'Belirli müşteriler',
+        'customers_description' => 'Yalnızca seçili müşteriler kullanabilir.',
     ],
 
     'requirement' => [

@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\SaveAndDispatchDiscountAction;
+use Shopper\Cart\Discounts\DiscountEligibilityManager;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
 use Shopper\Core\Enum\DiscountApplyTo;
@@ -38,6 +39,7 @@ use Shopper\Core\Models\Campaign;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Zone;
+use Shopper\Discounts\DiscountEligibilityFieldRegistry;
 
 trait InteractsWithDiscountForm
 {
@@ -335,7 +337,7 @@ trait InteractsWithDiscountForm
             $this->applyToField(),
             $this->productsItemsField(),
             $this->eligibilityField(),
-            $this->customersItemsField(),
+            ...resolve(DiscountEligibilityFieldRegistry::class)->fields(),
             $this->minRequiredField(),
             $this->minRequiredValueField(),
         ];
@@ -365,18 +367,9 @@ trait InteractsWithDiscountForm
         return Radio::make('eligibility')
             ->label(__('shopper::pages/discounts.customer_eligibility'))
             ->inline()
-            ->options(DiscountEligibility::options())
+            ->options(resolve(DiscountEligibilityManager::class)->options())
             ->required()
             ->live();
-    }
-
-    protected function customersItemsField(): Component
-    {
-        return SchemaView::make('shopper::livewire.pages.discounts.partials.items-list')
-            ->viewData(['type' => 'customers'])
-            ->visible(
-                fn (Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value
-            );
     }
 
     protected function minRequiredField(): Component
@@ -492,9 +485,10 @@ trait InteractsWithDiscountForm
         $data = $this->form->getState();
 
         $applyTo = $data['apply_to'] ?? null;
-        $eligibility = $data['eligibility'] ?? null;
+        $eligibility = (string) ($data['eligibility'] ?? '');
 
-        $userModel = config('auth.providers.users.model');
+        $registry = resolve(DiscountEligibilityFieldRegistry::class);
+        $formKey = $registry->formKeyFor($eligibility);
 
         $products = resolve(Product::class)::query()
             ->scopes('publish')
@@ -503,12 +497,9 @@ trait InteractsWithDiscountForm
             ->map(fn ($id): int => (int) $id)
             ->all();
 
-        $customers = $userModel::query()
-            ->scopes('customers')
-            ->whereIn('id', array_map('intval', (array) data_get($this->data, 'customers', [])))
-            ->pluck('id')
-            ->map(fn ($id): int => (int) $id)
-            ->all();
+        $eligibilityIds = $formKey !== null
+            ? $registry->resolveIds($eligibility, array_map('intval', (array) data_get($this->data, $formKey, [])))
+            : [];
 
         if ($applyTo === DiscountApplyTo::Products->value && $products === []) {
             Notification::make()
@@ -519,22 +510,22 @@ trait InteractsWithDiscountForm
             return false;
         }
 
-        if ($eligibility === DiscountEligibility::Customers->value && $customers === []) {
+        if ($formKey !== null && $eligibilityIds === []) {
             Notification::make()
-                ->title(__('shopper::pages/discounts.customers_picker.required'))
+                ->title(__('shopper::pages/discounts.eligibility_picker.required'))
                 ->danger()
                 ->send();
 
             return false;
         }
 
-        $discountFormValues = Arr::except($data, ['products', 'customers', 'usage_number']);
+        $discountFormValues = Arr::except($data, array_merge(['products', 'usage_number'], $registry->formKeys()));
 
         $this->discount = app()->call(SaveAndDispatchDiscountAction::class, [
             'values' => $discountFormValues,
             'discountId' => $this->discount->id ?? null,
             'productsIds' => $products,
-            'customersIds' => $customers,
+            'eligibilityIds' => $eligibilityIds,
             'trigger' => $data['trigger'] ?? null,
             'campaignId' => isset($data['campaign_id']) ? (int) $data['campaign_id'] : null,
         ]);
