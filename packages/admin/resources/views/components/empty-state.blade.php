@@ -21,7 +21,11 @@
         {{ $content }}
     </p>
 
-    @if ($permission)
+    @if (isset($action))
+        <div class="mt-6">
+            {{ $action }}
+        </div>
+    @elseif ($permission)
         @can($permission)
             @if ($url)
                 <x-filament::button tag="a" :href="$url" wire:navigate class="mt-6">
