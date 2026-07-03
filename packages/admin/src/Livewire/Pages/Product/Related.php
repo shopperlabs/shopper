@@ -16,6 +16,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Locked;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Product;
@@ -41,6 +42,24 @@ class Related extends Component implements HasActions, HasSchemas
     public function placeholder(): View
     {
         return view('shopper::components.skeleton.products.section');
+    }
+
+    /**
+     * @param  array<int>  $ids
+     */
+    #[On('shopper.product.related.selected')]
+    public function addRelatedProducts(array $ids): void
+    {
+        $this->authorize('products.edit');
+
+        $this->product->relatedProducts()->syncWithoutDetaching($ids);
+        $this->product->load('relatedProducts');
+
+        Notification::make()
+            ->title(__('shopper::layout.status.added'))
+            ->body(__('shopper::pages/products.notifications.related_added'))
+            ->success()
+            ->send();
     }
 
     public function removeAction(): Action

@@ -79,7 +79,6 @@ return [
         'slide-overs.choose-product-attributes' => Livewire\SlideOvers\ChooseProductAttributes::class,
         'slide-overs.attribute-values' => Livewire\SlideOvers\AttributeValues::class,
         'slide-overs.manage-pricing' => Livewire\SlideOvers\ManagePricing::class,
-        'slide-overs.related-products-list' => Livewire\SlideOvers\RelatedProductsList::class,
         'slide-overs.supplier-form' => Livewire\SlideOvers\SupplierForm::class,
     ],
 

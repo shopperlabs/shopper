@@ -185,4 +185,10 @@ return [
         'empty' => 'No product pricing added',
     ],
 
+    'picker' => [
+        'title' => 'Select products',
+        'description' => 'Search and select one or more products.',
+        'bulk_add' => 'Add selected products',
+        'empty' => 'No matching product found.',
+    ],
 ];

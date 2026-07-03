@@ -10,8 +10,14 @@
                 <x-filament::button
                     type="button"
                     wire:click="$dispatch('openPanel', {
-                        component: 'shopper-slide-overs.related-products-list',
-                        arguments: { product: {{ $product->id }}, ids: {{ json_encode($this->productsIds) }} },
+                        component: 'shopper-slide-overs.products-picker',
+                        arguments: {
+                            exceptIds: {{ json_encode($this->productsIds) }},
+                            ability: 'products.edit',
+                            event: 'shopper.product.related.selected',
+                            title: {{ \Illuminate\Support\Js::from(__('shopper::pages/products.related.modal.title')) }},
+                            description: {{ \Illuminate\Support\Js::from(__('shopper::pages/products.related.description')) }},
+                        },
                     })"
                 >
                     {{ __('shopper::layout.account_dropdown.add_product') }}
@@ -79,8 +85,14 @@
                     <x-filament::button
                         type="button"
                         wire:click="$dispatch('openPanel', {
-                            component: 'shopper-slide-overs.related-products-list',
-                            arguments: { product: {{ $product->id }}, ids: {{ json_encode($this->productsIds) }} },
+                            component: 'shopper-slide-overs.products-picker',
+                            arguments: {
+                                exceptIds: {{ json_encode($this->productsIds) }},
+                                ability: 'products.edit',
+                                event: 'shopper.product.related.selected',
+                                title: {{ \Illuminate\Support\Js::from(__('shopper::pages/products.related.modal.title')) }},
+                                description: {{ \Illuminate\Support\Js::from(__('shopper::pages/products.related.description')) }},
+                            },
                         })"
                     >
                         <x-untitledui-plus class="mr-2 size-5" stroke-width="1.5" aria-hidden="true" />

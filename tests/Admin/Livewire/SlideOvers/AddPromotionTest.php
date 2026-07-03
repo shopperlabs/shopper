@@ -169,8 +169,8 @@ describe(AddPromotion::class, function (): void {
         [$keep, $drop] = $products->pluck('id')->map(fn ($id): int => (int) $id)->all();
 
         $component = Livewire::test(AddPromotion::class)
-            ->dispatch('discount.products.added', ids: [$keep])
-            ->dispatch('discount.products.added', ids: [$keep, $drop])
+            ->dispatch('shopper.discount.products.selected', ids: [$keep])
+            ->dispatch('shopper.discount.products.selected', ids: [$keep, $drop])
             ->assertSet('data.products', [$keep, $drop]);
 
         expect($component->instance()->selectedProducts)->toHaveCount(2);

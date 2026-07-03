@@ -23,7 +23,7 @@ use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
-class DiscountProductsPicker extends SlideOverComponent implements HasActions, HasSchemas, HasTable
+class ProductsPicker extends SlideOverComponent implements HasActions, HasSchemas, HasTable
 {
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
@@ -34,19 +34,43 @@ class DiscountProductsPicker extends SlideOverComponent implements HasActions, H
     #[Locked]
     public array $exceptIds = [];
 
+    #[Locked]
+    public ?string $panelTitle = null;
+
+    #[Locked]
+    public ?string $panelDescription = null;
+
+    #[Locked]
+    public string $event = 'shopper.products.selected';
+
     public static function panelMaxWidth(): string
     {
         return '3xl';
     }
 
+    public static function destroyOnClose(): bool
+    {
+        return true;
+    }
+
+    public static function dispatchCloseEvent(): bool
+    {
+        return true;
+    }
+
     /**
      * @param  array<int>  $exceptIds
      */
-    public function mount(array $exceptIds = [], bool $editMode = false): void
+    public function mount(array $exceptIds = [], ?string $ability = null, ?string $title = null, ?string $description = null, ?string $event = null): void
     {
-        $this->authorize($editMode ? 'discounts.edit' : 'discounts.create');
+        if ($ability !== null) {
+            $this->authorize($ability);
+        }
 
         $this->exceptIds = array_values(array_filter(array_map('intval', $exceptIds)));
+        $this->panelTitle = $title;
+        $this->panelDescription = $description;
+        $this->event = $event ?? $this->event;
     }
 
     public function table(Table $table): Table
@@ -69,6 +93,9 @@ class DiscountProductsPicker extends SlideOverComponent implements HasActions, H
                 TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable(),
+                TextColumn::make('type')
+                    ->label(__('shopper::forms.label.type'))
+                    ->badge(),
                 TextColumn::make('sku')
                     ->label(__('shopper::forms.label.sku')),
             ])
@@ -76,23 +103,23 @@ class DiscountProductsPicker extends SlideOverComponent implements HasActions, H
             ->selectable()
             ->toolbarActions([
                 BulkAction::make('add')
-                    ->label(__('shopper::pages/discounts.products_picker.bulk_add'))
+                    ->label(__('shopper::pages/products.picker.bulk_add'))
                     ->icon(Untitledui::Plus)
                     ->action(function (Collection $records): void {
                         $ids = $records->pluck('id')
                             ->map(fn ($id): int => (int) $id)
                             ->all();
 
-                        $this->dispatch('discount.products.added', ids: $ids);
+                        $this->dispatch($this->event, ids: $ids);
                         $this->dispatch('closePanel');
                     }),
             ])
             ->emptyStateIcon(Untitledui::Box)
-            ->emptyStateHeading(__('shopper::pages/discounts.products_picker.empty'));
+            ->emptyStateHeading(__('shopper::pages/products.picker.empty'));
     }
 
     public function render(): View
     {
-        return view('shopper::livewire.slide-overs.discount-products-picker');
+        return view('shopper::livewire.slide-overs.products-picker');
     }
 }
