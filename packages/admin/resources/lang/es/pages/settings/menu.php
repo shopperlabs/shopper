@@ -28,5 +28,7 @@ return [
     'currency_description' => 'Activa divisas y gestiona los tipos de cambio.',
     'sales' => 'Canales de venta',
     'sales_description' => 'Gestiona los canales en línea y fuera de línea en los que vendes productos.',
+    'webhooks' => 'Webhooks',
+    'webhooks_description' => 'Notifica a sistemas externos cuando ocurren eventos en tu tienda.',
 
 ];

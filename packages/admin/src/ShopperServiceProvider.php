@@ -21,7 +21,6 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
 use Shopper\Concerns\TwoFactorAuthenticationProvider;
@@ -191,26 +190,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
         if ($productSections !== []) {
             app(ProductSectionManager::class)->register($productSections);
         }
-
-        $this->registerAddonRoutes($manager->getRoutes());
-    }
-
-    /**
-     * @param  list<Closure>  $routes
-     */
-    protected function registerAddonRoutes(array $routes): void
-    {
-        if ($routes === []) {
-            return;
-        }
-
-        Route::middleware(array_merge(['web'], (array) config('shopper.routes.middleware', [])))
-            ->prefix(shopper()->prefix())
-            ->group(function () use ($routes): void {
-                foreach ($routes as $registrar) {
-                    $registrar();
-                }
-            });
     }
 
     protected function bootLivewireComponents(): void

@@ -30,6 +30,7 @@ return [
         Items\ZoneSetting::class => true,
         Items\TaxSetting::class => true,
         Items\CurrencySetting::class => true,
+        Items\WebhookSetting::class => true,
     ],
 
 ];

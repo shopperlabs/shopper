@@ -8,12 +8,14 @@ use Illuminate\Console\Scheduling\Schedule;
 use Shopper\Cart\Console\PruneCartsCommand;
 use Shopper\Cart\Discounts\DiscountValidator;
 use Shopper\Cart\Discounts\PromotionResolver;
+use Shopper\Cart\Events\CartCompleted;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Cart\Models\Contracts\CartLine as CartLineContract;
 use Shopper\Cart\Pipelines\CartPipeline;
 use Shopper\Cart\Pipelines\CartPipelineRunner;
+use Shopper\Core\Enum\WebhookEventType;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -41,6 +43,11 @@ final class CartServiceProvider extends PackageServiceProvider
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
             $schedule->command('shopper:prune-carts')->daily();
         });
+
+        $this->app['config']->set(
+            'shopper.webhooks.events.'.CartCompleted::class,
+            WebhookEventType::CartCompleted->value,
+        );
     }
 
     public function packageRegistered(): void

@@ -28,6 +28,7 @@ return [
         'zones' => Pages\Settings\Zones::class,
         'taxes' => Pages\Settings\Taxes::class,
         'currencies' => Pages\Settings\Currencies::class,
+        'webhooks' => Pages\Settings\Webhooks::class,
     ],
 
     /*
