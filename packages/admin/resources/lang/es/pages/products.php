@@ -185,4 +185,10 @@ return [
         'empty' => 'Sin precio de producto añadido',
     ],
 
+    'picker' => [
+        'title' => 'Seleccionar productos',
+        'description' => 'Busca y selecciona uno o varios productos.',
+        'bulk_add' => 'Añadir productos seleccionados',
+        'empty' => 'No se encontró ningún producto.',
+    ],
 ];

@@ -185,4 +185,10 @@ return [
         'empty' => 'Ürün fiyatlandırması eklenmedi',
     ],
 
+    'picker' => [
+        'title' => 'Ürün seç',
+        'description' => 'Bir veya daha fazla ürün ara ve seç.',
+        'bulk_add' => 'Seçili ürünleri ekle',
+        'empty' => 'Eşleşen ürün bulunamadı.',
+    ],
 ];

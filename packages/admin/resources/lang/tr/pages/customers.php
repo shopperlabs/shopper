@@ -71,4 +71,10 @@ return [
         'last_name' => 'Müşteri',
     ],
 
+    'picker' => [
+        'title' => 'Müşteri seç',
+        'description' => 'Bir veya daha fazla müşteri ara ve seç.',
+        'bulk_add' => 'Seçili müşterileri ekle',
+        'empty' => 'Eşleşen müşteri bulunamadı.',
+    ],
 ];

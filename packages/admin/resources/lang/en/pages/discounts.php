@@ -209,4 +209,7 @@ return [
         'cancel' => 'Keep specific customers',
     ],
 
+    'eligibility_picker' => [
+        'required' => 'Please select at least one target for this eligibility mode.',
+    ],
 ];

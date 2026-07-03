@@ -4,10 +4,10 @@
             <div class="flex items-start justify-between gap-3">
                 <div>
                     <h2 class="text-lg font-medium text-sh-fg">
-                        {{ __('shopper::pages/discounts.customers_picker.title') }}
+                        {{ $panelTitle ?? __('shopper::pages/products.picker.title') }}
                     </h2>
                     <p class="text-sh-fg-secondary mt-1 text-sm">
-                        {{ __('shopper::pages/discounts.customers_picker.description') }}
+                        {{ $panelDescription ?? __('shopper::pages/products.picker.description') }}
                     </p>
                 </div>
                 <x-livewire-slide-over::close-icon />

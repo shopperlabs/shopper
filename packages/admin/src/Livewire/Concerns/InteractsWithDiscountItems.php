@@ -21,7 +21,7 @@ trait InteractsWithDiscountItems
     /**
      * @param  array<int>  $ids
      */
-    #[On('discount.products.added')]
+    #[On('shopper.discount.products.selected')]
     public function addProductsToDiscount(array $ids): void
     {
         $current = (array) data_get($this->data, 'products', []);
@@ -36,7 +36,7 @@ trait InteractsWithDiscountItems
     /**
      * @param  array<int>  $ids
      */
-    #[On('discount.customers.added')]
+    #[On('shopper.discount.customers.selected')]
     public function addCustomersToDiscount(array $ids): void
     {
         $current = (array) data_get($this->data, 'customers', []);

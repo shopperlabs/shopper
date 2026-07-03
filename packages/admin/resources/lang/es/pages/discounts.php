@@ -209,4 +209,7 @@ return [
         'cancel' => 'Mantener los clientes',
     ],
 
+    'eligibility_picker' => [
+        'required' => 'Selecciona al menos un objetivo para este modo de elegibilidad.',
+    ],
 ];

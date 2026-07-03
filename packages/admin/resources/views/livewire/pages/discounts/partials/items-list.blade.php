@@ -9,8 +9,12 @@
     $toggleShowAll = $isProducts ? 'toggleShowAllProducts' : 'toggleShowAllCustomers';
     $exceptIdsJson = json_encode($items->pluck('id')->all());
     $pickerComponent = $isProducts
-        ? 'shopper-slide-overs.discount-products-picker'
-        : 'shopper-slide-overs.discount-customers-picker';
+        ? 'shopper-slide-overs.products-picker'
+        : 'shopper-slide-overs.customers-picker';
+    $pickerAbility = $this->discount->exists ? 'discounts.edit' : 'discounts.create';
+    $pickerEvent = $isProducts
+        ? 'shopper.discount.products.selected'
+        : 'shopper.discount.customers.selected';
     $label = $isProducts
         ? __('shopper::pages/discounts.select_products')
         : __('shopper::pages/discounts.select_customers');
@@ -36,7 +40,7 @@
             size="sm"
             color="gray"
             icon="untitledui-plus"
-            wire:click="$dispatch('openPanel', { component: '{{ $pickerComponent }}', arguments: { exceptIds: {{ $exceptIdsJson }}, editMode: {{ $this->discount->exists ? 'true' : 'false' }} } })"
+            wire:click="$dispatch('openPanel', { component: '{{ $pickerComponent }}', arguments: { exceptIds: {{ $exceptIdsJson }}, ability: '{{ $pickerAbility }}', event: '{{ $pickerEvent }}' } })"
         >
             {{ $addLabel }}
         </x-filament::button>

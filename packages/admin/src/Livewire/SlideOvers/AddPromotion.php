@@ -31,6 +31,7 @@ use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Locked;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Actions\Store\SaveAndDispatchDiscountAction;
+use Shopper\Cart\Discounts\DiscountEligibilityManager;
 use Shopper\Components\Section;
 use Shopper\Components\SlideOverWizard;
 use Shopper\Components\Wizard\StepColumn;
@@ -44,6 +45,7 @@ use Shopper\Core\Models\Campaign;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Zone;
+use Shopper\Discounts\DiscountEligibilityFieldRegistry;
 use Shopper\Livewire\Concerns\InteractsWithDiscountItems;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
@@ -194,18 +196,13 @@ class AddPromotion extends SlideOverComponent implements HasActions, HasSchemas
                                 ->visible(fn (Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value),
                             Radio::make('eligibility')
                                 ->label(__('shopper::pages/discounts.customer_eligibility'))
-                                ->options(DiscountEligibility::options())
-                                ->descriptions([
-                                    DiscountEligibility::Everyone->value => __('shopper::pages/discounts.eligibility_everyone_description'),
-                                    DiscountEligibility::Customers->value => __('shopper::pages/discounts.eligibility_customers_description'),
-                                ])
+                                ->options(resolve(DiscountEligibilityManager::class)->options())
+                                ->descriptions(resolve(DiscountEligibilityManager::class)->descriptions())
                                 ->columns(2)
                                 ->columnSpanFull()
                                 ->required()
                                 ->live(),
-                            SchemaView::make('shopper::livewire.pages.discounts.partials.items-list')
-                                ->viewData(['type' => 'customers'])
-                                ->visible(fn (Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value),
+                            ...resolve(DiscountEligibilityFieldRegistry::class)->fields(),
                             Radio::make('min_required')
                                 ->label(__('shopper::pages/discounts.min_requirement'))
                                 ->inline()
@@ -322,9 +319,10 @@ class AddPromotion extends SlideOverComponent implements HasActions, HasSchemas
         $data = $this->form->getState();
 
         $applyTo = $data['apply_to'] ?? null;
-        $eligibility = $data['eligibility'] ?? null;
+        $eligibility = (string) ($data['eligibility'] ?? '');
 
-        $userModel = config('auth.providers.users.model');
+        $registry = resolve(DiscountEligibilityFieldRegistry::class);
+        $formKey = $registry->formKeyFor($eligibility);
 
         $products = resolve(Product::class)::query()
             ->scopes('publish')
@@ -333,12 +331,9 @@ class AddPromotion extends SlideOverComponent implements HasActions, HasSchemas
             ->map(fn ($id): int => (int) $id)
             ->all();
 
-        $customers = $userModel::query()
-            ->scopes('customers')
-            ->whereIn('id', array_map('intval', (array) data_get($this->data, 'customers', [])))
-            ->pluck('id')
-            ->map(fn ($id): int => (int) $id)
-            ->all();
+        $eligibilityIds = $formKey !== null
+            ? $registry->resolveIds($eligibility, array_map('intval', (array) data_get($this->data, $formKey, [])))
+            : [];
 
         if ($applyTo === DiscountApplyTo::Products->value && $products === []) {
             Notification::make()
@@ -349,9 +344,9 @@ class AddPromotion extends SlideOverComponent implements HasActions, HasSchemas
             return;
         }
 
-        if ($eligibility === DiscountEligibility::Customers->value && $customers === []) {
+        if ($formKey !== null && $eligibilityIds === []) {
             Notification::make()
-                ->title(__('shopper::pages/discounts.customers_picker.required'))
+                ->title(__('shopper::pages/discounts.eligibility_picker.required'))
                 ->danger()
                 ->send();
 
@@ -359,9 +354,9 @@ class AddPromotion extends SlideOverComponent implements HasActions, HasSchemas
         }
 
         $discount = app()->call(SaveAndDispatchDiscountAction::class, [
-            'values' => Arr::except($data, ['products', 'customers', 'usage_number']),
+            'values' => Arr::except($data, array_merge(['products', 'usage_number'], $registry->formKeys())),
             'productsIds' => $products,
-            'customersIds' => $customers,
+            'eligibilityIds' => $eligibilityIds,
             'trigger' => $data['trigger'] ?? null,
             'campaignId' => isset($data['campaign_id']) ? (int) $data['campaign_id'] : null,
         ]);

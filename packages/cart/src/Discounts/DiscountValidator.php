@@ -7,8 +7,6 @@ namespace Shopper\Cart\Discounts;
 use Illuminate\Database\Eloquent\Builder;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Pipelines\CartPipelineContext;
-use Shopper\Core\Enum\DiscountCondition;
-use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
@@ -16,6 +14,10 @@ use Shopper\Core\Models\OrderPromotion;
 
 final readonly class DiscountValidator
 {
+    public function __construct(
+        private DiscountEligibilityManager $eligibility,
+    ) {}
+
     public function validate(Discount $discount, CartPipelineContext $context): DiscountValidationResult
     {
         if (! $discount->is_active) {
@@ -56,19 +58,13 @@ final readonly class DiscountValidator
             return new DiscountValidationResult(false, __('shopper-cart::messages.discount.already_used'));
         }
 
-        if ($discount->eligibility === DiscountEligibility::Customers->value) {
-            if (! $context->cart->customer_id) {
-                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.requires_login'));
-            }
+        $eligibilityRule = $this->eligibility->for($discount->eligibility);
 
-            $isEligible = $discount->items()
-                ->where('condition', DiscountCondition::Eligibility)
-                ->where('discountable_type', config('auth.providers.users.model'))
-                ->where('discountable_id', $context->cart->customer_id)
-                ->exists();
+        if ($eligibilityRule !== null) {
+            $result = $eligibilityRule->passes($discount, $context);
 
-            if (! $isEligible) {
-                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.customer_not_eligible'));
+            if (! $result->valid) {
+                return $result;
             }
         }
 

@@ -132,4 +132,10 @@ return [
         'last_name' => 'Cliente',
     ],
 
+    'picker' => [
+        'title' => 'Seleccionar clientes',
+        'description' => 'Busca y selecciona uno o varios clientes.',
+        'bulk_add' => 'Añadir clientes seleccionados',
+        'empty' => 'No se encontró ningún cliente.',
+    ],
 ];

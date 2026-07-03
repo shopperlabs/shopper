@@ -26,8 +26,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Actions\Store\DuplicateDiscountAction;
+use Shopper\Cart\Discounts\DiscountEligibilityManager;
 use Shopper\Core\Enum\DiscountApplyTo;
-use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountStatus;
 use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Models\Discount;
@@ -216,7 +216,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                 SelectFilter::make('apply_to')
                     ->options(DiscountApplyTo::options()),
                 SelectFilter::make('eligibility')
-                    ->options(DiscountEligibility::options()),
+                    ->options(resolve(DiscountEligibilityManager::class)->options()),
                 SelectFilter::make('zone_id')
                     ->label(__('shopper::pages/settings/zones.single'))
                     ->relationship('zone', 'name')

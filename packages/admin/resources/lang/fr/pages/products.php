@@ -185,4 +185,10 @@ return [
         'empty' => 'Aucune tarification disponible',
     ],
 
+    'picker' => [
+        'title' => 'Sélectionner des produits',
+        'description' => 'Recherchez et sélectionnez un ou plusieurs produits.',
+        'bulk_add' => 'Ajouter les produits sélectionnés',
+        'empty' => 'Aucun produit correspondant.',
+    ],
 ];
