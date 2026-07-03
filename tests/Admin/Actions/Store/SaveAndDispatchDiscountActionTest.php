@@ -67,7 +67,7 @@ describe(SaveAndDispatchDiscountAction::class, function (): void {
             ]),
             'productsIds' => [$this->products->first()->id],
             'discountId' => $discount->id,
-            'customersIds' => $this->users->pluck('id')->toArray(),
+            'eligibilityIds' => $this->users->pluck('id')->toArray(),
         ]);
 
         $discount->refresh();
