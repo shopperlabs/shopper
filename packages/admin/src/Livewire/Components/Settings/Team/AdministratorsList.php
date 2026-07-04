@@ -14,7 +14,6 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
@@ -25,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Components\Tables\UserColumn;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Models\Role;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -57,9 +57,9 @@ class AdministratorsList extends Component implements HasActions, HasSchemas, Ha
         return $table
             ->query($query)
             ->columns([
-                ViewColumn::make('full_name')
+                UserColumn::make('full_name')
                     ->label(__('shopper::forms.label.full_name'))
-                    ->view('shopper::livewire.tables.cells.administrators.row'),
+                    ->currentUserBadge(),
                 TextColumn::make('roles.display_name')
                     ->label(__('shopper::forms.label.role'))
                     ->badge(),
@@ -87,10 +87,6 @@ class AdministratorsList extends Component implements HasActions, HasSchemas, Ha
                                 ->success()
                                 ->send();
                         }),
-                    Action::make('viewProfile')
-                        ->label(__('shopper::pages/settings/staff.view_profile'))
-                        ->icon(Untitledui::UserCircle)
-                        ->url(fn (ShopperUser $record): string => route('shopper.customers.show', $record)),
                     DeleteAction::make('delete')
                         ->label(__('shopper::pages/settings/staff.delete_user'))
                         ->icon(Untitledui::Trash03)

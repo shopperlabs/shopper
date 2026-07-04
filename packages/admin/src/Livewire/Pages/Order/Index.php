@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Url;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Components\Tables\UserColumn;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
@@ -180,14 +181,11 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                         'shopper::livewire.tables.cells.orders.purchased',
                         ['order' => $record]
                     )),
-                TextColumn::make('customer.first_name')
+                UserColumn::make('customer.first_name')
                     ->label(__('shopper::words.customer'))
+                    ->user(fn (Order $record) => $record->customer)
                     ->searchable()
                     ->sortable()
-                    ->formatStateUsing(fn (Order $record): View => view(
-                        'shopper::components.user-avatar',
-                        ['user' => $record->customer]
-                    ))
                     ->toggleable(),
                 TextColumn::make('currency_code')
                     ->label(__('shopper::forms.label.currency'))

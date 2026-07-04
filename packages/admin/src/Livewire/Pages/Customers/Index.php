@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Computed;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Components\Tables\UserColumn;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Contracts\Order;
@@ -68,9 +69,9 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->latest()
             )
             ->columns([
-                ViewColumn::make('first_name')
+                UserColumn::make('first_name')
                     ->label(__('shopper::forms.label.full_name'))
-                    ->view('shopper::livewire.tables.cells.customers.name')
+                    ->url(fn ($record): string => route('shopper.customers.show', $record))
                     ->searchable()
                     ->sortable(),
                 ViewColumn::make('email')
