@@ -28,10 +28,9 @@ use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
-use Shopper\Components\Form\SocialLinksField;
 use Shopper\Components\Form\CountryField;
+use Shopper\Components\Form\SocialLinksField;
 use Shopper\Components\OnboardingWizard;
-use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Setting;
@@ -277,7 +276,6 @@ final class InitializationWizard extends Component implements HasActions, HasSch
     {
         return view('shopper::livewire.components.initialization.wizard');
     }
-
 
     /**
      * @return array<int|string, string>

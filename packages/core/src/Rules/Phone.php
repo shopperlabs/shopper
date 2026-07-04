@@ -16,6 +16,17 @@ final class Phone implements ValidationRule
         private readonly ?string $defaultRegion = null,
     ) {}
 
+    public static function defaultRegion(): ?string
+    {
+        $countryId = shopper_setting('country_id');
+
+        if (! $countryId) {
+            return null;
+        }
+
+        return Country::query()->find($countryId)?->cca2;
+    }
+
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (blank($value) || ! is_string($value)) {
@@ -35,17 +46,6 @@ final class Phone implements ValidationRule
         if (! $phoneNumberUtil->isValidNumber($phoneNumber)) {
             $fail('shopper-core::validation.phone')->translate();
         }
-    }
-
-    public static function defaultRegion(): ?string
-    {
-        $countryId = shopper_setting('country_id');
-
-        if (! $countryId) {
-            return null;
-        }
-
-        return Country::query()->find($countryId)?->cca2;
     }
 
     private function resolveRegion(): ?string

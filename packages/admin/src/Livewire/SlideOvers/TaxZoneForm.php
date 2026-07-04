@@ -18,7 +18,6 @@ use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Form\CountryField;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
-use Shopper\Core\Models\Country;
 use Shopper\Core\Models\TaxProvider;
 use Shopper\Core\Models\TaxZone;
 use Shopper\Traits\HandlesAuthorizationExceptions;
