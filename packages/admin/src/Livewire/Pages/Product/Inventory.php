@@ -29,6 +29,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Components\Form\NumberStepper;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\InventoryHistory;
@@ -142,10 +143,9 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
                             ->relationship('inventory', 'name')
                             ->native(false)
                             ->required(),
-                        TextInput::make('quantity')
+                        NumberStepper::make('quantity')
                             ->label(__('shopper::forms.label.quantity'))
                             ->placeholder('-10 or -5 or 50, etc')
-                            ->numeric()
                             ->required(),
                     ])
                     ->action(function (array $data): void {

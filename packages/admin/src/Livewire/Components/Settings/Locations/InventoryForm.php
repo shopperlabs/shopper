@@ -19,6 +19,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Shopper\Components\Form\NumberStepper;
 use Shopper\Components\Form\AddressField;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
@@ -78,10 +79,9 @@ class InventoryForm extends Component implements HasActions, HasSchemas
                         Toggle::make('is_default')
                             ->label(__('shopper::pages/settings/global.location.set_default'))
                             ->helperText(__('shopper::pages/settings/global.location.set_default_summary')),
-                        TextInput::make('priority')
+                        NumberStepper::make('priority')
                             ->label(__('shopper::forms.label.priority'))
                             ->helperText(__('shopper::pages/settings/global.location.priority_summary'))
-                            ->numeric()
                             ->default(0)
                             ->minValue(0)
                             ->required(),
