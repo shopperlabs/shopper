@@ -24,6 +24,7 @@ return [
         'store_address_summary' => 'Esta dirección aparecerá en tus facturas. Puedes editar la dirección usada.',
         'store_currency' => 'Moneda de la tienda',
         'social_links' => 'Enlaces sociales',
+        'add_social_link' => 'Añadir red social',
         'social_links_summary' => 'Información sobre tus diferentes cuentas en redes sociales. Los usuarios podrán contactarte directamente en tus páginas oficiales.',
     ],
 

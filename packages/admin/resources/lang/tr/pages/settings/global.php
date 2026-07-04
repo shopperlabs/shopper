@@ -23,6 +23,7 @@ return [
         'store_address_summary' => 'Bu adres faturalarınızda görünecektir. Kullanılan adresi düzenleyebilirsiniz.',
         'store_currency' => 'Mağaza para birimi',
         'social_links' => 'Sosyal bağlantılar',
+        'add_social_link' => 'Sosyal bağlantı ekle',
         'social_links_summary' => 'Sosyal ağlardaki farklı hesaplarınız hakkında bilgiler. Kullanıcılar resmi sayfalarınızda sizinle doğrudan iletişime geçebilecek.',
     ],
 

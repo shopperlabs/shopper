@@ -28,6 +28,8 @@ use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Components\Form\SocialLinksField;
+use Shopper\Components\Form\CountryField;
 use Shopper\Components\OnboardingWizard;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
@@ -57,16 +59,11 @@ final class InitializationWizard extends Component implements HasActions, HasSch
         'state',
         'city',
         'phone_number',
-        'facebook_link',
-        'instagram_link',
-        'twitter_link',
+        'social_links',
     ];
 
     /** @var array<string, mixed>|null */
     public ?array $data = [];
-
-    #[Locked]
-    public array $countryOptions = [];
 
     #[Locked]
     public array $currencyOptions = [];
@@ -75,7 +72,6 @@ final class InitializationWizard extends Component implements HasActions, HasSch
     {
         $this->authorizeSettingsAccess();
 
-        $this->countryOptions = self::countryOptions();
         $this->currencyOptions = self::currencyOptions();
 
         /** @var Collection<int, Setting> $settings */
@@ -134,11 +130,7 @@ final class InitializationWizard extends Component implements HasActions, HasSch
                                         ->email()
                                         ->required(),
                                 ]),
-                            Select::make('country_id')
-                                ->label(__('shopper::forms.label.country'))
-                                ->options($this->countryOptions)
-                                ->searchable()
-                                ->native(false),
+                            CountryField::make('country_id'),
                             Select::make('currencies')
                                 ->label(__('shopper::forms.label.currencies'))
                                 ->helperText(__('shopper::pages/onboarding.currencies_description'))
@@ -236,27 +228,7 @@ final class InitializationWizard extends Component implements HasActions, HasSch
                                     'description' => __('shopper::pages/onboarding.step_3_description'),
                                     'optional' => __('shopper::forms.label.optional'),
                                 ]),
-                            TextInput::make('facebook_link')
-                                ->prefix($this->socialIconPrefix('facebook'))
-                                ->inlinePrefix()
-                                ->label(__('shopper::words.socials.facebook'))
-                                ->placeholder('https://facebook.com/laravelshopper')
-                                ->url()
-                                ->maxLength(255),
-                            TextInput::make('instagram_link')
-                                ->prefix($this->socialIconPrefix('instagram'))
-                                ->inlinePrefix()
-                                ->label(__('shopper::words.socials.instagram'))
-                                ->placeholder('https://instagram.com/laravelshopper')
-                                ->url()
-                                ->maxLength(255),
-                            TextInput::make('twitter_link')
-                                ->prefix($this->socialIconPrefix('twitter'))
-                                ->inlinePrefix()
-                                ->label(__('shopper::words.socials.twitter'))
-                                ->placeholder('https://twitter.com/laravelshopper')
-                                ->url()
-                                ->maxLength(255),
+                            SocialLinksField::make('social_links'),
                         ]),
                 ])
                     ->contained(false)
@@ -306,24 +278,6 @@ final class InitializationWizard extends Component implements HasActions, HasSch
         return view('shopper::livewire.components.initialization.wizard');
     }
 
-    /**
-     * @return array<int|string, string|array<int|string, string>>
-     */
-    private static function countryOptions(): array
-    {
-        return Cache::remember(
-            'shopper.onboarding.country_options.'.app()->getLocale(),
-            now()->addDay(),
-            fn (): array => Country::query()
-                ->select('name', 'id', 'region', 'cca2')
-                ->orderBy('name')
-                ->get()
-                ->sortBy('region')
-                ->groupBy('region')
-                ->map(fn ($region): array => $region->pluck('name', 'id')->toArray())
-                ->all()
-        );
-    }
 
     /**
      * @return array<int|string, string>
@@ -338,17 +292,6 @@ final class InitializationWizard extends Component implements HasActions, HasSch
                 ->pluck('name', 'id')
                 ->all()
         );
-    }
-
-    private function socialIconPrefix(string $name): HtmlString
-    {
-        return new HtmlString(Blade::render(<<<'Blade'
-            <x-dynamic-component
-                :component="'shopper::icons.' . $name"
-                class="size-5 text-sh-fg-muted"
-                aria-hidden="true"
-            />
-        Blade, ['name' => $name]));
     }
 
     /**
