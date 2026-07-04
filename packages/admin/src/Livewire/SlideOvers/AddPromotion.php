@@ -30,6 +30,7 @@ use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Locked;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Components\Form\MoneyInput;
 use Shopper\Actions\Store\SaveAndDispatchDiscountAction;
 use Shopper\Cart\Discounts\DiscountEligibilityManager;
 use Shopper\Components\Section;
@@ -113,7 +114,7 @@ class AddPromotion extends SlideOverComponent implements HasActions, HasSchemas
                                 ->columnSpanFull()
                                 ->required()
                                 ->live(),
-                            TextInput::make('value')
+                            MoneyInput::make('value')
                                 ->label(fn (Get $get): ?string => match ($get('type')) {
                                     DiscountType::Percentage->value => __('shopper::pages/discounts.percentage'),
                                     DiscountType::FixedAmount->value => __('shopper::pages/discounts.fixed_amount'),
@@ -124,16 +125,8 @@ class AddPromotion extends SlideOverComponent implements HasActions, HasSchemas
                                     DiscountType::FixedAmount->value => $this->resolveZoneCurrency($get('zone_id')),
                                     default => null,
                                 })
-                                ->dehydrateStateUsing(function (Get $get, $state) {
-                                    if ($get('type') !== DiscountType::FixedAmount->value) {
-                                        return (int) $state;
-                                    }
-
-                                    $currency = $this->resolveZoneCurrency($get('zone_id'));
-
-                                    return is_no_division_currency($currency) ? (int) $state : (int) round((float) $state * 100);
-                                })
-                                ->numeric()
+                                ->money(fn (Get $get): bool => $get('type') === DiscountType::FixedAmount->value)
+                                ->currency(fn (Get $get): string => $this->resolveZoneCurrency($get('zone_id')))
                                 ->minValue(fn (Get $get): float => $get('type') === DiscountType::FixedAmount->value ? 0.01 : 1)
                                 ->maxValue(fn (Get $get): int => $get('type') === DiscountType::Percentage->value ? 100 : 999_999_999)
                                 ->required()
@@ -210,23 +203,15 @@ class AddPromotion extends SlideOverComponent implements HasActions, HasSchemas
                                 ->options(DiscountRequirement::options())
                                 ->required()
                                 ->live(),
-                            TextInput::make('min_required_value')
+                            MoneyInput::make('min_required_value')
                                 ->hiddenLabel()
-                                ->numeric()
                                 ->minValue(1)
                                 ->suffix(fn (Get $get): ?string => match ($get('min_required')) {
                                     DiscountRequirement::Price->value => $this->resolveZoneCurrency($get('zone_id')),
                                     default => null,
                                 })
-                                ->dehydrateStateUsing(function (Get $get, $state) {
-                                    if ($get('min_required') !== DiscountRequirement::Price->value) {
-                                        return $state;
-                                    }
-
-                                    $currency = $this->resolveZoneCurrency($get('zone_id'));
-
-                                    return is_no_division_currency($currency) ? (string) (int) $state : (string) ((int) round((float) $state * 100));
-                                })
+                                ->money(fn (Get $get): bool => $get('min_required') === DiscountRequirement::Price->value)
+                                ->currency(fn (Get $get): string => $this->resolveZoneCurrency($get('zone_id')))
                                 ->required(fn (Get $get): bool => $get('min_required') !== DiscountRequirement::None->value)
                                 ->visible(fn (Get $get): bool => filled($get('min_required')) && $get('min_required') !== DiscountRequirement::None->value),
                             Grid::make()

@@ -24,6 +24,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
+use Shopper\Components\Form\MoneyInput;
 use Shopper\Actions\Store\SaveAndDispatchDiscountAction;
 use Shopper\Cart\Discounts\DiscountEligibilityManager;
 use Shopper\Components\Section;
@@ -113,7 +114,7 @@ trait InteractsWithDiscountForm
                                     ->live(onBlur: true)
                                     ->required(fn (Get $get): bool => $get('trigger') !== PromotionSource::Automatic->value)
                                     ->visible(fn (Get $get): bool => $get('trigger') !== PromotionSource::Automatic->value),
-                                TextInput::make('value')
+                                MoneyInput::make('value')
                                     ->label(
                                         fn (Get $get): ?string => match ($get('type')) {
                                             DiscountType::Percentage->value => __('shopper::pages/discounts.percentage'),
@@ -128,24 +129,8 @@ trait InteractsWithDiscountForm
                                             default => null,
                                         }
                                     )
-                                    ->afterStateHydrated(function (TextInput $component, $state): void {
-                                        if ($this->discount->exists && $this->discount->type === DiscountType::FixedAmount && $state) {
-                                            $currency = $this->discount->zone?->currency_code ?? shopper_currency(); // @phpstan-ignore nullsafe.neverNull
-                                            $component->state(
-                                                is_no_division_currency($currency) ? $state : $state / 100
-                                            );
-                                        }
-                                    })
-                                    ->dehydrateStateUsing(function (Get $get, $state) {
-                                        if ($get('type') !== DiscountType::FixedAmount->value) {
-                                            return (int) $state;
-                                        }
-
-                                        $currency = $this->resolveZoneCurrency($get('zone_id'));
-
-                                        return is_no_division_currency($currency) ? (int) $state : (int) round((float) $state * 100);
-                                    })
-                                    ->numeric()
+                                    ->money(fn (Get $get): bool => $get('type') === DiscountType::FixedAmount->value)
+                                    ->currency(fn (Get $get): string => $this->resolveZoneCurrency($get('zone_id')))
                                     ->minValue(fn (Get $get): float => $get('type') === DiscountType::FixedAmount->value ? 0.01 : 1)
                                     ->maxValue(fn (Get $get): int => $get('type') === DiscountType::Percentage->value ? 100 : 999_999_999)
                                     ->live(onBlur: true)
@@ -227,9 +212,8 @@ trait InteractsWithDiscountForm
                             ->options(DiscountRequirement::options())
                             ->required()
                             ->live(),
-                        TextInput::make('min_required_value')
+                        MoneyInput::make('min_required_value')
                             ->hiddenLabel()
-                            ->numeric()
                             ->minValue(1)
                             ->live(onBlur: true)
                             ->suffix(
@@ -238,23 +222,8 @@ trait InteractsWithDiscountForm
                                     default => null,
                                 }
                             )
-                            ->afterStateHydrated(function (TextInput $component, $state): void {
-                                if ($this->discount->exists && $this->discount->min_required === DiscountRequirement::Price->value && $state) {
-                                    $currency = $this->discount->zone?->currency_code ?? shopper_currency(); // @phpstan-ignore nullsafe.neverNull
-                                    $component->state(
-                                        is_no_division_currency($currency) ? $state : (string) ((int) $state / 100)
-                                    );
-                                }
-                            })
-                            ->dehydrateStateUsing(function (Get $get, $state) {
-                                if ($get('min_required') !== DiscountRequirement::Price->value) {
-                                    return $state;
-                                }
-
-                                $currency = $this->resolveZoneCurrency($get('zone_id'));
-
-                                return is_no_division_currency($currency) ? (string) (int) $state : (string) ((int) round((float) $state * 100));
-                            })
+                            ->money(fn (Get $get): bool => $get('min_required') === DiscountRequirement::Price->value)
+                            ->currency(fn (Get $get): string => $this->resolveZoneCurrency($get('zone_id')))
                             ->required(
                                 fn (Get $get): bool => $get('min_required') !== DiscountRequirement::None->value
                             )

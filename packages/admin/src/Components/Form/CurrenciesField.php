@@ -33,7 +33,6 @@ final class CurrenciesField
                                 ->statePath($currency->id.'.amount')
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                 ->required(fn (Get $get): bool => $get($currency->id.'.compare_amount') !== null)
-                                ->suffix($currency->code)
                                 ->currency($currency->code)
                                 ->live(),
                             MoneyInput::make('compare_amount')  // @phpstan-ignore-line
@@ -44,7 +43,6 @@ final class CurrenciesField
                                     fn (?string $state, Set $set): mixed => $state ?? $set($currency->id.'.compare_amount', null)
                                 )
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
-                                ->suffix($currency->code)
                                 ->currency($currency->code)
                                 ->live(),
                             MoneyInput::make('cost_amount')  // @phpstan-ignore-line
@@ -52,7 +50,6 @@ final class CurrenciesField
                                 ->helperText(__('shopper::pages/products.cost_per_items_help_text'))
                                 ->statePath($currency->id.'.cost_amount')
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
-                                ->suffix($currency->code)
                                 ->currency($currency->code),
                         ])
                         ->columns(3),
