@@ -32,7 +32,7 @@ describe(CreateTeamMember::class, function (): void {
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'gender' => 'male',
-                'phone_number' => '+1234567890',
+                'phone_number' => '+12125550123',
                 'roles' => [$this->role->id],
                 'send_mail' => false,
             ])

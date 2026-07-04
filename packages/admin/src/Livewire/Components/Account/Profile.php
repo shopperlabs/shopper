@@ -16,6 +16,7 @@ use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Livewire\Component;
+use Shopper\Components\Form\PhoneInput;
 use Shopper\Components\Section;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\HasAuthenticated;
@@ -79,9 +80,7 @@ class Profile extends Component implements HasActions, HasSchemas
                                         table: config('auth.providers.users.model'),
                                         ignorable: $this->getUser()
                                     ),
-                                TextInput::make('phone_number')
-                                    ->label(__('shopper::forms.label.phone_number'))
-                                    ->tel(),
+                                PhoneInput::make('phone_number'),
                             ]),
                     ]),
             ])

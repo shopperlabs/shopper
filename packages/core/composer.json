@@ -5,6 +5,7 @@
   "require": {
     "ext-intl": "*",
     "php": "^8.3",
+    "giggsey/libphonenumber-for-php": "^9.0",
     "illuminate/console": "^12.0|^13.0",
     "illuminate/contracts": "^12.0|^13.0",
     "illuminate/database": "^12.0|^13.0",
