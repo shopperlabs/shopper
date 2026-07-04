@@ -66,6 +66,7 @@ return [
         'visible' => 'Visible',
         'invisible' => 'Invisible',
         'search' => 'Recherche',
+        'all_icons' => 'Toutes les icônes',
         'price' => 'Prix',
         'price_amount' => 'Prix',
         'compare_price' => 'Prix à comparer',

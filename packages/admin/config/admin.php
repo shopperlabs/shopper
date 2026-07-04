@@ -135,6 +135,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Caching Blade Icons
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the caching of the icon picker component. Since
+    | icon packs often ship with a lot of icons, scanning them on every
+    | request can be slow. Set "cache" to false to disable it entirely.
+    |
+    */
+
+    'icon-picker' => [
+        'cache' => true,
+        'duration' => '7 days',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Database Notifications
     |--------------------------------------------------------------------------
     |

@@ -66,6 +66,7 @@ return [
         'visible' => 'Görünür',
         'invisible' => 'Görünmez',
         'search' => 'Ara',
+        'all_icons' => 'Tüm simgeler',
         'price' => 'Fiyat',
         'price_amount' => 'Fiyat tutarı',
         'compare_price' => 'Karşılaştırma fiyatı',

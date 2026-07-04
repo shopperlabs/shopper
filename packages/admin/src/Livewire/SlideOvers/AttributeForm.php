@@ -48,6 +48,11 @@ class AttributeForm extends SlideOverComponent implements HasActions, HasSchemas
      */
     public ?array $data = [];
 
+    public static function panelMaxWidth(): string
+    {
+        return 'lg';
+    }
+
     public function mount(?int $attributeId = null): void
     {
         abort_unless($this->authorize('attributes.create') || $this->authorize('attributes.edit'), 403);
@@ -79,7 +84,8 @@ class AttributeForm extends SlideOverComponent implements HasActions, HasSchemas
                     ->required()
                     ->native(false),
                 IconPicker::make('icon')
-                    ->label(__('shopper::forms.label.icon')),
+                    ->label(__('shopper::forms.label.icon'))
+                    ->iconsSearchResults(),
                 Textarea::make('description')
                     ->label(__('shopper::forms.label.description'))
                     ->hint(__('shopper::words.characters', ['number' => 100]))
