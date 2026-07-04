@@ -15,6 +15,7 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
+use Shopper\Components\Form\CountryField;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Models\Country;
@@ -68,12 +69,8 @@ class TaxZoneForm extends SlideOverComponent implements HasActions, HasSchemas, 
     {
         return $schema
             ->components([
-                Select::make('country_id')
-                    ->label(__('shopper::forms.label.country'))
-                    ->options(Country::query()->orderBy('name')->pluck('name', 'id'))
-                    ->searchable()
-                    ->required()
-                    ->native(false),
+                CountryField::make('country_id')
+                    ->required(),
                 TextInput::make('province_code')
                     ->label(__('shopper::pages/settings/taxes.province_code'))
                     ->placeholder('US-CA, FR-IDF, GB-ENG...')
