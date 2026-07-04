@@ -71,7 +71,7 @@
             <x-slot:prefix>
                 <button
                     type="button"
-                    x-on:click="$refs.panel.toggle($event)"
+                    x-on:click="$refs.panel.style.width = $el.closest('.fi-input-wrp').offsetWidth + 'px'; $refs.panel.toggle($event)"
                     @disabled($isDisabled)
                     class="flex items-center gap-1.5"
                 >
@@ -94,8 +94,8 @@
 
         <div
             x-ref="panel"
-            x-float.placement.bottom-start.flip.offset="{ offset: 8 }"
-            class="bg-sh-surface ring-sh-border absolute z-50 w-full overflow-hidden rounded-xl shadow-md ring-1"
+            x-float.placement.bottom-start.flip.shift.teleport.offset="{ offset: 8 }"
+            class="bg-sh-surface ring-sh-border absolute z-50 overflow-hidden rounded-xl shadow-md ring-1"
         >
             <div class="border-sh-border border-b p-2">
                 <input
