@@ -135,24 +135,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Caching Blade Icons
-    |--------------------------------------------------------------------------
-    |
-    | This section lets you configure the caching option of the icon picker component.
-    |
-    | Since icon packs are often packed with a lots of icons,
-    | searching through all of them can take quite a lot of time, which is
-    | why the plugin caches each field with it's configuration and search queries.
-    |
-    */
-
-    'icon-picker' => [
-        'cache' => true,
-        'duration' => '7 days',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Database Notifications
     |--------------------------------------------------------------------------
     |

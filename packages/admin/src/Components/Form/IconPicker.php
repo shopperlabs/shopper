@@ -4,80 +4,38 @@ declare(strict_types=1);
 
 namespace Shopper\Components\Form;
 
-use BadMethodCallException;
 use BladeUI\Icons\Factory as IconFactory;
 use Closure;
-use Filament\Forms\Components\Select;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
+use Filament\Forms\Components\Concerns\HasPlaceholder;
+use Filament\Forms\Components\Field;
+use Filament\Support\Components\Attributes\ExposedLivewireMethod;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
-use Shopper\Traits\CanBeCacheable;
+use Livewire\Attributes\Renderless;
 
-class IconPicker extends Select
+use function Filament\Support\generate_icon_html;
+
+class IconPicker extends Field
 {
-    use CanBeCacheable;
+    use HasPlaceholder;
 
     protected string $view = 'shopper::filament.form.icon-picker';
 
     protected array|Closure|null $sets = null;
 
-    protected array|Closure|null $allowedIcons = null;
+    protected int|Closure $searchResultsLimit = 48;
 
-    protected array|Closure|null $disallowedIcons = null;
-
-    protected bool|Closure $isHtmlAllowed = true;
-
-    protected Closure|bool|null $isSearchable = true;
-
-    protected Closure|string|Htmlable|null $itemTemplate = null;
-
-    protected bool|Closure $show;
-
-    protected string|Closure $layout = 'floating';
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->sets();
-        $this->layout($this->layout);
-
-        $this->getSearchResultsUsing = function (IconPicker $component, string $search, Collection $icons) {
-            $iconsHash = md5(serialize($icons));
-            $key = "icon-picker.results.{$iconsHash}.{$search}";
-
-            return $this->tryCache(
-                $key,
-                fn (): array => collect($icons)
-                    ->flatten()
-                    ->filter(fn (string $icon): bool => str_contains($icon, $search))
-                    ->mapWithKeys(fn (string $icon): array => [$icon => $component->getItemTemplate(['icon' => $icon])])
-                    ->toArray()
-            );
-        };
-
-        $this->getOptionLabelUsing = function (IconPicker $component, ?string $value) {
-            if ($value) {
-                return $component->getItemTemplate(['icon' => $value]);
-            }
-
-            return null;
-        };
-
-        $this
-            ->itemTemplate(fn (IconPicker $component, string $icon): string => view('shopper::filament.icon-picker-item', [
-                'icon' => $icon,
-            ])->render())
-            ->placeholder(__('shopper::forms.placeholder.icon_placeholder'));
+        $this->placeholder(__('shopper::forms.placeholder.icon_placeholder'));
     }
 
-    public function sets(array|Closure|string|null $sets = null): static
+    public function sets(array|string|Closure|null $sets): static
     {
-        $this->sets = $sets ? (is_string($sets) ? [$sets] : $sets) : null;
+        $this->sets = is_string($sets) ? [$sets] : $sets;
 
         return $this;
     }
@@ -87,180 +45,72 @@ class IconPicker extends Select
         return $this->evaluate($this->sets);
     }
 
-    public function allowedIcons(array|Closure|string $allowedIcons): static
+    public function searchResultsLimit(int|Closure $limit): static
     {
-        $this->allowedIcons = $allowedIcons;
+        $this->searchResultsLimit = $limit;
 
         return $this;
     }
 
-    public function getAllowedIcons(): ?array
+    public function getSearchResultsLimit(): int
     {
-        return $this->evaluate($this->allowedIcons, [
-            'sets' => $this->getSets(),
-        ]);
+        return $this->evaluate($this->searchResultsLimit);
     }
 
-    public function disallowedIcons(array|Closure|string $disallowedIcons): static
+    #[ExposedLivewireMethod]
+    #[Renderless]
+    public function getSearchResultsJs(?string $search = null): array
     {
-        $this->disallowedIcons = $disallowedIcons;
+        $search = mb_strtolower(mb_trim((string) $search));
 
-        return $this;
+        return collect($this->getIconNames())
+            ->when($search !== '', fn ($icons) => $icons->filter(
+                fn (string $icon): bool => str_contains($icon, $search)
+            ))
+            ->take($this->getSearchResultsLimit())
+            ->map(fn (string $icon): array => [
+                'name' => $icon,
+                'html' => generate_icon_html($icon)?->toHtml(),
+            ])
+            ->values()
+            ->all();
     }
 
-    public function getDisallowedIcons(): ?array
+    public function getSelectedIconHtml(): ?string
     {
-        return $this->evaluate($this->disallowedIcons, [
-            'sets' => $this->getSets(),
-        ]);
-    }
+        $state = $this->getState();
 
-    public function layout(string|Closure $layout): static
-    {
-        $this->layout = $layout;
-
-        return $this;
-    }
-
-    public function getLayout(): string
-    {
-        return $this->evaluate($this->layout);
-    }
-
-    public function itemTemplate(Htmlable|Closure|View $template): static
-    {
-        $this->itemTemplate = $template;
-
-        return $this;
-    }
-
-    public function getItemTemplate(array $options = []): string
-    {
-        return $this->evaluate($this->itemTemplate, $options);
-    }
-
-    public function getSearchResults(string $search): array
-    {
-        if (! $this->getSearchResultsUsing) {
-            return [];
-        }
-
-        $results = $this->evaluate($this->getSearchResultsUsing, [
-            'query' => $search,
-            'search' => $search,
-            'searchQuery' => $search,
-            'icons' => $this->loadIcons(),
-        ]);
-
-        if ($results instanceof Arrayable) {
-            $results = $results->toArray();
-        }
-
-        return $results;
-    }
-
-    public function relationship(string|Closure|null $name = null, string|Closure|null $titleAttribute = null, ?Closure $modifyQueryUsing = null, bool $ignoreRecord = false): static
-    {
-        throw new BadMethodCallException('Method not allowed.');
-    }
-
-    public function options(Arrayable|Closure|array|string|null $options): static
-    {
-        throw new BadMethodCallException('Method not allowed.');
-    }
-
-    public function allowHtml(bool|Closure $condition = true): static
-    {
-        throw new BadMethodCallException('Method not allowed.');
-    }
-
-    public function searchable(bool|array|Closure $condition = true): static
-    {
-        throw new BadMethodCallException('Method not allowed.');
-    }
-
-    public function getSearchResultsUsing(?Closure $callback): static
-    {
-        throw new BadMethodCallException('Method not allowed.');
-    }
-
-    public function getOptionLabelFromRecordUsing(?Closure $callback): static
-    {
-        throw new BadMethodCallException('Method not allowed.');
-    }
-
-    public function createOptionUsing(?Closure $callback): static
-    {
-        throw new BadMethodCallException('Method not allowed.');
-    }
-
-    public function createOptionAction(?Closure $callback): static
-    {
-        throw new BadMethodCallException('Method not allowed.');
-    }
-
-    public function createOptionForm(array|Closure|null $schema): static
-    {
-        throw new BadMethodCallException('Method not allowed.');
-    }
-
-    public function schema(array|Closure $components): static
-    {
-        throw new BadMethodCallException('Method not allowed.');
-    }
-
-    public function multiple(bool|Closure $condition = true): static
-    {
-        throw new BadMethodCallException('Method not allowed.');
+        return $state ? generate_icon_html($state)?->toHtml() : null;
     }
 
     /**
-     * @return Collection<array-key, mixed>
+     * @return array<int, string>
      */
-    private function loadIcons(): Collection
+    private function getIconNames(): array
     {
-        $iconsHash = md5(serialize($this->getSets()));
-        $key = "icon-picker.fields.{$iconsHash}.{$this->getStatePath()}";
+        $sets = $this->getSets();
 
-        [$sets, $allowedIcons, $disallowedIcons] = $this->tryCache(
-            key: $key,
-            callback: function (): array {
-                $allowedIcons = $this->getAllowedIcons();
-                $disallowedIcons = $this->getDisallowedIcons();
+        return Cache::remember(
+            'shopper.icon-picker.'.md5(serialize($sets)),
+            now()->addDay(),
+            function () use ($sets): array {
+                $iconSets = collect(App::make(IconFactory::class)->all())
+                    ->when($sets, fn ($allSets) => $allSets->filter(
+                        fn (array $set, string $name): bool => in_array($name, $sets, true)
+                    ));
 
-                $iconsFactory = App::make(IconFactory::class);
-                $allowedSets = $this->getSets();
-                $sets = collect($iconsFactory->all());
+                $icons = [];
 
-                if ($allowedSets) {
-                    $sets = $sets->filter(fn ($value, $key): bool => in_array($key, $allowedSets));
+                foreach ($iconSets as $set) {
+                    foreach ($set['paths'] as $path) {
+                        foreach (File::files($path) as $file) {
+                            $icons[] = $set['prefix'].'-'.$file->getFilenameWithoutExtension();
+                        }
+                    }
                 }
 
-                return [$sets, $allowedIcons, $disallowedIcons];
+                return $icons;
             }
         );
-
-        $icons = [];
-
-        foreach ($sets as $set) {
-            $prefix = $set['prefix'];
-            foreach ($set['paths'] as $path) {
-                foreach (File::files($path) as $file) {
-                    $filename = $prefix.'-'.$file->getFilenameWithoutExtension();
-
-                    if ($allowedIcons && ! in_array($filename, $allowedIcons)) {
-                        continue;
-                    }
-
-                    if ($disallowedIcons && in_array($filename, $disallowedIcons)) {
-                        continue;
-                    }
-
-                    $icons[Str::title($prefix)][] = $filename;
-                }
-            }
-        }
-
-        return collect($icons);
     }
 }
