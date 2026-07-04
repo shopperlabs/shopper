@@ -167,6 +167,7 @@ return [
         'confirm' => 'Confirmer',
         'cancel' => 'Annuler',
         'clear' => 'Réinitialiser',
+        'generate' => 'Générer',
         'close' => 'Fermer',
         'delete' => 'Supprimer',
         'disable' => 'Désactiver',

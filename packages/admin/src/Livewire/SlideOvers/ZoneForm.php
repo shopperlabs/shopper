@@ -6,7 +6,6 @@ namespace Shopper\Livewire\SlideOvers;
 
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -15,15 +14,15 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
+use Shopper\Components\Form\CountryField;
+use Shopper\Components\Form\SlugInput;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Models\Carrier;
@@ -106,14 +105,9 @@ class ZoneForm extends SlideOverComponent implements HasActions, HasSchemas, Sli
                         TextInput::make('name')
                             ->label(__('shopper::forms.label.name'))
                             ->placeholder('Africa')
-                            ->required()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function (?string $state, Set $set): void {
-                                if ($state) {
-                                    $set('slug', Str::slug($state));
-                                }
-                            }),
-                        Hidden::make('slug'),
+                            ->required(),
+                        SlugInput::make('slug')
+                            ->from('name'),
                         TextInput::make('code')
                             ->label(__('shopper::forms.label.code'))
                             ->placeholder('AF')
@@ -121,22 +115,14 @@ class ZoneForm extends SlideOverComponent implements HasActions, HasSchemas, Sli
                             ->maxLength(10)
                             ->unique(table: Zone::class, column: 'code', ignoreRecord: true),
                     ]),
-                Select::make('countries')
+                CountryField::make('countries')
                     ->label(__('shopper::forms.label.countries'))
                     ->placeholder(__('shopper::forms.placeholder.select_countries'))
                     ->multiple()
                     ->required()
-                    ->options(
-                        Country::query()
-                            ->select('name', 'id')
-                            ->orderBy('name')
-                            ->pluck('name', 'id')
-                    )
-                    ->searchable()
                     ->disableOptionWhen(
                         fn (int $value): bool => in_array($value, $this->countriesInZone)
-                    )
-                    ->native(false),
+                    ),
                 Select::make('currency_id')
                     ->label(__('shopper::forms.label.currency'))
                     ->placeholder(__('shopper::forms.placeholder.choose_currency'))

@@ -7,7 +7,6 @@ namespace Shopper\Livewire\SlideOvers;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\RichEditor;
@@ -15,13 +14,12 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
+use Shopper\Components\Form\SlugInput;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Contracts\SlideOverForm;
@@ -69,15 +67,9 @@ class AddCollectionForm extends SlideOverComponent implements HasActions, HasSch
                         TextInput::make('name')
                             ->label(__('shopper::forms.label.name'))
                             ->placeholder('Summers Collections, Christmas promotions...')
-                            ->required()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function (string $operation, ?string $state, Set $set): void {
-                                if ($state) {
-                                    $set('slug', Str::slug($state));
-                                }
-                            }),
-                        Hidden::make('slug')
-                            ->label(__('shopper::forms.label.slug')),
+                            ->required(),
+                        SlugInput::make('slug')
+                            ->from('name'),
                         DateTimePicker::make('published_at')
                             ->label(__('shopper::forms.label.availability'))
                             ->native(false)

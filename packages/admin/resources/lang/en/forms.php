@@ -167,6 +167,7 @@ return [
         'confirm' => 'Confirm',
         'cancel' => 'Cancel',
         'clear' => 'Clear',
+        'generate' => 'Generate',
         'close' => 'Close',
         'delete' => 'Delete',
         'disable' => 'Disable',

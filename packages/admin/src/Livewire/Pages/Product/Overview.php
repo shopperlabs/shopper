@@ -18,7 +18,6 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
@@ -27,9 +26,9 @@ use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Shopper\Components\Form\SlugInput;
 use Shopper\Actions\Store\Product\UpdateProductAction;
 use Shopper\Components\Separator;
 use Shopper\Core\Models\Contracts\Product;
@@ -74,18 +73,9 @@ class Overview extends Component implements HasActions, HasSchemas
                                 TextInput::make('name')
                                     ->label(__('shopper::forms.label.name'))
                                     ->required()
-                                    ->maxLength(255)
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(function (?string $state, Set $set): void {
-                                        if ($state) {
-                                            $set('slug', Str::slug($state));
-                                        }
-                                    }),
-                                TextInput::make('slug')
-                                    ->label(__('shopper::forms.label.slug'))
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->required()
+                                    ->maxLength(255),
+                                SlugInput::make('slug')
+                                    ->from('name')
                                     ->maxLength(255)
                                     ->unique(config('shopper.models.product'), 'slug', ignoreRecord: true),
                                 Textarea::make('summary')
@@ -187,14 +177,9 @@ class Overview extends Component implements HasActions, HasSchemas
                                     ->createOptionForm([
                                         TextInput::make('name')
                                             ->label(__('shopper::forms.label.name'))
-                                            ->required()
-                                            ->live(onBlur: true)
-                                            ->afterStateUpdated(fn (?string $state, Set $set): mixed => $set('slug', Str::slug($state ?? ''))),
-                                        TextInput::make('slug')
-                                            ->label(__('shopper::forms.label.slug'))
-                                            ->disabled()
-                                            ->dehydrated()
-                                            ->required()
+                                            ->required(),
+                                        SlugInput::make('slug')
+                                            ->from('name')
                                             ->unique(ProductTag::class, 'slug'),
                                     ])
                                     ->createOptionModalHeading(__('shopper::pages/tags.create'))

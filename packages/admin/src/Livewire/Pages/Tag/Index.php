@@ -10,7 +10,6 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
@@ -21,8 +20,8 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Str;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Components\Form\SlugInput;
 use Shopper\Core\Models\ProductTag;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -117,14 +116,9 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
         return $schema->components([
             TextInput::make('name')
                 ->label(__('shopper::forms.label.name'))
-                ->required()
-                ->live(onBlur: true)
-                ->afterStateUpdated(fn (?string $state, Set $set): mixed => $set('slug', Str::slug($state ?? ''))),
-            TextInput::make('slug')
-                ->label(__('shopper::forms.label.slug'))
-                ->disabled()
-                ->dehydrated()
-                ->required()
+                ->required(),
+            SlugInput::make('slug')
+                ->from('name')
                 ->unique(ProductTag::class, 'slug', ignoreRecord: true),
         ]);
     }

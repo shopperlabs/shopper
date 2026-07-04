@@ -59,14 +59,17 @@ describe(AttributeForm::class, function (): void {
             ->and(Attribute::query()->first()->slug)->toBe('color');
     });
 
-    it('auto generates slug from name', function (): void {
-        $component = Livewire::test(AttributeForm::class)
+    it('auto generates slug from name when left empty', function (): void {
+        Livewire::test(AttributeForm::class)
             ->assertFormExists()
             ->fillForm([
                 'name' => 'Product Size',
-            ]);
+                'type' => FieldType::Select(),
+            ])
+            ->call('store')
+            ->assertHasNoFormErrors();
 
-        expect($component->get('data.slug'))->toBe('product-size');
+        expect(Attribute::query()->first()->slug)->toBe('product-size');
     });
 
     it('validates required fields', function (): void {

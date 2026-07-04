@@ -164,6 +164,7 @@ return [
         'confirm' => 'Onayla',
         'cancel' => 'İptal',
         'clear' => 'Temizle',
+        'generate' => 'Oluştur',
         'close' => 'Kapat',
         'delete' => 'Sil',
         'disable' => 'Devre Dışı Bırak',

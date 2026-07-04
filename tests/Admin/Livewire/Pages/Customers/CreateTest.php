@@ -42,7 +42,7 @@ describe(Create::class, function (): void {
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'email' => 'john.doe@example.com',
-                'phone_number' => '1234567890',
+                'phone_number' => '+12125550123',
                 'password' => $password,
                 'password_confirmation' => $password,
                 'address' => [
@@ -185,7 +185,7 @@ describe(Create::class, function (): void {
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'email' => 'john.doe@example.com',
-                'phone_number' => '1234567890',
+                'phone_number' => '+12125550123',
                 'password' => $password,
                 'password_confirmation' => $password,
                 'address' => [
@@ -217,7 +217,7 @@ describe(Create::class, function (): void {
                 'first_name' => 'Jane',
                 'last_name' => 'Smith',
                 'email' => 'jane.smith@example.com',
-                'phone_number' => '0987654321',
+                'phone_number' => '+16175550142',
                 'password' => $password,
                 'password_confirmation' => $password,
                 'address' => [
