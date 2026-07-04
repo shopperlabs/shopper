@@ -6,19 +6,27 @@ namespace Shopper\Components\Form;
 
 use Closure;
 use Filament\Forms\Components\TextInput;
+use Illuminate\Contracts\Support\Htmlable;
+use NumberFormatter;
 
 class MoneyInput extends TextInput
 {
     protected string|Closure|null $currency = null;
 
+    protected bool|Closure $isMoney = true;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->numeric();
+        $this->numeric()
+            ->inlinePrefix()
+            ->inlineSuffix();
+
+        $this->suffix(fn (): ?string => $this->isMoney() ? $this->getCurrency() : null);
 
         $this->afterStateHydrated(function (self $component, $state): void {
-            if ($state === null || $state === '') {
+            if ($state === null || $state === '' || ! $component->isMoney()) {
                 return;
             }
 
@@ -29,9 +37,13 @@ class MoneyInput extends TextInput
             );
         });
 
-        $this->dehydrateStateUsing(function ($state): ?int {
+        $this->dehydrateStateUsing(function ($state) {
             if ($state === null || $state === '') {
                 return null;
+            }
+
+            if (! $this->isMoney()) {
+                return $state;
             }
 
             $currency = $this->getCurrency();
@@ -41,7 +53,19 @@ class MoneyInput extends TextInput
                 : (int) round((float) $state * 100);
         });
 
-        $this->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2); // @phpstan-ignore method.notFound
+        [$thousandSeparator, $decimalSeparator] = $this->getLocaleSeparators();
+
+        $this->currencyMask(thousandSeparator: $thousandSeparator, decimalSeparator: $decimalSeparator, precision: 2); // @phpstan-ignore method.notFound
+    }
+
+    public function prefix(string|Htmlable|Closure|null $label, bool|Closure $isInline = true): static
+    {
+        return parent::prefix($label, $isInline);
+    }
+
+    public function suffix(string|Htmlable|Closure|null $label, bool|Closure $isInline = true): static
+    {
+        return parent::suffix($label, $isInline);
     }
 
     public function currency(string|Closure $currency): static
@@ -51,14 +75,49 @@ class MoneyInput extends TextInput
         return $this;
     }
 
+    public function money(bool|Closure $condition = true): static
+    {
+        $this->isMoney = $condition;
+
+        return $this;
+    }
+
+    public function isMoney(): bool
+    {
+        return (bool) $this->evaluate($this->isMoney);
+    }
+
     public function getCurrency(): string
     {
         $currency = $this->evaluate($this->currency) ?? shopper_currency();
 
         if (is_no_division_currency($currency)) {
-            $this->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 0); // @phpstan-ignore method.notFound
+            [$thousandSeparator, $decimalSeparator] = $this->getLocaleSeparators();
+
+            $this->currencyMask(thousandSeparator: $thousandSeparator, decimalSeparator: $decimalSeparator, precision: 0); // @phpstan-ignore method.notFound
         }
 
         return $currency;
+    }
+
+    /**
+     * @return array{string, string}
+     */
+    private function getLocaleSeparators(): array
+    {
+        if (! class_exists(NumberFormatter::class)) {
+            return [',', '.'];
+        }
+
+        $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::DECIMAL);
+
+        $decimalSeparator = $formatter->getSymbol(NumberFormatter::DECIMAL_SEPARATOR_SYMBOL) ?: '.';
+        $thousandSeparator = $formatter->getSymbol(NumberFormatter::GROUPING_SEPARATOR_SYMBOL) ?: ',';
+
+        if (preg_match('/^\s$/u', $thousandSeparator)) {
+            $thousandSeparator = ' ';
+        }
+
+        return [$thousandSeparator, $decimalSeparator];
     }
 }

@@ -16,6 +16,7 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Arr;
 use Livewire\Attributes\Locked;
+use Shopper\Components\Form\MoneyInput;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
 use Shopper\Core\Enum\CampaignBudgetType;
@@ -73,28 +74,10 @@ trait InteractsWithCampaignForm
                             ->descriptions($this->budgetTypeDescriptions())
                             ->required()
                             ->live(),
-                        TextInput::make('budget_amount')
+                        MoneyInput::make('budget_amount')
                             ->label(__('shopper::pages/campaigns.budget_amount'))
-                            ->suffix(fn (Get $get): string => $this->resolveCurrency($get('currency_code')))
-                            ->numeric()
+                            ->currency(fn (Get $get): string => $this->resolveCurrency($get('currency_code')))
                             ->minValue(0.01)
-                            ->afterStateHydrated(function (TextInput $component, $state): void {
-                                if ($this->campaign->exists && $state !== null && $state !== '') {
-                                    $currency = $this->campaign->currency_code;
-                                    $component->state(
-                                        is_no_division_currency($currency) ? $state : $state / 100
-                                    );
-                                }
-                            })
-                            ->dehydrateStateUsing(function (Get $get, $state) {
-                                if ($state === null || $state === '') {
-                                    return null;
-                                }
-
-                                $currency = $this->resolveCurrency($get('currency_code'));
-
-                                return is_no_division_currency($currency) ? (int) $state : (int) round((float) $state * 100);
-                            })
                             ->required(fn (Get $get): bool => $this->budgetTypeHasSpendCap($get('budget_type')))
                             ->visible(fn (Get $get): bool => $this->budgetTypeHasSpendCap($get('budget_type')))
                             ->live(onBlur: true),

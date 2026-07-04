@@ -19,7 +19,6 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Livewire;
 use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
@@ -28,11 +27,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 use JaOcero\RadioDeck\Forms\Components\RadioDeck;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Actions\Store\Product\CreateProductAction;
+use Shopper\Components\Form\SlugInput;
 use Shopper\Components\Separator;
 use Shopper\Components\SlideOverWizard;
 use Shopper\Components\Wizard\StepColumn;
@@ -123,19 +122,10 @@ class AddProduct extends SlideOverComponent implements HasActions, HasSchemas
                                         ->label(__('shopper::forms.label.name'))
                                         ->placeholder('Table set')
                                         ->required()
-                                        ->maxLength(255)
-                                        ->live(onBlur: true)
-                                        ->afterStateUpdated(function (?string $state, Set $set): void {
-                                            if ($state) {
-                                                $set('slug', Str::slug($state));
-                                            }
-                                        }),
-                                    TextInput::make('slug')
-                                        ->label(__('shopper::forms.label.slug'))
+                                        ->maxLength(255),
+                                    SlugInput::make('slug')
+                                        ->from('name')
                                         ->placeholder('table-set')
-                                        ->disabled()
-                                        ->dehydrated()
-                                        ->required()
                                         ->maxLength(255)
                                         ->unique(config('shopper.models.product'), 'slug'),
                                     Textarea::make('summary')

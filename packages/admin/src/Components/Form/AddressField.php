@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Components\Form;
 
 use Filament\Forms\Components;
-use Shopper\Core\Models\Country;
 
 final class AddressField
 {
@@ -40,14 +39,9 @@ final class AddressField
             Components\TextInput::make(self::getPrefix($prefix).'postal_code')
                 ->label(__('shopper::forms.label.postal_code'))
                 ->required(),
-            Components\Select::make(self::getPrefix($prefix).'country_id')
-                ->label(__('shopper::forms.label.country'))
-                ->options(Country::query()->pluck('name', 'id'))
-                ->searchable()
+            CountryField::make(self::getPrefix($prefix).'country_id')
                 ->required(),
-            Components\TextInput::make(self::getPrefix($prefix).'phone_number')
-                ->label(__('shopper::forms.label.phone_number'))
-                ->tel(),
+            PhoneInput::make(self::getPrefix($prefix).'phone_number'),
         ];
     }
 }

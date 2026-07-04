@@ -12,7 +12,6 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\SelectFilter;
@@ -24,6 +23,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Components\Tables\RatingColumn;
+use Shopper\Components\Tables\UserColumn;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Review;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -137,14 +138,11 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     )
             )
             ->columns([
-                TextColumn::make('author.full_name')
+                UserColumn::make('author.full_name')
                     ->label(__('shopper::words.customer'))
+                    ->user(fn (Review $record) => $record->author)
                     ->searchable()
-                    ->sortable()
-                    ->formatStateUsing(fn (Review $record): View => view(
-                        'shopper::components.user-avatar',
-                        ['user' => $record->author]
-                    )),
+                    ->sortable(),
                 TextColumn::make('reviewrateable.name')
                     ->label(__('shopper::words.product'))
                     ->searchable()
@@ -153,9 +151,8 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                         name: 'shopper.products.edit',
                         parameters: ['product' => $record->reviewrateable]
                     )),
-                ViewColumn::make('rating')
-                    ->label(__('shopper::pages/products.reviews.rating'))
-                    ->view('shopper::livewire.tables.cells.reviews.rating'),
+                RatingColumn::make('rating')
+                    ->label(__('shopper::pages/products.reviews.rating')),
                 TextColumn::make('content')
                     ->label(__('shopper::pages/products.reviews.review'))
                     ->limit(30)

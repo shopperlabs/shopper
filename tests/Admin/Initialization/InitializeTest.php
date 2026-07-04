@@ -86,9 +86,10 @@ it('can save settings and create a default inventory through the wizard', functi
             'postal_code' => '00237',
             'city' => 'Douala',
             'phone_number' => '+237 600 000 000',
-            'facebook_link' => 'https://facebook.com/mystore',
-            'instagram_link' => 'https://instagram.com/mystore',
-            'twitter_link' => 'https://twitter.com/mystore',
+            'social_links' => [
+                ['platform' => 'facebook', 'url' => 'https://facebook.com/mystore'],
+                ['platform' => 'instagram', 'url' => 'https://instagram.com/mystore'],
+            ],
         ])
         ->call('save')
         ->assertHasNoFormErrors()
@@ -226,9 +227,26 @@ it('rejects a malformed social link `URL`', function (): void {
     $this->asAdmin();
 
     Livewire::test(InitializationWizard::class)
-        ->fillForm(['facebook_link' => 'not-a-url'])
+        ->fillForm([
+            'social_links' => [
+                ['platform' => 'facebook', 'url' => 'not-a-url'],
+            ],
+        ])
         ->call('save')
-        ->assertHasFormErrors(['facebook_link' => 'url']);
+        ->assertHasFormErrors(['social_links.0.url' => 'url']);
+});
+
+it('rejects a social link `URL` that does not match its platform', function (): void {
+    $this->asAdmin();
+
+    Livewire::test(InitializationWizard::class)
+        ->fillForm([
+            'social_links' => [
+                ['platform' => 'facebook', 'url' => 'https://instagram.com/mystore'],
+            ],
+        ])
+        ->call('save')
+        ->assertHasFormErrors(['social_links.0.url']);
 });
 
 it('forbids a non-admin user from mounting the wizard component', function (): void {

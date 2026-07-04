@@ -24,6 +24,7 @@ return [
         'store_address_summary' => 'This address will appear on your invoices. You can edit the address used.',
         'store_currency' => 'Store currency',
         'social_links' => 'Social links',
+        'add_social_link' => 'Add social link',
         'social_links_summary' => 'Information about your different accounts on social networks. Users will be able to contact you directly on your official pages.',
     ],
 

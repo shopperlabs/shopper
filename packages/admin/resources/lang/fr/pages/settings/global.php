@@ -24,6 +24,7 @@ return [
         'store_address_summary' => "Cette adresse apparaîtra sur vos factures. Vous pouvez modifier l'adresse utilisée.",
         'store_currency' => 'Devise de la boutique',
         'social_links' => 'Liens sociaux',
+        'add_social_link' => 'Ajouter un réseau social',
         'social_links_summary' => 'Informations sur vos différents comptes sur les réseaux sociaux. Les utilisateurs pourront vous contacter directement sur vos pages officielles.',
     ],
 

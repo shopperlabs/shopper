@@ -12,13 +12,12 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Form\IconPicker;
+use Shopper\Components\Form\SlugInput;
 use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Enum\FieldType;
@@ -49,6 +48,11 @@ class AttributeForm extends SlideOverComponent implements HasActions, HasSchemas
      */
     public ?array $data = [];
 
+    public static function panelMaxWidth(): string
+    {
+        return 'lg';
+    }
+
     public function mount(?int $attributeId = null): void
     {
         abort_unless($this->authorize('attributes.create') || $this->authorize('attributes.edit'), 403);
@@ -69,18 +73,9 @@ class AttributeForm extends SlideOverComponent implements HasActions, HasSchemas
                 TextInput::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->required()
-                    ->live(onBlur: true)
-                    ->maxLength(75)
-                    ->afterStateUpdated(function (string $operation, ?string $state, Set $set): void {
-                        if ($state) {
-                            $set('slug', Str::slug($state));
-                        }
-                    }),
-                TextInput::make('slug')
-                    ->label(__('shopper::forms.label.slug'))
-                    ->disabled()
-                    ->dehydrated()
-                    ->required()
+                    ->maxLength(75),
+                SlugInput::make('slug')
+                    ->from('name')
                     ->maxLength(255)
                     ->unique(table: Attribute::class, column: 'slug', ignoreRecord: true),
                 Select::make('type')
@@ -89,7 +84,8 @@ class AttributeForm extends SlideOverComponent implements HasActions, HasSchemas
                     ->required()
                     ->native(false),
                 IconPicker::make('icon')
-                    ->label(__('shopper::forms.label.icon')),
+                    ->label(__('shopper::forms.label.icon'))
+                    ->iconsSearchResults(),
                 Textarea::make('description')
                     ->label(__('shopper::forms.label.description'))
                     ->hint(__('shopper::words.characters', ['number' => 100]))

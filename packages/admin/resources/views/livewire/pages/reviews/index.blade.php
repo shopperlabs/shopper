@@ -28,18 +28,7 @@
                 </p>
 
                 <div class="mt-3 flex items-center gap-4">
-                    <div class="flex items-center gap-1">
-                        @foreach ([1, 2, 3, 4, 5] as $star)
-                            <x-heroicon-s-star
-                                @class([
-                                    'size-4 shrink-0',
-                                    'text-yellow-400' => $stats['average'] >= $star,
-                                    'text-sh-fg-muted' => $stats['average'] < $star,
-                                ])
-                                aria-hidden="true"
-                            />
-                        @endforeach
-                    </div>
+                    <x-shopper::rating-stars :rating="$stats['average']" />
 
                     <p class="text-sh-fg-muted text-xs">
                         {{ $hasReviews

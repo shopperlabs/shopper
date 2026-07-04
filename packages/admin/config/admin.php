@@ -138,11 +138,9 @@ return [
     | Caching Blade Icons
     |--------------------------------------------------------------------------
     |
-    | This section lets you configure the caching option of the icon picker component.
-    |
-    | Since icon packs are often packed with a lots of icons,
-    | searching through all of them can take quite a lot of time, which is
-    | why the plugin caches each field with it's configuration and search queries.
+    | Here you may configure the caching of the icon picker component. Since
+    | icon packs often ship with a lot of icons, scanning them on every
+    | request can be slow. Set "cache" to false to disable it entirely.
     |
     */
 

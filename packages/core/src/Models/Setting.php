@@ -49,9 +49,7 @@ class Setting extends Model implements SettingContract
             'phone_number' => __('shopper::forms.label.phone_number'),
             'longitude' => __('shopper::forms.label.longitude'),
             'latitude' => __('shopper::forms.label.latitude'),
-            'facebook_link' => __('shopper::words.socials.facebook'),
-            'instagram_link' => __('shopper::words.socials.instagram'),
-            'twitter_link' => __('shopper::words.socials.twitter'),
+            'social_links' => __('shopper::pages/settings/global.general.social_links'),
             'admin_theme' => __('shopper::forms.label.admin_theme'),
             default => Str::title($key),
         };

@@ -66,7 +66,10 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                 ViewColumn::make('starts_at')
                     ->label(__('shopper::words.date'))
                     ->toggleable()
-                    ->view('shopper::livewire.tables.cells.campaigns.date'),
+                    ->view('shopper::livewire.tables.cells.date-range', [
+                        'startColumn' => 'starts_at',
+                        'endColumn' => 'ends_at',
+                    ]),
             ])
             ->recordActions([
                 Action::make('edit')

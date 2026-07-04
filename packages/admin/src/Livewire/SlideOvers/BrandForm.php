@@ -6,20 +6,18 @@ namespace Shopper\Livewire\SlideOvers;
 
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Form\SeoField;
+use Shopper\Components\Form\SlugInput;
 use Shopper\Components\Section;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Models\Contracts\Brand;
@@ -73,12 +71,9 @@ class BrandForm extends SlideOverComponent implements HasActions, HasSchemas, Sl
                         TextInput::make('name')
                             ->label(__('shopper::forms.label.name'))
                             ->placeholder('Apple, Nike, Samsung...')
-                            ->required()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function (string $operation, $state, Set $set): void {
-                                $set('slug', Str::slug($state));
-                            }),
-                        Hidden::make('slug'),
+                            ->required(),
+                        SlugInput::make('slug')
+                            ->from('name'),
                         TextInput::make('website')
                             ->label(__('shopper::forms.label.website'))
                             ->placeholder('https://example.com')

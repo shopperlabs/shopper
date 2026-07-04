@@ -18,14 +18,15 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Components\Form\CountryField;
+use Shopper\Components\Form\PhoneInput;
+use Shopper\Components\Form\SocialLinksField;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
-use Shopper\Core\Models\Country;
+use Shopper\Core\Enum\SocialPlatform;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
 use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
@@ -75,6 +76,7 @@ class General extends Component implements HasActions, HasSchemas
             'country_id',
             'default_currency_id',
             'currencies',
+            'social_links',
             'facebook_link',
             'instagram_link',
             'twitter_link',
@@ -82,11 +84,28 @@ class General extends Component implements HasActions, HasSchemas
             ->select('value', 'key')
             ->get();
 
-        $this->form->fill(
-            $settings->mapWithKeys(
-                fn (Setting $item): array => [$item['key'] => $item['value']]
-            )->toArray()
-        );
+        $data = $settings->mapWithKeys(
+            fn (Setting $item): array => [$item['key'] => $item['value']]
+        )->toArray();
+
+        if (blank($data['social_links'] ?? null)) {
+            $data['social_links'] = collect([
+                SocialPlatform::Facebook->value => $data['facebook_link'] ?? null,
+                SocialPlatform::Instagram->value => $data['instagram_link'] ?? null,
+                SocialPlatform::X->value => $data['twitter_link'] ?? null,
+            ])
+                ->filter()
+                ->map(fn (string $url, string $platform): array => [
+                    'platform' => $platform,
+                    'url' => $url,
+                ])
+                ->values()
+                ->all();
+        }
+
+        unset($data['facebook_link'], $data['instagram_link'], $data['twitter_link']);
+
+        $this->form->fill($data);
     }
 
     public function form(Schema $schema): Schema
@@ -115,9 +134,7 @@ class General extends Component implements HasActions, HasSchemas
                                     ->autocomplete('email-address')
                                     ->email()
                                     ->required(),
-                                TextInput::make('phone_number')
-                                    ->label(__('shopper::forms.label.phone_number'))
-                                    ->tel()
+                                PhoneInput::make('phone_number')
                                     ->helperText(__('shopper::pages/settings/global.general.phone_number_helper')),
                             ]),
                     ]),
@@ -170,10 +187,7 @@ class General extends Component implements HasActions, HasSchemas
                                 ->required(),
                             TextInput::make('state')
                                 ->label(__('shopper::forms.label.state')),
-                            Select::make('country_id')
-                                ->label(__('shopper::forms.label.country'))
-                                ->options(Country::query()->pluck('name', 'id'))
-                                ->searchable(),
+                            CountryField::make('country_id'),
                         ]),
                     ]),
                 Separator::make(),
@@ -211,45 +225,7 @@ class General extends Component implements HasActions, HasSchemas
                     ->description(__('shopper::pages/settings/global.general.social_links_summary'))
                     ->extraAttributes(['class' => 'sh-section-aside'])
                     ->schema([
-                        TextInput::make('facebook_link')
-                            ->prefix(
-                                fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
-                                    <x-shopper::icons.facebook
-                                        class="size-5 text-sh-fg-muted"
-                                        aria-hidden="true"
-                                    />
-                                Blade))
-                            )
-                            ->inlinePrefix()
-                            ->label(__('shopper::words.socials.facebook'))
-                            ->placeholder('https://facebook.com/laravelshopper'),
-                        Grid::make()
-                            ->schema([
-                                TextInput::make('instagram_link')
-                                    ->prefix(
-                                        fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
-                                            <x-shopper::icons.instagram
-                                                class="size-5 text-sh-fg-muted"
-                                                aria-hidden="true"
-                                            />
-                                        Blade))
-                                    )
-                                    ->inlinePrefix()
-                                    ->label(__('shopper::words.socials.instagram'))
-                                    ->placeholder('https://instagram.com/laravelshopper'),
-                                TextInput::make('twitter_link')
-                                    ->prefix(
-                                        fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
-                                            <x-shopper::icons.twitter
-                                                class="size-4 text-sh-fg-muted"
-                                                aria-hidden="true"
-                                            />
-                                        Blade))
-                                    )
-                                    ->inlinePrefix()
-                                    ->label(__('shopper::words.socials.twitter'))
-                                    ->placeholder('https://twitter.com/laravelshopper'),
-                            ]),
+                        SocialLinksField::make('social_links'),
                     ]),
             ])
             ->statePath('data');

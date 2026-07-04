@@ -23,8 +23,9 @@ beforeEach(function (): void {
 });
 
 describe(Overview::class, function (): void {
-    it('can update product information', function (): void {
+    it('can update product information without changing the slug', function (): void {
         $product = Product::factory()->standard()->create();
+        $originalSlug = $product->slug;
 
         Livewire::test(Overview::class, ['product' => $product])
             ->fillForm([
@@ -37,7 +38,8 @@ describe(Overview::class, function (): void {
 
         Event::assertDispatched(ProductUpdated::class);
 
-        expect($product->slug)->toBe('demo-product');
+        expect($product->name)->toBe('Demo product')
+            ->and($product->slug)->toBe($originalSlug);
     });
 
     it('ensure that external_id field is invisible on non external product', function (): void {
