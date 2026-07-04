@@ -40,18 +40,7 @@
                             <dd class="flex space-x-4 text-sm text-sh-fg sm:col-span-2 sm:mt-0">
                                 <div class="grow">
                                     <span class="flex items-center gap-1">
-                                        @foreach ([1, 2, 3, 4, 5] as $star)
-                                            {{-- format-ignore-start --}}
-                                            <x-heroicon-s-star
-                                                @class([
-                                                    'size-4 shrink-0',
-                                                    'text-yellow-400' => $review->rating >= $star,
-                                                    'text-sh-fg-muted' => $review->rating < $star,
-                                                ])
-                                                aria-hidden="true"
-                                            />
-                                            {{-- format-ignore-end --}}
-                                        @endforeach
+                                        <x-shopper::rating-stars :rating="$review->rating" />
                                     </span>
                                 </div>
                             </dd>
