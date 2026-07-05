@@ -202,4 +202,56 @@ describe(Index::class, function (): void {
         expect(Livewire::test(Index::class)->instance()->recommendedPercent)
             ->toBe(0);
     });
+
+    it('sorts reviews by product and customer name', function (): void {
+        $author = User::factory()->create();
+
+        foreach (['Zebra Mug', 'Apple Case'] as $name) {
+            $product = Product::factory()->create(['name' => $name]);
+
+            Review::factory()->create([
+                'reviewrateable_id' => $product->id,
+                'reviewrateable_type' => $product->getMorphClass(),
+                'author_id' => $author->id,
+                'author_type' => $author->getMorphClass(),
+            ]);
+        }
+
+        Livewire::test(Index::class)
+            ->loadTable()
+            ->sortTable('reviewrateable.name')
+            ->assertOk()
+            ->sortTable('author.full_name')
+            ->assertOk();
+    });
+
+    it('searches reviews by product and customer name', function (): void {
+        $author = User::factory()->create(['first_name' => 'Zinedine']);
+        $otherAuthor = User::factory()->create(['first_name' => 'Karim']);
+        $product = Product::factory()->create(['name' => 'Zebra Mug']);
+        $otherProduct = Product::factory()->create(['name' => 'Apple Case']);
+
+        $match = Review::factory()->create([
+            'reviewrateable_id' => $product->id,
+            'reviewrateable_type' => $product->getMorphClass(),
+            'author_id' => $author->id,
+            'author_type' => $author->getMorphClass(),
+        ]);
+
+        $other = Review::factory()->create([
+            'reviewrateable_id' => $otherProduct->id,
+            'reviewrateable_type' => $otherProduct->getMorphClass(),
+            'author_id' => $otherAuthor->id,
+            'author_type' => $otherAuthor->getMorphClass(),
+        ]);
+
+        Livewire::test(Index::class)
+            ->loadTable()
+            ->searchTable('Zebra')
+            ->assertCanSeeTableRecords([$match])
+            ->assertCanNotSeeTableRecords([$other])
+            ->searchTable('Zinedine')
+            ->assertCanSeeTableRecords([$match])
+            ->assertCanNotSeeTableRecords([$other]);
+    });
 })->group('livewire', 'reviews');
