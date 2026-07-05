@@ -57,7 +57,7 @@
         }
 
         &:not(.sh-items-has-child).sh-sidebar-item-active {
-          @apply bg-sh-sidebar-hover text-sh-fg relative;
+          @apply bg-sh-sidebar-active text-sh-fg relative;
 
           &::before {
             content: '';
@@ -71,7 +71,7 @@
 
         &.sh-items-has-child.sh-sidebar-item-active {
           > .sh-sidebar-item-link.sh-active {
-            @apply bg-sh-sidebar-hover text-sh-fg relative rounded-lg;
+            @apply bg-sh-sidebar-active text-sh-fg relative rounded-lg;
 
             &::before {
               content: '';

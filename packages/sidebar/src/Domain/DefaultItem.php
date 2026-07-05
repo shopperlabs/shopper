@@ -60,7 +60,7 @@ class DefaultItem implements Item, Serializable
 
     protected string $toggleActiveIconClass = 'size-4';
 
-    protected bool $activeWhen = false;
+    protected ?string $activeWhen = null;
 
     protected bool $newTab = false;
 
@@ -325,12 +325,12 @@ class DefaultItem implements Item, Serializable
         $path = mb_rtrim($path, '/');
         $path = mb_rtrim($path, '?');
 
-        $this->activeWhen = (bool) $path;
+        $this->activeWhen = $path !== '' ? $path : null;
 
         return $this;
     }
 
-    public function getActiveWhen(): bool
+    public function getActiveWhen(): ?string
     {
         return $this->activeWhen;
     }

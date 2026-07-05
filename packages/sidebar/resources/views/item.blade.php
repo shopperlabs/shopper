@@ -4,8 +4,8 @@
         $item->getParentItemClass(),
         'sh-items-has-child' => $item->hasItems(),
     ])
-    x-data="{ url: {{ \Illuminate\Support\Js::from($item->getUrl()) }} }"
-    x-bind:class="{ 'sh-sidebar-item-active': $store.sidebar?.isActive(url) }"
+    x-data="{ url: {{ \Illuminate\Support\Js::from($item->getUrl()) }}, activeWhen: {{ \Illuminate\Support\Js::from($item->getActiveWhen()) }} }"
+    x-bind:class="{ 'sh-sidebar-item-active': $store.sidebar?.isActive(url, activeWhen) }"
 >
     <a
         href="{{ $item->getUrl() }}"
@@ -13,7 +13,7 @@
             'sh-sidebar-item-link',
             $item->getItemClass(),
         ])
-        x-bind:class="{ '{{ $item->getActiveClass() }}': $store.sidebar?.isActive(url) }"
+        x-bind:class="{ '{{ $item->getActiveClass() }}': $store.sidebar?.isActive(url, activeWhen) }"
         @if($item->withSpa()) wire:navigate @endif
         @if($item->getNewTab()) target="_blank" @endif
         x-on:click="if (window.innerWidth < ($store.sidebar?.breakpoint ?? 1024)) { $store.sidebar?.close() }"

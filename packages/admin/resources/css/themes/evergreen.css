@@ -34,6 +34,7 @@
     --theme-sh-body: var(--color-stone-100);
     --theme-sh-sidebar: var(--color-stone-50);
     --theme-sh-sidebar-hover: var(--color-stone-100);
+    --theme-sh-settings-sidebar-hover: var(--color-stone-200);
     --theme-sh-muted: var(--color-stone-100);
     --theme-sh-muted-strong: var(--color-stone-200);
     --theme-sh-border: var(--color-stone-200);
