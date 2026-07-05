@@ -66,7 +66,7 @@ interface Item extends Authorizable, Itemable, Routeable
 
     public function isActiveWhen(string $path): self;
 
-    public function getActiveWhen(): bool;
+    public function getActiveWhen(): ?string;
 
     public function isNewTab(bool $newTab): self;
 

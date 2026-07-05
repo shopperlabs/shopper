@@ -22,6 +22,7 @@ final class SettingsSidebar extends AbstractAdminSidebar
                 $item->weight(1);
                 $item->setAuthorized($this->user->hasPermissionTo('system.settings'));
                 $item->route('shopper.settings.shop');
+                $item->isActiveWhen(config('shopper.admin.prefix').'/setting*');
                 $item->useSpa();
                 $item->setIcon('phosphor-faders');
             });

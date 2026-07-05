@@ -12,6 +12,7 @@ use Shopper\Core\Console\ReconcileStockLevelsCommand;
 use Shopper\Core\Console\RedispatchWebhooksCommand;
 use Shopper\Core\Console\SyncCollectionsCommand;
 use Shopper\Core\Contracts\InventoryResolver;
+use Shopper\Core\Contracts\PriceResolver;
 use Shopper\Core\Contracts\StockAllocator;
 use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Contracts\TaxCalculationProvider;
@@ -39,6 +40,7 @@ use Shopper\Core\Observers\OrderObserver;
 use Shopper\Core\Observers\ProductObserver;
 use Shopper\Core\Observers\ProductVariantObserver;
 use Shopper\Core\Observers\TaxZoneObserver;
+use Shopper\Core\Pricing\CatalogPriceResolver;
 use Shopper\Core\Stock\DefaultInventoryResolver;
 use Shopper\Core\Stock\LockingStockReserver;
 use Shopper\Core\Stock\PriorityStockAllocator;
@@ -95,6 +97,7 @@ final class CoreServiceProvider extends PackageServiceProvider
         $this->registerDatabase();
         $this->registerStockAllocator();
         $this->registerTaxCalculator();
+        $this->registerPriceResolver();
 
         $this->app->singleton(WebhookPayloadSerializer::class, DefaultWebhookPayloadSerializer::class);
     }
@@ -176,6 +179,11 @@ final class CoreServiceProvider extends PackageServiceProvider
     {
         $this->app->singleton(TaxCalculationProvider::class, SystemTaxProvider::class);
         $this->app->singleton(TaxCalculator::class);
+    }
+
+    protected function registerPriceResolver(): void
+    {
+        $this->app->singleton(PriceResolver::class, CatalogPriceResolver::class);
     }
 
     protected function bootModelRelationName(): void

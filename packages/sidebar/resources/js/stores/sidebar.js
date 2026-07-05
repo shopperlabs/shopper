@@ -148,7 +148,16 @@ export default (config = {}) => {
       })
     },
 
-    isActive(url) {
+    isActive(url, activeWhen = null) {
+      if (activeWhen) {
+        const current = this.currentPath.replace(/^\/+/, '')
+        const pattern = activeWhen
+          .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+          .replace(/\\\*/g, '.*')
+
+        return new RegExp(`^${pattern}$`).test(current)
+      }
+
       if (!url) return false
 
       try {

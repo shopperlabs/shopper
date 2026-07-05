@@ -141,12 +141,36 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                 UserColumn::make('author.full_name')
                     ->label(__('shopper::words.customer'))
                     ->user(fn (Review $record) => $record->author)
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(
+                        query: fn (Builder $query, string $search): Builder => $query->orWhereHas(
+                            'author',
+                            fn (Builder $query): Builder => $query
+                                ->where('first_name', 'like', "%{$search}%")
+                                ->orWhere('last_name', 'like', "%{$search}%"),
+                        ),
+                    )
+                    ->sortable(
+                        query: fn (Builder $query, string $direction): Builder => $query->orderBy(
+                            $this->authorNameSubQuery(),
+                            $direction,
+                        ),
+                    ),
                 TextColumn::make('reviewrateable.name')
                     ->label(__('shopper::words.product'))
-                    ->searchable()
-                    ->sortable()
+                    ->searchable(
+                        query: fn (Builder $query, string $search): Builder => $query->orWhereIn(
+                            'reviewrateable_id',
+                            resolve(Product::class)::query()
+                                ->select('id')
+                                ->where('name', 'like', "%{$search}%"),
+                        ),
+                    )
+                    ->sortable(
+                        query: fn (Builder $query, string $direction): Builder => $query->orderBy(
+                            $this->productNameSubQuery(),
+                            $direction,
+                        ),
+                    )
                     ->url(fn (Review $record): string => route(
                         name: 'shopper.products.edit',
                         parameters: ['product' => $record->reviewrateable]
@@ -256,5 +280,30 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
     {
         return view('shopper::livewire.pages.reviews.index')
             ->title(__('shopper::pages/reviews.title'));
+    }
+
+    /**
+     * @return Builder<\Illuminate\Database\Eloquent\Model>
+     */
+    private function authorNameSubQuery(): Builder
+    {
+        /** @var \Illuminate\Database\Eloquent\Model $user */
+        $user = resolve(config('auth.providers.users.model'));
+
+        return $user::query()
+            ->select('first_name')
+            ->whereColumn($user->getTable().'.id', shopper_table('reviews').'.author_id');
+    }
+
+    /**
+     * @return Builder<\Illuminate\Database\Eloquent\Model>
+     */
+    private function productNameSubQuery(): Builder
+    {
+        $product = resolve(Product::class);
+
+        return $product::query()
+            ->select('name')
+            ->whereColumn($product->getTable().'.id', shopper_table('reviews').'.reviewrateable_id');
     }
 }

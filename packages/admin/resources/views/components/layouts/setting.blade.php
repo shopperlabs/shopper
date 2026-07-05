@@ -58,8 +58,8 @@
                                         href="{{ $url ?? '#' }}"
                                         @class([
                                             'group flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium transition',
-                                            'bg-sh-sidebar-hover text-sh-fg' => $isCurrent,
-                                            'text-sh-fg-secondary hover:bg-sh-sidebar-hover hover:text-sh-fg' => ! $isCurrent,
+                                            'bg-sh-settings-sidebar-hover text-sh-fg' => $isCurrent,
+                                            'text-sh-fg-secondary hover:bg-sh-settings-sidebar-hover hover:text-sh-fg' => ! $isCurrent,
                                         ])
                                         @if ($isCurrent)
                                             aria-current="page"

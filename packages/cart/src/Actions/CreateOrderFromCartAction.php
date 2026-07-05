@@ -32,6 +32,7 @@ use Shopper\Core\Models\OrderAddress;
 use Shopper\Core\Models\OrderPromotion;
 use Shopper\Core\Models\OrderTaxLine;
 use Shopper\Core\Models\ProductVariant as ProductVariantModel;
+use Shopper\Core\Pricing\PricingContext;
 use Throwable;
 
 final readonly class CreateOrderFromCartAction
@@ -192,7 +193,13 @@ final readonly class CreateOrderFromCartAction
                 continue;
             }
 
-            $price = $purchasable->getPrice($cart->currency_code);
+            $price = $purchasable->resolvePrice(new PricingContext(
+                currencyCode: $cart->currency_code,
+                customerId: $cart->customer_id,
+                quantity: $line->quantity,
+                channelId: $cart->channel_id,
+                zoneId: $cart->zone_id,
+            ));
 
             // No resolvable live price means the price cannot be revalidated,
             // not that it dropped to zero: keep the frozen amount. A genuinely
