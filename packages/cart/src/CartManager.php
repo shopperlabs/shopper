@@ -23,6 +23,7 @@ use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Models\Contracts\Stockable;
 use Shopper\Core\Models\Discount;
+use Shopper\Core\Pricing\PricingContext;
 use Shopper\Core\Taxes\TaxCalculationContext;
 use Shopper\Core\Taxes\TaxCalculator;
 use Throwable;
@@ -63,13 +64,19 @@ final readonly class CartManager
                 return $existing->refresh();
             }
 
-            $price = $purchasable->getPrice($cart->currency_code);
+            $price = $purchasable->resolvePrice(new PricingContext(
+                currencyCode: $cart->currency_code,
+                customerId: $cart->customer_id,
+                quantity: $quantity,
+                channelId: $cart->channel_id,
+                zoneId: $cart->zone_id,
+            ));
 
             return $cart->lines()->create([
                 'purchasable_type' => $purchasable->getMorphClass(),
                 'purchasable_id' => $purchasable->getKey(),
                 'quantity' => $quantity,
-                'unit_price_amount' => $price ? $price->amount : 0,
+                'unit_price_amount' => $price->amount ?? 0,
                 'metadata' => $metadata,
             ]);
         });
@@ -245,9 +252,17 @@ final readonly class CartManager
 
             foreach ($cart->lines as $line) {
                 $purchasable = $line->purchasable;
-                $price = $purchasable instanceof Priceable ? $purchasable->getPrice($currencyCode) : null;
+                $price = $purchasable instanceof Priceable
+                    ? $purchasable->resolvePrice(new PricingContext(
+                        currencyCode: $currencyCode,
+                        customerId: $cart->customer_id,
+                        quantity: $line->quantity,
+                        channelId: $cart->channel_id,
+                        zoneId: $cart->zone_id,
+                    ))
+                    : null;
 
-                $line->update(['unit_price_amount' => $price ? $price->amount : 0]);
+                $line->update(['unit_price_amount' => $price->amount ?? 0]);
             }
 
             $cart->update([
@@ -296,13 +311,21 @@ final readonly class CartManager
                 $purchasable = $line->purchasable;
                 $price = $source->currency_code === $target->currency_code
                     ? null
-                    : ($purchasable instanceof Priceable ? $purchasable->getPrice($target->currency_code) : null);
+                    : ($purchasable instanceof Priceable
+                        ? $purchasable->resolvePrice(new PricingContext(
+                            currencyCode: $target->currency_code,
+                            customerId: $target->customer_id,
+                            quantity: $line->quantity,
+                            channelId: $target->channel_id,
+                            zoneId: $target->zone_id,
+                        ))
+                        : null);
 
                 $line->update([
                     'cart_id' => $target->id,
                     ...($source->currency_code === $target->currency_code
                         ? []
-                        : ['unit_price_amount' => $price ? $price->amount : 0]),
+                        : ['unit_price_amount' => $price->amount ?? 0]),
                 ]);
             }
 

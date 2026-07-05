@@ -5,10 +5,18 @@ declare(strict_types=1);
 namespace Shopper\Core\Models\Traits;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Shopper\Core\Contracts\PriceResolver;
 use Shopper\Core\Models\Price;
+use Shopper\Core\Pricing\PricingContext;
+use Shopper\Core\Pricing\ResolvedPrice;
 
 trait HasPrices
 {
+    public function resolvePrice(?PricingContext $context = null): ?ResolvedPrice
+    {
+        return resolve(PriceResolver::class)->resolve($this, $context ?? new PricingContext);
+    }
+
     public function getPrice(?string $currencyCode = null): ?Price
     {
         $currencyCode = $currencyCode ?? shopper_currency();

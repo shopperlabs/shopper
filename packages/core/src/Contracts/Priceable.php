@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Shopper\Core\Models\Price;
+use Shopper\Core\Pricing\PricingContext;
+use Shopper\Core\Pricing\ResolvedPrice;
 
 /**
  * @template TModel of Model
@@ -16,6 +18,8 @@ use Shopper\Core\Models\Price;
  */
 interface Priceable
 {
+    public function resolvePrice(?PricingContext $context = null): ?ResolvedPrice;
+
     public function getPrice(?string $currencyCode = null): ?Price;
 
     /**
