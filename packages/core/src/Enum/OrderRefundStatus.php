@@ -36,6 +36,14 @@ enum OrderRefundStatus: string implements HasLabel
 
     case Cancelled = 'cancelled';
 
+    /**
+     * @return array<int, self>
+     */
+    public static function settled(): array
+    {
+        return [self::Partial_Refund, self::Refunded];
+    }
+
     public function getLabel(): string
     {
         return match ($this) {

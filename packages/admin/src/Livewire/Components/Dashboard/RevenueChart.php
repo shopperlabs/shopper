@@ -11,9 +11,11 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Js;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
+use Shopper\Core\Enum\OrderRefundStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Currency;
+use Shopper\Core\Models\OrderRefund;
 
 final class RevenueChart extends ApexChartWidget
 {
@@ -98,26 +100,46 @@ final class RevenueChart extends ApexChartWidget
 
         $months = collect(CarbonPeriod::create($startDate, '1 month', $endDate));
 
-        /** @var array{select: string, groupBy: string} $expr */
-        $expr = $this->revenueExpressions();
-
         /** @var array<string, float> $revenueByMonth */
         $revenueByMonth = Cache::flexible(
             "dashboard:revenue:{$currency}",
             [300, 1800],
-            fn () => resolve(Order::class)::query()
-                ->selectRaw($expr['select'])
-                ->where('payment_status', PaymentStatus::Paid)
-                ->where('currency_code', $currency)
-                ->where('created_at', '>=', $startDate)
-                ->where('created_at', '<=', $endDate)
-                ->groupByRaw($expr['groupBy'])
-                ->get()
-                ->keyBy(fn ($row): string => $row->getAttribute('year').'-'.$row->getAttribute('month'))
-                ->map(fn ($row): float => is_no_division_currency($currency)
-                    ? (float) $row->getAttribute('total')
-                    : (float) $row->getAttribute('total') / 100)
-                ->all(),
+            function () use ($currency, $startDate, $endDate): array {
+                $collectedExpr = $this->monthlyTotalExpressions('price_amount');
+                $refundedExpr = $this->monthlyTotalExpressions('amount');
+
+                $collected = resolve(Order::class)::query()
+                    ->selectRaw($collectedExpr['select'])
+                    ->whereIn('payment_status', PaymentStatus::revenueBearing())
+                    ->where('currency_code', $currency)
+                    ->where('created_at', '>=', $startDate)
+                    ->where('created_at', '<=', $endDate)
+                    ->groupByRaw($collectedExpr['groupBy'])
+                    ->get()
+                    ->keyBy(fn ($row): string => $row->getAttribute('year').'-'.$row->getAttribute('month'))
+                    ->map(fn ($row): int => (int) $row->getAttribute('total'));
+
+                $refunded = OrderRefund::query()
+                    ->selectRaw($refundedExpr['select'])
+                    ->whereIn('status', OrderRefundStatus::settled())
+                    ->where('currency', $currency)
+                    ->where('created_at', '>=', $startDate)
+                    ->where('created_at', '<=', $endDate)
+                    ->groupByRaw($refundedExpr['groupBy'])
+                    ->get()
+                    ->keyBy(fn ($row): string => $row->getAttribute('year').'-'.$row->getAttribute('month'))
+                    ->map(fn ($row): int => (int) $row->getAttribute('total'));
+
+                return $collected->keys()
+                    ->merge($refunded->keys())
+                    ->unique()
+                    ->mapWithKeys(function (string $month) use ($collected, $refunded, $currency): array {
+                        $total = ($collected[$month] ?? 0) - ($refunded[$month] ?? 0);
+
+                        return [$month => is_no_division_currency($currency) ? (float) $total : $total / 100];
+                    })
+                    ->all();
+            },
         );
 
         $data = $months->map(fn (Carbon $month): float => $revenueByMonth[$month->year.'-'.$month->month] ?? 0.0);
@@ -160,19 +182,19 @@ final class RevenueChart extends ApexChartWidget
     /**
      * @return array{select: string, groupBy: string}
      */
-    private function revenueExpressions(): array
+    private function monthlyTotalExpressions(string $column): array
     {
         return match (DB::connection()->getDriverName()) {
             'pgsql' => [
-                'select' => 'EXTRACT(YEAR FROM created_at)::int as year, EXTRACT(MONTH FROM created_at)::int as month, SUM(price_amount) as total',
+                'select' => "EXTRACT(YEAR FROM created_at)::int as year, EXTRACT(MONTH FROM created_at)::int as month, SUM({$column}) as total",
                 'groupBy' => 'EXTRACT(YEAR FROM created_at), EXTRACT(MONTH FROM created_at)',
             ],
             'sqlite' => [
-                'select' => "CAST(strftime('%Y', created_at) AS INTEGER) as year, CAST(strftime('%m', created_at) AS INTEGER) as month, SUM(price_amount) as total",
+                'select' => "CAST(strftime('%Y', created_at) AS INTEGER) as year, CAST(strftime('%m', created_at) AS INTEGER) as month, SUM({$column}) as total",
                 'groupBy' => "strftime('%Y', created_at), strftime('%m', created_at)",
             ],
             default => [
-                'select' => 'YEAR(created_at) as year, MONTH(created_at) as month, SUM(price_amount) as total',
+                'select' => "YEAR(created_at) as year, MONTH(created_at) as month, SUM({$column}) as total",
                 'groupBy' => 'YEAR(created_at), MONTH(created_at)',
             ],
         };

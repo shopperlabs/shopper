@@ -36,6 +36,14 @@ enum PaymentStatus: string implements HasColor, HasIcon, HasLabel
     case Voided = 'voided';
 
     /**
+     * @return array<int, self>
+     */
+    public static function revenueBearing(): array
+    {
+        return [self::Paid, self::PartiallyRefunded, self::Refunded];
+    }
+
+    /**
      * @return array<string, array<int, self>>
      */
     public static function transitions(): array

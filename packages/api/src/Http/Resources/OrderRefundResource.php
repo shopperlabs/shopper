@@ -21,9 +21,9 @@ final class OrderRefundResource extends JsonApiResource
     {
         return [
             'status' => $this->status->value,
-            'amount' => $this->refund_amount,
+            'amount' => $this->amount,
             'currency' => $this->currency,
-            'reason' => $this->refund_reason,
+            'reason' => $this->reason,
             'created_at' => $this->created_at->toIso8601String(),
         ];
     }
