@@ -16,8 +16,8 @@ use Shopper\Core\Models\Traits\HasPublicId;
 /**
  * @property-read int $id
  * @property-read ?string $public_id
- * @property-read ?string $refund_reason
- * @property-read ?int $refund_amount
+ * @property-read ?string $reason
+ * @property-read int $amount
  * @property-read OrderRefundStatus $status
  * @property-read ?string $notes
  * @property-read string $currency

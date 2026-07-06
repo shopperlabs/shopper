@@ -17,9 +17,11 @@ use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\Livewire\Partials\DataStoreOverride;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
+use Filament\Widgets\WidgetsServiceProvider;
 use JaOcero\RadioDeck\RadioDeckServiceProvider;
 use Laravel\Passkeys\PasskeysServiceProvider;
 use Laravelcm\LivewireSlideOvers\LivewireSlideOverServiceProvider;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Livewire\Mechanisms\DataStore;
 use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
@@ -87,9 +89,11 @@ abstract class TestCase extends \Tests\TestCase
             SupportServiceProvider::class,
             NotificationsServiceProvider::class,
             TablesServiceProvider::class,
+            WidgetsServiceProvider::class,
             MediaLibraryServiceProvider::class,
             TailwindMergeServiceProvider::class,
             RadioDeckServiceProvider::class,
+            FilamentApexChartsServiceProvider::class,
             FilamentSelectTreeServiceProvider::class,
             LivewireSlideOverServiceProvider::class,
         ];

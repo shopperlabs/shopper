@@ -9,7 +9,7 @@
 <div
     {{ $attributes->twMerge(['class' => 'sh-card flex flex-col justify-bewteen bg-sh-card ring-sh-border overflow-hidden rounded-xl p-0.5 ring-1']) }}
 >
-    @if ($title)
+    @if (mb_trim((string) $title) !== '')
         <header class="sh-card-header px-2 py-3">
             @if ($title instanceof \Illuminate\View\ComponentSlot)
                 {{ $title }}
