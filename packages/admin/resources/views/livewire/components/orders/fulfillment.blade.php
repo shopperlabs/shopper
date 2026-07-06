@@ -1,7 +1,7 @@
 <div>
     <x-shopper::card>
-        @if ($shippingAddress)
-            <x-slot:title>
+        <x-slot:title>
+            @if ($shippingAddress)
                 <div>
                     <p class="flex items-center gap-2 text-sm text-sh-fg-secondary">
                         <span>{{ __('shopper::pages/orders.expedition_to') }}</span>
@@ -24,8 +24,8 @@
                         @endif
                     </p>
                 </div>
-            </x-slot:title>
-        @endif
+            @endif
+        </x-slot:title>
 
             <div class="grid grid-cols-4 gap-3">
                 @foreach ($steps as $index => $step)
