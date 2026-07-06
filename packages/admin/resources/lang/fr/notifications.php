@@ -55,6 +55,12 @@ return [
         'two_factor_generate' => 'Vous avez régénéré avec succès vos codes de récupération de l\'authentification à deux facteurs',
     ],
 
+    'passkeys' => [
+        'registered' => 'Votre passkey a été enregistrée avec succès',
+        'deleted' => 'Votre passkey a été supprimée avec succès',
+        'failed' => 'Impossible d\'enregistrer votre passkey',
+    ],
+
     'orders' => [
         'archived' => 'Commande archivée avec succès',
     ],

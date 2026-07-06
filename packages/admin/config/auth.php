@@ -30,6 +30,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Passkeys
+    |--------------------------------------------------------------------------
+    |
+    | Enable passkey (WebAuthn) authentication on the Shopper admin panel.
+    | Administrators may register passkeys from their account page and
+    | use them to sign in without typing their password.
+    |
+    */
+
+    'passkeys_enabled' => env('SHOPPER_ENABLED_PASSKEYS', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Password Reset
     |--------------------------------------------------------------------------
     |

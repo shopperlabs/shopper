@@ -15,6 +15,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Shopper\Http\Controllers\AssetController;
+use Shopper\Http\Controllers\Auth\PasskeyRegistrationController;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Middleware\Dashboard;
 use Shopper\Http\Middleware\DispatchShopper;
@@ -79,6 +80,15 @@ Route::domain(config('shopper.admin.domain'))
         ])->group(function (): void {
             Route::livewire('/forbidden', Forbidden::class)->name('shopper.forbidden');
         });
+
+        if (config('shopper.auth.passkeys_enabled')) {
+            Route::middleware(Authenticate::class)->as('shopper.')->group(function (): void {
+                Route::get('/passkeys/options', [PasskeyRegistrationController::class, 'options'])
+                    ->name('passkeys.registration-options');
+                Route::post('/passkeys', [PasskeyRegistrationController::class, 'store'])
+                    ->name('passkeys.store');
+            });
+        }
 
         Route::middleware(array_merge([
             Authenticate::class,

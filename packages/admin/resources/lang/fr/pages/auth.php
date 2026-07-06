@@ -14,6 +14,7 @@ return [
         'failed' => 'Ces identifiants ne correspondent pas à nos enregistrements.',
         'throttled' => 'Tentatives de connexion trop nombreuses. Veuillez essayer de nouveau dans :seconds secondes.',
         'return_login' => 'Retour à la connexion',
+        'passkey_action' => 'Se connecter avec une passkey',
     ],
 
     'session_expired' => [
@@ -81,6 +82,21 @@ return [
         'two_factor_activation_message' => 'Lorsque l\'authentification à deux facteurs est activée, vous serez invité à saisir un jeton aléatoire sécurisé lors de l\'authentification. Vous pouvez récupérer ce jeton à partir de l\'application Google Authenticator de votre téléphone.',
         'two_factor_is_enabled' => 'L\'authentification à deux facteurs est maintenant activée. Scannez le code QR suivant à l\'aide de l\'application d\'authentification de votre téléphone.',
         'two_factor_store_recovery_codes' => 'Stockez ces codes de récupération dans un gestionnaire de mots de passe sécurisé. Ils peuvent être utilisés pour récupérer l\'accès à votre compte si votre dispositif d\'authentification à deux facteurs est perdu.',
+
+        'passkeys_title' => 'Passkeys',
+        'passkeys_description' => 'Connectez-vous sans mot de passe avec Face ID, Touch ID, Windows Hello ou une clé de sécurité physique.',
+        'passkeys_count' => '{0} Aucune passkey enregistrée|{1} :count passkey enregistrée|[2,*] :count passkeys enregistrées',
+        'passkeys_secure' => 'Les passkeys sont des identifiants résistants au phishing, stockés sur votre appareil. Vous seul pouvez approuver une connexion, avec votre empreinte, votre visage ou le code de votre appareil.',
+        'passkeys_unsupported' => 'Votre navigateur ne prend pas en charge les passkeys.',
+        'passkey_add' => 'Ajouter une passkey',
+        'passkey_add_description' => 'Donnez un nom à cette passkey pour la reconnaître plus tard, puis suivez les instructions de votre navigateur.',
+        'passkey_name_placeholder' => 'ex. MacBook Pro',
+        'passkey_added' => 'Ajoutée :date',
+        'passkey_last_used' => 'Dernière utilisation :date',
+        'passkey_never_used' => 'Jamais utilisée',
+        'passkey_delete' => 'Supprimer la passkey',
+        'passkey_delete_confirmation' => 'Cette passkey ne pourra plus être utilisée pour vous connecter à votre compte. Saisissez votre mot de passe pour confirmer.',
+        'passkey_password_confirmation_required' => 'Veuillez confirmer votre mot de passe avant de gérer vos passkeys.',
 
         'profile_title' => 'Informations sur le profil',
         'profile_description' => 'Mettez à jour les informations de profil et l\'adresse e-mail de votre compte.',

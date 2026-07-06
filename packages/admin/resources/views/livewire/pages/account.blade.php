@@ -19,6 +19,12 @@
             <livewire:shopper-account.two-factor />
         @endif
 
+        @if (config('shopper.auth.passkeys_enabled'))
+            <x-shopper::separator />
+
+            <livewire:shopper-account.passkeys />
+        @endif
+
         <x-shopper::separator />
 
         <livewire:shopper-account.devices />

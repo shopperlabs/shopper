@@ -26,6 +26,7 @@ return [
     'components' => [
         'account.devices' => Components\Account\Devices::class,
         'account.dropdown' => Components\Account\Dropdown::class,
+        'account.passkeys' => Components\Account\Passkeys::class,
         'account.password' => Components\Account\Password::class,
         'account.profile' => Components\Account\Profile::class,
         'account.two-factor' => Components\Account\TwoFactor::class,

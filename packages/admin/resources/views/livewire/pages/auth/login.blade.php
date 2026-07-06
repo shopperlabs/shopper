@@ -32,6 +32,48 @@
                 {{ __('shopper::pages/auth.login.action') }}
             </x-filament::button>
         </form>
+
+        @if (config('shopper.auth.passkeys_enabled'))
+            <div
+                x-data="passkeyLogin({
+                    optionsUrl: '{{ route('shopper.passkeys.login-options') }}',
+                    loginUrl: '{{ route('shopper.passkeys.login') }}',
+                })"
+                x-cloak
+                x-show="supported"
+                class="mt-6"
+            >
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div class="w-full border-t border-sh-border"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="bg-sh-surface px-2 text-sh-fg-muted">
+                            {{ __('shopper::pages/auth.login.or') }}
+                        </span>
+                    </div>
+                </div>
+
+                <x-filament::button
+                    x-on:click="login"
+                    x-bind:disabled="processing"
+                    type="button"
+                    color="gray"
+                    class="mt-6 w-full justify-center"
+                >
+                    <x-heroicon-o-finger-print class="size-5" aria-hidden="true" />
+                    {{ __('shopper::pages/auth.login.passkey_action') }}
+                </x-filament::button>
+
+                <p
+                    x-cloak
+                    x-show="error"
+                    x-text="error"
+                    class="text-danger-600 dark:text-danger-400 mt-3 text-center text-sm"
+                    role="alert"
+                ></p>
+            </div>
+        @endif
     @else
         <header class="flex flex-col justify-center items-center py-3">
             <div class="bg-sh-surface rounded-lg ring-1 ring-sh-border shadow space-y-2 p-2 flex items-center justify-center">
