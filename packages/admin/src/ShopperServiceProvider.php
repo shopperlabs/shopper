@@ -24,6 +24,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Laravel\Passkeys\Passkeys;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
 use Shopper\Concerns\TwoFactorAuthenticationProvider;
@@ -104,6 +105,12 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
+        $this->app->booting(function (): void {
+            if (config('shopper.auth.passkeys_enabled')) {
+                Passkeys::ignoreRoutes();
+            }
+        });
+
         $this->app['config']->set('livewire-slide-over.include_js', false);
         $this->app['config']->set('sidebar.breadcrumbs.view', 'shopper::components.breadcrumbs');
 

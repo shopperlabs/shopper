@@ -1,10 +1,13 @@
 import '../../../../vendor/laravelcm/livewire-slide-overs/resources/js/slide-over'
 import CodePreview from './components/code-preview'
 import NestedSortable from './components/nested-sortable'
+import { passkeyLogin, passkeyManager } from './components/passkeys'
 import sidebarStore from '../../../sidebar/resources/js/stores/sidebar'
 
 window.codePreview = CodePreview
 window.nestedSortable = NestedSortable
+window.passkeyLogin = passkeyLogin
+window.passkeyManager = passkeyManager
 
 document.addEventListener('alpine:init', () => {
   const theme = localStorage.getItem('theme') ?? 'system'

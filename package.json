@@ -42,5 +42,8 @@
     "shiki": "^3.21.0",
     "sortablejs": "^1.15.7",
     "tailwindcss": "^4.2.1"
+  },
+  "dependencies": {
+    "@laravel/passkeys": "^0.2.0"
   }
 }

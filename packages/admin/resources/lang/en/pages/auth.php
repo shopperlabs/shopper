@@ -14,6 +14,7 @@ return [
         'failed' => 'These credentials do not match our records.',
         'throttled' => 'Too many login attempts. Please try again in :seconds seconds.',
         'return_login' => 'Back to login',
+        'passkey_action' => 'Sign in with a passkey',
     ],
 
     'session_expired' => [
@@ -81,6 +82,21 @@ return [
         'two_factor_activation_message' => 'When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone\'s Google Authenticator application.',
         'two_factor_is_enabled' => 'Two factor authentication is now enabled. Scan the following QR code using your phone\'s authenticator application.',
         'two_factor_store_recovery_codes' => 'Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.',
+
+        'passkeys_title' => 'Passkeys',
+        'passkeys_description' => 'Sign in without a password using Face ID, Touch ID, Windows Hello or a hardware security key.',
+        'passkeys_count' => '{0} No passkeys registered|{1} :count passkey registered|[2,*] :count passkeys registered',
+        'passkeys_secure' => 'Passkeys are phishing-resistant credentials stored on your device. Only you can approve a sign in, using your fingerprint, face or device PIN.',
+        'passkeys_unsupported' => 'Your browser does not support passkeys.',
+        'passkey_add' => 'Add passkey',
+        'passkey_add_description' => 'Give this passkey a name so you can recognize it later, then follow your browser instructions.',
+        'passkey_name_placeholder' => 'e.g. MacBook Pro',
+        'passkey_added' => 'Added :date',
+        'passkey_last_used' => 'Last used :date',
+        'passkey_never_used' => 'Never used',
+        'passkey_delete' => 'Delete passkey',
+        'passkey_delete_confirmation' => 'This passkey will no longer be usable to sign in to your account. Enter your password to confirm.',
+        'passkey_password_confirmation_required' => 'Please confirm your password before managing passkeys.',
 
         'profile_title' => 'Profile Information',
         'profile_description' => 'Update your account\'s profile information and email address.',

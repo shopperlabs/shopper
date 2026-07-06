@@ -18,6 +18,7 @@ use Filament\Support\Livewire\Partials\DataStoreOverride;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use JaOcero\RadioDeck\RadioDeckServiceProvider;
+use Laravel\Passkeys\PasskeysServiceProvider;
 use Laravelcm\LivewireSlideOvers\LivewireSlideOverServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Livewire\Mechanisms\DataStore;
@@ -73,6 +74,7 @@ abstract class TestCase extends \Tests\TestCase
             CartServiceProvider::class,
             CoreServiceProvider::class,
             FilamentServiceProvider::class,
+            PasskeysServiceProvider::class,
             PaymentServiceProvider::class,
             PermissionServiceProvider::class,
             ShippingServiceProvider::class,

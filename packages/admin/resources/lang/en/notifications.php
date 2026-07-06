@@ -55,6 +55,12 @@ return [
         'two_factor_generate' => 'You have successfully regenerated your two-factor authentication recovery codes.',
     ],
 
+    'passkeys' => [
+        'registered' => 'Your passkey has been registered successfully',
+        'deleted' => 'Your passkey has been deleted successfully',
+        'failed' => 'Unable to register your passkey',
+    ],
+
     'orders' => [
         'archived' => 'Order successfully archived',
     ],

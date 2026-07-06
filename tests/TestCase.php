@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Passkeys\Passkeys;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use PDO;
@@ -18,6 +19,8 @@ abstract class TestCase extends BaseTestCase
     protected function defineEnvironment($app): void
     {
         $app['config']->set('auth.providers.users.model', Core\Stubs\User::class);
+        Passkeys::useUserModel(Core\Stubs\User::class);
+        (new \ReflectionProperty(Passkeys::class, 'registersRoutes'))->setValue(null, true);
         $app['config']->set('view.paths', [
             ...$app['config']->get('view.paths'),
             __DIR__.'/../packages/admin/resources/views',
@@ -93,6 +96,7 @@ abstract class TestCase extends BaseTestCase
                 __DIR__.'/../packages/admin/database/migrations',
                 __DIR__.'/../packages/cart/database/migrations',
                 __DIR__.'/../packages/payment/database/migrations',
+                Passkeys::migrationPath(),
             ] as $path) {
                 $migrator->path($path);
             }

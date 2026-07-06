@@ -7,6 +7,8 @@ namespace Tests\Core\Stubs;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passkeys\Contracts\PasskeyUser;
+use Laravel\Passkeys\PasskeyAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Shopper\Contracts\HasStoreAuthentication;
 use Shopper\Contracts\HasStoreAuthenticationRecovery;
@@ -15,7 +17,7 @@ use Shopper\Traits\InteractsWithShopper;
 use Shopper\Traits\InteractsWithStoreAuthentication;
 use Shopper\Traits\InteractsWithStoreAuthenticationRecovery;
 
-class User extends Authenticatable implements HasStoreAuthentication, HasStoreAuthenticationRecovery, ShopperUser
+class User extends Authenticatable implements HasStoreAuthentication, HasStoreAuthenticationRecovery, PasskeyUser, ShopperUser
 {
     use HasApiTokens;
     use HasFactory;
@@ -23,6 +25,7 @@ class User extends Authenticatable implements HasStoreAuthentication, HasStoreAu
     use InteractsWithStoreAuthentication;
     use InteractsWithStoreAuthenticationRecovery;
     use Notifiable;
+    use PasskeyAuthenticatable;
 
     protected $guarded = [];
 

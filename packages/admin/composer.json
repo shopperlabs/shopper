@@ -44,6 +44,7 @@
     "jenssegers/agent": "^2.6",
     "jaocero/radio-deck": "^3.1",
     "laravel/prompts": "^0.3.16",
+    "laravel/passkeys": "^0.2",
     "laravelcm/livewire-slide-overs": "^2.1",
     "livewire/blaze": "^1.0",
     "mckenziearts/filament-untitledui-icons": "^1.2",

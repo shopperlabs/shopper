@@ -58,7 +58,7 @@ final class Login extends Component implements HasSchemas
                     ->label(__('shopper::forms.label.email'))
                     ->email()
                     ->required()
-                    ->autocomplete('email')
+                    ->autocomplete(config('shopper.auth.passkeys_enabled') ? 'email webauthn' : 'email')
                     ->autofocus(),
                 TextInput::make('password')
                     ->label(__('shopper::forms.label.password'))
