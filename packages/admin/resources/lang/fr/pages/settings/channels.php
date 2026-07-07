@@ -6,5 +6,6 @@ return [
 
     'title' => 'Canaux de ventes',
     'single' => 'Canal de vente',
+    'no_channel' => 'Aucun canal de vente trouvé',
 
 ];

@@ -133,3 +133,10 @@ if (! function_exists('is_no_division_currency')) {
         return in_array($currency, zero_decimal_currencies());
     }
 }
+
+if (! function_exists('shopper_svg_data_uri')) {
+    function shopper_svg_data_uri(string $svg): string
+    {
+        return 'data:image/svg+xml;base64,'.base64_encode($svg);
+    }
+}

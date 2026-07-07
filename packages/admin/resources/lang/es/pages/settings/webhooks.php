@@ -5,6 +5,7 @@ declare(strict_types=1);
 return [
     'title' => 'Webhooks',
     'add_webhook' => 'Añadir webhook',
+    'empty' => 'Sin suscripciones de webhook',
     'no_webhook' => 'Aún no hay suscripciones de webhook. Añade una para notificar a un sistema externo cuando ocurran eventos en tu tienda.',
     'events' => 'Eventos',
     'deliveries' => 'Entregas',

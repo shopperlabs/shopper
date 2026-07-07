@@ -15,6 +15,7 @@ Route::prefix('locations')->group(function (): void {
 
 Route::livewire('/legal', config('shopper.components.setting.pages.legal'))->name('legal');
 Route::livewire('/analytics', config('shopper.components.setting.pages.analytics'))->name('analytics');
+Route::livewire('/channels', config('shopper.components.setting.pages.channels'))->name('channels');
 Route::livewire('/payment-methods', config('shopper.components.setting.pages.payment-methods'))->name('payment-methods');
 Route::livewire('/carriers', config('shopper.components.setting.pages.carriers'))->name('carriers');
 Route::livewire('/zones', config('shopper.components.setting.pages.zones'))->name('zones');

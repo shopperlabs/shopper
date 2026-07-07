@@ -11,11 +11,20 @@ class ChannelObserver
     public function creating(Channel $channel): void
     {
         $this->ensureOnlyOneIsDefault($channel);
+        $this->ensureDefaultStaysEnabled($channel);
     }
 
     public function updating(Channel $channel): void
     {
         $this->ensureOnlyOneIsDefault($channel);
+        $this->ensureDefaultStaysEnabled($channel);
+    }
+
+    private function ensureDefaultStaysEnabled(Channel $channel): void
+    {
+        if ($channel->is_default) {
+            $channel->is_enabled = true;
+        }
     }
 
     private function ensureOnlyOneIsDefault(Channel $channel): void
