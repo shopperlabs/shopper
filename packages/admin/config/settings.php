@@ -24,6 +24,7 @@ return [
         Items\AppearanceSetting::class => true,
         Items\StaffSetting::class => true,
         Items\LocationSetting::class => true,
+        Items\ChannelSetting::class => true,
         Items\PaymentSetting::class => true,
         Items\CarrierSetting::class => true,
         Items\LegalSetting::class => true,

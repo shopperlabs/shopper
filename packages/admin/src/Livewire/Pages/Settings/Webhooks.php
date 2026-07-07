@@ -169,8 +169,7 @@ class Webhooks extends Component implements HasActions, HasSchemas, HasTable
                     ->authorize('system.settings')
                     ->iconButton(),
             ])
-            ->emptyStateIcon(Untitledui::Share07)
-            ->emptyStateDescription(__('shopper::pages/settings/webhooks.no_webhook'));
+            ->emptyState(view('shopper::livewire.tables.empty-states.webhooks'));
     }
 
     public function render(): View

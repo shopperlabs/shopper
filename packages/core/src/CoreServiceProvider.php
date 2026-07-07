@@ -7,6 +7,7 @@ namespace Shopper\Core;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Shopper\Core\Channel\ChannelManager;
 use Shopper\Core\Console\ReclaimPendingOrdersCommand;
 use Shopper\Core\Console\ReconcileStockLevelsCommand;
 use Shopper\Core\Console\RedispatchWebhooksCommand;
@@ -98,6 +99,7 @@ final class CoreServiceProvider extends PackageServiceProvider
         $this->registerStockAllocator();
         $this->registerTaxCalculator();
         $this->registerPriceResolver();
+        $this->registerChannelManager();
 
         $this->app->singleton(WebhookPayloadSerializer::class, DefaultWebhookPayloadSerializer::class);
     }
@@ -184,6 +186,11 @@ final class CoreServiceProvider extends PackageServiceProvider
     protected function registerPriceResolver(): void
     {
         $this->app->singleton(PriceResolver::class, CatalogPriceResolver::class);
+    }
+
+    protected function registerChannelManager(): void
+    {
+        $this->app->singleton(ChannelManager::class, fn (): ChannelManager => new ChannelManager);
     }
 
     protected function bootModelRelationName(): void

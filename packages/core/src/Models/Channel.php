@@ -25,6 +25,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?string $description
  * @property-read ?string $timezone
  * @property-read ?string $url
+ * @property-read ?string $driver
  * @property-read bool $is_default
  * @property-read bool $is_enabled
  * @property-read array<string, mixed>|null $metadata
