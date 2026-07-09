@@ -47,7 +47,7 @@ final class ProductResource extends JsonApiResource
             ...$this->stockPayload(),
             'prices' => $this->pricesPayload(),
             'images' => $this->imagesPayload(),
-            'thumbnail' => $this->thumbnailPayload(),
+            'thumbnail' => $this->thumbnailPayload(withFallback: true),
             ...($this->isVirtual() ? ['files' => $this->filesPayload()] : []),
             ...$this->ratingPayload(),
             'created_at' => $this->created_at->toIso8601String(),

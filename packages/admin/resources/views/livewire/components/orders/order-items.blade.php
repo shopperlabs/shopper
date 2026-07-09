@@ -23,7 +23,7 @@
                 <div class="flex min-w-0 flex-1 items-center gap-2">
                     <img
                         class="size-6 shrink-0 rounded object-cover"
-                        src="{{ $item->product->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
+                        src="{{ $item->product->getThumbnailUrl() }}"
                         alt="{{ $item->name }}"
                     />
                     <p class="truncate text-sm text-sh-fg">

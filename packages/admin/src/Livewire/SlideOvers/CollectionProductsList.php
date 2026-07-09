@@ -10,7 +10,7 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -61,17 +61,17 @@ class CollectionProductsList extends SlideOverComponent implements HasActions, H
             ->query(
                 resolve(Product::class)::query()
                     ->scopes('publish')
+                    ->with('media')
                     ->when(
                         $this->exceptProductIds,
                         fn (Builder $query) => $query->whereNotIn('id', $this->exceptProductIds)
                     )
             )
             ->columns([
-                SpatieMediaLibraryImageColumn::make('thumbnail')
+                ImageColumn::make('thumbnail')
                     ->label(__('shopper::forms.label.thumbnail'))
-                    ->collection(config('shopper.media.storage.thumbnail_collection'))
-                    ->circular()
-                    ->defaultImageUrl(shopper_fallback_url()),
+                    ->getStateUsing(fn (Product $record): string => $record->getThumbnailUrl())
+                    ->circular(),
                 TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable(),

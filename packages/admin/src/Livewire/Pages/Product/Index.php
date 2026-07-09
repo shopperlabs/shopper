@@ -12,7 +12,7 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -93,14 +93,14 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
         return $table
             ->query(
                 resolve(Product::class)::query()
-                    ->with(['brand', 'variants'])
+                    ->with(['brand', 'media', 'variants'])
                     ->withCount(['variants'])
                     ->latest()
             )
             ->columns([
-                SpatieMediaLibraryImageColumn::make('thumbnail')
-                    ->collection(config('shopper.media.storage.thumbnail_collection'))
+                ImageColumn::make('thumbnail')
                     ->label(__('shopper::forms.label.thumbnail'))
+                    ->getStateUsing(fn (Product $record): string => $record->getThumbnailUrl())
                     ->circular(),
                 TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))

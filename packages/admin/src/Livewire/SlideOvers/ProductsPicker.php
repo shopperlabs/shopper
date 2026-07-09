@@ -9,7 +9,7 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -79,17 +79,17 @@ class ProductsPicker extends SlideOverComponent implements HasActions, HasSchema
             ->query(
                 resolve(Product::class)::query()
                     ->scopes('publish')
+                    ->with('media')
                     ->when(
                         $this->exceptIds,
                         fn (Builder $query) => $query->whereNotIn('id', $this->exceptIds)
                     )
             )
             ->columns([
-                SpatieMediaLibraryImageColumn::make('thumbnail')
+                ImageColumn::make('thumbnail')
                     ->label(__('shopper::forms.label.thumbnail'))
-                    ->collection(config('shopper.media.storage.thumbnail_collection'))
-                    ->circular()
-                    ->defaultImageUrl(shopper_fallback_url()),
+                    ->getStateUsing(fn (Product $record): string => $record->getThumbnailUrl())
+                    ->circular(),
                 TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable(),

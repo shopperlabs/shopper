@@ -17,12 +17,15 @@ use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rules\Unique;
 use Livewire\Attributes\Layout;
+use Shopper\Actions\Store\Product\UseImageAsThumbnail;
+use Shopper\Components\Form\ImagePicker;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Sidebar\Traits\WithBreadcrumbs;
 use Shopper\Traits\HandlesAuthorizationExceptions;
+use Spatie\MediaLibrary\MediaCollections\Models\Media as SpatieMedia;
 
 #[Layout('shopper::components.layouts.product')]
 class Variant extends AbstractPageComponent implements HasActions, HasSchemas
@@ -85,6 +88,43 @@ class Variant extends AbstractPageComponent implements HasActions, HasSchemas
             ])
             ->action(function (array $data): void {
                 $this->variant->update($data);
+
+                Notification::make()
+                    ->title(__('shopper::pages/products.notifications.variation_update'))
+                    ->success()
+                    ->send();
+            });
+    }
+
+    public function useAsThumbnailAction(): Action
+    {
+        return Action::make('useAsThumbnail')
+            ->authorize('products.variants.edit')
+            ->label(__('shopper::pages/products.choose_from_images'))
+            ->color('gray')
+            ->size(Size::Small)
+            ->visible(fn (): bool => $this->variant->getMedia((string) config('shopper.media.storage.collection_name'))->isNotEmpty())
+            ->modalHeading(__('shopper::pages/products.use_as_thumbnail'))
+            ->modalDescription(__('shopper::pages/products.use_as_thumbnail_description'))
+            ->modalWidth(Width::Medium)
+            ->modalSubmitActionLabel(__('shopper::pages/products.use_as_thumbnail'))
+            ->schema([
+                ImagePicker::make('media_id')
+                    ->hiddenLabel()
+                    ->required()
+                    ->options(
+                        fn (): array => $this->variant->getMedia((string) config('shopper.media.storage.collection_name'))
+                            ->mapWithKeys(fn (SpatieMedia $media): array => [$media->id => $media->getUrl()])
+                            ->all()
+                    ),
+            ])
+            ->action(function (array $data): void {
+                app()->call(UseImageAsThumbnail::class, [
+                    'model' => $this->variant,
+                    'mediaId' => $data['media_id'],
+                ]);
+
+                $this->variant->refresh();
 
                 Notification::make()
                     ->title(__('shopper::pages/products.notifications.variation_update'))

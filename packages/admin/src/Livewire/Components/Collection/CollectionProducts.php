@@ -11,7 +11,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -55,14 +55,13 @@ class CollectionProducts extends Component implements HasActions, HasSchemas, Ha
         return $table
             ->heading(__('shopper::pages/products.menu'))
             ->description($this->collection->isAutomatic() ? __('shopper::pages/collections.automatic_description') : __('shopper::pages/collections.manual_description'))
-            ->relationship(fn (): BelongsToMany => $this->collection->products())
+            ->relationship(fn (): BelongsToMany => $this->collection->products()->with('media'))
             ->inverseRelationship('collections')
             ->columns([
-                SpatieMediaLibraryImageColumn::make('thumbnail')
+                ImageColumn::make('thumbnail')
                     ->label(__('shopper::forms.label.thumbnail'))
-                    ->collection(config('shopper.media.storage.thumbnail_collection'))
-                    ->circular()
-                    ->defaultImageUrl(shopper_fallback_url()),
+                    ->getStateUsing(fn (Product $record): string => $record->getThumbnailUrl())
+                    ->circular(),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('type')

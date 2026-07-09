@@ -42,7 +42,7 @@
                                 <div class="flex min-w-0 items-center gap-3 px-3 py-2">
                                     <img
                                         class="ring-sh-border size-8 shrink-0 rounded-lg object-cover ring-1"
-                                        src="{{ $item['product']?->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
+                                        src="{{ $item['product']?->getThumbnailUrl() }}"
                                         alt="{{ $item['product']?->name }}"
                                     />
                                     <span class="text-sh-fg truncate text-sm">

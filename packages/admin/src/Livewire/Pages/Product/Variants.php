@@ -12,7 +12,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -55,14 +55,15 @@ class Variants extends Component implements HasActions, HasSchemas, HasTable
             ->query(
                 resolve(ProductVariant::class)::query()
                     ->where('product_id', $this->product->id)
+                    ->with('media')
             )
             ->defaultSort('position')
             ->reorderable('position')
             ->authorizeReorder(shopper()->auth()->user()->can('products.variants.edit'))
             ->columns([
-                SpatieMediaLibraryImageColumn::make('thumbnail')
-                    ->collection(config('shopper.media.storage.thumbnail_collection'))
+                ImageColumn::make('thumbnail')
                     ->label(__('shopper::forms.label.thumbnail'))
+                    ->getStateUsing(fn (ProductVariant $record): string => $record->getThumbnailUrl())
                     ->circular(),
                 TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
