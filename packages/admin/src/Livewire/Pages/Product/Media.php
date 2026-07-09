@@ -81,6 +81,7 @@ class Media extends Component implements HasSchemas
 
     public function render(): View
     {
-        return view('shopper::livewire.components.products.forms.media');
+        return view('shopper::livewire.components.products.forms.media')
+            ->title($this->product->name.' ~ '.__('shopper::words.media'));
     }
 }

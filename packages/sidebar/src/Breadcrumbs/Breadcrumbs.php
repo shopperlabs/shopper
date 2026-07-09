@@ -24,6 +24,11 @@ class Breadcrumbs
         $this->pushed[] = $crumb;
     }
 
+    public function prepend(Breadcrumb $crumb): void
+    {
+        array_unshift($this->pushed, $crumb);
+    }
+
     /**
      * @return list<Breadcrumb>
      */

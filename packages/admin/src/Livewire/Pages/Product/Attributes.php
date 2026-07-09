@@ -135,6 +135,7 @@ class Attributes extends Component implements HasActions, HasSchemas, HasTable
 
     public function render(): View
     {
-        return view('shopper::livewire.components.products.forms.attributes');
+        return view('shopper::livewire.components.products.forms.attributes')
+            ->title($this->product->name.' ~ '.__('shopper::pages/attributes.menu'));
     }
 }

@@ -67,6 +67,7 @@ class Seo extends Component implements HasSchemas
 
     public function render(): View
     {
-        return view('shopper::livewire.components.products.forms.seo');
+        return view('shopper::livewire.components.products.forms.seo')
+            ->title($this->product->name.' ~ '.__('shopper::words.seo.slug'));
     }
 }

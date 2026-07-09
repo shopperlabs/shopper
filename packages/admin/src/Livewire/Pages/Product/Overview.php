@@ -226,6 +226,7 @@ class Overview extends Component implements HasActions, HasSchemas
 
     public function render(): View
     {
-        return view('shopper::livewire.components.products.forms.edit');
+        return view('shopper::livewire.components.products.forms.edit')
+            ->title($this->product->name.' ~ '.__('shopper::words.overview'));
     }
 }

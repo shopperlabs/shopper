@@ -6,12 +6,19 @@
     $product = request()->route('product');
     $groups = resolve(\Shopper\Navigation\Product\ProductSectionManager::class)->groupedForProduct($product);
 
+    resolve(\Shopper\Sidebar\Breadcrumbs\Breadcrumbs::class)->prepend(
+        new \Shopper\Sidebar\Breadcrumbs\Breadcrumb(
+            text: $product->name,
+            url: route('shopper.products.edit', $product),
+        )
+    );
+
     $editPath = trim(parse_url(route('shopper.products.edit', ['product' => $product]), PHP_URL_PATH) ?? '', '/');
     $currentRest = ltrim(\Illuminate\Support\Str::after(trim(request()->path(), '/'), $editPath), '/');
     $currentSegment = $currentRest === '' ? '' : \Illuminate\Support\Str::before($currentRest, '/');
 @endphp
 
-<x-shopper::layouts.app :title="$title">
+<x-shopper::layouts.app :$title>
     <div class="sticky top-0 z-10 bg-sh-surface border-b border-sh-border py-8">
         <x-shopper::container>
             <x-shopper::heading>

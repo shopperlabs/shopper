@@ -68,7 +68,6 @@ return [
         'add' => 'Varyant ekle',
         'generate' => 'Varyant oluştur',
         'generate_description' => 'Ürünleriniz seçtiğiniz özelliklere göre oluşturulur',
-        'variant_title' => 'Varyantlar ~ :name',
         'empty' => 'Varyant bulunamadı',
         'search_label' => 'Varyant ara',
         'search_placeholder' => 'Ürün varyantı ara',

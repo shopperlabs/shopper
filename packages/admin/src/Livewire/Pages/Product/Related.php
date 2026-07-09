@@ -98,6 +98,6 @@ class Related extends Component implements HasActions, HasSchemas
     {
         return view('shopper::livewire.components.products.forms.related', [
             'relatedProducts' => $this->product->relatedProducts,
-        ]);
+        ])->title($this->product->name.' ~ '.__('shopper::pages/products.related_products'));
     }
 }

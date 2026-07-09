@@ -21,6 +21,6 @@ class Pricing extends Component
     public function render(): View
     {
         return view('shopper::livewire.pages.products.pricing')
-            ->title(__('shopper::words.pricing'));
+            ->title($this->product->name.' ~ '.__('shopper::words.pricing'));
     }
 }

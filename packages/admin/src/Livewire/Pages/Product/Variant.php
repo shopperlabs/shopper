@@ -15,7 +15,6 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Size;
 use Filament\Support\Enums\Width;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rules\Unique;
 use Livewire\Attributes\Layout;
 use Shopper\Core\Models\Contracts\Product;
@@ -39,22 +38,9 @@ class Variant extends AbstractPageComponent implements HasActions, HasSchemas
 
     public function getBreadcrumbs(): array
     {
-        $crumbs = [];
-
-        if ($this->product !== null) {
-            $crumbs[] = new Breadcrumb(
-                text: $this->product->name,
-                url: Route::has('shopper.products.edit')
-                    ? route('shopper.products.edit', $this->product)
-                    : null,
-            );
-        }
-
-        if ($this->variant !== null) {
-            $crumbs[] = new Breadcrumb(text: $this->variant->name);
-        }
-
-        return $crumbs;
+        return $this->variant !== null
+            ? [new Breadcrumb(text: $this->variant->name)]
+            : [];
     }
 
     public function mount(): void
@@ -137,6 +123,6 @@ class Variant extends AbstractPageComponent implements HasActions, HasSchemas
     public function render(): View
     {
         return view('shopper::livewire.pages.products.variant')
-            ->title(__('shopper::pages/products.variants.variant_title', ['name' => $this->variant->name]));
+            ->title($this->product->name.' ~ '.$this->variant->name);
     }
 }

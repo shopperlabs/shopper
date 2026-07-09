@@ -73,6 +73,7 @@ class Shipping extends Component implements HasSchemas
 
     public function render(): View
     {
-        return view('shopper::livewire.components.products.forms.shipping');
+        return view('shopper::livewire.components.products.forms.shipping')
+            ->title($this->product->name.' ~ '.__('shopper::words.shipping'));
     }
 }

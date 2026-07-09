@@ -210,6 +210,7 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
     #[On('inventory.updated')]
     public function render(): View
     {
-        return view('shopper::livewire.components.products.forms.inventory');
+        return view('shopper::livewire.components.products.forms.inventory')
+            ->title($this->product->name.' ~ '.__('shopper::pages/products.stock_inventory_heading'));
     }
 }

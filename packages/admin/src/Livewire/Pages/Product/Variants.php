@@ -55,8 +55,10 @@ class Variants extends Component implements HasActions, HasSchemas, HasTable
             ->query(
                 resolve(ProductVariant::class)::query()
                     ->where('product_id', $this->product->id)
-                    ->latest()
             )
+            ->defaultSort('position')
+            ->reorderable('position')
+            ->authorizeReorder(shopper()->auth()->user()->can('products.variants.edit'))
             ->columns([
                 SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
@@ -152,6 +154,7 @@ class Variants extends Component implements HasActions, HasSchemas, HasTable
 
     public function render(): View
     {
-        return view('shopper::livewire.components.products.forms.variants');
+        return view('shopper::livewire.components.products.forms.variants')
+            ->title($this->product->name.' ~ '.__('shopper::words.variants'));
     }
 }

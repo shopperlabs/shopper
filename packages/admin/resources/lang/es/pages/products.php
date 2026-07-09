@@ -68,7 +68,6 @@ return [
         'add' => 'Añadir variante',
         'generate' => 'Generar variantes',
         'generate_description' => 'Tus productos se generan de acuerdo a los atributos que has seleccionado',
-        'variant_title' => 'Variantes ~ :name',
         'empty' => 'No se encontró variante',
         'search_label' => 'Buscar variante',
         'search_placeholder' => 'Buscar variante de producto',
