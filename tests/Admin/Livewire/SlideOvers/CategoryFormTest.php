@@ -61,6 +61,22 @@ describe(CategoryForm::class, function (): void {
             ->toBe('my-first-category-1');
     });
 
+    it('generates the slug from the name while typing on create', function (): void {
+        $component = Livewire::test(CategoryForm::class)
+            ->set('data.name', 'Summer Shoes');
+
+        expect($component->get('data.slug'))->toBe('summer-shoes');
+    });
+
+    it('keeps the slug when renaming an existing category', function (): void {
+        $category = Category::factory()->create(['name' => 'Shoes', 'slug' => 'shoes']);
+
+        $component = Livewire::test(CategoryForm::class, ['category' => $category])
+            ->set('data.name', 'Footwear');
+
+        expect($component->get('data.slug'))->toBe('shoes');
+    });
+
     it('can create category with parent', function (): void {
         $parent = Category::factory()->create(['name' => 'Parent', 'is_enabled' => true]);
 

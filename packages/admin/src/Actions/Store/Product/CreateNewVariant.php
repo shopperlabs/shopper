@@ -24,6 +24,10 @@ final class CreateNewVariant
         DB::beginTransaction();
 
         try {
+            $values['position'] = (int) resolve(ProductVariant::class)::query()
+                ->where('product_id', $values['product_id'])
+                ->max('position') + 1;
+
             $variant = resolve(ProductVariant::class)::query()->create($values);
 
             if ($pricing = data_get($data, 'prices')) {

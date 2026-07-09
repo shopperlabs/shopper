@@ -197,7 +197,7 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
      */
     public function variants(): HasMany
     {
-        return $this->hasMany(config('shopper.models.variant'), 'product_id');
+        return $this->hasMany(config('shopper.models.variant'), 'product_id')->orderBy('position');
     }
 
     /**

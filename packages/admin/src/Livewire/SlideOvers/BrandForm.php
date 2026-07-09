@@ -13,10 +13,12 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Form\SeoField;
@@ -75,8 +77,12 @@ class BrandForm extends SlideOverComponent implements HasActions, HasSchemas, Sl
                             ->placeholder('Apple, Nike, Samsung...')
                             ->required()
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (string $operation, $state, Set $set): void {
-                                $set('slug', Str::slug($state));
+                            ->afterStateUpdated(function (?Model $record, ?string $state, Set $set, Get $get): void {
+                                if ($record?->exists && filled($get('slug'))) {
+                                    return;
+                                }
+
+                                $set('slug', Str::slug($state ?? ''));
                             }),
                         Hidden::make('slug'),
                         TextInput::make('website')

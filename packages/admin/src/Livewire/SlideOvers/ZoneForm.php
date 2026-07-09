@@ -15,10 +15,12 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
@@ -108,7 +110,11 @@ class ZoneForm extends SlideOverComponent implements HasActions, HasSchemas, Sli
                             ->placeholder('Africa')
                             ->required()
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (?string $state, Set $set): void {
+                            ->afterStateUpdated(function (?Model $record, ?string $state, Set $set, Get $get): void {
+                                if ($record?->exists && filled($get('slug'))) {
+                                    return;
+                                }
+
                                 if ($state) {
                                     $set('slug', Str::slug($state));
                                 }
