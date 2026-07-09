@@ -41,6 +41,7 @@ return [
     'variant_images_helpText' => 'Ajouter des images à votre variante.',
     'use_as_thumbnail' => 'Utiliser comme miniature',
     'choose_from_images' => 'Choisir parmi les images',
+    'channels_counter' => 'Disponible sur :count des :total canaux de vente',
     'use_as_thumbnail_description' => 'Sélectionnez une des images du produit à utiliser comme miniature.',
     'thumbnail_helpText' => 'Utilisé pour représenter votre produit lors du paiement, du partage social, et plus encore.',
     'weight_dimension' => 'Poids et dimensions',

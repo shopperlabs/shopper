@@ -41,6 +41,7 @@ return [
     'variant_images_helpText' => 'Varyantınıza görseller ekleyin.',
     'use_as_thumbnail' => 'Küçük resim olarak kullan',
     'choose_from_images' => 'Görseller arasından seç',
+    'channels_counter' => ':total satış kanalından :count tanesinde mevcut',
     'use_as_thumbnail_description' => 'Küçük resim olarak kullanmak için ürün görsellerinden birini seçin.',
     'thumbnail_helpText' => 'Ödeme, sosyal paylaşım ve daha fazlası sırasında ürününüzü temsil etmek için kullanılır.',
     'weight_dimension' => 'Ağırlık ve Boyut',

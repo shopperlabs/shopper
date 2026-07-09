@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use Shopper\Core\Events\Products\ProductUpdated;
+use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Supplier;
 use Shopper\Enum\FeatureState;
 use Shopper\Livewire\Pages\Product\Overview;
@@ -40,6 +41,40 @@ describe(Overview::class, function (): void {
 
         expect($product->name)->toBe('Demo product')
             ->and($product->slug)->toBe($originalSlug);
+    });
+
+    it('saves sales channels through the channel toggles', function (): void {
+        $product = Product::factory()->standard()->create();
+        $web = Channel::factory()->create(['name' => 'Web Store', 'is_enabled' => true]);
+        Channel::factory()->create(['name' => 'Point of Sale', 'is_enabled' => true]);
+
+        Livewire::test(Overview::class, ['product' => $product])
+            ->fillForm(['channels' => [$web->id]])
+            ->call('store')
+            ->assertHasNoFormErrors();
+
+        expect($product->refresh()->channels->pluck('id')->all())->toBe([$web->id]);
+    });
+
+    it('keeps disabled channel attachments on save', function (): void {
+        $product = Product::factory()->standard()->create();
+        $disabled = Channel::factory()->create(['name' => 'Legacy POS', 'is_enabled' => false]);
+        $product->channels()->attach($disabled->id);
+
+        Livewire::test(Overview::class, ['product' => $product])
+            ->call('store')
+            ->assertHasNoFormErrors();
+
+        expect($product->refresh()->channels->pluck('id')->all())->toBe([$disabled->id]);
+    });
+
+    it('hides the sales channels section when no channel exists', function (): void {
+        Channel::query()->delete();
+
+        $product = Product::factory()->standard()->create();
+
+        Livewire::test(Overview::class, ['product' => $product])
+            ->assertDontSee(__('shopper::pages/settings/menu.sales'));
     });
 
     it('ensure that external_id field is invisible on non external product', function (): void {
