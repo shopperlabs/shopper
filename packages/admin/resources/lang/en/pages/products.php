@@ -41,6 +41,7 @@ return [
     'variant_images_helpText' => 'Add images to your variant.',
     'use_as_thumbnail' => 'Use as thumbnail',
     'choose_from_images' => 'Choose from images',
+    'channels_counter' => 'Available in :count of :total sales channels',
     'use_as_thumbnail_description' => 'Pick one of the product images to use as the thumbnail.',
     'thumbnail_helpText' => 'Used to represent your product during checkout, social sharing and more.',
     'weight_dimension' => 'Weight and Dimension',

@@ -62,6 +62,14 @@ describe(ChannelManager::class, function (): void {
         expect(resolve(ChannelManager::class)->driver()->code())->toBe('web');
     });
 
+    it('resolves the logo for a known driver and null for an unknown one', function (): void {
+        $manager = resolve(ChannelManager::class);
+
+        expect($manager->logoFor('web'))->toBe($manager->driver('web')->logo())
+            ->and($manager->logoFor(null))->toBe($manager->driver('web')->logo())
+            ->and($manager->logoFor('unknown'))->toBeNull();
+    });
+
     it('keeps only configured drivers in the configured set', function (): void {
         $manager = resolve(ChannelManager::class)
             ->extend('custom', fn (): ChannelDriver => fakeChannelDriver('custom', configured: true))

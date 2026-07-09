@@ -65,12 +65,21 @@
                             x-on:click="collapsed = ! collapsed"
                             class="text-sh-fg-muted hover:bg-sh-sidebar-hover hover:text-sh-fg inline-flex size-8 items-center justify-center rounded-lg transition"
                             :aria-label="collapsed ? @js(__('shopper::words.expand')) : @js(__('shopper::words.collapse'))"
+                            x-tooltip="{
+                                content: () => collapsed ? @js(__('shopper::words.expand')) : @js(__('shopper::words.collapse')),
+                                placement: 'right',
+                                theme: $store.theme,
+                            }"
                         >
-                            <x-filament::icon
-                                icon="untitledui-chevron-left-double"
-                                class="size-4 transition-transform"
-                                ::class="collapsed && 'rotate-180'"
-                            />
+                            <span
+                                class="inline-flex transition-transform duration-200"
+                                :class="collapsed ? 'rotate-180' : ''"
+                            >
+                                <x-filament::icon
+                                    icon="untitledui-chevron-left-double"
+                                    class="size-4"
+                                />
+                            </span>
                         </button>
                     </div>
 

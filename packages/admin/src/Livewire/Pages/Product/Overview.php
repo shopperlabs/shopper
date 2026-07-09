@@ -17,7 +17,6 @@ use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
@@ -29,8 +28,11 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Shopper\Actions\Store\Product\UpdateProductAction;
+use Shopper\Components\Form\ChannelToggles;
 use Shopper\Components\Form\SlugInput;
+use Shopper\Components\SectionHeader;
 use Shopper\Components\Separator;
+use Shopper\Core\Models\Contracts\Channel;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\ProductTag;
 use Shopper\Feature;
@@ -65,10 +67,12 @@ class Overview extends Component implements HasActions, HasSchemas
             ->components([
                 Grid::make()
                     ->schema([
-                        Section::make(__('shopper::pages/products.general'))
+                        SectionHeader::make(__('shopper::pages/products.general'))
                             ->description($this->product->type?->getDescription())
                             ->icon($this->product->type?->getIcon())
                             ->iconSize(IconSize::Large)
+                            ->columnSpanFull(),
+                        Group::make()
                             ->schema([
                                 TextInput::make('name')
                                     ->label(__('shopper::forms.label.name'))
@@ -111,7 +115,10 @@ class Overview extends Component implements HasActions, HasSchemas
                             ])
                             ->columns()
                             ->columnSpanFull(),
-                        Section::make(__('shopper::pages/products.status'))
+                        Separator::make()->columnSpanFull(),
+                        SectionHeader::make(__('shopper::pages/products.status'))
+                            ->columnSpanFull(),
+                        Group::make()
                             ->schema([
                                 Toggle::make('is_visible')
                                     ->label(__('shopper::forms.label.visible'))
@@ -131,8 +138,18 @@ class Overview extends Component implements HasActions, HasSchemas
                     ->columnSpan(['lg' => 2]),
                 Group::make()
                     ->schema([
-                        Section::make(__('shopper::pages/products.product_associations'))
+                        Group::make()
                             ->schema([
+                                SectionHeader::make(__('shopper::pages/settings/menu.sales')),
+                                ChannelToggles::make('channels')
+                                    ->hiddenLabel()
+                                    ->relationship('channels', 'name'),
+                                Separator::make(),
+                            ])
+                            ->visible(fn (): bool => resolve(Channel::class)::query()->exists()),
+                        Group::make()
+                            ->schema([
+                                SectionHeader::make(__('shopper::pages/products.product_associations')),
                                 Select::make('brand_id')
                                     ->label(__('shopper::forms.label.brand'))
                                     ->relationship('brand', 'name', fn (Builder $query) => $query->where('is_enabled', true))
@@ -151,16 +168,6 @@ class Overview extends Component implements HasActions, HasSchemas
                                     ->searchable()
                                     ->visible(Feature::enabled('category'))
                                     ->withCount(),
-                                Select::make('channels')
-                                    ->label(__('shopper::pages/settings/menu.sales'))
-                                    ->relationship(
-                                        name: 'channels',
-                                        titleAttribute: 'name',
-                                        modifyQueryUsing: fn (Builder $query) => $query->where('is_enabled', true)
-                                    )
-                                    ->searchable()
-                                    ->preload()
-                                    ->multiple(),
                                 Select::make('collections')
                                     ->label(__('shopper::pages/collections.menu'))
                                     ->relationship('collections', 'name')
@@ -196,6 +203,7 @@ class Overview extends Component implements HasActions, HasSchemas
                     ->columnSpan(['lg' => 1]),
             ])
             ->columns(3)
+            ->extraAttributes(['class' => 'lg:gap-x-10'])
             ->statePath('data')
             ->model($this->product);
     }

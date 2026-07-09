@@ -58,7 +58,7 @@ class Channels extends Component implements HasActions, HasSchemas, HasTable
                 ImageColumn::make('logo')
                     ->label(__('shopper::forms.label.logo'))
                     ->circular()
-                    ->getStateUsing(fn (Channel $record): ?string => $this->channelLogo($record))
+                    ->getStateUsing(fn (Channel $record): ?string => ChannelDrivers::logoFor($record->driver))
                     ->defaultImageUrl(shopper_fallback_url()),
                 TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
@@ -94,13 +94,6 @@ class Channels extends Component implements HasActions, HasSchemas, HasTable
     {
         return view('shopper::livewire.pages.settings.channels')
             ->title(__('shopper::pages/settings/channels.title'));
-    }
-
-    protected function channelLogo(Channel $record): ?string
-    {
-        return in_array($record->driver ?? 'web', ChannelDrivers::availableDrivers(), true)
-            ? ChannelDrivers::driver($record->driver)->logo()
-            : null;
     }
 
     protected function driverLabel(string $driver): string

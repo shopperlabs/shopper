@@ -63,6 +63,15 @@ final class ChannelManager
         }
     }
 
+    public function logoFor(?string $driver): ?string
+    {
+        $driver ??= 'web';
+
+        return in_array($driver, $this->availableDrivers(), true)
+            ? $this->driver($driver)->logo()
+            : null;
+    }
+
     private function resolve(string $name): ChannelDriver
     {
         if (isset($this->customCreators[$name])) {
