@@ -20,6 +20,8 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
@@ -173,6 +175,16 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                             ->multiple(),
                         BooleanConstraint::make('is_visible')
                             ->label(__('shopper::forms.label.availability')),
+                        RelationshipConstraint::make('channels')
+                            ->label(__('shopper::pages/settings/menu.sales'))
+                            ->icon(Untitledui::Share07)
+                            ->selectable(
+                                IsRelatedToOperator::make()
+                                    ->titleAttribute('name')
+                                    ->searchable()
+                                    ->multiple()
+                                    ->preload(),
+                            ),
                         DateConstraint::make('published_at'),
                     ])
                     ->constraintPickerColumns(),

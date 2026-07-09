@@ -203,6 +203,7 @@ class Overview extends Component implements HasActions, HasSchemas
                     ->columnSpan(['lg' => 1]),
             ])
             ->columns(3)
+            ->extraAttributes(['class' => 'lg:gap-x-10'])
             ->statePath('data')
             ->model($this->product);
     }
