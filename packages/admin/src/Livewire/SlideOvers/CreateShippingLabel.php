@@ -151,7 +151,7 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasS
                             ->state(function (Get $get): HtmlString {
                                 $item = $this->unfulfilledItems->firstWhere('id', $get('item_id'));
                                 // @phpstan-ignore-next-line
-                                $url = $item?->product?->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection'));
+                                $url = $item?->product?->getThumbnailUrl();
 
                                 return new HtmlString(
                                     $url

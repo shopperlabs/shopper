@@ -59,7 +59,7 @@
                                     @if ($order->items->first()?->product)
                                         <img
                                             class="size-7 shrink-0 rounded-lg object-cover ring-1 ring-sh-border"
-                                            src="{{ $order->items->first()->product->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
+                                            src="{{ $order->items->first()->product->getThumbnailUrl() }}"
                                             alt="{{ $order->items->first()->name }}"
                                         />
                                     @endif

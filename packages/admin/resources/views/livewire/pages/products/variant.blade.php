@@ -176,7 +176,12 @@
                 <x-slot name="title">
                     <div class="flex items-center justify-between gap-4">
                         <x-shopper::section-heading :title="__('shopper::words.media')" />
-                        {{ $this->mediaAction }}
+                        <div class="flex items-center gap-2">
+                            @if ($this->useAsThumbnailAction->isVisible())
+                                {{ $this->useAsThumbnailAction }}
+                            @endif
+                            {{ $this->mediaAction }}
+                        </div>
                     </div>
                 </x-slot>
 

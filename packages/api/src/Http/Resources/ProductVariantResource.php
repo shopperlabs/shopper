@@ -38,7 +38,7 @@ final class ProductVariantResource extends JsonApiResource
             'prices' => $this->pricesPayload(),
             'values' => $this->optionValuesPayload(),
             'images' => $this->imagesPayload(),
-            'thumbnail' => $this->thumbnailPayload(),
+            'thumbnail' => $this->thumbnailPayload(withFallback: true),
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Http\UploadedFile;
 use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Livewire\Pages\Product\Variant;
@@ -121,5 +122,45 @@ describe(Variant::class, function (): void {
             'variant' => $this->variant,
         ])
             ->assertActionVisible('media');
+    });
+
+    it('hides the use as thumbnail action when the variant gallery is empty', function (): void {
+        $this->user->givePermissionTo('products.variants.edit');
+
+        Livewire::test(Variant::class, [
+            'product' => $this->product,
+            'variant' => $this->variant,
+        ])
+            ->assertActionHidden('useAsThumbnail');
+    });
+
+    it('hides the use as thumbnail action for users without `products.variants.edit`', function (): void {
+        $this->variant->addMedia(UploadedFile::fake()->image('gallery.jpg'))
+            ->toMediaCollection(config('shopper.media.storage.collection_name'));
+
+        Livewire::test(Variant::class, [
+            'product' => $this->product,
+            'variant' => $this->variant,
+        ])
+            ->assertActionHidden('useAsThumbnail');
+    });
+
+    it('sets a gallery image as the variant thumbnail', function (): void {
+        $this->user->givePermissionTo('products.variants.edit');
+
+        $image = $this->variant->addMedia(UploadedFile::fake()->image('gallery.jpg'))
+            ->toMediaCollection(config('shopper.media.storage.collection_name'));
+
+        Livewire::test(Variant::class, [
+            'product' => $this->product,
+            'variant' => $this->variant,
+        ])
+            ->callAction('useAsThumbnail', ['media_id' => $image->id])
+            ->assertNotified();
+
+        $thumbnail = $this->variant->refresh()
+            ->getFirstMedia(config('shopper.media.storage.thumbnail_collection'));
+
+        expect($thumbnail?->file_name)->toBe($image->file_name);
     });
 })->group('livewire', 'products');

@@ -49,6 +49,44 @@ it('shows a product by slug as a JSON:API document', function (): void {
         ->assertJsonPath('data.attributes.prices.0.currency_code', $product->prices()->first()->currency_code);
 });
 
+it('falls back to the first gallery image for the thumbnail payload', function (): void {
+    $product = publishedProduct(['name' => 'Camera']);
+
+    $image = Tests\Core\Stubs\Product::query()->findOrFail($product->id)
+        ->addMedia(UploadedFile::fake()->image('gallery.png', 10, 10))
+        ->toMediaCollection((string) config('shopper.media.storage.collection_name'));
+
+    $this->getJson('/store/products/'.$product->slug)
+        ->assertOk()
+        ->assertJsonPath('data.attributes.thumbnail.id', $image->uuid)
+        ->assertJsonPath('data.attributes.images.0.id', $image->uuid);
+});
+
+it('prefers the dedicated thumbnail over the gallery in the payload', function (): void {
+    $product = publishedProduct(['name' => 'Lens']);
+    $bound = Tests\Core\Stubs\Product::query()->findOrFail($product->id);
+
+    $bound->addMedia(UploadedFile::fake()->image('gallery.png', 10, 10))
+        ->toMediaCollection((string) config('shopper.media.storage.collection_name'));
+    $thumbnail = $bound->addMedia(UploadedFile::fake()->image('thumb.png', 10, 10))
+        ->toMediaCollection((string) config('shopper.media.storage.thumbnail_collection'));
+
+    $this->getJson('/store/products/'.$product->slug)
+        ->assertOk()
+        ->assertJsonPath('data.attributes.thumbnail.id', $thumbnail->uuid);
+});
+
+it('does not fall back to the gallery for the category thumbnail payload', function (): void {
+    $category = Tests\Core\Stubs\Category::factory()->create(['is_enabled' => true]);
+
+    $category->addMedia(UploadedFile::fake()->image('gallery.png', 10, 10))
+        ->toMediaCollection((string) config('shopper.media.storage.collection_name'));
+
+    $this->getJson('/store/categories/'.$category->slug)
+        ->assertOk()
+        ->assertJsonPath('data.attributes.thumbnail', null);
+});
+
 it('exposes a ULID public id, never the primary key', function (): void {
     $product = publishedProduct(['name' => 'Opaque']);
 

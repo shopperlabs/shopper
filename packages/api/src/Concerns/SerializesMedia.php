@@ -19,12 +19,18 @@ trait SerializesMedia
     }
 
     /**
-     * The single thumbnail media, or null.
+     * The thumbnail media, optionally falling back to the first gallery image.
      *
      * @return array<string, mixed>|null
      */
-    protected function thumbnailPayload(): ?array
+    protected function thumbnailPayload(bool $withFallback = false): ?array
     {
+        if ($withFallback && method_exists($this->resource, 'getThumbnail')) {
+            $media = $this->resource->getThumbnail();
+
+            return $media instanceof Media ? $this->mediaToArray($media) : null;
+        }
+
         return $this->firstMediaPayload((string) config('shopper.media.storage.thumbnail_collection', 'thumbnail'));
     }
 

@@ -57,7 +57,7 @@
             @foreach ($displayed as $item)
                 @php
                     $thumbnail = $isProducts
-                        ? ($item->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) ?: shopper_fallback_url())
+                        ? $item->getThumbnailUrl()
                         : $item->picture;
                     $name = $isProducts ? $item->name : $item->full_name;
                 @endphp

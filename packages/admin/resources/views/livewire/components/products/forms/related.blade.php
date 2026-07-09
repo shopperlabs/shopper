@@ -34,7 +34,7 @@
                         <div class="relative">
                             <div class="overflow-hidden bg-sh-muted">
                                 <img
-                                    src="{{ $relatedProduct->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
+                                    src="{{ $relatedProduct->getThumbnailUrl() }}"
                                     alt="{{ $relatedProduct->name }} Thumbnail"
                                     class="h-40 w-full max-w-none rounded-lg object-cover object-center"
                                 />

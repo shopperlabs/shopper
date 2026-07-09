@@ -46,7 +46,7 @@ class ShipmentDetail extends SlideOverComponent
     #[On('shipment-updated')]
     public function render(): View
     {
-        $this->shipment->loadMissing('order.shippingAddress', 'carrier', 'items.product');
+        $this->shipment->loadMissing('order.shippingAddress', 'carrier', 'items.product.media');
 
         return view('shopper::livewire.slide-overs.shipment-detail');
     }

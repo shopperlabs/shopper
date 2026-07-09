@@ -91,7 +91,7 @@
                                 @foreach ($lines as $line)
                                     @php
                                         $purchasable = $line->purchasable;
-                                        $thumbnailUrl = $purchasable?->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection'));
+                                        $thumbnailUrl = $purchasable?->getThumbnailUrl();
                                     @endphp
                                     <tr>
                                         <td class="fi-ta-cell overflow-hidden p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">

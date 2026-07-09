@@ -192,7 +192,7 @@
                                 <div class="flex items-center gap-2">
                                     <img
                                         class="size-6 shrink-0 rounded object-cover"
-                                        src="{{ $item->product->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
+                                        src="{{ $item->product->getThumbnailUrl() }}"
                                         alt="{{ $item->name }}"
                                     />
                                     <span class="text-sm text-sh-fg-secondary">
