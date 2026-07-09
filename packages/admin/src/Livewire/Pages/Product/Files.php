@@ -72,6 +72,7 @@ class Files extends Component implements HasSchemas
 
     public function render(): View
     {
-        return view('shopper::livewire.components.products.forms.files');
+        return view('shopper::livewire.components.products.forms.files')
+            ->title($this->product->name.' ~ '.__('shopper::words.files'));
     }
 }

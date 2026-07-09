@@ -68,7 +68,6 @@ return [
         'add' => 'Add variant',
         'generate' => 'Generate variants',
         'generate_description' => 'Your products are generated according to the attributes you have selected',
-        'variant_title' => 'Variants ~ :name',
         'empty' => 'No variant found',
         'search_label' => 'Search variant',
         'search_placeholder' => 'Search product variant',

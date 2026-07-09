@@ -86,6 +86,16 @@ it('preserves push order across multiple breadcrumbs', function (): void {
     expect($this->breadcrumbs->all())->toBe([$products, $brands, $nike]);
 })->group('Breadcrumbs');
 
+it('prepends a breadcrumb before previously pushed ones', function (): void {
+    $variant = new Breadcrumb(text: '45');
+    $product = new Breadcrumb(text: 'Nike Air Max 90', url: '/admin/products/1/edit');
+
+    $this->breadcrumbs->push($variant);
+    $this->breadcrumbs->prepend($product);
+
+    expect($this->breadcrumbs->all())->toBe([$product, $variant]);
+})->group('Breadcrumbs');
+
 it('empties the stack on reset', function (): void {
     $this->breadcrumbs->push(new Breadcrumb(text: 'Products'));
     $this->breadcrumbs->push(new Breadcrumb(text: 'Brands'));

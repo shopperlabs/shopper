@@ -68,4 +68,28 @@ describe(Variants::class, function (): void {
 
         expect(ProductVariant::query()->find($variant->id))->toBeNull();
     });
+
+    it('blocks reordering variants for users without `products.variants.edit`', function (): void {
+        $a = ProductVariant::factory()->create(['product_id' => $this->product->id, 'position' => 1]);
+        $b = ProductVariant::factory()->create(['product_id' => $this->product->id, 'position' => 2]);
+
+        Livewire::test(Variants::class, ['product' => $this->product])
+            ->call('reorderTable', [$b->getKey(), $a->getKey()]);
+
+        expect($a->refresh()->position)->toBe(1)
+            ->and($b->refresh()->position)->toBe(2);
+    });
+
+    it('allows reordering variants for users with `products.variants.edit`', function (): void {
+        $this->user->givePermissionTo('products.variants.edit');
+
+        $a = ProductVariant::factory()->create(['product_id' => $this->product->id, 'position' => 1]);
+        $b = ProductVariant::factory()->create(['product_id' => $this->product->id, 'position' => 2]);
+
+        Livewire::test(Variants::class, ['product' => $this->product])
+            ->call('reorderTable', [$b->getKey(), $a->getKey()]);
+
+        expect($a->refresh()->position)->toBe(2)
+            ->and($b->refresh()->position)->toBe(1);
+    });
 })->group('livewire', 'components', 'products', 'security');

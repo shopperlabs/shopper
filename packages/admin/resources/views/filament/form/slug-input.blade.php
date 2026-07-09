@@ -2,7 +2,7 @@
     $statePath = $getStatePath();
     $fromStatePath = $getFromStatePath();
     $isDisabled = $isDisabled();
-    $shouldSync = $fromStatePath && blank($getRecord());
+    $shouldSync = $fromStatePath && ! $getRecord()?->exists;
     $prefixLabel = $getPrefixLabel();
 @endphp
 

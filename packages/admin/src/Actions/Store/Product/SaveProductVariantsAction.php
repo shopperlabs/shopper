@@ -43,6 +43,8 @@ final class SaveProductVariantsAction
                 fn (ProductVariant $variant) => $variant->delete()
             );
 
+            $position = (int) $product->variants()->max('position');
+
             foreach ($variants as $key => $variantState) {
                 /** @var ProductVariant $variant */
                 $variant = $variantState['variant_id']
@@ -51,6 +53,7 @@ final class SaveProductVariantsAction
                         'name' => $variantState['name'],
                         'product_id' => $product->id,
                         'sku' => $variantState['sku'],
+                        'position' => ++$position,
                     ]);
 
                 $variants[$key]['variant_id'] = $variant->id;
