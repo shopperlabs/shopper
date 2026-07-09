@@ -104,4 +104,34 @@ describe(GenerateVariants::class, function (): void {
         $component->call('generate')
             ->assertNotified();
     });
+
+    it('assigns incremental positions to generated variants', function (): void {
+        $component = Livewire::test(GenerateVariants::class, ['product' => $this->product]);
+
+        $component->set('variants', [
+            [
+                'key' => 'test-key-1',
+                'variant_id' => null,
+                'name' => 'Variant 1',
+                'sku' => 'SKU-POS-1',
+                'price' => 1000,
+                'stock' => 10,
+                'values' => [],
+            ],
+            [
+                'key' => 'test-key-2',
+                'variant_id' => null,
+                'name' => 'Variant 2',
+                'sku' => 'SKU-POS-2',
+                'price' => 1000,
+                'stock' => 10,
+                'values' => [],
+            ],
+        ]);
+
+        $component->call('generate');
+
+        expect($this->product->variants()->pluck('position', 'sku')->all())
+            ->toBe(['SKU-POS-1' => 1, 'SKU-POS-2' => 2]);
+    });
 })->group('livewire', 'slideovers', 'products');

@@ -71,13 +71,7 @@ class Edit extends Component implements HasActions, HasSchemas
                                 TextInput::make('name')
                                     ->label(__('shopper::forms.label.name'))
                                     ->required()
-                                    ->maxLength(255)
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(function (?string $state, Set $set): void {
-                                        if ($state) {
-                                            $set('slug', Str::slug($state));
-                                        }
-                                    }),
+                                    ->maxLength(255),
                                 TextInput::make('slug')
                                     ->label(__('shopper::forms.label.slug'))
                                     ->disabled()

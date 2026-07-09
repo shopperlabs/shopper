@@ -41,4 +41,26 @@ describe(CreateNewVariant::class, function (): void {
             ->and($variant->stock)->toBe(10)
             ->and($variant->prices()->count())->toBe(1);
     });
+
+    it('assigns incremental positions per product', function (): void {
+        /** @var ProductContract $product */
+        $product = Product::factory()->create(['type' => ProductType::Variant]);
+
+        /** @var ProductVariantContract $first */
+        $first = app()->call(CreateNewVariant::class, ['data' => [
+            'product_id' => $product->id,
+            'name' => 'First Variant',
+            'sku' => 'VAR-POS-1',
+        ]]);
+
+        /** @var ProductVariantContract $second */
+        $second = app()->call(CreateNewVariant::class, ['data' => [
+            'product_id' => $product->id,
+            'name' => 'Second Variant',
+            'sku' => 'VAR-POS-2',
+        ]]);
+
+        expect($first->position)->toBe(1)
+            ->and($second->position)->toBe(2);
+    });
 })->group('actions', 'product');

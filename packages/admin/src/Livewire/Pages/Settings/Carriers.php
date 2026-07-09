@@ -14,6 +14,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
@@ -25,6 +26,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
@@ -130,7 +132,13 @@ class Carriers extends Component implements HasActions, HasSchemas, HasTable
                 ->placeholder('UPS, FedEx, DHL...')
                 ->required()
                 ->live(onBlur: true)
-                ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('slug', $state)),
+                ->afterStateUpdated(function (?Model $record, Set $set, ?string $state, Get $get): void {
+                    if ($record?->exists && filled($get('slug'))) {
+                        return;
+                    }
+
+                    $set('slug', $state);
+                }),
             Hidden::make('slug'),
             Select::make('driver')
                 ->label(__('shopper::forms.label.driver'))

@@ -53,8 +53,10 @@ class Variants extends Component implements HasActions, HasSchemas, HasTable
             ->query(
                 resolve(ProductVariant::class)::query()
                     ->where('product_id', $this->product->id)
-                    ->latest()
             )
+            ->defaultSort('position')
+            ->reorderable('position')
+            ->authorizeReorder(shopper()->auth()->user()->can('edit_product_variants'))
             ->columns([
                 SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))

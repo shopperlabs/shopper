@@ -17,14 +17,12 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Livewire;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
@@ -65,13 +63,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasSchemas
                                 TextInput::make('name')
                                     ->label(__('shopper::forms.label.name'))
                                     ->placeholder('Summers Collections, Christmas promotions...')
-                                    ->required()
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(function (string $operation, ?string $state, Set $set): void {
-                                        if ($state) {
-                                            $set('slug', Str::slug($state));
-                                        }
-                                    }),
+                                    ->required(),
                                 TextInput::make('slug')
                                     ->label(__('shopper::forms.label.slug'))
                                     ->disabled()

@@ -10,6 +10,7 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
@@ -21,6 +22,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\ProductTag;
@@ -118,7 +120,13 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                 ->label(__('shopper::forms.label.name'))
                 ->required()
                 ->live(onBlur: true)
-                ->afterStateUpdated(fn (?string $state, Set $set): mixed => $set('slug', Str::slug($state ?? ''))),
+                ->afterStateUpdated(function (?Model $record, ?string $state, Set $set, Get $get): void {
+                    if ($record?->exists && filled($get('slug'))) {
+                        return;
+                    }
+
+                    $set('slug', Str::slug($state ?? ''));
+                }),
             TextInput::make('slug')
                 ->label(__('shopper::forms.label.slug'))
                 ->disabled()

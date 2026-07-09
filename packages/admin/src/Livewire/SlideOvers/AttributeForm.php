@@ -12,10 +12,12 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Form\IconPicker;
@@ -71,7 +73,11 @@ class AttributeForm extends SlideOverComponent implements HasActions, HasSchemas
                     ->required()
                     ->live(onBlur: true)
                     ->maxLength(75)
-                    ->afterStateUpdated(function (string $operation, ?string $state, Set $set): void {
+                    ->afterStateUpdated(function (?Model $record, ?string $state, Set $set, Get $get): void {
+                        if ($record?->exists && filled($get('slug'))) {
+                            return;
+                        }
+
                         if ($state) {
                             $set('slug', Str::slug($state));
                         }
