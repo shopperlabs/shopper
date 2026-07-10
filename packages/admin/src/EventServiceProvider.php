@@ -7,9 +7,11 @@ namespace Shopper;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Shopper\Core\Events\Orders\OrderCreated;
 use Shopper\Core\Events\Orders\OrderPaid;
+use Shopper\Core\Events\Products\ProductImportCompleted;
 use Shopper\Listeners\Notifications\SendNewOrderNotification;
 use Shopper\Listeners\Notifications\SendOrderPaidNotification;
 use Shopper\Listeners\Notifications\SendPaymentFailedNotification;
+use Shopper\Listeners\Notifications\SendProductImportCompletedNotification;
 use Shopper\Payment\Events\PaymentFailed;
 
 final class EventServiceProvider extends ServiceProvider
@@ -24,6 +26,9 @@ final class EventServiceProvider extends ServiceProvider
         ],
         PaymentFailed::class => [
             SendPaymentFailedNotification::class,
+        ],
+        ProductImportCompleted::class => [
+            SendProductImportCompletedNotification::class,
         ],
     ];
 }

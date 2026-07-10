@@ -18,6 +18,7 @@ use Shopper\Core\Contracts\StockAllocator;
 use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Contracts\TaxCalculationProvider;
 use Shopper\Core\Contracts\WebhookPayloadSerializer;
+use Shopper\Core\Import\ImportManager;
 use Shopper\Core\Listeners\DispatchWebhooksListener;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Attribute;
@@ -55,6 +56,23 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 final class CoreServiceProvider extends PackageServiceProvider
 {
     use HasRegisterConfigAndMigrationFiles;
+
+    /** @var array<class-string, class-string> */
+    public array $bindings = [
+        InventoryResolver::class => DefaultInventoryResolver::class,
+        StockAllocator::class => PriorityStockAllocator::class,
+        StockReserver::class => LockingStockReserver::class,
+    ];
+
+    /** @var array<class-string, class-string> */
+    public array $singletons = [
+        TaxCalculationProvider::class => SystemTaxProvider::class,
+        TaxCalculator::class => TaxCalculator::class,
+        PriceResolver::class => CatalogPriceResolver::class,
+        ChannelManager::class => ChannelManager::class,
+        ImportManager::class => ImportManager::class,
+        WebhookPayloadSerializer::class => DefaultWebhookPayloadSerializer::class,
+    ];
 
     /** @var string[] */
     protected array $configFiles = [
@@ -96,12 +114,6 @@ final class CoreServiceProvider extends PackageServiceProvider
 
         $this->registerConfigFiles();
         $this->registerDatabase();
-        $this->registerStockAllocator();
-        $this->registerTaxCalculator();
-        $this->registerPriceResolver();
-        $this->registerChannelManager();
-
-        $this->app->singleton(WebhookPayloadSerializer::class, DefaultWebhookPayloadSerializer::class);
     }
 
     protected function registerWebhookListener(): void
@@ -168,29 +180,6 @@ final class CoreServiceProvider extends PackageServiceProvider
         foreach ($models as $configKey => $contract) {
             $this->app->bind($contract, config("shopper.models.{$configKey}"));
         }
-    }
-
-    protected function registerStockAllocator(): void
-    {
-        $this->app->bind(InventoryResolver::class, DefaultInventoryResolver::class);
-        $this->app->bind(StockAllocator::class, PriorityStockAllocator::class);
-        $this->app->bind(StockReserver::class, LockingStockReserver::class);
-    }
-
-    protected function registerTaxCalculator(): void
-    {
-        $this->app->singleton(TaxCalculationProvider::class, SystemTaxProvider::class);
-        $this->app->singleton(TaxCalculator::class);
-    }
-
-    protected function registerPriceResolver(): void
-    {
-        $this->app->singleton(PriceResolver::class, CatalogPriceResolver::class);
-    }
-
-    protected function registerChannelManager(): void
-    {
-        $this->app->singleton(ChannelManager::class, fn (): ChannelManager => new ChannelManager);
     }
 
     protected function bootModelRelationName(): void

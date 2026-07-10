@@ -5,7 +5,7 @@
 ])
 
 <x-shopper::slideover-card>
-    <form wire:submit="{{ $action }}" class="divide-sh-border flex h-full flex-col divide-y">
+    <form wire:submit="{{ $action }}" class="flex h-full flex-col">
         <header class="p-4">
             <div class="flex items-start justify-between">
                 <h2 class="text-sh-fg text-lg font-medium">
@@ -22,10 +22,10 @@
                 </div>
             @endif
         </header>
-        <div class="h-0 flex-1 overflow-y-auto px-4 py-6">
+        <div class="h-0 flex-1 overflow-y-auto px-4 pt-2 pb-6">
             {{ $slot }}
         </div>
-        <div class="flex shrink-0 justify-end gap-3 p-4">
+        <div class="border-t border-sh-border flex shrink-0 justify-end gap-3 p-4">
             <x-filament::button
                 color="gray"
                 wire:click="$dispatch('closePanel')"

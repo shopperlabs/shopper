@@ -83,6 +83,11 @@ return [
     ],
 
     'database' => [
+        'view_products' => 'Ver productos',
+        'product_import' => [
+            'title' => 'Importación de productos finalizada',
+            'body' => ':imported productos importados, :failed fallidos.',
+        ],
         'open' => 'Abrir notificaciones',
         'view_order' => 'Ver pedido',
         'order_created' => [

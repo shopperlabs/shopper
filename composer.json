@@ -36,6 +36,7 @@
     "laravel/passkeys": "^0.2",
     "laravel/sanctum": "^4.0",
     "laravelcm/livewire-slide-overs": "^2.1",
+    "league/csv": "^9.20",
     "leandrocfe/filament-apex-charts": "^5.0",
     "livewire/blaze": "^1.0",
     "mckenziearts/filament-untitledui-icons": "^1.2",

@@ -1,0 +1,17 @@
+handle,name,description,brand,category,tags,published,sku,barcode,ean,upc,option1_name,option1_value,option2_name,option2_value,option3_name,option3_value,price,compare_at_price,cost_per_item,quantity,weight_value,weight_unit,requires_shipping,image_url,image_position,image_alt,variant_image_url,seo_title,seo_description
+graphic-t-shirt,Graphic T-Shirt,"A soft cotton t-shirt with a vintage graphic print.",Acme Apparel,Apparel & Accessories > Clothing > Clothing Tops > T-Shirts,"Unisex, Clothing, Men, Women, Casual, Vintage",TRUE,TSHIRT-S-GREEN,1234567890101,,,Size,Small,Color,green,,,19.99,24.99,11.00,47,150,g,TRUE,https://example.com/images/t-shirt-green.jpg,1,Green graphic t-shirt,,Vintage Graphic T-Shirt,A soft cotton t-shirt with a vintage graphic print.
+graphic-t-shirt,,,,,,,TSHIRT-S-GRAY,1234567890102,,,,Small,,gray,,,19.99,24.99,11.00,42,150,g,TRUE,,,,,,
+graphic-t-shirt,,,,,,,TSHIRT-S-RED,1234567890103,,,,Small,,red,,,19.99,24.99,11.00,51,150,g,TRUE,,,,,,
+graphic-t-shirt,,,,,,,TSHIRT-M-GREEN,1234567890104,,,,Medium,,green,,,19.99,24.99,11.00,40,177,g,TRUE,,,,,,
+graphic-t-shirt,,,,,,,TSHIRT-M-GRAY,1234567890105,,,,Medium,,gray,,,19.99,24.99,11.00,39,177,g,TRUE,,,,,,
+graphic-t-shirt,,,,,,,TSHIRT-M-RED,1234567890106,,,,Medium,,red,,,19.99,24.99,11.00,56,177,g,TRUE,,,,,,
+graphic-t-shirt,,,,,,,TSHIRT-L-GREEN,1234567890107,,,,Large,,green,,,19.99,24.99,11.00,50,181,g,TRUE,,,,,,
+graphic-t-shirt,,,,,,,TSHIRT-L-GRAY,1234567890108,,,,Large,,gray,,,19.99,24.99,11.00,44,181,g,TRUE,,,,,,
+graphic-t-shirt,,,,,,,TSHIRT-L-RED,1234567890109,,,,Large,,red,,,19.99,24.99,11.00,34,181,g,TRUE,,,,,,
+graphic-t-shirt,,,,,,,TSHIRT-XL-GREEN,1234567890110,,,,XL,,green,,,19.99,24.99,11.00,27,200,g,TRUE,,,,,,
+graphic-t-shirt,,,,,,,TSHIRT-XL-GRAY,1234567890111,,,,XL,,gray,,,19.99,24.99,11.00,43,200,g,TRUE,,,,,,
+graphic-t-shirt,,,,,,,TSHIRT-XL-RED,1234567890112,,,,XL,,red,,,19.99,24.99,11.00,40,200,g,TRUE,,,,,,
+music-ebook,The History of Rock Music,"An in-depth journey through the history of rock music.",Acme Publishing,Media > Books > E-Books,"Rock Music, Music History, eBook",TRUE,EBOOK-PDF,,,,Format,PDF,,,,,14.99,,4.00,,,,FALSE,,,,,The History of Rock Music eBook,An in-depth journey through the history of rock music.
+music-ebook,,,,,,,EBOOK-AUDIO,,,,,Audio,,,,,21.99,,8.00,,,,FALSE,,,,,,
+music-ebook,,,,,,,EBOOK-KINDLE,,,,,Kindle,,,,,9.99,14.99,4.00,,,,FALSE,,,,,,
+classic-perfume,Classic Perfume,"A timeless fragrance with notes of cedar and citrus.",Acme,Health & Beauty > Personal Care > Cosmetics > Perfumes & Colognes,mens perfume,FALSE,PERFUME-CLASSIC,9876543210987,,,,,,,,,74.99,80.00,,,500,g,TRUE,https://example.com/images/perfume.jpg,1,Black glass perfume bottle,,Our classic perfume,A timeless fragrance with notes of cedar and citrus.
