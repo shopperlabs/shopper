@@ -10,6 +10,7 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
@@ -30,9 +31,14 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
+use JaOcero\RadioDeck\Forms\Components\RadioDeck;
+use Livewire\Attributes\On;
+use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Events\Products\ProductDeleted;
+use Shopper\Core\Import\Contracts\ImportSource;
+use Shopper\Core\Import\ImportManager;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Feature;
@@ -88,6 +94,36 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
     public function mount(): void
     {
         $this->authorize('products.browse');
+    }
+
+    #[On('products.import.finished')]
+    public function refreshAfterImport(): void {}
+
+    public function importAction(): Action
+    {
+        $sources = resolve(ImportManager::class)->configuredSources();
+
+        return Action::make('import')
+            ->label(__('shopper::pages/products.import.action'))
+            ->color('gray')
+            ->authorize('products.create')
+            ->modalHeading(__('shopper::pages/products.import.title'))
+            ->modalDescription(__('shopper::pages/products.import.description'))
+            ->modalWidth(Width::ExtraLarge)
+            ->modalSubmitActionLabel(__('shopper::pages/products.import.next'))
+            ->schema([
+                RadioDeck::make('source')
+                    ->hiddenLabel()
+                    ->required()
+                    ->options($sources->map(fn (ImportSource $source): string => $source->name())->all())
+                    ->descriptions($sources->map(fn (ImportSource $source): string => $source->description())->all())
+                    ->icons($sources->map(fn (ImportSource $source): string => $source->icon())->all())
+                    ->alignment(Alignment::Start)
+                    ->columns(1),
+            ])
+            ->action(function (array $data, Component $livewire): void {
+                $livewire->dispatch('openPanel', 'shopper-slide-overs.import-'.$data['source']);
+            });
     }
 
     public function table(Table $table): Table

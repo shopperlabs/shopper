@@ -67,11 +67,13 @@ return [
 
     'components' => [
         'products.delete-action' => Components\Products\DeleteAction::class,
+        'products.import-progress' => Components\Products\ImportProgress::class,
         'products.variant-stock' => Components\Products\VariantStock::class,
         'products.type-configuration' => Components\Products\ProductTypeConfiguration::class,
         'products.pricing' => Components\Products\Pricing::class,
 
         'slide-overs.add-product' => Livewire\SlideOvers\AddProduct::class,
+        'slide-overs.import-csv' => Livewire\SlideOvers\ImportCsv::class,
         'slide-overs.add-variant' => Livewire\SlideOvers\AddVariant::class,
         'slide-overs.update-variant' => Livewire\SlideOvers\UpdateVariant::class,
         'slide-overs.generate-variants' => Livewire\SlideOvers\GenerateVariants::class,

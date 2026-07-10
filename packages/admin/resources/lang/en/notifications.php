@@ -89,6 +89,11 @@ return [
     ],
 
     'database' => [
+        'view_products' => 'View products',
+        'product_import' => [
+            'title' => 'Product import finished',
+            'body' => ':imported products imported, :failed failed.',
+        ],
         'open' => 'Open notifications',
         'view_order' => 'View order',
         'order_created' => [

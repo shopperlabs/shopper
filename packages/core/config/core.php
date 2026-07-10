@@ -32,4 +32,18 @@ return [
 
     'barcode_type' => 'C128',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Product Import
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define how many products are processed per queued job
+    | when importing products from a CSV file or an external platform.
+    |
+    */
+
+    'import' => [
+        'chunk_size' => 25,
+    ],
+
 ];
