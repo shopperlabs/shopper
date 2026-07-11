@@ -15,8 +15,6 @@
         </x-slot>
     </x-shopper::heading>
 
-    <livewire:shopper-products.import-progress />
-
     {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::INDEX_TABLE_BEFORE) }}
 
     <div class="mt-10">

@@ -22,6 +22,7 @@ final readonly class VariantRow
         public ?float $weightValue = null,
         public ?string $weightUnit = null,
         public bool $requiresShipping = true,
+        public bool $allowBackorder = false,
         public ?string $imageUrl = null,
     ) {}
 
