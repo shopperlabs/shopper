@@ -163,6 +163,7 @@ final class ProductRowImporter
         $product->update([
             'sku' => $variant->sku,
             'barcode' => $variant->barcode,
+            'allow_backorder' => $variant->allowBackorder,
             ...$this->weightData($variant),
         ]);
 
@@ -189,6 +190,7 @@ final class ProductRowImporter
             'barcode' => $row->barcode,
             'ean' => $row->ean,
             'upc' => $row->upc,
+            'allow_backorder' => $row->allowBackorder,
             ...$this->weightData($row),
         ];
 
