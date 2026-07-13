@@ -88,12 +88,27 @@ describe(User::class, function (): void {
 
     it('scopes customers correctly', function (): void {
         $customerRole = Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.user')]);
+        $adminRole = Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.admin')]);
+        $managerRole = Role::query()->firstOrCreate(['name' => config('shopper.admin.roles.manager')]);
+
         $customers = User::factory()->count(3)->create();
         $customers->each(fn ($user) => $user->assignRole($customerRole));
 
         User::factory()->count(2)->create();
 
-        expect(User::customers()->count())->toBe(3);
+        $admin = User::factory()->create();
+        $admin->assignRole($adminRole);
+
+        $manager = User::factory()->create();
+        $manager->assignRole($managerRole);
+
+        $buyingAdmin = User::factory()->create();
+        $buyingAdmin->assignRole($adminRole);
+        $buyingAdmin->assignRole($customerRole);
+
+        expect(User::customers()->count())->toBe(6)
+            ->and(User::customers()->whereKey($admin->id)->exists())->toBeFalse()
+            ->and(User::customers()->whereKey($buyingAdmin->id)->exists())->toBeTrue();
     });
 
     it('scopes administrators correctly', function (): void {

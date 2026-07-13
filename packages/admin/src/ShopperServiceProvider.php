@@ -31,6 +31,7 @@ use Shopper\Concerns\TwoFactorAuthenticationProvider;
 use Shopper\Contracts\LoginResponse as LoginResponseContract;
 use Shopper\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 use Shopper\Core\Enum\DiscountEligibility;
+use Shopper\Core\Events\Orders\OrderCreated;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Shopper\Discounts\DiscountEligibilityFieldRegistry;
 use Shopper\Facades\Shopper;
@@ -38,6 +39,7 @@ use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Middleware\DispatchShopper;
 use Shopper\Http\Middleware\SetLocale;
 use Shopper\Http\Responses\LoginResponse;
+use Shopper\Listeners\EnsureCustomerRole;
 use Shopper\Livewire\Components;
 use Shopper\Livewire\Pages;
 use Shopper\Navigation\Product\ProductSectionManager;
@@ -126,6 +128,8 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
         $this->app->register(SidebarServiceProvider::class);
         $this->app->register(ComponentsServiceProvider::class);
+
+        $this->app['events']->listen(OrderCreated::class, EnsureCustomerRole::class);
 
         if (config('shopper.admin.notifications.database.enabled')) {
             $this->app->register(EventServiceProvider::class);
