@@ -18,6 +18,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
+    $this->user->assignRole(config('shopper.admin.roles.admin'));
     $this->user->givePermissionTo('customers.read');
     $this->actingAs($this->user);
 });
@@ -49,8 +50,9 @@ describe(Show::class, function (): void {
             ->assertForbidden();
     });
 
-    it('aborts when target user is not a customer', function (): void {
+    it('aborts when target user is an administrator', function (): void {
         $admin = User::factory()->create();
+        $admin->assignRole(config('shopper.admin.roles.admin'));
 
         Livewire::test(Show::class, ['user' => $admin->id]);
     })->throws(ModelNotFoundException::class);
@@ -217,8 +219,9 @@ describe(Show::class, function (): void {
             ->assertRedirect(route('shopper.customers.show', ['user' => $other->id]));
     });
 
-    it('aborts goToCustomer when target id is not a customer', function (): void {
+    it('aborts goToCustomer when target id is an administrator', function (): void {
         $admin = User::factory()->create();
+        $admin->assignRole(config('shopper.admin.roles.admin'));
         $current = makeCustomer();
 
         Livewire::test(Show::class, ['user' => $current->id])

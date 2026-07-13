@@ -13,6 +13,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
+    $this->user->assignRole(config('shopper.admin.roles.admin'));
     $this->user->givePermissionTo('customers.browse');
     $this->actingAs($this->user);
 });
@@ -51,7 +52,7 @@ describe(Index::class, function (): void {
         ]);
     });
 
-    it('counts only users that hold the customer role', function (): void {
+    it('counts users that are not administrators', function (): void {
         $customer = User::factory()->create();
         $customer->assignRole(config('shopper.admin.roles.user'));
 

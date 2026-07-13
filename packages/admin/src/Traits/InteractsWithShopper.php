@@ -90,8 +90,15 @@ trait InteractsWithShopper
      */
     public function scopeCustomers(Builder $query): Builder
     {
-        return $query->whereHas('roles', function (Builder $query): void {
-            $query->where('name', config('shopper.admin.roles.user'));
+        return $query->where(function (Builder $query): void {
+            $query->whereDoesntHave('roles', function (Builder $query): void {
+                $query->whereIn('name', [
+                    config('shopper.admin.roles.admin'),
+                    config('shopper.admin.roles.manager'),
+                ]);
+            })->orWhereHas('roles', function (Builder $query): void {
+                $query->where('name', config('shopper.admin.roles.user'));
+            });
         });
     }
 
