@@ -1,0 +1,45 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+
+    'title' => 'Användarroller & behörighetshantering',
+    'header_title' => 'Administratörer & roller',
+    'role_available' => 'Tillgängliga administratörsroller',
+    'role_available_summary' => 'En roll ger tillgång till fördefinierade menyer och funktioner så att administratören, beroende på tilldelad roll och behörigheter, har tillgång till vad som behövs.',
+    'new_role' => 'Lägg till ny roll',
+    'admin_accounts' => 'Administratörskonton',
+    'admin_accounts_summary' => 'Dessa är medlemmarna som redan finns i butiken med sina associerade roller. Du kan tilldela nya roller till befintliga medlemmar här.',
+    'add_admin' => 'Lägg till administratör',
+    'users_role' => 'Användare & roller',
+    'login_information' => 'Inloggningsinformation',
+    'login_information_summary' => 'Denna information kommer att vara användbar för administratören att ansluta till Shopper.',
+    'send_invite' => 'Skicka inbjudan',
+    'send_invite_summary' => 'Skicka en inbjudan till denna administratör via e-post med inloggningsuppgifterna.',
+    'personal_information' => 'Personlig information',
+    'personal_information_summary' => 'Information relaterad till administratörsprofilen.',
+    'role_information' => 'Rollinformation',
+    'role_information_summary' => 'Tilldela roller till denna administratör för att begränsa vilka åtgärder som kan utföras.',
+    'roles' => 'Roller',
+    'role' => 'Roll',
+    'permission' => 'Behörighet',
+    'permissions' => 'Behörigheter',
+    'choose_role' => 'Välj en roll för denna administratör',
+    'create_permission' => 'Skapa behörighet',
+    'generate_permissions' => 'Generera behörigheter',
+    'generate_permissions_description' => 'Ange ett resursnamn för att automatiskt generera de 5 standard-CRUD-behörigheterna och tilldela them till denna roll.',
+    'resource_name' => 'Resursnamn',
+    'permissions_preview' => 'Behörigheter som kommer att skapas',
+    'role_alert_msg' => 'Du håller på att uppdatera administratörsrollen, detta skulle kunna blockera din tillgång till instrumentpanelen.',
+    'with_role_name' => 'med rollen :name',
+    'permissions_in_role' => 'i rollen :name',
+    'custom_permission' => 'Anpassad behörighet',
+    'delete_team_member' => 'Är du säker på att du vill ta bort den här medlemmen?',
+    'joined' => 'Gick med',
+    'last_signed_in' => 'Senast inloggad',
+    'copy_user_id' => 'Kopiera användar-ID',
+    'view_profile' => 'Visa profil',
+    'delete_user' => 'Ta bort användare',
+
+];
