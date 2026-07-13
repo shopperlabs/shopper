@@ -15,7 +15,7 @@ return [
     'providers_description' => 'Lägg till de leverans- och betalsätt som ska vara tillgängliga i detta område.',
     'currency_help' => 'Huvudvalutan för denna zon, från listan över valutor som konfigurerats när butiken skapades.',
     'empty_detail_heading' => 'Ingen zon vald',
-    'empty_detail_description' => "När en zon har valts kommer all dess information att vara tillgänglig här",
+    'empty_detail_description' => 'När en zon har valts kommer all dess information att vara tillgänglig här',
 
     'shipping_options' => [
         'title' => 'Fraktalternativ',

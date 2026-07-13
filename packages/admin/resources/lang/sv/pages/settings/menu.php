@@ -17,7 +17,7 @@ return [
     'payment' => 'Betalsätt',
     'payment_description' => 'Lägg till olika betalsätt för kunder.',
     'legal' => 'Rättsligt',
-    'legal_description' => "Hantera butikens rättsliga sidor, såsom integritetspolicy och villkor.",
+    'legal_description' => 'Hantera butikens rättsliga sidor, såsom integritetspolicy och villkor.',
     'carrier' => 'Transportörer',
     'carrier_description' => 'Hantera frakttransportörer och leverantörer.',
     'zone' => 'Zoner',

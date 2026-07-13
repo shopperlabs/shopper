@@ -17,7 +17,7 @@ return [
 
     'expedition_to' => 'Leverans till',
     'create_shipping_label' => 'Skapa fraktsedel',
-    'no_shipping_method' => "Denna order saknar fraktsätt",
+    'no_shipping_method' => 'Denna order saknar fraktsätt',
     'read_about_shipping' => 'Läs mer om frakt',
     'no_shipments' => 'Inga leveranser registrerade ännu.',
     'shipments' => 'Leveranser',
@@ -30,7 +30,7 @@ return [
     'all_items_fulfilled' => 'Alla artiklar har levererats.',
     'carrier_service' => 'Transportörstjänst',
     'shipping_address' => 'Leveransadress',
-    'no_payment_method' => "Denna order saknar betalsätt",
+    'no_payment_method' => 'Denna order saknar betalsätt',
     'read_about_payment' => 'Läs mer om betalsätt',
     'payment_details' => 'Betalningsuppgifter',
     'shipping_type' => 'Frakttyp',
