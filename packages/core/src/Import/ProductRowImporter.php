@@ -19,10 +19,14 @@ use Shopper\Core\Models\Contracts\Category as CategoryContract;
 use Shopper\Core\Models\Contracts\Inventory as InventoryContract;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
+use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\ProductTag;
 
 final class ProductRowImporter
 {
+    /** @var array<string, int> */
+    private array $currencyIds = [];
+
     /**
      * @return Model&ProductContract
      */
@@ -248,11 +252,8 @@ final class ProductRowImporter
             return;
         }
 
-        /** @var int $currencyId */
-        $currencyId = shopper_setting('default_currency_id');
-
         $model->prices()->updateOrCreate(
-            ['currency_id' => $currencyId],
+            ['currency_id' => $this->resolveCurrencyId($row->currency)],
             [
                 'amount' => $this->toCents($row->price),
                 'compare_amount' => $this->toCents($row->compareAtPrice),
@@ -293,6 +294,31 @@ final class ProductRowImporter
             'weight_value' => $row->weightValue,
             'weight_unit' => Weight::tryFrom(mb_strtolower((string) $row->weightUnit)) ?? Weight::G,
         ];
+    }
+
+    private function resolveCurrencyId(?string $code): int
+    {
+        if ($code === null) {
+            return (int) shopper_setting('default_currency_id');
+        }
+
+        $code = mb_strtoupper($code);
+
+        if (isset($this->currencyIds[$code])) {
+            return $this->currencyIds[$code];
+        }
+
+        /** @var Currency|null $currency */
+        $currency = Currency::query()
+            ->whereIn('id', shopper_setting('currencies') ?? [])
+            ->where('code', $code)
+            ->first();
+
+        if ($currency === null) {
+            throw new ProductImportException("Currency [{$code}] is not enabled on this store.");
+        }
+
+        return $this->currencyIds[$code] = $currency->id;
     }
 
     private function toCents(?float $amount): ?int

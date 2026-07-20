@@ -18,6 +18,7 @@ final readonly class VariantRow
         public ?float $price = null,
         public ?float $compareAtPrice = null,
         public ?float $costPerItem = null,
+        public ?string $currency = null,
         public int $quantity = 0,
         public ?float $weightValue = null,
         public ?string $weightUnit = null,

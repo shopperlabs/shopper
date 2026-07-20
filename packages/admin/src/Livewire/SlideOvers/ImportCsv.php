@@ -56,6 +56,7 @@ class ImportCsv extends SlideOverComponent implements HasActions, HasSchemas
         'price',
         'compare_at_price',
         'cost_per_item',
+        'currency',
         'quantity',
         'weight_value',
         'weight_unit',

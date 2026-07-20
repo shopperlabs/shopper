@@ -70,6 +70,20 @@ describe(CsvSource::class, function (): void {
             ->and($product->images[1]->url)->toBe('https://example.com/b.jpg');
     });
 
+    it('reads the currency attached to a price row', function (): void {
+        $path = tempnam(sys_get_temp_dir(), 'import');
+        file_put_contents($path, implode("\n", [
+            'handle,name,price,currency',
+            'mug,Mug,12.50,EUR',
+            'bowl,Bowl,9.90,',
+        ]));
+
+        $products = (new CsvSource)->read($path)->all();
+
+        expect($products[0]->variants[0]->currency)->toBe('EUR')
+            ->and($products[1]->variants[0]->currency)->toBeNull();
+    });
+
     it('lists the file headers', function (): void {
         $headers = (new CsvSource)->headers(__DIR__.'/fixtures/products.csv');
 

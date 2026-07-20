@@ -227,6 +227,7 @@ return [
             'price' => 'Fiyat',
             'compare_at_price' => 'Karşılaştırma fiyatı',
             'cost_per_item' => 'Ürün başına maliyet',
+            'currency' => 'Para birimi',
             'quantity' => 'Miktar',
             'weight_value' => 'Ağırlık',
             'weight_unit' => 'Ağırlık birimi',

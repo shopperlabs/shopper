@@ -227,6 +227,7 @@ return [
             'price' => 'Pris',
             'compare_at_price' => 'Ordinarie pris',
             'cost_per_item' => 'Kostnad per produkt',
+            'currency' => 'Valuta',
             'quantity' => 'Antal',
             'weight_value' => 'Vikt',
             'weight_unit' => 'Viktenhet',
