@@ -9,10 +9,12 @@ use Shopper\Core\Exceptions\ProductImportException;
 use Shopper\Core\Import\ProductRow;
 use Shopper\Core\Import\ProductRowImporter;
 use Shopper\Core\Import\Sources\CsvSource;
+use Shopper\Core\Import\VariantRow;
 use Shopper\Core\Jobs\DownloadProductImageJob;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
+use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Product;
 
@@ -112,4 +114,40 @@ describe(ProductRowImporter::class, function (): void {
             name: '',
         ));
     })->throws(ProductImportException::class);
+
+    it('stores the price on the currency given in the file', function (): void {
+        setupCurrencies(['USD', 'EUR']);
+
+        $this->importer->import(new ProductRow(
+            handle: 'euro-lamp',
+            name: 'Euro Lamp',
+            variants: [new VariantRow(price: 49.99, currency: 'eur')],
+        ));
+
+        $price = Product::findBySlug('euro-lamp')->prices()->firstOrFail();
+        $euro = Currency::query()->where('code', 'EUR')->firstOrFail();
+
+        expect($price->currency_id)->toBe($euro->id)
+            ->and($price->amount)->toBe(4999);
+    });
+
+    it('falls back to the default store currency when the file has none', function (): void {
+        $this->importer->import(new ProductRow(
+            handle: 'plain-lamp',
+            name: 'Plain Lamp',
+            variants: [new VariantRow(price: 19.99)],
+        ));
+
+        $price = Product::findBySlug('plain-lamp')->prices()->firstOrFail();
+
+        expect($price->currency_id)->toBe((int) shopper_setting('default_currency_id'));
+    });
+
+    it('rejects a price whose currency is not enabled on the store', function (): void {
+        $this->importer->import(new ProductRow(
+            handle: 'yen-lamp',
+            name: 'Yen Lamp',
+            variants: [new VariantRow(price: 4900, currency: 'JPY')],
+        ));
+    })->throws(ProductImportException::class, 'Currency [JPY] is not enabled on this store.');
 });

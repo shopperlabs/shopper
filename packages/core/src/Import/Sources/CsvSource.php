@@ -198,6 +198,7 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
             price: $this->float($row, 'price'),
             compareAtPrice: $this->float($row, 'compare_at_price'),
             costPerItem: $this->float($row, 'cost_per_item'),
+            currency: $this->value($row, 'currency'),
             quantity: (int) ($this->value($row, 'quantity') ?? 0),
             weightValue: $this->float($row, 'weight_value'),
             weightUnit: $this->value($row, 'weight_unit'),

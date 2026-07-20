@@ -227,6 +227,7 @@ return [
             'price' => 'Precio',
             'compare_at_price' => 'Precio de comparación',
             'cost_per_item' => 'Costo por artículo',
+            'currency' => 'Moneda',
             'quantity' => 'Cantidad',
             'weight_value' => 'Peso',
             'weight_unit' => 'Unidad de peso',
