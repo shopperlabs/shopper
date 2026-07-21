@@ -1,0 +1,29 @@
+name: 'Shopper Livewire Starter Kit'
+description: 'A Livewire-powered storefront with reactive components for Shopper.'
+version: 1.0.0
+author: shopperlabs
+url: 'https://github.com/shopperlabs/livewire-starter-kit'
+
+shopper: ^2.9
+php: ^8.3
+laravel: '^11.48|^12.0'
+
+dependencies:
+  livewire/flux: ^2.9.0
+  livewire/volt: ^1.7.0
+  shopper/stripe: ^2.9
+
+dev_dependencies:
+  laravel/boost: ^2.4
+
+export_paths:
+  - app/Livewire
+  - app/Models
+  - resources/views
+  - resources/css
+  - routes/web.php
+  - tests
+
+post_install:
+  - php artisan migrate
+  - php artisan storage:link

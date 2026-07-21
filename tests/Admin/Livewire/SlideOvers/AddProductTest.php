@@ -10,6 +10,7 @@ use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\Setting;
 use Shopper\Livewire\SlideOvers\AddProduct;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\User;
@@ -26,6 +27,16 @@ beforeEach(function (): void {
 });
 
 describe(AddProduct::class, function (): void {
+    it('mounts when a default product type is stored in settings', function (): void {
+        Setting::factory()->create([
+            'key' => 'default_product_type',
+            'value' => ProductType::Standard->value,
+        ]);
+
+        Livewire::test(AddProduct::class)
+            ->assertSuccessful();
+    });
+
     it('create a new product', function (): void {
         Livewire::test(AddProduct::class)
             ->fillForm([
