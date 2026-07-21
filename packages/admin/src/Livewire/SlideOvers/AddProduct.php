@@ -108,7 +108,7 @@ class AddProduct extends SlideOverComponent implements HasActions, HasSchemas
                                 ->live()
                                 ->required(),
                             Livewire::make(ProductTypeConfiguration::class, fn (Get $get): array => [
-                                'defaultProductType' => $get('type'),
+                                'defaultProductType' => ProductType::tryFrom((string) $get('type')),
                             ]),
                         ]),
                     StepColumn::make(__('shopper::words.general'))
