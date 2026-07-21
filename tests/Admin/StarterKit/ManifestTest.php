@@ -142,14 +142,17 @@ it('parses dependencies in list-of-mappings format', function (): void {
     ]);
 });
 
-it('parses a starter kit manifest from a file', function (): void {
-    $manifest = Manifest::fromPath(__DIR__.'/fixtures/livewire-starter-kit.yaml');
+it('parses a full manifest file from disk', function (): void {
+    $manifest = Manifest::fromPath(__DIR__.'/fixtures/shopper-kit.yaml');
 
     expect($manifest)
         ->name->toBe('Shopper Livewire Starter Kit')
         ->author->toBe('shopperlabs')
-        ->dependencies->toHaveKey('livewire/livewire')
-        ->exportPaths->toContain('resources/views');
+        ->shopperConstraint->toBe('^3.0')
+        ->dependencies->toHaveKeys(['livewire/livewire', 'livewire/flux', 'shopper/stripe'])
+        ->devDependencies->toHaveKey('pestphp/pest')
+        ->exportPaths->toContain('resources/views')
+        ->postInstall->toContain('php artisan migrate');
 });
 
 it('ignores non-string dependency entries', function (): void {
