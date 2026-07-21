@@ -21,8 +21,6 @@ class IconPicker extends Select
 {
     use CanBeCacheable;
 
-    protected string $view = 'shopper::filament.form.icon-picker';
-
     protected array|Closure|null $sets = null;
 
     protected array|Closure|null $allowedIcons = null;

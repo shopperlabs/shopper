@@ -142,20 +142,17 @@ it('parses dependencies in list-of-mappings format', function (): void {
     ]);
 });
 
-it('parses the real livewire starter kit manifest', function (): void {
-    $manifestPath = '/Users/chretiendev/Sites/OSS/shopperlabs/starters/packages/livewire-starter-kit/shopper-kit.yaml';
-
-    if (! file_exists($manifestPath)) {
-        $this->markTestSkipped('Livewire starter kit not available locally.');
-    }
-
-    $manifest = Manifest::fromPath($manifestPath);
+it('parses a full manifest file from disk', function (): void {
+    $manifest = Manifest::fromPath(__DIR__.'/fixtures/shopper-kit.yaml');
 
     expect($manifest)
         ->name->toBe('Shopper Livewire Starter Kit')
         ->author->toBe('shopperlabs')
-        ->dependencies->toHaveKey('livewire/livewire')
-        ->exportPaths->toContain('resources/views');
+        ->shopperConstraint->toBe('^2.9')
+        ->dependencies->toHaveKeys(['livewire/flux', 'livewire/volt', 'shopper/stripe'])
+        ->devDependencies->toHaveKey('laravel/boost')
+        ->exportPaths->toContain('resources/views')
+        ->postInstall->toContain('php artisan migrate');
 });
 
 it('ignores non-string dependency entries', function (): void {
