@@ -78,6 +78,7 @@ final class CoreServiceProvider extends PackageServiceProvider
     protected array $configFiles = [
         'core',
         'orders',
+        'search',
         'webhooks',
     ];
 
@@ -106,6 +107,7 @@ final class CoreServiceProvider extends PackageServiceProvider
         $this->registerObservers();
         $this->scheduleCommands();
         $this->registerWebhookListener();
+        $this->registerCustomerIndexer();
     }
 
     public function packageRegistered(): void
@@ -126,6 +128,15 @@ final class CoreServiceProvider extends PackageServiceProvider
                 $this->app['events']->listen(array_keys($events), DispatchWebhooksListener::class);
             }
         });
+    }
+
+    protected function registerCustomerIndexer(): void
+    {
+        $userModel = (string) config('auth.providers.users.model');
+
+        if ($userModel !== '' && blank(config('shopper.search.indexers.'.$userModel))) {
+            config(['shopper.search.indexers.'.$userModel => Search\CustomerIndexer::class]);
+        }
     }
 
     protected function scheduleCommands(): void

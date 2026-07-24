@@ -17,6 +17,7 @@ use Shopper\Core\Models\Contracts\Category as CategoryContract;
 use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
+use Shopper\Core\Models\Traits\Searchable;
 use Shopper\Core\Traits\HasModelContract;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
@@ -48,6 +49,7 @@ class Category extends Model implements CategoryContract, ShopperHasMedia
     use HasPublicId;
     use HasRecursiveRelationships;
     use HasSlug;
+    use Searchable;
 
     protected $guarded = [];
 

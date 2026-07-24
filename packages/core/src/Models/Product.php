@@ -34,6 +34,7 @@ use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasStock;
 use Shopper\Core\Models\Traits\InteractsWithReviews;
+use Shopper\Core\Models\Traits\Searchable;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
@@ -100,6 +101,7 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
     use HasSlug;
     use HasStock;
     use InteractsWithReviews;
+    use Searchable;
     use SoftDeletes;
 
     protected $guarded = [];
@@ -342,7 +344,7 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
      * @param  Builder<Product>  $query
      */
     #[Scope]
-    protected function search(Builder $query, string $term): void
+    protected function matching(Builder $query, string $term): void
     {
         $term = '%'.mb_strtolower($term).'%';
 

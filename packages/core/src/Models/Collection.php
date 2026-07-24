@@ -19,6 +19,7 @@ use Shopper\Core\Models\Contracts\Collection as CollectionContract;
 use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
+use Shopper\Core\Models\Traits\Searchable;
 use Shopper\Core\Queries\CollectionProductsQuery;
 use Shopper\Core\Traits\HasModelContract;
 
@@ -50,6 +51,7 @@ class Collection extends Model implements CollectionContract, ShopperHasMedia
     use HasModelContract;
     use HasPublicId;
     use HasSlug;
+    use Searchable;
 
     protected $guarded = [];
 
