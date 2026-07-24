@@ -21,9 +21,9 @@ class CustomerIndexer extends ScoutIndexer
     {
         return [
             'id' => (string) $model->getKey(),
-            'name' => mb_trim(implode(' ', array_filter([$model->first_name, $model->last_name]))) ?: null,
-            'email' => $model->email,
-            'created_at' => $model->created_at->getTimestamp(),
+            'name' => mb_trim(implode(' ', array_filter([$model->getAttribute('first_name'), $model->getAttribute('last_name')]))) ?: null,
+            'email' => $model->getAttribute('email'),
+            'created_at' => $model->getAttribute('created_at')?->getTimestamp(),
         ];
     }
 }

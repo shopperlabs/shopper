@@ -61,7 +61,7 @@ use Shopper\Core\Traits\HasPaymentStatusTransitions;
  * @property-read ?Zone $zone
  * @property-read ?Channel $channel
  * @property-read ?static $parent
- * @property-read Model $customer
+ * @property-read ?Model $customer
  * @property-read Collection<int, OrderItem> $items
  * @property-read Collection<int, OrderPromotion> $promotions
  * @property-read Collection<int, OrderShipping> $shippings

@@ -12,7 +12,7 @@ class CollectionIndexer extends ScoutIndexer
     public function shouldBeSearchable(Model $model): bool
     {
         /** @var Collection $model */
-        return $model->published_at !== null && $model->published_at->isPast();
+        return $model->published_at->isPast();
     }
 
     /**
@@ -34,7 +34,7 @@ class CollectionIndexer extends ScoutIndexer
             'name' => $model->name,
             'slug' => $model->slug,
             'description' => strip_tags((string) $model->description) ?: null,
-            'published_at' => $model->published_at?->getTimestamp(),
+            'published_at' => $model->published_at->getTimestamp(),
             'created_at' => $model->created_at->getTimestamp(),
         ];
     }

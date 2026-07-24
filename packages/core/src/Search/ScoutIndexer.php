@@ -77,8 +77,8 @@ class ScoutIndexer
             ['id' => (string) $model->getKey()],
             $model->toArray(),
             array_filter([
-                'created_at' => $model->created_at?->getTimestamp(),
-                'updated_at' => $model->updated_at?->getTimestamp(),
+                'created_at' => $model->getAttribute('created_at')?->getTimestamp(),
+                'updated_at' => $model->getAttribute('updated_at')?->getTimestamp(),
             ]),
         );
     }

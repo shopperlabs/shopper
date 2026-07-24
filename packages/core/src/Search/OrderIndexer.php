@@ -54,7 +54,7 @@ class OrderIndexer extends ScoutIndexer
             'number' => $model->number,
             'email' => $model->email,
             'status' => $model->status->value,
-            'customer' => $model->customer?->full_name,
+            'customer' => $model->customer?->getAttribute('full_name'),
             'total' => $model->price_amount,
             'currency_code' => $model->currency_code,
             'created_at' => $model->created_at->getTimestamp(),

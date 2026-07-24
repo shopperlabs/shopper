@@ -74,7 +74,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?CarbonInterface $deleted_at
  * @property-read int $stock
  * @property-read ?Supplier $supplier
- * @property-read Brand $brand
+ * @property-read ?Brand $brand
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Channel> $channels
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $categories
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Attribute> $options
