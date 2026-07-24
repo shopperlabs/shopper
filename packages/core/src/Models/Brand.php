@@ -16,6 +16,7 @@ use Shopper\Core\Models\Contracts\Brand as BrandContract;
 use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
+use Shopper\Core\Models\Traits\Searchable;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
@@ -43,6 +44,7 @@ class Brand extends Model implements BrandContract, ShopperHasMedia
     use HasModelContract;
     use HasPublicId;
     use HasSlug;
+    use Searchable;
 
     protected $guarded = [];
 

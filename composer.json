@@ -35,6 +35,7 @@
     "laravel/framework": "^12.0|^13.0",
     "laravel/passkeys": "^0.2",
     "laravel/sanctum": "^4.0",
+    "laravel/scout": "^10.13",
     "laravelcm/livewire-slide-overs": "^2.1",
     "league/csv": "^9.20",
     "leandrocfe/filament-apex-charts": "^5.0",

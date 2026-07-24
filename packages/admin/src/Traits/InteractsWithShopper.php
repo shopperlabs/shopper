@@ -13,6 +13,7 @@ use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\Traits\HasDiscounts;
 use Shopper\Core\Models\Traits\HasPublicId;
+use Shopper\Core\Models\Traits\Searchable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -26,6 +27,7 @@ trait InteractsWithShopper
     use HasProfilePhoto;
     use HasPublicId;
     use HasRoles;
+    use Searchable;
 
     public static function bootInteractsWithShopper(): void
     {

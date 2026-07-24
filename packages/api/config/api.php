@@ -35,7 +35,7 @@ return [
             'filters' => [
                 'name' => 'partial',
                 'sku' => 'exact',
-                'q' => ['scope', 'search'],
+                'q' => ['scope', 'matching'],
                 'category' => 'scope',
                 'collection' => ['scope', 'collection'],
                 'brand' => ['scope', 'byBrand'],

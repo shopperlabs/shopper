@@ -20,6 +20,7 @@ use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Traits\HasPublicId;
+use Shopper\Core\Models\Traits\Searchable;
 use Shopper\Core\Traits\HasModelContract;
 use Shopper\Core\Traits\HasOrderStatusTransitions;
 use Shopper\Core\Traits\HasPaymentStatusTransitions;
@@ -60,7 +61,7 @@ use Shopper\Core\Traits\HasPaymentStatusTransitions;
  * @property-read ?Zone $zone
  * @property-read ?Channel $channel
  * @property-read ?static $parent
- * @property-read Model $customer
+ * @property-read ?Model $customer
  * @property-read Collection<int, OrderItem> $items
  * @property-read Collection<int, OrderPromotion> $promotions
  * @property-read Collection<int, OrderShipping> $shippings
@@ -75,6 +76,7 @@ class Order extends Model implements OrderContract
     use HasOrderStatusTransitions;
     use HasPaymentStatusTransitions;
     use HasPublicId;
+    use Searchable;
     use SoftDeletes;
 
     protected $guarded = [];
