@@ -51,7 +51,7 @@ export default class Shopper {
 export type { ShopperConfig, TokenStorage } from './client'
 export { AuthModule } from './auth'
 export type { RegisterPayload, LoginPayload, ResetPasswordPayload } from './auth'
-export { StoreModule, CustomerModule, CartModule, type Paginated } from './store'
+export { StoreModule, CustomerModule, CartModule, SingletonResource, type Paginated } from './store'
 export type {
   CreateCartPayload,
   CreateCartLinePayload,
