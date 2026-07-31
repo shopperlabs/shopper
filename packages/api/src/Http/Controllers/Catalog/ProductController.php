@@ -9,6 +9,7 @@ use Shopper\Api\Concerns\BuildsApiQueries;
 use Shopper\Api\Concerns\HandlesPriceQueries;
 use Shopper\Api\Concerns\LoadsPriceRange;
 use Shopper\Api\Concerns\LoadsStock;
+use Shopper\Api\Concerns\ResolvesChannel;
 use Shopper\Api\Concerns\ResolvesCurrency;
 use Shopper\Api\Http\Includes\RatingAggregate;
 use Shopper\Api\Http\Resources\ProductResource;
@@ -22,6 +23,7 @@ final class ProductController
     use HandlesPriceQueries;
     use LoadsPriceRange;
     use LoadsStock;
+    use ResolvesChannel;
     use ResolvesCurrency;
 
     public function index(): JsonApiResourceCollection
@@ -37,6 +39,8 @@ final class ProductController
         $query = $this->withMediaIfSupported(
             resolve(Product::class)::query()->publish()->with('prices.currency')
         );
+
+        $this->applyChannelScope($query);
 
         if ($currency !== null && $this->wantsPriceQuery()) {
             $this->applyPriceAggregate($query, $currency->id);
@@ -64,6 +68,9 @@ final class ProductController
         )
             ->with($this->requestedIncludeLoads('product'))
             ->where('slug', $slug);
+
+        $this->applyChannelScope($query);
+        $this->withPublicProducts($query, 'relatedProducts');
 
         if ($this->requestedIncludes()->contains('rating')) {
             (new RatingAggregate)($query, 'rating');

@@ -37,6 +37,15 @@ export default class Shopper {
   public getLocale(): string | null {
     return this.client.getLocale()
   }
+
+  /** Switch the sales channel of subsequent calls; null reverts to the unfiltered catalog. */
+  public setChannel(channel: string | null): void {
+    this.client.setChannel(channel)
+  }
+
+  public getChannel(): string | null {
+    return this.client.getChannel()
+  }
 }
 
 export type { ShopperConfig, TokenStorage } from './client'
