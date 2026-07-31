@@ -51,7 +51,8 @@ export type {
   ShippingOptionList,
 } from './store'
 export { ShopperApiError, buildQuery } from './http'
-export type { RequestParams, FetchOptions, FetchRequestOptions } from './http'
+export type { RequestParams, FetchOptions, FetchRequestOptions, FetchInit } from './http'
+export type * from '@shopperlabs/shopper-types'
 export { flatten } from './json-api'
 export type {
   JsonApiDocument,

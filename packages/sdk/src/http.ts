@@ -26,6 +26,23 @@ export interface FetchRequestOptions extends FetchOptions {
   body?: Record<string, unknown> | FormData
 }
 
+/**
+ * Per-request options forwarded to the underlying fetch call: standard
+ * RequestInit fields (cache, signal, ...) plus the Next.js extensions so a
+ * server component can tag or revalidate a single call:
+ *
+ * ```ts
+ * await sdk.store.product.list({ page: { size: 12 } }, { next: { tags: ['products'] } })
+ * ```
+ *
+ * Method, body and the JSON:API headers stay managed by the client; `headers`
+ * given here are merged last and win over the client-level ones.
+ */
+export type FetchInit = Omit<RequestInit, 'method' | 'body' | 'headers'> & {
+  headers?: Record<string, string>
+  next?: { revalidate?: number | false; tags?: string[] }
+}
+
 export function buildQuery(options?: FetchOptions): string {
   if (! options) {
     return ''
