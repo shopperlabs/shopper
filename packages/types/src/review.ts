@@ -2,7 +2,7 @@ import type { Entity } from './common'
 
 /**
  * A product review as the store API exposes it: approved reviews only, the
- * author reduced to a display name.
+ * author reduced to a public-safe display identity.
  */
 export interface Review extends Entity {
   /** The title of the review. */
@@ -13,8 +13,20 @@ export interface Review extends Entity {
   rating: number
   /** Whether the reviewer recommends the product. */
   is_recommended: boolean
-  /** Display name of the reviewer (first name and last initial). */
-  author_name: string | null
+  /** The reviewer's public identity, null when the account no longer exists. */
+  author: ReviewAuthor | null
+}
+
+/**
+ * The reviewer as shown next to a review. The avatar is only present when
+ * one was uploaded; build the fallback (initials, generated image) from
+ * `name` on the storefront.
+ */
+export interface ReviewAuthor {
+  /** Display name (first name and last initial). */
+  name: string | null
+  /** URL of the uploaded avatar, null when none was uploaded. */
+  avatar: string | null
 }
 
 /**

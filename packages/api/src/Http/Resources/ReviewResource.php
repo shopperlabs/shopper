@@ -24,18 +24,21 @@ final class ReviewResource extends JsonApiResource
             'content' => $this->content,
             'rating' => $this->rating,
             'is_recommended' => $this->is_recommended,
-            'author_name' => $this->authorName(),
+            'author' => $this->authorPayload(),
             'created_at' => $this->created_at->toIso8601String(),
         ];
     }
 
     /**
-     * The reviewer reduced to a display name (first name and last initial).
-     * The author id, type, full surname or avatar never reach the public
-     * payload: published together they would let anyone rebuild a customer's
+     * The reviewer reduced to a display name (first name and last initial)
+     * and their picture, uploaded file or generated fallback alike. The
+     * author id, type and full surname never reach the public payload:
+     * published together they would let anyone rebuild a customer's
      * purchase history.
+     *
+     * @return array{name: ?string, avatar: ?string}|null
      */
-    private function authorName(): ?string
+    private function authorPayload(): ?array
     {
         $author = $this->author;
 
@@ -45,9 +48,11 @@ final class ReviewResource extends JsonApiResource
 
         $first = (string) $author->getAttribute('first_name');
         $lastInitial = mb_substr((string) $author->getAttribute('last_name'), 0, 1);
-
         $name = mb_trim($first.' '.($lastInitial !== '' ? $lastInitial.'.' : ''));
 
-        return $name !== '' ? $name : null;
+        return [
+            'name' => $name !== '' ? $name : null,
+            'avatar' => $author->getAttribute('picture'),
+        ];
     }
 }

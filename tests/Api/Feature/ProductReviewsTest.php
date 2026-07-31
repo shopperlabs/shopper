@@ -40,7 +40,7 @@ it('lists only approved reviews for a product with an anonymized author', functi
         ->assertJsonPath('data.0.id', $review->refresh()->public_id)
         ->assertJsonPath('data.0.attributes.title', 'Great')
         ->assertJsonPath('data.0.attributes.rating', 5)
-        ->assertJsonPath('data.0.attributes.author_name', 'Arthur M.');
+        ->assertJsonPath('data.0.attributes.author.name', 'Arthur M.');
 
     $attributes = $response->json('data.0.attributes');
 
@@ -110,6 +110,27 @@ it('caps the latest reviews endpoint and never paginates it', function (): void 
     expect($response->json('links.next'))->toBeNull();
 });
 
+it('exposes the uploaded avatar or the generated fallback through the picture attribute', function (): void {
+    $product = reviewedProduct();
+
+    $withUpload = User::factory()->create([
+        'first_name' => 'Jane',
+        'last_name' => 'Doe',
+        'avatar_type' => 'storage',
+        'avatar_location' => 'avatars/jane.jpg',
+    ]);
+
+    approvedReview($product, ['rating' => 4], $withUpload);
+    approvedReview($product, ['rating' => 5]);
+
+    $avatars = collect(
+        $this->getJson('/store/products/'.$product->slug.'/reviews?sort=rating')->assertOk()->json('data')
+    )->pluck('attributes.author.avatar');
+
+    expect($avatars[0])->toContain('avatars/jane.jpg')
+        ->and($avatars[1])->toContain('ui-avatars.com');
+});
+
 it('anonymizes gracefully when the author is missing', function (): void {
     $product = reviewedProduct();
     $review = approvedReview($product);
@@ -118,5 +139,5 @@ it('anonymizes gracefully when the author is missing', function (): void {
 
     $this->getJson('/store/products/'.$product->slug.'/reviews')
         ->assertOk()
-        ->assertJsonPath('data.0.attributes.author_name', null);
+        ->assertJsonPath('data.0.attributes.author', null);
 });
