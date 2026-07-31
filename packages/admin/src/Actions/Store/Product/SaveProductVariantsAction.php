@@ -58,20 +58,26 @@ final class SaveProductVariantsAction
 
                 $variants[$key]['variant_id'] = $variant->id;
 
-                $price = (float) $variantState['price'];
+                $price = (int) $variantState['price'];
 
                 if ($price > 0) {
                     /** @var int $defaultCurrencyId */
                     $defaultCurrencyId = shopper_setting('default_currency_id');
 
-                    $variant->prices()
+                    $existingCompare = $variant->prices()
                         ->where('currency_id', $defaultCurrencyId)
-                        ->delete();
+                        ->value('compare_amount');
 
-                    $variant->prices()->create([
-                        'amount' => $price,
-                        'currency_id' => $defaultCurrencyId,
-                    ]);
+                    $variant->prices()->updateOrCreate(
+                        ['currency_id' => $defaultCurrencyId],
+                        [
+                            'amount' => $price,
+                            // A compare price at or below the selling price is a misleading strikethrough.
+                            'compare_amount' => $existingCompare !== null && (int) $existingCompare > $price
+                                ? (int) $existingCompare
+                                : null,
+                        ],
+                    );
                 }
 
                 /** @var int $stock */

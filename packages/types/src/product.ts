@@ -7,6 +7,7 @@ import type {
   Entity,
   Metadata,
   Price,
+  PriceRange,
   SEOFields,
   ShippingFields,
 } from './common'
@@ -95,4 +96,6 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   reviews_count?: number
   /** The prices of the product. */
   prices?: Price[]
+  /** The min/max price aggregate in the resolved currency. Null when the product has no price in that currency. */
+  price_range?: PriceRange | null
 }

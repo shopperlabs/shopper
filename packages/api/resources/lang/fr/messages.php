@@ -40,6 +40,11 @@ return [
         'restricted_includes' => 'Seul `items` peut être inclus sur la consultation de confirmation de commande. Utilisez l\'endpoint de commande du compte pour la commande complète.',
     ],
 
+    'catalog' => [
+        'unknown_currency' => 'La devise ":code" est inconnue ou non activée sur cette boutique.',
+        'no_currency' => 'Le tri et le filtre par prix nécessitent une devise configurée sur la boutique.',
+    ],
+
     'promotion' => [
         'not_found' => 'Ce code promotionnel est invalide.',
         'not_applicable' => 'Ce code promotionnel ne s\'applique pas à votre panier.',

@@ -129,4 +129,35 @@ describe(GenerateVariants::class, function (): void {
         expect($this->product->variants()->pluck('position', 'sku')->all())
             ->toBe(['SKU-POS-1' => 1, 'SKU-POS-2' => 2]);
     });
+
+    it('drops a compare price that is no longer above the new variant price', function (): void {
+        $variantState = [
+            'key' => 'test-key-1',
+            'variant_id' => null,
+            'name' => 'Variant 1',
+            'sku' => 'SKU-CMP-1',
+            'price' => 3999,
+            'stock' => 10,
+            'values' => [],
+        ];
+
+        Livewire::test(GenerateVariants::class, ['product' => $this->product])
+            ->set('variants', [$variantState])
+            ->call('generate');
+
+        $variant = $this->product->variants()->where('sku', 'SKU-CMP-1')->firstOrFail();
+        $variant->prices()->update(['compare_amount' => 4999]);
+
+        $variantState['variant_id'] = $variant->id;
+        $variantState['price'] = 5999;
+
+        Livewire::test(GenerateVariants::class, ['product' => $this->product])
+            ->set('variants', [$variantState])
+            ->call('generate');
+
+        $price = $variant->prices()->firstOrFail();
+
+        expect((int) $price->amount)->toBe(5999)
+            ->and($price->compare_amount)->toBeNull();
+    });
 })->group('livewire', 'slideovers', 'products');

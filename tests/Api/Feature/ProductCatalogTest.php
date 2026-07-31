@@ -21,7 +21,7 @@ uses(Tests\Api\TestCase::class);
 
 function publishedProduct(array $attributes = []): Product
 {
-    $product = Product::factory()->publish()->create($attributes);
+    $product = Product::factory()->publish()->create($attributes + ['type' => ProductType::Standard]);
 
     Price::factory()->create([
         'priceable_id' => $product->id,

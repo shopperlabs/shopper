@@ -17,6 +17,10 @@ final class ResolveZone
     {
         $request->attributes->set('shopper_zone', $this->resolver->resolve($request));
 
-        return $next($request);
+        $response = $next($request);
+
+        $response->setVary((string) config('shopper.http.zone.header', 'X-Shopper-Zone'), false);
+
+        return $response;
     }
 }

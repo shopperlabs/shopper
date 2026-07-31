@@ -9,7 +9,9 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\RateLimiter;
+use Shopper\Core\Models\Zone;
 use Shopper\Http\Contracts\ZoneResolver;
 use Shopper\Http\Enum\RateLimit;
 use Shopper\Http\Exceptions\JsonApiErrorRenderer;
@@ -51,6 +53,21 @@ final class HttpServiceProvider extends PackageServiceProvider
         $this->registerRateLimiters();
         $this->registerMiddleware();
         $this->registerExceptionRenderer();
+        $this->registerZoneCacheInvalidation();
+    }
+
+    private function registerZoneCacheInvalidation(): void
+    {
+        $forget = static function (Zone $zone): void {
+            Cache::forget(DefaultZoneResolver::cacheKey((string) $zone->code));
+
+            if ($zone->wasChanged('code')) {
+                Cache::forget(DefaultZoneResolver::cacheKey((string) $zone->getOriginal('code')));
+            }
+        };
+
+        Zone::saved($forget);
+        Zone::deleted($forget);
     }
 
     private function registerExceptionRenderer(): void

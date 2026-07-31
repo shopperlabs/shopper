@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Http\Controllers\Catalog;
 
+use Illuminate\Validation\ValidationException;
 use Shopper\Api\Concerns\BuildsApiQueries;
+use Shopper\Api\Concerns\HandlesPriceQueries;
+use Shopper\Api\Concerns\LoadsPriceRange;
 use Shopper\Api\Concerns\LoadsStock;
+use Shopper\Api\Concerns\ResolvesCurrency;
 use Shopper\Api\Http\Includes\RatingAggregate;
 use Shopper\Api\Http\Resources\ProductResource;
 use Shopper\Core\Models\Contracts\Product;
@@ -15,23 +19,46 @@ use TiMacDonald\JsonApi\JsonApiResourceCollection;
 final class ProductController
 {
     use BuildsApiQueries;
+    use HandlesPriceQueries;
+    use LoadsPriceRange;
     use LoadsStock;
+    use ResolvesCurrency;
 
     public function index(): JsonApiResourceCollection
     {
+        $currency = $this->resolvedCurrency();
+
+        if ($currency === null && $this->wantsPriceQuery()) {
+            throw ValidationException::withMessages([
+                $this->wantsPriceSort() ? 'sort' : 'filter.price_min' => __('shopper-api::messages.catalog.no_currency'),
+            ]);
+        }
+
         $query = $this->withMediaIfSupported(
             resolve(Product::class)::query()->publish()->with('prices.currency')
         );
 
-        $products = $this->paginated('product', $query);
+        if ($currency !== null && $this->wantsPriceQuery()) {
+            $this->applyPriceAggregate($query, $currency->id);
+        }
+
+        $products = $this->paginated(
+            'product',
+            $query,
+            extraFilters: $currency !== null ? $this->priceFilters($currency->id) : [],
+        );
 
         $this->loadStockForProducts($products->getCollection());
+        $this->loadPriceRangeForProducts($products->getCollection(), $currency?->id);
 
-        return ProductResource::collection($products);
+        return ProductResource::collection($products)
+            ->additional(['meta' => ['currency' => $currency?->code]]);
     }
 
     public function show(string $slug): JsonApiResource
     {
+        $currency = $this->resolvedCurrency();
+
         $query = $this->withMediaIfSupported(
             resolve(Product::class)::query()->publish()->with('prices.currency')
         )
@@ -45,7 +72,9 @@ final class ProductController
         $product = $query->firstOrFail();
 
         $this->loadStockForProducts(collect([$product]));
+        $this->loadPriceRangeForProducts(collect([$product]), $currency?->id);
 
-        return ProductResource::make($product);
+        return ProductResource::make($product)
+            ->additional(['meta' => ['currency' => $currency?->code]]);
     }
 }

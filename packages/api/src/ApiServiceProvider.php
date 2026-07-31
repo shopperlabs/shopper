@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopper\Api;
 
+use Illuminate\Support\Facades\Cache;
+use Shopper\Core\Models\Currency;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -30,5 +32,21 @@ final class ApiServiceProvider extends PackageServiceProvider
             [__DIR__.'/../config/api.php' => config_path('shopper/api.php')],
             'shopper-config',
         );
+
+        $this->registerCurrencyCacheInvalidation();
+    }
+
+    private function registerCurrencyCacheInvalidation(): void
+    {
+        $forget = static function (Currency $currency): void {
+            Cache::forget('shopper.api.currency.'.$currency->code);
+
+            if ($currency->wasChanged('code')) {
+                Cache::forget('shopper.api.currency.'.$currency->getOriginal('code'));
+            }
+        };
+
+        Currency::saved($forget);
+        Currency::deleted($forget);
     }
 }
