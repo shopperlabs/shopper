@@ -50,34 +50,35 @@ return [
                 'categories',
                 'collections',
                 'options',
-                'relatedProducts',
+                'relatedProducts' => Shopper\Api\Http\Includes\PublicProducts::class,
                 'rating' => Shopper\Api\Http\Includes\RatingAggregate::class,
             ],
             'include_loads' => [
                 'variants' => ['variants.prices.currency', 'variants.values.attribute'],
                 'options' => ['options.values', 'attributeProducts.media'],
-                'relatedProducts' => ['relatedProducts.prices.currency'],
             ],
         ],
         'category' => [
             'filters' => ['name' => 'partial'],
             'sorts' => ['name', 'position'],
-            'includes' => ['parent', 'children', 'products'],
-            'include_loads' => [
-                'products' => ['products.prices.currency'],
+            'includes' => [
+                'parent',
+                'children',
+                'products' => Shopper\Api\Http\Includes\PublicProducts::class,
             ],
         ],
         'collection' => [
             'filters' => ['name' => 'partial'],
             'sorts' => ['name'],
-            'includes' => [],
+            'includes' => [
+                'products' => Shopper\Api\Http\Includes\PublicProducts::class,
+            ],
         ],
         'brand' => [
             'filters' => ['name' => 'partial'],
             'sorts' => ['name', 'position'],
-            'includes' => ['products'],
-            'include_loads' => [
-                'products' => ['products.prices.currency'],
+            'includes' => [
+                'products' => Shopper\Api\Http\Includes\PublicProducts::class,
             ],
         ],
         'attribute' => [

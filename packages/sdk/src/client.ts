@@ -39,6 +39,12 @@ export interface ShopperConfig {
    * translated content (country names, translatable addons, ...).
    */
   locale?: string
+  /**
+   * Sales channel slug sent as the X-Shopper-Channel header on every
+   * request. The catalog endpoints then only return the products attached
+   * to that channel; without it the catalog stays unfiltered.
+   */
+  channel?: string
   /** Extra headers merged into every request (auth tokens, locale, ...). */
   headers?: Record<string, string>
   /** Custom fetch implementation (defaults to the global fetch). */
@@ -66,10 +72,13 @@ export class HttpClient {
 
   private locale: string | null
 
+  private channel: string | null
+
   public constructor(config: ShopperConfig) {
     this.baseUrl = config.baseUrl.replace(/\/$/, '')
     this.storePrefix = (config.storePrefix ?? 'store').replace(/^\/|\/$/g, '')
     this.locale = config.locale ?? null
+    this.channel = config.channel ?? null
     this.headers = config.headers ?? {}
     this.tokens = config.tokenStorage ?? new MemoryTokenStorage()
     // Bind to the global so the browser fetch keeps `this === window`
@@ -83,6 +92,15 @@ export class HttpClient {
 
   public getLocale(): string | null {
     return this.locale
+  }
+
+  /** Switch the sales channel of subsequent calls; null reverts to the unfiltered catalog. */
+  public setChannel(channel: string | null): void {
+    this.channel = channel
+  }
+
+  public getChannel(): string | null {
+    return this.channel
   }
 
   public async request(path: string, options?: FetchOptions, init?: FetchInit): Promise<JsonApiDocument> {
@@ -114,6 +132,7 @@ export class HttpClient {
         ...(body !== undefined && ! isForm ? { 'Content-Type': 'application/json' } : {}),
         ...(token !== null ? { Authorization: `Bearer ${token}` } : {}),
         ...(this.locale !== null ? { 'Accept-Language': this.locale } : {}),
+        ...(this.channel !== null ? { 'X-Shopper-Channel': this.channel } : {}),
         ...this.headers,
         ...initHeaders,
       },
