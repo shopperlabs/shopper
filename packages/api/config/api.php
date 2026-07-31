@@ -111,5 +111,11 @@ return [
             'sorts' => ['created_at'],
             'includes' => ['items'],
         ],
+        'review' => [
+            'filters' => ['rating' => 'exact'],
+            'sorts' => ['created_at', 'rating'],
+            'includes' => [],
+            'latest_limit' => 20,
+        ],
     ],
 ];
