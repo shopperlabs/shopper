@@ -1,4 +1,4 @@
-import { buildQuery, type FetchOptions, toApiError } from './http'
+import { buildQuery, type FetchInit, type FetchOptions, toApiError } from './http'
 import type { JsonApiDocument } from './json-api'
 
 /**
@@ -85,8 +85,8 @@ export class HttpClient {
     return this.locale
   }
 
-  public async request(path: string, options?: FetchOptions): Promise<JsonApiDocument> {
-    return (await this.send('GET', path, undefined, options)) as JsonApiDocument
+  public async request(path: string, options?: FetchOptions, init?: FetchInit): Promise<JsonApiDocument> {
+    return (await this.send('GET', path, undefined, options, init)) as JsonApiDocument
   }
 
   /**
@@ -99,12 +99,15 @@ export class HttpClient {
     path: string,
     body?: Record<string, unknown> | FormData,
     options?: FetchOptions,
+    init?: FetchInit,
   ): Promise<JsonApiDocument | null> {
     const url = `${this.baseUrl}/${path.replace(/^\//, '')}${buildQuery(options)}`
     const token = this.tokens.get()
     const isForm = typeof FormData !== 'undefined' && body instanceof FormData
+    const { headers: initHeaders, ...initRest } = init ?? {}
 
     const response = await this.fetchImpl(url, {
+      ...initRest,
       method,
       headers: {
         Accept: 'application/vnd.api+json',
@@ -112,6 +115,7 @@ export class HttpClient {
         ...(token !== null ? { Authorization: `Bearer ${token}` } : {}),
         ...(this.locale !== null ? { 'Accept-Language': this.locale } : {}),
         ...this.headers,
+        ...initHeaders,
       },
       ...(body !== undefined ? { body: isForm ? (body as FormData) : JSON.stringify(body) } : {}),
     })

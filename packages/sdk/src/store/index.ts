@@ -10,7 +10,7 @@ import type {
 } from '@shopperlabs/shopper-types'
 
 import type { HttpClient } from '../client'
-import type { FetchRequestOptions } from '../http'
+import type { FetchInit, FetchRequestOptions } from '../http'
 import { flatten } from '../json-api'
 import { CartModule } from './cart'
 import { CollectionResource } from './collection'
@@ -96,6 +96,7 @@ export class StoreModule {
   public async fetch<T = unknown>(
     path: string,
     options?: FetchRequestOptions,
+    init?: FetchInit,
   ): Promise<{ data: T | T[] | null; meta?: Record<string, unknown>; links?: Record<string, unknown> }> {
     const { method = 'GET', body, ...params } = options ?? {}
 
@@ -104,6 +105,7 @@ export class StoreModule {
       `/${this.client.storePrefix}/${path.replace(/^\//, '')}`,
       body,
       params,
+      init,
     )
 
     if (! document) {
