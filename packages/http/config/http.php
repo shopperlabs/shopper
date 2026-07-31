@@ -51,6 +51,7 @@ return [
         'resolver' => Shopper\Http\Zone\DefaultZoneResolver::class,
         'header' => 'X-Shopper-Zone',
         'default_code' => env('SHOPPER_API_DEFAULT_ZONE'),
+        'cache_ttl' => 60,
     ],
 
     /*

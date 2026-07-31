@@ -40,6 +40,11 @@ return [
         'restricted_includes' => 'Solo `items` puede incluirse en la consulta de confirmación del pedido. Usa el endpoint de pedidos de la cuenta para el pedido completo.',
     ],
 
+    'catalog' => [
+        'unknown_currency' => 'La moneda ":code" es desconocida o no está habilitada en esta tienda.',
+        'no_currency' => 'Ordenar y filtrar por precio requiere una moneda configurada en la tienda.',
+    ],
+
     'promotion' => [
         'not_found' => 'Este código promocional no es válido.',
         'not_applicable' => 'Este código promocional no se aplica a tu carrito.',

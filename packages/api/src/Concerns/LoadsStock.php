@@ -71,6 +71,16 @@ trait LoadsStock
     }
 
     /**
+     * @return Collection<int, Model>
+     */
+    protected function loadedRelation(Model $model, string $relation): Collection
+    {
+        $related = $model->relationLoaded($relation) ? $model->getRelation($relation) : null;
+
+        return $related instanceof EloquentCollection ? $related->toBase() : new Collection;
+    }
+
+    /**
      * One aggregate query: per product, the summed variant stock and whether
      * any variant allows backorders. Posed as raw attributes read back through
      * `getAttributes()` by the resources, because the product model already
@@ -106,15 +116,5 @@ trait LoadsStock
             $product->setAttribute('variants_real_stock', (int) ($row->variants_stock ?? 0));
             $product->setAttribute('variants_allow_backorder', (bool) ($row->variants_allow_backorder ?? false));
         });
-    }
-
-    /**
-     * @return Collection<int, Model>
-     */
-    private function loadedRelation(Model $model, string $relation): Collection
-    {
-        $related = $model->relationLoaded($relation) ? $model->getRelation($relation) : null;
-
-        return $related instanceof EloquentCollection ? $related->toBase() : new Collection;
     }
 }

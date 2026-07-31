@@ -12,6 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Includes\IncludeInterface;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\QueryBuilderRequest;
@@ -27,14 +28,14 @@ trait BuildsApiQueries
      *
      * @param  Builder<TModel>  $query
      */
-    protected function apiQuery(string $resource, Builder $query): QueryBuilder
+    protected function apiQuery(string $resource, Builder $query, array $extraFilters = []): QueryBuilder
     {
         $allowlist = (array) config('shopper.api.resources.'.$resource, []);
         $request = QueryBuilderRequest::fromRequest(request());
 
         $builder = QueryBuilder::for($query, $request)
-            ->allowedFilters(...$this->allowedFilters((array) ($allowlist['filters'] ?? [])))
-            ->allowedSorts(...($allowlist['sorts'] ?? []))
+            ->allowedFilters(...$this->allowedFilters((array) ($allowlist['filters'] ?? [])), ...$extraFilters)
+            ->allowedSorts(...$this->allowedSorts((array) ($allowlist['sorts'] ?? [])))
             ->allowedIncludes(...$this->allowedIncludes((array) ($allowlist['includes'] ?? [])));
 
         $loads = $this->requestedIncludeLoads($resource);
@@ -110,7 +111,7 @@ trait BuildsApiQueries
      *
      * @param  Builder<TModel>  $query
      */
-    protected function paginated(string $resource, Builder $query, ?string $defaultSort = null): CursorPaginator|LengthAwarePaginator
+    protected function paginated(string $resource, Builder $query, ?string $defaultSort = null, array $extraFilters = []): CursorPaginator|LengthAwarePaginator
     {
         $default = (int) config('shopper.api.pagination.per_page', 15);
         $max = (int) config('shopper.api.pagination.max_per_page', 100);
@@ -118,7 +119,7 @@ trait BuildsApiQueries
 
         $size = min(max((int) request()->input('page.size', $default), 1), $max);
 
-        $builder = $this->apiQuery($resource, $query);
+        $builder = $this->apiQuery($resource, $query, $extraFilters);
 
         if ($defaultSort !== null) {
             $builder->defaultSort($defaultSort);
@@ -128,7 +129,7 @@ trait BuildsApiQueries
             $encoded = (string) request()->input('page.cursor');
 
             return $builder
-                ->orderBy($query->getModel()->getKeyName())
+                ->orderBy($query->qualifyColumn($query->getModel()->getKeyName()))
                 ->cursorPaginate(
                     perPage: $size,
                     cursorName: 'page[cursor]',
@@ -140,6 +141,7 @@ trait BuildsApiQueries
         $page = min(max((int) request()->input('page.number', 1), 1), $maxPage);
 
         return $builder
+            ->orderBy($query->qualifyColumn($query->getModel()->getKeyName()))
             ->paginate(perPage: $size, pageName: 'page[number]', page: $page)
             ->withQueryString();
     }
@@ -168,6 +170,26 @@ trait BuildsApiQueries
             $include = resolve($value);
 
             $allowed[] = AllowedInclude::custom($key, $include);
+        }
+
+        return $allowed;
+    }
+
+    /**
+     * Build the spatie sort list from a config descriptor map. A plain string
+     * entry sorts by the column of the same name; a `name => ['field', 'alias']`
+     * entry sorts by another column or select alias, e.g. the price sort
+     * ordering by the `min_price` aggregate.
+     *
+     * @param  array<int|string, string|array{0: string, 1: string}>  $sorts
+     * @return array<int, string|AllowedSort>
+     */
+    private function allowedSorts(array $sorts): array
+    {
+        $allowed = [];
+
+        foreach ($sorts as $key => $value) {
+            $allowed[] = is_int($key) ? $value : AllowedSort::field($key, $value[1]);
         }
 
         return $allowed;

@@ -127,8 +127,9 @@ it('batch-loads stock without lazy queries and with a constant query count', fun
 
         expect($response->json('data'))->toHaveCount(4)
             // Bounded and constant regardless of product or variant count: the
-            // products', variants', and aggregate stock are three batch queries.
-            ->and($queryCount)->toBeLessThanOrEqual(16);
+            // products', variants', and aggregate stock are three batch queries,
+            // the price ranges two more, plus the resolved currency lookup.
+            ->and($queryCount)->toBeLessThanOrEqual(19);
     } finally {
         Product::preventLazyStockLoading(false);
         ProductVariant::preventLazyStockLoading(false);

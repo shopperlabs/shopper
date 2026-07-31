@@ -76,11 +76,15 @@ class Price extends Model implements PriceContract
     }
 
     /**
+     * A price always resolves its currency, enabled or not: the `enabled`
+     * scope on Currency is for public listings, never for the relational
+     * integrity the currency_id foreign key already guarantees.
+     *
      * @return BelongsTo<Currency, $this>
      */
     public function currency(): BelongsTo
     {
-        return $this->belongsTo(Currency::class, 'currency_id');
+        return $this->belongsTo(Currency::class, 'currency_id')->withoutGlobalScopes();
     }
 
     /**

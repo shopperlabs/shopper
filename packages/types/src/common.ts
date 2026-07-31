@@ -60,6 +60,19 @@ export interface Price {
 }
 
 /**
+ * Aggregated min/max price of a product in the currency resolved for the
+ * request (minor units). Variant products aggregate their variants' prices.
+ */
+export interface PriceRange {
+  /** The code of the resolved currency the range is expressed in. */
+  currency_code: string
+  /** The lowest price amount, in minor units. */
+  min: number
+  /** The highest price amount, in minor units. */
+  max: number
+}
+
+/**
  * ShippingFields interface for shipping entity.
  */
 export interface ShippingFields {

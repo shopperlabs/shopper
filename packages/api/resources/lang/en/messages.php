@@ -40,6 +40,11 @@ return [
         'restricted_includes' => 'Only `items` can be included on the order confirmation lookup. Use the account order endpoint for the full order.',
     ],
 
+    'catalog' => [
+        'unknown_currency' => 'The ":code" currency is unknown or not enabled on this shop.',
+        'no_currency' => 'Price sorting and filtering need a configured currency on the shop.',
+    ],
+
     'promotion' => [
         'not_found' => 'This promotion code is invalid.',
         'not_applicable' => 'This promotion code does not apply to your cart.',

@@ -45,7 +45,8 @@ final class ProductResource extends JsonApiResource
             'metadata' => $this->metadata,
             ...($this->isExternal() ? ['external_id' => $this->external_id] : []),
             ...$this->stockPayload(),
-            'prices' => $this->pricesPayload(),
+            ...$this->priceRangePayload(),
+            'prices' => $this->canUseVariants() ? [] : $this->pricesPayload(),
             'images' => $this->imagesPayload(),
             'thumbnail' => $this->thumbnailPayload(withFallback: true),
             ...($this->isVirtual() ? ['files' => $this->filesPayload()] : []),
@@ -128,6 +129,32 @@ final class ProductResource extends JsonApiResource
         return [
             'rating' => $average !== null ? round((float) $average, 1) : null,
             'reviews_count' => (int) $raw['reviews_count'],
+        ];
+    }
+
+    /**
+     * The min/max price aggregate in the currency resolved for the request,
+     * batch-loaded by the controller (LoadsPriceRange). Null when the product
+     * has no price in that currency; absent on responses that do not load it.
+     *
+     * @return array<string, array<string, int|string>|null>
+     */
+    private function priceRangePayload(): array
+    {
+        $raw = $this->resource->getAttributes();
+
+        if (! array_key_exists('price_range_min', $raw)) {
+            return [];
+        }
+
+        $currency = request()->attributes->get('shopper_price_currency');
+
+        return [
+            'price_range' => $raw['price_range_min'] === null || $currency === null ? null : [
+                'currency_code' => $currency->code,
+                'min' => (int) $raw['price_range_min'],
+                'max' => (int) $raw['price_range_max'],
+            ],
         ];
     }
 
