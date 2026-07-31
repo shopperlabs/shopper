@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 trait HasProfilePhoto
 {
+    public function initializeHasProfilePhoto(): void
+    {
+        $this->append('picture');
+    }
+
     protected function picture(): Attribute
     {
         return Attribute::make(

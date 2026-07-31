@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Core\Database\Factories\ReviewFactory;
 use Shopper\Core\Models\Contracts\Review as ReviewContract;
+use Shopper\Core\Models\Traits\HasPublicId;
 
 /**
  * @property-read int $id
+ * @property-read ?string $public_id
  * @property-read bool $approved
  * @property-read bool $is_recommended
  * @property-read ?string $title
@@ -30,6 +34,8 @@ class Review extends Model implements ReviewContract
 {
     /** @use HasFactory<ReviewFactory> */
     use HasFactory;
+
+    use HasPublicId;
 
     protected $guarded = [];
 
@@ -176,6 +182,18 @@ class Review extends Model implements ReviewContract
     protected static function newFactory(): ReviewFactory
     {
         return ReviewFactory::new();
+    }
+
+    /**
+     * @template TModel of Model
+     *
+     * @param  Builder<TModel>  $query
+     * @return Builder<TModel>
+     */
+    #[Scope]
+    protected function approved(Builder $query): Builder
+    {
+        return $query->where('approved', true);
     }
 
     protected function casts(): array

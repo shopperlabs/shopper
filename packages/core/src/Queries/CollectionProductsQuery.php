@@ -13,6 +13,7 @@ use Shopper\Core\Enum\Rule;
 use Shopper\Core\Models\CollectionRule;
 use Shopper\Core\Models\Contracts\Collection;
 use Shopper\Core\Models\Contracts\Product;
+use Shopper\Core\Models\Review;
 
 final class CollectionProductsQuery
 {
@@ -225,12 +226,15 @@ final class CollectionProductsQuery
             default => '=',
         };
 
-        $query->whereHas('ratings', function (Builder $subQuery) use ($operator, $rule): void { // @phpstan-ignore-line
-            $subQuery->select('reviewrateable_id')
-                ->where('approved', true)
-                ->groupBy('reviewrateable_id')
-                ->havingRaw('AVG(rating) '.$operator.' ?', [(float) $rule->value]);
-        });
+        /** @var class-string<Product> $productModel */
+        $productModel = config('shopper.models.product');
+
+        $query->whereIn('id', Review::query()
+            ->approved()
+            ->select('reviewrateable_id')
+            ->where('reviewrateable_type', (new $productModel)->getMorphClass())
+            ->groupBy('reviewrateable_id')
+            ->havingRaw('AVG(rating) '.$operator.' '.(float) $rule->value));
     }
 
     /**

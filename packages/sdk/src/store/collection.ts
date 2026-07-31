@@ -15,8 +15,8 @@ export interface Paginated<T> {
  */
 export class CollectionResource<T> {
   public constructor(
-    private readonly client: HttpClient,
-    private readonly path: string,
+    protected readonly client: HttpClient,
+    protected readonly path: string,
   ) {}
 
   public async list(params?: RequestParams, init?: FetchInit): Promise<Paginated<T>> {

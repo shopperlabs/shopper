@@ -1,37 +1,43 @@
 import type { Entity } from './common'
 
 /**
- * Review model.
+ * A product review as the store API exposes it: approved reviews only, the
+ * author reduced to a public-safe display identity.
  */
 export interface Review extends Entity {
-  /** Whether the review is recommended. */
-  is_recommended: boolean
-  /** The rating (usually 1-5). */
-  rating: number
   /** The title of the review. */
   title: string | null
   /** The content of the review. */
   content: string | null
-  /** Whether the review is approved. */
-  approved: boolean
-  /** The ID of the reviewable entity. */
-  reviewrateable_id: number
-  /** The type of the reviewable entity. */
-  reviewrateable_type: string
-  /** The ID of the author. */
-  author_id: number
-  /** The type of the author. */
-  author_type: string
-  /** The author of the review. */
-  author?: ReviewAuthor
+  /** The rating (1-5). */
+  rating: number
+  /** Whether the reviewer recommends the product. */
+  is_recommended: boolean
+  /** The reviewer's public identity, null when the account no longer exists. */
+  author: ReviewAuthor | null
 }
 
 /**
- * ReviewAuthor type for author information.
+ * The reviewer as shown next to a review. The avatar is only present when
+ * one was uploaded; build the fallback (initials, generated image) from
+ * `name` on the storefront.
  */
-export type ReviewAuthor = {
-  last_name: string
-  first_name: string
-  /** The avatar URL (uploaded file, or a generated fallback). */
-  avatar: string
+export interface ReviewAuthor {
+  /** Display name (first name and last initial). */
+  name: string | null
+  /** URL of the uploaded avatar, null when none was uploaded. */
+  avatar: string | null
+}
+
+/**
+ * Review aggregates returned in the `meta` of a product's reviews listing,
+ * computed server-side over the same approved predicate as the rows.
+ */
+export interface ReviewAggregates {
+  /** Total number of approved reviews. */
+  reviews_count: number
+  /** Average rating rounded to one decimal, null without reviews. */
+  average_rating: number | null
+  /** Number of approved reviews per rating value (1-5). */
+  rating_distribution: Record<number, number>
 }

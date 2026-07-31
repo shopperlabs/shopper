@@ -34,12 +34,4 @@ return new class extends Migration
             $table->index(['priceable_type', 'priceable_id', 'currency_id', 'amount'], 'prices_priceable_currency_amount_index');
         });
     }
-
-    public function down(): void
-    {
-        Schema::table($this->getTableName('prices'), static function (Blueprint $table): void {
-            $table->dropUnique('prices_priceable_currency_unique');
-            $table->dropIndex('prices_priceable_currency_amount_index');
-        });
-    }
 };

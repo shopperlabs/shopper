@@ -150,4 +150,44 @@ describe(Collection::class, function (): void {
 
         expect($collection)->toBeInstanceOf(Spatie\MediaLibrary\HasMedia::class);
     });
+
+    it('resolves the products of an automatic rating rule over approved reviews only', function (): void {
+        $collection = Collection::factory()->create(['type' => CollectionType::Auto, 'match_conditions' => 'all']);
+
+        CollectionRule::factory()->create([
+            'collection_id' => $collection->id,
+            'rule' => Rule::ProductRating,
+            'operator' => Operator::GreaterThan,
+            'value' => '3',
+        ]);
+
+        $highRated = Product::factory()->publish()->create();
+        $lowRated = Product::factory()->publish()->create();
+        $pendingOnly = Product::factory()->publish()->create();
+
+        Shopper\Core\Models\Review::factory()->create([
+            'reviewrateable_id' => $highRated->id,
+            'reviewrateable_type' => $highRated->getMorphClass(),
+            'rating' => 5,
+            'approved' => true,
+        ]);
+
+        Shopper\Core\Models\Review::factory()->create([
+            'reviewrateable_id' => $lowRated->id,
+            'reviewrateable_type' => $lowRated->getMorphClass(),
+            'rating' => 2,
+            'approved' => true,
+        ]);
+
+        Shopper\Core\Models\Review::factory()->create([
+            'reviewrateable_id' => $pendingOnly->id,
+            'reviewrateable_type' => $pendingOnly->getMorphClass(),
+            'rating' => 5,
+            'approved' => false,
+        ]);
+
+        $products = (new Shopper\Core\Queries\CollectionProductsQuery)->get($collection->refresh());
+
+        expect($products->pluck('id')->all())->toBe([$highRated->id]);
+    });
 })->group('collection', 'models');

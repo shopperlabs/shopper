@@ -41,7 +41,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@shopperlabs/shopper-types": "^3.0.0-beta.1"
+    "@shopperlabs/shopper-types": "^3.0.0"
   },
   "devDependencies": {
     "typescript": "^5.2.2"

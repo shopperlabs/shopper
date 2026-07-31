@@ -5,7 +5,6 @@ import type {
   Collection,
   Country,
   Currency,
-  Product,
   Zone,
 } from '@shopperlabs/shopper-types'
 
@@ -16,6 +15,8 @@ import { CartModule } from './cart'
 import { CollectionResource } from './collection'
 import { CustomerModule } from './customer'
 import { OrderModule } from './order'
+import { ProductResource } from './product'
+import { ReviewModule } from './review'
 
 export { CartModule } from './cart'
 export type {
@@ -31,6 +32,9 @@ export { CollectionResource } from './collection'
 export type { Paginated } from './collection'
 export { CustomerModule } from './customer'
 export { OrderModule } from './order'
+export { ProductResource } from './product'
+export type { ProductList, ReviewList } from './product'
+export { ReviewModule } from './review'
 
 /**
  * Store API surface, mirroring the catalog and geo endpoints. Resources are
@@ -40,7 +44,9 @@ export { OrderModule } from './order'
  * wrapped, including addon routes registered through shopper/http.
  */
 export class StoreModule {
-  public readonly product: CollectionResource<Product>
+  public readonly product: ProductResource
+
+  public readonly review: ReviewModule
 
   public readonly category: CollectionResource<Category>
 
@@ -65,7 +71,8 @@ export class StoreModule {
   public constructor(private readonly client: HttpClient) {
     const prefix = `/${client.storePrefix}`
 
-    this.product = new CollectionResource<Product>(client, `${prefix}/products`)
+    this.product = new ProductResource(client, `${prefix}/products`)
+    this.review = new ReviewModule(client)
     this.category = new CollectionResource<Category>(client, `${prefix}/categories`)
     this.collection = new CollectionResource<Collection>(client, `${prefix}/collections`)
     this.brand = new CollectionResource<Brand>(client, `${prefix}/brands`)
