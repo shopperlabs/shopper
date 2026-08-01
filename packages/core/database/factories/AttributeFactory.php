@@ -26,11 +26,32 @@ class AttributeFactory extends Factory
             'name' => $this->faker->word(),
             'slug' => $this->faker->slug(),
             'description' => $this->faker->sentence(),
-            'type' => $this->faker->randomElement(FieldType::values()),
+            'type' => FieldType::Text(),
             'icon' => null,
-            'is_enabled' => $this->faker->boolean(),
-            'is_searchable' => $this->faker->boolean(),
-            'is_filterable' => $this->faker->boolean(),
+            'is_enabled' => true,
+            'is_searchable' => false,
+            'is_filterable' => false,
         ];
+    }
+
+    public function disabled(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'is_enabled' => false,
+        ]);
+    }
+
+    public function searchable(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'is_searchable' => true,
+        ]);
+    }
+
+    public function filterable(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'is_filterable' => true,
+        ]);
     }
 }
