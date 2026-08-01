@@ -24,7 +24,6 @@
     "codeat3/blade-phosphor-icons": "^2.3",
     "codewithdennis/filament-select-tree": "^4.0",
     "danharrin/livewire-rate-limiting": "^2.0",
-    "dedoc/scramble": "^0.13",
     "filament/filament": "^5.0",
     "filament/spatie-laravel-media-library-plugin": "^5.0",
     "gehrisandro/tailwind-merge-laravel": "^1.3",
