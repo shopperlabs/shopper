@@ -30,9 +30,16 @@ class BrandFactory extends Factory
             'name' => $name = $this->faker->unique()->company(),
             'website' => 'https://www.'.$this->faker->domainName(),
             'description' => $this->faker->realText(),
-            'is_enabled' => $this->faker->boolean(),
+            'is_enabled' => true,
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month', 'now'),
         ];
+    }
+
+    public function disabled(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'is_enabled' => false,
+        ]);
     }
 }

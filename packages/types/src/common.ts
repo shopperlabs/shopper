@@ -21,12 +21,14 @@ export enum Volume {
   FLOZ = 'floz',
 }
 
+export type ResourceId = string | number
+
 /**
  * Global entity for all the models.
  */
 export interface Entity {
   /** The internal id of the entity (admin). */
-  id: string | number
+  id: ResourceId
   /** The stable public identifier (ULID) exposed by the API. */
   public_id?: string
   /** The ISO 8601 created at timestamp. */
@@ -42,7 +44,7 @@ export interface Entity {
  */
 export interface Price {
   /** The internal id of the entity (admin). */
-  id?: string | number
+  id?: ResourceId
   /** The stable public identifier (ULID) exposed by the API. */
   public_id?: string
   /** The original amount for the entity. */
@@ -52,7 +54,7 @@ export interface Price {
   /** The cost_amount for the entity. */
   cost_amount?: number | null
   /** The currency_id for the entity. */
-  currency_id?: number
+  currency_id?: ResourceId
   /** The currency_code for the entity. */
   currency_code: string
   /** The currency for the entity. */

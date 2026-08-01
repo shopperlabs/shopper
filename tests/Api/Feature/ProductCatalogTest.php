@@ -145,7 +145,7 @@ it('eager-loads variant prices when including variants, avoiding N+1', function 
 });
 
 it('includes the brand relationship on demand', function (): void {
-    $brand = Brand::factory()->create();
+    $brand = Brand::factory()->create(['is_enabled' => true]);
     $product = publishedProduct(['name' => 'Branded', 'brand_id' => $brand->id]);
 
     $this->getJson('/store/products/'.$product->slug.'?include=brand')

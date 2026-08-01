@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Api\Http\Controllers\Geo;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Shopper\Api\Concerns\BuildsApiQueries;
 use Shopper\Api\Http\Resources\CountryResource;
 use Shopper\Core\Models\Country;
@@ -26,9 +27,13 @@ final class CountryController
     {
         $code = mb_strtoupper($code);
 
-        $country = Country::query()
-            ->with($this->requestedIncludeLoads('country'))
-            ->where(fn (Builder $query) => $query->where('cca2', $code)->orWhere('cca3', $code))
+        /** @var Builder<Model> $query */
+        $query = Country::query()->with($this->requestedIncludeLoads('country'));
+
+        $this->applyPublicIncludes('country', $query);
+
+        $country = $query
+            ->where(fn (Builder $inner) => $inner->where('cca2', $code)->orWhere('cca3', $code))
             ->firstOrFail();
 
         return CountryResource::make($country);

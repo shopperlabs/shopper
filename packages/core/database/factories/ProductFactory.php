@@ -34,10 +34,10 @@ class ProductFactory extends Factory
             'barcode' => $this->faker->ean13(),
             'description' => $this->faker->realText(),
             'security_stock' => $this->faker->randomDigitNotNull(),
-            'featured' => $this->faker->boolean(),
-            'is_visible' => $this->faker->boolean(),
-            'type' => $this->faker->randomElement(ProductType::values()),
-            'published_at' => $this->faker->dateTimeBetween('-1 year', '+1 year'),
+            'featured' => false,
+            'is_visible' => true,
+            'type' => ProductType::Standard(),
+            'published_at' => $this->faker->dateTimeBetween('-6 month'),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month'),
         ];
@@ -48,6 +48,21 @@ class ProductFactory extends Factory
         return $this->state(fn (array $attributes): array => [
             'is_visible' => true,
             'published_at' => now(),
+        ]);
+    }
+
+    public function unpublished(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'is_visible' => false,
+            'published_at' => now()->addMonth(),
+        ]);
+    }
+
+    public function featured(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'featured' => true,
         ]);
     }
 

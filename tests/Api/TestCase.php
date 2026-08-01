@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Api;
 
-use Dedoc\Scramble\ScrambleServiceProvider;
 use Laravel\Sanctum\SanctumServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Shopper\Api\ApiServiceProvider;
@@ -45,7 +44,6 @@ abstract class TestCase extends \Tests\TestCase
             ShippingServiceProvider::class,
             MediaLibraryServiceProvider::class,
             PermissionServiceProvider::class,
-            ScrambleServiceProvider::class,
             SanctumServiceProvider::class,
             HttpServiceProvider::class,
             ApiServiceProvider::class,

@@ -1,5 +1,5 @@
 import type { Country } from './country'
-import type { Entity, Metadata } from './common'
+import type { Entity, Metadata, ResourceId } from './common'
 
 /**
  * TaxProvider model.
@@ -20,15 +20,15 @@ export interface TaxZone extends Entity {
   /** The zone name. */
   name: string | null
   /** The country ID. */
-  country_id: number
+  country_id: ResourceId
   /** The province code (for sub-country zones). */
   province_code: string | null
   /** Whether prices in this zone include tax. */
   is_tax_inclusive: boolean
   /** The parent zone ID. */
-  parent_id: number | null
+  parent_id: ResourceId | null
   /** The tax provider ID. */
-  provider_id: number | null
+  provider_id: ResourceId | null
   /** The metadata. */
   metadata: Metadata
   /** The computed display name (country — name). */
@@ -60,7 +60,7 @@ export interface TaxRate extends Entity {
   /** Whether this rate can be combined with others. */
   is_combinable: boolean
   /** The tax zone ID. */
-  tax_zone_id: number
+  tax_zone_id: ResourceId
   /** The metadata. */
   metadata: Metadata
   /** The tax zone. */
@@ -76,9 +76,9 @@ export interface TaxRateRule extends Entity {
   /** The morph type of the reference (e.g., product type, category). */
   reference_type: string
   /** The morph ID of the reference. */
-  reference_id: string | number
+  reference_id: ResourceId
   /** The tax rate ID. */
-  tax_rate_id: number
+  tax_rate_id: ResourceId
   /** The tax rate. */
   taxRate?: TaxRate
 }
@@ -90,7 +90,7 @@ export interface OrderTaxLine extends Entity {
   /** The morph type (OrderItem or OrderShipping). */
   taxable_type: string
   /** The morph ID. */
-  taxable_id: number
+  taxable_id: ResourceId
   /** The snapshot tax code (e.g., "VAT", "GST"). */
   code: string
   /** The snapshot tax name (e.g., "TVA 20%"). */
@@ -100,7 +100,7 @@ export interface OrderTaxLine extends Entity {
   /** The calculated tax amount (in cents). */
   amount: number
   /** Optional reference to the source tax rate. */
-  tax_rate_id: number | null
+  tax_rate_id: ResourceId | null
   /** The source tax rate (if still exists). */
   taxRate?: TaxRate | null
 }

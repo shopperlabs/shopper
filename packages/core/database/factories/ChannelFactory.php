@@ -26,8 +26,15 @@ class ChannelFactory extends Factory
             'slug' => $this->faker->slug(),
             'timezone' => $this->faker->timezone(),
             'url' => $this->faker->url(),
-            'is_enabled' => $this->faker->boolean(),
-            'is_default' => $this->faker->boolean(),
+            'is_enabled' => true,
+            'is_default' => false,
         ];
+    }
+
+    public function disabled(): self
+    {
+        return $this->state(fn (array $attributes): array => [
+            'is_enabled' => false,
+        ]);
     }
 }

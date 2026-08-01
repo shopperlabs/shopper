@@ -1,5 +1,5 @@
 import type { Campaign } from './campaign'
-import type { Entity, Metadata } from './common'
+import type { Entity, Metadata, ResourceId } from './common'
 import type { Zone } from './zone'
 
 export enum DiscountType {
@@ -74,9 +74,9 @@ export interface Discount extends Entity {
   /** The resolution priority when stacking promotions. */
   priority: number
   /** The campaign ID this discount belongs to, or null when standalone. */
-  campaign_id: number | null
+  campaign_id: ResourceId | null
   /** The zone ID this discount belongs to. */
-  zone_id: number | null
+  zone_id: ResourceId | null
   /** The metadata of the discount. */
   metadata: Metadata
   /** The start date of the discount. */
@@ -100,9 +100,9 @@ export interface DiscountDetail extends Entity {
   /** The type of the discountable entity. */
   discountable_type: string
   /** The ID of the discountable entity. */
-  discountable_id: number
+  discountable_id: ResourceId
   /** The discount ID this detail belongs to. */
-  discount_id: number
+  discount_id: ResourceId
   /** The total usage of this detail. */
   total_use: number
   /** The discount this detail belongs to. */

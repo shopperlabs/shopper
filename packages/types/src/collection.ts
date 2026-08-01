@@ -1,4 +1,4 @@
-import type { Entity, Metadata, SEOFields } from './common'
+import type { Entity, Metadata, ResourceId, SEOFields } from './common'
 import type { Media } from './media'
 import type { Product } from './product'
 import type { Zone } from './zone'
@@ -78,7 +78,7 @@ export interface CollectionRule extends Entity {
   /** The value for the rule. */
   value: string
   /** The collection ID this rule belongs to. */
-  collection_id: number
+  collection_id: ResourceId
   /** The collection this rule belongs to. */
   collection?: Collection
 }

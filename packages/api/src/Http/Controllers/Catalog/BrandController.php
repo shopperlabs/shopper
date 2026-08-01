@@ -31,12 +31,12 @@ final class BrandController
 
     public function show(string $slug): JsonApiResource
     {
-        $brand = $this->withPublicProducts(
-            $this->withMediaIfSupported(resolve(Brand::class)::query()->enabled())
-                ->with($this->requestedIncludeLoads('brand'))
-        )
-            ->where('slug', $slug)
-            ->firstOrFail();
+        $query = $this->withMediaIfSupported(resolve(Brand::class)::query()->enabled())
+            ->with($this->requestedIncludeLoads('brand'));
+
+        $this->applyPublicIncludes('brand', $query);
+
+        $brand = $query->where('slug', $slug)->firstOrFail();
 
         $this->loadStockThroughRelation(collect([$brand]));
 

@@ -1,4 +1,4 @@
-import type { Entity } from './common'
+import type { Entity, ResourceId } from './common'
 
 export enum FieldType {
   TEXT = 'text',
@@ -41,7 +41,7 @@ export interface Attribute extends Entity {
  */
 export interface AttributeValue {
   /** The internal id (admin contexts only). */
-  id?: number | string
+  id?: ResourceId
   /** The display value. */
   value: string | number
   /** The key identifier (used as the facet filter value). */
@@ -56,7 +56,7 @@ export interface AttributeValue {
    */
   swatch_url?: string | null
   /** The attribute ID this value belongs to (admin contexts only). */
-  attribute_id?: number
+  attribute_id?: ResourceId
   /** The attribute this value belongs to. */
   attribute?: Attribute
 }
