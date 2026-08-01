@@ -81,10 +81,27 @@ trait SerializesMedia
         return [
             'id' => $media->uuid,
             'url' => $media->getFullUrl(),
+            'conversions' => $this->conversionUrls($media),
             'name' => $media->name,
             'extension' => $media->extension,
             'created_at' => $media->created_at?->toIso8601String(),
             'updated_at' => $media->updated_at?->toIso8601String(),
         ];
+    }
+
+    /**
+     * The resized variants a storefront should display instead of the original.
+     * Read from the media row rather than from the configured conversions, so
+     * an image uploaded before a conversion existed never advertises a url
+     * pointing at a file that was never written.
+     *
+     * @return array<string, string>
+     */
+    private function conversionUrls(Media $media): array
+    {
+        return $media->getGeneratedConversions()
+            ->filter()
+            ->map(fn (mixed $generated, string $name): string => $media->getFullUrl($name))
+            ->all();
     }
 }
