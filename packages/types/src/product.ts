@@ -8,6 +8,7 @@ import type {
   Metadata,
   Price,
   PriceRange,
+  ResourceId,
   SEOFields,
   ShippingFields,
 } from './common'
@@ -59,9 +60,9 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   /** Whether the product is available for purchase (own or variant stock, or backorderable). */
   in_stock?: boolean
   /** The supplier ID of the product. */
-  supplier_id?: number | null
+  supplier_id?: ResourceId | null
   /** The brand ID of the product. */
-  brand_id: number | null
+  brand_id: ResourceId | null
   /** The metadata of the product. */
   metadata: Metadata
   /** The supplier of the product. */

@@ -1,6 +1,6 @@
 import type { Carrier, CarrierOption } from './carrier'
 import type { Collection } from './collection'
-import type { Entity, Metadata } from './common'
+import type { Entity, Metadata, ResourceId } from './common'
 import type { Country } from './country'
 import type { Currency } from './currency'
 import type { PaymentMethod } from './payment_method'
@@ -18,7 +18,7 @@ export interface Zone extends Entity {
   /** Whether the zone is enabled. */
   is_enabled: boolean
   /** The currency ID of the zone. */
-  currency_id?: number | null
+  currency_id?: ResourceId | null
   /** The metadata of the zone. */
   metadata?: Metadata
   /** Computed: carriers names joined. */

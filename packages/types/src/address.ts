@@ -1,4 +1,4 @@
-import type { Entity, Metadata } from './common'
+import type { Entity, Metadata, ResourceId } from './common'
 import type { Country } from './country'
 
 export enum AddressType {
@@ -39,9 +39,9 @@ export interface Address extends Entity {
   /** Whether this is the default billing address. */
   billing_default: boolean
   /** ID of the user this address belongs to. */
-  user_id?: number
+  user_id?: ResourceId
   /** ID of the country this address belongs to. */
-  country_id?: number
+  country_id?: ResourceId
   /** The ISO 3166-1 alpha-2 country code (store API). */
   country_code?: string
   /** The country of the address. */

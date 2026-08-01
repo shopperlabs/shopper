@@ -1,4 +1,4 @@
-import type { Entity } from './common'
+import type { Entity, ResourceId } from './common'
 import type { Country } from './country'
 
 /**
@@ -34,7 +34,7 @@ export interface Inventory extends Entity {
   /** The longitude of the inventory location. */
   longitude: number
   /** The country ID of the inventory location. */
-  country_id: number
+  country_id: ResourceId
   /** The country of the inventory location. */
   country?: Country
   /** The inventory histories. */
@@ -54,15 +54,15 @@ export interface InventoryHistory extends Entity {
   /** The description of the history entry. */
   description: string | null
   /** The user ID who made the adjustment. */
-  user_id: number | null
+  user_id: ResourceId | null
   /** The inventory ID. */
-  inventory_id: number
+  inventory_id: ResourceId
   /** The ID of the stockable entity. */
-  stockable_id: number
+  stockable_id: ResourceId
   /** The type of the stockable entity. */
   stockable_type: string
   /** The ID of the reference entity. */
-  reference_id?: number | null
+  reference_id?: ResourceId | null
   /** The type of the reference entity. */
   reference_type?: string | null
   /** The computed adjustment display. */

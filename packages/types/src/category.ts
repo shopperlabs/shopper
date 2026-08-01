@@ -1,4 +1,4 @@
-import type { Entity, Metadata, SEOFields } from './common'
+import type { Entity, Metadata, ResourceId, SEOFields } from './common'
 import type { Media } from './media'
 import type { Product } from './product'
 
@@ -16,8 +16,8 @@ export interface Category extends Entity, SEOFields {
   is_enabled: boolean
   /** The position of the category. */
   position: number
-  /** The id of the parent category. */
-  parent_id: number | null
+  /** The public id of the parent category, null on a root category. */
+  parent_id: ResourceId | null
   /** The metadata of the category. */
   metadata: Metadata
   /** The thumbnail of the category. */

@@ -1,4 +1,4 @@
-import type { Entity, Metadata, Price, ShippingFields } from './common'
+import type { Entity, Metadata, Price, ResourceId, ShippingFields } from './common'
 import type { Media } from './media'
 import type { Product } from './product'
 
@@ -36,7 +36,7 @@ export interface ProductVariant extends Entity, ShippingFields {
   /** Whether backorders are allowed. */
   allow_backorder: boolean
   /** The product ID this variant belongs to. */
-  product_id: number
+  product_id: ResourceId
   /** The stock quantity of the variant. */
   stock?: number
   /** Whether the variant is available for purchase (in stock or backorderable). */

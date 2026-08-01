@@ -1,5 +1,5 @@
 import type { Channel } from './channel'
-import type { Entity, Metadata } from './common'
+import type { Entity, Metadata, ResourceId } from './common'
 import type { Country } from './country'
 import type { Customer } from './customer'
 import type { Discount } from './discount'
@@ -59,13 +59,13 @@ export interface Cart extends Entity {
   /** Whether taxes are already included in the prices (store API). */
   tax_inclusive?: boolean
   /** The composite id `{carrier_code}:{service_code}` of the selected shipping option. */
-  shipping_option_id?: string | null
+  shipping_option_id?: ResourceId | null
   /** The customer ID. */
-  customer_id: number | null
+  customer_id: ResourceId | null
   /** The channel ID. */
-  channel_id: number | null
+  channel_id: ResourceId | null
   /** The zone ID. */
-  zone_id: number | null
+  zone_id: ResourceId | null
   /** The cart lines. */
   lines?: CartLine[]
   /** The cart addresses. */
@@ -87,11 +87,11 @@ export interface Cart extends Entity {
  */
 export interface CartLine extends Entity {
   /** The cart ID. */
-  cart_id?: number
+  cart_id?: ResourceId
   /** Whether the line holds a product or one of its variants. */
   purchasable_type?: 'product' | 'variant' | string
   /** The morph ID of the purchasable entity. */
-  purchasable_id?: number
+  purchasable_id?: ResourceId
   /** The quantity of the cart line. */
   quantity: number
   /** The unit price amount (in cents). */
@@ -119,11 +119,11 @@ export interface CartLine extends Entity {
  */
 export interface CartAddress extends Entity {
   /** The cart ID. */
-  cart_id: number
+  cart_id: ResourceId
   /** The address type (billing or shipping). */
   type: CartAddressType
   /** The country ID. */
-  country_id?: number | null
+  country_id?: ResourceId | null
   /** The ISO 3166-1 alpha-2 country code (store API). */
   country_code?: string | null
   /** The first name. */
@@ -158,15 +158,15 @@ export interface CartAddress extends Entity {
  */
 export interface CartLineAdjustment {
   /** The internal id of the entity (admin). */
-  id?: string | number
+  id?: ResourceId
   /** The cart line ID. */
-  cart_line_id?: number
+  cart_line_id?: ResourceId
   /** The adjustment amount (in cents). */
   amount: number
   /** The coupon/discount code. */
   code: string | null
   /** The discount ID (if applied from a discount). */
-  discount_id?: number | null
+  discount_id?: ResourceId | null
   /** The cart line this adjustment belongs to. */
   cart_line?: CartLine
   /** The discount this adjustment comes from. */
@@ -179,9 +179,9 @@ export interface CartLineAdjustment {
  */
 export interface CartLineTaxLine {
   /** The internal id of the entity (admin). */
-  id?: string | number
+  id?: ResourceId
   /** The cart line ID. */
-  cart_line_id?: number
+  cart_line_id?: ResourceId
   /** The tax code (e.g., "VAT", "GST"). */
   code: string
   /** The tax name (e.g., "TVA 20%"). */
@@ -191,7 +191,7 @@ export interface CartLineTaxLine {
   /** The calculated tax amount (in cents). */
   amount: number
   /** The source tax rate ID. */
-  tax_rate_id?: number | null
+  tax_rate_id?: ResourceId | null
   /** The cart line this tax line belongs to. */
   cart_line?: CartLine
   /** The source tax rate. */

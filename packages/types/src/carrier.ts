@@ -1,4 +1,4 @@
-import type { Entity, Metadata } from './common'
+import type { Entity, Metadata, ResourceId } from './common'
 import type { Media } from './media'
 import type { Zone } from './zone'
 
@@ -43,9 +43,9 @@ export interface CarrierOption extends Entity {
   /** Whether the carrier option is enabled. */
   is_enabled: boolean
   /** The zone ID this option belongs to. */
-  zone_id: number
+  zone_id: ResourceId
   /** The carrier ID this option belongs to. */
-  carrier_id: number
+  carrier_id: ResourceId
   /** The metadata of the carrier option. */
   metadata: Metadata
   /** The zone of the carrier option. */

@@ -1,4 +1,4 @@
-import type { Entity, Metadata } from './common'
+import type { Entity, Metadata, ResourceId } from './common'
 import type { Order } from './order'
 import type { PaymentMethod } from './payment_method'
 
@@ -39,9 +39,9 @@ export interface PaymentTransaction extends Entity {
   /** The metadata of the transaction. */
   metadata: Metadata
   /** The order ID. */
-  order_id: number | null
+  order_id: ResourceId | null
   /** The payment method ID. */
-  payment_method_id: number | null
+  payment_method_id: ResourceId | null
   /** The order. */
   order?: Order
   /** The payment method. */

@@ -1,6 +1,6 @@
 import type { CarrierOption } from './carrier'
 import type { Channel } from './channel'
-import type { Entity, Metadata } from './common'
+import type { Entity, Metadata, ResourceId } from './common'
 import type { Customer } from './customer'
 import type { PaymentMethod } from './payment_method'
 import type { OrderTaxLine } from './tax'
@@ -94,23 +94,23 @@ export interface Order extends Entity {
   /** The date the order was archived. */
   archived_at: string | null
   /** The zone ID. */
-  zone_id: number | null
+  zone_id: ResourceId | null
   /** The shipping address ID. */
-  shipping_address_id: number | null
+  shipping_address_id: ResourceId | null
   /** The billing address ID. */
-  billing_address_id: number | null
+  billing_address_id: ResourceId | null
   /** The payment method ID. */
-  payment_method_id: number | null
+  payment_method_id: ResourceId | null
   /** The customer ID. */
-  customer_id: number | null
+  customer_id: ResourceId | null
   /** The channel ID. */
-  channel_id: number | null
+  channel_id: ResourceId | null
   /** The parent order ID (for split orders). */
-  parent_order_id: number | null
+  parent_order_id: ResourceId | null
   /** The metadata of the order. */
   metadata?: Metadata
   /** The shipping option ID. */
-  shipping_option_id?: number | null
+  shipping_option_id?: ResourceId | null
   /** The shipping option. */
   shippingOption?: CarrierOption
   /** The shipping address. */
@@ -162,13 +162,13 @@ export interface OrderItem extends Entity {
   /** The SKU of the order item. */
   sku: string | null
   /** The product ID. */
-  product_id: number
+  product_id: ResourceId
   /** The product type (morph type). */
   product_type: string
   /** The order ID. */
-  order_id: number
+  order_id: ResourceId
   /** The order shipping ID. */
-  order_shipping_id: number | null
+  order_shipping_id: ResourceId | null
   /** The fulfillment status. */
   fulfillment_status: FulfillmentStatus | null
   /** The order. */
@@ -206,7 +206,7 @@ export interface OrderAddress extends Entity {
   /** The country name. */
   country_name: string | null
   /** The customer ID. */
-  customer_id?: number | null
+  customer_id?: ResourceId | null
   /** The customer. */
   customer?: Customer
 }
@@ -232,9 +232,9 @@ export interface OrderShipping extends Entity {
   /** The shipping voucher data. */
   voucher: Record<string, unknown> | null
   /** The order ID. */
-  order_id: number
+  order_id: ResourceId
   /** The carrier ID. */
-  carrier_id: number | null
+  carrier_id: ResourceId | null
   /** The order. */
   order?: Order
   /** The carrier. */
@@ -251,7 +251,7 @@ export interface OrderShipping extends Entity {
  * OrderShippingEvent model.
  */
 export interface OrderShippingEvent {
-  id?: number | string
+  id?: ResourceId
   /** The event status. */
   status: ShipmentStatus
   /** The description of the event. */
@@ -269,7 +269,7 @@ export interface OrderShippingEvent {
   /** The creation date. */
   created_at?: string
   /** The order shipping ID. */
-  order_shipping_id?: number
+  order_shipping_id?: ResourceId
   /** The shipment this event belongs to. */
   shipment?: OrderShipping
 }
@@ -289,9 +289,9 @@ export interface OrderRefund extends Entity {
   /** The currency code. */
   currency: string
   /** The order ID. */
-  order_id: number
+  order_id: ResourceId
   /** The user ID who processed the refund. */
-  user_id: number | null
+  user_id: ResourceId | null
   /** The metadata of the refund. */
   metadata: Metadata
   /** The order. */
