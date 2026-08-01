@@ -85,6 +85,38 @@ trait BuildsApiQueries
     }
 
     /**
+     * Install the custom includes configured for a resource on an endpoint that
+     * reads a single record. Only a listing goes through the spatie query
+     * builder, which is what installs them; a show endpoint resolves its
+     * includes straight from the query string, so without this the relations
+     * are lazy-loaded at serialization time with no constraint at all.
+     *
+     * @param  Builder<Model>  $query
+     * @return Builder<Model>
+     */
+    protected function applyPublicIncludes(string $resource, Builder $query): Builder
+    {
+        $requested = $this->requestedIncludes();
+
+        /** @var array<int|string, string> $includes */
+        $includes = (array) config('shopper.api.resources.'.$resource.'.includes', []);
+
+        foreach ($includes as $name => $class) {
+            if (is_int($name) || ! $requested->contains($name)) {
+                continue;
+            }
+
+            $include = resolve($class);
+
+            if ($include instanceof IncludeInterface) {
+                $include($query, $name);
+            }
+        }
+
+        return $query;
+    }
+
+    /**
      * @template TModel of Model
      *
      * @param  Builder<TModel>  $query

@@ -45,10 +45,10 @@ return [
             ],
             'sorts' => ['name', 'created_at', 'published_at', 'price' => ['field', 'min_price']],
             'includes' => [
-                'brand',
+                'brand' => Shopper\Api\Http\Includes\EnabledRelation::class,
                 'variants',
-                'categories',
-                'collections',
+                'categories' => Shopper\Api\Http\Includes\EnabledRelation::class,
+                'collections' => Shopper\Api\Http\Includes\PublishedRelation::class,
                 'options',
                 'relatedProducts' => Shopper\Api\Http\Includes\PublicProducts::class,
                 'rating' => Shopper\Api\Http\Includes\RatingAggregate::class,
@@ -56,15 +56,20 @@ return [
             'include_loads' => [
                 'variants' => ['variants.prices.currency', 'variants.values.attribute'],
                 'options' => ['options.values', 'attributeProducts.media'],
+                'categories' => ['categories.parent'],
             ],
         ],
         'category' => [
             'filters' => ['name' => 'partial'],
             'sorts' => ['name', 'position'],
             'includes' => [
-                'parent',
-                'children',
+                'parent' => Shopper\Api\Http\Includes\EnabledRelation::class,
+                'children' => Shopper\Api\Http\Includes\EnabledRelation::class,
                 'products' => Shopper\Api\Http\Includes\PublicProducts::class,
+            ],
+            'include_loads' => [
+                'parent' => ['parent.parent'],
+                'children' => ['children.parent'],
             ],
         ],
         'collection' => [
@@ -95,7 +100,7 @@ return [
                 'zone' => ['exact', 'zones.code'],
             ],
             'sorts' => ['name'],
-            'includes' => ['zones'],
+            'includes' => ['zones' => Shopper\Api\Http\Includes\EnabledRelation::class],
         ],
         'zone' => [
             'filters' => ['name' => 'partial', 'code' => 'exact'],

@@ -6,7 +6,6 @@ namespace Shopper\Api\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Api\Http\Includes\PublicProducts;
 use Shopper\Core\Models\Contracts\Channel;
 
 trait ResolvesChannel
@@ -30,26 +29,6 @@ trait ResolvesChannel
         }
 
         return $query;
-    }
-
-    /**
-     * Eager-load a products relation through the public catalog constraints on
-     * the endpoints that read a single record, where no query builder installs
-     * the custom include. Without it the relation is lazy-loaded at
-     * serialization time, unfiltered.
-     *
-     * @template TModel of Model
-     *
-     * @param  Builder<TModel>  $query
-     * @return Builder<TModel>
-     */
-    protected function withPublicProducts(Builder $query, string $relation = 'products'): Builder
-    {
-        if (! $this->requestedIncludes()->contains($relation)) {
-            return $query;
-        }
-
-        return $query->with([$relation => PublicProducts::constraint()]);
     }
 
     protected function resolvedChannel(): ?Channel

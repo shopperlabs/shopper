@@ -11,7 +11,6 @@ use Shopper\Api\Concerns\LoadsPriceRange;
 use Shopper\Api\Concerns\LoadsStock;
 use Shopper\Api\Concerns\ResolvesChannel;
 use Shopper\Api\Concerns\ResolvesCurrency;
-use Shopper\Api\Http\Includes\RatingAggregate;
 use Shopper\Api\Http\Resources\ProductResource;
 use Shopper\Core\Models\Contracts\Product;
 use TiMacDonald\JsonApi\JsonApiResource;
@@ -70,11 +69,7 @@ final class ProductController
             ->where('slug', $slug);
 
         $this->applyChannelScope($query);
-        $this->withPublicProducts($query, 'relatedProducts');
-
-        if ($this->requestedIncludes()->contains('rating')) {
-            (new RatingAggregate)($query, 'rating');
-        }
+        $this->applyPublicIncludes('product', $query);
 
         $product = $query->firstOrFail();
 

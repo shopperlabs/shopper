@@ -25,12 +25,10 @@ final class CollectionController
 
     public function show(string $slug): JsonApiResource
     {
-        $collection = $this->withPublicProducts(
-            $this->withMediaIfSupported(resolve(Collection::class)::query()->published())
-        )
-            ->where('slug', $slug)
-            ->firstOrFail();
+        $query = $this->withMediaIfSupported(resolve(Collection::class)::query()->published());
 
-        return CollectionResource::make($collection);
+        $this->applyPublicIncludes('collection', $query);
+
+        return CollectionResource::make($query->where('slug', $slug)->firstOrFail());
     }
 }
