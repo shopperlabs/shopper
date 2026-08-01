@@ -118,5 +118,47 @@ return [
             'includes' => [],
             'latest_limit' => 20,
         ],
+        'legal' => [
+            'filters' => ['title' => 'partial'],
+            'sorts' => ['title', 'updated_at'],
+            'includes' => [],
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Public store settings
+    |--------------------------------------------------------------------------
+    |
+    | Here you may list the setting keys the /store/settings endpoint returns.
+    | The settings table also holds administration keys, so the endpoint reads
+    | from this allowlist and never from the table itself. Add your own keys to
+    | expose them; a key that was never filled in comes back as null.
+    |
+    | The `country_id`, `default_currency_id`, `currencies`, `logo`, `cover`
+    | and `social_links` keys are resolved to their public shape (ISO code,
+    | currency code, media URL) rather than the internal value.
+    |
+    */
+    'settings' => [
+        'expose' => [
+            'name',
+            'legal_name',
+            'about',
+            'email',
+            'phone_number',
+            'street_address',
+            'city',
+            'postal_code',
+            'state',
+            'country_id',
+            'logo',
+            'cover',
+            'social_links',
+            'default_currency_id',
+            'currencies',
+        ],
+
+        'max_age' => 300,
     ],
 ];

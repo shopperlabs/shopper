@@ -7,7 +7,9 @@ namespace Shopper\Core\Models;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Core\Database\Factories\LegalFactory;
 use Shopper\Core\Models\Contracts\Legal as LegalContract;
 use Shopper\Core\Models\Traits\HasSlug;
 
@@ -22,6 +24,9 @@ use Shopper\Core\Models\Traits\HasSlug;
  */
 class Legal extends Model implements LegalContract
 {
+    /** @use HasFactory<LegalFactory> */
+    use HasFactory;
+
     use HasSlug;
 
     protected $guarded = [];
@@ -29,6 +34,11 @@ class Legal extends Model implements LegalContract
     public function getTable(): string
     {
         return shopper_table('legals');
+    }
+
+    protected static function newFactory(): LegalFactory
+    {
+        return LegalFactory::new();
     }
 
     /**

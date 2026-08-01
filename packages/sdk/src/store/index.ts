@@ -5,6 +5,8 @@ import type {
   Collection,
   Country,
   Currency,
+  Legal,
+  StoreSettings,
   Zone,
 } from '@shopperlabs/shopper-types'
 
@@ -17,6 +19,7 @@ import { CustomerModule } from './customer'
 import { OrderModule } from './order'
 import { ProductResource } from './product'
 import { ReviewModule } from './review'
+import { SingletonResource } from './singleton'
 
 export { CartModule } from './cart'
 export type {
@@ -35,13 +38,16 @@ export { OrderModule } from './order'
 export { ProductResource } from './product'
 export type { ProductList, ReviewList } from './product'
 export { ReviewModule } from './review'
+export { SingletonResource } from './singleton'
 
 /**
  * Store API surface, mirroring the catalog and geo endpoints. Resources are
  * singular (sdk.store.product.list()) Geo resources
  * retrieve by code: sdk.store.country.retrieve('CM'), sdk.store.zone.retrieve('af'),
- * sdk.store.currency.retrieve('XAF'). Use `fetch()` for endpoints not yet
- * wrapped, including addon routes registered through shopper/http.
+ * sdk.store.currency.retrieve('XAF'). The store settings are a singleton:
+ * sdk.store.setting.retrieve(), or sdk.store.setting.get('email') for one key.
+ * Use `fetch()` for endpoints not yet wrapped, including addon routes
+ * registered through shopper/http.
  */
 export class StoreModule {
   public readonly product: ProductResource
@@ -55,6 +61,10 @@ export class StoreModule {
   public readonly brand: CollectionResource<Brand>
 
   public readonly attribute: Pick<CollectionResource<Attribute>, 'list'>
+
+  public readonly setting: SingletonResource<StoreSettings>
+
+  public readonly legal: CollectionResource<Legal>
 
   public readonly country: CollectionResource<Country>
 
@@ -77,6 +87,8 @@ export class StoreModule {
     this.collection = new CollectionResource<Collection>(client, `${prefix}/collections`)
     this.brand = new CollectionResource<Brand>(client, `${prefix}/brands`)
     this.attribute = new CollectionResource<Attribute>(client, `${prefix}/attributes`)
+    this.setting = new SingletonResource<StoreSettings>(client, `${prefix}/settings`)
+    this.legal = new CollectionResource<Legal>(client, `${prefix}/legals`)
     this.country = new CollectionResource<Country>(client, `${prefix}/countries`)
     this.zone = new CollectionResource<Zone>(client, `${prefix}/zones`)
     this.currency = new CollectionResource<Currency>(client, `${prefix}/currencies`)
