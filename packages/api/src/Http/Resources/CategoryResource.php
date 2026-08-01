@@ -27,7 +27,7 @@ final class CategoryResource extends JsonApiResource
             'slug' => $this->slug,
             'description' => $this->description,
             'position' => $this->position,
-            'parent_id' => $this->parent_id,
+            'parent_id' => $this->parent?->public_id,
             'seo_title' => $this->seo_title,
             'seo_description' => $this->seo_description,
             'metadata' => $this->metadata,
