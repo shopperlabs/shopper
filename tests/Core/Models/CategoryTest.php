@@ -119,4 +119,20 @@ describe(Category::class, function (): void {
         expect($category->metadata)->toBeArray()
             ->and($category->metadata)->toBe($metadata);
     });
+
+    it('rejects moving a category under one of its own descendants', function (): void {
+        $furniture = Category::factory()->create(['slug' => 'furniture']);
+        $sofas = Category::factory()->create(['slug' => 'sofas', 'parent_id' => $furniture->id]);
+        $corner = Category::factory()->create(['slug' => 'corner', 'parent_id' => $sofas->id]);
+
+        expect(fn () => $furniture->update(['parent_id' => (string) $corner->id]))
+            ->toThrow(RuntimeException::class);
+    });
+
+    it('rejects a category submitted as its own parent, even as a string', function (): void {
+        $furniture = Category::factory()->create(['slug' => 'furniture']);
+
+        expect(fn () => $furniture->update(['parent_id' => (string) $furniture->id]))
+            ->toThrow(RuntimeException::class);
+    });
 })->group('category', 'models');

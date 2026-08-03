@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Collection as SupportCollection;
 use Shopper\Core\Contracts\Media\HasMedia as ShopperHasMedia;
 use Shopper\Core\Database\Factories\CategoryFactory;
 use Shopper\Core\Models\Contracts\Category as CategoryContract;
@@ -18,6 +19,7 @@ use Shopper\Core\Models\Traits\HasMediaCollections;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\Searchable;
+use Shopper\Core\Queries\CategoryTree;
 use Shopper\Core\Traits\HasModelContract;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
@@ -80,6 +82,14 @@ class Category extends Model implements CategoryContract, ShopperHasMedia
     public function updateStatus(bool $status = true): void
     {
         $this->update(['is_enabled' => $status]);
+    }
+
+    /**
+     * @return SupportCollection<int, int>
+     */
+    public function enabledSubtreeIds(): SupportCollection
+    {
+        return new SupportCollection(resolve(CategoryTree::class)->subtreeIds($this->getKey()));
     }
 
     public function getLabelOptionName(): string
