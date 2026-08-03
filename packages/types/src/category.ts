@@ -26,8 +26,23 @@ export interface Category extends Entity, SEOFields {
   parent?: Category
   /** The children categories. */
   children?: Category[]
+  /** The enabled ancestors of the category, root first. */
+  ancestors?: Category[]
   /** The products of the category. */
   products?: Product[]
-  /** The slug path of the category. */
-  slug_path?: string
+  /** The number of ancestors above the category, zero on a root. */
+  depth?: number | null
+  /** The number of distinct public products in the category subtree. */
+  products_count?: number
+}
+
+/**
+ * A node of the public category tree, children nested recursively.
+ */
+export interface CategoryTreeNode {
+  id: ResourceId
+  name: string
+  slug: string
+  position: number
+  children: CategoryTreeNode[]
 }

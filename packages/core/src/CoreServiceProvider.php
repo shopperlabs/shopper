@@ -113,6 +113,7 @@ final class CoreServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->app->register(EventServiceProvider::class);
+        $this->app->scoped(Queries\CategoryTree::class);
 
         $this->registerConfigFiles();
         $this->registerDatabase();

@@ -43,6 +43,7 @@ return [
     'catalog' => [
         'unknown_currency' => 'The ":code" currency is unknown or not enabled on this shop.',
         'no_currency' => 'Price sorting and filtering need a configured currency on the shop.',
+        'filter_too_wide' => 'A filter accepts at most :max values.',
     ],
 
     'promotion' => [

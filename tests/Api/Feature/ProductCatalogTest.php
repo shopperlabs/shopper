@@ -10,8 +10,10 @@ use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
+use Shopper\Core\Models\Collection;
 use Shopper\Core\Models\Contracts\AttributeProduct as AttributeProductContract;
 use Shopper\Core\Models\Currency;
+use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Price;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
@@ -19,15 +21,15 @@ use Shopper\Core\Models\Review;
 
 uses(Tests\Api\TestCase::class);
 
-function publishedProduct(array $attributes = []): Product
+function publishedProduct(array $attributes = [], int $amount = 2999): Product
 {
     $product = Product::factory()->publish()->create($attributes + ['type' => ProductType::Standard]);
 
     Price::factory()->create([
         'priceable_id' => $product->id,
         'priceable_type' => $product->getMorphClass(),
-        'currency_id' => Currency::query()->value('id'),
-        'amount' => 2999,
+        'currency_id' => Currency::query()->where('code', shopper_currency())->value('id'),
+        'amount' => $amount,
         'compare_amount' => 3999,
     ]);
 
@@ -167,6 +169,70 @@ it('filters products by category', function (): void {
     expect($names)->toContain('Pixel')->and($names)->not->toContain('Sneaker');
 });
 
+it('filters products by category subtree', function (): void {
+    $furniture = Category::factory()->create(['name' => 'Furniture', 'slug' => 'furniture']);
+    $sofas = Category::factory()->create(['name' => 'Sofas', 'parent_id' => $furniture->id]);
+    $corner = Category::factory()->create(['name' => 'Corner', 'parent_id' => $sofas->id]);
+    $garden = Category::factory()->create(['name' => 'Garden', 'slug' => 'garden']);
+    $pots = Category::factory()->create(['name' => 'Pots', 'parent_id' => $garden->id]);
+
+    $direct = publishedProduct(['name' => 'Bookshelf']);
+    $direct->categories()->attach($furniture);
+
+    $deep = publishedProduct(['name' => 'Corner Sofa']);
+    $deep->categories()->attach($corner);
+
+    $foreign = publishedProduct(['name' => 'Flower Pot']);
+    $foreign->categories()->attach($pots);
+
+    $names = collect($this->getJson('/store/products?filter[category_tree]=furniture')->assertOk()->json('data'))
+        ->pluck('attributes.name');
+
+    expect($names)->toContain('Bookshelf')
+        ->and($names)->toContain('Corner Sofa')
+        ->and($names)->not->toContain('Flower Pot');
+});
+
+it('returns no products for an unknown category subtree', function (): void {
+    publishedProduct(['name' => 'Pixel']);
+
+    $this->getJson('/store/products?filter[category_tree]=nope')
+        ->assertOk()
+        ->assertJsonCount(0, 'data');
+});
+
+it('filters products by category subtree through the public identifier', function (): void {
+    $furniture = Category::factory()->create(['name' => 'Furniture', 'slug' => 'furniture']);
+    $sofas = Category::factory()->create(['name' => 'Sofas', 'parent_id' => $furniture->id]);
+
+    publishedProduct(['name' => 'Bookshelf'])->categories()->attach($sofas);
+    publishedProduct(['name' => 'Flower Pot']);
+
+    $names = collect($this->getJson('/store/products?filter[category_tree]='.$furniture->public_id)->assertOk()->json('data'))
+        ->pluck('attributes.name');
+
+    expect($names)->toContain('Bookshelf')->and($names)->not->toContain('Flower Pot');
+});
+
+it('hides the products of a disabled category subtree', function (): void {
+    $furniture = Category::factory()->create(['name' => 'Furniture', 'slug' => 'furniture']);
+    $unreleased = Category::factory()->create(['name' => 'Unreleased', 'parent_id' => $furniture->id]);
+
+    publishedProduct(['name' => 'Secret Sofa'])->categories()->attach($unreleased);
+    publishedProduct(['name' => 'Bookshelf'])->categories()->attach($furniture);
+
+    $unreleased->update(['is_enabled' => false]);
+
+    $names = collect($this->getJson('/store/products?filter[category_tree]='.$furniture->slug)->assertOk()->json('data'))
+        ->pluck('attributes.name');
+
+    expect($names)->toContain('Bookshelf')->and($names)->not->toContain('Secret Sofa');
+
+    $this->getJson('/store/products?filter[category_tree]='.$unreleased->slug)
+        ->assertOk()
+        ->assertJsonCount(0, 'data');
+});
+
 it('searches products by term', function (): void {
     publishedProduct(['name' => 'Wireless Headphones']);
     publishedProduct(['name' => 'Running Shoes']);
@@ -300,8 +366,8 @@ it('shapes the payload by product type', function (): void {
         ->and($products->get('ShapeVariant'))->toHaveKey('in_stock')
         ->not->toHaveKeys(['stock', 'variants_stock', 'files'])
         ->and($products->get('ShapeVirtual'))->toHaveKeys(['files', 'stock', 'in_stock'])
-        ->and($products->get('ShapeExternal'))->toMatchArray(['external_id' => 'ext-42'])
-        ->not->toHaveKeys(['stock', 'variants_stock', 'in_stock', 'files']);
+        ->and($products->get('ShapeExternal'))->toMatchArray(['external_id' => 'ext-42', 'in_stock' => true])
+        ->not->toHaveKeys(['stock', 'variants_stock', 'files']);
 });
 
 it('only exposes the variants and options relationships for capable product types', function (): void {
@@ -380,4 +446,168 @@ it('filters and sorts the product list through the allowlist', function (): void
     )->pluck('attributes.name');
 
     expect($names->toArray())->toBe(['ZzzCatalogAlpha', 'ZzzCatalogBeta']);
+});
+
+it('lists the products matching any value of a multi-valued facet', function (): void {
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => 'red']);
+    $blue = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Blue', 'key' => 'blue']);
+
+    $both = publishedProduct(['name' => 'FacetBoth', 'type' => ProductType::Variant]);
+    ProductVariant::factory()->create(['product_id' => $both->id])->values()->attach([$red->id, $blue->id]);
+
+    $blueOnly = publishedProduct(['name' => 'FacetBlue', 'type' => ProductType::Variant]);
+    ProductVariant::factory()->create(['product_id' => $blueOnly->id])->values()->attach($blue->id);
+
+    publishedProduct(['name' => 'FacetNone', 'type' => ProductType::Variant]);
+
+    $names = collect($this->getJson('/store/products?filter[option]=red,blue')->assertOk()->json('data'))
+        ->pluck('attributes.name')
+        ->sort()
+        ->values();
+
+    expect($names->all())->toBe(['FacetBlue', 'FacetBoth']);
+});
+
+it('keeps two different facets an intersection', function (): void {
+    $nordika = Brand::factory()->create(['name' => 'Nordika', 'slug' => 'nordika', 'is_enabled' => true]);
+    $hem = Brand::factory()->create(['name' => 'Hem', 'slug' => 'hem', 'is_enabled' => true]);
+
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => 'red']);
+
+    $match = publishedProduct(['name' => 'IntersectHit', 'type' => ProductType::Variant, 'brand_id' => $nordika->id]);
+    ProductVariant::factory()->create(['product_id' => $match->id])->values()->attach($red->id);
+
+    $otherBrand = publishedProduct(['name' => 'IntersectMiss', 'type' => ProductType::Variant, 'brand_id' => $hem->id]);
+    ProductVariant::factory()->create(['product_id' => $otherBrand->id])->values()->attach($red->id);
+
+    $names = collect(
+        $this->getJson('/store/products?filter[option]=red&filter[brand]=nordika,unknown')->assertOk()->json('data')
+    )->pluck('attributes.name');
+
+    expect($names->all())->toBe(['IntersectHit']);
+});
+
+it('matches an option declared on a product that has no variants', function (): void {
+    $product = publishedProduct(['name' => 'StandardOption', 'type' => ProductType::Standard]);
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $green = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Green', 'key' => 'green']);
+    $product->options()->attach($color->id, ['attribute_value_id' => $green->id]);
+
+    publishedProduct(['name' => 'StandardPlain', 'type' => ProductType::Standard]);
+
+    $names = collect($this->getJson('/store/products?filter[option]=green')->assertOk()->json('data'))
+        ->pluck('attributes.name');
+
+    expect($names->all())->toBe(['StandardOption']);
+});
+
+it('never contradicts the in_stock attribute of the rows it filters', function (): void {
+    $inventory = Inventory::factory()->create();
+
+    publishedProduct(['name' => 'StockEmpty', 'type' => ProductType::Standard]);
+    publishedProduct(['name' => 'StockBackorder', 'type' => ProductType::Standard, 'allow_backorder' => true]);
+    publishedProduct(['name' => 'StockExternal', 'type' => ProductType::External]);
+    publishedProduct(['name' => 'StockLegacy', 'type' => null]);
+    publishedProduct(['name' => 'StockFilled', 'type' => ProductType::Standard])->mutateStock($inventory->id, 4);
+    publishedProduct(['name' => 'StockVirtual', 'type' => ProductType::Virtual])->mutateStock($inventory->id, 1);
+    publishedProduct(['name' => 'StockVariantEmpty', 'type' => ProductType::Variant]);
+
+    $negative = publishedProduct(['name' => 'StockNegative', 'type' => ProductType::Standard]);
+    $negative->mutateStock($inventory->id, 2);
+    $negative->decreaseStock($inventory->id, 5);
+
+    $variantProduct = publishedProduct(['name' => 'StockVariant', 'type' => ProductType::Variant]);
+    ProductVariant::factory()->create(['product_id' => $variantProduct->id])->mutateStock($inventory->id, 2);
+
+    $all = collect($this->getJson('/store/products?page[size]=50')->assertOk()->json('data'));
+    $available = collect($this->getJson('/store/products?filter[in_stock]=1&page[size]=50')->assertOk()->json('data'));
+    $unavailable = collect($this->getJson('/store/products?filter[in_stock]=false&page[size]=50')->assertOk()->json('data'));
+
+    expect($available->pluck('attributes.name')->sort()->values()->all())
+        ->toBe(['StockBackorder', 'StockExternal', 'StockFilled', 'StockVariant', 'StockVirtual'])
+        ->and($unavailable->pluck('attributes.name')->sort()->values()->all())
+        ->toBe(['StockEmpty', 'StockLegacy', 'StockNegative', 'StockVariantEmpty'])
+        ->and($available->count() + $unavailable->count())->toBe($all->count())
+        ->and($available->firstWhere('attributes.name', 'StockExternal')['attributes']['in_stock'])->toBeTrue()
+        ->and($available->pluck('attributes.in_stock')->filter(fn (?bool $value): bool => $value === false))->toBeEmpty()
+        ->and($unavailable->pluck('attributes.in_stock')->filter(fn (?bool $value): bool => $value === true))->toBeEmpty();
+});
+
+it('hides the products reached through a disabled category, brand or unpublished collection facet', function (): void {
+    $staged = Category::factory()->create(['name' => 'Staged', 'slug' => 'staged', 'is_enabled' => false]);
+    publishedProduct(['name' => 'StagedProduct'])->categories()->attach($staged);
+
+    $ghost = Brand::factory()->create(['name' => 'Ghost', 'slug' => 'ghost', 'is_enabled' => false]);
+    publishedProduct(['name' => 'GhostProduct', 'brand_id' => $ghost->id]);
+
+    $embargoed = Collection::factory()->create(['name' => 'Embargoed', 'slug' => 'embargoed', 'published_at' => now()->addYear()]);
+    publishedProduct(['name' => 'EmbargoedProduct'])->collections()->attach($embargoed->id);
+
+    $this->getJson('/store/products?filter[category]=staged')->assertOk()->assertJsonCount(0, 'data');
+    $this->getJson('/store/products?filter[brand]=ghost')->assertOk()->assertJsonCount(0, 'data');
+    $this->getJson('/store/products?filter[collection]=embargoed')->assertOk()->assertJsonCount(0, 'data');
+});
+
+it('unions the subtrees of two category_tree values and skips an unknown one', function (): void {
+    $furniture = Category::factory()->create(['name' => 'Furniture', 'slug' => 'furniture']);
+    $garden = Category::factory()->create(['name' => 'Garden', 'slug' => 'garden']);
+
+    publishedProduct(['name' => 'Bookshelf'])->categories()->attach($furniture);
+    publishedProduct(['name' => 'FlowerPot'])->categories()->attach($garden);
+    publishedProduct(['name' => 'Standalone']);
+
+    $names = collect(
+        $this->getJson('/store/products?filter[category_tree]=furniture,garden,nope')->assertOk()->json('data')
+    )->pluck('attributes.name')->sort()->values();
+
+    expect($names->all())->toBe(['Bookshelf', 'FlowerPot']);
+});
+
+it('refuses a filter carrying more values than the allowed breadth', function (): void {
+    publishedProduct(['name' => 'Pixel']);
+
+    $this->getJson('/store/products?filter[option]='.implode(',', range(1, 51)))->assertStatus(422);
+
+    $this->getJson('/store/products?filter[option]='.implode(',', range(1, 50)))
+        ->assertOk()
+        ->assertJsonCount(0, 'data');
+});
+
+it('bounds the listing prices on the result before the price filters narrow it', function (): void {
+    publishedProduct(['name' => 'BoundCheap'], amount: 1000);
+    publishedProduct(['name' => 'BoundMid'], amount: 5000);
+    publishedProduct(['name' => 'BoundPricey'], amount: 245000);
+
+    $response = $this->getJson('/store/products?include=price_range&filter[price_min]=4000')->assertOk();
+
+    expect($response->json('meta.price_range'))->toBe([
+        'min' => 1000,
+        'max' => 245000,
+        'currency_code' => $response->json('meta.currency'),
+    ])
+        ->and(collect($response->json('data'))->pluck('attributes.name')->sort()->values()->all())
+        ->toBe(['BoundMid', 'BoundPricey']);
+});
+
+it('bounds the listing prices within the other filters and omits them unless asked', function (): void {
+    $nordika = Brand::factory()->create(['name' => 'Nordika', 'slug' => 'nordika', 'is_enabled' => true]);
+
+    publishedProduct(['name' => 'ScopedIn', 'brand_id' => $nordika->id], amount: 1000);
+    publishedProduct(['name' => 'ScopedOut'], amount: 900000);
+
+    $scoped = $this->getJson('/store/products?include=price_range&filter[brand]=nordika')->assertOk();
+
+    expect($scoped->json('meta.price_range.min'))->toBe(1000)
+        ->and($scoped->json('meta.price_range.max'))->toBe(1000)
+        ->and($this->getJson('/store/products')->assertOk()->json('meta'))->not->toHaveKey('price_range');
+});
+
+it('returns a null price range when nothing in the result carries a price', function (): void {
+    Product::factory()->publish()->create(['name' => 'Unpriced', 'type' => ProductType::Standard]);
+
+    $this->getJson('/store/products?include=price_range&filter[name]=Unpriced')
+        ->assertOk()
+        ->assertJsonPath('meta.price_range', null);
 });

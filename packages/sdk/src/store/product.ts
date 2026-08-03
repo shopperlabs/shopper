@@ -6,10 +6,15 @@ import { CollectionResource, type Paginated } from './collection'
 
 /**
  * A paginated products listing: the rows plus the currency every price-aware
- * value of the response is expressed in (`price_range`, price sorting).
+ * value of the response is expressed in. `price_range` bounds the whole
+ * filtered result, is only present with `include: 'price_range'`, and
+ * ignores `price_min`/`price_max`.
  */
 export interface ProductList extends Paginated<Product> {
-  meta: { currency: string | null } & Record<string, unknown>
+  meta: {
+    currency: string | null
+    price_range?: { min: number; max: number; currency_code: string | null } | null
+  } & Record<string, unknown>
 }
 
 /**

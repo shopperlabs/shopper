@@ -9,6 +9,7 @@ use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Collection;
 use Shopper\Core\Models\Product;
+use Shopper\Core\Models\ProductTag;
 
 uses(Tests\Api\TestCase::class);
 
@@ -59,6 +60,32 @@ it('hides disabled brands from the listing', function (): void {
 
     $ids = collect($this->getJson('/store/brands?filter[name]=Brand')->assertOk()->json('data'))->pluck('id');
     expect($ids)->toContain($enabled->public_id)->and($ids)->not->toContain($disabled->public_id);
+});
+
+it('lists tags and exposes them on a product through the include', function (): void {
+    $tag = ProductTag::factory()->create(['name' => 'TagSummer']);
+    $other = ProductTag::factory()->create(['name' => 'TagWinter']);
+    $product = Product::factory()->publish()->create();
+    $product->tags()->attach($tag->id);
+
+    $ids = collect($this->getJson('/store/tags?filter[name]=Tag')->assertOk()->json('data'))->pluck('id');
+    expect($ids)->toContain($tag->public_id)->and($ids)->toContain($other->public_id);
+
+    $this->getJson('/store/products/'.$product->slug.'?include=tags')
+        ->assertOk()
+        ->assertJsonPath('included.0.type', 'tags')
+        ->assertJsonPath('included.0.id', $tag->public_id)
+        ->assertJsonPath('included.0.attributes.name', 'TagSummer');
+});
+
+it('shows only public products through the tag products include', function (): void {
+    $tag = ProductTag::factory()->create(['name' => 'TagVisible']);
+    $published = Product::factory()->publish()->create();
+    $draft = Product::factory()->create(['published_at' => now()->addYear()]);
+    $tag->products()->attach([$published->id, $draft->id]);
+
+    $ids = collect($this->getJson('/store/tags?filter[name]=TagVisible&include=products')->assertOk()->json('included') ?? [])->pluck('id');
+    expect($ids)->toContain($published->public_id)->and($ids)->not->toContain($draft->public_id);
 });
 
 it('lists only filterable facet attributes with their embedded values', function (): void {

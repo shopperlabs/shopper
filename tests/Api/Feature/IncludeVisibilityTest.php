@@ -39,6 +39,17 @@ it('never includes a disabled category', function (): void {
     expect(includedNames($this, '/store/products/'.$product->slug.'?include=categories'))->toBe(['Visible']);
 });
 
+it('never includes a category hidden through a disabled ancestor', function (): void {
+    $disabledRoot = Category::factory()->create(['name' => 'AncestorOff', 'slug' => 'ancestor-off', 'is_enabled' => false]);
+    $orphan = Category::factory()->create(['name' => 'OrphanOn', 'slug' => 'orphan-on', 'is_enabled' => true, 'parent_id' => $disabledRoot->id]);
+    $visible = Category::factory()->create(['name' => 'StillOn', 'slug' => 'still-on', 'is_enabled' => true]);
+
+    $product = Product::factory()->publish()->create(['name' => 'P2', 'type' => ProductType::Standard]);
+    $product->categories()->attach([$visible->id, $orphan->id]);
+
+    expect(includedNames($this, '/store/products/'.$product->slug.'?include=categories'))->toBe(['StillOn']);
+});
+
 it('never includes a collection that is not published yet', function (): void {
     $live = Collection::factory()->create(['name' => 'Live', 'slug' => 'live', 'published_at' => now()->subDay()]);
     $embargoed = Collection::factory()->create(['name' => 'Embargoed', 'slug' => 'embargoed', 'published_at' => now()->addYear()]);
@@ -59,10 +70,7 @@ it('never includes a disabled child or parent category', function (): void {
     $hiddenRoot = Category::factory()->create(['name' => 'HiddenRoot', 'slug' => 'hidden-root', 'is_enabled' => false]);
     $child = Category::factory()->create(['name' => 'Orphan', 'slug' => 'orphan', 'is_enabled' => true, 'parent_id' => $hiddenRoot->id]);
 
-    $this->getJson('/store/categories/'.$child->slug.'?include=parent')
-        ->assertOk()
-        ->assertJsonPath('included', null)
-        ->assertJsonPath('data.attributes.parent_id', null);
+    $this->getJson('/store/categories/'.$child->slug.'?include=parent')->assertNotFound();
 });
 
 it('never includes a disabled zone', function (): void {

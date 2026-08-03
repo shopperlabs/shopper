@@ -62,3 +62,39 @@ it('resolves the parent identifier through the children include too', function (
 
     expect($included['attributes']['parent_id'])->toBe($parent->public_id);
 });
+
+it('returns the nested public tree in one call', function (): void {
+    $root = category('TreeRoot');
+    $child = category('TreeChild', $root);
+    $grandchild = category('TreeGrand', $child);
+
+    $disabledRoot = Category::factory()->create(['name' => 'TreeHidden', 'is_enabled' => false]);
+    Category::factory()->create(['name' => 'TreeOrphan', 'is_enabled' => true, 'parent_id' => $disabledRoot->id]);
+
+    $data = collect($this->getJson('/store/categories/tree')->assertOk()->json('data'));
+
+    $names = $data->pluck('name');
+    expect($names)->toContain('TreeRoot')
+        ->and($names)->not->toContain('TreeHidden')
+        ->and($names)->not->toContain('TreeOrphan');
+
+    $rootNode = $data->firstWhere('name', 'TreeRoot');
+    expect($rootNode['id'])->toBe($root->public_id)
+        ->and($rootNode['slug'])->toBe($root->fresh()->slug)
+        ->and($rootNode['children'][0]['id'])->toBe($child->public_id)
+        ->and($rootNode['children'][0]['children'][0]['id'])->toBe($grandchild->public_id)
+        ->and($rootNode['children'][0]['children'][0]['children'])->toBe([]);
+});
+
+it('orders the tree nodes by position on every level', function (): void {
+    $root = category('PosRoot');
+    $second = category('PosSecond', $root);
+    $first = category('PosFirst', $root);
+    $second->update(['position' => 2]);
+    $first->update(['position' => 1]);
+
+    $rootNode = collect($this->getJson('/store/categories/tree')->assertOk()->json('data'))
+        ->firstWhere('name', 'PosRoot');
+
+    expect(collect($rootNode['children'])->pluck('name')->all())->toBe(['PosFirst', 'PosSecond']);
+});

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models\Traits;
 
+use Closure;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -78,6 +80,19 @@ trait HasStock
     public function inStock(int $quantity = 1): bool
     {
         return $this->stock > 0 && $this->stock >= $quantity;
+    }
+
+    /**
+     * @return Closure(QueryBuilder): QueryBuilder
+     */
+    public function hasStockQuery(): Closure
+    {
+        return fn (QueryBuilder $query): QueryBuilder => $query
+            ->selectRaw('SUM(quantity)')
+            ->from((new StockLevel)->getTable())
+            ->where('stockable_type', $this->getMorphClass())
+            ->whereColumn('stockable_id', $this->qualifyColumn('id'))
+            ->havingRaw('SUM(quantity) > 0');
     }
 
     /**

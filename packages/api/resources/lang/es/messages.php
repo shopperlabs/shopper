@@ -43,6 +43,7 @@ return [
     'catalog' => [
         'unknown_currency' => 'La moneda ":code" es desconocida o no está habilitada en esta tienda.',
         'no_currency' => 'Ordenar y filtrar por precio requiere una moneda configurada en la tienda.',
+        'filter_too_wide' => 'Un filtro acepta como máximo :max valores.',
     ],
 
     'promotion' => [

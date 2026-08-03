@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\CarbonInterface;
+use Closure;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
@@ -15,7 +16,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection as SupportCollection;
 use Shopper\Core\Contracts\HasReviews;
 use Shopper\Core\Contracts\Media\HasMedia as ShopperHasMedia;
 use Shopper\Core\Contracts\Priceable;
@@ -25,7 +28,9 @@ use Shopper\Core\Enum\Dimension\Volume;
 use Shopper\Core\Enum\Dimension\Weight;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Media\MediaCollectionConfig;
+use Shopper\Core\Models\Contracts\Category as CategoryContract;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Core\Models\Traits\HasDimensions;
 use Shopper\Core\Models\Traits\HasDiscounts;
 use Shopper\Core\Models\Traits\HasMediaCollections;
@@ -35,6 +40,7 @@ use Shopper\Core\Models\Traits\HasSlug;
 use Shopper\Core\Models\Traits\HasStock;
 use Shopper\Core\Models\Traits\InteractsWithReviews;
 use Shopper\Core\Models\Traits\Searchable;
+use Shopper\Core\Queries\CategoryTree;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
@@ -271,48 +277,114 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
      * @param  Builder<Product>  $query
      */
     #[Scope]
-    protected function collection(Builder $query, string $value): void
+    protected function collection(Builder $query, string|array ...$values): void
     {
-        $query->whereHas('collections', fn (Builder $query): Builder => $query->where('slug', $value)->orWhere('public_id', $value));
+        $values = Arr::flatten($values);
+
+        $query->whereHas('collections', fn (Builder $query): Builder => $query
+            ->scopes(['published'])
+            ->where(fn (Builder $query): Builder => $query
+                ->whereIn('slug', $values)
+                ->orWhereIn('public_id', $values)));
     }
 
     /**
      * @param  Builder<Product>  $query
      */
     #[Scope]
-    protected function byBrand(Builder $query, string $value): void
+    protected function byBrand(Builder $query, string|array ...$values): void
     {
-        $query->whereHas('brand', fn (Builder $query): Builder => $query->where('slug', $value)->orWhere('public_id', $value));
+        $values = Arr::flatten($values);
+
+        $query->whereHas('brand', fn (Builder $query): Builder => $query
+            ->scopes(['enabled'])
+            ->where(fn (Builder $query): Builder => $query
+                ->whereIn('slug', $values)
+                ->orWhereIn('public_id', $values)));
     }
 
     /**
      * @param  Builder<Product>  $query
      */
     #[Scope]
-    protected function tag(Builder $query, string $value): void
+    protected function tag(Builder $query, string|array ...$values): void
     {
-        $query->whereHas('tags', fn (Builder $query): Builder => $query->where('slug', $value)->orWhere('public_id', $value));
-    }
+        $values = Arr::flatten($values);
 
-    /**
-     * Products having a variant carrying the given attribute value (by key or
-     * value), e.g. filter[option]=red. Powers faceted listing filters.
-     *
-     * @param  Builder<Product>  $query
-     */
-    #[Scope]
-    protected function option(Builder $query, string $value): void
-    {
-        $query->whereHas('variants.values', fn (Builder $query): Builder => $query->where('key', $value)->orWhere('value', $value));
+        $query->whereHas('tags', fn (Builder $query): Builder => $query
+            ->whereIn('slug', $values)
+            ->orWhereIn('public_id', $values));
     }
 
     /**
      * @param  Builder<Product>  $query
      */
     #[Scope]
-    protected function category(Builder $query, string $value): void
+    protected function option(Builder $query, string|array ...$values): void
     {
-        $query->whereHas('categories', fn (Builder $query): Builder => $query->where('slug', $value)->orWhere('public_id', $value));
+        $values = Arr::flatten($values);
+
+        $match = fn (Builder $query): Builder => $query
+            ->whereIn('key', $values)
+            ->orWhereIn('value', $values);
+
+        $query->where(fn (Builder $query): Builder => $query
+            ->whereHas('variants.values', $match)
+            ->orWhereHas('attributeProducts.value', $match));
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    #[Scope]
+    protected function category(Builder $query, string|array ...$values): void
+    {
+        $values = Arr::flatten($values);
+        $hidden = resolve(CategoryTree::class)->hiddenIds();
+
+        $query->whereHas('categories', fn (Builder $query): Builder => $query
+            ->when($hidden !== [], fn (Builder $query): Builder => $query->whereKeyNot($hidden))
+            ->where(fn (Builder $query): Builder => $query
+                ->whereIn('slug', $values)
+                ->orWhereIn('public_id', $values)));
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    #[Scope]
+    protected function categoryTree(Builder $query, string|array ...$values): void
+    {
+        $values = Arr::flatten($values);
+
+        $ids = resolve(CategoryContract::class)::query()
+            ->where(
+                fn (Builder $query): Builder => $query->whereIn('slug', $values)->orWhereIn('public_id', $values)
+            )
+            ->get()
+            ->flatMap(fn (CategoryContract $category): SupportCollection => $category->enabledSubtreeIds())
+            ->unique()
+            ->values();
+
+        $query->whereHas('categories', fn (Builder $query): Builder => $query->whereIn($query->qualifyColumn('id'), $ids));
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    #[Scope]
+    protected function availability(Builder $query, bool|string $value = true): void
+    {
+        $available = fn (Builder $query): Builder => $query
+            ->where(fn (Builder $query): Builder => $query
+                ->whereNotNull('type')
+                ->where('type', ProductType::External))
+            ->orWhere($this->whereVariantsInStock(...))
+            ->orWhere($this->whereOwnStockLeft(...));
+
+        filter_var($value, FILTER_VALIDATE_BOOLEAN)
+            ? $query->where($available)
+            : $query->whereNot($available);
     }
 
     /**
@@ -389,5 +461,51 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
             'volume_value' => 'decimal:2',
             'type' => ProductType::class,
         ];
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    private function whereVariantsInStock(Builder $query): void
+    {
+        $query
+            ->whereNotNull('type')
+            ->where('type', ProductType::Variant)
+            ->where(fn (Builder $query): Builder => $query
+                ->whereHas('variants', fn (Builder $query): Builder => $query->where('allow_backorder', true))
+                ->orWhereExists($this->hasVariantStockQuery()));
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     */
+    private function whereOwnStockLeft(Builder $query): void
+    {
+        $query
+            ->where(fn (Builder $query): Builder => $query
+                ->whereNot('type', ProductType::Variant)
+                ->orWhereNull('type'))
+            ->where(fn (Builder $query): Builder => $query
+                ->where('allow_backorder', true)
+                ->orWhereExists($this->hasStockQuery()));
+    }
+
+    /**
+     * @return Closure(QueryBuilder): QueryBuilder
+     */
+    private function hasVariantStockQuery(): Closure
+    {
+        /** @var Model $variant */
+        $variant = resolve(ProductVariantContract::class);
+
+        return fn (QueryBuilder $query): QueryBuilder => $query
+            ->selectRaw('SUM(quantity)')
+            ->from((new StockLevel)->getTable())
+            ->where('stockable_type', $variant->getMorphClass())
+            ->whereIn(
+                'stockable_id',
+                $variant->newQuery()->select('id')->whereColumn('product_id', $this->qualifyColumn('id'))
+            )
+            ->havingRaw('SUM(quantity) > 0');
     }
 }

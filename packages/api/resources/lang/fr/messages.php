@@ -43,6 +43,7 @@ return [
     'catalog' => [
         'unknown_currency' => 'La devise ":code" est inconnue ou non activée sur cette boutique.',
         'no_currency' => 'Le tri et le filtre par prix nécessitent une devise configurée sur la boutique.',
+        'filter_too_wide' => 'Un filtre accepte au plus :max valeurs.',
     ],
 
     'promotion' => [

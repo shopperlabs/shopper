@@ -37,7 +37,9 @@ return [
                 'sku' => 'exact',
                 'q' => ['scope', 'matching'],
                 'featured' => 'exact',
+                'in_stock' => ['scope', 'availability'],
                 'category' => 'scope',
+                'category_tree' => ['scope', 'categoryTree'],
                 'collection' => ['scope', 'collection'],
                 'brand' => ['scope', 'byBrand'],
                 'tag' => ['scope', 'tag'],
@@ -47,11 +49,13 @@ return [
             'includes' => [
                 'brand' => Shopper\Api\Http\Includes\EnabledRelation::class,
                 'variants',
-                'categories' => Shopper\Api\Http\Includes\EnabledRelation::class,
+                'categories' => Shopper\Api\Http\Includes\VisibleCategories::class,
                 'collections' => Shopper\Api\Http\Includes\PublishedRelation::class,
                 'options',
+                'tags',
                 'relatedProducts' => Shopper\Api\Http\Includes\PublicProducts::class,
                 'rating' => Shopper\Api\Http\Includes\RatingAggregate::class,
+                'price_range' => Shopper\Api\Http\Includes\ListingPriceRange::class,
             ],
             'include_loads' => [
                 'variants' => ['variants.prices.currency', 'variants.values.attribute'],
@@ -65,11 +69,14 @@ return [
             'includes' => [
                 'parent' => Shopper\Api\Http\Includes\EnabledRelation::class,
                 'children' => Shopper\Api\Http\Includes\EnabledRelation::class,
+                'ancestors' => Shopper\Api\Http\Includes\EnabledRelation::class,
                 'products' => Shopper\Api\Http\Includes\PublicProducts::class,
+                'products_count' => Shopper\Api\Http\Includes\SubtreeProductsCount::class,
             ],
             'include_loads' => [
                 'parent' => ['parent.parent'],
                 'children' => ['children.parent'],
+                'ancestors' => ['ancestors.parent', 'ancestors.media'],
             ],
         ],
         'collection' => [
@@ -90,6 +97,13 @@ return [
             'filters' => ['name' => 'partial'],
             'sorts' => ['name', 'position'],
             'includes' => [],
+        ],
+        'tag' => [
+            'filters' => ['name' => 'partial'],
+            'sorts' => ['name'],
+            'includes' => [
+                'products' => Shopper\Api\Http\Includes\PublicProducts::class,
+            ],
         ],
         'country' => [
             'filters' => [

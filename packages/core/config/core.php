@@ -46,4 +46,20 @@ return [
         'chunk_size' => 25,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Cache
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define how long, in seconds, the category tree stays
+    | cached. Saving or deleting a category refreshes it, so this duration
+    | only bounds a change made without going through the models. Set it to
+    | null to always read the tree from the database.
+    |
+    */
+
+    'cache' => [
+        'category_tree' => 3600,
+    ],
+
 ];
