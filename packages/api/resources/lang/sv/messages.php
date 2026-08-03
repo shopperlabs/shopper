@@ -43,6 +43,7 @@ return [
     'catalog' => [
         'unknown_currency' => 'Valutan ":code" är okänd eller inte aktiverad i denna butik.',
         'no_currency' => 'Sortering och filtrering efter pris kräver en konfigurerad valuta i butiken.',
+        'filter_too_wide' => 'Ett filter accepterar högst :max värden.',
     ],
 
     'promotion' => [

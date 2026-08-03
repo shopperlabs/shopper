@@ -39,6 +39,38 @@ trait HandlesPriceQueries
         return $filters->has('price_min') || $filters->has('price_max');
     }
 
+    protected function wantsPriceRange(): bool
+    {
+        return QueryBuilderRequest::fromRequest(request())->includes()->contains('price_range');
+    }
+
+    /**
+     * @param  Builder<Model>  $query
+     * @return array{min: int, max: int}|null
+     */
+    protected function priceRange(string $resource, Builder $query, int $currencyId): ?array
+    {
+        $sql = $this->minPriceExpression($query, $currencyId);
+
+        $row = $this->apiQuery($resource, $query, [
+            AllowedFilter::callback('currency', static function (): void {}),
+            AllowedFilter::callback('price_min', static function (): void {}),
+            AllowedFilter::callback('price_max', static function (): void {}),
+        ])
+            ->getEloquentBuilder()
+            ->reorder()
+            ->toBase()
+            ->select([])
+            ->selectRaw("MIN({$sql}) as min_amount, MAX({$sql}) as max_amount")
+            ->first();
+
+        if ($row === null || $row->min_amount === null) {
+            return null;
+        }
+
+        return ['min' => (int) $row->min_amount, 'max' => (int) $row->max_amount];
+    }
+
     /**
      * Add the `min_price` aggregate to the select, branched by product type
      * exactly like stock is: a variant product aggregates its variants'

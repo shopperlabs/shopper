@@ -45,6 +45,10 @@ final class ProductController
             $this->applyPriceAggregate($query, $currency->id);
         }
 
+        $range = $this->wantsPriceRange() && $currency !== null
+            ? $this->priceRange('product', clone $query, $currency->id)
+            : null;
+
         $products = $this->paginated(
             'product',
             $query,
@@ -55,7 +59,12 @@ final class ProductController
         $this->loadPriceRangeForProducts($products->getCollection(), $currency?->id);
 
         return ProductResource::collection($products)
-            ->additional(['meta' => ['currency' => $currency?->code]]);
+            ->additional(['meta' => [
+                'currency' => $currency?->code,
+                ...($this->wantsPriceRange()
+                    ? ['price_range' => $range === null ? null : [...$range, 'currency_code' => $currency->code]]
+                    : []),
+            ]]);
     }
 
     public function show(string $slug): JsonApiResource

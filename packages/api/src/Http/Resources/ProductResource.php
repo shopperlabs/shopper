@@ -62,6 +62,7 @@ final class ProductResource extends JsonApiResource
             'brand' => fn () => BrandResource::make($this->brand),
             'categories' => fn () => CategoryResource::collection($this->categories),
             'collections' => fn () => CollectionResource::collection($this->collections),
+            'tags' => fn () => TagResource::collection($this->tags),
             'relatedProducts' => fn () => ProductResource::collection($this->relatedProducts),
         ];
 
@@ -82,7 +83,7 @@ final class ProductResource extends JsonApiResource
     private function stockPayload(): array
     {
         if ($this->isExternal()) {
-            return [];
+            return ['in_stock' => true];
         }
 
         $raw = $this->resource->getAttributes();

@@ -9,13 +9,16 @@ use Shopper\Api\Http\Controllers\Catalog\CategoryController;
 use Shopper\Api\Http\Controllers\Catalog\CollectionController;
 use Shopper\Api\Http\Controllers\Catalog\ProductController;
 use Shopper\Api\Http\Controllers\Catalog\ReviewController;
+use Shopper\Api\Http\Controllers\Catalog\TagController;
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{slug}', [ProductController::class, 'show']);
 Route::get('/products/{slug}/reviews', [ReviewController::class, 'index']);
 Route::get('/reviews', [ReviewController::class, 'latest']);
 Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/tree', [CategoryController::class, 'tree']);
 Route::get('/categories/{slug}', [CategoryController::class, 'show']);
+Route::get('/tags', [TagController::class, 'index']);
 Route::get('/collections', [CollectionController::class, 'index']);
 Route::get('/collections/{slug}', [CollectionController::class, 'show']);
 Route::get('/brands', [BrandController::class, 'index']);

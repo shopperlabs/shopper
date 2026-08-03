@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\Cursor;
 use Illuminate\Pagination\CursorPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\AllowedSort;
@@ -19,6 +21,8 @@ use Spatie\QueryBuilder\QueryBuilderRequest;
 
 trait BuildsApiQueries
 {
+    private const int MAX_FILTER_VALUES = 50;
+
     /**
      * Wrap an Eloquent query with the spatie query builder, applying the
      * filter / sort / include allowlist configured for the given resource.
@@ -30,6 +34,8 @@ trait BuildsApiQueries
      */
     protected function apiQuery(string $resource, Builder $query, array $extraFilters = []): QueryBuilder
     {
+        $this->guardFilterBreadth();
+
         $allowlist = (array) config('shopper.api.resources.'.$resource, []);
         $request = QueryBuilderRequest::fromRequest(request());
 
@@ -176,6 +182,21 @@ trait BuildsApiQueries
             ->orderBy($query->qualifyColumn($query->getModel()->getKeyName()))
             ->paginate(perPage: $size, pageName: 'page[number]', page: $page)
             ->withQueryString();
+    }
+
+    private function guardFilterBreadth(): void
+    {
+        QueryBuilderRequest::fromRequest(request())->filters()
+            ->each(function (mixed $values, string $filter): void {
+                $breadth = (new Collection(Arr::flatten([$values])))
+                    ->sum(fn (mixed $value): int => mb_substr_count((string) $value, ',') + 1);
+
+                if ($breadth > self::MAX_FILTER_VALUES) {
+                    throw ValidationException::withMessages([
+                        'filter.'.$filter => __('shopper-api::messages.catalog.filter_too_wide', ['max' => self::MAX_FILTER_VALUES]),
+                    ]);
+                }
+            });
     }
 
     /**
