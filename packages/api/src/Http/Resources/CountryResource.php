@@ -10,9 +10,9 @@ use Shopper\Core\Models\Country;
 /**
  * @mixin Country
  */
-final class CountryResource extends JsonApiResource
+class CountryResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'countries';
     }

@@ -10,9 +10,9 @@ use Shopper\Core\Models\Review;
 /**
  * @mixin Review
  */
-final class ReviewResource extends JsonApiResource
+class ReviewResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'reviews';
     }

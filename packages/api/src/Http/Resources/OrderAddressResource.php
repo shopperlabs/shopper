@@ -10,9 +10,9 @@ use Shopper\Core\Models\OrderAddress;
 /**
  * @mixin OrderAddress
  */
-final class OrderAddressResource extends JsonApiResource
+class OrderAddressResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'order-addresses';
     }

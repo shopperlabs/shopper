@@ -10,9 +10,9 @@ use Shopper\Core\Models\PaymentMethod;
 /**
  * @mixin PaymentMethod
  */
-final class PaymentMethodResource extends JsonApiResource
+class PaymentMethodResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'payment-methods';
     }

@@ -13,12 +13,12 @@ use Shopper\Core\Models\ProductVariant;
 /**
  * @mixin ProductVariant
  */
-final class ProductVariantResource extends JsonApiResource
+class ProductVariantResource extends JsonApiResource
 {
     use SerializesMedia;
     use SerializesPrices;
 
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'variants';
     }

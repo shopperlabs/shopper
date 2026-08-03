@@ -11,9 +11,9 @@ use Shopper\Core\Models\AttributeValue;
 /**
  * @mixin Attribute
  */
-final class AttributeResource extends JsonApiResource
+class AttributeResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'attributes';
     }

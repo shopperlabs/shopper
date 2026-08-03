@@ -14,14 +14,14 @@ use Shopper\Api\Support\ShippingOption;
  *
  * @property ShippingOption $resource
  */
-final class ShippingOptionResource extends JsonApiResource
+class ShippingOptionResource extends JsonApiResource
 {
     public function toId(Request $request): string
     {
         return $this->resource->id();
     }
 
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'shipping-options';
     }

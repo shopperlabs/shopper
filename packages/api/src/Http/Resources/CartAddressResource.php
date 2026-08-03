@@ -10,9 +10,9 @@ use Shopper\Cart\Models\CartAddress;
 /**
  * @mixin CartAddress
  */
-final class CartAddressResource extends JsonApiResource
+class CartAddressResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'cart-addresses';
     }

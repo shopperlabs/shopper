@@ -6,7 +6,7 @@ namespace Shopper\Api\Http\Resources;
 
 use Illuminate\Http\Request;
 
-final class SettingResource extends JsonApiResource
+class SettingResource extends JsonApiResource
 {
     /**
      * The store settings are a singleton, not a row: the id is the constant
@@ -17,7 +17,7 @@ final class SettingResource extends JsonApiResource
         return 'store';
     }
 
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'settings';
     }

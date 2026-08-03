@@ -16,7 +16,7 @@ use Shopper\Api\Support\PaymentSession;
  *
  * @property PaymentSession $resource
  */
-final class PaymentSessionResource extends JsonApiResource
+class PaymentSessionResource extends JsonApiResource
 {
     /**
      * The driver `data` array is an internal grab bag: only keys a storefront
@@ -31,7 +31,7 @@ final class PaymentSessionResource extends JsonApiResource
         return $this->resource->id();
     }
 
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'payment-sessions';
     }
