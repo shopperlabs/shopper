@@ -10,9 +10,9 @@ use Shopper\Core\Models\OrderRefund;
 /**
  * @mixin OrderRefund
  */
-final class OrderRefundResource extends JsonApiResource
+class OrderRefundResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'order-refunds';
     }

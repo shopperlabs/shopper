@@ -10,9 +10,9 @@ use Shopper\Core\Models\ProductTag;
 /**
  * @mixin ProductTag
  */
-final class TagResource extends JsonApiResource
+class TagResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'tags';
     }

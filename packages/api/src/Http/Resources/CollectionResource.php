@@ -11,11 +11,11 @@ use Shopper\Models\Collection;
 /**
  * @mixin Collection
  */
-final class CollectionResource extends JsonApiResource
+class CollectionResource extends JsonApiResource
 {
     use SerializesMedia;
 
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'collections';
     }

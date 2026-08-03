@@ -15,9 +15,9 @@ use TiMacDonald\JsonApi\JsonApiResourceCollection;
  *
  * @mixin OrderShipping
  */
-final class OrderShippingResource extends JsonApiResource
+class OrderShippingResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'order-shippings';
     }

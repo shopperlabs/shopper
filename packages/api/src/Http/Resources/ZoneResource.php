@@ -10,9 +10,9 @@ use Shopper\Core\Models\Zone;
 /**
  * @mixin Zone
  */
-final class ZoneResource extends JsonApiResource
+class ZoneResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'zones';
     }

@@ -14,11 +14,11 @@ use Shopper\Core\Models\Category;
  *
  * @property-read ?int $depth
  */
-final class CategoryResource extends JsonApiResource
+class CategoryResource extends JsonApiResource
 {
     use SerializesMedia;
 
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'categories';
     }

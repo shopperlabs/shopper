@@ -10,9 +10,9 @@ use Shopper\Core\Models\OrderShippingEvent;
 /**
  * @mixin OrderShippingEvent
  */
-final class OrderShippingEventResource extends JsonApiResource
+class OrderShippingEventResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'order-shipping-events';
     }

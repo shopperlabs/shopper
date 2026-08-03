@@ -51,6 +51,14 @@ it('shows a product by slug as a JSON:API document', function (): void {
         ->assertJsonPath('data.attributes.prices.0.currency_code', $product->prices()->first()->currency_code);
 });
 
+it('keeps the price payload limited to its public keys', function (): void {
+    $product = publishedProduct(['name' => 'Guarded']);
+
+    $keys = array_keys($this->getJson('/store/products/'.$product->slug)->json('data.attributes.prices.0'));
+
+    expect($keys)->toBe(['public_id', 'amount', 'compare_amount', 'currency_code']);
+});
+
 it('falls back to the first gallery image for the thumbnail payload', function (): void {
     $product = publishedProduct(['name' => 'Camera']);
 

@@ -10,9 +10,9 @@ use Shopper\Core\Models\OrderItem;
 /**
  * @mixin OrderItem
  */
-final class OrderItemResource extends JsonApiResource
+class OrderItemResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'order-items';
     }

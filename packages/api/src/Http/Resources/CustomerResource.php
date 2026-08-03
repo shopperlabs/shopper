@@ -24,9 +24,9 @@ use Shopper\Core\Enum\GenderType;
  * @property-read ?CarbonInterface $email_verified_at
  * @property-read ?CarbonInterface $created_at
  */
-final class CustomerResource extends JsonApiResource
+class CustomerResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'customers';
     }

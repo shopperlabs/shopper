@@ -10,9 +10,9 @@ use Shopper\Core\Models\Legal;
 /**
  * @mixin Legal
  */
-final class LegalResource extends JsonApiResource
+class LegalResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'legals';
     }

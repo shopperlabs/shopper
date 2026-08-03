@@ -18,12 +18,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 /**
  * @mixin Product
  */
-final class ProductResource extends JsonApiResource
+class ProductResource extends JsonApiResource
 {
     use SerializesMedia;
     use SerializesPrices;
 
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'products';
     }

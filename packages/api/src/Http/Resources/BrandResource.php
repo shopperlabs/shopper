@@ -11,11 +11,11 @@ use Shopper\Core\Models\Brand;
 /**
  * @mixin Brand
  */
-final class BrandResource extends JsonApiResource
+class BrandResource extends JsonApiResource
 {
     use SerializesMedia;
 
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'brands';
     }

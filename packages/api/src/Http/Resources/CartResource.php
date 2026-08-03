@@ -13,20 +13,20 @@ use TiMacDonald\JsonApi\JsonApiResourceCollection;
 /**
  * @mixin Cart
  */
-final class CartResource extends JsonApiResource
+class CartResource extends JsonApiResource
 {
     private ?CartPipelineContext $totals = null;
+
+    final public function toType(Request $request): string
+    {
+        return 'carts';
+    }
 
     public function withTotals(CartPipelineContext $context): self
     {
         $this->totals = $context;
 
         return $this;
-    }
-
-    public function toType(Request $request): string
-    {
-        return 'carts';
     }
 
     public function toAttributes(Request $request): array

@@ -24,6 +24,8 @@ final class ApiServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/api.php', 'shopper.api');
+
+        $this->app->singleton(Support\ResourceManifest::class);
     }
 
     public function packageBooted(): void

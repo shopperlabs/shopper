@@ -47,7 +47,7 @@ trait SerializesMedia
     /**
      * @return array<int, array<string, mixed>>
      */
-    private function mediaPayload(string $collection): array
+    protected function mediaPayload(string $collection): array
     {
         if (! method_exists($this->resource, 'getMedia')) {
             return [];
@@ -62,7 +62,7 @@ trait SerializesMedia
     /**
      * @return array<string, mixed>|null
      */
-    private function firstMediaPayload(string $collection): ?array
+    protected function firstMediaPayload(string $collection): ?array
     {
         if (! method_exists($this->resource, 'getFirstMedia')) {
             return null;
@@ -76,7 +76,7 @@ trait SerializesMedia
     /**
      * @return array<string, mixed>
      */
-    private function mediaToArray(Media $media): array
+    protected function mediaToArray(Media $media): array
     {
         return [
             'id' => $media->uuid,
@@ -97,7 +97,7 @@ trait SerializesMedia
      *
      * @return array<string, string>
      */
-    private function conversionUrls(Media $media): array
+    protected function conversionUrls(Media $media): array
     {
         return $media->getGeneratedConversions()
             ->filter()

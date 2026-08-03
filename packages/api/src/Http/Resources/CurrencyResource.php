@@ -10,9 +10,9 @@ use Shopper\Core\Models\Currency;
 /**
  * @mixin Currency
  */
-final class CurrencyResource extends JsonApiResource
+class CurrencyResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'currencies';
     }

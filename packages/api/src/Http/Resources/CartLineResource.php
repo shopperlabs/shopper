@@ -14,9 +14,9 @@ use TiMacDonald\JsonApi\JsonApiResource as BaseJsonApiResource;
 /**
  * @mixin CartLine
  */
-final class CartLineResource extends JsonApiResource
+class CartLineResource extends JsonApiResource
 {
-    public function toType(Request $request): string
+    final public function toType(Request $request): string
     {
         return 'cart-lines';
     }
