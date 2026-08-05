@@ -74,4 +74,16 @@ describe(General::class, function (): void {
 
         Storage::disk($disk)->assertExists($logo);
     });
+
+    it('rejects SVG logo and cover uploads to prevent stored XSS from same-origin media', function (): void {
+        Storage::fake(config('shopper.media.storage.disk_name'));
+
+        Livewire::test(General::class)
+            ->fillForm([
+                'logo' => UploadedFile::fake()->create('logo.svg', 10, 'image/svg+xml'),
+                'cover' => UploadedFile::fake()->create('cover.svg', 10, 'image/svg+xml'),
+            ])
+            ->call('store')
+            ->assertHasFormErrors(['logo', 'cover']);
+    });
 })->group('livewire', 'settings');
