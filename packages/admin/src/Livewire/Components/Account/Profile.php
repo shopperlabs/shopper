@@ -50,7 +50,7 @@ class Profile extends Component implements HasActions, HasSchemas
                         FileUpload::make('avatar_location')
                             ->label(__('shopper::forms.label.photo'))
                             ->avatar()
-                            ->image()
+                            ->acceptedFileTypes(config('shopper.media.accepts_mime_types'))
                             ->maxSize(1024)
                             ->disk(config('shopper.media.storage.disk_name')),
                         Grid::make()
