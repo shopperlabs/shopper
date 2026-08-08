@@ -26,7 +26,7 @@ final class PermissionsTableSeeder extends Seeder
             'name' => 'access_setting',
             'group_name' => 'system',
             'display_name' => __('Access Setting'),
-            'description' => __('This permission allow user to view the setting page.'),
+            'description' => __('This permission allow user to view and update the store settings, except administrators, roles and permissions.'),
             'can_be_removed' => false,
         ]);
 

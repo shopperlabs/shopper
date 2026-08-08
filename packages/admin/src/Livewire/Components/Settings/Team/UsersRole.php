@@ -20,10 +20,12 @@ use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Models\Role;
+use Shopper\Traits\AuthorizesTeamManagement;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class UsersRole extends Component implements HasActions, HasSchemas, HasTable
 {
+    use AuthorizesTeamManagement;
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
@@ -31,6 +33,11 @@ class UsersRole extends Component implements HasActions, HasSchemas, HasTable
 
     #[Locked]
     public Role $role;
+
+    public function mount(): void
+    {
+        $this->authorizeTeamAccess($this->role);
+    }
 
     public function table(Table $table): Table
     {
