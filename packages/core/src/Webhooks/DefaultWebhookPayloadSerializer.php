@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Webhooks;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Shopper\Core\Contracts\WebhookPayloadSerializer;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\Product;
@@ -21,6 +22,10 @@ final class DefaultWebhookPayloadSerializer implements WebhookPayloadSerializer
         $resource = $this->resourceOf($event);
 
         if (! $resource instanceof Model) {
+            Log::warning('Webhook payload is empty: the event exposes no known resource. Register a serializer for it.', [
+                'event' => $event::class,
+            ]);
+
             return ['resource_type' => null, 'resource_id' => null, 'data' => []];
         }
 

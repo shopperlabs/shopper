@@ -11,30 +11,13 @@ use Shopper\Core\Jobs\DeliverWebhookJob;
 use Shopper\Core\Models\WebhookDelivery;
 use Shopper\Core\Models\WebhookEvent;
 use Shopper\Core\Models\WebhookSubscription;
+use Shopper\Core\Webhooks\WebhookRegistry;
 use Throwable;
 
-/**
- * Fans a domain event out to the webhook subscriptions listening to it.
- *
- * Runs synchronously in the dispatching request. Do not make this listener
- * queued: domain events use `SerializesModels`, so a queued listener
- * re-fetches the model on wake-up and throws `ModelNotFoundException` for
- * every `*Deleted` event. The payload is therefore snapshotted here, and
- * the queued `DeliverWebhookJob` only posts the frozen JSON.
- *
- * Per event: resolves the public name from `shopper.webhooks.events`,
- * reads the cached active-subscription list (no query on stores without
- * webhooks), creates one `WebhookEvent` row (payload stored once), then one
- * pending `WebhookDelivery` plus one queued job per matching subscription.
- *
- * Every failure path is contained: a failing subscription never aborts the
- * remaining ones, and no exception escapes `handle()` — the listener runs
- * in an after-commit callback of a business transaction (checkout, payment)
- * and must never turn a committed order into a 500.
- */
 final readonly class DispatchWebhooksListener
 {
     public function __construct(
+        private WebhookRegistry $registry,
         private WebhookPayloadSerializer $serializer,
     ) {}
 
@@ -52,9 +35,9 @@ final readonly class DispatchWebhooksListener
 
     private function dispatchWebhooks(object $event): void
     {
-        $name = config('shopper.webhooks.events.'.$event::class);
+        $name = $this->registry->nameFor($event::class);
 
-        if (! is_string($name)) {
+        if ($name === null) {
             return;
         }
 
@@ -65,7 +48,7 @@ final readonly class DispatchWebhooksListener
             return;
         }
 
-        $serialized = $this->serializer->serialize($event);
+        $serialized = $this->registry->serialize($event) ?? $this->normalize($this->serializer->serialize($event));
 
         $webhookEvent = WebhookEvent::query()->create([
             'name' => $name,
@@ -96,5 +79,21 @@ final readonly class DispatchWebhooksListener
                 ]);
             }
         }
+    }
+
+    /**
+     * A rebound serializer may not honour the contract's declared shape at
+     * runtime, so the payload is normalised before it is persisted.
+     *
+     * @param  array<string, mixed>  $payload
+     * @return array{resource_type: ?string, resource_id: ?string, data: array<string, mixed>}
+     */
+    private function normalize(array $payload): array
+    {
+        return [
+            'resource_type' => $payload['resource_type'] ?? null,
+            'resource_id' => $payload['resource_id'] ?? null,
+            'data' => $payload['data'] ?? [],
+        ];
     }
 }
