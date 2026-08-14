@@ -28,11 +28,13 @@ use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Models\Role;
+use Shopper\Traits\AuthorizesTeamManagement;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 #[Layout('shopper::components.layouts.setting')]
 class Index extends Component implements HasActions, HasSchemas, HasTable
 {
+    use AuthorizesTeamManagement;
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
@@ -40,7 +42,7 @@ class Index extends Component implements HasActions, HasSchemas, HasTable
 
     public function mount(): void
     {
-        $this->authorize('view_users');
+        $this->authorizeTeamAccess();
     }
 
     public function createRoleAction(): Action

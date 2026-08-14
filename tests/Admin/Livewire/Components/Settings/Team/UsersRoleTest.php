@@ -117,6 +117,7 @@ describe(UsersRole::class, function (): void {
     it('non-admin cannot see delete action', function (): void {
         $nonAdminUser = User::factory()->create();
         $nonAdminUser->assignRole($this->role->name);
+        $nonAdminUser->givePermissionTo('view_users');
         $this->actingAs($nonAdminUser);
 
         $targetUser = User::factory()->create();
