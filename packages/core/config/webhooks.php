@@ -20,8 +20,9 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may map internal event classes to the public names webhook
-    | subscriptions listen to. Packages and addons append their own entries.
-    | The public name is the wire contract and must stay stable.
+    | subscriptions listen to. Packages and addons register their own events
+    | through the Webhooks facade in their service provider. The public name
+    | is the wire contract and must stay stable.
     |
     */
 

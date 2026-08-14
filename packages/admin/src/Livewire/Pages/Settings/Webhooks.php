@@ -33,6 +33,7 @@ use Shopper\Core\Jobs\DeliverWebhookJob;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\WebhookDelivery;
 use Shopper\Core\Models\WebhookSubscription;
+use Shopper\Core\Webhooks\WebhookRegistry;
 use Shopper\Core\Webhooks\WebhookUrl;
 use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
 use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
@@ -260,7 +261,7 @@ class Webhooks extends Component implements HasActions, HasSchemas, HasTable
                 }),
             CheckboxList::make('events')
                 ->label(__('shopper::pages/settings/webhooks.events'))
-                ->options(collect(config('shopper.webhooks.events', []))
+                ->options(collect(resolve(WebhookRegistry::class)->events())
                     ->values()
                     ->mapWithKeys(fn (string $name): array => [$name => $name])
                     ->all())

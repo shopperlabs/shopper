@@ -19,7 +19,6 @@ use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Contracts\TaxCalculationProvider;
 use Shopper\Core\Contracts\WebhookPayloadSerializer;
 use Shopper\Core\Import\ImportManager;
-use Shopper\Core\Listeners\DispatchWebhooksListener;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\Category;
@@ -50,6 +49,7 @@ use Shopper\Core\Taxes\SystemTaxProvider;
 use Shopper\Core\Taxes\TaxCalculator;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Shopper\Core\Webhooks\DefaultWebhookPayloadSerializer;
+use Shopper\Core\Webhooks\WebhookRegistry;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -72,6 +72,7 @@ final class CoreServiceProvider extends PackageServiceProvider
         ChannelManager::class => ChannelManager::class,
         ImportManager::class => ImportManager::class,
         WebhookPayloadSerializer::class => DefaultWebhookPayloadSerializer::class,
+        WebhookRegistry::class => WebhookRegistry::class,
     ];
 
     /** @var string[] */
@@ -122,12 +123,7 @@ final class CoreServiceProvider extends PackageServiceProvider
     protected function registerWebhookListener(): void
     {
         $this->app->booted(function (): void {
-            /** @var array<class-string, string> $events */
-            $events = (array) config('shopper.webhooks.events', []);
-
-            if ($events !== []) {
-                $this->app['events']->listen(array_keys($events), DispatchWebhooksListener::class);
-            }
+            $this->app->make(WebhookRegistry::class)->activate();
         });
     }
 

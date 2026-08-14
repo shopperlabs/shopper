@@ -20,6 +20,7 @@ use Shopper\Cart\Pipelines\CartPipeline;
 use Shopper\Cart\Pipelines\CartPipelineRunner;
 use Shopper\Core\Enum\WebhookEventType;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
+use Shopper\Core\Webhooks\Facades\Webhooks;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -47,10 +48,7 @@ final class CartServiceProvider extends PackageServiceProvider
             $schedule->command('shopper:prune-carts')->daily();
         });
 
-        $this->app['config']->set(
-            'shopper.webhooks.events.'.CartCompleted::class,
-            WebhookEventType::CartCompleted->value,
-        );
+        Webhooks::register(CartCompleted::class, WebhookEventType::CartCompleted->value);
     }
 
     public function packageRegistered(): void
