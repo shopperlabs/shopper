@@ -16,6 +16,8 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -27,6 +29,7 @@ use Shopper\Contracts\SlideOverForm;
 use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Models\Role;
 use Shopper\Notifications\AdminSendCredentials;
+use Shopper\Traits\AuthorizesTeamManagement;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\InteractsWithSlideOverForm;
 
@@ -35,6 +38,7 @@ use Shopper\Traits\InteractsWithSlideOverForm;
  */
 class CreateTeamMember extends SlideOverComponent implements HasActions, HasSchemas, SlideOverForm
 {
+    use AuthorizesTeamManagement;
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
@@ -51,7 +55,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
 
     public function mount(): void
     {
-        $this->authorize('system.users');
+        $this->authorizeTeamAccess();
 
         $this->title = __('shopper::pages/settings/staff.add_admin');
 
@@ -106,6 +110,10 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
                             ->options(
                                 Role::query()
                                     ->where('name', '<>', config('shopper.admin.roles.user'))
+                                    ->unless(
+                                        $this->actingUserIsAdmin(),
+                                        fn (Builder $query): Builder => $query->where('name', '<>', config('shopper.admin.roles.admin'))
+                                    )
                                     ->pluck('display_name', 'id')
                             )
                             ->columns()
@@ -120,10 +128,15 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
 
     public function store(): void
     {
-        $this->authorize('system.users');
+        $this->authorizeTeamAccess();
 
         $data = $this->form->getState();
         $userModel = config('auth.providers.users.model');
+
+        /** @var Collection<int, Role> $roles */
+        $roles = Role::query()->findMany($data['roles']);
+
+        $roles->each(fn (Role $role) => $this->authorizeTeamAccess($role));
 
         /** @var ShopperUser $user */
         $user = $userModel::query()->create([
@@ -138,7 +151,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
             'email_verified_at' => now()->toDateTimeString(),
         ]);
 
-        $user->assignRole($data['roles']);
+        $user->assignRole($roles->pluck('name')->all());
 
         $this->dispatch('teamUpdate');
 

@@ -12,7 +12,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo(['system.users', 'system.settings']);
+    $this->user->assignRole(config('shopper.admin.roles.admin'));
     $this->actingAs($this->user);
 
     $this->role = Role::create([
