@@ -33,6 +33,7 @@ use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
 use Shopper\Models\Permission;
 use Shopper\Models\Role;
 use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
+use Shopper\Traits\AuthorizesTeamManagement;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
@@ -41,6 +42,7 @@ use Shopper\Traits\HandlesAuthorizationExceptions;
 #[Layout('shopper::components.layouts.setting')]
 class RolePermission extends Component implements HasActions, HasSchemas
 {
+    use AuthorizesTeamManagement;
     use HandlesAuthorizationExceptions;
     use InteractsWithActions;
     use InteractsWithSchemas;
@@ -70,7 +72,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
 
     public function mount(): void
     {
-        $this->authorize('system.users');
+        $this->authorizeTeamAccess($this->role);
 
         $this->form->fill($this->role->toArray());
     }
@@ -118,6 +120,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
             ->icon(Untitledui::ShieldZap)
             ->color('gray')
             ->authorize('system.settings')
+            ->visible(fn (): bool => $this->actingUserIsAdmin())
             ->modalWidth(Width::Medium)
             ->modalHeading(__('shopper::pages/settings/staff.generate_permissions'))
             ->modalDescription(__('shopper::pages/settings/staff.generate_permissions_description'))
@@ -151,6 +154,8 @@ class RolePermission extends Component implements HasActions, HasSchemas
                     ->columnSpan('full'),
             ])
             ->action(function (array $data): void {
+                $this->authorizePermissionDefinition();
+
                 $resource = $data['resource'];
                 $group = $data['group_name'] ?? null;
 
@@ -177,6 +182,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
             ->label(__('shopper::pages/settings/staff.create_permission'))
             ->icon(Untitledui::Lock04)
             ->authorize('system.settings')
+            ->visible(fn (): bool => $this->actingUserIsAdmin())
             ->modalWidth(Width::Medium)
             ->modalHeading(__('shopper::modals.permissions.new'))
             ->modalDescription(__('shopper::modals.permissions.new_description'))
@@ -204,6 +210,8 @@ class RolePermission extends Component implements HasActions, HasSchemas
                     ->columnSpan('full'),
             ])
             ->action(function (array $data): void {
+                $this->authorizePermissionDefinition();
+
                 /** @var Permission $permission */
                 $permission = Permission::query()->create($data);
 
@@ -220,7 +228,7 @@ class RolePermission extends Component implements HasActions, HasSchemas
 
     public function save(): void
     {
-        $this->authorize('system.settings');
+        $this->authorizeTeamManagement($this->role);
 
         $this->role->update($this->form->getState());
 

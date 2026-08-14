@@ -40,7 +40,7 @@
                                 />
                             </div>
                             <div class="flex items-center space-x-3">
-                                @if ($permission->can_be_removed)
+                                @if ($permission->can_be_removed && auth(config('shopper.auth.guard'))->user()?->isAdmin())
                                     <button
                                         wire:click="removePermission({{ $permission->id }})"
                                         type="button"

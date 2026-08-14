@@ -86,6 +86,10 @@ return [
     'unauthorized' => [
         'title' => 'Obehörig',
         'body' => 'Behörighet saknas för att utföra denna åtgärd.',
+        'administrator_role' => 'Endast en administratör kan hantera administratörsrollen.',
+        'administrator_only' => 'Endast en administratör kan skapa eller ta bort en behörighet.',
+        'permission_scope' => 'Du kan endast tilldela en behörighet som du själv har.',
+        'protected_permission' => 'Denna behörighet krävs av panelen och kan inte tas bort.',
     ],
 
     'database' => [
