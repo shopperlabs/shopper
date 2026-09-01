@@ -130,7 +130,7 @@ describe(RolePermission::class, function (): void {
                 'display_name' => 'Manage Orders',
                 'description' => 'Can view and manage orders',
             ])
-            ->assertHasNoFormErrors()
+            ->assertHasNoErrors()
             ->assertDispatched('permissionAdded')
             ->assertNotified(__('shopper::notifications.users_roles.permission_add'));
 
@@ -175,7 +175,7 @@ describe(RolePermission::class, function (): void {
                 'name' => 'blog.edit',
                 'display_name' => 'Edit Blog',
             ])
-            ->assertHasNoFormErrors();
+            ->assertHasNoErrors();
 
         expect(Permission::query()->count())->toBe($initialCount + 1);
     });
