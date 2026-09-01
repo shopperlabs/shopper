@@ -66,7 +66,7 @@ describe(Variant::class, function (): void {
                 'sku' => 'NEW-SKU-123',
                 'barcode' => '1234567890',
             ])
-            ->assertHasNoActionErrors()
+            ->assertHasNoErrors()
             ->assertNotified(__('shopper::pages/products.notifications.variation_update'));
 
         $this->variant->refresh();
