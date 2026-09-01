@@ -41,6 +41,14 @@ enum ShipmentStatus: string implements HasColor, HasIcon, HasLabel
 
     case Returned = 'returned';
 
+    /**
+     * @return array<int, self>
+     */
+    public static function open(): array
+    {
+        return collect(self::cases())->reject->isFinal()->values()->all();
+    }
+
     public function rank(): int
     {
         return match ($this) {
@@ -56,14 +64,6 @@ enum ShipmentStatus: string implements HasColor, HasIcon, HasLabel
     public function isFinal(): bool
     {
         return $this === self::Delivered || $this === self::Returned;
-    }
-
-    /**
-     * @return array<int, self>
-     */
-    public static function open(): array
-    {
-        return collect(self::cases())->reject->isFinal()->values()->all();
     }
 
     public function getColor(): string

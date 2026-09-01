@@ -44,6 +44,6 @@ describe(Devices::class, function (): void {
             ->callAction('logoutOtherBrowsers', [
                 'password' => 'password',
             ])
-            ->assertHasNoFormErrors();
+            ->assertHasNoErrors();
     });
 })->group('livewire', 'account');
