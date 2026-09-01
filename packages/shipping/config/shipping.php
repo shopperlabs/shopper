@@ -98,4 +98,22 @@ return [
 
     'rates_cache_ttl' => env('SHIPPING_RATES_CACHE_TTL', 600),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Tracking Sync
+    |--------------------------------------------------------------------------
+    |
+    | Here you may control the scheduled tracking refresh. Every thirty
+    | minutes the undelivered shipments whose carrier driver supports
+    | tracking are queued, and each job pulls the carrier timeline into
+    | the shipment events. Carriers that push webhooks do not need it.
+    |
+    */
+
+    'tracking' => [
+        'sync' => env('SHIPPING_TRACKING_SYNC', true),
+        'queue' => env('SHIPPING_TRACKING_QUEUE'),
+        'backoff' => [60, 300, 900],
+    ],
+
 ];

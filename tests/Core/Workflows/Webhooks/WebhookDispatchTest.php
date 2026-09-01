@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Bus;
 use Shopper\Core\Events\Orders\OrderPaid;
+use Shopper\Core\Events\Orders\OrderShipmentDelivered;
 use Shopper\Core\Events\Products\ProductDeleted;
 use Shopper\Core\Jobs\DeliverWebhookJob;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\OrderShipping;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\WebhookDelivery;
 use Shopper\Core\Models\WebhookEvent;
@@ -123,5 +125,21 @@ describe('Webhook dispatch', function (): void {
         expect($payload)->not->toHaveKey('password')
             ->not->toHaveKey('remember_token')
             ->not->toHaveKey('store_two_factor_secret');
+    });
+
+    it('serializes a shipment event from the shipment rather than its order', function (): void {
+        WebhookSubscription::factory()->create(['events' => ['shipment.delivered']]);
+
+        $shipment = OrderShipping::factory()->create(['tracking_number' => 'TRK-1']);
+
+        event(new OrderShipmentDelivered($shipment->order, $shipment));
+
+        $webhookEvent = WebhookEvent::query()->where('name', 'shipment.delivered')->sole();
+
+        expect($webhookEvent->resource_type)->toBe($shipment->getMorphClass())
+            ->and($webhookEvent->resource_id)->toBe($shipment->public_id)
+            ->and($webhookEvent->payload['tracking_number'])->toBe('TRK-1')
+            ->and($webhookEvent->payload['order_number'])->toBe($shipment->order->number)
+            ->and($webhookEvent->payload)->not->toHaveKey('price_amount');
     });
 })->group('core', 'webhooks');

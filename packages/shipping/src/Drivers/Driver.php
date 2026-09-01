@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Shipping\Drivers;
 
+use Illuminate\Http\Request;
 use Shopper\Shipping\Contracts\ShippingDriver;
 use Shopper\Shipping\DataTransferObjects\Address;
 use Shopper\Shipping\DataTransferObjects\Package;
@@ -30,7 +31,12 @@ abstract class Driver implements ShippingDriver
 
     public function supportsTracking(): bool
     {
-        return true;
+        return false;
+    }
+
+    public function supportsWebhooks(): bool
+    {
+        return false;
     }
 
     public function createShipment(
@@ -45,6 +51,11 @@ abstract class Driver implements ShippingDriver
     public function track(string $trackingNumber): TrackingInfo
     {
         throw ShippingException::notSupported('track', $this->code());
+    }
+
+    public function handleWebhook(Request $request): ?TrackingInfo
+    {
+        throw ShippingException::notSupported('handleWebhook', $this->code());
     }
 
     /**

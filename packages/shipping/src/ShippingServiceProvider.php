@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopper\Shipping;
 
 use Closure;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
 use Shopper\Core\Models\Carrier;
+use Shopper\Shipping\Console\SyncShipmentTrackingCommand;
 use Shopper\Shipping\Facades\Shipping;
 use Shopper\Shipping\Services\CarrierRateService;
 
@@ -16,7 +18,7 @@ final class ShippingServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/shipping.php', 'shopper.shipping');
 
-        $this->app->singleton(ShippingManager::class, fn (): ShippingManager => new ShippingManager);
+        $this->app->singleton(ShippingManager::class, fn (): ShippingManager => new ShippingManager($this->app));
         $this->app->singleton(CarrierRateService::class);
 
         $this->app->bind(
@@ -30,5 +32,15 @@ final class ShippingServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/shipping.php' => config_path('shopper/shipping.php'),
         ], 'shopper-config');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([SyncShipmentTrackingCommand::class]);
+        }
+
+        $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
+            if (config('shopper.shipping.tracking.sync')) {
+                $schedule->command('shopper:shipments:sync-tracking')->everyThirtyMinutes();
+            }
+        });
     }
 }

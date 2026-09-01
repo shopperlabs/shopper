@@ -25,12 +25,11 @@ use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Shopper\Contracts\SlideOverForm;
+use Shopper\Core\Actions\CreateShipmentAction;
+use Shopper\Core\Exceptions\CannotCreateEmptyShipmentException;
 use Shopper\Core\Enum\FulfillmentStatus;
-use Shopper\Core\Enum\ShipmentStatus;
-use Shopper\Core\Events\Orders\OrderShipmentCreated;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\OrderItem;
-use Shopper\Core\Models\OrderShipping;
 use Shopper\Shipping\Services\CarrierRateService;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\InteractsWithSlideOverForm;
@@ -192,27 +191,25 @@ class CreateShippingLabel extends SlideOverComponent implements HasActions, HasS
 
         $data = $this->form->getState();
 
-        $itemIds = collect($data['items'])->pluck('item_id')->all();
+        try {
+            (new CreateShipmentAction)->execute(
+                order: $this->order,
+                carrierId: (int) $data['carrier_id'],
+                itemIds: array_map('intval', collect($data['items'])->pluck('item_id')->all()),
+                trackingNumber: $data['tracking_number'] ?? null,
+                trackingUrl: $data['tracking_url'] ?? null,
+                description: __('shopper::notifications.shipments.label_created'),
+            );
+        } catch (CannotCreateEmptyShipmentException) {
+            Notification::make()
+                ->title(__('shopper::pages/orders.notifications.shipment_empty'))
+                ->warning()
+                ->send();
 
-        $shipment = OrderShipping::query()->create([
-            'order_id' => $this->order->id,
-            'carrier_id' => $data['carrier_id'],
-            'status' => ShipmentStatus::Pending,
-            'tracking_number' => $data['tracking_number'] ?? null,
-            'tracking_url' => $data['tracking_url'] ?? null,
-        ]);
+            $this->closePanel();
 
-        $shipment->logEvent(ShipmentStatus::Pending, [
-            'description' => __('shopper::notifications.shipments.label_created'),
-        ]);
-
-        $this->order->items()
-            ->whereIn('id', $itemIds)
-            ->update([
-                'order_shipping_id' => $shipment->id,
-            ]);
-
-        event(new OrderShipmentCreated($this->order, $shipment));
+            return;
+        }
 
         Notification::make()
             ->title(__('shopper::pages/orders.notifications.shipment_created'))

@@ -22,7 +22,7 @@ use Shopper\Core\Traits\HasFulfillmentTransitions;
  * @property-read ?ShipmentStatus $status
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
- * @property-read CarbonInterface $shipped_at
+ * @property-read ?CarbonInterface $shipped_at
  * @property-read ?CarbonInterface $received_at
  * @property-read ?CarbonInterface $returned_at
  * @property-read ?string $tracking_number

@@ -18,7 +18,7 @@ final class PaymentServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/payment.php', 'shopper.payment');
 
-        $this->app->singleton(PaymentManager::class, fn (): PaymentManager => new PaymentManager);
+        $this->app->singleton(PaymentManager::class, fn (): PaymentManager => new PaymentManager($this->app));
         $this->app->singleton(PaymentProcessingService::class);
 
         $this->app->bind(

@@ -99,6 +99,11 @@ final class FedExDriver extends Driver
         throw ShippingException::notSupported('createShipment', 'fedex');
     }
 
+    public function supportsTracking(): bool
+    {
+        return true;
+    }
+
     public function track(string $trackingNumber): TrackingInfo
     {
         if (! $this->isConfigured()) {

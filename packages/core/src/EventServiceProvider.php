@@ -6,6 +6,8 @@ namespace Shopper\Core;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Shopper\Core\Events\Orders\OrderCancelled;
+use Shopper\Core\Events\Orders\OrderPaid;
+use Shopper\Core\Listeners\Orders\CompleteFulfilledOrderListener;
 use Shopper\Core\Listeners\Orders\ReleaseCampaignBudgetListener;
 use Shopper\Core\Listeners\Orders\RestoreOrderStockListener;
 
@@ -16,6 +18,9 @@ final class EventServiceProvider extends ServiceProvider
         OrderCancelled::class => [
             RestoreOrderStockListener::class,
             ReleaseCampaignBudgetListener::class,
+        ],
+        OrderPaid::class => [
+            CompleteFulfilledOrderListener::class,
         ],
     ];
 }

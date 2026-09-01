@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Core\Actions;
 
 use Shopper\Core\Enum\ShipmentStatus;
-use Shopper\Core\Events\Orders\OrderShipmentDelivered;
 use Shopper\Core\Models\OrderShipping;
 
 final class MarkShipmentDeliveredAction
@@ -26,7 +25,5 @@ final class MarkShipmentDeliveredAction
         }
 
         (new RecordShipmentEventAction)->execute($shipment, ShipmentStatus::Delivered, $context);
-
-        event(new OrderShipmentDelivered($shipment->order, $shipment));
     }
 }

@@ -23,6 +23,14 @@ enum WebhookEventType: string implements HasLabel
 
     case OrderCompleted = 'order.completed';
 
+    case ShipmentCreated = 'shipment.created';
+
+    case ShipmentDelivered = 'shipment.delivered';
+
+    case ShipmentDeliveryFailed = 'shipment.delivery_failed';
+
+    case ShipmentReturned = 'shipment.returned';
+
     case ProductCreated = 'product.created';
 
     case ProductUpdated = 'product.updated';

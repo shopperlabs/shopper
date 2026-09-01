@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Shopper\Core\Contracts\WebhookPayloadSerializer;
 use Shopper\Core\Models\Contracts\Order;
+use Shopper\Core\Models\Contracts\OrderShipping;
 use Shopper\Core\Models\Contracts\Product;
 
 final class DefaultWebhookPayloadSerializer implements WebhookPayloadSerializer
@@ -38,7 +39,7 @@ final class DefaultWebhookPayloadSerializer implements WebhookPayloadSerializer
 
     private function resourceOf(object $event): ?object
     {
-        foreach (['order', 'product', 'customer', 'cart'] as $property) {
+        foreach (['shipment', 'order', 'product', 'customer', 'cart'] as $property) {
             if (property_exists($event, $property)) {
                 return $event->{$property};
             }
@@ -53,10 +54,35 @@ final class DefaultWebhookPayloadSerializer implements WebhookPayloadSerializer
     private function dataFor(Model $resource): array
     {
         return match (true) {
+            $resource instanceof OrderShipping => $this->shipmentData($resource),
             $resource instanceof Order => $this->orderData($resource),
             $resource instanceof Product => $this->productData($resource),
             default => $this->genericData($resource),
         };
+    }
+
+    /**
+     * @param  Model&OrderShipping  $shipment
+     * @return array<string, mixed>
+     */
+    private function shipmentData(OrderShipping $shipment): array
+    {
+        $order = $shipment->getAttribute('order');
+        $carrier = $shipment->getAttribute('carrier');
+
+        return [
+            'id' => $shipment->getAttribute('public_id'),
+            'order_id' => $order?->getAttribute('public_id'),
+            'order_number' => $order?->getAttribute('number'),
+            'status' => $shipment->getAttribute('status')?->value,
+            'carrier' => $carrier?->getAttribute('name'),
+            'carrier_driver' => $carrier?->getAttribute('driver'),
+            'tracking_number' => $shipment->getAttribute('tracking_number'),
+            'tracking_url' => $shipment->getAttribute('tracking_url'),
+            'shipped_at' => $shipment->getAttribute('shipped_at')?->toIso8601String(),
+            'received_at' => $shipment->getAttribute('received_at')?->toIso8601String(),
+            'returned_at' => $shipment->getAttribute('returned_at')?->toIso8601String(),
+        ];
     }
 
     /**
