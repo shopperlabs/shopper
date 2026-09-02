@@ -28,7 +28,8 @@ final class CompleteCartController
      * holds shippable lines. Placement is idempotent: completing an already
      * completed cart answers 200 with the order it produced, so a client
      * retrying a timed-out call never creates a duplicate. The actual money
-     * movement is confirmed asynchronously through the payment webhooks.
+     * movement is confirmed through the payment webhooks: those that arrived
+     * before the order existed are settled here, the rest land later.
      */
     public function __invoke(Request $request, string $cartId): JsonResponse
     {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Payment\Services;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Shopper\Core\Actions\ReleaseCampaignBudget;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
@@ -17,6 +18,7 @@ use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Enum\WebhookAction;
 use Shopper\Payment\Events\PaymentFailed;
 use Shopper\Payment\Exceptions\PaymentException;
 use Shopper\Payment\Facades\Payment;
@@ -73,6 +75,7 @@ final class PaymentProcessingService
             type: TransactionType::Initiate,
             result: $result,
             amount: $order->price_amount,
+            actorId: auth()->id(),
         );
 
         return $result;
@@ -97,6 +100,7 @@ final class PaymentProcessingService
             type: TransactionType::Authorize,
             result: $result,
             amount: $result->amount ?? $order->price_amount,
+            actorId: auth()->id(),
         );
 
         $this->syncPaymentStatus($order, TransactionType::Authorize, $result);
@@ -130,6 +134,7 @@ final class PaymentProcessingService
             type: TransactionType::Capture,
             result: $result,
             amount: $amount ?? $order->price_amount,
+            actorId: auth()->id(),
         );
 
         $this->syncPaymentStatus($order, TransactionType::Capture, $result);
@@ -158,6 +163,7 @@ final class PaymentProcessingService
             type: TransactionType::Refund,
             result: $result,
             amount: $amount,
+            actorId: auth()->id(),
         );
 
         $this->syncPaymentStatus($order, TransactionType::Refund, $result);
@@ -184,6 +190,7 @@ final class PaymentProcessingService
             type: TransactionType::Cancel,
             result: $result,
             amount: $order->price_amount,
+            actorId: auth()->id(),
         );
 
         $this->syncPaymentStatus($order, TransactionType::Cancel, $result);
@@ -191,26 +198,36 @@ final class PaymentProcessingService
         return $result;
     }
 
-    public function processWebhook(string $driver, WebhookResult $result): void
+    /**
+     * Apply what the provider said about a payment to the order it settles.
+     * Runs under the order row lock so the outcome row, the status transition
+     * and the redelivery guard commit together: a duplicate can never slip
+     * between the guard and the insert, and a failure never leaves a capture
+     * journalized on an order that is still unpaid.
+     */
+    public function apply(Order $order, string $driver, WebhookResult $result): void
     {
-        if ($result->isIgnored() || $result->reference === null) {
-            return;
-        }
+        DB::transaction(function () use ($order, $driver, $result): void {
+            /** @var Order $order */
+            $order = resolve(Order::class)::query()->lockForUpdate()->findOrFail($order->getKey());
 
-        $order = $this->findOrderByReference($result->reference);
+            match ($result->action) {
+                WebhookAction::Authorized => $this->recordWebhookOutcome($order, $driver, TransactionType::Authorize, $result),
+                WebhookAction::Captured => $this->recordWebhookOutcome($order, $driver, TransactionType::Capture, $result),
+                WebhookAction::Refunded => $this->processWebhookRefund($order, $driver, $result),
+                WebhookAction::Canceled => $this->processWebhookCancellation($order, $driver, $result),
+                WebhookAction::Failed => $this->processWebhookFailure($order, $driver, $result),
+                WebhookAction::Ignored => null,
+            };
+        });
+    }
 
-        if ($order === null) {
-            return;
-        }
-
-        match ($result->action) {
-            'authorized' => $this->recordWebhookOutcome($order, $driver, TransactionType::Authorize, $result),
-            'captured' => $this->recordWebhookOutcome($order, $driver, TransactionType::Capture, $result),
-            'refunded' => $this->processWebhookRefund($order, $driver, $result),
-            'canceled' => $this->processWebhookCancellation($order, $driver, $result),
-            'failed' => $this->processWebhookFailure($order, $driver, $result),
-            default => null,
-        };
+    public function findOrderByReference(string $reference): ?Order
+    {
+        return PaymentTransaction::query()
+            ->where('reference', $reference)
+            ->latest()
+            ->first()?->order;
     }
 
     /**
@@ -358,11 +375,12 @@ final class PaymentProcessingService
         TransactionType $type,
         PaymentResult $result,
         int $amount,
+        ?int $actorId = null,
     ): void {
         PaymentTransaction::query()->create([
             'order_id' => $order->id,
             'payment_method_id' => $paymentMethod->id,
-            'user_id' => auth()->id(),
+            'user_id' => $actorId,
             'driver' => $driverCode,
             'type' => $type,
             'status' => $result->success ? TransactionStatus::Success : TransactionStatus::Failed,
@@ -374,23 +392,36 @@ final class PaymentProcessingService
         ]);
     }
 
-    private function findOrderByReference(string $reference): ?Order
+    /**
+     * A provider settles a reference once: a second successful authorize,
+     * capture or cancel for the same payment reference is a redelivery, and
+     * a second refund under the same refund id is the webhook confirming a
+     * refund already journalized. Either duplicate would inflate a total the
+     * refund ceiling is computed from.
+     */
+    private function alreadyRecorded(Order $order, TransactionType $type, ?string $reference): bool
     {
+        if ($reference === null) {
+            return false;
+        }
+
         return PaymentTransaction::query()
+            ->where('order_id', $order->getKey())
+            ->where('type', $type)
+            ->where('status', TransactionStatus::Success)
             ->where('reference', $reference)
-            ->latest()
-            ->first()?->order;
+            ->exists();
     }
 
     private function recordWebhookOutcome(Order $order, string $driver, TransactionType $type, WebhookResult $result): void
     {
-        $paymentResult = new PaymentResult(
-            success: true,
-            status: $result->action,
-            reference: $result->reference,
-            amount: $result->amount,
-            data: $result->data,
-        );
+        $reference = $type === TransactionType::Refund ? $result->refundId() : $result->reference;
+
+        if ($this->alreadyRecorded($order, $type, $reference)) {
+            return;
+        }
+
+        $paymentResult = $result->toPaymentResult();
 
         $this->recordTransaction(
             order: $order,
@@ -416,8 +447,18 @@ final class PaymentProcessingService
         $this->cancelOrder($order);
     }
 
+    /**
+     * A failed attempt is not the provider's last word: the intent stays
+     * open for the customer to retry, so the order stays pending with its
+     * stock reserved, and shopper:orders:reclaim cancels it if no payment
+     * ever lands. A failure reported after the payment settled is noise.
+     */
     private function processWebhookFailure(Order $order, string $driver, WebhookResult $result): void
     {
+        if ($order->payment_status !== PaymentStatus::Pending) {
+            return;
+        }
+
         $message = $result->data['failure_message'] ?? null;
 
         $paymentResult = PaymentResult::failed(
@@ -434,10 +475,7 @@ final class PaymentProcessingService
             amount: $result->amount ?? $order->price_amount,
         );
 
-        // Emits PaymentFailed; the failed result leaves the payment status
-        // untouched, then the order is cancelled to release reserved stock.
         $this->syncPaymentStatus($order, TransactionType::Capture, $paymentResult);
-        $this->cancelOrder($order);
     }
 
     private function cancelOrder(Order $order): void

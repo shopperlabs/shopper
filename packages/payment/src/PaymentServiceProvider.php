@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Shopper\Payment;
 
 use Closure;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
+use Shopper\Payment\Console\ReconcilePaymentsCommand;
 use Shopper\Payment\Facades\Payment;
 use Shopper\Payment\Models\PaymentTransaction;
+use Shopper\Payment\Models\PaymentWebhookEvent;
 use Shopper\Payment\Services\PaymentProcessingService;
 
 final class PaymentServiceProvider extends ServiceProvider
@@ -36,5 +39,17 @@ final class PaymentServiceProvider extends ServiceProvider
         ], 'shopper-config');
 
         Order::resolveRelationUsing('paymentTransactions', fn (Order $order) => $order->hasMany(PaymentTransaction::class, 'order_id'));
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([ReconcilePaymentsCommand::class]);
+        }
+
+        $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
+            if (config('shopper.payment.reconciliation.schedule')) {
+                $schedule->command('shopper:payments:reconcile', ['--pull'])->everyFifteenMinutes();
+            }
+
+            $schedule->command('model:prune', ['--model' => [PaymentWebhookEvent::class]])->daily();
+        });
     }
 }
