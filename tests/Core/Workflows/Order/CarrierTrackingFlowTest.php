@@ -93,6 +93,26 @@ describe('Carrier tracking feed', function (): void {
         expect($order->refresh()->status)->toBe(OrderStatus::Completed);
     });
 
+    it('keeps a paid order open while its items are still in preparation', function (OrderStatus $status): void {
+        $order = Order::factory()->create([
+            'status' => $status,
+            'payment_status' => PaymentStatus::Paid,
+            'shipping_status' => ShippingStatus::Unfulfilled,
+        ]);
+
+        OrderItem::factory()->count(2)->create([
+            'order_id' => $order->id,
+            'fulfillment_status' => FulfillmentStatus::Pending,
+        ]);
+
+        event(new OrderPaid($order));
+
+        expect($order->refresh()->status)->toBe($status);
+    })->with([
+        'new' => OrderStatus::New,
+        'processing' => OrderStatus::Processing,
+    ]);
+
     it('walks the carrier timeline and fires each side effect once', function (): void {
         Event::fake([OrderShipped::class, OrderShipmentDelivered::class]);
 
