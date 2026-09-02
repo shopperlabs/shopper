@@ -18,5 +18,6 @@ ShopperApi::authenticated(function (): void {
 });
 
 ShopperApi::webhooks(function (): void {
+    require __DIR__.'/store/shipping.php';
     require __DIR__.'/store/payment.php';
 });

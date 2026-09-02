@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Shipping\DataTransferObjects;
 
 use DateTimeInterface;
+use Shopper\Core\Enum\ShipmentStatus;
 
 final readonly class TrackingInfo
 {
@@ -13,7 +14,7 @@ final readonly class TrackingInfo
      */
     public function __construct(
         public string $trackingNumber,
-        public string $status,
+        public ShipmentStatus $status,
         public ?string $statusDescription = null,
         public ?DateTimeInterface $estimatedDelivery = null,
         public ?DateTimeInterface $deliveredAt = null,
@@ -22,7 +23,7 @@ final readonly class TrackingInfo
 
     public function isDelivered(): bool
     {
-        return $this->deliveredAt !== null || $this->status === 'delivered';
+        return $this->deliveredAt !== null || $this->status === ShipmentStatus::Delivered;
     }
 
     /**
@@ -32,7 +33,7 @@ final readonly class TrackingInfo
     {
         return [
             'tracking_number' => $this->trackingNumber,
-            'status' => $this->status,
+            'status' => $this->status->value,
             'status_description' => $this->statusDescription,
             'estimated_delivery' => $this->estimatedDelivery?->format('Y-m-d H:i:s'),
             'delivered_at' => $this->deliveredAt?->format('Y-m-d H:i:s'),

@@ -84,6 +84,7 @@ return [
     ],
 
     'notifications' => [
+        'shipment_empty' => 'These items are already on another shipment. Refresh the order and try again.',
         'archived' => 'The orders has successfully archived !',
         'cancelled' => 'The order has successfully cancelled !',
         'note_added' => 'Your note has been added to this order.',

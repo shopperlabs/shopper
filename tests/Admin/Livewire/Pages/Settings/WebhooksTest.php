@@ -43,7 +43,7 @@ describe(Webhooks::class, function (): void {
                 'url' => 'https://erp.example.com/hooks',
                 'events' => ['order.paid'],
             ])
-            ->assertHasNoActionErrors();
+            ->assertHasNoErrors();
 
         $subscription = WebhookSubscription::query()->sole();
 

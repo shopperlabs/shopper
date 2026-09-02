@@ -103,6 +103,11 @@ final class UpsDriver extends Driver
         throw ShippingException::notSupported('createShipment', 'ups');
     }
 
+    public function supportsTracking(): bool
+    {
+        return true;
+    }
+
     public function track(string $trackingNumber): TrackingInfo
     {
         if (! $this->isConfigured()) {

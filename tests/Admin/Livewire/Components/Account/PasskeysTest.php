@@ -73,7 +73,7 @@ describe(Passkeys::class, function (): void {
                 data: ['password' => 'password'],
                 arguments: ['passkey' => $passkey->getKey()],
             )
-            ->assertHasNoActionErrors();
+            ->assertHasNoErrors();
 
         expect($this->user->passkeys()->count())->toBe(0);
 

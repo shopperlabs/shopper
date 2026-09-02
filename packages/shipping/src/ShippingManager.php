@@ -4,56 +4,40 @@ declare(strict_types=1);
 
 namespace Shopper\Shipping;
 
-use Closure;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Manager;
 use InvalidArgumentException;
 use Shopper\Shipping\Contracts\ShippingDriver;
 use Shopper\Shipping\Drivers\FedExDriver;
 use Shopper\Shipping\Drivers\ManualDriver;
 use Shopper\Shipping\Drivers\UpsDriver;
 use Shopper\Shipping\Drivers\UspsDriver;
+use UnitEnum;
 
-final class ShippingManager
+final class ShippingManager extends Manager
 {
-    /** @var array<string, ShippingDriver> */
-    private array $drivers = [];
-
-    /** @var array<string, Closure> */
-    private array $customCreators = [];
-
-    public function driver(?string $name = null): ShippingDriver
+    public function getDefaultDriver(): string
     {
-        $name ??= 'manual';
-
-        return $this->drivers[$name] ??= $this->resolve($name);
+        return 'manual';
     }
 
     /**
-     * Register a custom driver creator.
+     * @param  UnitEnum|string|null  $driver
      */
-    public function extend(string $name, Closure $callback): self
+    public function driver($driver = null): ShippingDriver
     {
-        $this->customCreators[$name] = $callback;
-
-        return $this;
+        return parent::driver($driver);
     }
 
     /**
-     * Get all available driver codes.
-     *
      * @return array<int, string>
      */
     public function availableDrivers(): array
     {
-        $builtIn = ['manual', 'ups', 'fedex', 'usps'];
-        $custom = array_keys($this->customCreators);
-
-        return array_unique([...$builtIn, ...$custom]);
+        return array_unique(['manual', 'ups', 'fedex', 'usps', ...array_keys($this->customCreators)]);
     }
 
     /**
-     * Get all configured and enabled drivers.
-     *
      * @return Collection<string, ShippingDriver>
      */
     public function configuredDrivers(): Collection
@@ -69,9 +53,6 @@ final class ShippingManager
             ->mapWithKeys(fn (string $name): array => [$name => $this->driver($name)]);
     }
 
-    /**
-     * Check if a driver is configured and ready to use.
-     */
     public function isConfigured(string $name): bool
     {
         try {
@@ -81,22 +62,12 @@ final class ShippingManager
         }
     }
 
-    private function resolve(string $name): ShippingDriver
+    protected function createManualDriver(): ManualDriver
     {
-        if (isset($this->customCreators[$name])) {
-            return call_user_func($this->customCreators[$name], $name);
-        }
-
-        return match ($name) {
-            'manual' => new ManualDriver,
-            'ups' => $this->createUpsDriver(),
-            'fedex' => $this->createFedExDriver(),
-            'usps' => $this->createUspsDriver(),
-            default => throw new InvalidArgumentException("Driver [{$name}] is not supported."),
-        };
+        return new ManualDriver;
     }
 
-    private function createUpsDriver(): UpsDriver
+    protected function createUpsDriver(): UpsDriver
     {
         $config = config('shopper.shipping.drivers.ups', []);
 
@@ -109,7 +80,7 @@ final class ShippingManager
         );
     }
 
-    private function createFedExDriver(): FedExDriver
+    protected function createFedexDriver(): FedExDriver
     {
         $config = config('shopper.shipping.drivers.fedex', []);
 
@@ -121,7 +92,7 @@ final class ShippingManager
         );
     }
 
-    private function createUspsDriver(): UspsDriver
+    protected function createUspsDriver(): UspsDriver
     {
         $config = config('shopper.shipping.drivers.usps', []);
 

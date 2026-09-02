@@ -40,7 +40,7 @@ describe(PaymentMethods::class, function (): void {
                 'description' => 'Pay with credit card',
                 'instructions' => 'Enter your card details',
             ])
-            ->assertHasNoActionErrors()
+            ->assertHasNoErrors()
             ->assertNotified(__('shopper::notifications.payment.add'));
 
         expect(PaymentMethod::query()->count())->toBe($initialCount + 1)

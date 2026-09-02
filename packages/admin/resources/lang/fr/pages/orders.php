@@ -84,6 +84,7 @@ return [
     ],
 
     'notifications' => [
+        'shipment_empty' => 'Ces articles sont déjà rattachés à une autre expédition. Actualisez la commande et réessayez.',
         'archived' => 'La commande a été archivée avec succès !',
         'cancelled' => 'La commande a été annulée avec succès !',
         'note_added' => 'Votre note a été ajoutée à cette commande.',

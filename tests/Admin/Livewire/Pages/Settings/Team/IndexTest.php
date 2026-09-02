@@ -46,7 +46,7 @@ describe(Index::class, function (): void {
                 'display_name' => 'Supervisor',
                 'description' => 'Can supervise operations',
             ])
-            ->assertHasNoFormErrors()
+            ->assertHasNoErrors()
             ->assertNotified(__('shopper::notifications.users_roles.role_added'));
 
         expect(Role::query()->count())->toBe($initialCount + 1)
@@ -86,7 +86,7 @@ describe(Index::class, function (): void {
             ->callAction('createRole', [
                 'name' => 'custom_role_'.uniqid(),
             ])
-            ->assertHasNoFormErrors();
+            ->assertHasNoErrors();
 
         expect(Role::query()->count())->toBe($initialCount + 1);
     });

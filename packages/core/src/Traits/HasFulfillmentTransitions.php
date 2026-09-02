@@ -6,6 +6,7 @@ namespace Shopper\Core\Traits;
 
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Core\Enum\ShipmentEventSource;
 use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Exceptions\InvalidShipmentStatusTransitionException;
 use Shopper\Core\Models\OrderShippingEvent;
@@ -106,11 +107,14 @@ trait HasFulfillmentTransitions
 
     /**
      * @param  array{
-     *     description?: string,
-     *     location?: string,
-     *     latitude?: float,
-     *     longitude?: float,
+     *     description?: string|null,
+     *     location?: string|null,
+     *     latitude?: float|null,
+     *     longitude?: float|null,
      *     occurred_at?: CarbonInterface,
+     *     external_id?: string|null,
+     *     source?: ShipmentEventSource,
+     *     causer_id?: int|null,
      *     metadata?: array<string, mixed>,
      * }  $context
      */
@@ -118,6 +122,9 @@ trait HasFulfillmentTransitions
     {
         return $this->events()->create([
             'status' => $status,
+            'external_id' => $context['external_id'] ?? null,
+            'source' => $context['source'] ?? ShipmentEventSource::Manual,
+            'causer_id' => $context['causer_id'] ?? null,
             'description' => $context['description'] ?? null,
             'location' => $context['location'] ?? null,
             'latitude' => $context['latitude'] ?? null,

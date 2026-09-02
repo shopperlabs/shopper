@@ -8,6 +8,10 @@ use Shopper\Core\Events\Orders\OrderCancelled;
 use Shopper\Core\Events\Orders\OrderCompleted;
 use Shopper\Core\Events\Orders\OrderCreated;
 use Shopper\Core\Events\Orders\OrderPaid;
+use Shopper\Core\Events\Orders\OrderShipmentCreated;
+use Shopper\Core\Events\Orders\OrderShipmentDelivered;
+use Shopper\Core\Events\Orders\OrderShipmentDeliveryFailed;
+use Shopper\Core\Events\Orders\OrderShipmentReturned;
 use Shopper\Core\Events\Orders\OrderShipped;
 use Shopper\Core\Events\Products\ProductCreated;
 use Shopper\Core\Events\Products\ProductDeleted;
@@ -32,6 +36,10 @@ return [
         OrderCancelled::class => WebhookEventType::OrderCancelled->value,
         OrderShipped::class => WebhookEventType::OrderShipped->value,
         OrderCompleted::class => WebhookEventType::OrderCompleted->value,
+        OrderShipmentCreated::class => WebhookEventType::ShipmentCreated->value,
+        OrderShipmentDelivered::class => WebhookEventType::ShipmentDelivered->value,
+        OrderShipmentDeliveryFailed::class => WebhookEventType::ShipmentDeliveryFailed->value,
+        OrderShipmentReturned::class => WebhookEventType::ShipmentReturned->value,
         ProductCreated::class => WebhookEventType::ProductCreated->value,
         ProductUpdated::class => WebhookEventType::ProductUpdated->value,
         ProductDeleted::class => WebhookEventType::ProductDeleted->value,

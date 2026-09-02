@@ -4,33 +4,31 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Import;
 
-use Closure;
 use Illuminate\Support\Collection;
-use InvalidArgumentException;
+use Illuminate\Support\Manager;
 use Shopper\Core\Import\Contracts\ImportSource;
 use Shopper\Core\Import\Sources\CsvSource;
 use Throwable;
+use UnitEnum;
 
-final class ImportManager
+final class ImportManager extends Manager
 {
-    /** @var array<string, ImportSource> */
-    private array $sources = [];
+    public function getDefaultDriver(): string
+    {
+        return 'csv';
+    }
 
-    /** @var array<string, Closure> */
-    private array $customCreators = [];
+    /**
+     * @param  UnitEnum|string|null  $driver
+     */
+    public function driver($driver = null): ImportSource
+    {
+        return parent::driver($driver);
+    }
 
     public function source(?string $name = null): ImportSource
     {
-        $name ??= 'csv';
-
-        return $this->sources[$name] ??= $this->resolve($name);
-    }
-
-    public function extend(string $name, Closure $callback): self
-    {
-        $this->customCreators[$name] = $callback;
-
-        return $this;
+        return $this->driver($name);
     }
 
     /**
@@ -38,10 +36,7 @@ final class ImportManager
      */
     public function availableSources(): array
     {
-        $builtIn = ['csv'];
-        $custom = array_keys($this->customCreators);
-
-        return array_unique([...$builtIn, ...$custom]);
+        return array_unique(['csv', ...array_keys($this->customCreators)]);
     }
 
     /**
@@ -63,15 +58,8 @@ final class ImportManager
         }
     }
 
-    private function resolve(string $name): ImportSource
+    protected function createCsvDriver(): CsvSource
     {
-        if (isset($this->customCreators[$name])) {
-            return call_user_func($this->customCreators[$name], $name);
-        }
-
-        return match ($name) {
-            'csv' => new CsvSource,
-            default => throw new InvalidArgumentException("Import source [{$name}] is not supported."),
-        };
+        return new CsvSource;
     }
 }

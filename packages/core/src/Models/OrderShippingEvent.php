@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\OrderShippingEventFactory;
+use Shopper\Core\Enum\ShipmentEventSource;
 use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Models\Traits\HasPublicId;
 
@@ -16,6 +17,9 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read int $id
  * @property-read ?string $public_id
  * @property-read ShipmentStatus $status
+ * @property-read ?string $external_id
+ * @property-read ShipmentEventSource $source
+ * @property-read ?int $causer_id
  * @property-read ?string $description
  * @property-read ?string $location
  * @property-read ?float $latitude
@@ -57,6 +61,7 @@ class OrderShippingEvent extends Model
     {
         return [
             'status' => ShipmentStatus::class,
+            'source' => ShipmentEventSource::class,
             'occurred_at' => 'datetime',
             'latitude' => 'decimal:7',
             'longitude' => 'decimal:7',

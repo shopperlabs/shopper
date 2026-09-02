@@ -4,33 +4,26 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Channel;
 
-use Closure;
 use Illuminate\Support\Collection;
-use InvalidArgumentException;
+use Illuminate\Support\Manager;
 use Shopper\Core\Channel\Contracts\ChannelDriver;
 use Shopper\Core\Channel\Drivers\WebDriver;
 use Throwable;
+use UnitEnum;
 
-final class ChannelManager
+final class ChannelManager extends Manager
 {
-    /** @var array<string, ChannelDriver> */
-    private array $drivers = [];
-
-    /** @var array<string, Closure> */
-    private array $customCreators = [];
-
-    public function driver(?string $name = null): ChannelDriver
+    public function getDefaultDriver(): string
     {
-        $name ??= 'web';
-
-        return $this->drivers[$name] ??= $this->resolve($name);
+        return 'web';
     }
 
-    public function extend(string $name, Closure $callback): self
+    /**
+     * @param  UnitEnum|string|null  $driver
+     */
+    public function driver($driver = null): ChannelDriver
     {
-        $this->customCreators[$name] = $callback;
-
-        return $this;
+        return parent::driver($driver);
     }
 
     /**
@@ -38,10 +31,7 @@ final class ChannelManager
      */
     public function availableDrivers(): array
     {
-        $builtIn = ['web'];
-        $custom = array_keys($this->customCreators);
-
-        return array_unique([...$builtIn, ...$custom]);
+        return array_unique(['web', ...array_keys($this->customCreators)]);
     }
 
     /**
@@ -72,15 +62,8 @@ final class ChannelManager
             : null;
     }
 
-    private function resolve(string $name): ChannelDriver
+    protected function createWebDriver(): WebDriver
     {
-        if (isset($this->customCreators[$name])) {
-            return call_user_func($this->customCreators[$name], $name);
-        }
-
-        return match ($name) {
-            'web' => new WebDriver,
-            default => throw new InvalidArgumentException("Channel driver [{$name}] is not supported."),
-        };
+        return new WebDriver;
     }
 }

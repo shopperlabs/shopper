@@ -4,53 +4,37 @@ declare(strict_types=1);
 
 namespace Shopper\Payment;
 
-use Closure;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Manager;
 use InvalidArgumentException;
 use Shopper\Payment\Contracts\PaymentDriver;
 use Shopper\Payment\Drivers\ManualDriver;
+use UnitEnum;
 
-final class PaymentManager
+final class PaymentManager extends Manager
 {
-    /** @var array<string, PaymentDriver> */
-    private array $drivers = [];
-
-    /** @var array<string, Closure> */
-    private array $customCreators = [];
-
-    public function driver(?string $name = null): PaymentDriver
+    public function getDefaultDriver(): string
     {
-        $name ??= 'manual';
-
-        return $this->drivers[$name] ??= $this->resolve($name);
+        return 'manual';
     }
 
     /**
-     * Register a custom driver creator.
+     * @param  UnitEnum|string|null  $driver
      */
-    public function extend(string $name, Closure $callback): self
+    public function driver($driver = null): PaymentDriver
     {
-        $this->customCreators[$name] = $callback;
-
-        return $this;
+        return parent::driver($driver);
     }
 
     /**
-     * Get all available driver codes.
-     *
      * @return array<int, string>
      */
     public function availableDrivers(): array
     {
-        $builtIn = ['manual'];
-        $custom = array_keys($this->customCreators);
-
-        return array_unique([...$builtIn, ...$custom]);
+        return array_unique(['manual', ...array_keys($this->customCreators)]);
     }
 
     /**
-     * Get all configured and enabled drivers.
-     *
      * @return Collection<string, PaymentDriver>
      */
     public function configuredDrivers(): Collection
@@ -66,9 +50,6 @@ final class PaymentManager
             ->mapWithKeys(fn (string $name): array => [$name => $this->driver($name)]);
     }
 
-    /**
-     * Check if a driver is configured and ready to use.
-     */
     public function isConfigured(string $name): bool
     {
         try {
@@ -78,15 +59,8 @@ final class PaymentManager
         }
     }
 
-    private function resolve(string $name): PaymentDriver
+    protected function createManualDriver(): ManualDriver
     {
-        if (isset($this->customCreators[$name])) {
-            return call_user_func($this->customCreators[$name], $name);
-        }
-
-        return match ($name) {
-            'manual' => new ManualDriver,
-            default => throw new InvalidArgumentException("Driver [{$name}] is not supported."),
-        };
+        return new ManualDriver;
     }
 }
