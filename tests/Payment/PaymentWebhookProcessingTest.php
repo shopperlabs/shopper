@@ -172,7 +172,7 @@ describe('PaymentWebhookProcessingTest', function (): void {
         }
 
         expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::PartiallyRefunded)
-            ->and(PaymentTransaction::query()->where('order_id', $this->order->id)->where('type', TransactionType::Refund)->sum('amount'))->toBe(2000);
+            ->and((int) PaymentTransaction::query()->where('order_id', $this->order->id)->where('type', TransactionType::Refund)->sum('amount'))->toBe(2000);
     });
 
     it('does not count an admin refund twice when its webhook confirms it', function (): void {
