@@ -15,9 +15,12 @@ use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Exceptions\CampaignBudgetExceededException;
 use Shopper\Core\Models\Contracts\Order;
+use Shopper\Payment\Actions\SettlePayment;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Jobs\SyncPendingPaymentJob;
 use Shopper\Payment\Models\PaymentTransaction;
+use Throwable;
 
 final readonly class CompleteCartAction
 {
@@ -25,6 +28,7 @@ final readonly class CompleteCartAction
         private GetCartShippingOptionsAction $shippingOptions,
         private CartManager $cartManager,
         private CreateOrderFromCartAction $createOrderFromCart,
+        private SettlePayment $settle,
     ) {}
 
     /**
@@ -82,7 +86,38 @@ final readonly class CompleteCartAction
             ]);
         }
 
+        $this->settlePayment($cart, $order);
+
         return $order;
+    }
+
+    /**
+     * The browser confirms the payment before the storefront completes the
+     * cart, so the provider often speaks before the order exists. Once the
+     * order and its initiate transaction are committed, the events that
+     * landed early are replayed, and a provider check is queued for a
+     * payment still pending: the response never waits on the provider, and
+     * placement is never blocked by the settlement. The order is the durable
+     * anchor, the scheduled reconciliation is the safety net.
+     */
+    private function settlePayment(Cart $cart, Order $order): void
+    {
+        $reference = $cart->payment_session['reference'] ?? null;
+
+        if (! is_string($reference)) {
+            return;
+        }
+
+        try {
+            $this->settle->execute($reference);
+
+            if (config('shopper.payment.reconciliation.pull_on_completion', true)) {
+                SyncPendingPaymentJob::dispatch($order->getKey(), $reference)
+                    ->onQueue(config('shopper.payment.reconciliation.queue'));
+            }
+        } catch (Throwable $exception) {
+            report($exception);
+        }
     }
 
     /**

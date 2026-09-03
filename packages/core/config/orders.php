@@ -37,11 +37,13 @@ return [
     |
     | Here you may define the number of hours after which unpaid pending
     | orders are automatically cancelled and their reserved stock released.
-    | When set, the `shopper:orders:reclaim` command runs hourly. Use null
-    | to disable. Orders paid offline (manual driver) are never reclaimed.
+    | A failed payment attempt never cancels an order on its own, since the
+    | customer may still retry: this window is what frees the stock when no
+    | payment ever lands. The `shopper:orders:reclaim` command runs hourly.
+    | Use null to disable. Offline payments (manual driver) are never reclaimed.
     |
     */
 
-    'reclaim_pending_after_hours' => null,
+    'reclaim_pending_after_hours' => 24,
 
 ];

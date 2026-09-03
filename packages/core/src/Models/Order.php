@@ -177,6 +177,12 @@ class Order extends Model implements OrderContract
         return $this->payment_status === PaymentStatus::Authorized;
     }
 
+    public function isAwaitingPayment(): bool
+    {
+        return $this->payment_status === PaymentStatus::Pending
+            && $this->status === OrderStatus::New;
+    }
+
     public function isRefunded(): bool
     {
         return $this->payment_status === PaymentStatus::Refunded;
@@ -339,6 +345,18 @@ class Order extends Model implements OrderContract
     protected function archived(Builder $query): Builder
     {
         return $query->where('status', OrderStatus::Archived);
+    }
+
+    /**
+     * @param  Builder<Order>  $query
+     * @return Builder<Order>
+     */
+    #[Scope]
+    protected function awaitingPayment(Builder $query): Builder
+    {
+        return $query
+            ->where('payment_status', PaymentStatus::Pending)
+            ->where('status', OrderStatus::New);
     }
 
     protected function casts(): array

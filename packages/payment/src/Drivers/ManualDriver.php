@@ -8,10 +8,6 @@ use Illuminate\Support\Str;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 
-/**
- * Manual driver for payment methods without API integration.
- * Acts as a cash-on-delivery (COD) or bank transfer placeholder.
- */
 final class ManualDriver extends Driver
 {
     public function code(): string

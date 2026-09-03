@@ -13,12 +13,13 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Product;
+use Shopper\Payment\Actions\IngestPaymentEvent;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Enum\WebhookAction;
 use Shopper\Payment\Events\PaymentFailed;
 use Shopper\Payment\Models\PaymentTransaction;
-use Shopper\Payment\Services\PaymentProcessingService;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Core\TestCase::class);
@@ -48,13 +49,13 @@ beforeEach(function (): void {
         'reference' => 'pi_123',
     ]);
 
-    $this->service = resolve(PaymentProcessingService::class);
+    $this->ingest = resolve(IngestPaymentEvent::class);
 });
 
 describe('PaymentWebhookProcessingTest', function (): void {
     it('advances the order to `Paid` on a captured event', function (): void {
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'captured',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Captured,
             reference: 'pi_123',
             amount: 5000,
             eventId: 'evt_1',
@@ -72,8 +73,8 @@ describe('PaymentWebhookProcessingTest', function (): void {
     });
 
     it('advances the order to `Authorized` on an authorized event', function (): void {
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'authorized',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Authorized,
             reference: 'pi_123',
             amount: 5000,
             eventId: 'evt_2',
@@ -83,15 +84,15 @@ describe('PaymentWebhookProcessingTest', function (): void {
     });
 
     it('marks the order `PartiallyRefunded` then `Refunded` as refunds accumulate', function (): void {
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'captured',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Captured,
             reference: 'pi_123',
             amount: 5000,
             eventId: 'evt_capture',
         ));
 
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'refunded',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Refunded,
             reference: 'pi_123',
             amount: 2000,
             eventId: 'evt_3',
@@ -99,8 +100,8 @@ describe('PaymentWebhookProcessingTest', function (): void {
 
         expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::PartiallyRefunded);
 
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'refunded',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Refunded,
             reference: 'pi_123',
             amount: 3000,
             eventId: 'evt_4',
@@ -109,22 +110,24 @@ describe('PaymentWebhookProcessingTest', function (): void {
         expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::Refunded);
     });
 
-    it('cancels the order and dispatches `PaymentFailed` on a failed event', function (): void {
+    it('records a failed attempt and dispatches `PaymentFailed` without cancelling the order', function (): void {
         Event::fake([PaymentFailed::class]);
 
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'failed',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Failed,
             reference: 'pi_123',
             amount: 5000,
             data: ['failure_message' => 'card_declined'],
             eventId: 'evt_5',
         ));
 
-        expect($this->order->refresh()->status)->toBe(OrderStatus::Cancelled);
+        expect($this->order->refresh()->status)->toBe(OrderStatus::New)
+            ->and($this->order->payment_status)->toBe(PaymentStatus::Pending)
+            ->and(PaymentTransaction::query()->where('order_id', $this->order->id)->where('type', TransactionType::Capture)->where('status', TransactionStatus::Failed)->count())->toBe(1);
         Event::assertDispatched(PaymentFailed::class);
     });
 
-    it('restores reserved stock when a payment fails', function (): void {
+    it('keeps the stock reserved on a failed attempt so the customer can retry', function (): void {
         $inventory = Inventory::factory()->create(['is_default' => true, 'priority' => 0]);
         $product = Product::factory()->standard()->create();
         $product->mutateStock($inventory->id, 10, event: 'Initial');
@@ -139,27 +142,76 @@ describe('PaymentWebhookProcessingTest', function (): void {
         resolve(StockReserver::class)->reserve($product, 3, $this->order, $this->user->id);
         expect($product->getStock())->toBe(7);
 
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'failed',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Failed,
             reference: 'pi_123',
             amount: 5000,
             eventId: 'evt_6',
         ));
 
-        expect($this->order->refresh()->status)->toBe(OrderStatus::Cancelled)
-            ->and($product->getStock())->toBe(10);
+        expect($this->order->refresh()->status)->toBe(OrderStatus::New)
+            ->and($product->getStock())->toBe(7);
+    });
+
+    it('collapses a redelivered refund onto the refund id', function (): void {
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Captured,
+            reference: 'pi_123',
+            amount: 5000,
+            eventId: 'evt_refund_capture',
+        ));
+
+        foreach (['evt_refund_a', 'evt_refund_b'] as $eventId) {
+            $this->ingest->execute('fake', new WebhookResult(
+                action: WebhookAction::Refunded,
+                reference: 'pi_123',
+                amount: 2000,
+                data: ['refund_id' => 're_1'],
+                eventId: $eventId,
+            ));
+        }
+
+        expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::PartiallyRefunded)
+            ->and((int) PaymentTransaction::query()->where('order_id', $this->order->id)->where('type', TransactionType::Refund)->sum('amount'))->toBe(2000);
+    });
+
+    it('does not count an admin refund twice when its webhook confirms it', function (): void {
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Captured,
+            reference: 'pi_123',
+            amount: 5000,
+            eventId: 'evt_admin_capture',
+        ));
+
+        PaymentTransaction::factory()->refund()->create([
+            'order_id' => $this->order->id,
+            'payment_method_id' => $this->method->id,
+            'driver' => 'fake',
+            'amount' => 2000,
+            'reference' => 're_admin',
+        ]);
+
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Refunded,
+            reference: 'pi_123',
+            amount: 2000,
+            data: ['refund_id' => 're_admin'],
+            eventId: 'evt_admin_refund',
+        ));
+
+        expect(PaymentTransaction::query()->where('order_id', $this->order->id)->where('type', TransactionType::Refund)->count())->toBe(1);
     });
 
     it('keeps a refunded order refunded when a late captured event arrives', function (): void {
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'captured',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Captured,
             reference: 'pi_123',
             amount: 5000,
             eventId: 'evt_late_1',
         ));
 
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'refunded',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Refunded,
             reference: 'pi_123',
             amount: 5000,
             eventId: 'evt_late_2',
@@ -167,14 +219,15 @@ describe('PaymentWebhookProcessingTest', function (): void {
 
         expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::Refunded);
 
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'captured',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Captured,
             reference: 'pi_123',
             amount: 5000,
             eventId: 'evt_late_3',
         ));
 
-        expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::Refunded);
+        expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::Refunded)
+            ->and(PaymentTransaction::query()->where('order_id', $this->order->id)->where('type', TransactionType::Capture)->count())->toBe(1);
     });
 
     it('keeps a paid order paid when a late failed event arrives', function (): void {
@@ -191,15 +244,15 @@ describe('PaymentWebhookProcessingTest', function (): void {
 
         resolve(StockReserver::class)->reserve($product, 3, $this->order, $this->user->id);
 
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'captured',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Captured,
             reference: 'pi_123',
             amount: 5000,
             eventId: 'evt_ooo_1',
         ));
 
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'failed',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Failed,
             reference: 'pi_123',
             amount: 5000,
             data: ['failure_message' => 'late failure'],
@@ -214,8 +267,8 @@ describe('PaymentWebhookProcessingTest', function (): void {
     it('dispatches `OrderPaid` when a captured webhook marks the order paid', function (): void {
         Event::fake([OrderPaid::class]);
 
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'captured',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Captured,
             reference: 'pi_123',
             amount: 5000,
             eventId: 'evt_paid_event',
@@ -228,8 +281,8 @@ describe('PaymentWebhookProcessingTest', function (): void {
     });
 
     it('does nothing when no order matches the reference', function (): void {
-        $this->service->processWebhook('fake', new WebhookResult(
-            action: 'captured',
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Captured,
             reference: 'pi_unknown',
             amount: 5000,
             eventId: 'evt_7',
@@ -240,7 +293,7 @@ describe('PaymentWebhookProcessingTest', function (): void {
     });
 
     it('ignores an ignored webhook result', function (): void {
-        $this->service->processWebhook('fake', WebhookResult::ignored());
+        $this->ingest->execute('fake', WebhookResult::ignored());
 
         expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::Pending);
     });

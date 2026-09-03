@@ -7,7 +7,6 @@ namespace Shopper\Core\Console;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
 use Shopper\Core\Enum\OrderStatus;
-use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Events\Orders\OrderCancelled;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Order;
@@ -36,8 +35,7 @@ final class ReclaimPendingOrdersCommand extends Command
         $reclaimed = 0;
 
         resolve(OrderContract::class)::query()
-            ->where('payment_status', PaymentStatus::Pending)
-            ->where('status', OrderStatus::New)
+            ->awaitingPayment()
             ->where('created_at', '<', now()->subHours($hours))
             ->whereHas('paymentMethod', function ($query): void {
                 $query->whereNotNull('driver')->where('driver', '<>', 'manual');

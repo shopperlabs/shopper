@@ -8,10 +8,15 @@ use RuntimeException;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Drivers\Driver;
+use Shopper\Payment\Enum\WebhookAction;
 
 final class FakePaymentDriver extends Driver
 {
     public bool $failRetrieve = false;
+
+    public bool $throwOnRetrieve = false;
+
+    public ?string $retrievedStatus = null;
 
     public int $initiations = 0;
 
@@ -85,16 +90,34 @@ final class FakePaymentDriver extends Driver
         }
 
         return new WebhookResult(
-            action: (string) ($payload['action'] ?? 'ignored'),
+            action: WebhookAction::tryFrom((string) ($payload['action'] ?? '')) ?? WebhookAction::Ignored,
             reference: isset($payload['reference']) ? (string) $payload['reference'] : null,
             amount: isset($payload['amount']) ? (int) $payload['amount'] : null,
             eventId: isset($payload['event_id']) ? (string) $payload['event_id'] : null,
         );
     }
 
+    public function supportsRetrieval(): bool
+    {
+        return true;
+    }
+
     public function retrievePayment(string $reference): PaymentResult
     {
         $this->retrievals++;
+
+        if ($this->throwOnRetrieve) {
+            throw new RuntimeException('Provider unreachable.');
+        }
+
+        if ($this->retrievedStatus !== null) {
+            return new PaymentResult(
+                success: true,
+                status: $this->retrievedStatus,
+                reference: $reference,
+                amount: $this->lastAmount,
+            );
+        }
 
         if ($this->failRetrieve) {
             return new PaymentResult(

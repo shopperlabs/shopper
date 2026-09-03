@@ -32,6 +32,11 @@ abstract class Driver implements PaymentDriver
         return true;
     }
 
+    public function supportsRetrieval(): bool
+    {
+        return false;
+    }
+
     public function authorizePayment(string $reference, array $data = []): PaymentResult
     {
         throw PaymentException::notSupported('authorizePayment', $this->code());

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Enum\PaymentMode;
+use Shopper\Payment\Enum\WebhookAction;
 use Shopper\Stripe\Exceptions\StripeException;
 use Shopper\Stripe\StripeDriver;
 use Stripe\Exception\InvalidRequestException;
@@ -660,7 +661,7 @@ describe(StripeDriver::class, function (): void {
             $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
 
             expect($result)->toBeInstanceOf(WebhookResult::class)
-                ->and($result->action)->toBe('captured')
+                ->and($result->action)->toBe(WebhookAction::Captured)
                 ->and($result->reference)->toBe('pi_test_123')
                 ->and($result->amount)->toBe(5000)
                 ->and($result->data['stripe_event'])->toBe('payment_intent.succeeded');
@@ -677,7 +678,7 @@ describe(StripeDriver::class, function (): void {
 
             $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
 
-            expect($result->action)->toBe('failed')
+            expect($result->action)->toBe(WebhookAction::Failed)
                 ->and($result->reference)->toBe('pi_test_456')
                 ->and($result->amount)->toBe(3000)
                 ->and($result->data['failure_message'])->toBe('Your card was declined.');
@@ -693,25 +694,42 @@ describe(StripeDriver::class, function (): void {
 
             $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
 
-            expect($result->action)->toBe('canceled')
+            expect($result->action)->toBe(WebhookAction::Canceled)
                 ->and($result->reference)->toBe('pi_test_789')
                 ->and($result->amount)->toBe(2000);
         });
 
-        it('handles `charge.refunded` event', function (): void {
+        it('handles a succeeded `refund.created` event with the refund amount and id', function (): void {
             $driver = createDriver();
-            $webhook = webhookPayload('charge.refunded', [
-                'id' => 'ch_test_123',
-                'object' => 'charge',
+            $webhook = webhookPayload('refund.created', [
+                'id' => 're_test_123',
+                'object' => 'refund',
                 'payment_intent' => 'pi_test_123',
-                'amount_refunded' => 2500,
+                'amount' => 2500,
+                'status' => 'succeeded',
             ]);
 
             $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
 
-            expect($result->action)->toBe('refunded')
+            expect($result->action)->toBe(WebhookAction::Refunded)
                 ->and($result->reference)->toBe('pi_test_123')
-                ->and($result->amount)->toBe(2500);
+                ->and($result->amount)->toBe(2500)
+                ->and($result->refundId())->toBe('re_test_123');
+        });
+
+        it('ignores a refund that has not succeeded yet', function (): void {
+            $driver = createDriver();
+            $webhook = webhookPayload('refund.updated', [
+                'id' => 're_test_123',
+                'object' => 'refund',
+                'payment_intent' => 'pi_test_123',
+                'amount' => 2500,
+                'status' => 'pending',
+            ]);
+
+            $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
+
+            expect($result->isIgnored())->toBeTrue();
         });
 
         it('returns ignored result for unknown events', function (): void {

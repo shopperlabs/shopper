@@ -67,7 +67,8 @@ it('advances the order to Paid on a captured event', function (): void {
     ])->assertOk()->assertJson(['received' => true]);
 
     expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::Paid)
-        ->and(PaymentTransaction::query()->where('order_id', $this->order->id)->where('type', TransactionType::Capture)->count())->toBe(1);
+        ->and(PaymentTransaction::query()->where('order_id', $this->order->id)->where('type', TransactionType::Capture)->count())->toBe(1)
+        ->and(PaymentWebhookEvent::query()->where('event_id', 'evt_capture_1')->firstOrFail()->isProcessed())->toBeTrue();
 });
 
 it('is idempotent: a redelivered event id is not processed twice', function (): void {
