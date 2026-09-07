@@ -36,7 +36,7 @@ final class OrderController
      * Retrieve one of the customer's orders.
      *
      * The full order view: expand what the account page needs through
-     * `include=items,shipping_address,billing_address,payment_method,shippings,shippings.events,refund`.
+     * `include=items,shippingAddress,billingAddress,paymentMethod,shippings,shippings.events,refund`.
      * Orders of other customers answer 404, indistinguishable from an order
      * that does not exist.
      */
@@ -49,9 +49,9 @@ final class OrderController
 
         $order->load([
             'items',
-            'shipping_address',
-            'billing_address',
-            'payment_method',
+            'shippingAddress',
+            'billingAddress',
+            'paymentMethod',
             'shippings.carrier',
             'shippings.events',
             'refund',

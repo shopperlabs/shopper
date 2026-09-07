@@ -39,9 +39,9 @@ class OrderResource extends JsonApiResource
     {
         return [
             'items' => OrderItemResource::class,
-            'shipping_address' => OrderAddressResource::class,
-            'billing_address' => OrderAddressResource::class,
-            'payment_method' => PaymentMethodResource::class,
+            'shippingAddress' => OrderAddressResource::class,
+            'billingAddress' => OrderAddressResource::class,
+            'paymentMethod' => PaymentMethodResource::class,
             'shippings' => OrderShippingResource::class,
             'refund' => OrderRefundResource::class,
         ];

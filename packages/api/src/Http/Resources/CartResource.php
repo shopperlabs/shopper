@@ -63,7 +63,7 @@ class CartResource extends JsonApiResource
         return [
             'lines' => CartLineResource::class,
             'addresses' => CartAddressResource::class,
-            'payment_method' => PaymentMethodResource::class,
+            'paymentMethod' => PaymentMethodResource::class,
         ];
     }
 }

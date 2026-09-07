@@ -14,11 +14,6 @@ use Shopper\Api\Support\ResourceManifest;
 
 abstract class JsonApiResource extends BaseJsonApiResource
 {
-    protected ?JsonApiRequest $includeScope = null;
-
-    /** @var array<string, JsonApiRequest> */
-    private array $includeScopes = [];
-
     public static function make(...$parameters): static
     {
         $resolved = app(ResourceManifest::class)->for(static::class);
@@ -61,20 +56,6 @@ abstract class JsonApiResource extends BaseJsonApiResource
         return (string) ($this->resource->public_id ?? $this->resource->getKey());
     }
 
-    public function resolveResourceData(Request $request)
-    {
-        return parent::resolveResourceData(
-            $this->loadedRelationshipsOnly($this->includeScope ?? $this->resolveJsonApiRequestFrom($request))
-        );
-    }
-
-    public function includePreviouslyLoadedRelationships()
-    {
-        return $this->includeScope instanceof JsonApiRequest
-            ? $this
-            : parent::includePreviouslyLoadedRelationships();
-    }
-
     public function with($request): array
     {
         return static::compoundDocumentMembers(
@@ -82,91 +63,43 @@ abstract class JsonApiResource extends BaseJsonApiResource
         );
     }
 
-    protected function compileIncludedNestedRelationshipsMap(JsonApiRequest $request, Model $relation, BaseJsonApiResource $resource): void
-    {
-        if ($resource instanceof self) {
-            $resource->includeScope = $this->includeScopeFor($request, $this->relationNameOf($relation));
-        }
-    }
-
-    private function relationNameOf(Model $related): string
-    {
-        if (! $this->resource instanceof Model) {
-            return '';
-        }
-
-        foreach ($this->resource->getRelations() as $name => $loaded) {
-            foreach ($loaded instanceof Collection ? $loaded : [$loaded] as $model) {
-                if ($model === $related) {
-                    return $name;
-                }
-            }
-        }
-
-        return '';
-    }
-
-    private function loadedRelationshipsOnly(JsonApiRequest $request): JsonApiRequest
+    /**
+     * A resource only exposes the relationships named on its own include
+     * path, and only those the endpoint already loaded: relations loaded
+     * for other purposes stay out of the document, and nothing is lazy
+     * loaded while serializing.
+     */
+    protected function requestedResourceRelationships(JsonApiRequest $request, ?string $relationName = null): array
     {
         if (! $this->resource instanceof Model) {
-            return $request;
+            return [];
         }
 
-        $paths = array_values(array_filter(explode(',', (string) $request->string('include'))));
-        $loaded = array_values(array_unique(array_filter(array_map(
-            fn (string $path): string => implode('.', $this->loadedPrefix($this->resource, explode('.', $path))),
-            $paths,
-        ))));
-
-        if ($loaded === $paths) {
-            return $request;
+        if ($relationName !== null) {
+            return $this->requestedRelationships === null
+                ? $request->sparseIncluded($relationName) ?? []
+                : $this->requestedRelationshipsBelow($relationName);
         }
 
-        $scoped = JsonApiRequest::createFrom($request);
-        $scoped->query->set('include', implode(',', $loaded));
+        $relations = $this->requestedRelationships === null
+            ? $request->sparseIncluded() ?? []
+            : array_map(fn (string $path): string => explode('.', $path, 2)[0], $this->requestedRelationships);
 
-        return $scoped;
+        return array_values(array_unique(array_filter(
+            $relations,
+            fn (string $relation): bool => $this->resource->relationLoaded($relation),
+        )));
     }
 
     /**
-     * @param  array<int, string>  $segments
      * @return array<int, string>
      */
-    private function loadedPrefix(mixed $models, array $segments): array
+    private function requestedRelationshipsBelow(string $relationName): array
     {
-        if ($segments === []) {
-            return [];
-        }
-
-        $models = Collection::wrap($models)->whereInstanceOf(Model::class);
-
-        if ($models->isEmpty()) {
-            return $segments;
-        }
-
-        [$segment, $rest] = [$segments[0], array_slice($segments, 1)];
-
-        if ($models->contains(fn (Model $model): bool => ! $model->relationLoaded($segment))) {
-            return [];
-        }
-
-        $tail = $models
-            ->map(fn (Model $model): array => $this->loadedPrefix($model->getRelation($segment), $rest))
-            ->sortBy(fn (array $prefix): int => count($prefix))
-            ->first();
-
-        return [$segment, ...$tail];
-    }
-
-    private function includeScopeFor(JsonApiRequest $request, string $relation): JsonApiRequest
-    {
-        if (! isset($this->includeScopes[$relation])) {
-            $scoped = JsonApiRequest::createFrom($request);
-            $scoped->query->set('include', implode(',', $request->sparseIncluded($relation)));
-
-            $this->includeScopes[$relation] = $scoped;
-        }
-
-        return $this->includeScopes[$relation];
+        return (new Collection($this->requestedRelationships))
+            ->filter(fn (string $path): bool => str_starts_with($path, $relationName.'.'))
+            ->map(fn (string $path): string => mb_substr($path, mb_strlen($relationName) + 1))
+            ->values()
+            ->all();
     }
 }

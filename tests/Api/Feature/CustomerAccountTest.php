@@ -211,7 +211,7 @@ it('retrieves a customer order with its full account detail', function (): void 
 
     $response = $this->getJson(
         "/store/customers/me/orders/{$order->public_id}"
-        .'?include=items,shipping_address,billing_address,payment_method,shippings,shippings.events'
+        .'?include=items,shippingAddress,billingAddress,paymentMethod,shippings,shippings.events'
     )
         ->assertOk()
         ->assertJsonPath('data.id', $order->public_id)

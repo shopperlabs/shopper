@@ -608,18 +608,18 @@ it('expands the payment method of the cart on demand', function (): void {
     $cartId = $this->postJson('/store/carts')->json('data.id');
     Cart::query()->where('public_id', $cartId)->update(['payment_method_id' => $method->id]);
 
-    $this->getJson("/store/carts/{$cartId}?include=payment_method")
+    $this->getJson("/store/carts/{$cartId}?include=paymentMethod")
         ->assertOk()
-        ->assertJsonPath('data.relationships.payment_method.data.id', $method->public_id)
+        ->assertJsonPath('data.relationships.paymentMethod.data.id', $method->public_id)
         ->assertJsonPath('included.0.type', 'payment-methods');
 });
 
 it('answers a null payment method relationship on a fresh cart', function (): void {
     $cartId = $this->postJson('/store/carts')->json('data.id');
 
-    $this->getJson("/store/carts/{$cartId}?include=payment_method")
+    $this->getJson("/store/carts/{$cartId}?include=paymentMethod")
         ->assertOk()
-        ->assertJsonPath('data.relationships.payment_method.data', null);
+        ->assertJsonPath('data.relationships.paymentMethod.data', null);
 });
 
 it('serializes a product line and a variant line of the same cart', function (): void {

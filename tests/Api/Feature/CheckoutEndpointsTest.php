@@ -466,7 +466,7 @@ it('keeps personal data out of the guest order lookup', function (): void {
 
     $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")->json('data.id');
 
-    $this->getJson("/store/orders/{$orderId}?include=shipping_address")
+    $this->getJson("/store/orders/{$orderId}?include=shippingAddress")
         ->assertUnprocessable()
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/include');
 

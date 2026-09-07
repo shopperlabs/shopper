@@ -42,7 +42,7 @@ export class CustomerModule {
   /**
    * The customer's orders. list() answers a summary per order (number,
    * statuses, totals); retrieve() is the full account view, expandable with
-   * `include: ['items', 'shipping_address', 'billing_address', 'payment_method', 'shippings', 'shippings.events', 'refund']`.
+   * `include: ['items', 'shippingAddress', 'billingAddress', 'paymentMethod', 'shippings', 'shippings.events', 'refund']`.
    */
   public readonly orders: CollectionResource<Order>
 
