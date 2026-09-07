@@ -39,7 +39,8 @@ final class ApiServiceProvider extends PackageServiceProvider
         );
 
         $this->registerCurrencyCacheInvalidation();
-        $this->registerRelationshipIncludeNames();
+
+        $this->app->booted(fn () => $this->registerRelationshipIncludeNames());
     }
 
     private function registerRelationshipIncludeNames(): void
