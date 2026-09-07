@@ -11,10 +11,10 @@ use Shopper\Api\Concerns\LoadsPriceRange;
 use Shopper\Api\Concerns\LoadsStock;
 use Shopper\Api\Concerns\ResolvesChannel;
 use Shopper\Api\Concerns\ResolvesCurrency;
+use Shopper\Api\Http\Resources\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Api\Http\Resources\ProductResource;
 use Shopper\Core\Models\Contracts\Product;
-use TiMacDonald\JsonApi\JsonApiResource;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class ProductController
 {

@@ -33,8 +33,8 @@ class ZoneResource extends JsonApiResource
     public function toRelationships(Request $request): array
     {
         return [
-            'currency' => fn () => CurrencyResource::make($this->currency),
-            'countries' => fn () => CountryResource::collection($this->countries),
+            'currency' => CurrencyResource::class,
+            'countries' => CountryResource::class,
         ];
     }
 }

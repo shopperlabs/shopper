@@ -7,7 +7,7 @@ namespace Shopper\Api\Http\Controllers\Account;
 use Illuminate\Http\Request;
 use Shopper\Api\Http\Requests\Account\UpdateProfileRequest;
 use Shopper\Api\Http\Resources\CustomerResource;
-use TiMacDonald\JsonApi\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResource;
 
 final class CustomerController
 {

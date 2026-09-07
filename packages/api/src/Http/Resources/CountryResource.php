@@ -35,7 +35,7 @@ class CountryResource extends JsonApiResource
     public function toRelationships(Request $request): array
     {
         return [
-            'zones' => fn () => ZoneResource::collection($this->zones),
+            'zones' => ZoneResource::class,
         ];
     }
 }

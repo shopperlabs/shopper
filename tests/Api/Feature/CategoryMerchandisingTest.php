@@ -78,7 +78,7 @@ it('includes the ancestors root first for the breadcrumb', function (): void {
     $included = collect($response->json('included'))->firstWhere('id', $furniture->public_id);
 
     expect($ids->all())->toBe([$furniture->public_id, $sofas->public_id])
-        ->and($included['attributes']['depth'])->toBeNull();
+        ->and($included['attributes']['depth'])->toBe(0);
 });
 
 it('prunes a category under a disabled ancestor from every response', function (): void {
@@ -294,4 +294,15 @@ it('keeps the subtree count equal to what the tree filter lists', function (): v
         ->json('data');
 
     expect($count)->toBe(count($listed));
+});
+
+it('keeps the ancestors root first on the listing', function (): void {
+    $furniture = node('Furniture');
+    $sofas = node('Sofas', $furniture);
+    node('Corner', $sofas);
+
+    $response = $this->getJson('/store/categories?include=ancestors&filter[name]=Corner')->assertOk();
+
+    expect(collect($response->json('data.0.relationships.ancestors.data'))->pluck('id')->all())
+        ->toBe([$furniture->public_id, $sofas->public_id]);
 });

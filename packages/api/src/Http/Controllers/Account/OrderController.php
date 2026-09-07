@@ -7,9 +7,9 @@ namespace Shopper\Api\Http\Controllers\Account;
 use Illuminate\Http\Request;
 use Shopper\Api\Concerns\BuildsApiQueries;
 use Shopper\Api\Concerns\RespondsWithOrder;
+use Shopper\Api\Http\Resources\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Api\Http\Resources\OrderResource;
-use TiMacDonald\JsonApi\JsonApiResource;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class OrderController
 {
@@ -49,9 +49,9 @@ final class OrderController
 
         $order->load([
             'items',
-            'shippingAddress',
-            'billingAddress',
-            'paymentMethod',
+            'shipping_address',
+            'billing_address',
+            'payment_method',
             'shippings.carrier',
             'shippings.events',
             'refund',

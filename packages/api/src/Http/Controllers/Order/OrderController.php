@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Shopper\Api\Concerns\RespondsWithOrder;
+use Shopper\Api\Http\Resources\JsonApiResource;
 use Shopper\Api\Http\Resources\OrderResource;
 use Shopper\Core\Models\Order;
-use TiMacDonald\JsonApi\JsonApiResource;
 
 final class OrderController
 {

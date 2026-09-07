@@ -10,6 +10,15 @@
   ],
   "require": {
     "php": "^8.3",
+    "illuminate/auth": "^12.45|^13.0",
+    "illuminate/console": "^12.45|^13.0",
+    "illuminate/contracts": "^12.45|^13.0",
+    "illuminate/database": "^12.45|^13.0",
+    "illuminate/filesystem": "^12.45|^13.0",
+    "illuminate/http": "^12.45|^13.0",
+    "illuminate/pagination": "^12.45|^13.0",
+    "illuminate/support": "^12.45|^13.0",
+    "illuminate/validation": "^12.45|^13.0",
     "laravel/prompts": "^0.3.16",
     "shopper/cart": "self.version",
     "shopper/core": "self.version",
@@ -17,8 +26,7 @@
     "shopper/payment": "self.version",
     "shopper/shipping": "self.version",
     "spatie/laravel-medialibrary": "^11.5",
-    "spatie/laravel-query-builder": "^7.3",
-    "timacdonald/json-api": "^1.0@beta"
+    "spatie/laravel-query-builder": "^7.3"
   },
   "autoload": {
     "psr-4": {

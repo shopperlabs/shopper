@@ -7,10 +7,10 @@ namespace Shopper\Api\Http\Controllers\Cart;
 use Illuminate\Support\Arr;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Requests\Cart\StoreCartAddressesRequest;
+use Shopper\Api\Http\Resources\JsonApiResource;
 use Shopper\Cart\CartManager;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Country;
-use TiMacDonald\JsonApi\JsonApiResource;
 
 final class CartAddressController
 {

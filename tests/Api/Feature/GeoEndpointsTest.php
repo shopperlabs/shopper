@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Zone;
+use Symfony\Component\HttpFoundation\Response;
 
 uses(Tests\Api\TestCase::class);
 
@@ -105,4 +106,10 @@ it('falls back to a supported locale when the requested one is not offered', fun
         ->assertJsonPath('data.attributes.translated_name', 'Germany');
 
     expect(app()->getLocale())->toBeIn(array_keys(config('shopper.admin.locales')));
+});
+
+it('rejects an include that is not on the allowlist of the zone detail endpoint', function (): void {
+    Zone::factory()->create(['name' => 'Europe', 'code' => 'eu', 'is_enabled' => true]);
+
+    $this->getJson('/store/zones/eu?include=nope')->assertStatus(Response::HTTP_BAD_REQUEST);
 });

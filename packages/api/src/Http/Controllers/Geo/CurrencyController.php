@@ -6,9 +6,9 @@ namespace Shopper\Api\Http\Controllers\Geo;
 
 use Shopper\Api\Concerns\BuildsApiQueries;
 use Shopper\Api\Http\Resources\CurrencyResource;
+use Shopper\Api\Http\Resources\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Core\Models\Currency;
-use TiMacDonald\JsonApi\JsonApiResource;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class CurrencyController
 {
@@ -23,8 +23,10 @@ final class CurrencyController
 
     public function show(string $code): JsonApiResource
     {
-        return CurrencyResource::make(
-            Currency::query()->where('code', mb_strtoupper($code))->firstOrFail()
-        );
+        $query = Currency::query()->where('code', mb_strtoupper($code));
+
+        $this->applyPublicIncludes('currency', $query);
+
+        return CurrencyResource::make($query->firstOrFail());
     }
 }

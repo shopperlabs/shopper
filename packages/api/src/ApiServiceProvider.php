@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Shopper\Api;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Cache;
+use Shopper\Cart\Models\Contracts\Cart;
+use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Currency;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -36,6 +39,18 @@ final class ApiServiceProvider extends PackageServiceProvider
         );
 
         $this->registerCurrencyCacheInvalidation();
+        $this->registerRelationshipIncludeNames();
+    }
+
+    private function registerRelationshipIncludeNames(): void
+    {
+        $cart = resolve(Cart::class);
+        $cart::resolveRelationUsing('payment_method', fn (Cart $cart): BelongsTo => $cart->paymentMethod());
+
+        $order = resolve(Order::class);
+        $order::resolveRelationUsing('payment_method', fn (Order $order): BelongsTo => $order->paymentMethod());
+        $order::resolveRelationUsing('shipping_address', fn (Order $order): BelongsTo => $order->shippingAddress());
+        $order::resolveRelationUsing('billing_address', fn (Order $order): BelongsTo => $order->billingAddress());
     }
 
     private function registerCurrencyCacheInvalidation(): void

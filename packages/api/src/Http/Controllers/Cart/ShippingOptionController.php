@@ -7,8 +7,8 @@ namespace Shopper\Api\Http\Controllers\Cart;
 use Illuminate\Http\Request;
 use Shopper\Api\Actions\GetCartShippingOptionsAction;
 use Shopper\Api\Concerns\RespondsWithCart;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Api\Http\Resources\ShippingOptionResource;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class ShippingOptionController
 {

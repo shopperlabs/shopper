@@ -9,14 +9,14 @@ use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Requests\Cart\SetPaymentMethodRequest;
+use Shopper\Api\Http\Resources\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Api\Http\Resources\PaymentMethodResource;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Payment\PaymentManager;
 use Shopper\Payment\Services\PaymentProcessingService;
-use TiMacDonald\JsonApi\JsonApiResource;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class CartPaymentMethodController
 {

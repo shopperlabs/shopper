@@ -8,9 +8,9 @@ use Shopper\Api\Concerns\BuildsApiQueries;
 use Shopper\Api\Concerns\LoadsStock;
 use Shopper\Api\Concerns\ResolvesChannel;
 use Shopper\Api\Http\Resources\BrandResource;
+use Shopper\Api\Http\Resources\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Core\Models\Contracts\Brand;
-use TiMacDonald\JsonApi\JsonApiResource;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class BrandController
 {

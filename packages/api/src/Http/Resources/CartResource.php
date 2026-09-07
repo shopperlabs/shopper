@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartPromotion;
 use Shopper\Cart\Pipelines\CartPipelineContext;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 /**
  * @mixin Cart
@@ -62,11 +61,9 @@ class CartResource extends JsonApiResource
     public function toRelationships(Request $request): array
     {
         return [
-            'lines' => fn (): JsonApiResourceCollection => CartLineResource::collection($this->lines),
-            'addresses' => fn (): JsonApiResourceCollection => CartAddressResource::collection($this->addresses),
-            'payment_method' => fn (): ?PaymentMethodResource => $this->paymentMethod
-                ? PaymentMethodResource::make($this->paymentMethod)
-                : null,
+            'lines' => CartLineResource::class,
+            'addresses' => CartAddressResource::class,
+            'payment_method' => PaymentMethodResource::class,
         ];
     }
 }

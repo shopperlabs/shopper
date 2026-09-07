@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ab28a783347c51e9f69ee57d840baf0",
+    "content-hash": "21de69c4d447d8b68bb6708009a2387d",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -11166,66 +11166,6 @@
             "time": "2025-12-02T11:56:42+00:00"
         },
         {
-            "name": "timacdonald/json-api",
-            "version": "v1.0.0-beta.12",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/timacdonald/json-api.git",
-                "reference": "af110504f4a21ec0b9514bf0bcc03022c8877066"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/timacdonald/json-api/zipball/af110504f4a21ec0b9514bf0bcc03022c8877066",
-                "reference": "af110504f4a21ec0b9514bf0bcc03022c8877066",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/collections": "^11.0 || ^12.0 || ^13.0",
-                "illuminate/database": "^11.0 || ^12.0 || ^13.0",
-                "illuminate/http": "^11.0 || ^12.0 || ^13.0",
-                "illuminate/support": "^11.0 || ^12.0 || ^13.0",
-                "php": "^8.2",
-                "symfony/http-kernel": "^7.0 || ^8.0"
-            },
-            "require-dev": {
-                "laravel/framework": "^11.0 || ^12.0 || ^13.0",
-                "opis/json-schema": "^2.3",
-                "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
-                "phpunit/phpunit": "^9.0 || ^10.5 || ^11.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "TiMacDonald\\JsonApi\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tim MacDonald",
-                    "email": "hello@timacdonald.me",
-                    "homepage": "https://timacdonald.me"
-                }
-            ],
-            "description": "A Lightweight JSON:API Resource for Laravel",
-            "keywords": [
-                "JSON-API",
-                "api",
-                "json",
-                "laravel",
-                "resource"
-            ],
-            "support": {
-                "docs": "https://github.com/timacdonald/json-api/blob/master/readme.md",
-                "issues": "https://github.com/timacdonald/json-api/issues",
-                "source": "https://github.com/timacdonald/json-api/releases/latest"
-            },
-            "time": "2026-03-26T00:18:05+00:00"
-        },
-        {
             "name": "ueberdosis/tiptap-php",
             "version": "2.1.0",
             "source": {
@@ -15820,8 +15760,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "shopper/core": 20,
-        "timacdonald/json-api": 10
+        "shopper/core": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

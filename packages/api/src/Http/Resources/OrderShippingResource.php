@@ -6,7 +6,6 @@ namespace Shopper\Api\Http\Resources;
 
 use Illuminate\Http\Request;
 use Shopper\Core\Models\OrderShipping;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 /**
  * A shipment of the order with its carrier tracking. The tracking timeline
@@ -38,7 +37,7 @@ class OrderShippingResource extends JsonApiResource
     public function toRelationships(Request $request): array
     {
         return [
-            'events' => fn (): JsonApiResourceCollection => OrderShippingEventResource::collection($this->events),
+            'events' => OrderShippingEventResource::class,
         ];
     }
 }

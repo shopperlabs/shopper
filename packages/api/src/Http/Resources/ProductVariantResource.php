@@ -47,7 +47,7 @@ class ProductVariantResource extends JsonApiResource
     public function toRelationships(Request $request): array
     {
         return [
-            'product' => fn () => ProductResource::make($this->product),
+            'product' => ProductResource::class,
         ];
     }
 

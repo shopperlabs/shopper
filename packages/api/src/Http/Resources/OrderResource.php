@@ -38,20 +38,12 @@ class OrderResource extends JsonApiResource
     public function toRelationships(Request $request): array
     {
         return [
-            'items' => fn () => OrderItemResource::collection($this->items),
-            'shipping_address' => fn (): ?OrderAddressResource => $this->shippingAddress
-                ? OrderAddressResource::make($this->shippingAddress)
-                : null,
-            'billing_address' => fn (): ?OrderAddressResource => $this->billingAddress
-                ? OrderAddressResource::make($this->billingAddress)
-                : null,
-            'payment_method' => fn (): ?PaymentMethodResource => $this->paymentMethod
-                ? PaymentMethodResource::make($this->paymentMethod)
-                : null,
-            'shippings' => fn () => OrderShippingResource::collection($this->shippings),
-            'refund' => fn (): ?OrderRefundResource => $this->refund
-                ? OrderRefundResource::make($this->refund)
-                : null,
+            'items' => OrderItemResource::class,
+            'shipping_address' => OrderAddressResource::class,
+            'billing_address' => OrderAddressResource::class,
+            'payment_method' => PaymentMethodResource::class,
+            'shippings' => OrderShippingResource::class,
+            'refund' => OrderRefundResource::class,
         ];
     }
 }

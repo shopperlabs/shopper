@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Http\Resources;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Shopper\Api\Concerns\SerializesMedia;
 use Shopper\Core\Models\Category;
+use Shopper\Core\Queries\CategoryTree;
 
 /**
  * @mixin Category
- *
- * @property-read ?int $depth
  */
 class CategoryResource extends JsonApiResource
 {
@@ -32,7 +30,7 @@ class CategoryResource extends JsonApiResource
             'position' => $this->position,
             'parent_id' => $this->parent?->public_id,
             'is_enabled' => $this->is_enabled,
-            'depth' => $this->depth,
+            'depth' => resolve(CategoryTree::class)->depth($this->resource->getKey()),
             ...$this->productsCountPayload(),
             'seo_title' => $this->seo_title,
             'seo_description' => $this->seo_description,
@@ -46,14 +44,10 @@ class CategoryResource extends JsonApiResource
     public function toRelationships(Request $request): array
     {
         return [
-            'parent' => fn () => CategoryResource::make($this->parent),
-            'children' => fn () => CategoryResource::collection($this->children),
-            'ancestors' => fn () => CategoryResource::collection(
-                $this->ancestors->sortBy('depth')->values()->each(function (Model $ancestor): void {
-                    $ancestor->setAttribute('depth', null);
-                })
-            ),
-            'products' => fn () => ProductResource::collection($this->products),
+            'parent' => self::class,
+            'children' => self::class,
+            'ancestors' => self::class,
+            'products' => ProductResource::class,
         ];
     }
 

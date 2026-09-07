@@ -9,7 +9,7 @@ use Shopper\Api\Actions\RemoveProfilePhotoAction;
 use Shopper\Api\Actions\UpdateProfilePhotoAction;
 use Shopper\Api\Http\Requests\Account\UpdateAvatarRequest;
 use Shopper\Api\Http\Resources\CustomerResource;
-use TiMacDonald\JsonApi\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResource;
 
 final class AvatarController
 {

@@ -9,10 +9,10 @@ use Shopper\Api\Actions\ResolvePurchasableAction;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Requests\Cart\StoreCartLineRequest;
 use Shopper\Api\Http\Requests\Cart\UpdateCartLineRequest;
+use Shopper\Api\Http\Resources\JsonApiResource;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
-use TiMacDonald\JsonApi\JsonApiResource;
 
 final class CartLineController
 {

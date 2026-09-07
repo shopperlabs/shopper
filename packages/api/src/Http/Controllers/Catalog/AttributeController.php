@@ -6,8 +6,8 @@ namespace Shopper\Api\Http\Controllers\Catalog;
 
 use Shopper\Api\Concerns\BuildsApiQueries;
 use Shopper\Api\Http\Resources\AttributeResource;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Core\Models\Attribute;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class AttributeController
 {
