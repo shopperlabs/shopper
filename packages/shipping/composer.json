@@ -4,7 +4,7 @@
   "license": "MIT",
   "require": {
     "php": "^8.3",
-    "shopper/core": "*",
+    "shopper/core": "self.version",
     "ivanmitrikeski/laravel-shipping": "^1.0"
   },
   "autoload": {
