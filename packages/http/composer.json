@@ -11,7 +11,7 @@
   "require": {
     "php": "^8.3",
     "laravel/sanctum": "^4.0",
-    "shopper/core": "*"
+    "shopper/core": "self.version"
   },
   "autoload": {
     "psr-4": {
