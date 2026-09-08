@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\TestResponse;
 use Laravel\Sanctum\Sanctum;
 use Shopper\Cart\CartManager;
@@ -23,6 +24,7 @@ use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxZone;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Api\TestCase::class);
@@ -44,6 +46,7 @@ beforeEach(function (): void {
         'currency_id' => $this->currency->id,
     ]);
     $this->product->mutateStock($this->inventory->id, 50);
+    $this->product->refresh();
 });
 
 it('creates a guest cart with the default currency', function (): void {
@@ -210,16 +213,16 @@ it('rejects purchasables a storefront cannot sell', function (): void {
     $unpriced = Product::factory()->standard()->publish()->create();
 
     foreach ([
-        '01JUNKNOWNPURCHASABLEID000',
-        $draft->public_id,
-        $external->public_id,
-        $parent->public_id,
-        $unpriced->public_id,
-    ] as $publicId) {
+        '01JUNKNOWNPURCHASABLEID000' => 'purchasable_unavailable',
+        $draft->public_id => 'purchasable_unavailable',
+        $external->public_id => 'purchasable_unavailable',
+        $parent->public_id => 'variant_required',
+        $unpriced->public_id => 'price_missing',
+    ] as $publicId => $code) {
         $this->postJson("/store/carts/{$cartId}/lines", [
             'purchasable_type' => 'product',
             'purchasable_id' => $publicId,
-        ])->assertUnprocessable();
+        ])->assertUnprocessable()->assertJsonPath('errors.0.code', $code);
     }
 });
 
@@ -230,7 +233,7 @@ it('returns a validation error when stock is insufficient', function (): void {
         'purchasable_type' => 'product',
         'purchasable_id' => $this->product->public_id,
         'quantity' => 100,
-    ])->assertUnprocessable();
+    ])->assertUnprocessable()->assertJsonPath('errors.0.code', 'stock_insufficient');
 });
 
 it('updates the quantity of a line and removes it', function (): void {
@@ -263,7 +266,7 @@ it('returns a conflict when mutating a completed cart', function (): void {
     $this->postJson("/store/carts/{$cart->public_id}/lines", [
         'purchasable_type' => 'product',
         'purchasable_id' => $this->product->public_id,
-    ])->assertConflict();
+    ])->assertConflict()->assertJsonPath('errors.0.code', 'cart_completed');
 });
 
 it('exposes the cart addresses as an include', function (): void {
@@ -418,6 +421,7 @@ it('rejects a currency that is enabled but not configured for the shop', functio
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'EUR'])
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'exists')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/currency_code');
 
     expect($cart->refresh()->currency_code)->toBe('USD');
@@ -437,6 +441,7 @@ it('rejects a currency change when a line has no price in it', function (): void
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'EUR'])
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'price_missing')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/currency_code');
 
     expect($cart->refresh()->currency_code)->toBe('USD');
@@ -591,6 +596,103 @@ it('refuses to transfer a cart owned by another customer', function (): void {
     expect($cart->refresh()->customer_id)->toBe($owner->id);
 });
 
+it('refuses to transfer a completed guest cart', function (): void {
+    $cart = Cart::factory()->create(['currency_code' => 'USD', 'completed_at' => now()]);
+
+    Sanctum::actingAs(User::factory()->create(), ['store']);
+
+    $this->postJson("/store/carts/{$cart->public_id}/transfer")
+        ->assertConflict()
+        ->assertJsonPath('errors.0.code', 'cart_completed');
+});
+
+it('attaches the guest cart to the new account at registration', function (): void {
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
+
+    $response = $this->postJson('/store/auth/register', [
+        'last_name' => 'Doe',
+        'email' => 'jane@example.com',
+        'password' => 'super-secret-password',
+        'cart_id' => $cart->public_id,
+    ])->assertCreated()->assertJsonPath('meta.cart_id', $cart->public_id);
+
+    expect($cart->refresh()->customer_id)->toBe(User::query()->where('email', 'jane@example.com')->firstOrFail()->id);
+
+    $this->getJson("/store/carts/{$cart->public_id}", ['Authorization' => 'Bearer '.$response->json('meta.token')])->assertOk();
+});
+
+it('folds the guest cart into the cart the customer already owns at login', function (): void {
+    $customer = User::factory()->create(['email' => 'john@example.com', 'password' => Hash::make('correct-password')]);
+
+    $guestCart = Cart::factory()->create(['currency_code' => 'USD']);
+    $ownedCart = Cart::factory()->create(['currency_code' => 'USD', 'customer_id' => $customer->id]);
+
+    $cartManager = resolve(CartManager::class);
+    $cartManager->add($guestCart, $this->product, quantity: 2);
+    $cartManager->add($ownedCart, $this->product, quantity: 1);
+
+    $login = ['email' => 'john@example.com', 'password' => 'correct-password', 'cart_id' => $guestCart->public_id];
+
+    $this->postJson('/store/auth/login', $login)->assertOk()->assertJsonPath('meta.cart_id', $ownedCart->public_id);
+
+    expect($ownedCart->lines()->first()->quantity)->toBe(3)
+        ->and(Cart::query()->find($guestCart->id))->toBeNull();
+
+    $this->postJson('/store/auth/login', $login)->assertOk()->assertJsonPath('meta.cart_id', $ownedCart->public_id);
+
+    expect($ownedCart->lines()->first()->quantity)->toBe(3);
+});
+
+it('claims a guest cart whole when a line has no price in the customer currency', function (): void {
+    $customer = User::factory()->create(['email' => 'john@example.com', 'password' => Hash::make('correct-password')]);
+
+    $guestCart = Cart::factory()->create(['currency_code' => 'USD']);
+    $ownedCart = Cart::factory()->create(['currency_code' => 'EUR', 'customer_id' => $customer->id]);
+
+    resolve(CartManager::class)->add($guestCart, $this->product, quantity: 2);
+
+    $this->postJson('/store/auth/login', [
+        'email' => 'john@example.com',
+        'password' => 'correct-password',
+        'cart_id' => $guestCart->public_id,
+    ])->assertOk()->assertJsonPath('meta.cart_id', $guestCart->public_id);
+
+    expect($guestCart->refresh()->customer_id)->toBe($customer->id)
+        ->and($guestCart->currency_code)->toBe('USD')
+        ->and($guestCart->lines()->first()->unit_price_amount)->toBe(2500)
+        ->and($ownedCart->lines()->count())->toBe(0);
+
+    $otherGuestCart = Cart::factory()->create(['currency_code' => 'USD']);
+    resolve(CartManager::class)->add($otherGuestCart, $this->product, quantity: 1);
+
+    Sanctum::actingAs($customer, ['store']);
+
+    $this->postJson("/store/carts/{$otherGuestCart->public_id}/transfer")
+        ->assertOk()
+        ->assertJsonPath('data.id', $otherGuestCart->public_id);
+
+    expect($otherGuestCart->refresh()->customer_id)->toBe($customer->id);
+});
+
+it('ignores an unknown, completed or foreign cart at login', function (): void {
+    $owner = User::factory()->create();
+    User::factory()->create(['email' => 'john@example.com', 'password' => Hash::make('correct-password')]);
+
+    $completed = Cart::factory()->create(['currency_code' => 'USD', 'completed_at' => now()]);
+    $foreign = Cart::factory()->create(['currency_code' => 'USD', 'customer_id' => $owner->id]);
+
+    foreach (['01JUNKNOWNCARTIDENTIFIER00', $completed->public_id, $foreign->public_id] as $cartId) {
+        $this->postJson('/store/auth/login', [
+            'email' => 'john@example.com',
+            'password' => 'correct-password',
+            'cart_id' => $cartId,
+        ])->assertOk()->assertJsonPath('meta.cart_id', null);
+    }
+
+    expect($foreign->refresh()->customer_id)->toBe($owner->id)
+        ->and($completed->refresh()->customer_id)->toBeNull();
+});
+
 it('requires authentication to transfer a cart', function (): void {
     $cart = Cart::factory()->create(['currency_code' => 'USD']);
 
@@ -637,14 +739,31 @@ it('serializes a product line and a variant line of the same cart', function ():
     expect($types)->toBe(['cart-lines', 'products', 'variants']);
 });
 
-it('never loads a relation of a purchasable through a nested include', function (): void {
+it('rejects an include outside the cart allowlist', function (): void {
     $hidden = Category::factory()->create(['name' => 'Hidden', 'slug' => 'hidden', 'is_enabled' => false]);
     $this->product->categories()->attach($hidden);
 
     $cartId = $this->postJson('/store/carts')->json('data.id');
     $this->postJson("/store/carts/{$cartId}/lines", ['purchasable_type' => 'product', 'purchasable_id' => $this->product->public_id])->assertOk();
 
-    $included = collect($this->getJson("/store/carts/{$cartId}?include=lines.purchasable.categories")->assertOk()->json('included'));
+    $this->getJson("/store/carts/{$cartId}?include=lines.purchasable.categories")
+        ->assertStatus(Response::HTTP_BAD_REQUEST)
+        ->assertJsonPath('errors.0.code', 'bad_request');
+});
 
-    expect($included->pluck('type')->unique()->sort()->values()->all())->toBe(['cart-lines', 'products']);
+it('includes the product of a variant line through a three level include', function (): void {
+    $parent = Product::factory()->publish()->create();
+    $variant = ProductVariant::factory()->create(['product_id' => $parent->id]);
+    $variant->prices()->create(['amount' => 3000, 'currency_id' => $this->currency->id]);
+    $variant->mutateStock($this->inventory->id, 20);
+
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+    $this->postJson("/store/carts/{$cartId}/lines", ['purchasable_type' => 'product', 'purchasable_id' => $this->product->public_id])->assertOk();
+    $this->postJson("/store/carts/{$cartId}/lines", ['purchasable_type' => 'variant', 'purchasable_id' => $variant->public_id])->assertOk();
+
+    $included = collect($this->getJson("/store/carts/{$cartId}?include=lines.purchasable.product")->assertOk()->json('included'));
+
+    expect($included->pluck('type')->unique()->sort()->values()->all())->toBe(['cart-lines', 'products', 'variants'])
+        ->and($included->where('type', 'products')->pluck('id')->sort()->values()->all())->toBe(collect([$this->product->public_id, $parent->public_id])->sort()->values()->all())
+        ->and($included->firstWhere('type', 'variants')['relationships']['product']['data']['id'])->toBe($parent->public_id);
 });

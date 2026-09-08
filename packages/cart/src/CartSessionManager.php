@@ -6,6 +6,7 @@ namespace Shopper\Cart;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Session\SessionManager;
+use Shopper\Cart\Exceptions\MissingPriceException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
 
@@ -85,11 +86,12 @@ final class CartSessionManager
             ->first();
 
         if ($existing) {
-            $merged = resolve(CartManager::class)->merge($cart, $existing);
+            try {
+                $this->use(resolve(CartManager::class)->merge($cart, $existing));
 
-            $this->use($merged);
-
-            return;
+                return;
+            } catch (MissingPriceException) {
+            }
         }
 
         $cart->update(['customer_id' => $user->getAuthIdentifier()]);

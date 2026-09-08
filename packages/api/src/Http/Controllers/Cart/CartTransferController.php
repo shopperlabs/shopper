@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Shopper\Api\Actions\TransferCartAction;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Resources\JsonApiResource;
+use Shopper\Cart\Models\Cart;
 
 final class CartTransferController
 {
@@ -28,10 +29,10 @@ final class CartTransferController
      */
     public function __invoke(Request $request, string $cartId): JsonApiResource
     {
-        $cart = $this->action->execute(
+        $cart = $this->mutateCart(fn (): Cart => $this->action->execute(
             cart: $this->findCartOrFail($cartId),
             customerId: (int) $request->user()->getAuthIdentifier(),
-        );
+        ));
 
         return $this->cartResource($cart->refresh());
     }

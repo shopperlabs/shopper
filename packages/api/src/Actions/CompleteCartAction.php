@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Actions;
 
-use Illuminate\Validation\ValidationException;
 use Shopper\Api\Support\ShippingOption;
 use Shopper\Cart\Actions\CreateOrderFromCartAction;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Exceptions\CartCompletedException;
+use Shopper\Cart\Exceptions\DiscountLimitReachedException;
 use Shopper\Cart\Exceptions\InsufficientStockException;
 use Shopper\Cart\Exceptions\PriceChangedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Exceptions\CampaignBudgetExceededException;
 use Shopper\Core\Models\Contracts\Order;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 use Shopper\Payment\Actions\SettlePayment;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
@@ -50,13 +52,13 @@ final readonly class CompleteCartAction
         $cart->load(['zone.currency', 'zone.carriers', 'lines.purchasable', 'addresses.country', 'customer']);
 
         if ($cart->lines->isEmpty()) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::CartEmpty, [
                 'cart' => __('shopper-api::messages.cart.empty'),
             ]);
         }
 
         if (! $cart->payment_method_id) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::PaymentMethodRequired, [
                 'payment_method' => __('shopper-api::messages.payment.method_required'),
             ]);
         }
@@ -77,11 +79,19 @@ final readonly class CompleteCartAction
 
             return $order;
         } catch (CampaignBudgetExceededException) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::PromotionBudgetReached, [
                 'promotion' => __('shopper-cart::messages.discount.campaign_budget_reached'),
             ]);
-        } catch (InsufficientStockException|PriceChangedException $exception) {
-            throw ValidationException::withMessages([
+        } catch (DiscountLimitReachedException $exception) {
+            throw ApiValidationException::withCode(ErrorCode::PromotionLimitReached, [
+                'promotion' => $exception->getMessage(),
+            ]);
+        } catch (InsufficientStockException $exception) {
+            throw ApiValidationException::withCode(ErrorCode::StockInsufficient, [
+                'cart' => $exception->getMessage(),
+            ]);
+        } catch (PriceChangedException $exception) {
+            throw ApiValidationException::withCode(ErrorCode::PriceChanged, [
                 'cart' => $exception->getMessage(),
             ]);
         }
@@ -134,7 +144,7 @@ final readonly class CompleteCartAction
         $email = $cart->customer?->getAttribute('email');
 
         if (! is_string($email)) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::EmailRequired, [
                 'email' => __('shopper-api::messages.cart.email_required'),
             ]);
         }
@@ -155,7 +165,7 @@ final readonly class CompleteCartAction
         }
 
         if (! $cart->shipping_option_id) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::ShippingMethodRequired, [
                 'shipping_method' => __('shopper-api::messages.shipping.method_required'),
             ]);
         }
@@ -168,7 +178,7 @@ final readonly class CompleteCartAction
         );
 
         if (! $option) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::ShippingOptionUnavailable, [
                 'shipping_method' => __('shopper-api::messages.shipping.option_gone'),
             ]);
         }
@@ -177,7 +187,7 @@ final readonly class CompleteCartAction
         $frozen = $cart->shipping_amount;
 
         if ($frozen !== null && $quoted > $frozen) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::ShippingPriceChanged, [
                 'shipping_method' => __('shopper-api::messages.shipping.price_changed'),
             ]);
         }
@@ -206,7 +216,7 @@ final readonly class CompleteCartAction
             $session['amount'] !== $total
             || (isset($session['currency']) && $session['currency'] !== $cart->currency_code)
         ) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::PaymentSessionMismatch, [
                 'payment_session' => __('shopper-api::messages.payment.session_mismatch'),
             ]);
         }

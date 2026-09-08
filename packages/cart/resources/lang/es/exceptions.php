@@ -8,6 +8,7 @@ return [
     'cart_not_found' => 'Carrito no encontrado.',
     'insufficient_stock' => 'Stock insuficiente para este artículo.',
     'price_changed' => 'El precio de un artículo de tu carrito ha cambiado. Revisa tu carrito antes de finalizar la compra.',
+    'missing_price' => 'Este artículo no tiene precio en :currency.',
     'quantity_minimum' => 'La cantidad debe ser al menos 1.',
     'discount_not_found' => 'Código de descuento no encontrado.',
 

@@ -7,7 +7,8 @@ namespace Shopper\Api\Http\Requests\Account;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rules\File;
-use Illuminate\Validation\ValidationException;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 
 final class UpdateAvatarRequest extends FormRequest
 {
@@ -31,7 +32,7 @@ final class UpdateAvatarRequest extends FormRequest
         $file = $this->file('avatar');
 
         if (! $file instanceof UploadedFile) {
-            throw ValidationException::withMessages(['avatar' => __('validation.image', ['attribute' => 'avatar'])]);
+            throw ApiValidationException::withCode(ErrorCode::AvatarInvalid, ['avatar' => __('validation.image', ['attribute' => 'avatar'])]);
         }
 
         return $file;

@@ -6,6 +6,8 @@ namespace Shopper\Api\Actions;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Shopper\Cart\CartManager;
+use Shopper\Cart\Exceptions\CartCompletedException;
+use Shopper\Cart\Exceptions\MissingPriceException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
 
@@ -19,16 +21,24 @@ final readonly class TransferCartAction
     /**
      * Attach a guest cart to a customer, folding it into the cart the
      * customer already owns when one exists so nothing they saved earlier is
-     * lost. Transferring a cart the customer already owns is a no-op, so a
-     * retried login never fails; a cart owned by another customer is refused.
-     * Once the cart belongs to the customer, an applied coupon is
+     * lost. A guest line without a price in the customer's currency keeps
+     * the guest cart whole: it is claimed as is instead of merged, so nothing
+     * the customer picked disappears at sign in. Transferring a cart the
+     * customer already owns is a no-op, so a retried login never fails; a
+     * cart owned by another customer is refused. Once the cart belongs to
+     * the customer, an applied coupon is
      * re-validated against their redemption history and dropped if a
      * per-customer limit now rejects it.
      *
      * @throws AuthorizationException
+     * @throws CartCompletedException
      */
     public function execute(Cart $cart, int $customerId): Cart
     {
+        if ($cart->isCompleted()) {
+            throw new CartCompletedException;
+        }
+
         if ($cart->customer_id === $customerId) {
             return $cart;
         }
@@ -41,11 +51,15 @@ final readonly class TransferCartAction
         $existing = resolve(CartContract::class)::query()
             ->where('customer_id', $customerId)
             ->whereNull('completed_at')
-            ->latest()
+            ->latest('id')
             ->first();
 
         if ($existing) {
-            $cart = $this->cartManager->merge($cart, $existing);
+            try {
+                $cart = $this->cartManager->merge($cart, $existing);
+            } catch (MissingPriceException) {
+                $cart->update(['customer_id' => $customerId]);
+            }
         } else {
             $cart->update(['customer_id' => $customerId]);
         }

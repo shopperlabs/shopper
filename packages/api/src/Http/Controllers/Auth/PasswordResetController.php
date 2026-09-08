@@ -9,10 +9,11 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\PersonalAccessToken;
 use Shopper\Api\Http\Requests\Auth\ForgotPasswordRequest;
 use Shopper\Api\Http\Requests\Auth\ResetPasswordRequest;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 final class PasswordResetController
@@ -45,7 +46,7 @@ final class PasswordResetController
         );
 
         if ($status !== Password::PASSWORD_RESET) {
-            throw ValidationException::withMessages(['email' => __($status)]);
+            throw ApiValidationException::withCode(ErrorCode::ResetTokenInvalid, ['email' => __(Password::INVALID_TOKEN)]);
         }
 
         return response()->noContent();

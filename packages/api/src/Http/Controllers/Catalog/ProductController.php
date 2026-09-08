@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Http\Controllers\Catalog;
 
-use Illuminate\Validation\ValidationException;
 use Shopper\Api\Concerns\BuildsApiQueries;
 use Shopper\Api\Concerns\HandlesPriceQueries;
 use Shopper\Api\Concerns\LoadsPriceRange;
@@ -15,6 +14,8 @@ use Shopper\Api\Http\Resources\JsonApiResource;
 use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Api\Http\Resources\ProductResource;
 use Shopper\Core\Models\Contracts\Product;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 
 final class ProductController
 {
@@ -30,7 +31,7 @@ final class ProductController
         $currency = $this->resolvedCurrency();
 
         if ($currency === null && $this->wantsPriceQuery()) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::CurrencyRequired, [
                 $this->wantsPriceSort() ? 'sort' : 'filter.price_min' => __('shopper-api::messages.catalog.no_currency'),
             ]);
         }

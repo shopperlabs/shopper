@@ -8,6 +8,7 @@ return [
     'cart_not_found' => 'Cart not found.',
     'insufficient_stock' => 'Insufficient stock for this item.',
     'price_changed' => 'The price of an item in your cart has changed. Please review your cart before checking out.',
+    'missing_price' => 'This item has no price in :currency.',
     'quantity_minimum' => 'Quantity must be at least 1.',
     'discount_not_found' => 'Discount code not found.',
 

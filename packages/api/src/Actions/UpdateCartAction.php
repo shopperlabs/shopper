@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Actions;
 
-use Illuminate\Validation\ValidationException;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Models\Price;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 
 final readonly class UpdateCartAction
 {
@@ -60,7 +61,7 @@ final readonly class UpdateCartAction
             $purchasable = $line->purchasable;
 
             if (! $purchasable instanceof Priceable || ! $purchasable->getPrice($currencyCode) instanceof Price) {
-                throw ValidationException::withMessages([
+                throw ApiValidationException::withCode(ErrorCode::PriceMissing, [
                     'currency_code' => __('shopper-api::messages.purchasable.missing_price', ['currency' => $currencyCode]),
                 ]);
             }

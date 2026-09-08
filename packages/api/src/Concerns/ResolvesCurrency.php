@@ -6,8 +6,9 @@ namespace Shopper\Api\Concerns;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Validation\ValidationException;
 use Shopper\Core\Models\Currency;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 
 trait ResolvesCurrency
 {
@@ -40,7 +41,7 @@ trait ResolvesCurrency
             $currency = Currency::query()->where('code', mb_strtoupper($code))->first();
 
             if ($currency === null) {
-                throw ValidationException::withMessages([
+                throw ApiValidationException::withCode(ErrorCode::CurrencyUnknown, [
                     'filter.currency' => __('shopper-api::messages.catalog.unknown_currency', ['code' => $code]),
                 ]);
             }

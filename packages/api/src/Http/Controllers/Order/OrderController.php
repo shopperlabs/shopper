@@ -6,11 +6,12 @@ namespace Shopper\Api\Http\Controllers\Order;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Shopper\Api\Concerns\RespondsWithOrder;
 use Shopper\Api\Http\Resources\JsonApiResource;
 use Shopper\Api\Http\Resources\OrderResource;
 use Shopper\Core\Models\Order;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 
 final class OrderController
 {
@@ -55,7 +56,7 @@ final class OrderController
         $forbidden = array_diff($requested, self::ALLOWED_INCLUDES);
 
         if ($forbidden !== []) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::IncludeNotAllowed, [
                 'include' => __('shopper-api::messages.order.restricted_includes'),
             ]);
         }

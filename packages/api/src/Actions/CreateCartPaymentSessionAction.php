@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Actions;
 
-use Illuminate\Validation\ValidationException;
 use Shopper\Api\Support\PaymentSession;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Models\Cart;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 use Shopper\Payment\Contracts\PaymentDriver;
 use Shopper\Payment\Exceptions\PaymentException;
 use Shopper\Payment\PaymentManager;
@@ -25,7 +26,7 @@ final readonly class CreateCartPaymentSessionAction
         $method = $cart->paymentMethod;
 
         if (! $method) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::PaymentMethodRequired, [
                 'payment_method' => __('shopper-api::messages.payment.method_required_for_session'),
             ]);
         }
@@ -34,7 +35,7 @@ final readonly class CreateCartPaymentSessionAction
         $driver = $this->paymentManager->driver($driverCode);
 
         if (! $driver->isConfigured()) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::PaymentMethodNotConfigured, [
                 'payment_method' => __('shopper-api::messages.payment.method_not_configured', ['method' => $method->title]),
             ]);
         }
@@ -42,7 +43,7 @@ final readonly class CreateCartPaymentSessionAction
         $amount = $this->cartManager->calculate($cart)->total;
 
         if ($amount <= 0) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::CartNothingToCollect, [
                 'cart' => __('shopper-api::messages.cart.nothing_to_collect'),
             ]);
         }

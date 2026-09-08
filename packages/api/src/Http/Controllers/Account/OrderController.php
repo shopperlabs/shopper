@@ -42,21 +42,13 @@ final class OrderController
      */
     public function show(Request $request, string $orderId): JsonApiResource
     {
-        $order = $this->orderQuery()
+        $query = $this->orderQuery()
+            ->with($this->requestedIncludeLoads('order'))
             ->where('customer_id', $request->user()?->getAuthIdentifier())
-            ->where('public_id', $orderId)
-            ->firstOrFail();
+            ->where('public_id', $orderId);
 
-        $order->load([
-            'items',
-            'shippingAddress',
-            'billingAddress',
-            'paymentMethod',
-            'shippings.carrier',
-            'shippings.events',
-            'refund',
-        ]);
+        $this->applyPublicIncludes('order', $query);
 
-        return OrderResource::make($order);
+        return OrderResource::make($query->firstOrFail());
     }
 }

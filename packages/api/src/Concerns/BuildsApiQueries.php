@@ -11,7 +11,8 @@ use Illuminate\Pagination\CursorPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Validation\ValidationException;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\AllowedSort;
@@ -68,7 +69,7 @@ trait BuildsApiQueries
         $loads = [];
 
         foreach (QueryBuilderRequest::fromRequest(request())->includes() as $include) {
-            $loads = array_merge($loads, $map[$include] ?? []);
+            $loads = array_merge($loads, $map[$include] ?? $map[explode('.', $include, 2)[0]] ?? []);
         }
 
         return array_values(array_unique($loads));
@@ -204,7 +205,7 @@ trait BuildsApiQueries
                     ->sum(fn (mixed $value): int => mb_substr_count((string) $value, ',') + 1);
 
                 if ($breadth > self::MAX_FILTER_VALUES) {
-                    throw ValidationException::withMessages([
+                    throw ApiValidationException::withCode(ErrorCode::FilterTooWide, [
                         'filter.'.$filter => __('shopper-api::messages.catalog.filter_too_wide', ['max' => self::MAX_FILTER_VALUES]),
                     ]);
                 }

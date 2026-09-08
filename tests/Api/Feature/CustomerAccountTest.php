@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\Sanctum;
 use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Models\Address;
+use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderAddress;
@@ -14,6 +15,7 @@ use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\OrderShipping;
 use Shopper\Core\Models\OrderShippingEvent;
 use Shopper\Core\Models\PaymentMethod;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Api\TestCase::class);
@@ -234,6 +236,29 @@ it('retrieves a customer order with its full account detail', function (): void 
     expect($events)->toHaveCount(1)
         ->and($events[0]['attributes']['location'])->toBe('Roissy Hub')
         ->and($events[0]['attributes']['status'])->toBe(ShipmentStatus::InTransit->value);
+});
+
+it('rejects an include outside the order allowlist on the account detail endpoint', function (): void {
+    $order = Order::factory()->create(['customer_id' => $this->customer->id]);
+
+    Sanctum::actingAs($this->customer, ['store']);
+
+    $this->getJson("/store/customers/me/orders/{$order->public_id}?include=items.product")
+        ->assertStatus(Response::HTTP_BAD_REQUEST)
+        ->assertJsonPath('errors.0.code', 'bad_request');
+});
+
+it('exposes the carrier name of a shipment on the account order detail endpoint', function (): void {
+    $order = Order::factory()->create(['customer_id' => $this->customer->id]);
+    $carrier = Carrier::factory()->create(['name' => 'UPS']);
+    OrderShipping::factory()->create(['order_id' => $order->id, 'carrier_id' => $carrier->id]);
+
+    Sanctum::actingAs($this->customer, ['store']);
+
+    $shipment = collect($this->getJson("/store/customers/me/orders/{$order->public_id}?include=shippings")->assertOk()->json('included'))
+        ->firstWhere('type', 'order-shippings');
+
+    expect($shipment['attributes']['carrier_name'])->toBe('UPS');
 });
 
 it('hides another customer order from the account detail endpoint', function (): void {
