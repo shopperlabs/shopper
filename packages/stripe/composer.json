@@ -4,6 +4,7 @@
   "license": "MIT",
   "require": {
     "php": "^8.3",
+    "illuminate/support": "^12.68|^13.27",
     "shopper/payment": "self.version",
     "stripe/stripe-php": "^19.0"
   },

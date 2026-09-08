@@ -13,10 +13,12 @@ use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Enum\ProductType;
+use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Models\TaxRate;
@@ -599,4 +601,50 @@ it('returns 404 when transferring an unknown cart', function (): void {
     Sanctum::actingAs(User::factory()->create(), ['store']);
 
     $this->postJson('/store/carts/01JUNKNOWNCARTIDENTIFIER00/transfer')->assertNotFound();
+});
+
+it('expands the payment method of the cart on demand', function (): void {
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'manual']);
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+    Cart::query()->where('public_id', $cartId)->update(['payment_method_id' => $method->id]);
+
+    $this->getJson("/store/carts/{$cartId}?include=paymentMethod")
+        ->assertOk()
+        ->assertJsonPath('data.relationships.paymentMethod.data.id', $method->public_id)
+        ->assertJsonPath('included.0.type', 'payment-methods');
+});
+
+it('answers a null payment method relationship on a fresh cart', function (): void {
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+
+    $this->getJson("/store/carts/{$cartId}?include=paymentMethod")
+        ->assertOk()
+        ->assertJsonPath('data.relationships.paymentMethod.data', null);
+});
+
+it('serializes a product line and a variant line of the same cart', function (): void {
+    $variant = ProductVariant::factory()->create(['product_id' => $this->product->id]);
+    $variant->prices()->create(['amount' => 3000, 'currency_id' => $this->currency->id]);
+    $variant->mutateStock($this->inventory->id, 20);
+
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+    $this->postJson("/store/carts/{$cartId}/lines", ['purchasable_type' => 'product', 'purchasable_id' => $this->product->public_id])->assertOk();
+    $this->postJson("/store/carts/{$cartId}/lines", ['purchasable_type' => 'variant', 'purchasable_id' => $variant->public_id])->assertOk();
+
+    $types = collect($this->getJson("/store/carts/{$cartId}?include=lines.purchasable")->assertOk()->json('included'))
+        ->pluck('type')->unique()->sort()->values()->all();
+
+    expect($types)->toBe(['cart-lines', 'products', 'variants']);
+});
+
+it('never loads a relation of a purchasable through a nested include', function (): void {
+    $hidden = Category::factory()->create(['name' => 'Hidden', 'slug' => 'hidden', 'is_enabled' => false]);
+    $this->product->categories()->attach($hidden);
+
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+    $this->postJson("/store/carts/{$cartId}/lines", ['purchasable_type' => 'product', 'purchasable_id' => $this->product->public_id])->assertOk();
+
+    $included = collect($this->getJson("/store/carts/{$cartId}?include=lines.purchasable.categories")->assertOk()->json('included'));
+
+    expect($included->pluck('type')->unique()->sort()->values()->all())->toBe(['cart-lines', 'products']);
 });

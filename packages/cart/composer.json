@@ -4,6 +4,12 @@
   "license": "MIT",
   "require": {
     "php": "^8.3",
+    "illuminate/console": "^12.68|^13.27",
+    "illuminate/contracts": "^12.68|^13.27",
+    "illuminate/database": "^12.68|^13.27",
+    "illuminate/pipeline": "^12.68|^13.27",
+    "illuminate/session": "^12.68|^13.27",
+    "illuminate/support": "^12.68|^13.27",
     "shopper/core": "self.version"
   },
   "autoload": {

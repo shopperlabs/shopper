@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Shopper\Api\Http\Controllers\Store;
 
 use Shopper\Api\Concerns\BuildsApiQueries;
+use Shopper\Api\Http\Resources\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Api\Http\Resources\LegalResource;
 use Shopper\Core\Models\Legal;
-use TiMacDonald\JsonApi\JsonApiResource;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class LegalController
 {
@@ -23,8 +23,10 @@ final class LegalController
 
     public function show(string $slug): JsonApiResource
     {
-        return LegalResource::make(
-            Legal::query()->enabled()->where('slug', $slug)->firstOrFail()
-        );
+        $query = Legal::query()->enabled()->where('slug', $slug);
+
+        $this->applyPublicIncludes('legal', $query);
+
+        return LegalResource::make($query->firstOrFail());
     }
 }

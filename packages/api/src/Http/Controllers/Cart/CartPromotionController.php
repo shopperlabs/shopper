@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Shopper\Api\Actions\ApplyCartPromotionAction;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Requests\Cart\ApplyPromotionRequest;
+use Shopper\Api\Http\Resources\JsonApiResource;
 use Shopper\Cart\CartManager;
-use TiMacDonald\JsonApi\JsonApiResource;
 
 final class CartPromotionController
 {

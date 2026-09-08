@@ -11,11 +11,11 @@ use Shopper\Api\Actions\SaveAddressAction;
 use Shopper\Api\Http\Requests\Account\StoreAddressRequest;
 use Shopper\Api\Http\Requests\Account\UpdateAddressRequest;
 use Shopper\Api\Http\Resources\AddressResource;
+use Shopper\Api\Http\Resources\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Contracts\Address as AddressContract;
 use Symfony\Component\HttpFoundation\Response;
-use TiMacDonald\JsonApi\JsonApiResource;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class AddressController
 {

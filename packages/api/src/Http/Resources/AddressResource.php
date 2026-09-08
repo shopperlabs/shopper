@@ -41,7 +41,7 @@ class AddressResource extends JsonApiResource
     public function toRelationships(Request $request): array
     {
         return [
-            'country' => fn () => CountryResource::make($this->country),
+            'country' => CountryResource::class,
         ];
     }
 }

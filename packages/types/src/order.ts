@@ -113,18 +113,12 @@ export interface Order extends Entity {
   shipping_option_id?: ResourceId | null
   /** The shipping option. */
   shippingOption?: CarrierOption
-  /** The shipping address. */
+  /** The shipping address, when expanded through `include=shippingAddress`. */
   shippingAddress?: OrderAddress | null
-  /** The billing address. */
+  /** The billing address, when expanded through `include=billingAddress`. */
   billingAddress?: OrderAddress | null
-  /** The payment method. */
+  /** The payment method, when expanded through `include=paymentMethod`. */
   paymentMethod?: PaymentMethod | null
-  /** The shipping address, when expanded through `include=shipping_address` (store API). */
-  shipping_address?: OrderAddress | null
-  /** The billing address, when expanded through `include=billing_address` (store API). */
-  billing_address?: OrderAddress | null
-  /** The payment method, when expanded through `include=payment_method` (store API). */
-  payment_method?: PaymentMethod | null
   /** The zone. */
   zone?: Zone | null
   /** The channel. */

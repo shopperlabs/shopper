@@ -10,6 +10,14 @@
   ],
   "require": {
     "php": "^8.3",
+    "illuminate/auth": "^12.68|^13.27",
+    "illuminate/cache": "^12.68|^13.27",
+    "illuminate/contracts": "^12.68|^13.27",
+    "illuminate/database": "^12.68|^13.27",
+    "illuminate/http": "^12.68|^13.27",
+    "illuminate/routing": "^12.68|^13.27",
+    "illuminate/support": "^12.68|^13.27",
+    "illuminate/validation": "^12.68|^13.27",
     "laravel/sanctum": "^4.0",
     "shopper/core": "self.version"
   },

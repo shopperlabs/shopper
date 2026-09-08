@@ -6,10 +6,10 @@ namespace Shopper\Api\Http\Controllers\Catalog;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Api\Concerns\BuildsApiQueries;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Api\Http\Resources\ReviewResource;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Review;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class ReviewController
 {

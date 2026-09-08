@@ -76,8 +76,8 @@ export interface Cart extends Entity {
   channel?: Channel | null
   /** The zone. */
   zone?: Zone | null
-  /** The selected payment method, when expanded through `include=payment_method`. */
-  payment_method?: PaymentMethod | null
+  /** The selected payment method, when expanded through `include=paymentMethod`. */
+  paymentMethod?: PaymentMethod | null
 }
 
 /**

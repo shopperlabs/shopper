@@ -14,10 +14,10 @@ use Shopper\Api\Concerns\ResolvesChannel;
 use Shopper\Api\Http\Includes\EnabledRelation;
 use Shopper\Api\Http\Includes\SubtreeProductsCount;
 use Shopper\Api\Http\Resources\CategoryResource;
+use Shopper\Api\Http\Resources\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Core\Models\Contracts\Category as CategoryContract;
 use Shopper\Core\Queries\CategoryTree;
-use TiMacDonald\JsonApi\JsonApiResource;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class CategoryController
 {
@@ -30,7 +30,6 @@ final class CategoryController
         $categories = $this->paginated('category', $this->publicQuery());
 
         $this->loadStockThroughRelation($categories->getCollection());
-        $this->loadDepth($categories->getCollection());
         $this->loadSubtreeProductsCount($categories->getCollection());
 
         return CategoryResource::collection($categories);
@@ -60,7 +59,6 @@ final class CategoryController
         $category = $query->where('slug', $slug)->firstOrFail();
 
         $this->loadStockThroughRelation(collect([$category]));
-        $this->loadDepth(collect([$category]));
         $this->loadSubtreeProductsCount(collect([$category]));
 
         return CategoryResource::make($category);
@@ -85,18 +83,6 @@ final class CategoryController
         }
 
         return $nodes;
-    }
-
-    /**
-     * @param  Collection<int, Model>  $categories
-     */
-    private function loadDepth(Collection $categories): void
-    {
-        $tree = resolve(CategoryTree::class);
-
-        $categories->each(
-            fn (Model $category) => $category->setAttribute('depth', $tree->depth($category->getKey()))
-        );
     }
 
     /**

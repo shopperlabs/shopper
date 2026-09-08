@@ -9,7 +9,6 @@ use Shopper\Cart\Models\CartLine;
 use Shopper\Cart\Models\CartLineAdjustment;
 use Shopper\Cart\Models\CartLineTaxLine;
 use Shopper\Core\Models\Contracts\ProductVariant;
-use TiMacDonald\JsonApi\JsonApiResource as BaseJsonApiResource;
 
 /**
  * @mixin CartLine
@@ -43,9 +42,9 @@ class CartLineResource extends JsonApiResource
     public function toRelationships(Request $request): array
     {
         return [
-            'purchasable' => fn (): BaseJsonApiResource => $this->purchasable instanceof ProductVariant
-                ? ProductVariantResource::make($this->purchasable)
-                : ProductResource::make($this->purchasable),
+            'purchasable' => $this->purchasable instanceof ProductVariant
+                ? ProductVariantResource::class
+                : ProductResource::class,
         ];
     }
 

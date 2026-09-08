@@ -51,7 +51,7 @@ return [
                 'variants',
                 'categories' => Shopper\Api\Http\Includes\VisibleCategories::class,
                 'collections' => Shopper\Api\Http\Includes\PublishedRelation::class,
-                'options',
+                'options' => Shopper\Api\Http\Includes\ScopedOptions::class,
                 'tags',
                 'relatedProducts' => Shopper\Api\Http\Includes\PublicProducts::class,
                 'rating' => Shopper\Api\Http\Includes\RatingAggregate::class,
@@ -59,7 +59,6 @@ return [
             ],
             'include_loads' => [
                 'variants' => ['variants.prices.currency', 'variants.values.attribute'],
-                'options' => ['options.values', 'attributeProducts.media'],
                 'categories' => ['categories.parent'],
             ],
         ],
@@ -69,7 +68,7 @@ return [
             'includes' => [
                 'parent' => Shopper\Api\Http\Includes\EnabledRelation::class,
                 'children' => Shopper\Api\Http\Includes\EnabledRelation::class,
-                'ancestors' => Shopper\Api\Http\Includes\EnabledRelation::class,
+                'ancestors' => Shopper\Api\Http\Includes\EnabledAncestors::class,
                 'products' => Shopper\Api\Http\Includes\PublicProducts::class,
                 'products_count' => Shopper\Api\Http\Includes\SubtreeProductsCount::class,
             ],

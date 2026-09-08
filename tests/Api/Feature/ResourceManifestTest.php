@@ -95,3 +95,14 @@ it('rejects a replacement that does not extend the stock resource', function ():
     expect(fn () => ApiResource::replace(ProductResource::class, ProductStubResource::class))
         ->toThrow(InvalidArgumentException::class);
 });
+
+it('serializes the included relationships of a listing with the replacement resource', function (): void {
+    ApiResource::replace(BrandResource::class, CustomBrandResource::class);
+
+    $brand = Brand::factory()->create(['name' => 'BrandList', 'slug' => 'brand-list', 'is_enabled' => true]);
+    Product::factory()->publish()->create(['brand_id' => $brand->id]);
+
+    $this->getJson('/store/products?include=brand')
+        ->assertOk()
+        ->assertJsonPath('included.0.attributes.brand_flag', 'custom');
+});

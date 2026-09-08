@@ -30,7 +30,7 @@ class TagResource extends JsonApiResource
     public function toRelationships(Request $request): array
     {
         return [
-            'products' => fn () => ProductResource::collection($this->products),
+            'products' => ProductResource::class,
         ];
     }
 }

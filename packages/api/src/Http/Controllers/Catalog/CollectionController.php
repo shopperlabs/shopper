@@ -7,9 +7,9 @@ namespace Shopper\Api\Http\Controllers\Catalog;
 use Shopper\Api\Concerns\BuildsApiQueries;
 use Shopper\Api\Concerns\ResolvesChannel;
 use Shopper\Api\Http\Resources\CollectionResource;
+use Shopper\Api\Http\Resources\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Core\Models\Contracts\Collection;
-use TiMacDonald\JsonApi\JsonApiResource;
-use TiMacDonald\JsonApi\JsonApiResourceCollection;
 
 final class CollectionController
 {

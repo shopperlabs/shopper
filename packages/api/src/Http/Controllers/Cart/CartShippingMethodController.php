@@ -7,7 +7,7 @@ namespace Shopper\Api\Http\Controllers\Cart;
 use Shopper\Api\Actions\SetCartShippingMethodAction;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Requests\Cart\SetShippingMethodRequest;
-use TiMacDonald\JsonApi\JsonApiResource;
+use Shopper\Api\Http\Resources\JsonApiResource;
 
 final class CartShippingMethodController
 {
