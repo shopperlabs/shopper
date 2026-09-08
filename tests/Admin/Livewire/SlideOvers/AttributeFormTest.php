@@ -44,7 +44,7 @@ describe(AttributeForm::class, function (): void {
 
     it('can create new attribute', function (): void {
         Livewire::test(AttributeForm::class)
-            ->assertFormExists()
+            ->assertSchemaExists('form')
             ->fillForm([
                 'name' => 'Color',
                 'slug' => 'color',
@@ -61,7 +61,7 @@ describe(AttributeForm::class, function (): void {
 
     it('auto generates slug from name when left empty', function (): void {
         Livewire::test(AttributeForm::class)
-            ->assertFormExists()
+            ->assertSchemaExists('form')
             ->fillForm([
                 'name' => 'Product Size',
                 'type' => FieldType::Select(),
@@ -74,7 +74,7 @@ describe(AttributeForm::class, function (): void {
 
     it('validates required fields', function (): void {
         Livewire::test(AttributeForm::class)
-            ->assertFormExists()
+            ->assertSchemaExists('form')
             ->fillForm()
             ->call('store')
             ->assertHasFormErrors(['name' => 'required', 'type' => 'required']);

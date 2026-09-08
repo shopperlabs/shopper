@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
 use Shopper\Core\Models\Inventory as InventoryModel;
 use Shopper\Livewire\Pages\Product\Inventory;
@@ -11,7 +12,6 @@ use Tests\Core\Stubs\User;
 uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
-
     $this->user = User::factory()->create();
     $this->user->givePermissionTo('products.edit');
     $this->actingAs($this->user);
@@ -71,7 +71,7 @@ describe(Inventory::class, function (): void {
     });
 
     it('validates unique sku', function (): void {
-        $existingProduct = Product::factory()->create(['sku' => 'EXISTING-SKU']);
+        Product::factory()->create(['sku' => 'EXISTING-SKU']);
 
         Livewire::test(Inventory::class, ['product' => $this->product])
             ->fillForm([
@@ -82,7 +82,7 @@ describe(Inventory::class, function (): void {
     });
 
     it('validates unique barcode', function (): void {
-        $existingProduct = Product::factory()->create(['barcode' => '111222333']);
+        Product::factory()->create(['barcode' => '111222333']);
 
         Livewire::test(Inventory::class, ['product' => $this->product])
             ->fillForm([
@@ -94,11 +94,11 @@ describe(Inventory::class, function (): void {
 
     it('can add stock to product', function (): void {
         Livewire::test(Inventory::class, ['product' => $this->product])
-            ->callTableAction('stock', data: [
+            ->callAction(TestAction::make('stock')->table(), data: [
                 'inventory' => $this->inventory->id,
                 'quantity' => 10,
             ])
-            ->assertHasNoTableActionErrors()
+            ->assertHasNoFormErrors()
             ->assertDispatched('inventory.updated');
 
         expect($this->product->getStock())->toBe(10);
@@ -108,11 +108,11 @@ describe(Inventory::class, function (): void {
         $this->product->mutateStock($this->inventory->id, 20);
 
         Livewire::test(Inventory::class, ['product' => $this->product])
-            ->callTableAction('stock', data: [
+            ->callAction(TestAction::make('stock')->table(), data: [
                 'inventory' => $this->inventory->id,
                 'quantity' => -5,
             ])
-            ->assertHasNoTableActionErrors()
+            ->assertHasNoFormErrors()
             ->assertDispatched('inventory.updated');
 
         expect($this->product->getStock())->toBe(15);
@@ -128,7 +128,7 @@ describe(Inventory::class, function (): void {
 
     it('validates required fields when adding stock', function (): void {
         Livewire::test(Inventory::class, ['product' => $this->product])
-            ->callTableAction('stock', data: [])
-            ->assertHasTableActionErrors(['inventory' => 'required', 'quantity' => 'required']);
+            ->callAction(TestAction::make('stock')->table())
+            ->assertHasFormErrors(['inventory' => 'required', 'quantity' => 'required']);
     });
 })->group('livewire', 'products');

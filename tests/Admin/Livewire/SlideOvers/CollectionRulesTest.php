@@ -22,7 +22,7 @@ describe(CollectionRules::class, function (): void {
 
         Livewire::test(CollectionRules::class, ['collection' => $collection])
             ->assertSuccessful()
-            ->assertFormExists()
+            ->assertSchemaExists('form')
             ->fillForm()
             ->call('store')
             ->assertHasNoFormErrors();

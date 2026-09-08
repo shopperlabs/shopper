@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Livewire\Pages\Product\Variants;
@@ -46,7 +47,7 @@ describe(Variants::class, function (): void {
 
         Livewire::test(Variants::class, ['product' => $this->product])
             ->loadTable()
-            ->assertTableActionHidden('delete', $variant);
+            ->assertActionHidden(TestAction::make('delete')->table($variant));
     });
 
     it('hides the bulk delete action for users without `products.variants.delete`', function (): void {
@@ -54,7 +55,7 @@ describe(Variants::class, function (): void {
 
         Livewire::test(Variants::class, ['product' => $this->product])
             ->loadTable()
-            ->assertTableBulkActionHidden('delete');
+            ->assertActionHidden(TestAction::make('delete')->table()->bulk());
     });
 
     it('allows deleting a variant with `products.variants.delete`', function (): void {
@@ -64,7 +65,7 @@ describe(Variants::class, function (): void {
 
         Livewire::test(Variants::class, ['product' => $this->product])
             ->loadTable()
-            ->callTableAction('delete', $variant);
+            ->callAction(TestAction::make('delete')->table($variant));
 
         expect(ProductVariant::query()->find($variant->id))->toBeNull();
     });

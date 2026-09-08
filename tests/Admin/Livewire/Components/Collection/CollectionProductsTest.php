@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
@@ -24,8 +25,8 @@ describe(CollectionProducts::class, function (): void {
         Livewire::test(CollectionProducts::class, ['collection' => $collection])
             ->assertSuccessful()
             ->assertCountTableRecords(0)
-            ->assertTableActionHidden('rules')
-            ->assertTableActionExists('products');
+            ->assertActionHidden(TestAction::make('rules')->table())
+            ->assertActionExists(TestAction::make('products')->table());
     });
 
     it('can display rules action on auto collection', function (): void {
@@ -34,7 +35,7 @@ describe(CollectionProducts::class, function (): void {
         Livewire::test(CollectionProducts::class, ['collection' => $collection])
             ->assertSuccessful()
             ->assertCountTableRecords(0)
-            ->assertTableActionHidden('products')
-            ->assertTableActionExists('rules');
+            ->assertActionHidden(TestAction::make('products')->table())
+            ->assertActionExists(TestAction::make('rules')->table());
     });
 })->group('livewire', 'components', 'collections');

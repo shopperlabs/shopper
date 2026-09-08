@@ -82,7 +82,7 @@ describe(Overview::class, function (): void {
 
         Livewire::test(Overview::class, ['product' => $product])
             ->fillForm()
-            ->assertFormFieldIsHidden('external_id');
+            ->assertSchemaComponentHidden('external_id');
     });
 
     it('blocks `store` for users without `products.edit`', function (): void {
@@ -111,7 +111,7 @@ describe(Overview::class, function (): void {
                 'external_id' => $uuid = fake()->uuid,
                 'supplier_id' => $supplier->id,
             ])
-            ->assertFormFieldIsVisible('external_id')
+            ->assertSchemaComponentVisible('external_id')
             ->call('store')
             ->assertHasNoFormErrors();
 

@@ -89,7 +89,7 @@ describe(Passkeys::class, function (): void {
                 data: ['password' => 'wrong-password'],
                 arguments: ['passkey' => $passkey->getKey()],
             )
-            ->assertHasActionErrors();
+            ->assertHasFormErrors();
 
         expect($this->user->passkeys()->count())->toBe(1);
     });
