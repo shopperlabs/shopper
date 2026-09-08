@@ -11,6 +11,7 @@ use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\CarrierOption;
+use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Inventory;
@@ -159,7 +160,7 @@ it('sets the shipping method and folds its price into the totals', function (): 
 it('rejects a shipping option the carriers do not quote', function (): void {
     $this->postJson("/store/carts/{$this->cart->public_id}/shipping-method", [
         'option_id' => 'main-carrier:does-not-exist',
-    ])->assertUnprocessable();
+    ])->assertUnprocessable()->assertJsonPath('errors.0.code', 'shipping_option_unavailable');
 });
 
 it('lists the payment methods available for the cart zone', function (): void {
@@ -190,7 +191,7 @@ it('rejects a payment method outside the cart offer', function (): void {
 
     $this->postJson("/store/carts/{$this->cart->public_id}/payment-method", [
         'payment_method_id' => (string) $elsewhere->public_id,
-    ])->assertUnprocessable();
+    ])->assertUnprocessable()->assertJsonPath('errors.0.code', 'payment_method_unavailable');
 
     expect($this->cart->refresh()->payment_method_id)->toBeNull();
 });
@@ -262,7 +263,8 @@ it('opens a fresh session when the cart total changed', function (): void {
 
 it('requires a payment method before opening a session', function (): void {
     $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
-        ->assertUnprocessable();
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'payment_method_required');
 });
 
 it('completes the cart into an order', function (): void {
@@ -295,7 +297,8 @@ it('rejects checkout with a 422 when stock is drained after the line is added', 
     $this->product->decreaseStock($this->inventory->id, 100);
 
     $this->postJson("/store/carts/{$this->cart->public_id}/complete")
-        ->assertUnprocessable();
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'stock_insufficient');
 
     expect(Order::query()->count())->toBe(0)
         ->and($this->product->getStock())->toBe(0);
@@ -322,6 +325,7 @@ it('rejects completion when the shipping price increased since selection', funct
 
     $this->postJson("/store/carts/{$this->cart->public_id}/complete")
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'shipping_price_changed')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/shipping_method');
 
     expect($this->cart->refresh()->isCompleted())->toBeFalse();
@@ -343,6 +347,7 @@ it('requires a shipping method to complete a shippable cart', function (): void 
 
     $this->postJson("/store/carts/{$this->cart->public_id}/complete")
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'shipping_method_required')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/shipping_method');
 });
 
@@ -360,6 +365,7 @@ it('completes a cart of virtual products without any shipping method', function 
 it('requires a payment method to complete the cart', function (): void {
     $this->postJson("/store/carts/{$this->cart->public_id}/complete")
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'payment_method_required')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/payment_method');
 });
 
@@ -368,6 +374,7 @@ it('rejects the completion of an empty cart', function (): void {
 
     $this->postJson("/store/carts/{$cart->public_id}/complete")
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'cart_empty')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/cart');
 });
 
@@ -410,6 +417,7 @@ it('rejects completion when the payment session no longer matches the total', fu
 
     $this->postJson("/store/carts/{$this->cart->public_id}/complete")
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'payment_session_mismatch')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/payment_session');
 });
 
@@ -468,6 +476,7 @@ it('keeps personal data out of the guest order lookup', function (): void {
 
     $this->getJson("/store/orders/{$orderId}?include=shippingAddress")
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'include_not_allowed')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/include');
 
     $this->getJson("/store/orders/{$orderId}?include=items")->assertOk();
@@ -579,6 +588,7 @@ it('requires a shipping method when the cart mixes virtual and physical products
 
     $this->postJson("/store/carts/{$cart->public_id}/complete")
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'shipping_method_required')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/shipping_method');
 });
 
@@ -635,6 +645,7 @@ it('requires an email to complete a guest cart', function (): void {
 
     $this->postJson("/store/carts/{$this->cart->public_id}/complete")
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'email_required')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/email');
 
     expect($this->cart->refresh()->isCompleted())->toBeFalse();
@@ -742,9 +753,26 @@ it('applies a promotion code and folds the discount into the totals', function (
     expect($this->cart->refresh()->promotions->first()->code)->toBe('SAVE20');
 });
 
+it('answers promotion_limit_reached when the code is exhausted between validation and reservation', function (): void {
+    $discount = orderDiscount(['usage_limit' => 1]);
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+
+    $orderModel = resolve(OrderContract::class)::class;
+    $orderModel::created(fn () => $discount->increment('total_use'));
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'promotion_limit_reached');
+
+    expect(Order::query()->count())->toBe(0)
+        ->and($discount->refresh()->total_use)->toBe(0);
+});
+
 it('rejects an unknown promotion code', function (): void {
     $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'NOPE'])
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'promotion_not_applicable')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/code');
 
     expect($this->cart->refresh()->promotions)->toBeEmpty();
@@ -816,6 +844,7 @@ it('rejects an expired promotion code', function (): void {
 
     $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])
         ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'promotion_not_applicable')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/code');
 
     expect($this->cart->refresh()->promotions)->toBeEmpty();

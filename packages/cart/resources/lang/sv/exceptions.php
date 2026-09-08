@@ -8,6 +8,7 @@ return [
     'cart_not_found' => 'Varukorgen hittades inte.',
     'insufficient_stock' => 'Otillräckligt lager för denna artikel.',
     'price_changed' => 'Priset på en artikel i varukorgen har ändrats. Vänligen granska varukorgen före kassan.',
+    'missing_price' => 'Den här artikeln har inget pris i :currency.',
     'quantity_minimum' => 'Antalet måste vara minst 1.',
     'discount_not_found' => 'Rabattkoden hittades inte.',
 

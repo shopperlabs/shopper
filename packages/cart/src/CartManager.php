@@ -13,6 +13,7 @@ use Shopper\Cart\Events\CouponRemoved;
 use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Exceptions\InsufficientStockException;
 use Shopper\Cart\Exceptions\InvalidDiscountException;
+use Shopper\Cart\Exceptions\MissingPriceException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
 use Shopper\Cart\Models\CartLineAdjustment;
@@ -72,11 +73,15 @@ final readonly class CartManager
                 zoneId: $cart->zone_id,
             ));
 
+            if ($price === null) {
+                throw new MissingPriceException($purchasable, $cart->currency_code);
+            }
+
             return $cart->lines()->create([
                 'purchasable_type' => $purchasable->getMorphClass(),
                 'purchasable_id' => $purchasable->getKey(),
                 'quantity' => $quantity,
-                'unit_price_amount' => $price->amount ?? 0,
+                'unit_price_amount' => $price->amount,
                 'metadata' => $metadata,
             ]);
         });
@@ -262,7 +267,11 @@ final readonly class CartManager
                     ))
                     : null;
 
-                $line->update(['unit_price_amount' => $price->amount ?? 0]);
+                if ($price === null) {
+                    throw new MissingPriceException($purchasable, $currencyCode);
+                }
+
+                $line->update(['unit_price_amount' => $price->amount]);
             }
 
             $cart->update([
@@ -281,25 +290,42 @@ final readonly class CartManager
      * purchasable are summed, other lines move over re-priced in the target
      * currency, applied code promotions carry over without duplicating, and
      * the emptied source cart is deleted. Stock is not guarded here: the
-     * checkout reservation remains the gate, exactly as for a stale cart.
+     * checkout reservation remains the gate, exactly as for a stale cart. A
+     * line without a price in the target currency refuses the merge rather
+     * than moving for free. Both carts are re-read under lock: a concurrent
+     * merge of the same source is a no-op instead of a double count, and a
+     * target completed meanwhile is refused. The target's shipping choice
+     * and payment session are dropped once its contents changed, so they
+     * are quoted again.
      *
      * @throws Throwable
      */
     public function merge(Cart $source, Cart $target): Cart
     {
-        $this->guardCompleted($source);
-        $this->guardCompleted($target);
-        $this->invalidateTotals($target);
-
         return DB::transaction(function () use ($source, $target): Cart {
-            $source->loadMissing(['lines.purchasable.prices', 'promotions']);
+            /** @var Cart|null $source */
+            $source = $source->newQuery()->lockForUpdate()->find($source->getKey());
+
+            if ($source === null) {
+                return $target;
+            }
+
+            /** @var Cart $target */
+            $target = $target->newQuery()->lockForUpdate()->findOrFail($target->getKey());
+
+            $this->guardCompleted($source);
+            $this->guardCompleted($target);
+            $this->invalidateTotals($target);
+
+            $source->loadMissing(['lines.purchasable.prices.currency', 'promotions']);
+
+            $existingLines = $target->lines()
+                ->lockForUpdate()
+                ->get()
+                ->keyBy(fn (CartLine $line): string => $line->purchasable_type.':'.$line->purchasable_id);
 
             foreach ($source->lines as $line) {
-                $existing = $target->lines()
-                    ->where('purchasable_type', $line->purchasable_type)
-                    ->where('purchasable_id', $line->purchasable_id)
-                    ->lockForUpdate()
-                    ->first();
+                $existing = $existingLines->get($line->purchasable_type.':'.$line->purchasable_id);
 
                 if ($existing) {
                     $existing->update(['quantity' => $existing->quantity + $line->quantity]);
@@ -321,11 +347,13 @@ final readonly class CartManager
                         ))
                         : null);
 
+                if ($source->currency_code !== $target->currency_code && $price === null) {
+                    throw new MissingPriceException($purchasable, $target->currency_code);
+                }
+
                 $line->update([
                     'cart_id' => $target->id,
-                    ...($source->currency_code === $target->currency_code
-                        ? []
-                        : ['unit_price_amount' => $price->amount ?? 0]),
+                    ...($price === null ? [] : ['unit_price_amount' => $price->amount]),
                 ]);
             }
 
@@ -334,6 +362,11 @@ final readonly class CartManager
                     ['discount_id' => $promotion->discount_id],
                     ['source' => $promotion->source, 'code' => $promotion->code],
                 );
+            }
+
+            if ($source->lines->isNotEmpty()) {
+                $target->update(['shipping_option_id' => null, 'shipping_amount' => null]);
+                $this->setPaymentSession($target, null);
             }
 
             $source->delete();

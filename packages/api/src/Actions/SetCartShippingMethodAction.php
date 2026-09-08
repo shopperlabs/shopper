@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Actions;
 
-use Illuminate\Validation\ValidationException;
 use Shopper\Api\Support\ShippingOption;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Models\Cart;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 
 final readonly class SetCartShippingMethodAction
 {
@@ -33,7 +34,7 @@ final readonly class SetCartShippingMethodAction
         );
 
         if (! $option) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::ShippingOptionUnavailable, [
                 'option_id' => __('shopper-api::messages.shipping.option_not_available'),
             ]);
         }

@@ -102,6 +102,47 @@ export class ShopperApiError extends Error {
     this.status = status
     this.errors = errors
   }
+
+  /** The code of the first error, when the API provides one. */
+  public get code(): string | undefined {
+    return this.errors[0]?.code
+  }
+
+  /** The code reported for a field, when the API provides one. */
+  public codeFor(field: string): string | undefined {
+    return this.errors.find((error) => ShopperApiError.fieldOf(error.source?.pointer) === field)?.code
+  }
+
+  /**
+   * Messages grouped by field name, read from `source.pointer`
+   * (`/data/attributes/email` becomes `email`). Errors without a pointer are
+   * left out; they stay readable through `errors`.
+   */
+  public fields(): Record<string, string[]> {
+    const fields: Record<string, string[]> = {}
+
+    for (const error of this.errors) {
+      const field = ShopperApiError.fieldOf(error.source?.pointer)
+
+      if (field === undefined || error.detail === undefined) {
+        continue
+      }
+
+      fields[field] = [...(fields[field] ?? []), error.detail]
+    }
+
+    return fields
+  }
+
+  private static fieldOf(pointer: string | undefined): string | undefined {
+    if (pointer === undefined) {
+      return undefined
+    }
+
+    const field = pointer.replace(/^\/data\/attributes\//, '').replace(/\//g, '.')
+
+    return field === '__proto__' || field === 'constructor' || field === 'prototype' ? undefined : field
+  }
 }
 
 export async function toApiError(response: Response): Promise<ShopperApiError> {

@@ -21,6 +21,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Token expiration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may set how many minutes a customer token issued by the store
+    | authentication endpoints stays valid. A null or zero value keeps the token alive
+    | until the customer logs out or resets their password. Expired tokens
+    | answer 401 and are pruned daily.
+    |
+    */
+    'token_expiration' => env('SHOPPER_API_TOKEN_EXPIRATION', 60 * 24 * 30),
+
+    /*
+    |--------------------------------------------------------------------------
     | Resource query allowlists
     |--------------------------------------------------------------------------
     |
@@ -125,10 +138,16 @@ return [
             'sorts' => ['name', 'code'],
             'includes' => [],
         ],
+        'cart' => [
+            'includes' => ['lines', 'lines.purchasable', 'lines.purchasable.product', 'addresses', 'paymentMethod'],
+        ],
         'order' => [
             'filters' => ['status' => 'exact'],
             'sorts' => ['created_at'],
-            'includes' => ['items'],
+            'includes' => ['items', 'shippingAddress', 'billingAddress', 'paymentMethod', 'shippings', 'shippings.events', 'refund'],
+            'include_loads' => [
+                'shippings' => ['shippings.carrier'],
+            ],
         ],
         'review' => [
             'filters' => ['rating' => 'exact'],

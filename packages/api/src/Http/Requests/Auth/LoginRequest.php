@@ -21,6 +21,7 @@ final class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
+            'cart_id' => ['nullable', 'string', 'max:26'],
         ];
     }
 }

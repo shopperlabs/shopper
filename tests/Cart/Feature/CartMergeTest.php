@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Shopper\Cart\CartManager;
 use Shopper\Cart\CartSessionManager;
+use Shopper\Cart\Exceptions\MissingPriceException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Models\Currency;
@@ -52,12 +53,34 @@ describe('CartManager::merge', function (): void {
 
         $this->cartManager->add($this->guestCart, $other, quantity: 1);
         $this->cartManager->add($this->userCart, $this->product, quantity: 1);
+        $this->userCart->update(['shipping_option_id' => 'main-carrier:standard', 'shipping_amount' => 500]);
+        $this->cartManager->setPaymentSession($this->userCart, ['reference' => 'pi_1', 'amount' => 1500]);
 
         $merged = $this->cartManager->merge($this->guestCart, $this->userCart);
 
         expect($merged->lines()->count())->toBe(2)
-            ->and($merged->lines()->pluck('purchasable_id'))->toContain($other->id);
+            ->and($merged->lines()->pluck('purchasable_id'))->toContain($other->id)
+            ->and($merged->shipping_option_id)->toBeNull()
+            ->and($merged->shipping_amount)->toBeNull()
+            ->and($merged->payment_session)->toBeNull();
     });
+
+    it('is a no-op when the source cart is gone by the time the lock is acquired', function (): void {
+        $this->cartManager->add($this->userCart, $this->product, quantity: 1);
+        $this->guestCart->delete();
+
+        $merged = $this->cartManager->merge($this->guestCart, $this->userCart);
+
+        expect($merged->is($this->userCart))->toBeTrue()
+            ->and($merged->lines()->first()->quantity)->toBe(1);
+    });
+
+    it('refuses a line without a price in the target currency', function (): void {
+        $eurCart = Cart::factory()->create(['currency_code' => 'EUR', 'customer_id' => $this->user->id]);
+        $this->cartManager->add($this->guestCart, $this->product, quantity: 1);
+
+        $this->cartManager->merge($this->guestCart, $eurCart);
+    })->throws(MissingPriceException::class);
 
     it('re-prices moved lines when the carts use different currencies', function (): void {
         $eur = Currency::query()->where('code', 'EUR')->first();
@@ -105,6 +128,21 @@ describe('CartSessionManager::associate', function (): void {
 
         expect($session->current()->id)->toBe($this->userCart->id)
             ->and($this->userCart->lines()->first()->quantity)->toBe(3);
+    });
+
+    it('claims the session cart whole when a line has no price in the currency of the cart the user owns', function (): void {
+        $user = User::factory()->create();
+        Cart::factory()->create(['currency_code' => 'EUR', 'customer_id' => $user->id]);
+        $session = resolve(CartSessionManager::class);
+        $session->use($this->guestCart);
+
+        $this->cartManager->add($this->guestCart, $this->product, quantity: 2);
+
+        $session->associate($user);
+
+        expect($session->current()->id)->toBe($this->guestCart->id)
+            ->and($this->guestCart->refresh()->customer_id)->toBe($user->id)
+            ->and($this->guestCart->lines()->first()->unit_price_amount)->toBe(1000);
     });
 
     it('attaches the session cart when the user owns no cart', function (): void {

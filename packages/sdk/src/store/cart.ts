@@ -106,7 +106,9 @@ export class CartModule {
   /**
    * Attach a guest cart to the authenticated customer, used when a guest signs
    * in mid-checkout. Requires a customer token. Idempotent for a cart they
-   * already own; rejected for a cart that belongs to another customer.
+   * already own; rejected for a cart that belongs to another customer. Keep
+   * the id of the returned cart: when the customer already owned one, the
+   * guest cart is folded into it and the id sent is gone after the merge.
    */
   public async transfer(cartId: string, params?: RequestParams): Promise<Cart> {
     const document = await this.client.send('POST', `${this.path}/${cartId}/transfer`, undefined, this.params(params))

@@ -6,7 +6,6 @@ namespace Shopper\Api\Http\Controllers\Cart;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Validation\ValidationException;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Requests\Cart\SetPaymentMethodRequest;
 use Shopper\Api\Http\Resources\JsonApiResource;
@@ -15,6 +14,8 @@ use Shopper\Api\Http\Resources\PaymentMethodResource;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Models\PaymentMethod;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 use Shopper\Payment\PaymentManager;
 use Shopper\Payment\Services\PaymentProcessingService;
 
@@ -57,7 +58,7 @@ final class CartPaymentMethodController
         );
 
         if (! $method) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::PaymentMethodUnavailable, [
                 'payment_method_id' => __('shopper-api::messages.payment.method_not_available'),
             ]);
         }

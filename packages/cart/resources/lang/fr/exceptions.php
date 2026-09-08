@@ -8,6 +8,7 @@ return [
     'cart_not_found' => 'Panier introuvable.',
     'insufficient_stock' => 'Stock insuffisant pour cet article.',
     'price_changed' => 'Le prix d\'un article de votre panier a changé. Veuillez vérifier votre panier avant de commander.',
+    'missing_price' => 'Cet article n\'a pas de prix en :currency.',
     'quantity_minimum' => 'La quantité doit être d\'au moins 1.',
     'discount_not_found' => 'Code de réduction introuvable.',
 

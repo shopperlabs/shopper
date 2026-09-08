@@ -29,6 +29,8 @@ export interface JsonApiDocument {
 
 export interface JsonApiError {
   status?: string
+  /** Stable, untranslated machine code: the failed validation rule (unique, required, ...) or a domain code (credentials_invalid, stock_insufficient, ...). */
+  code?: string
   title?: string
   detail?: string
   source?: { pointer?: string; parameter?: string }

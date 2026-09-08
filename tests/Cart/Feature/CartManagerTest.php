@@ -6,6 +6,7 @@ use Shopper\Cart\CartManager;
 use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Exceptions\InsufficientStockException;
 use Shopper\Cart\Exceptions\InvalidDiscountException;
+use Shopper\Cart\Exceptions\MissingPriceException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
 use Shopper\Core\Enum\DiscountApplyTo;
@@ -44,6 +45,13 @@ beforeEach(function (): void {
 });
 
 describe(CartManager::class, function (): void {
+    it('refuses to add a purchasable without a price in the cart currency', function (): void {
+        $unpriced = Product::factory()->standard()->create();
+        $unpriced->mutateStock($this->inventory->id, 10);
+
+        $this->cartManager->add($this->cart, $unpriced);
+    })->throws(MissingPriceException::class);
+
     it('adds a product to the cart', function (): void {
         $line = $this->cartManager->add($this->cart, $this->product);
 
@@ -103,6 +111,7 @@ describe(CartManager::class, function (): void {
             'currency_id' => $this->currency->id,
         ]);
         $product2->mutateStock($this->inventory->id, 10);
+        $product2->refresh();
 
         $this->cartManager->add($this->cart, $this->product);
         $this->cartManager->add($this->cart, $product2);

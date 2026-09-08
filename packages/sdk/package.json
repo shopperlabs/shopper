@@ -38,12 +38,14 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
+    "test": "vitest run",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@shopperlabs/shopper-types": "^3.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^4.1.11"
   }
 }

@@ -51,6 +51,13 @@ export interface ShopperConfig {
   fetch?: typeof globalThis.fetch
   /** Customer token persistence. Defaults to an in-memory store. */
   tokenStorage?: TokenStorage
+  /**
+   * Called once per 401 answered to a request that carried an Authorization
+   * header, from the token storage or from the configured headers, after the
+   * token storage has been cleared and before the error is thrown. Never
+   * called for an anonymous request nor for a 403.
+   */
+  onUnauthorized?: () => void | Promise<void>
 }
 
 /**
@@ -70,6 +77,8 @@ export class HttpClient {
 
   private readonly fetchImpl: typeof globalThis.fetch
 
+  private readonly onUnauthorized: (() => void | Promise<void>) | null
+
   private locale: string | null
 
   private channel: string | null
@@ -81,6 +90,7 @@ export class HttpClient {
     this.channel = config.channel ?? null
     this.headers = config.headers ?? {}
     this.tokens = config.tokenStorage ?? new MemoryTokenStorage()
+    this.onUnauthorized = config.onUnauthorized ?? null
     // Bind to the global so the browser fetch keeps `this === window`
     this.fetchImpl = (config.fetch ?? globalThis.fetch).bind(globalThis)
   }
@@ -124,23 +134,32 @@ export class HttpClient {
     const isForm = typeof FormData !== 'undefined' && body instanceof FormData
     const { headers: initHeaders, ...initRest } = init ?? {}
 
+    const headers: Record<string, string> = {
+      Accept: 'application/vnd.api+json',
+      ...(body !== undefined && ! isForm ? { 'Content-Type': 'application/json' } : {}),
+      ...(token !== null ? { Authorization: `Bearer ${token}` } : {}),
+      ...(this.locale !== null ? { 'Accept-Language': this.locale } : {}),
+      ...(this.channel !== null ? { 'X-Shopper-Channel': this.channel } : {}),
+      ...this.headers,
+      ...initHeaders,
+    }
+
     const response = await this.fetchImpl(url, {
       ...initRest,
       method,
-      headers: {
-        Accept: 'application/vnd.api+json',
-        ...(body !== undefined && ! isForm ? { 'Content-Type': 'application/json' } : {}),
-        ...(token !== null ? { Authorization: `Bearer ${token}` } : {}),
-        ...(this.locale !== null ? { 'Accept-Language': this.locale } : {}),
-        ...(this.channel !== null ? { 'X-Shopper-Channel': this.channel } : {}),
-        ...this.headers,
-        ...initHeaders,
-      },
+      headers,
       ...(body !== undefined ? { body: isForm ? (body as FormData) : JSON.stringify(body) } : {}),
     })
 
     if (! response.ok) {
-      throw await toApiError(response)
+      const error = await toApiError(response)
+
+      if (response.status === 401 && (headers.Authorization ?? headers.authorization) !== undefined) {
+        this.tokens.clear()
+        await this.onUnauthorized?.()
+      }
+
+      throw error
     }
 
     if (response.status === 204 || response.status === 202) {

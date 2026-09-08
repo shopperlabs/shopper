@@ -30,6 +30,7 @@ final class RegisterRequest extends FormRequest
             'email' => ['required', 'email', 'max:255', Rule::unique((new $model)->getTable(), 'email')],
             'password' => ['required', 'string', Password::defaults()],
             'opt_in' => ['nullable', 'boolean'],
+            'cart_id' => ['nullable', 'string', 'max:26'],
         ];
     }
 }

@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Shopper\Api\Actions;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\ValidationException;
 use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Core\Models\Price;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 
 final class ResolvePurchasableAction
 {
@@ -21,19 +22,19 @@ final class ResolvePurchasableAction
             : $this->findProduct($publicId);
 
         if (! $purchasable instanceof Priceable) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::PurchasableUnavailable, [
                 'purchasable_id' => __('shopper-api::messages.purchasable.not_available'),
             ]);
         }
 
         if ($purchasable instanceof Product && $purchasable->canUseVariants()) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::VariantRequired, [
                 'purchasable_id' => __('shopper-api::messages.purchasable.sold_through_variants'),
             ]);
         }
 
         if (! $purchasable->getPrice($currencyCode) instanceof Price) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::PriceMissing, [
                 'purchasable_id' => __('shopper-api::messages.purchasable.missing_price', ['currency' => $currencyCode]),
             ]);
         }

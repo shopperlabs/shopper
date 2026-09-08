@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Shopper\Api\Actions;
 
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Validation\ValidationException;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Discounts\DiscountValidator;
 use Shopper\Cart\Discounts\PromotionResolver;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Models\Discount;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 
 final readonly class ApplyCartPromotionAction
 {
@@ -35,7 +36,7 @@ final readonly class ApplyCartPromotionAction
         $discount = Discount::query()->where('code', $code)->first();
 
         if (! $discount instanceof Discount || ! $discount->is_active) {
-            throw ValidationException::withMessages([
+            throw ApiValidationException::withCode(ErrorCode::PromotionNotApplicable, [
                 'code' => __('shopper-api::messages.promotion.not_applicable'),
             ]);
         }
@@ -53,7 +54,7 @@ final readonly class ApplyCartPromotionAction
             if (! $applies) {
                 $this->cartManager->removeCoupon($cart, $code);
 
-                throw ValidationException::withMessages([
+                throw ApiValidationException::withCode(ErrorCode::PromotionNotApplicable, [
                     'code' => __('shopper-api::messages.promotion.not_applicable'),
                 ]);
             }
