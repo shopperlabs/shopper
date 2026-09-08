@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
 use Shopper\Livewire\Components\Settings\Team\AdministratorsList;
 use Shopper\Models\Role;
@@ -56,7 +57,7 @@ describe(AdministratorsList::class, function (): void {
         $manager->assignRole(config('shopper.admin.roles.manager'));
 
         Livewire::test(AdministratorsList::class)
-            ->callTableAction('delete', $manager)
+            ->callAction(TestAction::make('delete')->table($manager))
             ->assertNotified();
 
         expect(User::query()->find($manager->id))->toBeNull();
@@ -67,7 +68,7 @@ describe(AdministratorsList::class, function (): void {
         $anotherAdmin->assignRole(config('shopper.admin.roles.admin'));
 
         Livewire::test(AdministratorsList::class)
-            ->callTableAction('delete', $anotherAdmin)
+            ->callAction(TestAction::make('delete')->table($anotherAdmin))
             ->assertNotified();
 
         expect(User::query()->find($anotherAdmin->id))->toBeNull();
@@ -75,14 +76,14 @@ describe(AdministratorsList::class, function (): void {
 
     it('prevents admin from deleting the last remaining admin', function (): void {
         Livewire::test(AdministratorsList::class)
-            ->assertTableActionHidden('delete', $this->adminUser);
+            ->assertActionHidden(TestAction::make('delete')->table($this->adminUser));
     });
 
     it('prevents admin from deleting themselves via delete action', function (): void {
         User::factory()->create()->assignRole(config('shopper.admin.roles.admin'));
 
         Livewire::test(AdministratorsList::class)
-            ->assertTableActionHidden('delete', $this->adminUser);
+            ->assertActionHidden(TestAction::make('delete')->table($this->adminUser));
     });
 
     it('denies the delete action for a non-admin even when mounted directly', function (): void {
@@ -130,12 +131,24 @@ describe(AdministratorsList::class, function (): void {
         expect(User::query()->find($editor->id))->not->toBeNull();
     });
 
+    it('never deletes the acting admin through a forged bulk selection', function (): void {
+        $manager = User::factory()->create();
+        $manager->assignRole(config('shopper.admin.roles.manager'));
+
+        Livewire::test(AdministratorsList::class)
+            ->selectTableRecords([$this->adminUser, $manager])
+            ->callAction(TestAction::make('delete')->table()->bulk());
+
+        expect(User::query()->find($this->adminUser->id))->not->toBeNull()
+            ->and(User::query()->find($manager->id))->toBeNull();
+    });
+
     it('sends notification when copyUserId action is triggered', function (): void {
         $manager = User::factory()->create();
         $manager->assignRole(config('shopper.admin.roles.manager'));
 
         Livewire::test(AdministratorsList::class)
-            ->callTableAction('copyUserId', $manager)
+            ->callAction(TestAction::make('copyUserId')->table($manager))
             ->assertNotified(__('shopper::notifications.users_roles.user_id_copied'));
     });
 

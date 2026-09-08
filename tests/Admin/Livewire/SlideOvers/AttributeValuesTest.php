@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
@@ -54,11 +55,11 @@ describe(AttributeValues::class, function (): void {
 
     it('can create new attribute value via header action', function (): void {
         Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
-            ->callTableAction('add', data: [
+            ->callAction(TestAction::make('add')->table(), data: [
                 'key' => 'GREEN',
                 'value' => 'Green',
             ])
-            ->assertHasNoTableActionErrors();
+            ->assertHasNoFormErrors();
 
         $value = AttributeValue::query()->where('attribute_id', $this->attribute->id)->first();
 
@@ -69,11 +70,11 @@ describe(AttributeValues::class, function (): void {
 
     it('converts key to lowercase when creating value', function (): void {
         Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
-            ->callTableAction('add', data: [
+            ->callAction(TestAction::make('add')->table(), data: [
                 'key' => 'UPPERCASE_KEY',
                 'value' => 'Test Value',
             ])
-            ->assertHasNoTableActionErrors();
+            ->assertHasNoFormErrors();
 
         $value = AttributeValue::query()->where('attribute_id', $this->attribute->id)->first();
 
@@ -82,11 +83,11 @@ describe(AttributeValues::class, function (): void {
 
     it('validates required fields when creating value', function (): void {
         Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
-            ->callTableAction('add', data: [
+            ->callAction(TestAction::make('add')->table(), data: [
                 'key' => '',
                 'value' => '',
             ])
-            ->assertHasTableActionErrors([
+            ->assertHasFormErrors([
                 'key' => 'required',
                 'value' => 'required',
             ]);
@@ -100,11 +101,11 @@ describe(AttributeValues::class, function (): void {
         ]);
 
         Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
-            ->callTableAction('add', data: [
+            ->callAction(TestAction::make('add')->table(), data: [
                 'key' => 'existing',
                 'value' => 'New Value',
             ])
-            ->assertHasTableActionErrors(['key' => 'unique']);
+            ->assertHasFormErrors(['key' => 'unique']);
     });
 
     it('can edit attribute value', function (): void {
@@ -115,11 +116,11 @@ describe(AttributeValues::class, function (): void {
         ]);
 
         Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
-            ->callTableAction('edit', $value, data: [
+            ->callAction(TestAction::make('edit')->table($value), data: [
                 'key' => 'NEW',
                 'value' => 'New Value',
             ])
-            ->assertHasNoTableActionErrors();
+            ->assertHasNoFormErrors();
 
         $value->refresh();
 
@@ -135,7 +136,7 @@ describe(AttributeValues::class, function (): void {
         ]);
 
         Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
-            ->callTableAction('delete', $value);
+            ->callAction(TestAction::make('delete')->table($value));
 
         expect(AttributeValue::query()->find($value->id))->toBeNull();
     });
@@ -148,7 +149,8 @@ describe(AttributeValues::class, function (): void {
         ]);
 
         Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
-            ->callTableBulkAction('delete', $values);
+            ->selectTableRecords($values)
+            ->callAction(TestAction::make('delete')->table()->bulk());
 
         expect(AttributeValue::query()->whereIn('id', $values->pluck('id'))->count())->toBe(0);
     });
@@ -159,7 +161,7 @@ describe(AttributeValues::class, function (): void {
         ]);
 
         Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
-            ->assertTableActionHidden('delete', $value);
+            ->assertActionHidden(TestAction::make('delete')->table($value));
     });
 
     it('hides the bulk delete action for users without `attributes.delete`', function (): void {
@@ -168,7 +170,7 @@ describe(AttributeValues::class, function (): void {
         ]);
 
         Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id])
-            ->assertTableBulkActionHidden('delete');
+            ->assertActionHidden(TestAction::make('delete')->table()->bulk());
     });
 
     it('can remove value via method', function (): void {

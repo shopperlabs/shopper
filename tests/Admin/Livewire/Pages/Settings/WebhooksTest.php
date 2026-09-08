@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Illuminate\Support\Facades\Bus;
 use Livewire\Livewire;
 use Shopper\Core\Enum\WebhookDeliveryStatus;
@@ -68,7 +69,7 @@ describe(Webhooks::class, function (): void {
         $subscription = WebhookSubscription::factory()->create(['secret' => 'old-secret']);
 
         Livewire::test(Webhooks::class)
-            ->callTableAction('regenerateSecret', $subscription);
+            ->callAction(TestAction::make('regenerateSecret')->table($subscription));
 
         $newSecret = $subscription->refresh()->secret;
 
@@ -84,7 +85,7 @@ describe(Webhooks::class, function (): void {
                 'url' => 'https://metadata.example.com/steal',
                 'events' => ['order.paid'],
             ])
-            ->assertHasActionErrors(['url']);
+            ->assertHasFormErrors(['url']);
 
         expect(WebhookSubscription::query()->count())->toBe(0);
     });
@@ -109,7 +110,7 @@ describe(Webhooks::class, function (): void {
         ]);
 
         Livewire::test(Webhooks::class)
-            ->callTableAction('redeliver', $subscription);
+            ->callAction(TestAction::make('redeliver')->table($subscription));
 
         expect(WebhookEvent::query()->count())->toBe(1);
 
@@ -147,7 +148,7 @@ describe(Webhooks::class, function (): void {
         $product->forceDelete();
 
         Livewire::test(Webhooks::class)
-            ->callTableAction('redeliver', $subscription);
+            ->callAction(TestAction::make('redeliver')->table($subscription));
 
         expect($subscription->deliveries()->count())->toBe(1);
         Bus::assertNothingDispatched();

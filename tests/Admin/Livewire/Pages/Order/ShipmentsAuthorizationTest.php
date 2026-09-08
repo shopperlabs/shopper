@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
 use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Core\Models\OrderShipping;
@@ -23,7 +24,7 @@ describe('Shipments authorization', function (): void {
         ]);
 
         Livewire::test(Shipments::class)
-            ->assertTableActionHidden('markDelivered', $shipment)
-            ->assertTableActionHidden('edit', $shipment);
+            ->assertActionHidden(TestAction::make('markDelivered')->table($shipment))
+            ->assertActionHidden(TestAction::make('edit')->table($shipment));
     });
 })->group('livewire', 'orders', 'security');

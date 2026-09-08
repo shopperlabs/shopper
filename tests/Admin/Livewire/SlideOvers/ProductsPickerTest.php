@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
 use Shopper\Livewire\SlideOvers\ProductsPicker;
 use Tests\Core\Stubs\Product;
@@ -33,7 +34,8 @@ describe(ProductsPicker::class, function (): void {
         $product = Product::factory()->create(['is_visible' => true, 'published_at' => now()->subDay()]);
 
         Livewire::test(ProductsPicker::class, ['ability' => 'products.edit'])
-            ->callTableBulkAction('add', [$product])
+            ->selectTableRecords([$product])
+            ->callAction(TestAction::make('add')->table()->bulk())
             ->assertDispatched('shopper.products.selected', ids: [$product->id]);
     });
 
@@ -41,7 +43,8 @@ describe(ProductsPicker::class, function (): void {
         $product = Product::factory()->create(['is_visible' => true, 'published_at' => now()->subDay()]);
 
         Livewire::test(ProductsPicker::class, ['ability' => 'products.edit', 'event' => 'shopper.product.related.selected'])
-            ->callTableBulkAction('add', [$product])
+            ->selectTableRecords([$product])
+            ->callAction(TestAction::make('add')->table()->bulk())
             ->assertDispatched('shopper.product.related.selected', ids: [$product->id])
             ->assertNotDispatched('shopper.products.selected');
     });

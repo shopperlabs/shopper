@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Livewire\Pages\Settings\PaymentMethods;
@@ -52,7 +53,7 @@ describe(PaymentMethods::class, function (): void {
             ->callAction('createPayment', [
                 'title' => '',
             ])
-            ->assertHasActionErrors(['title' => 'required']);
+            ->assertHasFormErrors(['title' => 'required']);
     });
 
     it('validates url format for link_url when creating payment method', function (): void {
@@ -61,7 +62,7 @@ describe(PaymentMethods::class, function (): void {
                 'title' => 'Test Payment',
                 'link_url' => 'not-a-valid-url',
             ])
-            ->assertHasActionErrors(['link_url' => 'url']);
+            ->assertHasFormErrors(['link_url' => 'url']);
     });
 
     it('can edit payment method via table action', function (): void {
@@ -70,12 +71,12 @@ describe(PaymentMethods::class, function (): void {
         ]);
 
         Livewire::test(PaymentMethods::class)
-            ->callTableAction('edit', $payment, [
+            ->callAction(TestAction::make('edit')->table($payment), [
                 'title' => 'New Title',
                 'driver' => 'manual',
                 'link_url' => 'https://example.com',
             ])
-            ->assertHasNoTableActionErrors();
+            ->assertHasNoFormErrors();
 
         $payment->refresh();
 
@@ -86,7 +87,7 @@ describe(PaymentMethods::class, function (): void {
         $payment = PaymentMethod::factory()->create();
 
         Livewire::test(PaymentMethods::class)
-            ->callTableAction('delete', $payment);
+            ->callAction(TestAction::make('delete')->table($payment));
 
         expect(PaymentMethod::query()->find($payment->id))->toBeNull();
     });

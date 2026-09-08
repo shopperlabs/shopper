@@ -25,7 +25,7 @@ describe(CreateTeamMember::class, function (): void {
         $initialCount = User::query()->count();
 
         Livewire::test(CreateTeamMember::class)
-            ->assertFormExists()
+            ->assertSchemaExists('form')
             ->fillForm([
                 'email' => 'member@example.com',
                 'password' => 'password123',
@@ -52,7 +52,7 @@ describe(CreateTeamMember::class, function (): void {
 
     it('validates required fields', function (): void {
         Livewire::test(CreateTeamMember::class)
-            ->assertFormExists()
+            ->assertSchemaExists('form')
             ->fillForm()
             ->call('store')
             ->assertHasFormErrors([

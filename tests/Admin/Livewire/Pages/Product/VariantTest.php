@@ -87,7 +87,7 @@ describe(Variant::class, function (): void {
             ->callAction('updateStock', data: [
                 'sku' => 'EXISTING-SKU',
             ])
-            ->assertHasActionErrors(['sku' => 'unique']);
+            ->assertHasFormErrors(['sku' => 'unique']);
     });
 
     it('validates unique barcode when updating stock', function (): void {
@@ -103,7 +103,7 @@ describe(Variant::class, function (): void {
             ->callAction('updateStock', data: [
                 'barcode' => '9999999999',
             ])
-            ->assertHasActionErrors(['barcode' => 'unique']);
+            ->assertHasFormErrors(['barcode' => 'unique']);
     });
 
     it('hides the media action for users without `products.variants.edit`', function (): void {

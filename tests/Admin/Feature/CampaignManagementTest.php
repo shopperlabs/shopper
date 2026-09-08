@@ -119,7 +119,7 @@ describe('campaign management', function (): void {
             ]);
 
         Livewire::test(Edit::class, ['record' => $campaign->id])
-            ->assertFormFieldIsDisabled('currency_code');
+            ->assertFormFieldDisabled('currency_code');
     });
 
     it('locks the currency once the campaign has recorded a use', function (): void {
@@ -128,7 +128,7 @@ describe('campaign management', function (): void {
             ->create(['currency_code' => 'USD', 'used_count' => 3]);
 
         Livewire::test(Edit::class, ['record' => $campaign->id])
-            ->assertFormFieldIsDisabled('currency_code');
+            ->assertFormFieldDisabled('currency_code');
     });
 
     it('stores only the count cap for the `Count` budget type', function (): void {
