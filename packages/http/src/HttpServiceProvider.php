@@ -59,11 +59,22 @@ final class HttpServiceProvider extends PackageServiceProvider
             'shopper-config',
         );
 
+        $this->registerCorsPaths();
         $this->registerRateLimiters();
         $this->registerMiddleware();
         $this->registerExceptionRenderer();
         $this->registerZoneCacheInvalidation();
         $this->registerChannelCacheInvalidation();
+    }
+
+    private function registerCorsPaths(): void
+    {
+        $path = mb_trim($this->app->make(ShopperApiRouter::class)->prefix(), '/').'/*';
+        $paths = (array) config('cors.paths', []);
+
+        if (! in_array($path, $paths, true)) {
+            config(['cors.paths' => [...$paths, $path]]);
+        }
     }
 
     private function registerChannelCacheInvalidation(): void

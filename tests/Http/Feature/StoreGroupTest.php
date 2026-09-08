@@ -23,6 +23,19 @@ it('prefixes store routes and forces a JSON:API content type', function (): void
         ->assertJson(['ok' => true]);
 });
 
+it('answers cross origin preflight requests on store routes', function (): void {
+    ShopperApi::store(function (): void {
+        Route::get('/ping', fn () => response()->json(['ok' => true]));
+    });
+
+    $this->options('/store/ping', [], [
+        'Origin' => 'https://shop.example',
+        'Access-Control-Request-Method' => 'GET',
+    ])
+        ->assertNoContent()
+        ->assertHeader('Access-Control-Allow-Origin', '*');
+});
+
 it('binds the resolved zone onto the request', function (): void {
     $zone = Zone::factory()->make(['code' => 'eu']);
 
