@@ -197,18 +197,17 @@ final readonly class CompleteCartAction
         }
     }
 
-    /**
-     * An open payment session must match what the order will charge, in
-     * amount and in currency: a total or a currency that moved since the
-     * intent was created would collect the wrong money. Runs under the cart
-     * lock against the exact total the order freezes. The client recreates
-     * the session against the new total and retries.
-     */
     private function guardPaymentSession(Cart $cart, int $total): void
     {
         $session = $cart->payment_session;
 
         if (! $session || ! isset($session['amount'])) {
+            if (($cart->paymentMethod->driver ?? 'manual') !== 'manual') {
+                throw ApiValidationException::withCode(ErrorCode::PaymentSessionRequired, [
+                    'payment_session' => __('shopper-api::messages.payment.session_required'),
+                ]);
+            }
+
             return;
         }
 

@@ -47,7 +47,10 @@ enum ErrorCode: string
     case PaymentMethodRequired = 'payment_method_required';
     case PaymentMethodUnavailable = 'payment_method_unavailable';
     case PaymentMethodNotConfigured = 'payment_method_not_configured';
+    case PaymentProviderUnavailable = 'payment_provider_unavailable';
     case PaymentSessionMismatch = 'payment_session_mismatch';
+    case PaymentSessionInProgress = 'payment_session_in_progress';
+    case PaymentSessionRequired = 'payment_session_required';
 
     case AvatarInvalid = 'avatar_invalid';
 

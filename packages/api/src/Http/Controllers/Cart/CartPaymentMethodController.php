@@ -6,6 +6,7 @@ namespace Shopper\Api\Http\Controllers\Cart;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Shopper\Api\Actions\CancelPaymentSessionAction;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Requests\Cart\SetPaymentMethodRequest;
 use Shopper\Api\Http\Resources\JsonApiResource;
@@ -27,6 +28,7 @@ final class CartPaymentMethodController
         private readonly PaymentProcessingService $paymentService,
         private readonly PaymentManager $paymentManager,
         private readonly CartManager $cartManager,
+        private readonly CancelPaymentSessionAction $cancelSession,
     ) {}
 
     /**
@@ -46,7 +48,9 @@ final class CartPaymentMethodController
      * Set the payment method of a cart.
      *
      * The method is referenced by its public id, as listed by the payment
-     * methods endpoint. A method outside the cart's offer is rejected.
+     * methods endpoint. A method outside the cart's offer is rejected. A
+     * session opened for the previous method is dropped and its intent
+     * cancelled, so an order never journals a reference of another method.
      */
     public function store(SetPaymentMethodRequest $request, string $cartId): JsonApiResource
     {
@@ -63,7 +67,13 @@ final class CartPaymentMethodController
             ]);
         }
 
+        $previous = $cart->payment_session;
+
         $this->mutateCart(fn () => $this->cartManager->setPaymentMethod($cart, $method->id));
+
+        if ($cart->payment_session === null) {
+            $this->cancelSession->execute($previous);
+        }
 
         return $this->cartResource($cart->refresh());
     }

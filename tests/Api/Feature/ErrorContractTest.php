@@ -70,7 +70,7 @@ it('keeps the rate limit headers on a throttled request', function (): void {
     $attempts = (int) config('shopper.http.rate_limiters.shopper-api-auth');
 
     for ($attempt = 0; $attempt < $attempts; $attempt++) {
-        $this->postJson('/store/auth/login', ['email' => 'john@example.com', 'password' => 'wrong'])->assertUnprocessable();
+        $this->postJson('/store/auth/login', ['email' => "john{$attempt}@example.com", 'password' => 'wrong'])->assertUnprocessable();
     }
 
     $this->postJson('/store/auth/login', ['email' => 'john@example.com', 'password' => 'wrong'])

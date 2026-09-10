@@ -32,8 +32,11 @@ return [
         'method_required' => 'Selecciona un método de pago antes de completar el carrito.',
         'method_required_for_session' => 'Selecciona un método de pago antes de abrir una sesión de pago.',
         'method_not_available' => 'Este método de pago no está disponible para el carrito.',
-        'method_not_configured' => 'El método de pago «:method» no está configurado.',
+        'method_not_configured' => 'El método de pago «:method» no está configurado. Elige otro método de pago.',
+        'provider_unavailable' => 'El proveedor de pagos no pudo abrir la sesión de pago. Inténtalo de nuevo en un momento.',
         'session_mismatch' => 'La sesión de pago ya no coincide con el total del carrito. Crea una nueva sesión de pago e inténtalo de nuevo.',
+        'session_in_progress' => 'Otra solicitud está abriendo la sesión de pago de este carrito. Inténtalo de nuevo en un momento.',
+        'session_required' => 'Abre una sesión de pago antes de completar el carrito.',
     ],
 
     'order' => [

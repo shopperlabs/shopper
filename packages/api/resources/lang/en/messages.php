@@ -32,8 +32,11 @@ return [
         'method_required' => 'Set a payment method on the cart before completing it.',
         'method_required_for_session' => 'Set a payment method on the cart before opening a payment session.',
         'method_not_available' => 'This payment method is not available for the cart.',
-        'method_not_configured' => 'The ":method" payment method is not configured.',
+        'method_not_configured' => 'The ":method" payment method is not configured. Choose another payment method.',
+        'provider_unavailable' => 'The payment provider could not open the payment session. Try again in a moment.',
         'session_mismatch' => 'The payment session no longer matches the cart total. Create a new payment session and try again.',
+        'session_in_progress' => 'Another request is opening the payment session for this cart. Try again in a moment.',
+        'session_required' => 'Open a payment session before completing the cart.',
     ],
 
     'order' => [

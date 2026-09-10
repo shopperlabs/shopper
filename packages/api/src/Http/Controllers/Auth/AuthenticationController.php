@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Http\Controllers\Auth;
 
+use Illuminate\Auth\Events\Lockout;
+use Illuminate\Cache\RateLimiter;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\NewAccessToken;
 use Laravel\Sanctum\PersonalAccessToken;
 use RuntimeException;
@@ -31,6 +35,7 @@ final class AuthenticationController
     public function __construct(
         private readonly DatabaseManager $database,
         private readonly TransferCartAction $transferCart,
+        private readonly RateLimiter $limiter,
     ) {}
 
     /**
@@ -57,17 +62,35 @@ final class AuthenticationController
         return $response->setStatusCode(Response::HTTP_CREATED);
     }
 
+    /**
+     * Failed logins are counted per email and origin, the key Laravel's own
+     * login throttling uses: an attacker cannot lock a customer out from
+     * another address. A successful login clears the count.
+     */
     public function login(LoginRequest $request): JsonResponse
     {
+        $email = $request->string('email')->toString();
+        $throttleKey = 'shopper:login:'.sha1(Str::transliterate(Str::lower($email)).'|'.$request->ip());
+
+        if ($this->limiter->tooManyAttempts($throttleKey, $this->loginFailures())) {
+            event(new Lockout($request));
+
+            throw $this->throttled($throttleKey);
+        }
+
         /** @var class-string<Model&Authenticatable> $model */
         $model = (string) config('auth.providers.users.model');
 
         /** @var (Model&Authenticatable)|null $customer */
-        $customer = $model::query()->where('email', $request->string('email')->toString())->first();
+        $customer = $model::query()->firstWhere('email', $email);
 
         if ($customer === null || ! Hash::check($request->string('password')->toString(), $customer->getAuthPassword())) {
+            $this->limiter->hit($throttleKey);
+
             throw ApiValidationException::withCode(ErrorCode::CredentialsInvalid, ['email' => __('auth.failed')]);
         }
+
+        $this->limiter->clear($throttleKey);
 
         /** @var JsonResponse $response */
         $response = CustomerResource::make($customer)
@@ -134,6 +157,22 @@ final class AuthenticationController
             ->first();
 
         return $cart === null ? null : $this->transferCart->execute($cart, (int) $customer->getAuthIdentifier());
+    }
+
+    private function throttled(string $key): ThrottleRequestsException
+    {
+        $seconds = $this->limiter->availableIn($key);
+
+        return new ThrottleRequestsException(
+            __('auth.throttle', ['seconds' => $seconds, 'minutes' => (int) ceil($seconds / 60)]),
+            null,
+            ['Retry-After' => $seconds],
+        );
+    }
+
+    private function loginFailures(): int
+    {
+        return (int) config('shopper.http.login_failures', 5);
     }
 
     private function issueToken(Model&Authenticatable $customer): string

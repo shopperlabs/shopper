@@ -211,7 +211,7 @@ final class StripeDriver extends Driver
             $intent = $this->getClient()->paymentIntents->retrieve($reference);
 
             return new PaymentResult(
-                success: ! in_array($intent->status, ['canceled', 'requires_payment_method'], true),
+                success: $intent->status !== 'canceled',
                 status: $this->mapIntentStatus($intent->status),
                 reference: $intent->id,
                 clientSecret: $intent->client_secret,

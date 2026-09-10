@@ -18,7 +18,6 @@ use Shopper\Cart\Exceptions\PriceChangedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartAddress;
 use Shopper\Cart\Models\CartPromotion;
-use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Actions\ReserveCampaignBudget;
 use Shopper\Core\Contracts\Priceable;
@@ -57,8 +56,11 @@ final readonly class CreateOrderFromCartAction
     public function execute(Cart $cart, ?Closure $assertTotals = null, ?Closure $afterCreate = null): Order
     {
         return DB::transaction(function () use ($cart, $assertTotals, $afterCreate): Order {
-            /** @var Cart $cart */
-            $cart = resolve(CartContract::class)::query()->lockForUpdate()->findOrFail($cart->id);
+            $cart->setRawAttributes(
+                $cart->newQueryWithoutScopes()->lockForUpdate()->findOrFail($cart->getKey())->getAttributes(),
+                true,
+            );
+            $cart->unsetRelations();
 
             if ($cart->isCompleted()) {
                 throw new CartCompletedException;
@@ -223,12 +225,6 @@ final readonly class CreateOrderFromCartAction
         }
     }
 
-    /**
-     * A flat-rate option id is `{carrier_code}:{carrier_option_public_id}`,
-     * so the carrier option row can be linked back on the order. Live carrier
-     * rates have no local row and leave the foreign key empty; the frozen
-     * shipping_amount remains the source of truth for what was charged.
-     */
     private function resolveCarrierOptionId(?string $shippingOptionId): ?int
     {
         if (! $shippingOptionId || ! str_contains($shippingOptionId, ':')) {
@@ -241,12 +237,7 @@ final readonly class CreateOrderFromCartAction
     }
 
     /**
-     * Reserve and snapshot every applied promotion once the order exists: bump
-     * each code's usage counter atomically (throwing on a limit lost to a race
-     * or a per-customer reuse), record a per-promotion snapshot on the order, and
-     * draw down each parent campaign budget once per campaign (summed across its
-     * promotions). All keyed to the order, so a retried checkout cannot double
-     * reserve.
+     * Reserve and snapshot every applied promotion once the order exists
      *
      * @param  Collection<int, CartPromotion>  $applied
      */
