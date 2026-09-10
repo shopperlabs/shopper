@@ -137,14 +137,6 @@ final readonly class CartManager
         return $context;
     }
 
-    /**
-     * The read path of the cart totals: rebuilds the pipeline context from the
-     * rows the last calculation persisted, without a single write. A cart that
-     * was mutated since (invalidated) or whose totals aged past the freshness
-     * window is recalculated once, so a time-bound automatic promotion can
-     * never stay displayed forever. Checkout never uses this path: the money
-     * charged is always recomputed under the cart lock.
-     */
     public function totals(Cart $cart): CartPipelineContext
     {
         $ttl = (int) config('shopper.cart.totals_ttl_minutes', 15);
@@ -195,7 +187,7 @@ final readonly class CartManager
     /**
      * Bind a delivery choice to the cart. The option id is the composite
      * `{carrier_code}:{service_code}` quoted by the shipping options endpoint
-     * and the amount is the server-resolved price, never a client value.
+     * and the amount is the server-resolved price.
      */
     public function setShippingMethod(Cart $cart, string $optionId, int $amount): void
     {
@@ -211,6 +203,10 @@ final readonly class CartManager
     public function setPaymentMethod(Cart $cart, int $paymentMethodId): void
     {
         $this->guardCompleted($cart);
+
+        if ((int) $cart->payment_method_id !== $paymentMethodId) {
+            $cart->setAttribute('payment_session', null);
+        }
 
         $cart->update(['payment_method_id' => $paymentMethodId]);
     }
@@ -242,10 +238,7 @@ final readonly class CartManager
     }
 
     /**
-     * Re-price the cart in another currency. Each line's unit price is resolved
-     * again from its purchasable, and the frozen checkout choices that are
-     * bound to the old currency (shipping price, payment session) are dropped
-     * so they are quoted again against the new total.
+     * Re-price the cart in another currency.
      */
     public function changeCurrency(Cart $cart, string $currencyCode): void
     {
@@ -285,18 +278,7 @@ final readonly class CartManager
     }
 
     /**
-     * Fold a guest cart into the cart a customer already owns, the standard
-     * expectation when signing in mid shopping. Quantities of the same
-     * purchasable are summed, other lines move over re-priced in the target
-     * currency, applied code promotions carry over without duplicating, and
-     * the emptied source cart is deleted. Stock is not guarded here: the
-     * checkout reservation remains the gate, exactly as for a stale cart. A
-     * line without a price in the target currency refuses the merge rather
-     * than moving for free. Both carts are re-read under lock: a concurrent
-     * merge of the same source is a no-op instead of a double count, and a
-     * target completed meanwhile is refused. The target's shipping choice
-     * and payment session are dropped once its contents changed, so they
-     * are quoted again.
+     * Fold a guest cart into the cart a customer already owns
      *
      * @throws Throwable
      */
@@ -395,8 +377,7 @@ final readonly class CartManager
     }
 
     /**
-     * Remove a code promotion from the cart. A null code clears every applied
-     * code promotion; a given code removes only that one.
+     * Remove a code promotion from the cart
      */
     public function removeCoupon(Cart $cart, ?string $code = null): void
     {

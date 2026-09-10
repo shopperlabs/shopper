@@ -580,7 +580,7 @@ describe(StripeDriver::class, function (): void {
                 ->and($result->status)->toBe('canceled');
         });
 
-        it('returns not successful for `requires_payment_method` status', function (): void {
+        it('keeps a `requires_payment_method` intent resumable', function (): void {
             $driver = createDriver();
             $mocks = injectMockClient($driver);
 
@@ -598,7 +598,7 @@ describe(StripeDriver::class, function (): void {
 
             $result = $driver->retrievePayment('pi_test_123');
 
-            expect($result->success)->toBeFalse()
+            expect($result->success)->toBeTrue()
                 ->and($result->status)->toBe('pending');
         });
 

@@ -154,6 +154,7 @@ final class InstallCommand extends Command
         note(implode("\n", [
             "→ Your storefront endpoints live under /{$prefix}",
             '→ Pin a pricing zone per request with the X-Shopper-Zone header',
+            '→ Calling from a server-side storefront? Forward the visitor IP in X-Forwarded-For and trust it with trustProxies()',
             '→ Consume the API with: npm install @shopperlabs/shopper-sdk',
         ]));
 

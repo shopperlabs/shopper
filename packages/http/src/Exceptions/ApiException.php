@@ -9,11 +9,15 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 final class ApiException extends HttpException
 {
+    /**
+     * @param  array<string, string|int>  $headers
+     */
     public function __construct(
         int $status,
         public readonly ErrorCode $errorCode,
         string $message = '',
+        array $headers = [],
     ) {
-        parent::__construct($status, $message);
+        parent::__construct($status, $message, null, $headers);
     }
 }

@@ -9,12 +9,15 @@ use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Drivers\Driver;
 use Shopper\Payment\Enum\WebhookAction;
+use Shopper\Payment\Exceptions\PaymentException;
 
 final class FakePaymentDriver extends Driver
 {
     public bool $failRetrieve = false;
 
     public bool $throwOnRetrieve = false;
+
+    public bool $throwOnInitiate = false;
 
     public ?string $retrievedStatus = null;
 
@@ -59,6 +62,10 @@ final class FakePaymentDriver extends Driver
         $this->lastAmount = $amount;
         $this->lastContext = $context;
         $this->idempotencyKeys[] = (string) ($context['idempotency_key'] ?? '');
+
+        if ($this->throwOnInitiate) {
+            throw PaymentException::apiError($this->code(), 'Provider down.');
+        }
 
         return new PaymentResult(
             success: true,

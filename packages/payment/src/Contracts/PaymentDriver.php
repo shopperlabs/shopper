@@ -36,8 +36,6 @@ interface PaymentDriver
     /**
      * Initiate a payment session with the provider.
      *
-     * Returns the data needed by the frontend (client_secret, order_id, etc.).
-     *
      * @param  array<string, mixed>  $context
      */
     public function initiatePayment(int $amount, string $currency, array $context = []): PaymentResult;
@@ -55,9 +53,7 @@ interface PaymentDriver
     public function capturePayment(string $reference, ?int $amount = null): PaymentResult;
 
     /**
-     * Refund a captured payment (full or partial). A caller-supplied
-     * `idempotency_key` in the context must make a retried refund collapse
-     * into a single refund at the gateway.
+     * Refund a captured payment (full or partial).
      *
      * @param  array<string, mixed>  $context
      */
@@ -74,11 +70,7 @@ interface PaymentDriver
     public function retrievePayment(string $reference): PaymentResult;
 
     /**
-     * Process an incoming webhook event from the provider. The reference is
-     * the payment reference the order was initiated with, and the event id is
-     * what makes a redelivery collapse. A refund event carries the amount of
-     * that refund alone, never a cumulative total, and its provider refund id
-     * under `data['refund_id']`.
+     * Process an incoming webhook event from the provider.
      *
      * @param  array<string, mixed>  $payload
      * @param  array<string, mixed>  $headers

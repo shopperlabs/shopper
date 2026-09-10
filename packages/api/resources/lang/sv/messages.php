@@ -32,8 +32,11 @@ return [
         'method_required' => 'Välj ett betalsätt för varukorgen innan den slutförs.',
         'method_required_for_session' => 'Välj ett betalsätt för varukorgen innan en betalsession öppnas.',
         'method_not_available' => 'Detta betalsätt är inte tillgängligt för varukorgen.',
-        'method_not_configured' => 'Betalsättet ":method" är inte konfigurerat.',
+        'method_not_configured' => 'Betalsättet ":method" är inte konfigurerat. Välj ett annat betalsätt.',
+        'provider_unavailable' => 'Betalleverantören kunde inte öppna betalsessionen. Försök igen om en stund.',
         'session_mismatch' => 'Betalsessionen matchar inte längre varukorgens totalbelopp. Skapa en ny betalsession och försök igen.',
+        'session_in_progress' => 'En annan begäran öppnar betalsessionen för denna varukorg. Försök igen om en stund.',
+        'session_required' => 'Öppna en betalsession innan varukorgen slutförs.',
     ],
 
     'order' => [

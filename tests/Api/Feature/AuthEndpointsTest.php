@@ -63,6 +63,43 @@ it('logs a customer in and rejects invalid credentials', function (): void {
     ])->assertUnprocessable();
 });
 
+it('throttles failed logins per email, even with the right password afterwards', function (): void {
+    User::factory()->create(['email' => 'john@example.com', 'password' => Hash::make('correct-password')]);
+    User::factory()->create(['email' => 'jane@example.com', 'password' => Hash::make('correct-password')]);
+
+    $attempts = (int) config('shopper.http.login_failures');
+
+    for ($attempt = 0; $attempt < $attempts; $attempt++) {
+        $this->postJson('/store/auth/login', ['email' => 'Jöhn@Example.com', 'password' => 'wrong'])
+            ->assertUnprocessable()
+            ->assertJsonPath('errors.0.code', 'credentials_invalid');
+    }
+
+    $detail = $this->postJson('/store/auth/login', ['email' => 'john@example.com', 'password' => 'correct-password'])
+        ->assertStatus(429)
+        ->assertJsonPath('errors.0.code', 'rate_limited')
+        ->assertHeader('Retry-After')
+        ->json('errors.0.detail');
+
+    expect($detail)->toStartWith('Too many login attempts');
+
+    $this->postJson('/store/auth/login', ['email' => 'jane@example.com', 'password' => 'correct-password'])->assertOk();
+});
+
+it('clears the failed login count on a successful login', function (): void {
+    User::factory()->create(['email' => 'john@example.com', 'password' => Hash::make('correct-password')]);
+
+    $attempts = (int) config('shopper.http.login_failures');
+
+    for ($round = 0; $round < 2; $round++) {
+        for ($attempt = 1; $attempt < $attempts; $attempt++) {
+            $this->postJson('/store/auth/login', ['email' => 'john@example.com', 'password' => 'wrong'])->assertUnprocessable();
+        }
+
+        $this->postJson('/store/auth/login', ['email' => 'john@example.com', 'password' => 'correct-password'])->assertOk();
+    }
+});
+
 it('revokes the current token on logout', function (): void {
     User::factory()->create([
         'email' => 'leaving@example.com',

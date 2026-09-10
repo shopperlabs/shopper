@@ -23,9 +23,11 @@ return [
     |--------------------------------------------------------------------------
     |
     | Max attempts per minute for each named limiter. Keyed by the RateLimit
-    | enum so the names stay searchable and type-safe. Tune these per traffic
-    | profile; the auth and webhook surfaces are keyed by IP, the others by
-    | the authenticated customer when available.
+    | enum so the names stay searchable and type-safe. The auth and webhook
+    | surfaces are keyed by IP, the others by the authenticated customer when
+    | available. A storefront calling from its own server must forward the
+    | visitor IP (X-Forwarded-For) and be trusted in bootstrap/app.php, or
+    | every visitor shares one quota.
     |
     */
     'rate_limiters' => [
@@ -34,6 +36,20 @@ return [
         RateLimit::Checkout->value => 30,
         RateLimit::Webhook->value => 120,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Login failures
+    |--------------------------------------------------------------------------
+    |
+    | Failed logins allowed per email and per origin within a minute, the
+    | key Laravel's own login throttling uses: an attacker cannot lock a
+    | customer out from another address, and a successful login clears the
+    | count before the limit is reached. Behind a server-side storefront the
+    | origin is the visitor IP it forwards, see the rate limiters above.
+    |
+    */
+    'login_failures' => 5,
 
     /*
     |--------------------------------------------------------------------------

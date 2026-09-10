@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Exceptions;
+use Illuminate\Support\Sleep;
 use Laravel\Sanctum\Sanctum;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Enum\AddressType;
@@ -20,6 +23,7 @@ use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Zone;
 use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Exceptions\PaymentException;
 use Shopper\Payment\Facades\Payment;
 use Shopper\Payment\Models\PaymentTransaction;
 use Tests\Api\Stubs\FakePaymentDriver;
@@ -265,6 +269,118 @@ it('requires a payment method before opening a session', function (): void {
     $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
         ->assertUnprocessable()
         ->assertJsonPath('errors.0.code', 'payment_method_required');
+});
+
+it('keeps the previous session when the provider refuses to open a new one and replaces it on the next attempt', function (): void {
+    Exceptions::fake();
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+
+    $this->cart->update(['payment_method_id' => $method->id]);
+
+    $url = "/store/carts/{$this->cart->public_id}/payment-session";
+
+    $this->postJson($url)->assertCreated()->assertJsonPath('data.id', 'fake_intent_1');
+
+    $this->cart->lines()->first()->update(['quantity' => 2]);
+    $driver->throwOnInitiate = true;
+
+    $this->postJson($url)
+        ->assertStatus(503)
+        ->assertJsonPath('errors.0.code', 'payment_provider_unavailable');
+
+    Exceptions::assertReported(PaymentException::class);
+
+    expect($driver->cancellations)->toBe(0)
+        ->and($this->cart->refresh()->payment_session['reference'])->toBe('fake_intent_1');
+
+    $driver->throwOnInitiate = false;
+
+    $this->postJson($url)->assertCreated()->assertJsonPath('data.id', 'fake_intent_3');
+
+    expect($driver->cancellations)->toBe(1)
+        ->and($driver->lastCancelledReference)->toBe('fake_intent_1')
+        ->and(array_unique($driver->idempotencyKeys))->toHaveCount(3)
+        ->and($this->cart->refresh()->payment_session['reference'])->toBe('fake_intent_3');
+});
+
+it('answers 409 while another request is opening the payment session', function (): void {
+    Sleep::fake(syncWithCarbon: true);
+
+    $this->cart->update(['payment_method_id' => $this->paymentMethod->id]);
+
+    Cache::lock("cart:payment-session:{$this->cart->public_id}", 30)->get();
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertConflict()
+        ->assertJsonPath('errors.0.code', 'payment_session_in_progress')
+        ->assertHeader('Retry-After');
+});
+
+it('drops the payment session and cancels its intent when the payment method changes', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+
+    $this->cart->update(['payment_method_id' => $method->id]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-method", [
+        'payment_method_id' => (string) $this->paymentMethod->public_id,
+    ])->assertOk();
+
+    expect($this->cart->refresh()->payment_session)->toBeNull()
+        ->and($driver->lastCancelledReference)->toBe('fake_intent_1');
+});
+
+it('refuses to complete a cart paid through a provider without a payment session', function (): void {
+    Payment::extend('fake', fn (): FakePaymentDriver => new FakePaymentDriver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'payment_session_required');
+});
+
+it('answers 503 and reports it when the driver of the selected payment method is not configured', function (): void {
+    Exceptions::fake();
+    Payment::extend('fake', fn (): FakePaymentDriver => new FakePaymentDriver(configured: false));
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+
+    $this->cart->update(['payment_method_id' => $method->id]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertStatus(503)
+        ->assertJsonPath('errors.0.code', 'payment_method_not_configured');
+
+    Exceptions::assertReported(PaymentException::class);
+});
+
+it('answers 503 when the driver of the selected payment method is not registered', function (): void {
+    Exceptions::fake();
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'ghost']);
+    $method->zones()->attach($this->zone);
+
+    $this->cart->update(['payment_method_id' => $method->id]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertStatus(503)
+        ->assertJsonPath('errors.0.code', 'payment_method_not_configured');
+
+    Exceptions::assertReported(PaymentException::class);
 });
 
 it('completes the cart into an order', function (): void {

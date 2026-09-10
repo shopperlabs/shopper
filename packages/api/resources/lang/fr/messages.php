@@ -32,8 +32,11 @@ return [
         'method_required' => 'Choisissez un moyen de paiement avant de finaliser le panier.',
         'method_required_for_session' => 'Choisissez un moyen de paiement avant d\'ouvrir une session de paiement.',
         'method_not_available' => 'Ce moyen de paiement n\'est pas disponible pour le panier.',
-        'method_not_configured' => 'Le moyen de paiement « :method » n\'est pas configuré.',
+        'method_not_configured' => 'Le moyen de paiement « :method » n\'est pas configuré. Choisissez un autre moyen de paiement.',
+        'provider_unavailable' => 'Le prestataire de paiement n\'a pas pu ouvrir la session de paiement. Réessayez dans un instant.',
         'session_mismatch' => 'La session de paiement ne correspond plus au total du panier. Créez une nouvelle session de paiement et réessayez.',
+        'session_in_progress' => 'Une autre requête ouvre la session de paiement de ce panier. Réessayez dans un instant.',
+        'session_required' => 'Ouvrez une session de paiement avant de finaliser le panier.',
     ],
 
     'order' => [
