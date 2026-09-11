@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
@@ -272,7 +273,7 @@ it('exposes variant option values for option matching', function (): void {
         ]);
 });
 
-it('serializes product options as a deduplicated array scoped to the used values', function (): void {
+it('serializes product options inline, scoped to the values the product uses', function (): void {
     $product = publishedProduct(['name' => 'Phone', 'type' => ProductType::Standard]);
     $color = Attribute::factory()->create(['name' => 'Color']);
     $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => 'red']);
@@ -283,13 +284,96 @@ it('serializes product options as a deduplicated array scoped to the used values
     $product->options()->attach($color->id, ['attribute_value_id' => $blue->id]);
 
     $response = $this->getJson('/store/products/'.$product->slug.'?include=options')->assertOk();
-    $optionsData = $response->json('data.relationships.options.data');
-    $colorOption = collect($response->json('included'))->firstWhere('type', 'attributes');
-    $values = collect($colorOption['attributes']['values'])->pluck('value');
+    $options = $response->json('data.attributes.options');
+    $values = collect($options[0]['values'])->pluck('value');
 
-    expect($optionsData)->toBeArray()->toHaveCount(1)
-        ->and(array_is_list($optionsData))->toBeTrue()
-        ->and($values)->toContain('Red', 'Blue')->not->toContain('Green');
+    expect($options)->toBeArray()->toHaveCount(1)
+        ->and(array_is_list($options))->toBeTrue()
+        ->and($options[0])->toMatchArray(['name' => 'Color', 'slug' => $color->slug])
+        ->and($values)->toContain('Red', 'Blue')->not->toContain('Green')
+        ->and($response->json('data.relationships.options'))->toBeNull()
+        ->and($response->json('included'))->toBeNull();
+});
+
+it('keeps the option values of each product apart on the listing', function (): void {
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => 'red']);
+    $blue = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Blue', 'key' => 'blue']);
+    $green = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Green', 'key' => 'green']);
+
+    $phone = publishedProduct(['name' => 'OptPhone']);
+    $phone->options()->attach($color->id, ['attribute_value_id' => $red->id]);
+    $phone->options()->attach($color->id, ['attribute_value_id' => $blue->id]);
+
+    $tablet = publishedProduct(['name' => 'OptTablet']);
+    $tablet->options()->attach($color->id, ['attribute_value_id' => $green->id]);
+
+    $values = collect($this->getJson('/store/products?filter[name]=Opt&include=options')->assertOk()->json('data'))
+        ->keyBy('attributes.name')
+        ->map(fn (array $product): array => collect($product['attributes']['options'][0]['values'])->pluck('value')->all());
+
+    expect($values->get('OptPhone'))->toEqualCanonicalizing(['Red', 'Blue'])
+        ->and($values->get('OptTablet'))->toBe(['Green']);
+});
+
+it('never exposes an option the merchant disabled', function (): void {
+    $product = publishedProduct(['name' => 'Hoodie']);
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $size = Attribute::factory()->disabled()->create(['name' => 'Size']);
+    $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => 'red']);
+    $large = AttributeValue::factory()->create(['attribute_id' => $size->id, 'value' => 'Large', 'key' => 'large']);
+
+    $product->options()->attach($color->id, ['attribute_value_id' => $red->id]);
+    $product->options()->attach($size->id, ['attribute_value_id' => $large->id]);
+
+    $options = $this->getJson('/store/products/'.$product->slug.'?include=options')->assertOk()->json('data.attributes.options');
+
+    expect($options)->toHaveCount(1)
+        ->and($options[0]['name'])->toBe('Color');
+});
+
+it('carries the free text of a text type option', function (): void {
+    $product = publishedProduct(['name' => 'Jacket']);
+    $material = Attribute::factory()->create(['name' => 'Material', 'type' => FieldType::Text]);
+
+    $product->options()->attach($material->id, ['attribute_custom_value' => 'Merino wool']);
+
+    $options = $this->getJson('/store/products/'.$product->slug.'?include=options')->assertOk()->json('data.attributes.options');
+
+    expect($options)->toHaveCount(1)
+        ->and($options[0])->toMatchArray(['name' => 'Material', 'custom_value' => 'Merino wool'])
+        ->and($options[0]['values'])->toBe([]);
+});
+
+it('orders the options by attachment and their values by position', function (): void {
+    $product = publishedProduct(['name' => 'Tee']);
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $size = Attribute::factory()->create(['name' => 'Size']);
+    $blue = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Blue', 'key' => 'tee-blue', 'position' => 2]);
+    $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => 'tee-red', 'position' => 1]);
+    $large = AttributeValue::factory()->create(['attribute_id' => $size->id, 'value' => 'Large', 'key' => 'tee-large', 'position' => 1]);
+
+    $product->options()->attach($color->id, ['attribute_value_id' => $blue->id]);
+    $product->options()->attach($color->id, ['attribute_value_id' => $red->id]);
+    $product->options()->attach($size->id, ['attribute_value_id' => $large->id]);
+
+    $options = $this->getJson('/store/products/'.$product->slug.'?include=options')->assertOk()->json('data.attributes.options');
+
+    expect(collect($options)->pluck('name')->all())->toBe(['Color', 'Size'])
+        ->and(collect($options[0]['values'])->pluck('value')->all())->toBe(['Red', 'Blue']);
+});
+
+it('leaves the options out until the client asks for them', function (): void {
+    $product = publishedProduct(['name' => 'Sweater']);
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => 'red']);
+
+    $product->options()->attach($color->id, ['attribute_value_id' => $red->id]);
+
+    expect($this->getJson('/store/products/'.$product->slug)->assertOk()->json('data.attributes'))
+        ->not->toHaveKey('options')
+        ->and(collect($this->getJson('/store/products?filter[name]=Sweater')->assertOk()->json('data'))->first()['attributes'])
+        ->not->toHaveKey('options');
 });
 
 it('exposes a per-product swatch image url on option values when one is attached', function (): void {
@@ -313,9 +397,8 @@ it('exposes a per-product swatch image url on option values when one is attached
         ->usingFileName('red.png')
         ->toMediaCollection('swatch');
 
-    $colorOption = collect($this->getJson('/store/products/'.$product->slug.'?include=options')->assertOk()->json('included'))
-        ->firstWhere('type', 'attributes');
-    $values = collect($colorOption['attributes']['values'])->keyBy('value');
+    $values = collect($this->getJson('/store/products/'.$product->slug.'?include=options')->assertOk()->json('data.attributes.options.0.values'))
+        ->keyBy('value');
 
     expect($values['Red']['swatch_url'])->toBeString()->toContain('red.png')
         ->and($values['Blue']['swatch_url'])->toBeNull();
@@ -378,7 +461,7 @@ it('shapes the payload by product type', function (): void {
         ->not->toHaveKeys(['stock', 'variants_stock', 'files']);
 });
 
-it('only exposes the variants and options relationships for capable product types', function (): void {
+it('only exposes the variants relationship and the options for capable product types', function (): void {
     publishedProduct(['name' => 'RelVariant', 'type' => ProductType::Variant]);
     publishedProduct(['name' => 'RelExternal', 'type' => ProductType::External, 'external_id' => 'ext-1']);
 
@@ -387,8 +470,9 @@ it('only exposes the variants and options relationships for capable product type
     )->keyBy('attributes.name');
 
     expect($products->get('RelVariant')['relationships'])->toHaveKey('variants')
+        ->and($products->get('RelVariant')['attributes'])->toHaveKey('options')
         ->and($products->get('RelExternal')['relationships'] ?? [])->not->toHaveKey('variants')
-        ->not->toHaveKey('options');
+        ->and($products->get('RelExternal')['attributes'])->not->toHaveKey('options');
 });
 
 it('paginates with page[size] and page[number]', function (): void {

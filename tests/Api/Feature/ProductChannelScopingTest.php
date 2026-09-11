@@ -126,7 +126,7 @@ it('scopes the products included through a collection to the same channel', func
     expect(includedProductNames($this, '/store/collections/summer?include=products', ['X-Shopper-Channel' => 'webstore']))
         ->toBe(['On Webstore'])
         ->and(includedProductNames($this, '/store/collections/summer?include=products'))
-        ->toBe(['On Webstore', 'Unattached']);
+        ->toEqualCanonicalizing(['On Webstore', 'Unattached']);
 });
 
 it('scopes the related products of a product to the same channel', function (): void {

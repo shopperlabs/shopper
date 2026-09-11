@@ -48,13 +48,6 @@ export interface AttributeValue {
   key: string
   /** The position/order. */
   position: number
-  /**
-   * Per-product swatch image URL for this value, shown instead of (or alongside)
-   * the hex `key`. Present on a product's `options` include; null when the value
-   * has no image for that product. The same value can carry a different image
-   * per product.
-   */
-  swatch_url?: string | null
   /** The attribute ID this value belongs to (admin contexts only). */
   attribute_id?: ResourceId
   /** The attribute this value belongs to. */

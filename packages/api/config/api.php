@@ -107,7 +107,7 @@ return [
         ],
         'attribute' => [
             'filters' => ['name' => 'partial'],
-            'sorts' => ['name', 'position'],
+            'sorts' => ['name'],
             'includes' => [],
         ],
         'tag' => [

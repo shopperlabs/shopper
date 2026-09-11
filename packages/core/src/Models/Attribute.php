@@ -33,6 +33,7 @@ use Shopper\Core\Models\Traits\HasSlug;
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, AttributeValue> $values
+ * @property ?string $custom_value
  */
 class Attribute extends Model implements AttributeContract
 {

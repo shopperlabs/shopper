@@ -136,7 +136,7 @@ trait RespondsWithCart
         $variant = resolve(ProductVariantContract::class);
 
         $productLoads = $this->serializedLoads($product);
-        $variantLoads = $this->serializedLoads($variant);
+        $variantLoads = [...$this->serializedLoads($variant), 'values.attribute'];
 
         if ($includes->contains('lines.purchasable.product')) {
             $variantLoads = [...$variantLoads, ...array_map(fn (string $load): string => 'product.'.$load, $productLoads)];
