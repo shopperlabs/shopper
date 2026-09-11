@@ -6,7 +6,7 @@ namespace Shopper\Shipping\Exceptions;
 
 use Exception;
 
-final class ShippingException extends Exception
+class ShippingException extends Exception
 {
     public static function notConfigured(string $driver): self
     {

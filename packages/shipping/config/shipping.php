@@ -108,6 +108,11 @@ return [
     | tracking are queued, and each job pulls the carrier timeline into
     | the shipment events. Carriers that push webhooks do not need it.
     |
+    | High volumes are better kept off the default queue, where they would
+    | sit in front of payment and order jobs. Name a queue below and run a
+    | worker for it. Carrier tokens live in the default cache store, so run
+    | a shared one when several nodes poll.
+    |
     */
 
     'tracking' => [

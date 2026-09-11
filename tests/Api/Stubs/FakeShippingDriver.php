@@ -16,6 +16,7 @@ use Shopper\Shipping\DataTransferObjects\ShippingRate;
 use Shopper\Shipping\DataTransferObjects\TrackingEvent;
 use Shopper\Shipping\DataTransferObjects\TrackingInfo;
 use Shopper\Shipping\Exceptions\ShippingException;
+use Shopper\Shipping\Exceptions\TrackingNotFoundException;
 
 final class FakeShippingDriver implements ShippingDriver
 {
@@ -32,6 +33,7 @@ final class FakeShippingDriver implements ShippingDriver
         private readonly bool $configured = true,
         private readonly bool $webhooks = false,
         private readonly ?TrackingInfo $tracking = null,
+        private readonly bool $notFound = false,
     ) {}
 
     public function code(): string
@@ -93,6 +95,10 @@ final class FakeShippingDriver implements ShippingDriver
     public function track(string $trackingNumber): TrackingInfo
     {
         $this->trackings++;
+
+        if ($this->notFound) {
+            throw TrackingNotFoundException::for('fake', $trackingNumber);
+        }
 
         if ($this->fails || $this->tracking === null) {
             throw ShippingException::apiError('fake', 'Tracking unavailable');

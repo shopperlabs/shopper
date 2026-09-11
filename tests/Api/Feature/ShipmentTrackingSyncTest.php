@@ -10,6 +10,7 @@ use Shopper\Core\Models\OrderShipping;
 use Shopper\Shipping\Actions\ApplyTrackingInfoAction;
 use Shopper\Shipping\DataTransferObjects\TrackingEvent;
 use Shopper\Shipping\DataTransferObjects\TrackingInfo;
+use Shopper\Shipping\Exceptions\ShippingException;
 use Shopper\Shipping\Facades\Shipping;
 use Shopper\Shipping\Jobs\SyncShipmentTrackingJob;
 use Tests\Api\Stubs\FakeShippingDriver;
@@ -140,4 +141,51 @@ it('records a status-only tracking response once across runs', function (): void
     expect($shipment->events()->count())->toBe(1)
         ->and($shipment->refresh()->status)->toBe(ShipmentStatus::InTransit)
         ->and($shipment->shipped_at)->not->toBeNull();
+});
+
+it('stops polling a tracking number the carrier has no record of', function (): void {
+    Shipping::extend('fake', fn (): FakeShippingDriver => new FakeShippingDriver(
+        tracking: new TrackingInfo(trackingNumber: 'TRK-1', status: ShipmentStatus::InTransit),
+        notFound: true,
+    ));
+
+    $shipment = OrderShipping::factory()->create([
+        'carrier_id' => $this->carrier->id,
+        'status' => ShipmentStatus::Pending,
+        'tracking_number' => 'TRK-1',
+    ]);
+
+    (new SyncShipmentTrackingJob($shipment->id))->handle(resolve(ApplyTrackingInfoAction::class));
+
+    expect($shipment->events()->count())->toBe(0)
+        ->and($shipment->refresh()->status)->toBe(ShipmentStatus::Pending);
+});
+
+it('lets a carrier outage fail the job so the queue retries it', function (): void {
+    Shipping::extend('fake', fn (): FakeShippingDriver => new FakeShippingDriver(
+        fails: true,
+        tracking: new TrackingInfo(trackingNumber: 'TRK-1', status: ShipmentStatus::InTransit),
+    ));
+
+    $shipment = OrderShipping::factory()->create([
+        'carrier_id' => $this->carrier->id,
+        'status' => ShipmentStatus::Pending,
+        'tracking_number' => 'TRK-1',
+    ]);
+
+    expect(fn () => (new SyncShipmentTrackingJob($shipment->id))->handle(resolve(ApplyTrackingInfoAction::class)))
+        ->toThrow(ShippingException::class);
+});
+
+it('keeps the retry budget when the tracking backoff is misconfigured', function (): void {
+    $job = new SyncShipmentTrackingJob(1);
+
+    config()->set('shopper.shipping.tracking.backoff', null);
+    expect($job->backoff())->toBe([60, 300, 900])->and($job->tries())->toBe(4);
+
+    config()->set('shopper.shipping.tracking.backoff', 300);
+    expect($job->backoff())->toBe([300])->and($job->tries())->toBe(2);
+
+    config()->set('shopper.shipping.tracking.backoff', []);
+    expect($job->backoff())->toBe([])->and($job->tries())->toBe(1);
 });
