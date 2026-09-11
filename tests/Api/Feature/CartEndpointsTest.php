@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\TestResponse;
 use Laravel\Sanctum\Sanctum;
@@ -14,6 +15,8 @@ use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Enum\ProductType;
+use Shopper\Core\Models\Attribute;
+use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
@@ -202,6 +205,39 @@ it('adds a variant to the cart', function (): void {
     expect($line['attributes']['unit_price_amount'])->toBe(3000)
         ->and($line['attributes']['purchasable_type'])->toBe('variant')
         ->and($variants->sole()['id'])->toBe($variant->public_id);
+});
+
+it('carries the option values of a variant line, in a constant number of queries', function (): void {
+    $variant = ProductVariant::factory()->create(['product_id' => $this->product->id, 'name' => 'Tee 1234']);
+    $variant->prices()->create(['amount' => 3000, 'currency_id' => $this->currency->id]);
+    $variant->mutateStock($this->inventory->id, 20);
+
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $size = Attribute::factory()->create(['name' => 'Size']);
+    $black = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Black', 'key' => 'black']);
+    $medium = AttributeValue::factory()->create(['attribute_id' => $size->id, 'value' => 'M', 'key' => 'm']);
+    $variant->values()->attach([$black->id, $medium->id]);
+
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+
+    DB::enableQueryLog();
+    DB::flushQueryLog();
+
+    $response = $this->postJson("/store/carts/{$cartId}/lines?include=lines.purchasable", [
+        'purchasable_type' => 'variant',
+        'purchasable_id' => $variant->public_id,
+    ])->assertOk();
+
+    $attributeReads = collect(DB::getQueryLog())
+        ->filter(fn (array $query): bool => str_contains((string) $query['query'], shopper_table('attributes')))
+        ->count();
+
+    $values = collect(collect($response->json('included'))->where('type', 'variants')->sole()['attributes']['values']);
+
+    expect($values->pluck('value')->all())->toEqualCanonicalizing(['Black', 'M'])
+        ->and($values->pluck('attribute')->all())->toEqualCanonicalizing(['Color', 'Size'])
+        ->and($values->firstWhere('value', 'Black')['attribute_slug'])->toBe($color->slug)
+        ->and($attributeReads)->toBe(1);
 });
 
 it('rejects purchasables a storefront cannot sell', function (): void {

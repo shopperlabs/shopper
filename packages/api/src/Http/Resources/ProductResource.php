@@ -7,6 +7,8 @@ namespace Shopper\Api\Http\Resources;
 use Illuminate\Http\Request;
 use Shopper\Api\Concerns\SerializesMedia;
 use Shopper\Api\Concerns\SerializesPrices;
+use Shopper\Core\Models\Attribute;
+use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Product;
 
 /**
@@ -45,6 +47,7 @@ class ProductResource extends JsonApiResource
             'thumbnail' => $this->thumbnailPayload(withFallback: true),
             ...($this->isVirtual() ? ['files' => $this->filesPayload()] : []),
             ...$this->ratingPayload(),
+            ...$this->optionsPayload(),
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
         ];
@@ -62,10 +65,6 @@ class ProductResource extends JsonApiResource
 
         if ($this->canUseVariants()) {
             $relationships['variants'] = ProductVariantResource::class;
-        }
-
-        if ($this->canUseAttributes()) {
-            $relationships['options'] = AttributeResource::class;
         }
 
         return $relationships;
@@ -124,6 +123,39 @@ class ProductResource extends JsonApiResource
         return [
             'rating' => $average !== null ? round((float) $average, 1) : null,
             'reviews_count' => (int) $raw['reviews_count'],
+        ];
+    }
+
+    /**
+     * @return array<string, array<int, array<string, mixed>>>
+     */
+    private function optionsPayload(): array
+    {
+        if (! $this->canUseAttributes() || ! $this->resource->relationLoaded('options')) {
+            return [];
+        }
+
+        return [
+            'options' => $this->options
+                ->map(fn (Attribute $option): array => [
+                    'name' => $option->name,
+                    'slug' => $option->slug,
+                    'description' => $option->description,
+                    'type' => $option->type->value,
+                    'icon' => $option->icon,
+                    'custom_value' => $option->custom_value ?? null,
+                    'values' => $option->values
+                        ->map(fn (AttributeValue $value): array => [
+                            'key' => $value->key,
+                            'value' => $value->value,
+                            'position' => $value->position,
+                            'swatch_url' => $value->swatch_url ?? null,
+                        ])
+                        ->values()
+                        ->all(),
+                ])
+                ->values()
+                ->all(),
         ];
     }
 

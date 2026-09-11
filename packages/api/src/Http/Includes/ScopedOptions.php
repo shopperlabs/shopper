@@ -19,7 +19,9 @@ final class ScopedOptions implements IncludeInterface
     {
         $query->with([$include => function (Relation $options): void {
             $options->getQuery()
-                ->with('values')
+                ->scopes(['enabled'])
+                ->orderBy(shopper_table('attribute_product').'.id')
+                ->with(['values' => fn (Relation $values): Relation => $values->orderBy('position')->orderBy('id')])
                 ->afterQuery(fn (Collection $rows): Collection => $this->scopeToUsedValues($rows));
         }]);
     }
@@ -43,6 +45,12 @@ final class ScopedOptions implements IncludeInterface
                         $value->swatch_url = $swatches[$productId][$value->id] ?? null;
                     })
                     ->values());
+
+                $option->custom_value = $productRows
+                    ->where('id', $option->id)
+                    ->pluck('pivot.attribute_custom_value')
+                    ->filter()
+                    ->first();
 
                 $kept[spl_object_id($option)] = true;
             }

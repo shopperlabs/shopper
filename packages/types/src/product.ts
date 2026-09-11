@@ -1,4 +1,4 @@
-import type { Attribute } from './attribute'
+import type { FieldType } from './attribute'
 import type { Brand } from './brand'
 import type { Category } from './category'
 import type { Channel } from './channel'
@@ -73,8 +73,8 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   channels?: Channel[]
   /** The categories of the product. */
   categories?: Category[]
-  /** The options/attributes of the product. */
-  options?: Attribute[]
+  /** The options of the product, present with the `options` include. */
+  options?: ProductOption[]
   /** The collections of the product. */
   collections?: Collection[]
   /** The tags of the product. */
@@ -99,4 +99,34 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   prices?: Price[]
   /** The min/max price aggregate in the resolved currency. Null when the product has no price in that currency. */
   price_range?: PriceRange | null
+}
+
+/** An option of a product, with the values that product uses. */
+export interface ProductOption {
+  /** The name of the attribute. */
+  name: string
+  /** The slug of the attribute. */
+  slug: string
+  /** The description of the attribute. */
+  description: string | null
+  /** The type of the attribute field. */
+  type: FieldType
+  /** The icon of the attribute. */
+  icon: string | null
+  /** The free text of a text type option. */
+  custom_value: string | null
+  /** The values this product uses. */
+  values: ProductOptionValue[]
+}
+
+/** A value of a product option. */
+export interface ProductOptionValue {
+  /** The display value. */
+  value: string
+  /** The key identifier (used as the facet filter value). */
+  key: string
+  /** The position/order. */
+  position: number
+  /** The swatch image URL for this product and value. */
+  swatch_url: string | null
 }

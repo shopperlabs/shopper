@@ -30,7 +30,6 @@ class AttributeResource extends JsonApiResource
                 'key' => $value->key,
                 'value' => $value->value,
                 'position' => $value->position,
-                'swatch_url' => $value->swatch_url ?? null,
             ])->values()->all(),
         ];
     }
