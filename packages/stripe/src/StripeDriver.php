@@ -37,9 +37,11 @@ final class StripeDriver extends Driver
         return 'Stripe';
     }
 
-    public function logo(): string
+    public function logo(): ?string
     {
-        return shopper_panel_assets('/images/payments/stripe.svg');
+        return function_exists('shopper_panel_assets')
+            ? shopper_panel_assets('/images/payments/stripe.svg')
+            : null;
     }
 
     public function isConfigured(): bool

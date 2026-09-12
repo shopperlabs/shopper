@@ -2,16 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Api;
+namespace Tests\Shipping;
 
-use Laravel\Sanctum\SanctumServiceProvider;
+use Illuminate\Support\Facades\Http;
 use Livewire\LivewireServiceProvider;
-use Shopper\Api\ApiServiceProvider;
-use Shopper\Cart\CartServiceProvider;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\FedEx\FedExServiceProvider;
-use Shopper\Http\HttpServiceProvider;
-use Shopper\Payment\PaymentServiceProvider;
 use Shopper\Shipping\ShippingServiceProvider;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
@@ -20,19 +16,23 @@ use Shopper\Usps\UspsServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
-use Tests\Database\Seeders\TestSeeder;
 
 abstract class TestCase extends \Tests\TestCase
 {
-    protected bool $seed = true;
-
-    protected string $seeder = TestSeeder::class;
-
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->app->make(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        Http::preventStrayRequests();
+    }
+
+    protected function defineEnvironment($app): void
+    {
+        parent::defineEnvironment($app);
+
+        $app['config']->set('cache.default', 'array');
     }
 
     protected function getPackageProviders($app): array
@@ -42,17 +42,12 @@ abstract class TestCase extends \Tests\TestCase
             CoreServiceProvider::class,
             ShopperServiceProvider::class,
             SidebarServiceProvider::class,
-            CartServiceProvider::class,
-            PaymentServiceProvider::class,
+            MediaLibraryServiceProvider::class,
+            PermissionServiceProvider::class,
             ShippingServiceProvider::class,
             UpsServiceProvider::class,
             FedExServiceProvider::class,
             UspsServiceProvider::class,
-            MediaLibraryServiceProvider::class,
-            PermissionServiceProvider::class,
-            SanctumServiceProvider::class,
-            HttpServiceProvider::class,
-            ApiServiceProvider::class,
         ];
     }
 }

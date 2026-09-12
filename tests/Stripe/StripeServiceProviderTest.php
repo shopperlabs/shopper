@@ -12,6 +12,7 @@ describe(StripeServiceProvider::class, function (): void {
     it('merges config under `shopper.stripe`', function (): void {
         expect(config('shopper.stripe'))->toBeArray()
             ->and(config('shopper.stripe'))->toHaveKeys([
+                'enabled',
                 'secret_key',
                 'publishable_key',
                 'webhook_secret',

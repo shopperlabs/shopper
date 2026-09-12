@@ -16,6 +16,12 @@ use function Laravel\Prompts\warning;
 #[AsCommand('shopper:upgrade')]
 final class UpgradeCommand extends Command
 {
+    private const CARRIER_PACKAGES = [
+        'ups' => 'Shopper\\Ups\\UpsDriver',
+        'fedex' => 'Shopper\\FedEx\\FedExDriver',
+        'usps' => 'Shopper\\Usps\\UspsDriver',
+    ];
+
     protected $signature = 'shopper:upgrade
         {--path=app : Comma-separated paths for Rector to process}
         {--force : Run every step without confirmation}';
@@ -91,9 +97,39 @@ final class UpgradeCommand extends Command
         return mb_trim($process->getOutput()) !== '';
     }
 
+    /**
+     * @return array<int, string>
+     */
+    private function missingCarrierPackages(): array
+    {
+        $missing = [];
+
+        foreach (self::CARRIER_PACKAGES as $code => $driver) {
+            if (class_exists($driver)) {
+                continue;
+            }
+
+            $enabled = config("shopper.shipping.drivers.{$code}.enabled")
+                ?? env('SHIPPING_'.mb_strtoupper($code).'_ENABLED');
+
+            if ((bool) $enabled) {
+                $missing[] = "shopper/{$code}";
+            }
+        }
+
+        return $missing;
+    }
+
     private function printNextSteps(): void
     {
         info('Automated upgrade steps complete.');
+
+        $missingCarriers = $this->missingCarrierPackages();
+
+        if ($missingCarriers !== []) {
+            warning('These carriers are enabled in your config but their driver no longer ships with shopper/shipping: '.implode(', ', $missingCarriers));
+            note('Install them to keep their rates and tracking working:'."\n".'  composer require '.implode(' ', $missingCarriers));
+        }
 
         note(
             "Next steps:\n".

@@ -58,5 +58,13 @@ describe('shopper:upgrade', function (): void {
                 ->value('quantity')
         )->toBe(10);
     });
+
+    it('never asks for a carrier package that is already installed', function (): void {
+        config()->set('shopper.shipping.drivers.ups.enabled', true);
+
+        $this->artisan('shopper:upgrade', ['--force' => true, '--path' => 'rector-target-that-does-not-exist'])
+            ->doesntExpectOutputToContain('composer require shopper/ups')
+            ->assertSuccessful();
+    });
 })
     ->group('upgrade');

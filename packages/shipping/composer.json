@@ -11,7 +11,6 @@
     "illuminate/http": "^12.68|^13.27",
     "illuminate/queue": "^12.68|^13.27",
     "illuminate/support": "^12.68|^13.27",
-    "ivanmitrikeski/laravel-shipping": "^1.0",
     "shopper/core": "self.version"
   },
   "autoload": {
@@ -23,9 +22,6 @@
     "laravel": {
       "providers": [
         "Shopper\\Shipping\\ShippingServiceProvider"
-      ],
-      "dont-discover": [
-        "ivanmitrikeski/laravel-shipping"
       ]
     }
   },
