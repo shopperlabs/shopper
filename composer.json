@@ -50,7 +50,6 @@
     "stevebauman/location": "^7.2"
   },
   "require-dev": {
-    "ivanmitrikeski/laravel-shipping": "^1.0",
     "larastan/larastan": "^3.8",
     "laravel/pint": "^1.16",
     "mockery/mockery": "^1.4",

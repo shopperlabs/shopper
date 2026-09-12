@@ -6,6 +6,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Stripe Driver
+    |--------------------------------------------------------------------------
+    |
+    | Here you may enable the Stripe driver. A driver left disabled stays out
+    | of the payment methods the admin offers, even once its credentials are
+    | filled in. Test mode is read from the secret key prefix.
+    |
+    */
+
+    'enabled' => env('PAYMENT_STRIPE_ENABLED', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Stripe Credentials
     |--------------------------------------------------------------------------
     |

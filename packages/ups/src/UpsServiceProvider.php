@@ -11,17 +11,21 @@ final class UpsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/ups.php', 'shopper.shipping.drivers.ups');
+        $this->mergeConfigFrom(__DIR__.'/../config/ups.php', 'shopper.ups');
     }
 
     public function boot(): void
     {
+        $this->publishes([
+            __DIR__.'/../config/ups.php' => config_path('shopper/ups.php'),
+        ], 'shopper-ups-config');
+
         Shipping::extend('ups', fn (): UpsDriver => new UpsDriver(
-            clientId: (string) config('shopper.shipping.drivers.ups.credentials.client_id'),
-            clientSecret: (string) config('shopper.shipping.drivers.ups.credentials.client_secret'),
-            userId: (string) config('shopper.shipping.drivers.ups.credentials.user_id'),
-            accountNumber: (string) config('shopper.shipping.drivers.ups.credentials.account_number'),
-            sandbox: (bool) config('shopper.shipping.drivers.ups.sandbox', false),
+            clientId: (string) config('shopper.ups.client_id'),
+            clientSecret: (string) config('shopper.ups.client_secret'),
+            userId: (string) config('shopper.ups.user_id'),
+            accountNumber: (string) config('shopper.ups.account_number'),
+            sandbox: (bool) config('shopper.ups.sandbox', false),
         ));
     }
 }

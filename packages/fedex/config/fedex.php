@@ -6,12 +6,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | FedEx Credentials
+    | FedEx Driver
     |--------------------------------------------------------------------------
     |
-    | Configure your FedEx API credentials. These should always be stored in
-    | your .env file and never committed to version control. Rates are
-    | quoted against the account number given below.
+    | Here you may enable the FedEx driver and point it at the FedEx test
+    | environment. A driver left disabled stays out of the carriers the
+    | admin offers, even once its credentials are filled in.
     |
     */
 
@@ -19,10 +19,21 @@ return [
 
     'sandbox' => env('SHIPPING_SANDBOX', false),
 
-    'credentials' => [
-        'client_id' => env('FEDEX_CLIENT_ID'),
-        'client_secret' => env('FEDEX_CLIENT_SECRET'),
-        'account_number' => env('FEDEX_ACCOUNT_NUMBER'),
-    ],
+    /*
+    |--------------------------------------------------------------------------
+    | FedEx Credentials
+    |--------------------------------------------------------------------------
+    |
+    | Here you may set the credentials issued by the FedEx developer portal.
+    | Keep them in your .env file and never commit them. Rates are quoted
+    | against the account number given below.
+    |
+    */
+
+    'client_id' => env('FEDEX_CLIENT_ID'),
+
+    'client_secret' => env('FEDEX_CLIENT_SECRET'),
+
+    'account_number' => env('FEDEX_ACCOUNT_NUMBER'),
 
 ];

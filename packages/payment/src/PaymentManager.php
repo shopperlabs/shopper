@@ -45,7 +45,7 @@ final class PaymentManager extends Manager
                     return true;
                 }
 
-                return config("shopper.payment.drivers.{$name}.enabled", false);
+                return config("shopper.{$name}.enabled", false);
             })
             ->mapWithKeys(fn (string $name): array => [$name => $this->driver($name)]);
     }

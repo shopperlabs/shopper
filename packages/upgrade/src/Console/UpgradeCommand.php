@@ -105,7 +105,14 @@ final class UpgradeCommand extends Command
         $missing = [];
 
         foreach (self::CARRIER_PACKAGES as $code => $driver) {
-            if ((bool) config("shopper.shipping.drivers.{$code}.enabled", false) && ! class_exists($driver)) {
+            if (class_exists($driver)) {
+                continue;
+            }
+
+            $enabled = config("shopper.shipping.drivers.{$code}.enabled")
+                ?? env('SHIPPING_'.mb_strtoupper($code).'_ENABLED');
+
+            if ((bool) $enabled) {
                 $missing[] = "shopper/{$code}";
             }
         }

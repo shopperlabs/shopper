@@ -9,6 +9,7 @@ use Shopper\Shipping\DataTransferObjects\Package;
 use Shopper\Shipping\DataTransferObjects\ShippingRate;
 use Shopper\Shipping\Exceptions\ShippingException;
 use Shopper\Ups\UpsDriver;
+use Shopper\Usps\UspsDriver;
 
 uses(Tests\Shipping\TestCase::class);
 
@@ -456,6 +457,214 @@ it('surfaces a FedEx rate outage as a retryable api error', function (): void {
 
 it('refuses to rate before the FedEx credentials are configured', function (): void {
     expect(fn () => (new FedExDriver('', '', ''))->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
+        ->toThrow(ShippingException::class);
+
+    Http::assertNothingSent();
+});
+
+function uspsRateDriver(bool $sandbox = false): UspsDriver
+{
+    return new UspsDriver('client', 'secret', sandbox: $sandbox);
+}
+
+function uspsWarehouse(): Address
+{
+    return new Address(
+        firstName: 'Arthur',
+        lastName: 'Monney',
+        street: '1 Main St',
+        city: 'Brooklyn',
+        postalCode: '11201',
+        state: 'NY',
+        country: 'US',
+    );
+}
+
+/**
+ * @param  array<int, array<string, mixed>>  $rates
+ * @return array<string, mixed>
+ */
+function uspsRateResponse(array $rates): array
+{
+    return ['pricingOptions' => [['shippingOptions' => [['rateOptions' => [['rates' => $rates]]]]]]];
+}
+
+/**
+ * @return array<int, array<string, mixed>>
+ */
+function uspsRates(): array
+{
+    return [
+        [
+            'mailClass' => 'USPS_GROUND_ADVANTAGE',
+            'rateIndicator' => 'SP',
+            'productName' => 'USPS Ground Advantage',
+            'price' => 8.45,
+        ],
+        [
+            'mailClass' => 'PRIORITY_MAIL',
+            'rateIndicator' => 'DR',
+            'productName' => 'Priority Mail',
+            'price' => 14.2,
+        ],
+    ];
+}
+
+function fakeUspsRates(mixed $body, int $status = 200, string $host = 'apis.usps.com'): void
+{
+    Http::fake([
+        $host.'/oauth2/v3/token' => Http::response(['access_token' => 'usps-token', 'expires_in' => 3600]),
+        $host.'/shipments/v3/options/search' => Http::response($body, $status),
+    ]);
+}
+
+/**
+ * @return array<string, mixed>
+ */
+function sentUspsRateRequest(): array
+{
+    $body = [];
+
+    Http::assertSent(function ($request) use (&$body): bool {
+        if (str_contains($request->url(), '/shipments/v3/options/search')) {
+            $body = $request->data();
+        }
+
+        return true;
+    });
+
+    return $body;
+}
+
+it('turns the USPS price options into shipping rates', function (): void {
+    fakeUspsRates(uspsRateResponse(uspsRates()));
+
+    $rates = uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]);
+
+    expect($rates)->toHaveCount(2)
+        ->and($rates->every(fn (ShippingRate $rate): bool => $rate->carrierCode === 'usps'))->toBeTrue()
+        ->and($rates->first()->serviceCode)->toBe('USPS_GROUND_ADVANTAGE-SP')
+        ->and($rates->first()->serviceName)->toBe('USPS Ground Advantage')
+        ->and($rates->first()->currency)->toBe('USD')
+        ->and($rates->last()->amount)->toBe(1420);
+});
+
+it('rounds a USPS price to the nearest minor unit instead of truncating it', function (): void {
+    fakeUspsRates(uspsRateResponse(uspsRates()));
+
+    $rate = uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')])->first();
+
+    expect($rate->amount)->toBe(845);
+});
+
+it('totals a USPS service across every package and drops one the carrier omits', function (): void {
+    Http::fake([
+        'apis.usps.com/oauth2/v3/token' => Http::response(['access_token' => 'usps-token', 'expires_in' => 3600]),
+        'apis.usps.com/shipments/v3/options/search' => Http::sequence()
+            ->push(uspsRateResponse(uspsRates()))
+            ->push(uspsRateResponse([[
+                'mailClass' => 'USPS_GROUND_ADVANTAGE',
+                'rateIndicator' => 'SP',
+                'productName' => 'USPS Ground Advantage',
+                'price' => 6.1,
+            ]])),
+    ]);
+
+    $rates = uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [
+        new Package(12, 8, 4, 3, 'imperial'),
+        new Package(6, 4, 2, 1, 'imperial'),
+    ]);
+
+    expect($rates)->toHaveCount(1)
+        ->and($rates->first()->serviceCode)->toBe('USPS_GROUND_ADVANTAGE-SP')
+        ->and($rates->first()->amount)->toBe(1455);
+});
+
+it('discards an unusable USPS price without losing the rest of the reply', function (): void {
+    fakeUspsRates(uspsRateResponse([
+        ['mailClass' => 'PARCEL_SELECT', 'rateIndicator' => 'SP', 'productName' => 'Parcel Select', 'price' => 'USD 9.10'],
+        ['mailClass' => 'MEDIA_MAIL', 'rateIndicator' => 'SP', 'productName' => 'Media Mail', 'price' => 0],
+        ['mailClass' => 'LIBRARY_MAIL', 'rateIndicator' => 'SP', 'price' => 4.5],
+        ['mailClass' => 'PRIORITY_MAIL', 'rateIndicator' => 'DR', 'productName' => 'Priority Mail', 'price' => 14.2],
+    ]));
+
+    $rates = uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]);
+
+    expect($rates)->toHaveCount(1)
+        ->and($rates->first()->serviceCode)->toBe('PRIORITY_MAIL-DR')
+        ->and($rates->first()->amount)->toBe(1420);
+});
+
+it('sends the USPS domestic payload in pounds and inches', function (): void {
+    fakeUspsRates(uspsRateResponse(uspsRates()));
+
+    uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]);
+
+    $payload = sentUspsRateRequest();
+
+    expect($payload['originZIPCode'])->toBe('11201')
+        ->and($payload['destinationZIPCode'])->toBe('10118')
+        ->and($payload)->not->toHaveKey('destinationCountryCode')
+        ->and($payload['pricingOptions'])->toBe([['priceType' => 'RETAIL']])
+        ->and($payload['packageDescription'])->toBe([
+            'weight' => 3.0,
+            'weightUnit' => 'POUND',
+            'length' => 12.0,
+            'width' => 8.0,
+            'height' => 4.0,
+            'mailClass' => 'ALL_OUTBOUND',
+        ]);
+});
+
+it('switches the USPS payload to international for a destination outside the US', function (): void {
+    fakeUspsRates(uspsRateResponse(uspsRates()));
+
+    uspsRateDriver()->calculateRates(uspsWarehouse(), warehouse(), [new Package(12, 8, 4, 3, 'imperial')]);
+
+    $payload = sentUspsRateRequest();
+
+    expect($payload['destinationCountryCode'])->toBe('FR')
+        ->and($payload['foreignPostalCode'])->toBe('75002')
+        ->and($payload)->not->toHaveKey('destinationZIPCode')
+        ->and($payload['packageDescription']['mailClass'])->toBe('ALL');
+});
+
+it('converts a metric package before quoting USPS', function (): void {
+    fakeUspsRates(uspsRateResponse(uspsRates()));
+
+    uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [new Package(30, 20, 10, 2)]);
+
+    $package = sentUspsRateRequest()['packageDescription'];
+
+    expect($package['weightUnit'])->toBe('POUND')
+        ->and($package['weight'])->toBe(4.41)
+        ->and($package['length'])->toBe(11.81);
+});
+
+it('rates against the USPS test host when the driver runs in sandbox mode', function (): void {
+    fakeUspsRates(uspsRateResponse(uspsRates()), host: 'apis-tem.usps.com');
+
+    uspsRateDriver(sandbox: true)->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]);
+
+    Http::assertSent(fn ($request): bool => str_contains($request->url(), 'apis-tem.usps.com'));
+});
+
+it('rejects a USPS reply that quotes nothing', function (): void {
+    fakeUspsRates(['pricingOptions' => []]);
+
+    expect(fn () => uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]))
+        ->toThrow(ShippingException::class);
+});
+
+it('surfaces a USPS rate outage as a retryable api error', function (): void {
+    fakeUspsRates(['error' => ['message' => 'No valid rates for these parameters']], 503);
+
+    expect(fn () => uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]))
+        ->toThrow(ShippingException::class, 'No valid rates for these parameters');
+});
+
+it('refuses to rate before the USPS credentials are configured', function (): void {
+    expect(fn () => (new UspsDriver('', ''))->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]))
         ->toThrow(ShippingException::class);
 
     Http::assertNothingSent();

@@ -45,7 +45,7 @@ final class ShippingManager extends Manager
                     return true;
                 }
 
-                return config("shopper.shipping.drivers.{$name}.enabled", false);
+                return config("shopper.{$name}.enabled", false);
             })
             ->mapWithKeys(fn (string $name): array => [$name => $this->driver($name)]);
     }

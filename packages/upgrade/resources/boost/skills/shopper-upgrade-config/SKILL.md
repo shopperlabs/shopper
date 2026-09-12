@@ -17,7 +17,7 @@ Every provider calls `mergeConfigFrom` before `publishes`, so a **missing scalar
 List which default-published files your app actually has:
 
 ```bash
-ls config/shopper/{admin,features,themes,cart,shipping}.php config/shopper/components/discount.php 2>/dev/null
+ls config/shopper/{admin,features,themes,cart,payment,shipping}.php config/shopper/components/discount.php 2>/dev/null
 ```
 
 Reconcile only the files that exist. A file with no result inherits the 3.x default automatically — skip it.
@@ -82,6 +82,16 @@ Add the stacking limit at the top level of the config:
 'max_promotions' => 5,
 ```
 
+## config/shopper/payment.php
+
+Same move on the payment side: `shopper/stripe` owns its config, so the `drivers` block here is dead and should be deleted. It duplicated the Stripe credentials that `config/shopper/stripe.php` already reads from the same env variables, and its `paypal` entry never had a driver behind it.
+
+`PAYMENT_STRIPE_ENABLED` is unchanged, it is simply read from `shopper.stripe.enabled` now. Publish the Stripe copy to edit it:
+
+```bash
+php artisan vendor:publish --tag=shopper-stripe-config
+```
+
 ## config/shopper/shipping.php
 
 A shipping-rates cache TTL was added. Add it at the top level:
@@ -90,21 +100,35 @@ A shipping-rates cache TTL was added. Add it at the top level:
 'rates_cache_ttl' => env('SHIPPING_RATES_CACHE_TTL', 600),
 ```
 
-### The `drivers` block moved out of this file
+### Delete the `drivers` block from this file
 
-Each carrier now ships as its own opt-in package. **Keep your published `drivers` block exactly as it is**: every carrier provider merges its defaults onto the same `shopper.shipping.drivers.<code>` key, and `mergeConfigFrom` lets the published value win, so your credentials and env names are unchanged.
+Each carrier now ships as its own opt-in package owning its own config file, the way `shopper/stripe` does. Nothing reads `shopper.shipping.drivers.*` any more, so the whole `drivers` block in your published copy is dead. Delete it, including the `canada_post` and `purolator` entries, which were config-only in 2.x with no driver behind them.
 
-What changes is that a key only means something once its package is installed:
+| Carrier | Package | Config file | Config key |
+|---------|----------------------|----------------------------|-----------------|
+| UPS     | `shopper/ups`        | `config/shopper/ups.php`   | `shopper.ups`   |
+| FedEx   | `shopper/fedex`      | `config/shopper/fedex.php` | `shopper.fedex` |
+| USPS    | `shopper/usps`       | `config/shopper/usps.php`  | `shopper.usps`  |
 
-| Entry in your `drivers` block | Install |
-|-------------------------------|----------------------------------|
-| `ups`                         | `composer require shopper/ups`   |
-| `fedex`                       | `composer require shopper/fedex` |
-| `usps`                        | `composer require shopper/usps`  |
+```bash
+composer require shopper/ups
+php artisan vendor:publish --tag=shopper-ups-config
+```
 
-Without the package the carrier drops out of `Shipping::availableDrivers()`, disappears from the shipping admin, and `Shipping::driver('ups')` throws `Driver [ups] not supported.` The `shopper:upgrade` command prints the exact `composer require` line for the carriers you had enabled.
+**The env names did not change.** `SHIPPING_UPS_ENABLED`, `SHIPPING_SANDBOX`, `UPS_CLIENT_ID` and the rest read exactly as before, so a project that kept its credentials in `.env`, which is the normal case, has nothing to move.
 
-Delete `canada_post` and `purolator` while you are in the file. Both were config-only entries in 2.x with no driver behind them, and nothing reads them.
+Only a project that wrote literal values into the published `drivers` block has to carry them over. The keys are flat now, there is no `credentials` nesting:
+
+```php
+// config/shopper/shipping.php in 2.x
+'drivers' => ['ups' => ['enabled' => true, 'credentials' => ['client_id' => 'abc']]],
+
+// config/shopper/ups.php in 3.x
+'enabled' => true,
+'client_id' => 'abc',
+```
+
+Without the package the carrier drops out of `Shipping::availableDrivers()`, disappears from the shipping admin, and `Shipping::driver('ups')` throws `Driver [ups] not supported.` The `shopper:upgrade` command prints the exact `composer require` line for the carriers you had enabled, reading either your 2.x config or your `.env`.
 
 ## config/shopper/components/discount.php
 

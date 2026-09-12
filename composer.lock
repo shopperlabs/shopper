@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f4a8b57e713fec61b57a58d1544686c3",
+    "content-hash": "b46a73ec578cc478504fb81c9cce8431",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -12144,79 +12144,6 @@
             "time": "2026-01-28T22:20:33+00:00"
         },
         {
-            "name": "ivanmitrikeski/laravel-shipping",
-            "version": "v1.0.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ivanmitrikeski/laravel-shipping.git",
-                "reference": "71d626eaf2378742bac32cba8b5ecfd1e15f8e96"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ivanmitrikeski/laravel-shipping/zipball/71d626eaf2378742bac32cba8b5ecfd1e15f8e96",
-                "reference": "71d626eaf2378742bac32cba8b5ecfd1e15f8e96",
-                "shasum": ""
-            },
-            "require": {
-                "ext-soap": "*",
-                "guzzlehttp/guzzle": "^7.6",
-                "illuminate/collections": "^11.0|^12.0|^13.0",
-                "openlss/lib-array2xml": "^1.0",
-                "php": "^8.2",
-                "psr/log": "^3.0"
-            },
-            "require-dev": {
-                "illuminate/database": "^11.0|^12.0|^13.0",
-                "illuminate/support": "^11.0|^12.0|^13.0",
-                "illuminate/testing": "^11.0|^12.0|^13.0",
-                "orchestra/testbench": "^9.0|^10.6|^11.0",
-                "phpoption/phpoption": "^1.9",
-                "phpunit/phpunit": "^11.5.3|^12.0.1|^13.0",
-                "vlucas/phpdotenv": "^5.5"
-            },
-            "type": "laravel-package",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Mitrik\\Shipping\\ShippingServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Mitrik\\Shipping\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ivan Mitrikeski",
-                    "email": "ivan@mitrik.ca"
-                }
-            ],
-            "description": "Shipping package for Laravel. Supported providers: CanadaPost, USPS, UPS, FedEx and Purolator.",
-            "keywords": [
-                "FedEx",
-                "Rate",
-                "Rating",
-                "canadapost",
-                "laravel",
-                "purolator",
-                "rest",
-                "shipping",
-                "ups",
-                "usps"
-            ],
-            "support": {
-                "issues": "https://github.com/ivanmitrikeski/laravel-shipping/issues",
-                "source": "https://github.com/ivanmitrikeski/laravel-shipping/tree/v1.0.9"
-            },
-            "time": "2026-03-17T01:02:58+00:00"
-        },
-        {
             "name": "jean85/pretty-package-versions",
             "version": "2.1.1",
             "source": {
@@ -12900,59 +12827,6 @@
                 }
             ],
             "time": "2026-04-12T12:06:31+00:00"
-        },
-        {
-            "name": "openlss/lib-array2xml",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nullivex/lib-array2xml.git",
-                "reference": "a91f18a8dfc69ffabe5f9b068bc39bb202c81d90"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nullivex/lib-array2xml/zipball/a91f18a8dfc69ffabe5f9b068bc39bb202c81d90",
-                "reference": "a91f18a8dfc69ffabe5f9b068bc39bb202c81d90",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "LSS": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Bryan Tong",
-                    "email": "bryan@nullivex.com",
-                    "homepage": "https://www.nullivex.com"
-                },
-                {
-                    "name": "Tony Butler",
-                    "email": "spudz76@gmail.com",
-                    "homepage": "https://www.nullivex.com"
-                }
-            ],
-            "description": "Array2XML conversion library credit to lalit.org",
-            "homepage": "https://www.nullivex.com",
-            "keywords": [
-                "array",
-                "array conversion",
-                "xml",
-                "xml conversion"
-            ],
-            "support": {
-                "issues": "https://github.com/nullivex/lib-array2xml/issues",
-                "source": "https://github.com/nullivex/lib-array2xml/tree/master"
-            },
-            "time": "2019-03-29T20:06:56+00:00"
         },
         {
             "name": "orchestra/canvas",

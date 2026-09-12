@@ -4,8 +4,8 @@
   "license": "MIT",
   "require": {
     "php": "^8.3",
+    "illuminate/http": "^12.68|^13.27",
     "illuminate/support": "^12.68|^13.27",
-    "ivanmitrikeski/laravel-shipping": "^1.0",
     "shopper/shipping": "self.version"
   },
   "autoload": {
@@ -17,9 +17,6 @@
     "laravel": {
       "providers": [
         "Shopper\\Usps\\UspsServiceProvider"
-      ],
-      "dont-discover": [
-        "ivanmitrikeski/laravel-shipping"
       ]
     }
   },

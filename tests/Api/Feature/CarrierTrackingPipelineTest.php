@@ -50,15 +50,13 @@ function upsTrackingPayload(): array
 }
 
 beforeEach(function (): void {
-    config()->set('shopper.shipping.drivers.ups', [
+    config()->set('shopper.ups', [
         'enabled' => true,
         'sandbox' => false,
-        'credentials' => [
-            'client_id' => 'client',
-            'client_secret' => 'secret',
-            'user_id' => 'user',
-            'account_number' => 'account',
-        ],
+        'client_id' => 'client',
+        'client_secret' => 'secret',
+        'user_id' => 'user',
+        'account_number' => 'account',
     ]);
 
     Http::fake([

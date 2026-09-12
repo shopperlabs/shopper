@@ -6,11 +6,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | USPS Credentials
+    | USPS Driver
     |--------------------------------------------------------------------------
     |
-    | Configure your USPS API credentials. These should always be stored in
-    | your .env file and never committed to version control.
+    | Here you may enable the USPS driver and point it at the USPS test
+    | environment. A driver left disabled stays out of the carriers the
+    | admin offers, even once its credentials are filled in.
     |
     */
 
@@ -18,9 +19,18 @@ return [
 
     'sandbox' => env('SHIPPING_SANDBOX', false),
 
-    'credentials' => [
-        'client_id' => env('USPS_CLIENT_ID'),
-        'client_secret' => env('USPS_CLIENT_SECRET'),
-    ],
+    /*
+    |--------------------------------------------------------------------------
+    | USPS Credentials
+    |--------------------------------------------------------------------------
+    |
+    | Here you may set the credentials issued by the USPS developer portal.
+    | Keep them in your .env file and never commit them.
+    |
+    */
+
+    'client_id' => env('USPS_CLIENT_ID'),
+
+    'client_secret' => env('USPS_CLIENT_SECRET'),
 
 ];

@@ -18,10 +18,12 @@ it('registers each carrier package against the shipping manager', function (stri
     ['usps', UspsDriver::class],
 ]);
 
-it('reads the carrier credentials from the shipping driver config', function (string $code, array $credentials): void {
+it('reads the carrier credentials from the carrier package config', function (string $code, array $credentials): void {
     expect(Shipping::isConfigured($code))->toBeFalse();
 
-    config()->set("shopper.shipping.drivers.{$code}.credentials", $credentials);
+    foreach ($credentials as $key => $value) {
+        config()->set("shopper.{$code}.{$key}", $value);
+    }
 
     Shipping::forgetDrivers();
 
@@ -33,11 +35,11 @@ it('reads the carrier credentials from the shipping driver config', function (st
 ]);
 
 it('leaves a carrier out of the configured drivers until it is enabled', function (): void {
-    config()->set('shopper.shipping.drivers.ups.enabled', false);
+    config()->set('shopper.ups.enabled', false);
 
     expect(Shipping::configuredDrivers()->keys()->all())->toBe(['manual']);
 
-    config()->set('shopper.shipping.drivers.ups.enabled', true);
+    config()->set('shopper.ups.enabled', true);
 
     expect(Shipping::configuredDrivers()->keys()->all())->toBe(['manual', 'ups']);
 });
