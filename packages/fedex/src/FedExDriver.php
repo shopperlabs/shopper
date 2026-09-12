@@ -2,19 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Shipping\Drivers;
+namespace Shopper\FedEx;
 
 use Carbon\CarbonImmutable;
+use Closure;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
-use Mitrik\Shipping\ServiceProviders\Address\Address as MitrikAddress;
-use Mitrik\Shipping\ServiceProviders\Box\BoxCollection;
-use Mitrik\Shipping\ServiceProviders\Box\BoxMetric;
-use Mitrik\Shipping\ServiceProviders\ServiceFedEx\ServiceFedEx;
-use Mitrik\Shipping\ServiceProviders\ServiceFedEx\ServiceFedExCredentials;
+use Illuminate\Support\Facades\Log;
 use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Shipping\Concerns\InteractsWithCarrierApi;
 use Shopper\Shipping\DataTransferObjects\Address;
@@ -22,6 +20,7 @@ use Shopper\Shipping\DataTransferObjects\Package;
 use Shopper\Shipping\DataTransferObjects\ShippingRate;
 use Shopper\Shipping\DataTransferObjects\TrackingEvent;
 use Shopper\Shipping\DataTransferObjects\TrackingInfo;
+use Shopper\Shipping\Drivers\Driver;
 use Shopper\Shipping\Exceptions\ShippingException;
 use Shopper\Shipping\Exceptions\TrackingNotFoundException;
 use Throwable;
@@ -29,8 +28,6 @@ use Throwable;
 final class FedExDriver extends Driver
 {
     use InteractsWithCarrierApi;
-
-    private ?ServiceFedEx $client = null;
 
     public function __construct(
         private readonly string $clientId,
@@ -49,9 +46,11 @@ final class FedExDriver extends Driver
         return 'FedEx';
     }
 
-    public function logo(): string
+    public function logo(): ?string
     {
-        return shopper_panel_assets('/images/carriers/fedex.svg');
+        return function_exists('shopper_panel_assets')
+            ? shopper_panel_assets('/images/carriers/fedex.svg')
+            : null;
     }
 
     public function isConfigured(): bool
@@ -77,33 +76,40 @@ final class FedExDriver extends Driver
             throw ShippingException::notConfigured('fedex');
         }
 
-        $client = $this->getClient();
-        $packages = $this->normalizePackages($packages);
+        $response = $this->send(
+            fn (PendingRequest $request) => $request->post('/rate/v1/rates/quotes', [
+                'accountNumber' => ['value' => $this->accountNumber],
+                'requestedShipment' => [
+                    'shipper' => ['address' => $this->toFedExAddress($from)],
+                    'recipient' => ['address' => $this->toFedExAddress($to)],
+                    'pickupType' => 'DROPOFF_AT_FEDEX_LOCATION',
+                    'packagingType' => 'YOUR_PACKAGING',
+                    'rateRequestType' => ['ACCOUNT', 'LIST'],
+                    'requestedPackageLineItems' => $this->toFedExPackages($this->normalizePackages($packages)),
+                ],
+            ])
+        );
 
-        try {
-            $rates = $client->rate(
-                $this->toMitrikAddress($from),
-                $this->toMitrikAddress($to),
-                $this->toBoxCollection($packages),
-            );
-
-            return collect($rates)->map(function ($rate): ShippingRate {
-                $currency = $rate->getCurrency() ?? 'USD';
-
-                return new ShippingRate(
-                    serviceCode: $rate->getServiceCode(),
-                    serviceName: $rate->getServiceName(),
-                    amount: is_no_division_currency($currency)
-                        ? (int) $rate->getPrice()
-                        : (int) round($rate->getPrice() * 100),
-                    currency: $currency,
-                    carrierCode: 'fedex',
-                    estimatedDays: $rate->getDeliveryEstimate() ?? null,
-                );
-            });
-        } catch (Exception $e) {
-            throw ShippingException::apiError('fedex', $e->getMessage());
+        if ($response->failed()) {
+            throw ShippingException::apiError('fedex', $this->carrierMessage($response));
         }
+
+        $details = $response->json('output.rateReplyDetails');
+
+        if (! is_array($details)) {
+            throw ShippingException::invalidResponse('fedex');
+        }
+
+        $rates = collect($details)
+            ->map(fn (mixed $detail): ?ShippingRate => is_array($detail) ? $this->toShippingRate($detail) : null)
+            ->filter()
+            ->values();
+
+        if ($rates->isEmpty()) {
+            throw ShippingException::invalidResponse('fedex');
+        }
+
+        return $rates;
     }
 
     public function track(string $trackingNumber): TrackingInfo
@@ -112,18 +118,14 @@ final class FedExDriver extends Driver
             throw ShippingException::notConfigured('fedex');
         }
 
-        try {
-            $response = $this->api()
-                ->withToken($this->accessToken())
-                ->post('/track/v1/trackingnumbers', [
-                    'includeDetailedScans' => true,
-                    'trackingInfo' => [
-                        ['trackingNumberInfo' => ['trackingNumber' => $trackingNumber]],
-                    ],
-                ]);
-        } catch (ConnectionException $e) {
-            throw ShippingException::apiError('fedex', $e->getMessage());
-        }
+        $response = $this->send(
+            fn (PendingRequest $request) => $request->post('/track/v1/trackingnumbers', [
+                'includeDetailedScans' => true,
+                'trackingInfo' => [
+                    ['trackingNumberInfo' => ['trackingNumber' => $trackingNumber]],
+                ],
+            ])
+        );
 
         if ($response->failed()) {
             throw ShippingException::apiError('fedex', $this->carrierMessage($response));
@@ -146,6 +148,18 @@ final class FedExDriver extends Driver
             ->acceptJson()
             ->timeout(15)
             ->retry(3, 200, fn (Throwable $e): bool => $e instanceof ConnectionException, throw: false);
+    }
+
+    /**
+     * @param  Closure(PendingRequest): Response  $call
+     */
+    private function send(Closure $call): Response
+    {
+        try {
+            return $call($this->api()->withToken($this->accessToken()));
+        } catch (ConnectionException $e) {
+            throw ShippingException::apiError('fedex', $e->getMessage());
+        }
     }
 
     private function accessToken(): string
@@ -293,47 +307,102 @@ final class FedExDriver extends Driver
         }
     }
 
-    private function getClient(): ServiceFedEx
+    /**
+     * @return array<string, mixed>
+     */
+    private function toFedExAddress(Address $address): array
     {
-        if ($this->client === null) {
-            $credentials = new ServiceFedExCredentials(
-                $this->clientId,
-                $this->clientSecret,
-                $this->accountNumber,
-                $this->sandbox,
-            );
-
-            $this->client = new ServiceFedEx($credentials);
-        }
-
-        return $this->client;
-    }
-
-    private function toMitrikAddress(Address $address): MitrikAddress
-    {
-        return new MitrikAddress(
-            $address->firstName,
-            $address->lastName,
-            $address->company ?? '',
-            $address->street,
-            $address->street2 ?? '',
-            $address->city,
-            $address->postalCode,
-            $address->state,
-            $address->country,
-        );
+        return [
+            'streetLines' => collect([$address->street, $address->street2])->filter()->values()->all(),
+            'city' => $address->city,
+            'stateOrProvinceCode' => $address->state,
+            'postalCode' => $address->postalCode,
+            'countryCode' => $address->country,
+        ];
     }
 
     /**
      * @param  array<int, Package>  $packages
+     * @return array<int, array<string, mixed>>
      */
-    private function toBoxCollection(array $packages): BoxCollection
+    private function toFedExPackages(array $packages): array
     {
-        $boxes = array_map(
-            fn (Package $p): BoxMetric => new BoxMetric($p->length, $p->width, $p->height, $p->weight),
-            $packages
-        );
+        return array_map(fn (Package $package): array => [
+            'weight' => [
+                'units' => 'KG',
+                'value' => round($package->weight, 2),
+            ],
+            'dimensions' => [
+                'length' => round($package->length, 2),
+                'width' => round($package->width, 2),
+                'height' => round($package->height, 2),
+                'units' => 'CM',
+            ],
+        ], $packages);
+    }
 
-        return new BoxCollection($boxes);
+    /**
+     * @param  array<string, mixed>  $detail
+     */
+    private function toShippingRate(array $detail): ?ShippingRate
+    {
+        $code = $this->carrierText($detail, 'serviceType');
+        $rated = $this->ratedShipment($detail);
+
+        if ($code === null || $rated === null) {
+            return $this->dropRate($detail, 'service');
+        }
+
+        $amount = data_get($rated, 'totalNetCharge');
+        $currency = $this->carrierText($rated, 'currency')
+            ?? $this->carrierText($rated, 'shipmentRateDetail.currency');
+
+        if ($currency === null || ! is_numeric($amount)) {
+            return $this->dropRate($detail, 'charges');
+        }
+
+        $currency = mb_strtoupper($currency);
+
+        $minorUnits = is_no_division_currency($currency)
+            ? (int) round((float) $amount)
+            : (int) round((float) $amount * 100);
+
+        if ($minorUnits <= 0) {
+            return $this->dropRate($detail, 'amount');
+        }
+
+        return new ShippingRate(
+            serviceCode: $code,
+            serviceName: $this->carrierText($detail, 'serviceName') ?? $code,
+            amount: $minorUnits,
+            currency: $currency,
+            carrierCode: 'fedex',
+        );
+    }
+
+    /**
+     * @param  array<string, mixed>  $detail
+     * @return array<string, mixed>|null
+     */
+    private function ratedShipment(array $detail): ?array
+    {
+        $rated = collect(data_get($detail, 'ratedShipmentDetails'))
+            ->filter(fn (mixed $entry): bool => is_array($entry));
+
+        return $rated->firstWhere('rateType', 'ACCOUNT') ?? $rated->first();
+    }
+
+    /**
+     * @param  array<string, mixed>  $detail
+     */
+    private function dropRate(array $detail, string $reason): null
+    {
+        Log::warning('Discarded an unusable FedEx rate.', [
+            'driver' => 'fedex',
+            'service_type' => $this->carrierText($detail, 'serviceType'),
+            'reason' => $reason,
+        ]);
+
+        return null;
     }
 }

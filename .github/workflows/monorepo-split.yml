@@ -19,6 +19,7 @@ jobs:
           - api
           - cart
           - core
+          - fedex
           - http
           - payment
           - sdk
@@ -27,6 +28,8 @@ jobs:
           - stripe
           - types
           - upgrade
+          - ups
+          - usps
         include:
           - package: admin
             repository: admin
@@ -36,6 +39,8 @@ jobs:
             repository: cart
           - package: core
             repository: core
+          - package: fedex
+            repository: fedex
           - package: http
             repository: http
           - package: payment
@@ -52,6 +57,10 @@ jobs:
             repository: shopper-types
           - package: upgrade
             repository: upgrade
+          - package: ups
+            repository: ups
+          - package: usps
+            repository: usps
     steps:
       - uses: actions/checkout@v6
         with:

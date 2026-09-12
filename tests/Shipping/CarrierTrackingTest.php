@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Http;
 use Shopper\Core\Enum\ShipmentStatus;
+use Shopper\FedEx\FedExDriver;
 use Shopper\Shipping\DataTransferObjects\TrackingEvent;
-use Shopper\Shipping\Drivers\FedExDriver;
-use Shopper\Shipping\Drivers\UpsDriver;
 use Shopper\Shipping\Exceptions\ShippingException;
 use Shopper\Shipping\Exceptions\TrackingNotFoundException;
+use Shopper\Ups\UpsDriver;
 
 uses(Tests\Shipping\TestCase::class);
 

@@ -1,0 +1,29 @@
+{
+  "name": "shopper/fedex",
+  "description": "FedEx shipping driver for Shopper",
+  "license": "MIT",
+  "require": {
+    "php": "^8.3",
+    "illuminate/http": "^12.68|^13.27",
+    "illuminate/support": "^12.68|^13.27",
+    "shopper/core": "self.version",
+    "shopper/shipping": "self.version"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shopper\\FedEx\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shopper\\FedEx\\FedExServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

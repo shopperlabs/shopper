@@ -2,21 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Shipping\Drivers;
+namespace Shopper\Ups;
 
 use Carbon\CarbonImmutable;
+use Closure;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Mitrik\Shipping\ServiceProviders\Address\Address as MitrikAddress;
-use Mitrik\Shipping\ServiceProviders\Box\BoxCollection;
-use Mitrik\Shipping\ServiceProviders\Box\BoxMetric;
-use Mitrik\Shipping\ServiceProviders\ServiceUPS\ServiceUPS;
-use Mitrik\Shipping\ServiceProviders\ServiceUPS\ServiceUPSCredentials;
 use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\Shipping\Concerns\InteractsWithCarrierApi;
 use Shopper\Shipping\DataTransferObjects\Address;
@@ -24,6 +21,7 @@ use Shopper\Shipping\DataTransferObjects\Package;
 use Shopper\Shipping\DataTransferObjects\ShippingRate;
 use Shopper\Shipping\DataTransferObjects\TrackingEvent;
 use Shopper\Shipping\DataTransferObjects\TrackingInfo;
+use Shopper\Shipping\Drivers\Driver;
 use Shopper\Shipping\Exceptions\ShippingException;
 use Shopper\Shipping\Exceptions\TrackingNotFoundException;
 use Throwable;
@@ -31,8 +29,6 @@ use Throwable;
 final class UpsDriver extends Driver
 {
     use InteractsWithCarrierApi;
-
-    private ?ServiceUPS $client = null;
 
     public function __construct(
         private readonly string $clientId,
@@ -52,9 +48,11 @@ final class UpsDriver extends Driver
         return 'UPS';
     }
 
-    public function logo(): string
+    public function logo(): ?string
     {
-        return shopper_panel_assets('/images/carriers/ups.svg');
+        return function_exists('shopper_panel_assets')
+            ? shopper_panel_assets('/images/carriers/ups.svg')
+            : null;
     }
 
     public function isConfigured(): bool
@@ -81,33 +79,45 @@ final class UpsDriver extends Driver
             throw ShippingException::notConfigured('ups');
         }
 
-        $client = $this->getClient();
-        $packages = $this->normalizePackages($packages);
+        $response = $this->send(
+            fn (PendingRequest $request) => $request->post('/api/rating/v2409/Shop', [
+                'RateRequest' => [
+                    'PickupType' => ['Code' => '01'],
+                    'CustomerClassification' => ['Code' => '01'],
+                    'Shipment' => [
+                        'Shipper' => [
+                            'Name' => $this->shipperName($from),
+                            'ShipperNumber' => $this->accountNumber,
+                            'Address' => $this->toUpsAddress($from),
+                        ],
+                        'ShipFrom' => ['Address' => $this->toUpsAddress($from)],
+                        'ShipTo' => ['Address' => $this->toUpsAddress($to)],
+                        'Package' => $this->toUpsPackages($this->normalizePackages($packages)),
+                    ],
+                ],
+            ])
+        );
 
-        try {
-            $rates = $client->rate(
-                $this->toMitrikAddress($from),
-                $this->toMitrikAddress($to),
-                $this->toBoxCollection($packages),
-            );
-
-            return collect($rates)->map(function ($rate): ShippingRate {
-                $currency = $rate->getCurrency() ?? 'USD';
-
-                return new ShippingRate(
-                    serviceCode: $rate->getServiceCode(),
-                    serviceName: $rate->getServiceName(),
-                    amount: is_no_division_currency($currency)
-                        ? (int) $rate->getPrice()
-                        : (int) round($rate->getPrice() * 100),
-                    currency: $currency,
-                    carrierCode: 'ups',
-                    estimatedDays: $rate->getDeliveryEstimate() ?? null,
-                );
-            });
-        } catch (Exception $e) {
-            throw ShippingException::apiError('ups', $e->getMessage());
+        if ($response->failed()) {
+            throw ShippingException::apiError('ups', $this->carrierMessage($response));
         }
+
+        $shipments = $response->json('RateResponse.RatedShipment');
+
+        if (! is_array($shipments)) {
+            throw ShippingException::invalidResponse('ups');
+        }
+
+        $rates = collect(array_is_list($shipments) ? $shipments : [$shipments])
+            ->map(fn (mixed $shipment): ?ShippingRate => is_array($shipment) ? $this->toShippingRate($shipment) : null)
+            ->filter()
+            ->values();
+
+        if ($rates->isEmpty()) {
+            throw ShippingException::invalidResponse('ups');
+        }
+
+        return $rates;
     }
 
     public function track(string $trackingNumber): TrackingInfo
@@ -116,20 +126,12 @@ final class UpsDriver extends Driver
             throw ShippingException::notConfigured('ups');
         }
 
-        try {
-            $response = $this->api()
-                ->withToken($this->accessToken())
-                ->withHeaders([
-                    'transId' => (string) Str::uuid()->getHex(),
-                    'transactionSrc' => 'shopper',
-                ])
-                ->get('/api/track/v1/details/'.rawurlencode($trackingNumber), [
-                    'locale' => 'en_US',
-                    'returnSignature' => 'false',
-                ]);
-        } catch (ConnectionException $e) {
-            throw ShippingException::apiError('ups', $e->getMessage());
-        }
+        $response = $this->send(
+            fn (PendingRequest $request) => $request->get('/api/track/v1/details/'.rawurlencode($trackingNumber), [
+                'locale' => 'en_US',
+                'returnSignature' => 'false',
+            ])
+        );
 
         if ($this->deniesTracking($response)) {
             throw TrackingNotFoundException::for('ups', $trackingNumber);
@@ -154,6 +156,25 @@ final class UpsDriver extends Driver
             ->acceptJson()
             ->timeout(15)
             ->retry(3, 200, fn (Throwable $e): bool => $e instanceof ConnectionException, throw: false);
+    }
+
+    /**
+     * @param  Closure(PendingRequest): Response  $call
+     */
+    private function send(Closure $call): Response
+    {
+        try {
+            return $call(
+                $this->api()
+                    ->withToken($this->accessToken())
+                    ->withHeaders([
+                        'transId' => (string) Str::uuid()->getHex(),
+                        'transactionSrc' => 'shopper',
+                    ])
+            );
+        } catch (ConnectionException $e) {
+            throw ShippingException::apiError('ups', $e->getMessage());
+        }
     }
 
     private function accessToken(): string
@@ -335,48 +356,112 @@ final class UpsDriver extends Driver
         return $date !== null && CarbonImmutable::canBeCreatedFromFormat($date, 'Ymd') ? $date : null;
     }
 
-    private function getClient(): ServiceUPS
+    /**
+     * @return array<string, mixed>
+     */
+    private function toUpsAddress(Address $address): array
     {
-        if ($this->client === null) {
-            $credentials = new ServiceUPSCredentials(
-                $this->clientId,
-                $this->userId,
-                $this->clientSecret,
-                $this->accountNumber,
-                $this->sandbox,
-            );
-
-            $this->client = new ServiceUPS($credentials);
-        }
-
-        return $this->client;
+        return [
+            'AddressLine' => collect([$address->street, $address->street2])->filter()->values()->all(),
+            'City' => $address->city,
+            'StateProvinceCode' => $address->state,
+            'PostalCode' => $address->postalCode,
+            'CountryCode' => $address->country,
+        ];
     }
 
-    private function toMitrikAddress(Address $address): MitrikAddress
+    private function shipperName(Address $address): string
     {
-        return new MitrikAddress(
-            $address->firstName,
-            $address->lastName,
-            $address->company ?? '',
-            $address->street,
-            $address->street2 ?? '',
-            $address->city,
-            $address->postalCode,
-            $address->state,
-            $address->country,
-        );
+        return $address->company ?? $address->fullName();
     }
 
     /**
      * @param  array<int, Package>  $packages
+     * @return array<int, array<string, mixed>>
      */
-    private function toBoxCollection(array $packages): BoxCollection
+    private function toUpsPackages(array $packages): array
     {
-        $boxes = array_map(
-            fn (Package $p): BoxMetric => new BoxMetric($p->length, $p->width, $p->height, $p->weight),
-            $packages
-        );
+        return array_map(fn (Package $package): array => [
+            'PackagingType' => ['Code' => '02'],
+            'Dimensions' => [
+                'UnitOfMeasurement' => ['Code' => 'CM'],
+                'Length' => (string) round($package->length, 2),
+                'Width' => (string) round($package->width, 2),
+                'Height' => (string) round($package->height, 2),
+            ],
+            'PackageWeight' => [
+                'UnitOfMeasurement' => ['Code' => 'KGS'],
+                'Weight' => (string) round($package->weight, 2),
+            ],
+        ], $packages);
+    }
 
-        return new BoxCollection($boxes);
+    /**
+     * @param  array<string, mixed>  $shipment
+     */
+    private function toShippingRate(array $shipment): ?ShippingRate
+    {
+        $code = $this->carrierText($shipment, 'Service.Code');
+        $amount = $this->carrierText($shipment, 'TotalCharges.MonetaryValue');
+        $currency = $this->carrierText($shipment, 'TotalCharges.CurrencyCode');
+
+        if ($code === null || $currency === null || $amount === null || ! is_numeric($amount)) {
+            return $this->dropRate($shipment, 'charges');
+        }
+
+        $currency = mb_strtoupper($currency);
+
+        $minorUnits = is_no_division_currency($currency)
+            ? (int) round((float) $amount)
+            : (int) round((float) $amount * 100);
+
+        if ($minorUnits <= 0) {
+            return $this->dropRate($shipment, 'amount');
+        }
+
+        return new ShippingRate(
+            serviceCode: $code,
+            serviceName: $this->carrierText($shipment, 'Service.Description') ?? $this->serviceName($code),
+            amount: $minorUnits,
+            currency: $currency,
+            carrierCode: 'ups',
+            estimatedDays: $this->carrierText($shipment, 'GuaranteedDelivery.BusinessDaysInTransit'),
+        );
+    }
+
+    /**
+     * @param  array<string, mixed>  $shipment
+     */
+    private function dropRate(array $shipment, string $reason): null
+    {
+        Log::warning('Discarded an unusable UPS rate.', [
+            'driver' => 'ups',
+            'service_code' => $this->carrierText($shipment, 'Service.Code'),
+            'reason' => $reason,
+        ]);
+
+        return null;
+    }
+
+    private function serviceName(string $code): string
+    {
+        return match ($code) {
+            '01' => 'UPS Next Day Air',
+            '02' => 'UPS 2nd Day Air',
+            '03' => 'UPS Ground',
+            '07' => 'UPS Worldwide Express',
+            '08' => 'UPS Worldwide Expedited',
+            '11' => 'UPS Standard',
+            '12' => 'UPS 3 Day Select',
+            '13' => 'UPS Next Day Air Saver',
+            '14' => 'UPS Next Day Air Early',
+            '54' => 'UPS Worldwide Express Plus',
+            '59' => 'UPS 2nd Day Air A.M.',
+            '65' => 'UPS Saver',
+            '71' => 'UPS Worldwide Express Freight Midday',
+            '75' => 'UPS Heavy Goods',
+            '96' => 'UPS Worldwide Express Freight',
+            default => 'UPS '.$code,
+        };
     }
 }

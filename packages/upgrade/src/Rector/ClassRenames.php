@@ -57,5 +57,10 @@ final class ClassRenames
         'Shopper\Livewire\Components\Products\Form\Seo' => 'Shopper\Livewire\Pages\Product\Seo',
         'Shopper\Livewire\Components\Products\Form\Shipping' => 'Shopper\Livewire\Pages\Product\Shipping',
         'Shopper\Livewire\Components\Products\Form\Variants' => 'Shopper\Livewire\Pages\Product\Variants',
+
+        // Carrier drivers extracted into their own opt-in packages.
+        'Shopper\Shipping\Drivers\UpsDriver' => 'Shopper\Ups\UpsDriver',
+        'Shopper\Shipping\Drivers\FedExDriver' => 'Shopper\FedEx\FedExDriver',
+        'Shopper\Shipping\Drivers\UspsDriver' => 'Shopper\Usps\UspsDriver',
     ];
 }

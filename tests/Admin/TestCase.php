@@ -28,11 +28,14 @@ use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
 use Milon\Barcode\BarcodeServiceProvider;
 use Shopper\Cart\CartServiceProvider;
 use Shopper\Core\CoreServiceProvider;
+use Shopper\FedEx\FedExServiceProvider;
 use Shopper\Payment\PaymentServiceProvider;
 use Shopper\Shipping\ShippingServiceProvider;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
 use Shopper\Stripe\StripeServiceProvider;
+use Shopper\Ups\UpsServiceProvider;
+use Shopper\Usps\UspsServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
@@ -80,6 +83,9 @@ abstract class TestCase extends \Tests\TestCase
             PaymentServiceProvider::class,
             PermissionServiceProvider::class,
             ShippingServiceProvider::class,
+            UpsServiceProvider::class,
+            FedExServiceProvider::class,
+            UspsServiceProvider::class,
             ShopperServiceProvider::class,
             SidebarServiceProvider::class,
             StripeServiceProvider::class,

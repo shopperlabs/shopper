@@ -9,11 +9,14 @@ use Livewire\LivewireServiceProvider;
 use Shopper\Api\ApiServiceProvider;
 use Shopper\Cart\CartServiceProvider;
 use Shopper\Core\CoreServiceProvider;
+use Shopper\FedEx\FedExServiceProvider;
 use Shopper\Http\HttpServiceProvider;
 use Shopper\Payment\PaymentServiceProvider;
 use Shopper\Shipping\ShippingServiceProvider;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
+use Shopper\Ups\UpsServiceProvider;
+use Shopper\Usps\UspsServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
@@ -42,6 +45,9 @@ abstract class TestCase extends \Tests\TestCase
             CartServiceProvider::class,
             PaymentServiceProvider::class,
             ShippingServiceProvider::class,
+            UpsServiceProvider::class,
+            FedExServiceProvider::class,
+            UspsServiceProvider::class,
             MediaLibraryServiceProvider::class,
             PermissionServiceProvider::class,
             SanctumServiceProvider::class,

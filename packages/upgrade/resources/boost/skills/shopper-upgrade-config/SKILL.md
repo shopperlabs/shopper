@@ -1,6 +1,6 @@
 ---
 name: shopper-upgrade-config
-description: Guides reconciliation of published config files (admin notifications, campaign feature, themes, cart pipelines, max_promotions, shipping rates cache, discount components) after upgrading to Shopper 3.x. Only needed for config files the app published under 2.x.
+description: Guides reconciliation of published config files (admin notifications, campaign feature, themes, cart pipelines, max_promotions, shipping rates cache, carrier driver packages, discount components) after upgrading to Shopper 3.x. Only needed for config files the app published under 2.x.
 license: MIT
 metadata:
     author: shopperlabs
@@ -89,6 +89,22 @@ A shipping-rates cache TTL was added. Add it at the top level:
 ```php
 'rates_cache_ttl' => env('SHIPPING_RATES_CACHE_TTL', 600),
 ```
+
+### The `drivers` block moved out of this file
+
+Each carrier now ships as its own opt-in package. **Keep your published `drivers` block exactly as it is**: every carrier provider merges its defaults onto the same `shopper.shipping.drivers.<code>` key, and `mergeConfigFrom` lets the published value win, so your credentials and env names are unchanged.
+
+What changes is that a key only means something once its package is installed:
+
+| Entry in your `drivers` block | Install |
+|-------------------------------|----------------------------------|
+| `ups`                         | `composer require shopper/ups`   |
+| `fedex`                       | `composer require shopper/fedex` |
+| `usps`                        | `composer require shopper/usps`  |
+
+Without the package the carrier drops out of `Shipping::availableDrivers()`, disappears from the shipping admin, and `Shipping::driver('ups')` throws `Driver [ups] not supported.` The `shopper:upgrade` command prints the exact `composer require` line for the carriers you had enabled.
+
+Delete `canada_post` and `purolator` while you are in the file. Both were config-only entries in 2.x with no driver behind them, and nothing reads them.
 
 ## config/shopper/components/discount.php
 

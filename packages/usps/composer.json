@@ -1,0 +1,31 @@
+{
+  "name": "shopper/usps",
+  "description": "USPS shipping driver for Shopper",
+  "license": "MIT",
+  "require": {
+    "php": "^8.3",
+    "illuminate/support": "^12.68|^13.27",
+    "ivanmitrikeski/laravel-shipping": "^1.0",
+    "shopper/shipping": "self.version"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shopper\\Usps\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shopper\\Usps\\UspsServiceProvider"
+      ],
+      "dont-discover": [
+        "ivanmitrikeski/laravel-shipping"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

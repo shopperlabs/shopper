@@ -7,9 +7,12 @@ namespace Tests\Shipping;
 use Illuminate\Support\Facades\Http;
 use Livewire\LivewireServiceProvider;
 use Shopper\Core\CoreServiceProvider;
+use Shopper\FedEx\FedExServiceProvider;
 use Shopper\Shipping\ShippingServiceProvider;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
+use Shopper\Ups\UpsServiceProvider;
+use Shopper\Usps\UspsServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
@@ -42,6 +45,9 @@ abstract class TestCase extends \Tests\TestCase
             MediaLibraryServiceProvider::class,
             PermissionServiceProvider::class,
             ShippingServiceProvider::class,
+            UpsServiceProvider::class,
+            FedExServiceProvider::class,
+            UspsServiceProvider::class,
         ];
     }
 }

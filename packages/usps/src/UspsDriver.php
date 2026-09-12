@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Shipping\Drivers;
+namespace Shopper\Usps;
 
 use Exception;
 use Illuminate\Support\Collection;
@@ -14,6 +14,7 @@ use Mitrik\Shipping\ServiceProviders\ServiceUSPS\ServiceUSPSCredentials;
 use Shopper\Shipping\DataTransferObjects\Address;
 use Shopper\Shipping\DataTransferObjects\Package;
 use Shopper\Shipping\DataTransferObjects\ShippingRate;
+use Shopper\Shipping\Drivers\Driver;
 use Shopper\Shipping\Exceptions\ShippingException;
 
 final class UspsDriver extends Driver
@@ -36,9 +37,11 @@ final class UspsDriver extends Driver
         return 'USPS';
     }
 
-    public function logo(): string
+    public function logo(): ?string
     {
-        return shopper_panel_assets('/images/carriers/usps.svg');
+        return function_exists('shopper_panel_assets')
+            ? shopper_panel_assets('/images/carriers/usps.svg')
+            : null;
     }
 
     public function supportsLabels(): bool
