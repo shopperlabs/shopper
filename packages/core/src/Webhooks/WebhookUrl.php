@@ -95,13 +95,18 @@ final class WebhookUrl
     public static function pinnedResolveOptions(string $url, string $address): array
     {
         $parts = parse_url($url);
-        $host = is_array($parts) ? ($parts['host'] ?? null) : null;
+
+        if (! is_array($parts)) {
+            return [];
+        }
+
+        $host = $parts['host'] ?? null;
 
         if ($host === null || filter_var($host, FILTER_VALIDATE_IP) !== false) {
             return [];
         }
 
-        $port = is_array($parts) ? ($parts['port'] ?? 443) : 443;
+        $port = $parts['port'] ?? 443;
 
         return [
             CURLOPT_RESOLVE => ["{$host}:{$port}:{$address}"],
