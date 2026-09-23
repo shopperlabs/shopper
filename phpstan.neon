@@ -8,6 +8,9 @@ parameters:
     paths:
         - packages
 
+    scanFiles:
+        - vendor/symfony/polyfill-mbstring/bootstrap80.php
+
     excludePaths:
         - packages/admin/src/Events
         - packages/admin/src/Traits
