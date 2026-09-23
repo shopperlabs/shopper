@@ -8,6 +8,7 @@ use BadMethodCallException;
 use BladeUI\Icons\Factory as IconFactory;
 use Closure;
 use Filament\Forms\Components\Select;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
@@ -202,7 +203,7 @@ class IconPicker extends Select
         throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function schema(array|Closure $components): static
+    public function schema(array|Schema|Closure $components): static
     {
         throw new BadMethodCallException('Method not allowed.');
     }
