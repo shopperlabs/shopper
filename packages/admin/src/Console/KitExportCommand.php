@@ -17,7 +17,7 @@ final class KitExportCommand extends Command
 {
     protected $signature = 'shopper:kit:export
         {path : The path to the starter kit directory}
-        {--clear : Clear the export path before exporting (preserves .git)}';
+        {--clear : Clear the export path before exporting (keeps .git, .github, README, composer.json and the manifest)}';
 
     protected $description = 'Export your project files into a starter kit';
 

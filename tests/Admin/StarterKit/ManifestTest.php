@@ -10,9 +10,15 @@ it('parses a valid YAML manifest', function (): void {
     $yaml = <<<'YAML'
     name: "Shopper Blade Starter"
     description: "A minimal Laravel/Blade storefront."
+    stack: [inertia, react]
     version: "1.0.0"
     author: "shopperlabs"
     url: "https://github.com/shopperlabs/starter-blade"
+    preview: "https://blade.laravelshopper.dev"
+    docs: "https://docs.laravelshopper.dev/starter-kits/blade"
+    screenshots:
+      - .github/screenshots/home.png
+      - .github/screenshots/checkout.png
     shopper: "^2.0"
     php: "^8.3"
     laravel: "^11.0|^12.0"
@@ -38,9 +44,13 @@ it('parses a valid YAML manifest', function (): void {
     expect($manifest)
         ->name->toBe('Shopper Blade Starter')
         ->description->toBe('A minimal Laravel/Blade storefront.')
+        ->stack->toBe(['inertia', 'react'])
         ->version->toBe('1.0.0')
         ->author->toBe('shopperlabs')
         ->url->toBe('https://github.com/shopperlabs/starter-blade')
+        ->preview->toBe('https://blade.laravelshopper.dev')
+        ->docs->toBe('https://docs.laravelshopper.dev/starter-kits/blade')
+        ->screenshots->toBe(['.github/screenshots/home.png', '.github/screenshots/checkout.png'])
         ->shopperConstraint->toBe('^2.0')
         ->phpConstraint->toBe('^8.3')
         ->laravelConstraint->toBe('^11.0|^12.0')
@@ -62,9 +72,13 @@ it('parses a minimal YAML manifest with defaults', function (): void {
     expect($manifest)
         ->name->toBe('Minimal Kit')
         ->description->toBe('')
+        ->stack->toBe([])
         ->version->toBe('0.0.0')
         ->author->toBe('')
         ->url->toBe('')
+        ->preview->toBe('')
+        ->docs->toBe('')
+        ->screenshots->toBe([])
         ->shopperConstraint->toBe('*')
         ->phpConstraint->toBe('*')
         ->laravelConstraint->toBe('*')
@@ -153,6 +167,53 @@ it('parses a full manifest file from disk', function (): void {
         ->devDependencies->toHaveKey('laravel/boost')
         ->exportPaths->toContain('resources/views')
         ->postInstall->toContain('php artisan migrate');
+});
+
+it('keeps technologies outside the stack vocabulary and names them', function (): void {
+    $yaml = <<<'YAML'
+    name: "Test Kit"
+    export_paths:
+      - resources/views
+    stack: [inertia, python, react]
+    YAML;
+
+    $manifest = Manifest::fromYaml($yaml);
+
+    expect($manifest->stack)->toBe(['inertia', 'python', 'react'])
+        ->and($manifest->unknownStack())->toBe(['python']);
+});
+
+it('drops non-string `stack` and `screenshots` entries', function (): void {
+    $yaml = <<<'YAML'
+    name: "Test Kit"
+    export_paths:
+      - resources/views
+    stack: [inertia, 123, true, null]
+    screenshots: [123, true, .github/screenshots/home.png]
+    YAML;
+
+    expect(Manifest::fromYaml($yaml))
+        ->stack->toBe(['inertia'])
+        ->screenshots->toBe(['.github/screenshots/home.png']);
+});
+
+it('dumps back to YAML with an inline stack and no empty section', function (): void {
+    $yaml = <<<'YAML'
+    name: "Test Kit"
+    stack: [inertia, react]
+    export_paths:
+      - resources/views
+    YAML;
+
+    $dumped = Manifest::fromYaml($yaml)->toYaml();
+
+    expect($dumped)
+        ->toContain('stack: [inertia, react]')
+        ->toContain("export_paths:\n  - resources/views")
+        ->not->toContain('screenshots:')
+        ->not->toContain('dependencies:')
+        ->not->toContain('post_install:')
+        ->and(Manifest::fromYaml($dumped)->stack)->toBe(['inertia', 'react']);
 });
 
 it('ignores non-string dependency entries', function (): void {

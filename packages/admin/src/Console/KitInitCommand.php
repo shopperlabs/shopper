@@ -7,9 +7,11 @@ namespace Shopper\Console;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Shopper\StarterKit\Concerns\HasConsoleTask;
+use Shopper\StarterKit\Manifest;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 use function Laravel\Prompts\confirm;
+use function Laravel\Prompts\multisearch;
 use function Laravel\Prompts\text;
 use function Laravel\Prompts\warning;
 
@@ -55,6 +57,17 @@ final class KitInitCommand extends Command
             default: explode('/', $package)[0],
         );
 
+        /** @var list<string> $stack */
+        $stack = multisearch(
+            label: 'Stack',
+            options: fn (string $value): array => array_filter(
+                Manifest::STACKS,
+                fn (string $label): bool => $value === '' || mb_stripos($label, $value) !== false,
+            ),
+            required: true,
+            hint: 'Use the space bar to select the technologies shown on the listing.',
+        );
+
         $directory = $this->resolveDirectory($package);
 
         if ($files->isDirectory($directory)) {
@@ -86,31 +99,21 @@ final class KitInitCommand extends Command
             ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         });
 
-        $this->task('Generating shopper-kit.yaml', function () use ($files, $directory, $name, $description, $author): void {
-            $yaml = <<<YAML
-            name: "{$name}"
-            description: "{$description}"
-            version: "1.0.0"
-            author: "{$author}"
-            url: ""
-            shopper: "^2.7"
-            php: "^8.3"
-            laravel: "^11.48|^12.0"
+        $this->task('Generating shopper-kit.yaml', function () use ($files, $directory, $name, $description, $author, $stack): void {
+            $manifest = new Manifest(
+                name: $name,
+                description: $description,
+                version: '1.0.0',
+                author: $author,
+                url: '',
+                shopperConstraint: '^2.11',
+                phpConstraint: '^8.3',
+                laravelConstraint: '^11.48|^12.0',
+                exportPaths: ['resources/views', 'resources/css', 'resources/js', 'routes'],
+                stack: $stack,
+            );
 
-            export_paths:
-              - resources/views
-              - resources/css
-              - resources/js
-              - routes
-
-            dependencies: []
-
-            dev_dependencies: []
-
-            post_install: []
-            YAML;
-
-            $files->put($directory.'/shopper-kit.yaml', $yaml);
+            $files->put($directory.'/shopper-kit.yaml', $manifest->toYaml());
         });
 
         $this->task('Generating README.md', function () use ($files, $directory, $name, $package): void {
@@ -145,6 +148,7 @@ final class KitInitCommand extends Command
 
         $this->line('  <fg=#3B82F6>→</> Edit <options=bold>shopper-kit.yaml</> to configure export_paths');
         $this->line('  <fg=#3B82F6>→</> Run <options=bold>php artisan shopper:kit:export '.$relativePath.'</> to export files from your project');
+        $this->line('  <fg=#3B82F6>→</> Fill <options=bold>preview</>, <options=bold>docs</> and <options=bold>screenshots</> so the kit has a listing');
         $this->line('  <fg=#3B82F6>→</> Publish on GitHub or Packagist');
         $this->newLine();
 
