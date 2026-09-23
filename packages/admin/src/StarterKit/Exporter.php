@@ -10,7 +10,6 @@ use RuntimeException;
 use Shopper\StarterKit\Concerns\HasConsoleTask;
 use Shopper\StarterKit\Exceptions\InvalidManifestException;
 use Shopper\StarterKit\Exceptions\ManifestNotFoundException;
-use Symfony\Component\Yaml\Yaml;
 
 use function Laravel\Prompts\warning;
 
@@ -19,6 +18,9 @@ final class Exporter
     use HasConsoleTask;
 
     private const string MANIFEST_FILE = 'shopper-kit.yaml';
+
+    /** What `--clear` leaves in place: the kit's own files, never exported from a project. */
+    private const array CLEAR_KEEP = ['.git', '.github', 'README.md', 'CHANGELOG.md', 'LICENSE', 'LICENSE.md', 'composer.json', self::MANIFEST_FILE];
 
     /** @var list<string> */
     private const array FORBIDDEN_EXPORTS = [
@@ -46,6 +48,7 @@ final class Exporter
             ->loadManifest()
             ->validateExportPaths()
             ->validateDependencies()
+            ->validateListing()
             ->clearExportPath()
             ->copyFiles()
             ->versionDependencies()
@@ -113,6 +116,21 @@ final class Exporter
         return $this;
     }
 
+    private function validateListing(): self
+    {
+        foreach ($this->manifest->unknownStack() as $stack) {
+            warning("  Stack [{$stack}] is not a known technology and will not appear on the listing.");
+        }
+
+        foreach ($this->manifest->screenshots as $screenshot) {
+            if (! str_contains($screenshot, '://') && ! $this->files->exists(mb_rtrim($this->exportPath, '/').'/'.$screenshot)) {
+                warning("  Screenshot [{$screenshot}] does not exist in the kit.");
+            }
+        }
+
+        return $this;
+    }
+
     private function clearExportPath(): self
     {
         if (! $this->clear) {
@@ -120,33 +138,18 @@ final class Exporter
         }
 
         $this->task('Clearing export path', function (): void {
-            $gitPath = mb_rtrim($this->exportPath, '/').'/.git';
-            $hasGit = $this->files->isDirectory($gitPath);
-            $tempGitPath = sys_get_temp_dir().'/shopper-kit-git-'.bin2hex(random_bytes(8));
+            $exportPath = mb_rtrim($this->exportPath, '/');
 
-            if ($hasGit) {
-                $this->files->moveDirectory($gitPath, $tempGitPath);
-            }
+            foreach ([...$this->files->glob($exportPath.'/*'), ...$this->files->glob($exportPath.'/.[!.]*')] as $item) {
+                if (in_array(basename($item), self::CLEAR_KEEP, true)) {
+                    continue;
+                }
 
-            foreach ($this->files->glob(mb_rtrim($this->exportPath, '/').'/*') as $item) {
                 if ($this->files->isDirectory($item)) {
                     $this->files->deleteDirectory($item);
                 } else {
                     $this->files->delete($item);
                 }
-            }
-
-            // Also remove hidden files (except .git which was moved)
-            foreach ($this->files->glob(mb_rtrim($this->exportPath, '/').'/.[!.]*') as $item) {
-                if ($this->files->isDirectory($item)) {
-                    $this->files->deleteDirectory($item);
-                } else {
-                    $this->files->delete($item);
-                }
-            }
-
-            if ($hasGit) {
-                $this->files->moveDirectory($tempGitPath, $gitPath);
             }
         });
 
@@ -182,19 +185,9 @@ final class Exporter
         $require = $composerJson['require'] ?? [];
         $requireDev = $composerJson['require-dev'] ?? [];
 
-        $this->manifest = new Manifest(
-            name: $this->manifest->name,
-            description: $this->manifest->description,
-            version: $this->manifest->version,
-            author: $this->manifest->author,
-            url: $this->manifest->url,
-            shopperConstraint: $this->manifest->shopperConstraint,
-            phpConstraint: $this->manifest->phpConstraint,
-            laravelConstraint: $this->manifest->laravelConstraint,
-            exportPaths: $this->manifest->exportPaths,
-            dependencies: $this->resolveVersions($this->manifest->dependencies, $require),
-            devDependencies: $this->resolveVersions($this->manifest->devDependencies, $requireDev),
-            postInstall: $this->manifest->postInstall,
+        $this->manifest = $this->manifest->withDependencies(
+            $this->resolveVersions($this->manifest->dependencies, $require),
+            $this->resolveVersions($this->manifest->devDependencies, $requireDev),
         );
 
         return $this;
@@ -203,50 +196,13 @@ final class Exporter
     private function exportManifest(): self
     {
         $this->task('Writing shopper-kit.yaml', function (): void {
-            $yaml = $this->buildYaml();
-
             $this->files->put(
                 mb_rtrim($this->exportPath, '/').'/'.self::MANIFEST_FILE,
-                $yaml,
+                $this->manifest->toYaml(),
             );
         });
 
         return $this;
-    }
-
-    private function buildYaml(): string
-    {
-        $sections = [];
-
-        $sections[] = Yaml::dump([
-            'name' => $this->manifest->name,
-            'description' => $this->manifest->description,
-            'version' => $this->manifest->version,
-            'author' => $this->manifest->author,
-            'url' => $this->manifest->url,
-        ]);
-
-        $sections[] = Yaml::dump([
-            'shopper' => $this->manifest->shopperConstraint,
-            'php' => $this->manifest->phpConstraint,
-            'laravel' => $this->manifest->laravelConstraint,
-        ]);
-
-        $sections[] = Yaml::dump(['export_paths' => $this->manifest->exportPaths], 4, 2);
-
-        if ($this->manifest->dependencies !== []) {
-            $sections[] = Yaml::dump(['dependencies' => $this->manifest->dependencies], 4, 2);
-        }
-
-        if ($this->manifest->devDependencies !== []) {
-            $sections[] = Yaml::dump(['dev_dependencies' => $this->manifest->devDependencies], 4, 2);
-        }
-
-        if ($this->manifest->postInstall !== []) {
-            $sections[] = Yaml::dump(['post_install' => $this->manifest->postInstall], 4, 2);
-        }
-
-        return implode("\n", $sections);
     }
 
     private function exportComposerJson(): self
