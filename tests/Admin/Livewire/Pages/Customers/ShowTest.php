@@ -51,6 +51,8 @@ describe(Show::class, function (): void {
     });
 
     it('aborts when target user is an administrator', function (): void {
+        $this->withoutExceptionHandling();
+
         $admin = User::factory()->create();
         $admin->assignRole(config('shopper.admin.roles.admin'));
 

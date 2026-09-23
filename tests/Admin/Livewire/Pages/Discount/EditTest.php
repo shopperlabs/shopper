@@ -112,6 +112,8 @@ describe(Edit::class, function (): void {
     });
 
     it('throws ModelNotFoundException for a non existing discount', function (): void {
+        $this->withoutExceptionHandling();
+
         Livewire::test(Edit::class, ['record' => 999_999]);
     })->throws(Illuminate\Database\Eloquent\ModelNotFoundException::class);
 

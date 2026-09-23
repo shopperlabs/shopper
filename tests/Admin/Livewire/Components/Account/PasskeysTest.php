@@ -95,6 +95,8 @@ describe(Passkeys::class, function (): void {
     });
 
     it('cannot delete a passkey belonging to another user', function (): void {
+        $this->withoutExceptionHandling();
+
         $foreign = createPasskeyFor(User::factory()->create(), 'Other device');
 
         Livewire::test(Passkeys::class)
