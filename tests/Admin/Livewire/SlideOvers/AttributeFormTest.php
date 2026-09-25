@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Cache;
 use Livewire\Livewire;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
@@ -138,5 +139,27 @@ describe(AttributeForm::class, function (): void {
             ])
             ->call('store')
             ->assertNotified(__('shopper::pages/attributes.notifications.save'));
+    });
+
+    it('searches icons from a cache store that refuses object unserialization', function (): void {
+        config([
+            'cache.stores.array.serialize' => true,
+            'cache.serializable_classes' => false,
+        ]);
+        Cache::forgetDriver('array');
+
+        $component = Livewire::test(AttributeForm::class);
+
+        expect($component->instance()->callSchemaComponentMethod('form.icon', 'getSearchResultsForJs', ['search' => 'home']))
+            ->not->toBeEmpty()
+            ->and($component->instance()->callSchemaComponentMethod('form.icon', 'getSearchResultsForJs', ['search' => 'user']))
+            ->not->toBeEmpty();
+    });
+
+    it('renders no more icon search results than the options limit', function (): void {
+        $component = Livewire::test(AttributeForm::class);
+
+        expect($component->instance()->callSchemaComponentMethod('form.icon', 'getSearchResultsForJs', ['search' => 'a']))
+            ->toHaveCount(50);
     });
 })->group('livewire', 'attributes');

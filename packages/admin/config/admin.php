@@ -142,7 +142,7 @@ return [
     |
     | Since icon packs are often packed with a lots of icons,
     | searching through all of them can take quite a lot of time, which is
-    | why the plugin caches each field with it's configuration and search queries.
+    | why the plugin caches the icon list of each field.
     |
     */
 
