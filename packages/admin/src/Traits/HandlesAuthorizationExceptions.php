@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Traits;
 
-use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Auth\Access\AuthorizationException;
+use Throwable;
 
 trait HandlesAuthorizationExceptions
 {
@@ -17,7 +17,7 @@ trait HandlesAuthorizationExceptions
         $this->mountedHandlesAuthorizationExceptions = true;
     }
 
-    public function exception(Exception $e, callable $stopPropagation): void
+    public function exception(Throwable $e, callable $stopPropagation): void
     {
         if ($e instanceof AuthorizationException && $this->mountedHandlesAuthorizationExceptions) {
             Notification::make()
