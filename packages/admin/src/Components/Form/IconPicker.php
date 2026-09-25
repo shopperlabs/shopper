@@ -45,19 +45,12 @@ class IconPicker extends Select
         $this->sets();
         $this->layout($this->layout);
 
-        $this->getSearchResultsUsing = function (IconPicker $component, string $search, Collection $icons) {
-            $iconsHash = md5(serialize($icons));
-            $key = "icon-picker.results.{$iconsHash}.{$search}";
-
-            return $this->tryCache(
-                $key,
-                fn (): array => collect($icons)
-                    ->flatten()
-                    ->filter(fn (string $icon): bool => str_contains($icon, $search))
-                    ->mapWithKeys(fn (string $icon): array => [$icon => $component->getItemTemplate(['icon' => $icon])])
-                    ->toArray()
-            );
-        };
+        $this->getSearchResultsUsing = fn (IconPicker $component, string $search, Collection $icons): array => $icons
+            ->flatten()
+            ->filter(fn (string $icon): bool => str_contains($icon, $search))
+            ->take($component->getOptionsLimit())
+            ->mapWithKeys(fn (string $icon): array => [$icon => $component->getItemTemplate(['icon' => $icon])])
+            ->toArray();
 
         $this->getOptionLabelUsing = function (IconPicker $component, ?string $value) {
             if ($value) {
@@ -219,47 +212,43 @@ class IconPicker extends Select
     private function loadIcons(): Collection
     {
         $iconsHash = md5(serialize($this->getSets()));
-        $key = "icon-picker.fields.{$iconsHash}.{$this->getStatePath()}";
+        $key = "icon-picker.icons.{$iconsHash}.{$this->getStatePath()}";
 
-        [$sets, $allowedIcons, $disallowedIcons] = $this->tryCache(
+        return collect($this->tryCache(
             key: $key,
             callback: function (): array {
                 $allowedIcons = $this->getAllowedIcons();
                 $disallowedIcons = $this->getDisallowedIcons();
-
-                $iconsFactory = App::make(IconFactory::class);
                 $allowedSets = $this->getSets();
-                $sets = collect($iconsFactory->all());
+                $sets = App::make(IconFactory::class)->all();
 
                 if ($allowedSets) {
-                    $sets = $sets->filter(fn ($value, $key): bool => in_array($key, $allowedSets));
+                    $sets = array_intersect_key($sets, array_flip($allowedSets));
                 }
 
-                return [$sets, $allowedIcons, $disallowedIcons];
-            }
-        );
+                $icons = [];
 
-        $icons = [];
+                foreach ($sets as $set) {
+                    $prefix = $set['prefix'];
+                    foreach ($set['paths'] as $path) {
+                        foreach (File::files($path) as $file) {
+                            $filename = $prefix.'-'.$file->getFilenameWithoutExtension();
 
-        foreach ($sets as $set) {
-            $prefix = $set['prefix'];
-            foreach ($set['paths'] as $path) {
-                foreach (File::files($path) as $file) {
-                    $filename = $prefix.'-'.$file->getFilenameWithoutExtension();
+                            if ($allowedIcons && ! in_array($filename, $allowedIcons)) {
+                                continue;
+                            }
 
-                    if ($allowedIcons && ! in_array($filename, $allowedIcons)) {
-                        continue;
+                            if ($disallowedIcons && in_array($filename, $disallowedIcons)) {
+                                continue;
+                            }
+
+                            $icons[Str::title($prefix)][] = $filename;
+                        }
                     }
-
-                    if ($disallowedIcons && in_array($filename, $disallowedIcons)) {
-                        continue;
-                    }
-
-                    $icons[Str::title($prefix)][] = $filename;
                 }
-            }
-        }
 
-        return collect($icons);
+                return $icons;
+            }
+        ));
     }
 }
