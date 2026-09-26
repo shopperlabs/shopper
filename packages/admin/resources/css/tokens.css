@@ -1,0 +1,55 @@
+@variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-heading: 'Figtree', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --color-gray-50: oklch(0.985 0 0);
+  --color-gray-100: oklch(0.967 0.001 286.375);
+  --color-gray-200: oklch(0.92 0.004 286.32);
+  --color-gray-300: oklch(0.871 0.006 286.286);
+  --color-gray-400: oklch(0.705 0.015 286.067);
+  --color-gray-500: oklch(0.552 0.016 285.938);
+  --color-gray-600: oklch(0.442 0.017 285.786);
+  --color-gray-700: oklch(0.37 0.013 285.805);
+  --color-gray-800: oklch(0.274 0.006 286.033);
+  --color-gray-900: oklch(0.21 0.006 285.885);
+  --color-gray-950: oklch(0.141 0.005 285.823);
+
+  --color-sh-header: var(--theme-sh-header);
+  --color-sh-header-border: var(--theme-sh-header-border);
+  --color-sh-header-fg: var(--theme-sh-header-fg);
+  --color-sh-header-fg-muted: var(--theme-sh-header-fg-muted);
+  --color-sh-header-hover: var(--theme-sh-header-hover);
+  --color-sh-body: var(--theme-sh-body);
+  --color-sh-sidebar: var(--theme-sh-sidebar);
+  --color-sh-sidebar-hover: var(--theme-sh-sidebar-hover);
+  --color-sh-sidebar-active: var(--theme-sh-sidebar-active, var(--theme-sh-sidebar-hover));
+  --color-sh-settings-sidebar-hover: var(--theme-sh-settings-sidebar-hover, var(--theme-sh-sidebar-hover));
+  --color-sh-surface: var(--theme-sh-surface);
+  --color-sh-muted: var(--theme-sh-muted);
+  --color-sh-muted-strong: var(--theme-sh-muted-strong);
+  --color-sh-border: var(--theme-sh-border);
+  --color-sh-fg: var(--theme-sh-fg);
+  --color-sh-fg-secondary: var(--theme-sh-fg-secondary);
+  --color-sh-fg-muted: var(--theme-sh-fg-muted);
+  --color-sh-accent: var(--theme-sh-accent);
+  --color-sh-accent-fg: var(--theme-sh-accent-fg);
+  --color-sh-card: var(--theme-sh-card);
+  --color-sh-table-header: var(--theme-sh-table-header);
+  --color-sh-skeleton: var(--theme-sh-skeleton);
+
+  --color-primary-50: var(--primary-50);
+  --color-primary-100: var(--primary-100);
+  --color-primary-200: var(--primary-200);
+  --color-primary-300: var(--primary-300);
+  --color-primary-400: var(--primary-400);
+  --color-primary-500: var(--primary-500);
+  --color-primary-600: var(--primary-600);
+  --color-primary-700: var(--primary-700);
+  --color-primary-800: var(--primary-800);
+  --color-primary-900: var(--primary-900);
+  --color-primary-950: var(--primary-950);
+}

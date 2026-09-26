@@ -136,7 +136,6 @@ return [
     'global_search' => 'Genel arama',
     'display_shortcuts' => 'Kısayolları göster',
     'go_to_documentation' => 'Dokümantasyona git',
-    'search' => 'İçerik ara',
     'icon_no_result' => 'Eşleşen simge bulunamadı',
     'selection' => 'Seçim',
     'sign_in_as' => 'Oturum açan:',

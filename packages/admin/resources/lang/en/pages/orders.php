@@ -51,6 +51,14 @@ return [
         'archived_notice' => 'Are you sure you want to archived this order? This action will change the income you have earned so far in your store.',
         'capture_heading' => 'Capture payment for order :number',
         'capture_notice' => 'This will charge the customer for the authorized amount. This action cannot be undone.',
+        'cancel_heading' => 'Cancel order :number',
+        'cancel_notice' => 'The order will be cancelled and its items returned to stock. No refund is issued, refund the customer separately if needed. This action cannot be undone.',
+        'processing_heading' => 'Start processing order :number',
+        'processing_notice' => 'The order will move to processing so it can be prepared for shipping.',
+        'paid_heading' => 'Mark order :number as paid',
+        'paid_notice' => 'The payment will be recorded as received and a new order will move to processing. Only confirm if you have collected the payment outside of Shopper.',
+        'complete_heading' => 'Complete order :number',
+        'complete_notice' => 'The order will be marked as completed.',
     ],
 
     'shipment' => [

@@ -3,6 +3,12 @@
         $customer = $order->customer;
     @endphp
 
+    @if (filled($this->defaultAction))
+        <div
+            wire:init="mountAction(@js($this->defaultAction), @if (filled($this->defaultActionArguments)) @js($this->defaultActionArguments) @else {} @endif, @js($this->getDefaultActionUrlContext()))"
+        ></div>
+    @endif
+
     <div class="sticky top-0 z-10 bg-sh-surface pt-8 backdrop-blur-lg">
         <x-shopper::container class="border-b space-y-2 pb-5 border-sh-border">
             <div class="space-y-3 lg:flex lg:items-center justify-between lg:space-y-0">

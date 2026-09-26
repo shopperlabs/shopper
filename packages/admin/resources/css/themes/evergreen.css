@@ -54,6 +54,7 @@
     --theme-sh-body: #15180f;
     --theme-sh-sidebar: #15180f;
     --theme-sh-sidebar-hover: oklch(1 0 0 / 0.05); /* white/5 */
+    --theme-sh-settings-sidebar-hover: oklch(1 0 0 / 0.05); /* white/5 */
     --theme-sh-surface: #1e2418;
     --theme-sh-muted: #2a3122;
     --theme-sh-muted-strong: #3a4230;

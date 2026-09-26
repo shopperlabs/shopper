@@ -198,6 +198,26 @@ describe(Detail::class, function (): void {
             ->assertActionHidden('archive');
     });
 
+    it('archive action is hidden for archived orders', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::Archived,
+            'payment_status' => PaymentStatus::Pending,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->assertActionHidden('archive');
+    });
+
+    it('`cancelOrder` action is hidden for completed orders', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::Completed,
+            'payment_status' => PaymentStatus::Paid,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->assertActionHidden('cancelOrder');
+    });
+
     it('archive action is visible for new unpaid orders', function (): void {
         $order = Order::factory()->hasItems(1)->create([
             'status' => OrderStatus::New,
@@ -225,5 +245,36 @@ describe(Detail::class, function (): void {
 
         Livewire::test(Detail::class, ['order' => $order])
             ->assertActionHidden('markComplete');
+    });
+
+    it('`markPaid` action is hidden for an authorized payment', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::New,
+            'payment_status' => PaymentStatus::Authorized,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->assertActionHidden('markPaid')
+            ->assertActionVisible('capturePayment');
+    });
+
+    it('`capturePayment` action is hidden for a cancelled order', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::Cancelled,
+            'payment_status' => PaymentStatus::Authorized,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->assertActionHidden('capturePayment');
+    });
+
+    it('mounts the action given in the `action` query parameter on load', function (): void {
+        $order = Order::factory()->hasItems(1)->create(['status' => OrderStatus::New]);
+
+        Livewire::withQueryParams(['action' => 'cancelOrder'])
+            ->test(Detail::class, ['order' => $order])
+            ->assertSeeHtml("mountAction('cancelOrder'");
+
+        expect($order->fresh()->status)->toBe(OrderStatus::New);
     });
 })->group('livewire', 'orders');

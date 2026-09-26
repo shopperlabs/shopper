@@ -51,6 +51,14 @@ return [
         'archived_notice' => 'Är du säker på att du vill arkivera denna order? Denna åtgärd kommer inte att påverka intäkter som hittills intjänats i din butik.',
         'capture_heading' => 'Bokför betalning för order :number',
         'capture_notice' => 'Detta kommer att debitera kunden det auktoriserade beloppet. Denna åtgärd kan inte ångras.',
+        'cancel_heading' => 'Avbryt order :number',
+        'cancel_notice' => 'Ordern avbryts och dess artiklar återförs till lagret. Ingen återbetalning görs, återbetala kunden separat vid behov. Denna åtgärd kan inte ångras.',
+        'processing_heading' => 'Börja bearbeta order :number',
+        'processing_notice' => 'Ordern flyttas till bearbetning så att den kan förberedas för leverans.',
+        'paid_heading' => 'Markera order :number som betald',
+        'paid_notice' => 'Betalningen registreras som mottagen och en ny order flyttas till bearbetning. Bekräfta endast om du har tagit emot betalningen utanför Shopper.',
+        'complete_heading' => 'Slutför order :number',
+        'complete_notice' => 'Ordern markeras som slutförd.',
     ],
 
     'shipment' => [

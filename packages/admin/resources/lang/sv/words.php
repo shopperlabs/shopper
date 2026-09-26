@@ -145,7 +145,6 @@ return [
     'global_search' => 'Global sökning',
     'display_shortcuts' => 'Visa genvägar',
     'go_to_documentation' => 'Gå till dokumentation',
-    'search' => 'Sök innehåll',
     'icon_no_result' => 'Inga matchande ikoner hittades',
     'selection' => 'Urval',
     'sign_in_as' => 'Inloggad som',

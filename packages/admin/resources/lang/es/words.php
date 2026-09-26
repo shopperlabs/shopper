@@ -144,7 +144,6 @@ return [
     'global_search' => 'Búsqueda global',
     'display_shortcuts' => 'Mostrar atajos',
     'go_to_documentation' => 'Ir a la documentación',
-    'search' => 'Buscar contenido',
     'icon_no_result' => 'No se encontraron iconos coincidentes',
     'selection' => 'Selección',
     'sign_in_as' => 'Iniciado sesión como',

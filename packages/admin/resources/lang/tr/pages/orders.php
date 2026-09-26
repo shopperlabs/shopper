@@ -51,6 +51,14 @@ return [
         'archived_notice' => 'Bu siparişi arşivlemek istediğinizden emin misiniz? Bu işlem, mağazanızda şu ana kadar kazandığınız geliri değiştirecektir.',
         'capture_heading' => ':number siparişi için ödemeyi tahsil et',
         'capture_notice' => 'Bu, müşteriye yetkilendirilen tutar için ücret yansıtılacaktır. Bu işlem geri alınamaz.',
+        'cancel_heading' => ':number numaralı siparişi iptal et',
+        'cancel_notice' => 'Sipariş iptal edilecek ve ürünleri stoğa geri eklenecek. Geri ödeme yapılmaz, gerekirse müşteriye ayrıca geri ödeme yapın. Bu işlem geri alınamaz.',
+        'processing_heading' => ':number numaralı siparişi işleme al',
+        'processing_notice' => 'Sipariş, gönderime hazırlanmak üzere işleme alınacak.',
+        'paid_heading' => ':number numaralı siparişi ödendi olarak işaretle',
+        'paid_notice' => 'Ödeme alınmış olarak kaydedilecek ve yeni bir sipariş işleme alınacak. Yalnızca ödemeyi Shopper dışında tahsil ettiyseniz onaylayın.',
+        'complete_heading' => ':number numaralı siparişi tamamla',
+        'complete_notice' => 'Sipariş tamamlandı olarak işaretlenecek.',
     ],
 
     'shipment' => [

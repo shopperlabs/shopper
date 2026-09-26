@@ -24,7 +24,6 @@ return [
     */
 
     'components' => [
-        // 'search' => Components\Search::class,
         'locale-switcher' => Components\LocaleSwitcher::class,
     ],
 

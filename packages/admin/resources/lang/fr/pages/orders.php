@@ -51,6 +51,14 @@ return [
         'archived_notice' => 'Êtes-vous sûr de vouloir archiver cette commande ? Cette action modifiera le revenu que vous avez gagné jusqu\'à présent dans votre magasin.',
         'capture_heading' => 'Capturer le paiement de la commande :number',
         'capture_notice' => 'Le montant autorisé sera débité du client. Cette action est irréversible.',
+        'cancel_heading' => 'Annuler la commande :number',
+        'cancel_notice' => 'La commande sera annulée et ses articles remis en stock. Aucun remboursement n\'est effectué, remboursez le client séparément si besoin. Cette action est irréversible.',
+        'processing_heading' => 'Traiter la commande :number',
+        'processing_notice' => 'La commande passera en traitement pour être préparée à l\'expédition.',
+        'paid_heading' => 'Marquer la commande :number comme payée',
+        'paid_notice' => 'Le paiement sera enregistré comme reçu et une nouvelle commande passera en traitement. Ne confirmez que si vous avez encaissé le paiement en dehors de Shopper.',
+        'complete_heading' => 'Terminer la commande :number',
+        'complete_notice' => 'La commande sera marquée comme terminée.',
     ],
 
     'shipment' => [

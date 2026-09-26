@@ -40,10 +40,6 @@
     <div class="flex items-center gap-x-2">
         {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEADER_START) }}
 
-        @if (config('shopper.components.dashboard.components.search'))
-            <livewire:shopper-search />
-        @endif
-
         {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::HEADER_END) }}
 
         @if (config('shopper.admin.notifications.database.enabled'))
