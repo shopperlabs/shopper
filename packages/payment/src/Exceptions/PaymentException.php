@@ -33,6 +33,11 @@ class PaymentException extends Exception
         return new self("Webhook signature verification failed for [{$driver}].");
     }
 
+    public static function captureNotAllowed(string $status): self
+    {
+        return new self("Cannot capture the payment of an order whose status is [{$status}].");
+    }
+
     public static function refundNotAllowed(string $status): self
     {
         return new self("Cannot refund an order whose payment is [{$status}].");

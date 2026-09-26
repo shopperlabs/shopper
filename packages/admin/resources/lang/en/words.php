@@ -145,7 +145,6 @@ return [
     'global_search' => 'Global search',
     'display_shortcuts' => 'Display shortcuts',
     'go_to_documentation' => 'Go to documentation',
-    'search' => 'Search content',
     'icon_no_result' => 'No matching icons found',
     'selection' => 'Selection',
     'sign_in_as' => 'Signed in as',

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Event;
+use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
@@ -56,6 +57,7 @@ it('dispatches `PaymentFailed` when a capture fails', function (): void {
     $method = PaymentMethod::factory()->create(['driver' => 'failing']);
     $order = Order::factory()->create([
         'payment_method_id' => $method->id,
+        'status' => OrderStatus::Processing,
         'payment_status' => PaymentStatus::Authorized,
     ]);
 

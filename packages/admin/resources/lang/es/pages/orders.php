@@ -51,6 +51,14 @@ return [
         'archived_notice' => '¿Estás seguro de que deseas archivar este pedido? Esta acción cambiará los ingresos que has obtenido hasta ahora en tu tienda.',
         'capture_heading' => 'Capturar pago del pedido :number',
         'capture_notice' => 'Se cobrará al cliente el monto autorizado. Esta acción no se puede deshacer.',
+        'cancel_heading' => 'Cancelar el pedido :number',
+        'cancel_notice' => 'El pedido se cancelará y sus artículos volverán al stock. No se emite ningún reembolso, reembolse al cliente por separado si es necesario. Esta acción no se puede deshacer.',
+        'processing_heading' => 'Procesar el pedido :number',
+        'processing_notice' => 'El pedido pasará a procesamiento para prepararse para el envío.',
+        'paid_heading' => 'Marcar el pedido :number como pagado',
+        'paid_notice' => 'El pago se registrará como recibido y un pedido nuevo pasará a procesamiento. Confirme solo si ha cobrado el pago fuera de Shopper.',
+        'complete_heading' => 'Completar el pedido :number',
+        'complete_notice' => 'El pedido se marcará como completado.',
     ],
 
     'shipment' => [

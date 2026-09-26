@@ -60,7 +60,11 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
         return Action::make('cancelOrder')
             ->label(__('shopper::forms.actions.cancel_order'))
             ->authorize('orders.edit')
-            ->visible($this->order->canBeCancelled())
+            ->visible($this->order->canBeCancelled() && ! $this->order->isCompleted())
+            ->requiresConfirmation()
+            ->modalHeading(__('shopper::pages/orders.modals.cancel_heading', ['number' => $this->order->number]))
+            ->modalDescription(__('shopper::pages/orders.modals.cancel_notice'))
+            ->modalSubmitActionLabel(__('shopper::forms.actions.confirm'))
             ->action(function (): void {
                 $this->order->transitionTo(OrderStatus::Cancelled);
 
@@ -82,6 +86,10 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->label(__('shopper::forms.actions.start_processing'))
             ->authorize('orders.edit')
             ->visible($this->order->isNew())
+            ->requiresConfirmation()
+            ->modalHeading(__('shopper::pages/orders.modals.processing_heading', ['number' => $this->order->number]))
+            ->modalDescription(__('shopper::pages/orders.modals.processing_notice'))
+            ->modalSubmitActionLabel(__('shopper::forms.actions.confirm'))
             ->action(function (): void {
                 $this->order->transitionTo(OrderStatus::Processing);
 
@@ -100,7 +108,11 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
         return Action::make('markPaid')
             ->label(__('shopper::forms.actions.mark_paid'))
             ->authorize('orders.edit')
-            ->visible($this->order->isPaymentPending() || $this->order->isPaymentAuthorized())
+            ->visible($this->order->isPaymentPending())
+            ->requiresConfirmation()
+            ->modalHeading(__('shopper::pages/orders.modals.paid_heading', ['number' => $this->order->number]))
+            ->modalDescription(__('shopper::pages/orders.modals.paid_notice'))
+            ->modalSubmitActionLabel(__('shopper::forms.actions.confirm'))
             ->action(function (): void {
                 $this->order->transitionPaymentTo(PaymentStatus::Paid);
 
@@ -124,6 +136,10 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->label(__('shopper::forms.actions.mark_complete'))
             ->authorize('orders.edit')
             ->visible($this->order->isProcessing() && $this->order->isPaid())
+            ->requiresConfirmation()
+            ->modalHeading(__('shopper::pages/orders.modals.complete_heading', ['number' => $this->order->number]))
+            ->modalDescription(__('shopper::pages/orders.modals.complete_notice'))
+            ->modalSubmitActionLabel(__('shopper::forms.actions.confirm'))
             ->action(function (): void {
                 $this->order->transitionTo(OrderStatus::Completed);
 
@@ -145,7 +161,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->label(__('shopper::forms.actions.capture_payment'))
             ->icon(Untitledui::CreditCardDown)
             ->authorize('orders.edit')
-            ->visible($this->order->isPaymentAuthorized())
+            ->visible($this->order->isPaymentAuthorized() && $this->order->isNotCancelled() && ! $this->order->isArchived())
             ->requiresConfirmation()
             ->modalIcon(Untitledui::CreditCardDown)
             ->modalHeading(__('shopper::pages/orders.modals.capture_heading', ['number' => $this->order->number]))
@@ -192,7 +208,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->color('danger')
             ->icon(Untitledui::Archive)
             ->authorize('orders.edit')
-            ->visible(! $this->order->isCompleted() && ! $this->order->isPaid())
+            ->visible(! $this->order->isCompleted() && ! $this->order->isPaid() && ! $this->order->isArchived())
             ->requiresConfirmation()
             ->modalHeading(__('shopper::pages/orders.modals.archived_number', ['number' => $this->order->number]))
             ->modalDescription(__('shopper::pages/orders.modals.archived_notice'))

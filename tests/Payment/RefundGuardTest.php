@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
@@ -156,6 +157,19 @@ it('short-circuits a capture on an already paid order without calling the driver
     expect($result->success)->toBeTrue()
         ->and($this->driverCalls)->toBeEmpty()
         ->and(PaymentTransaction::query()->where('order_id', $order->id)->where('type', TransactionType::Capture)->count())->toBe(1);
+});
+
+it('refuses to capture the payment of a cancelled order', function (): void {
+    $order = Order::factory()->create([
+        'payment_method_id' => $this->method->id,
+        'status' => OrderStatus::Cancelled,
+        'payment_status' => PaymentStatus::Authorized,
+    ]);
+
+    expect(fn () => $this->service->capture($order, 'pi_guard'))
+        ->toThrow(PaymentException::class);
+
+    expect($this->driverCalls)->toBeEmpty();
 });
 
 it('records the acting user on payment transactions', function (): void {

@@ -122,6 +122,10 @@ final class PaymentProcessingService
             );
         }
 
+        if (in_array($order->status, [OrderStatus::Cancelled, OrderStatus::Archived], strict: true)) {
+            throw PaymentException::captureNotAllowed($order->status->value);
+        }
+
         $paymentMethod = $order->paymentMethod;
         $driver = $this->resolveDriver($paymentMethod);
 
