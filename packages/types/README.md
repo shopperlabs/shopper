@@ -4,20 +4,20 @@
 
 # Shopper Types definitions
 
-TypeScript types derived from the OpenAPI Spec (OAS) to be used in API clients for Shopper.
+TypeScript types for the resources of the Shopper API, used by [`@shopperlabs/shopper-sdk`](https://www.npmjs.com/package/@shopperlabs/shopper-sdk) and by any client of the API.
 
 ## Install
 
 ```bash
-npm install @shopper/types
+npm install @shopperlabs/shopper-types
 # or
-yarn add @shopper/types
+yarn add @shopperlabs/shopper-types
 ```
 
 ## Usage
 
 ```typescript
-import type { Product, Order, Customer } from '@shopper/types'
+import type { Product, Order, Customer } from '@shopperlabs/shopper-types'
 
 const product: Product = {
   id: 1,
@@ -29,39 +29,4 @@ const product: Product = {
 
 ## Available Types
 
-### Models
-- `Product`
-- `ProductVariant`
-- `Category`
-- `Brand`
-- `Collection`
-- `Order`
-- `OrderItem`
-- `Customer`
-- `Address`
-- `Inventory`
-- `Discount`
-- `Review`
-- `Channel`
-- `Currency`
-- `PaymentMethod`
-- `Attribute`
-- `AttributeValue`
-- `Media`
-
-### Enums
-- `ProductType`
-- `CollectionType`
-- `CollectionCondition`
-- `AddressType`
-- `GenderType`
-- `Weight`
-- `Length`
-- `Volume`
-
-### Common Interfaces
-- `Entity`
-- `DateEntity`
-- `Price`
-- `ShippingFields`
-- `SEOFields`
+Every resource of the Shopper API has its interface, exported from the package root along with its enums and the shared shapes (`Entity`, `Price`, `SEOFields`, `ShippingFields`).
