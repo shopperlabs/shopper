@@ -86,7 +86,7 @@ class ShippingOptionForm extends SlideOverComponent implements HasActions, HasSc
                         MoneyInput::make('price')
                             ->label(__('shopper::forms.label.price'))
                             ->required()
-                            ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
+                            ->amountRules()
                             ->currency($this->zone->currency->code),
                         Select::make('carrier_id')
                             ->label(__('shopper::pages/settings/carriers.title'))

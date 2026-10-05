@@ -27,4 +27,21 @@ trait SerializesPrices
                 'currency_code' => $price->currency_code,
             ])->values()->all();
     }
+
+    /**
+     * @return array<string, array<string, mixed>|null>
+     */
+    protected function calculatedPricePayload(): array
+    {
+        $raw = $this->resource->getAttributes();
+
+        if (! array_key_exists('calculated_price', $raw)) {
+            return [];
+        }
+
+        return [
+            'calculated_price' => $raw['calculated_price'],
+            'quantity_rule' => $raw['quantity_rule'] ?? null,
+        ];
+    }
 }

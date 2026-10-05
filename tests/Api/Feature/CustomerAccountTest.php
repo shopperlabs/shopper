@@ -196,6 +196,7 @@ it('retrieves a customer order with its full account detail', function (): void 
         'quantity' => 2,
         'unit_price_amount' => 1500,
         'discount_amount' => 0,
+        'metadata' => ['engraving' => 'MC'],
     ]);
 
     $shipping = OrderShipping::factory()->create([
@@ -223,7 +224,8 @@ it('retrieves a customer order with its full account detail', function (): void 
 
     expect($included->pluck('type'))->toContain('order-items', 'order-addresses', 'payment-methods', 'order-shippings', 'order-shipping-events')
         ->and($included->where('type', 'order-addresses')->pluck('attributes.city')->all())->toContain('Paris', 'Lyon')
-        ->and($included->firstWhere('type', 'payment-methods')['attributes']['title'])->toBe('Card');
+        ->and($included->firstWhere('type', 'payment-methods')['attributes']['title'])->toBe('Card')
+        ->and($included->firstWhere('type', 'order-items')['attributes']['metadata'])->toBe(['engraving' => 'MC']);
 
     $shipment = $included->firstWhere('type', 'order-shippings');
 

@@ -40,6 +40,10 @@
     @apply px-1;
   }
 
+  .fi-ta-header-toolbar > .fi-ta-actions:has(.sh-table-tabs) {
+    @apply min-w-0 shrink;
+  }
+
   .fi-ta-content {
     @apply ring-sh-border rounded-xl ring-1;
 

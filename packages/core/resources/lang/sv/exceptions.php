@@ -9,6 +9,7 @@ return [
     'discount_terms_frozen' => 'Det går inte att ändra kod, typ eller värde för en rabatt som redan har använts. Dessa villkor förblir frysta för att hålla tidigare inlösen korrekta.',
 
     'campaign_budget_exceeded' => 'Kampanjen ":name" har nått sin budget och kan inte längre tillämpas.',
+    'payment_provider_unavailable' => 'Betalningsleverantören kunde inte nås. Försök igen.',
 
     'discount_value' => [
         'not_positive' => 'Rabattvärdet måste vara större än noll.',

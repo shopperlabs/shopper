@@ -1,4 +1,11 @@
-import type { Cart, Order, PaymentMethod, PaymentSession, ShippingOption } from '@shopperlabs/shopper-types'
+import type {
+  Cart,
+  CartPriceChange,
+  Order,
+  PaymentMethod,
+  PaymentSession,
+  ShippingOption,
+} from '@shopperlabs/shopper-types'
 
 import type { HttpClient } from '../client'
 import type { RequestParams } from '../http'
@@ -15,6 +22,8 @@ export type CreateCartPayload = {
 export type UpdateCartPayload = {
   /** Re-price the cart in another currency. Drops the shipping and payment choices bound to the old one. */
   currency_code?: string
+  /** Re-price the cart for the zone with this code. Drops the shipping and payment choices, keeps the currency. */
+  zone_code?: string
   /** Contact email frozen on the order at completion. */
   email?: string | null
   metadata?: Record<string, unknown> | null
@@ -60,6 +69,13 @@ export interface ShippingOptionList {
   data: ShippingOption[]
   /** Carriers that failed to quote, options dropped for currency mismatch, ... */
   warnings: string[]
+}
+
+/** The customer cart after a transfer plus the lines repriced by it. */
+export interface CartTransfer {
+  cart: Cart
+  /** Lines whose unit price moved in the same currency: show them before checkout. */
+  price_changes: CartPriceChange[]
 }
 
 /**
@@ -110,10 +126,13 @@ export class CartModule {
    * the id of the returned cart: when the customer already owned one, the
    * guest cart is folded into it and the id sent is gone after the merge.
    */
-  public async transfer(cartId: string, params?: RequestParams): Promise<Cart> {
+  public async transfer(cartId: string, params?: RequestParams): Promise<CartTransfer> {
     const document = await this.client.send('POST', `${this.path}/${cartId}/transfer`, undefined, this.params(params))
 
-    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+    return {
+      cart: flatten<Cart>(document as NonNullable<typeof document>) as Cart,
+      price_changes: (document?.meta?.price_changes as CartPriceChange[] | undefined) ?? [],
+    }
   }
 
   public async createLineItem(cartId: string, payload: CreateCartLinePayload, params?: RequestParams): Promise<Cart> {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Api\Concerns;
 
 use Closure;
+use Illuminate\Contracts\Cache\LockTimeoutException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Http\Request;
@@ -12,10 +13,15 @@ use Illuminate\Support\Collection;
 use Shopper\Api\Http\Resources\CartResource;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Exceptions\CartCompletedException;
+use Shopper\Cart\Exceptions\CartLineLockedException;
+use Shopper\Cart\Exceptions\CartLineMetadataConflictException;
 use Shopper\Cart\Exceptions\InsufficientStockException;
 use Shopper\Cart\Exceptions\MissingPriceException;
+use Shopper\Cart\Exceptions\PaymentSessionCollectedException;
+use Shopper\Cart\Exceptions\QuantityRuleViolationException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
+use Shopper\Core\Exceptions\PaymentProviderUnavailableException;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Contracts\ProductVariant as ProductVariantContract;
 use Shopper\Http\Enum\ErrorCode;
@@ -27,6 +33,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait RespondsWithCart
 {
+    use LocksPaymentSession;
+
     protected function findCart(Request $request, string $publicId): Cart
     {
         /** @var Cart|null $cart */
@@ -34,7 +42,7 @@ trait RespondsWithCart
 
         if (
             ! $cart
-            || ($cart->customer_id !== null && $cart->customer_id !== $request->user('sanctum')?->getAuthIdentifier())
+            || ($cart->customer_id !== null && ! $cart->belongsToCustomer($request->user('sanctum')?->getAuthIdentifier()))
         ) {
             throw (new ModelNotFoundException)->setModel(Cart::class, [$publicId]);
         }
@@ -95,10 +103,29 @@ trait RespondsWithCart
             return $operation();
         } catch (InsufficientStockException $exception) {
             throw ApiValidationException::withCode(ErrorCode::StockInsufficient, ['quantity' => $exception->getMessage()]);
+        } catch (QuantityRuleViolationException $exception) {
+            throw ApiValidationException::withCode(ErrorCode::QuantityRuleViolated, ['quantity' => $exception->getMessage()], $exception->context());
+        } catch (CartLineMetadataConflictException $exception) {
+            throw ApiValidationException::withCode(ErrorCode::CartLineMetadataConflict, ['metadata' => $exception->getMessage()]);
         } catch (MissingPriceException $exception) {
             throw ApiValidationException::withCode(ErrorCode::PriceMissing, ['cart' => $exception->getMessage()]);
         } catch (CartCompletedException $exception) {
             throw new ApiException(Response::HTTP_CONFLICT, ErrorCode::CartCompleted, $exception->getMessage());
+        } catch (CartLineLockedException $exception) {
+            throw new ApiException(Response::HTTP_CONFLICT, ErrorCode::CartLineLocked, $exception->getMessage());
+        } catch (PaymentSessionCollectedException $exception) {
+            throw new ApiException(Response::HTTP_CONFLICT, ErrorCode::PaymentSessionCollected, $exception->getMessage());
+        } catch (LockTimeoutException $exception) {
+            throw $this->paymentSessionInProgress($exception);
+        } catch (PaymentProviderUnavailableException $exception) {
+            report($exception);
+
+            throw new ApiException(
+                Response::HTTP_SERVICE_UNAVAILABLE,
+                ErrorCode::PaymentProviderUnavailable,
+                __('shopper-api::messages.payment.provider_unavailable'),
+                ['Retry-After' => 5],
+            );
         }
     }
 

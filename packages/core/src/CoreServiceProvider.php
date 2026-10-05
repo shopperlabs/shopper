@@ -13,7 +13,10 @@ use Shopper\Core\Console\ReconcileStockLevelsCommand;
 use Shopper\Core\Console\RedispatchWebhooksCommand;
 use Shopper\Core\Console\SyncCollectionsCommand;
 use Shopper\Core\Contracts\InventoryResolver;
+use Shopper\Core\Contracts\PaymentSessionGateway;
 use Shopper\Core\Contracts\PriceResolver;
+use Shopper\Core\Contracts\ProductPriceIndex;
+use Shopper\Core\Contracts\QuantityRuleResolver;
 use Shopper\Core\Contracts\StockAllocator;
 use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Contracts\TaxCalculationProvider;
@@ -41,7 +44,10 @@ use Shopper\Core\Observers\OrderObserver;
 use Shopper\Core\Observers\ProductObserver;
 use Shopper\Core\Observers\ProductVariantObserver;
 use Shopper\Core\Observers\TaxZoneObserver;
+use Shopper\Core\Payments\NullPaymentSessionGateway;
 use Shopper\Core\Pricing\CatalogPriceResolver;
+use Shopper\Core\Pricing\CatalogProductPriceIndex;
+use Shopper\Core\Pricing\DefaultQuantityRuleResolver;
 use Shopper\Core\Stock\DefaultInventoryResolver;
 use Shopper\Core\Stock\LockingStockReserver;
 use Shopper\Core\Stock\PriorityStockAllocator;
@@ -66,9 +72,9 @@ final class CoreServiceProvider extends PackageServiceProvider
 
     /** @var array<class-string, class-string> */
     public array $singletons = [
-        TaxCalculationProvider::class => SystemTaxProvider::class,
-        TaxCalculator::class => TaxCalculator::class,
         PriceResolver::class => CatalogPriceResolver::class,
+        QuantityRuleResolver::class => DefaultQuantityRuleResolver::class,
+        ProductPriceIndex::class => CatalogProductPriceIndex::class,
         ChannelManager::class => ChannelManager::class,
         ImportManager::class => ImportManager::class,
         WebhookPayloadSerializer::class => DefaultWebhookPayloadSerializer::class,
@@ -115,6 +121,9 @@ final class CoreServiceProvider extends PackageServiceProvider
     {
         $this->app->register(EventServiceProvider::class);
         $this->app->scoped(Queries\CategoryTree::class);
+        $this->app->scoped(TaxCalculationProvider::class, SystemTaxProvider::class);
+        $this->app->scoped(TaxCalculator::class);
+        $this->app->singletonIf(PaymentSessionGateway::class, NullPaymentSessionGateway::class);
 
         $this->registerConfigFiles();
         $this->registerDatabase();
@@ -140,7 +149,7 @@ final class CoreServiceProvider extends PackageServiceProvider
     {
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
             if (config('shopper.orders.reclaim_pending_after_hours')) {
-                $schedule->command('shopper:orders:reclaim')->hourly();
+                $schedule->command('shopper:orders:reclaim')->hourly()->withoutOverlapping(60);
             }
 
             $schedule->command('shopper:webhooks:redispatch')->everyFifteenMinutes();

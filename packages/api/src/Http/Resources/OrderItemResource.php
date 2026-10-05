@@ -25,6 +25,7 @@ class OrderItemResource extends JsonApiResource
             'quantity' => $this->quantity,
             'unit_price_amount' => $this->unit_price_amount,
             'total' => $this->total,
+            'metadata' => $this->metadata,
         ];
     }
 }

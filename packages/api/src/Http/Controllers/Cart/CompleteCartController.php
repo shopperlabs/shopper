@@ -10,6 +10,7 @@ use Shopper\Api\Actions\CompleteCartAction;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Concerns\RespondsWithOrder;
 use Shopper\Api\Http\Resources\OrderResource;
+use Shopper\Core\Models\Contracts\Order;
 use Symfony\Component\HttpFoundation\Response;
 
 final class CompleteCartController
@@ -35,7 +36,7 @@ final class CompleteCartController
     {
         $cart = $this->findCart($request, $cartId);
 
-        $order = $this->action->execute($cart);
+        $order = $this->mutateCart(fn (): Order => $this->action->execute($cart));
 
         // The flag survives the re-fetch below and stays false on every
         // idempotent path, including the loser of a concurrent completion.

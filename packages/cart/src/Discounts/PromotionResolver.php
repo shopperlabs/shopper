@@ -32,16 +32,26 @@ final readonly class PromotionResolver
     /**
      * Apply every promotion on the cart deterministically.
      *
-     * Valid candidates are ordered by (exclusivity class, priority desc, id),
-     * exclusivity and the max-stack cap decide which actually apply, then each
-     * applied promotion draws from a shared per-line balance so a line can never
-     * be discounted below zero and the same cart state always yields the same
-     * adjustments. Suppressed or invalid promotions stay on the cart with a zero
-     * computed amount.
+     * Valid candidates are ordered by (exclusivity class, priority desc, id).
+     * The first promotion applied in a class always applies; a later one in the
+     * same class stacks only when it and that first one are both combinable,
+     * different classes always stack, and the count is capped at the configured
+     * maximum. Each applied promotion draws from a shared per-line balance so a
+     * line can never be discounted below zero and the same cart state always
+     * yields the same adjustments. A promotion that discounts nothing, or that
+     * its campaign's remaining spend budget cannot absorb, is dropped before it
+     * takes its class or a slot under the cap. Suppressed or invalid promotions
+     * stay on the cart with a zero computed amount.
      */
     public function resolve(CartPipelineContext $context): void
     {
         $cart = $context->cart;
+
+        if ($cart->holdsProviderPaymentSession()) {
+            $context->discountTotal = (int) $cart->lines->sum(fn (CartLine $line): int => (int) $line->adjustments->sum('amount'));
+
+            return;
+        }
 
         CartLineAdjustment::query()
             ->whereIn('cart_line_id', $cart->lines->pluck('id'))
@@ -50,9 +60,6 @@ final readonly class PromotionResolver
         // The runner eager-loads `lines.adjustments`; drop the cached relation so
         // later pipes (tax) compute on the rewritten adjustments, not the old set.
         $cart->lines->each(fn (CartLine $line) => $line->unsetRelation('adjustments'));
-
-        $valid = $this->validCandidates($context);
-        $applied = $this->selectApplied($this->order($valid));
 
         $remaining = [];
 
@@ -64,21 +71,53 @@ final readonly class PromotionResolver
         $sequence = 0;
         $adjustments = [];
         $computed = [];
+        $campaignSpend = [];
+        $classCombinable = [];
+        $max = (int) config('shopper.cart.max_promotions', 5);
 
-        foreach ($applied as $promotion) {
+        foreach ($this->order($this->validCandidates($context)) as $promotion) {
+            if ($sequence >= $max) {
+                break;
+            }
+
             /** @var Discount $discount */
             $discount = $promotion->discount;
-            $promotionAmount = 0;
+            $class = $discount->exclusivity_class->value;
+
+            if (array_key_exists($class, $classCombinable) && ! ($classCombinable[$class] && $discount->combinable)) {
+                continue;
+            }
+
+            $lineAmounts = [];
 
             foreach ($this->rawAmounts($discount, $context) as $lineId => $raw) {
                 $applicable = min($raw, $remaining[$lineId] ?? 0);
 
-                if ($applicable <= 0) {
+                if ($applicable > 0) {
+                    $lineAmounts[$lineId] = $applicable;
+                }
+            }
+
+            $promotionAmount = array_sum($lineAmounts);
+
+            if ($promotionAmount === 0) {
+                continue;
+            }
+
+            $campaign = $discount->campaign;
+
+            if ($campaign !== null) {
+                if (! $campaign->canAbsorb(($campaignSpend[$campaign->id] ?? 0) + $promotionAmount)) {
                     continue;
                 }
 
+                $campaignSpend[$campaign->id] = ($campaignSpend[$campaign->id] ?? 0) + $promotionAmount;
+            }
+
+            $classCombinable[$class] ??= $discount->combinable;
+
+            foreach ($lineAmounts as $lineId => $applicable) {
                 $remaining[$lineId] -= $applicable;
-                $promotionAmount += $applicable;
 
                 $adjustments[] = [
                     'cart_line_id' => $lineId,
@@ -113,7 +152,9 @@ final readonly class PromotionResolver
      */
     public function wouldApply(Discount $discount, CartPipelineContext $context): bool
     {
-        return array_sum($this->rawAmounts($discount, $context)) > 0;
+        $amount = array_sum($this->rawAmounts($discount, $context));
+
+        return $amount > 0 && ($discount->campaign?->canAbsorb($amount) ?? true);
     }
 
     /**
@@ -144,40 +185,6 @@ final readonly class PromotionResolver
 
             return [$classA, -$a->discount->priority, $a->id] <=> [$classB, -$b->discount->priority, $b->id];
         })->values()->all();
-    }
-
-    /**
-     * The first promotion of each class always applies. A later promotion in the
-     * same class stacks only when it and that class's first promotion are both
-     * combinable; otherwise it is suppressed. Different classes always stack. The
-     * final list is capped at the configured maximum.
-     *
-     * @param  list<CartPromotion>  $ordered
-     * @return list<CartPromotion>
-     */
-    private function selectApplied(array $ordered): array
-    {
-        $classCombinable = [];
-        $applied = [];
-
-        foreach ($ordered as $promotion) {
-            $class = $promotion->discount->exclusivity_class->value;
-
-            if (! array_key_exists($class, $classCombinable)) {
-                $classCombinable[$class] = $promotion->discount->combinable;
-                $applied[] = $promotion;
-
-                continue;
-            }
-
-            if ($classCombinable[$class] && $promotion->discount->combinable) {
-                $applied[] = $promotion;
-            }
-        }
-
-        $max = (int) config('shopper.cart.max_promotions', 5);
-
-        return array_slice($applied, 0, $max);
     }
 
     /**
@@ -277,11 +284,11 @@ final readonly class PromotionResolver
     }
 
     /**
-     * Persist every promotion's computed amount and sequence in one upsert:
-     * applied promotions get their amount/sequence, all others are zeroed (kept
-     * on the cart, contributing nothing). Full rows are supplied so the INSERT
-     * clause is valid on every driver, but only the two columns are updated, and
-     * rows already at their target value are skipped.
+     * Persist every promotion's computed amount, sequence and discount terms in
+     * one upsert: applied promotions get their amount/sequence, all others are
+     * zeroed (kept on the cart, contributing nothing). Full rows are supplied so
+     * the INSERT clause is valid on every driver, but only these columns are
+     * updated, and rows already at their target value are skipped.
      *
      * @param  Collection<int, CartPromotion>  $promotions
      * @param  array<int, array{amount: int, sequence: int}>  $computed
@@ -293,8 +300,11 @@ final readonly class PromotionResolver
         foreach ($promotions as $promotion) {
             $amount = $computed[$promotion->id]['amount'] ?? 0;
             $sequence = $computed[$promotion->id]['sequence'] ?? 0;
+            $type = $promotion->discount?->type;
+            $value = $promotion->discount?->value;
+            $campaignId = $promotion->discount?->campaign_id;
 
-            if ($promotion->computed_amount === $amount && $promotion->sequence === $sequence) {
+            if ($promotion->computed_amount === $amount && $promotion->sequence === $sequence && $promotion->type === $type && $promotion->value === $value && $promotion->campaign_id === $campaignId) {
                 continue;
             }
 
@@ -306,16 +316,22 @@ final readonly class PromotionResolver
                 'code' => $promotion->code,
                 'computed_amount' => $amount,
                 'sequence' => $sequence,
+                'type' => $type?->value,
+                'value' => $value,
+                'campaign_id' => $campaignId,
             ];
 
             $promotion->setAttribute('computed_amount', $amount);
             $promotion->setAttribute('sequence', $sequence);
+            $promotion->setAttribute('type', $type);
+            $promotion->setAttribute('value', $value);
+            $promotion->setAttribute('campaign_id', $campaignId);
             $promotion->syncChanges();
-            $promotion->syncOriginalAttributes(['computed_amount', 'sequence']);
+            $promotion->syncOriginalAttributes(['computed_amount', 'sequence', 'type', 'value', 'campaign_id']);
         }
 
         if ($rows !== []) {
-            CartPromotion::query()->upsert($rows, ['id'], ['computed_amount', 'sequence']);
+            CartPromotion::query()->upsert($rows, ['id'], ['computed_amount', 'sequence', 'type', 'value', 'campaign_id']);
         }
     }
 }

@@ -24,21 +24,25 @@ final readonly class SetCartShippingMethodAction
      */
     public function execute(Cart $cart, string $optionId): void
     {
-        $cart->load(['zone.currency', 'zone.carriers', 'lines.purchasable', 'addresses.country']);
+        $this->cartManager->withPaymentSessionLock($cart, function () use ($cart, $optionId): void {
+            $cart->unsetRelations()->refresh()->load(['zone.currency', 'zone.carriers', 'lines.purchasable', 'addresses.country']);
 
-        ['options' => $options] = $this->shippingOptions->execute($cart);
+            ['options' => $options, 'unavailable_carriers' => $unavailableCarriers] = $this->shippingOptions->execute($cart);
 
-        /** @var ShippingOption|null $option */
-        $option = $options->first(
-            fn (ShippingOption $option): bool => $option->id() === $optionId,
-        );
+            /** @var ShippingOption|null $option */
+            $option = $options->first(
+                fn (ShippingOption $option): bool => $option->id() === $optionId,
+            );
 
-        if (! $option) {
-            throw ApiValidationException::withCode(ErrorCode::ShippingOptionUnavailable, [
-                'option_id' => __('shopper-api::messages.shipping.option_not_available'),
-            ]);
-        }
+            if (! $option) {
+                $this->shippingOptions->guardCarrierOutage($optionId, $unavailableCarriers);
 
-        $this->cartManager->setShippingMethod($cart, $option->id(), $option->rate->amount);
+                throw ApiValidationException::withCode(ErrorCode::ShippingOptionUnavailable, [
+                    'option_id' => __('shopper-api::messages.shipping.option_not_available'),
+                ]);
+            }
+
+            $this->cartManager->setShippingMethod($cart, $option->id(), $option->rate->amount);
+        });
     }
 }

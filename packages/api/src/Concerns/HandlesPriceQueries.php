@@ -6,14 +6,14 @@ namespace Shopper\Api\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Core\Enum\ProductType;
-use Shopper\Core\Models\Contracts\ProductVariant;
-use Shopper\Core\Models\Price;
+use Shopper\Core\Contracts\ProductPriceIndex;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilderRequest;
 
 trait HandlesPriceQueries
 {
+    use ResolvesPricingContext;
+
     /**
      * Whether the request needs the price aggregate on the query itself
      * (sorting or bounding by price). The aggregate subquery is only added
@@ -81,8 +81,8 @@ trait HandlesPriceQueries
      * that currency, and excluding them keeps the ordering identical across
      * MySQL, Postgres and SQLite. When a price bound is requested the
      * explicit exclusion is skipped: a NULL aggregate never satisfies the
-     * bound comparison, so re-stating it would only duplicate the EXISTS
-     * probes on both the count and select queries.
+     * bound comparison, so re-stating it would only evaluate the aggregate
+     * twice on both the count and select queries.
      *
      * @template TModel of Model
      *
@@ -101,27 +101,7 @@ trait HandlesPriceQueries
             return $query;
         }
 
-        return $query->where(function (Builder $query) use ($currencyId): void {
-            $query
-                ->where(function (Builder $query) use ($currencyId): void {
-                    $query
-                        ->where(function (Builder $query): void {
-                            $query
-                                ->where('type', '<>', ProductType::Variant)
-                                ->orWhereNull('type');
-                        })
-                        ->whereHas('prices', fn (Builder $query) => $query
-                            ->where('currency_id', $currencyId)
-                            ->whereNotNull('amount'));
-                })
-                ->orWhere(function (Builder $query) use ($currencyId): void {
-                    $query
-                        ->where('type', ProductType::Variant)
-                        ->whereHas('variants.prices', fn (Builder $query) => $query
-                            ->where('currency_id', $currencyId)
-                            ->whereNotNull('amount'));
-                });
-        });
+        return $query->whereRaw("({$sql}) is not null");
     }
 
     /**
@@ -155,41 +135,16 @@ trait HandlesPriceQueries
     }
 
     /**
-     * The aggregate as a self-contained SQL expression with every value
-     * inlined (server-controlled morph aliases, enum value, currency id;
-     * never user input). Bindings are deliberately avoided: cursor
-     * pagination copies the sorted expression into its WHERE clause without
-     * carrying select bindings along, which would desalign every
-     * placeholder after it.
-     *
      * @template TModel of Model
      *
      * @param  Builder<TModel>  $query
      */
     private function minPriceExpression(Builder $query, int $currencyId): string
     {
-        $grammar = $query->getQuery()->getGrammar();
-        $productsTable = $query->getModel()->getTable();
-        $productMorph = $grammar->quoteString($query->getModel()->getMorphClass());
-
-        /** @var Model $variantModel */
-        $variantModel = resolve(ProductVariant::class);
-        $variantsTable = $variantModel->getTable();
-        $variantMorph = $grammar->quoteString($variantModel->getMorphClass());
-        $variantType = $grammar->quoteString(ProductType::Variant->value);
-        $pricesTable = (new Price)->getTable();
-
-        $own = "SELECT MIN({$pricesTable}.amount) FROM {$pricesTable}"
-            ." WHERE {$pricesTable}.priceable_type = {$productMorph}"
-            ." AND {$pricesTable}.priceable_id = {$productsTable}.id"
-            ." AND {$pricesTable}.currency_id = {$currencyId}";
-
-        $variant = "SELECT MIN({$pricesTable}.amount) FROM {$pricesTable}"
-            ." INNER JOIN {$variantsTable} ON {$variantsTable}.id = {$pricesTable}.priceable_id"
-            ." WHERE {$pricesTable}.priceable_type = {$variantMorph}"
-            ." AND {$variantsTable}.product_id = {$productsTable}.id"
-            ." AND {$pricesTable}.currency_id = {$currencyId}";
-
-        return "CASE WHEN {$productsTable}.type = {$variantType} THEN ({$variant}) ELSE ({$own}) END";
+        return resolve(ProductPriceIndex::class)->minPriceExpression(
+            $query,
+            $currencyId,
+            $this->requestPricingContext(),
+        );
     }
 }

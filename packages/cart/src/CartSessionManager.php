@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Shopper\Cart;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Session\SessionManager;
-use Shopper\Cart\Exceptions\MissingPriceException;
+use Shopper\Cart\Exceptions\CartCompletedException;
+use Shopper\Cart\Exceptions\CartOwnedByAnotherCustomerException;
+use Shopper\Cart\Exceptions\PaymentSessionCollectedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
+use Throwable;
 
 final class CartSessionManager
 {
@@ -62,9 +66,7 @@ final class CartSessionManager
     }
 
     /**
-     * Attach the session cart to the user who just signed in, folding it into
-     * the cart they already owned when one exists and repointing the session
-     * to the surviving cart.
+     * Attach the session cart to the user who just signed in
      */
     public function associate(Authenticatable $user): void
     {
@@ -74,27 +76,15 @@ final class CartSessionManager
             return;
         }
 
-        if ($cart->customer_id === $user->getAuthIdentifier()) {
-            return;
+        try {
+            $this->use(resolve(CartManager::class)->transfer($cart, $user->getAuthIdentifier()));
+        } catch (CartCompletedException|CartOwnedByAnotherCustomerException|ModelNotFoundException) {
+            $this->forget();
+        } catch (PaymentSessionCollectedException) {
+            $this->use($cart);
+        } catch (Throwable $exception) {
+            report($exception);
         }
-
-        /** @var Cart|null $existing */
-        $existing = resolve(CartContract::class)::query()
-            ->where('customer_id', $user->getAuthIdentifier())
-            ->whereNull('completed_at')
-            ->latest()
-            ->first();
-
-        if ($existing) {
-            try {
-                $this->use(resolve(CartManager::class)->merge($cart, $existing));
-
-                return;
-            } catch (MissingPriceException) {
-            }
-        }
-
-        $cart->update(['customer_id' => $user->getAuthIdentifier()]);
     }
 
     private function sessionKey(): string

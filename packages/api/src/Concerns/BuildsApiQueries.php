@@ -155,8 +155,9 @@ trait BuildsApiQueries
      *
      * Offset pagination stays the default for classic paged storefronts, with
      * the page number capped so a deep page can never scan the whole table.
-     * A `page[cursor]` parameter switches to cursor pagination, whose cost is
-     * flat at any depth: the way to walk a very large catalog.
+     * A `page[cursor]` parameter switches to cursor pagination, whose cost
+     * stays flat at any depth when the sort column is indexed: the way to
+     * walk a very large catalog.
      *
      * @template TModel of Model
      *

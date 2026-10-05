@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Event;
 use Shopper\Cart\Actions\CreateOrderFromCartAction;
 use Shopper\Cart\CartManager;
@@ -28,6 +29,7 @@ use Shopper\Core\Models\OrderAddress;
 use Shopper\Core\Models\OrderTaxLine;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Product;
+use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxZone;
 use Tests\Core\Stubs\User;
@@ -68,6 +70,32 @@ describe(CreateOrderFromCartAction::class, function (): void {
             ->and($order->customer_id)->toBe($this->user->id)
             ->and($order->items)->toHaveCount(1)
             ->and($order->items->first()->quantity)->toBe(2);
+    });
+
+    it('copies the line metadata onto the order item', function (): void {
+        $this->cartManager->add($this->cart, $this->product, metadata: ['engraving' => 'MC']);
+
+        $order = $this->action->execute($this->cart);
+
+        expect($order->items->sole()->refresh()->metadata)->toBe(['engraving' => 'MC']);
+    });
+
+    it('names the variant items without loading their product one line at a time', function (): void {
+        foreach (ProductVariant::factory()->count(2)->create(['product_id' => $this->product->id]) as $variant) {
+            $variant->prices()->create(['amount' => 30, 'currency_id' => $this->currency->id]);
+            $variant->mutateStock($this->inventory->id, 10);
+            $this->cartManager->add($this->cart, $variant);
+        }
+
+        Model::preventLazyLoading();
+
+        try {
+            $order = $this->action->execute(Cart::query()->findOrFail($this->cart->id));
+        } finally {
+            Model::preventLazyLoading(false);
+        }
+
+        expect($order->items->pluck('name')->all())->each->toStartWith($this->product->name.' / ');
     });
 
     it('transfers discount amount to order items', function (): void {
@@ -473,6 +501,30 @@ describe(CreateOrderFromCartAction::class, function (): void {
         expect($discount->refresh()->total_use)->toBe(1);
     });
 
+    it('places a paid order without a discount link when the discount is deleted during checkout', function (): void {
+        $discount = Discount::factory()->create([
+            'code' => 'SAVE10',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->applyCoupon($this->cart, 'SAVE10');
+
+        $order = $this->action->execute(
+            $this->cart->refresh(),
+            assertTotals: fn () => $discount->delete(),
+            honoursPayment: fn (): bool => true,
+        );
+
+        expect($order->discount_id)->toBeNull()
+            ->and($order->discount_code)->toBe('SAVE10');
+    });
+
     it('creates the order without a discount when the applied coupon is exhausted', function (): void {
         $discount = Discount::factory()->create([
             'code' => 'LIMITED',
@@ -607,6 +659,26 @@ describe(CreateOrderFromCartAction::class, function (): void {
         $campaign->refresh();
 
         expect($campaign->used_count)->toBe(1)
+            ->and($campaign->spent_amount)->toBeGreaterThan(0)
+            ->and(CampaignBudgetMovement::query()->where('order_id', $order->id)->count())->toBe(1);
+    });
+
+    it('spends the campaign a discount joined after its coupon was applied', function (): void {
+        $campaign = Campaign::factory()->withSpendBudget(amount: 1_000)->create(['currency_code' => 'USD']);
+        $discount = Discount::factory()->create([
+            'code' => 'JOINED', 'is_active' => true, 'type' => DiscountType::Percentage, 'value' => 10,
+            'total_use' => 0, 'apply_to' => DiscountApplyTo::Order, 'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product, quantity: 2);
+        $this->cartManager->applyCoupon($this->cart, 'JOINED');
+        $this->cartManager->calculate($this->cart->refresh());
+        $discount->update(['campaign_id' => $campaign->id]);
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        expect($campaign->refresh()->spent_amount)->toBe((int) $order->promotions->sole()->amount)
             ->and($campaign->spent_amount)->toBeGreaterThan(0)
             ->and(CampaignBudgetMovement::query()->where('order_id', $order->id)->count())->toBe(1);
     });

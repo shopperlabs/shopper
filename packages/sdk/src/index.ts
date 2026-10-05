@@ -53,6 +53,7 @@ export { AuthModule } from './auth'
 export type { RegisterPayload, LoginPayload, ResetPasswordPayload } from './auth'
 export { StoreModule, CustomerModule, CartModule, SingletonResource, type Paginated } from './store'
 export type {
+  CartTransfer,
   CreateCartPayload,
   CreateCartLinePayload,
   UpdateCartLinePayload,

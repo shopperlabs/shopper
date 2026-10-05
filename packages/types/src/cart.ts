@@ -27,7 +27,7 @@ export interface AppliedCartPromotion {
   source: 'code' | 'automatic'
   /** The discount amount this promotion contributes, in cents. */
   amount: number
-  /** `applied` when it reduces the cart, `suppressed` when stacked out by another promotion. */
+  /** `applied` when it reduces the cart, `suppressed` when stacked out by another promotion or its campaign spend budget cannot absorb it. */
   status: 'applied' | 'suppressed'
 }
 
@@ -96,6 +96,8 @@ export interface CartLine extends Entity {
   quantity: number
   /** The unit price amount (in cents). */
   unit_price_amount: number
+  /** Whether the unit price was set by the merchant and is locked, along with the quantity (store API). */
+  is_custom_price?: boolean
   /** The line subtotal in cents (unit price times quantity, store API). */
   subtotal?: number
   /** The discount amount applied to this line in cents (store API). */
@@ -112,6 +114,19 @@ export interface CartLine extends Entity {
   adjustments?: CartLineAdjustment[]
   /** The tax lines applied to this line. */
   tax_lines?: CartLineTaxLine[]
+}
+
+/**
+ * A line repriced when a guest cart is transferred to a customer, listed in
+ * the `meta.price_changes` of the transfer response.
+ */
+export interface CartPriceChange {
+  /** The cart line ID. */
+  line: ResourceId
+  /** The unit price amount before the transfer (in cents). */
+  from: number
+  /** The unit price amount after the transfer (in cents). */
+  to: number
 }
 
 /**

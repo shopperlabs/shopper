@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Shopper\Api\Http\Resources;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\JsonApi\JsonApiRequest;
 use Illuminate\Http\Resources\JsonApi\JsonApiResource as BaseJsonApiResource;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Shopper\Api\Support\ResourceManifest;
+use Shopper\Http\Support\Vary;
 
 abstract class JsonApiResource extends BaseJsonApiResource
 {
@@ -44,6 +46,15 @@ abstract class JsonApiResource extends BaseJsonApiResource
                 ? ['jsonapi' => $implementation]
                 : [],
         ]);
+    }
+
+    public function withResponse(Request $request, JsonResponse $response): void
+    {
+        parent::withResponse($request, $response);
+
+        if ($request->attributes->get('shopper_calculated_prices') === true) {
+            Vary::add($response, 'Authorization');
+        }
     }
 
     /**

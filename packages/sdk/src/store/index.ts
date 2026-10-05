@@ -26,6 +26,7 @@ export { CartModule } from './cart'
 export type {
   CartAddressPayload,
   CreateCartLinePayload,
+  CartTransfer,
   CreateCartPayload,
   SetCartAddressesPayload,
   ShippingOptionList,

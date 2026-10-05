@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -76,6 +77,13 @@ it('attaches the cart to the authenticated customer', function (): void {
         ->json('data.id');
 
     expect(Cart::query()->where('public_id', $cartId)->value('customer_id'))->toBe($customer->id);
+});
+
+it('rejects cart metadata the database cannot store on creation', function (): void {
+    $this->postJson('/store/carts', ['metadata' => ['note' => "a\u{0}b"]])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'closure_validation_rule')
+        ->assertJsonPath('errors.0.source.pointer', '/data/attributes/metadata');
 });
 
 it('rejects a currency the shop does not sell in', function (): void {
@@ -184,6 +192,18 @@ it('merges duplicate purchasables into a single line', function (): void {
     expect(includedCartLines($response)->sole()['attributes']['quantity'])->toBe(3);
 });
 
+it('rejects adding a purchasable again with different line metadata', function (): void {
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+    $payload = ['purchasable_type' => 'product', 'purchasable_id' => $this->product->public_id];
+
+    $this->postJson("/store/carts/{$cartId}/lines", [...$payload, 'metadata' => ['engraving' => 'Alice']])->assertOk();
+
+    $this->postJson("/store/carts/{$cartId}/lines", [...$payload, 'metadata' => ['engraving' => 'Bob']])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'cart_line_metadata_conflict')
+        ->assertJsonPath('errors.0.source.pointer', '/data/attributes/metadata');
+});
+
 it('adds a variant to the cart', function (): void {
     $variant = ProductVariant::factory()->create(['product_id' => $this->product->id]);
     $variant->prices()->create([
@@ -247,6 +267,7 @@ it('rejects purchasables a storefront cannot sell', function (): void {
     $external = Product::factory()->external()->publish()->create();
     $parent = Product::factory()->publish()->create(['type' => ProductType::Variant]);
     $unpriced = Product::factory()->standard()->publish()->create();
+    $unpriced->mutateStock($this->inventory->id, 5);
 
     foreach ([
         '01JUNKNOWNPURCHASABLEID000' => 'purchasable_unavailable',
@@ -258,8 +279,77 @@ it('rejects purchasables a storefront cannot sell', function (): void {
         $this->postJson("/store/carts/{$cartId}/lines", [
             'purchasable_type' => 'product',
             'purchasable_id' => $publicId,
-        ])->assertUnprocessable()->assertJsonPath('errors.0.code', $code);
+        ])
+            ->assertUnprocessable()
+            ->assertJsonPath('errors.0.code', $code)
+            ->assertJsonPath('errors.0.source.pointer', '/data/attributes/purchasable_id');
     }
+});
+
+it('rejects a line quantity or metadata beyond what a cart stores', function (array $payload, string $code, string $pointer): void {
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+
+    $this->postJson("/store/carts/{$cartId}/lines", [
+        'purchasable_type' => 'product',
+        'purchasable_id' => $this->product->public_id,
+        ...$payload,
+    ])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', $code)
+        ->assertJsonPath('errors.0.source.pointer', $pointer);
+})->with([
+    'quantity' => [['quantity' => 1_000_001], 'max', '/data/attributes/quantity'],
+    'metadata' => [['metadata' => ['note' => str_repeat('a', 5000)]], 'closure_validation_rule', '/data/attributes/metadata'],
+]);
+
+it('rejects a line update whose quantity or metadata goes beyond what a cart stores', function (array $payload, string $code, string $pointer): void {
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+    $response = $this->postJson("/store/carts/{$cartId}/lines?include=lines", [
+        'purchasable_type' => 'product',
+        'purchasable_id' => $this->product->public_id,
+    ]);
+    $lineId = includedCartLines($response)->sole()['id'];
+
+    $this->patchJson("/store/carts/{$cartId}/lines/{$lineId}", $payload)
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', $code)
+        ->assertJsonPath('errors.0.source.pointer', $pointer);
+})->with([
+    'quantity' => [['quantity' => 1_000_001], 'max', '/data/attributes/quantity'],
+    'metadata' => [['metadata' => ['note' => str_repeat('a', 5000)]], 'closure_validation_rule', '/data/attributes/metadata'],
+]);
+
+it('rejects line metadata the database cannot store', function (array $metadata): void {
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+
+    $this->post("/store/carts/{$cartId}/lines", [
+        'purchasable_type' => 'product',
+        'purchasable_id' => $this->product->public_id,
+        'metadata' => $metadata,
+    ], ['Accept' => 'application/json'])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'closure_validation_rule')
+        ->assertJsonPath('errors.0.source.pointer', '/data/attributes/metadata');
+})->with([
+    'invalid UTF-8' => [['note' => "\xff"]],
+    'NUL character' => [['note' => "a\u{0}b"]],
+    'NUL character in a key' => [["a\u{0}b" => 'gift']],
+    'file' => [['note' => new UploadedFile(__FILE__, 'note.txt', test: true)]],
+]);
+
+it('refuses to add a purchasable again beyond the largest quantity a line holds', function (): void {
+    $this->product->update(['allow_backorder' => true]);
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+    $line = ['purchasable_type' => 'product', 'purchasable_id' => $this->product->public_id];
+
+    $this->postJson("/store/carts/{$cartId}/lines", [...$line, 'quantity' => 1_000_000])->assertSuccessful();
+
+    $this->postJson("/store/carts/{$cartId}/lines", $line)
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'quantity_rule_violated')
+        ->assertJsonPath('errors.0.meta.maximum', 1_000_000);
+
+    expect(Cart::query()->where('public_id', $cartId)->sole()->lines()->sole()->quantity)->toBe(1_000_000);
 });
 
 it('returns a validation error when stock is insufficient', function (): void {
@@ -401,6 +491,15 @@ it('updates the cart metadata', function (): void {
     expect($cart->refresh()->metadata)->toBe(['note' => 'gift']);
 });
 
+it('accepts cart metadata holding a whole number written as a float', function (): void {
+    $cart = Cart::factory()->create(['currency_code' => 'USD']);
+
+    $this->call('PATCH', "/store/carts/{$cart->public_id}", server: ['CONTENT_TYPE' => 'application/json', 'HTTP_ACCEPT' => 'application/json'], content: '{"metadata":{"weight":1.0}}')
+        ->assertOk();
+
+    expect($cart->refresh()->metadata)->toEqual(['weight' => 1]);
+});
+
 it('updates the cart contact email', function (): void {
     $cart = Cart::factory()->create(['currency_code' => 'USD']);
 
@@ -463,24 +562,29 @@ it('rejects a currency that is enabled but not configured for the shop', functio
     expect($cart->refresh()->currency_code)->toBe('USD');
 });
 
-it('rejects a currency change when a line has no price in it', function (): void {
+it('rejects a currency change when a line has no price in it, without repricing the other lines', function (): void {
     setupCurrencies(['USD', 'EUR']);
     Currency::query()->where('code', 'EUR')->update(['is_enabled' => true]);
+    $this->product->prices()->create(['amount' => 3000, 'currency_id' => Currency::query()->where('code', 'EUR')->value('id')]);
 
     $cart = Cart::factory()->create(['currency_code' => 'USD']);
-    $cart->lines()->create([
-        'purchasable_type' => $this->product->getMorphClass(),
-        'purchasable_id' => $this->product->id,
-        'quantity' => 1,
-        'unit_price_amount' => 2500,
-    ]);
+
+    foreach ([$this->product, Product::factory()->standard()->publish()->create()] as $product) {
+        $cart->lines()->create([
+            'purchasable_type' => $product->getMorphClass(),
+            'purchasable_id' => $product->id,
+            'quantity' => 1,
+            'unit_price_amount' => 2500,
+        ]);
+    }
 
     $this->patchJson("/store/carts/{$cart->public_id}", ['currency_code' => 'EUR'])
         ->assertUnprocessable()
         ->assertJsonPath('errors.0.code', 'price_missing')
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/currency_code');
 
-    expect($cart->refresh()->currency_code)->toBe('USD');
+    expect($cart->refresh()->currency_code)->toBe('USD')
+        ->and($cart->lines()->pluck('unit_price_amount')->all())->toBe([2500, 2500]);
 });
 
 it('rejects an update on a completed cart', function (): void {

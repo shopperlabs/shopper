@@ -6,8 +6,8 @@ namespace Shopper\Api;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Foundation\CachesConfiguration;
-use Illuminate\Support\Facades\Cache;
-use Shopper\Core\Models\Currency;
+use Illuminate\Support\Facades\Event;
+use Shopper\Core\Events\Payments\PaymentOrphaned;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -37,8 +37,9 @@ final class ApiServiceProvider extends PackageServiceProvider
             'shopper-config',
         );
 
-        $this->registerCurrencyCacheInvalidation();
         $this->scheduleTokenPruning();
+
+        Event::listen(PaymentOrphaned::class, Listeners\CompleteOrphanedCart::class);
     }
 
     /**
@@ -76,19 +77,5 @@ final class ApiServiceProvider extends PackageServiceProvider
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
             $schedule->command('sanctum:prune-expired', ['--hours' => 24])->daily();
         });
-    }
-
-    private function registerCurrencyCacheInvalidation(): void
-    {
-        $forget = static function (Currency $currency): void {
-            Cache::forget('shopper.api.currency.'.$currency->code);
-
-            if ($currency->wasChanged('code')) {
-                Cache::forget('shopper.api.currency.'.$currency->getOriginal('code'));
-            }
-        };
-
-        Currency::saved($forget);
-        Currency::deleted($forget);
     }
 }

@@ -9,9 +9,11 @@ use Shopper\Api\Http\Controllers\Account\CustomerController;
 use Shopper\Api\Http\Controllers\Account\OrderController;
 use Shopper\Api\Http\Controllers\Auth\AuthenticationController;
 use Shopper\Api\Http\Controllers\Cart\CartTransferController;
+use Shopper\Http\Enum\RateLimit;
 
 Route::post('/auth/logout', [AuthenticationController::class, 'logout']);
-Route::post('/carts/{cartId}/transfer', CartTransferController::class);
+Route::post('/carts/{cartId}/transfer', CartTransferController::class)
+    ->middleware('throttle:'.RateLimit::Checkout->value);
 
 Route::prefix('customers/me')->group(function (): void {
     Route::get('/', [CustomerController::class, 'show']);

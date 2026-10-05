@@ -30,7 +30,8 @@ Route::delete('/carts/{cartId}/promotion', [CartPromotionController::class, 'des
 Route::get('/carts/{cartId}/shipping-options', ShippingOptionController::class);
 Route::post('/carts/{cartId}/shipping-method', [CartShippingMethodController::class, 'store']);
 Route::get('/carts/{cartId}/payment-methods', [CartPaymentMethodController::class, 'index']);
-Route::post('/carts/{cartId}/payment-method', [CartPaymentMethodController::class, 'store']);
+Route::post('/carts/{cartId}/payment-method', [CartPaymentMethodController::class, 'store'])
+    ->middleware('throttle:'.RateLimit::Checkout->value);
 Route::post('/carts/{cartId}/payment-session', [PaymentSessionController::class, 'store'])
     ->middleware('throttle:'.RateLimit::Checkout->value);
 Route::post('/carts/{cartId}/complete', CompleteCartController::class)

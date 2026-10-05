@@ -5,6 +5,7 @@
   "require": {
     "php": "^8.3",
     "illuminate/http": "^12.68|^13.27",
+    "illuminate/log": "^12.68|^13.27",
     "illuminate/support": "^12.68|^13.27",
     "shopper/core": "self.version",
     "shopper/shipping": "self.version"

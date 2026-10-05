@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Cart\Pipelines;
 
 use Closure;
+use Shopper\Cart\Models\CartLine;
 use Shopper\Cart\Taxes\CartLineTaxAdapter;
 use Shopper\Core\Taxes\TaxCalculationContext;
 use Shopper\Core\Taxes\TaxCalculator;
@@ -30,6 +31,19 @@ final readonly class CalculateTax
             customerId: $context->cart->customer_id,
         );
 
+        if ($context->cart->holdsProviderPaymentSession()) {
+            $context->taxTotal += (int) $context->cart->lines->sum(fn (CartLine $line): int => (int) $line->taxLines->sum('amount'));
+        } else {
+            $this->taxLines($context, $taxContext);
+        }
+
+        $context->taxInclusive = $context->cart->heldTaxInclusive() ?? $this->calculator->resolveZone($taxContext)->is_tax_inclusive ?? false;
+
+        return $next($context);
+    }
+
+    private function taxLines(CartPipelineContext $context, TaxCalculationContext $taxContext): void
+    {
         foreach ($context->cart->lines as $line) {
             $discountAmount = (int) $line->adjustments->sum('amount');
             $taxableAmount = ($context->lineSubtotals[$line->id] ?? 0) - $discountAmount;
@@ -62,10 +76,5 @@ final readonly class CalculateTax
 
             $context->taxTotal += $lineTaxTotal;
         }
-
-        $zone = $this->calculator->resolveZone($taxContext);
-        $context->taxInclusive = $zone->is_tax_inclusive ?? false;
-
-        return $next($context);
     }
 }

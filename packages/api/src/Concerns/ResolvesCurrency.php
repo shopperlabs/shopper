@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Api\Concerns;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Shopper\Core\Models\Currency;
 use Shopper\Http\Enum\ErrorCode;
 use Shopper\Http\Exceptions\ApiValidationException;
@@ -59,12 +58,6 @@ trait ResolvesCurrency
             }
         }
 
-        $code = shopper_currency();
-
-        return Cache::remember(
-            'shopper.api.currency.'.$code,
-            3600,
-            fn (): ?Currency => Currency::query()->where('code', $code)->first(),
-        );
+        return Currency::query()->where('code', shopper_currency())->first();
     }
 }

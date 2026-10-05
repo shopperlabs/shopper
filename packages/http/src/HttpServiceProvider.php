@@ -149,6 +149,7 @@ final class HttpServiceProvider extends PackageServiceProvider
             NegotiateLocale::class,
             ResolveZone::class,
             ResolveChannel::class,
+            ResolveCustomer::class,
         ], (array) config('shopper.http.middleware.store', [])));
 
         $router->middlewareGroup('shopper:store-auth', array_merge([

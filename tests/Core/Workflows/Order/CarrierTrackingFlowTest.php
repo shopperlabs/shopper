@@ -19,6 +19,7 @@ use Shopper\Core\Events\Orders\OrderShipped;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\OrderShipping;
+use Shopper\Core\Models\OrderShippingEvent;
 
 uses(Tests\Core\TestCase::class);
 
@@ -286,7 +287,7 @@ describe('Carrier tracking feed', function (): void {
 
         $shipment->logEvent(ShipmentStatus::PickedUp, ['external_id' => 'evt-1']);
 
-        expect(fn () => $shipment->logEvent(ShipmentStatus::PickedUp, ['external_id' => 'evt-1']))
+        expect(fn (): OrderShippingEvent => $shipment->logEvent(ShipmentStatus::PickedUp, ['external_id' => 'evt-1']))
             ->toThrow(QueryException::class);
     });
 })

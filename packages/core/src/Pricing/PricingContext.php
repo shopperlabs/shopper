@@ -12,10 +12,16 @@ final readonly class PricingContext
         public int $quantity = 1,
         public ?int $channelId = null,
         public ?int $zoneId = null,
+        public ?int $productQuantity = null,
     ) {}
 
     public function currency(): string
     {
         return $this->currencyCode ?? shopper_currency();
+    }
+
+    public function productQuantity(): int
+    {
+        return $this->productQuantity ?? $this->quantity;
     }
 }

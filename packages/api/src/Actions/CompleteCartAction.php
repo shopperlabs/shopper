@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Actions;
 
-use Shopper\Api\Support\ShippingOption;
 use Shopper\Cart\Actions\CreateOrderFromCartAction;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Exceptions\DiscountLimitReachedException;
 use Shopper\Cart\Exceptions\InsufficientStockException;
+use Shopper\Cart\Exceptions\MissingPriceException;
 use Shopper\Cart\Exceptions\PriceChangedException;
+use Shopper\Cart\Exceptions\PromotionUnavailableException;
+use Shopper\Cart\Exceptions\QuantityRuleViolationException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Pipelines\CartPipelineContext;
+use Shopper\Core\Contracts\PaymentSessionGateway;
 use Shopper\Core\Exceptions\CampaignBudgetExceededException;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Http\Enum\ErrorCode;
@@ -27,10 +30,11 @@ use Throwable;
 final readonly class CompleteCartAction
 {
     public function __construct(
-        private GetCartShippingOptionsAction $shippingOptions,
+        private RefreshCartShippingAction $refreshShipping,
         private CartManager $cartManager,
         private CreateOrderFromCartAction $createOrderFromCart,
         private SettlePayment $settle,
+        private PaymentSessionGateway $paymentSessions,
     ) {}
 
     /**
@@ -49,7 +53,19 @@ final readonly class CompleteCartAction
             return $order;
         }
 
-        $cart->load(['zone.currency', 'zone.carriers', 'lines.purchasable', 'addresses.country', 'customer']);
+        return $this->cartManager->withPaymentSessionLock($cart, fn (): Order => $this->complete($cart->unsetRelations()->refresh()));
+    }
+
+    private function complete(Cart $cart): Order
+    {
+        if ($cart->isCompleted()) {
+            /** @var Order $order */
+            $order = $cart->order()->firstOrFail();
+
+            return $order;
+        }
+
+        $cart->load(['zone.currency', 'zone.carriers', $cart->payment_session === null ? 'lines.purchasable' : 'lines.purchasable.prices.currency', 'addresses.country', 'customer']);
 
         if ($cart->lines->isEmpty()) {
             throw ApiValidationException::withCode(ErrorCode::CartEmpty, [
@@ -65,13 +81,30 @@ final readonly class CompleteCartAction
 
         $this->ensureEmail($cart);
 
-        $this->refreshShipping($cart);
+        $session = $cart->payment_session;
+        $checked = false;
+        $collected = null;
+        $isCollected = function () use ($session, &$checked, &$collected): ?bool {
+            if (! $checked) {
+                $collected = $session === null ? false : $this->paymentSessions->collected($session);
+                $checked = true;
+            }
+
+            return $collected;
+        };
+
+        $this->refreshShipping->execute($cart, $isCollected);
+
+        if ($session !== null && ($this->cartManager->needsRevalidation($cart) || ($cart->holdsProviderPaymentSession() && $cart->promotions()->where('computed_amount', '>', 0)->exists()))) {
+            $isCollected();
+        }
 
         try {
             $order = $this->createOrderFromCart->execute(
                 $cart,
                 fn (CartPipelineContext $context) => $this->guardPaymentSession($cart, $context->total),
                 fn (Order $order) => $this->recordInitiatedPayment($cart, $order),
+                fn (): bool => $cart->payment_session === $session && $isCollected() !== false,
             );
         } catch (CartCompletedException) {
             /** @var Order $order */
@@ -79,18 +112,49 @@ final readonly class CompleteCartAction
 
             return $order;
         } catch (CampaignBudgetExceededException) {
+            $this->reopenPromotions($cart);
+
             throw ApiValidationException::withCode(ErrorCode::PromotionBudgetReached, [
                 'promotion' => __('shopper-cart::messages.discount.campaign_budget_reached'),
             ]);
+        } catch (PromotionUnavailableException $exception) {
+            $this->reopenPromotions($cart);
+
+            throw ApiValidationException::withCode(ErrorCode::PromotionNotApplicable, [
+                'promotion' => $exception->getMessage(),
+            ]);
         } catch (DiscountLimitReachedException $exception) {
+            $this->reopenPromotions($cart);
+
             throw ApiValidationException::withCode(ErrorCode::PromotionLimitReached, [
                 'promotion' => $exception->getMessage(),
             ]);
         } catch (InsufficientStockException $exception) {
+            if ($session !== null && $isCollected() !== false && $this->paymentSessions->refund($session)) {
+                $this->cartManager->setPaymentSession($cart, null);
+
+                throw ApiValidationException::withCode(ErrorCode::PaymentReleased, [
+                    'cart' => __('shopper-api::messages.payment.released'),
+                ]);
+            }
+
             throw ApiValidationException::withCode(ErrorCode::StockInsufficient, [
                 'cart' => $exception->getMessage(),
             ]);
+        } catch (MissingPriceException $exception) {
+            throw ApiValidationException::withCode(ErrorCode::PriceMissing, ['cart' => $exception->getMessage()]);
+        } catch (QuantityRuleViolationException $exception) {
+            throw ApiValidationException::withCode(ErrorCode::QuantityRuleViolated, ['cart' => $exception->getMessage()], $exception->context());
         } catch (PriceChangedException $exception) {
+            try {
+                $this->cartManager->reprice($cart);
+            } catch (CartCompletedException) {
+                /** @var Order $order */
+                $order = $cart->refresh()->order()->firstOrFail();
+
+                return $order;
+            }
+
             throw ApiValidationException::withCode(ErrorCode::PriceChanged, [
                 'cart' => $exception->getMessage(),
             ]);
@@ -130,6 +194,12 @@ final readonly class CompleteCartAction
         }
     }
 
+    private function reopenPromotions(Cart $cart): void
+    {
+        $this->cartManager->releasePaymentSession($cart);
+        $this->cartManager->calculate($cart->unsetRelations());
+    }
+
     /**
      * Freeze the contact email on the cart so the order can be confirmed and
      * looked up. A customer cart falls back to the customer's own email; a
@@ -152,51 +222,6 @@ final readonly class CompleteCartAction
         $this->cartManager->setEmail($cart, $email);
     }
 
-    /**
-     * A shippable cart must carry a delivery choice, and that choice must
-     * still be quoted by the carrier. A price drop since selection is
-     * absorbed silently; a price increase is never charged without the
-     * customer re-consenting to the new total.
-     */
-    private function refreshShipping(Cart $cart): void
-    {
-        if (! $this->shippingOptions->requiresShipping($cart)) {
-            return;
-        }
-
-        if (! $cart->shipping_option_id) {
-            throw ApiValidationException::withCode(ErrorCode::ShippingMethodRequired, [
-                'shipping_method' => __('shopper-api::messages.shipping.method_required'),
-            ]);
-        }
-
-        ['options' => $options] = $this->shippingOptions->execute($cart);
-
-        /** @var ShippingOption|null $option */
-        $option = $options->first(
-            fn (ShippingOption $option): bool => $option->id() === $cart->shipping_option_id,
-        );
-
-        if (! $option) {
-            throw ApiValidationException::withCode(ErrorCode::ShippingOptionUnavailable, [
-                'shipping_method' => __('shopper-api::messages.shipping.option_gone'),
-            ]);
-        }
-
-        $quoted = $option->rate->amount;
-        $frozen = $cart->shipping_amount;
-
-        if ($frozen !== null && $quoted > $frozen) {
-            throw ApiValidationException::withCode(ErrorCode::ShippingPriceChanged, [
-                'shipping_method' => __('shopper-api::messages.shipping.price_changed'),
-            ]);
-        }
-
-        if ($quoted !== $frozen) {
-            $this->cartManager->setShippingMethod($cart, $option->id(), $quoted);
-        }
-    }
-
     private function guardPaymentSession(Cart $cart, int $total): void
     {
         $session = $cart->payment_session;
@@ -208,6 +233,10 @@ final readonly class CompleteCartAction
                 ]);
             }
 
+            return;
+        }
+
+        if (($session['driver'] ?? 'manual') === 'manual' && ($cart->paymentMethod->driver ?? 'manual') === 'manual') {
             return;
         }
 
@@ -240,7 +269,7 @@ final readonly class CompleteCartAction
             'driver' => $session['driver'] ?? 'manual',
             'type' => TransactionType::Initiate,
             'status' => TransactionStatus::Pending,
-            'amount' => $session['amount'] ?? $order->price_amount,
+            'amount' => $order->price_amount,
             'currency_code' => $order->currency_code,
             'reference' => $session['reference'],
         ]);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Exceptions\CartCompletedException;
+use Shopper\Cart\Exceptions\CartLineMetadataConflictException;
 use Shopper\Cart\Exceptions\InsufficientStockException;
 use Shopper\Cart\Exceptions\InvalidDiscountException;
 use Shopper\Cart\Exceptions\MissingPriceException;
@@ -88,6 +89,17 @@ describe(CartManager::class, function (): void {
             ->and($line->purchasable_id)->toBe($variant->id);
     });
 
+    it('finds the price of every line of a cart mixing a product and a variant loaded without their prices', function (): void {
+        $variant = ProductVariant::factory()->create(['id' => $this->product->id + 1, 'product_id' => $this->product->id]);
+        $variant->prices()->create(['amount' => 30, 'currency_id' => $this->currency->id]);
+        $variant->mutateStock($this->inventory->id, 20);
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->add($this->cart, $variant);
+        $cart = $this->cart->refresh()->load('lines.purchasable');
+
+        expect(fn () => $this->cartManager->assertSellable($cart))->not->toThrow(MissingPriceException::class);
+    });
+
     it('updates a cart line quantity', function (): void {
         $line = $this->cartManager->add($this->cart, $this->product, quantity: 1);
 
@@ -150,6 +162,27 @@ describe(CartManager::class, function (): void {
 
         expect($line->metadata)->toBe($metadata)
             ->and($line->metadata['attributes']['Size'])->toBe('M');
+    });
+
+    it('refuses to add an item again with different metadata', function (): void {
+        $line = $this->cartManager->add($this->cart, $this->product, metadata: ['engraving' => 'Alice']);
+
+        expect(fn () => $this->cartManager->add($this->cart, $this->product, metadata: ['engraving' => 'Bob']))
+            ->toThrow(CartLineMetadataConflictException::class);
+
+        expect($line->refresh()->quantity)->toBe(1)
+            ->and($line->metadata)->toBe(['engraving' => 'Alice']);
+    });
+
+    it('adds to the line when the metadata match in another key order or are omitted', function (): void {
+        $metadata = ['engraving' => 'Alice', 'gift' => ['wrap' => true, 'note' => 'Hi']];
+
+        $this->cartManager->add($this->cart, $this->product, metadata: $metadata);
+        $this->cartManager->add($this->cart, $this->product, metadata: ['gift' => ['note' => 'Hi', 'wrap' => true], 'engraving' => 'Alice']);
+        $line = $this->cartManager->add($this->cart, $this->product, metadata: []);
+
+        expect($line->quantity)->toBe(3)
+            ->and($line->metadata)->toEqual($metadata);
     });
 
     it('throws `InvalidArgumentException` when quantity is zero', function (): void {

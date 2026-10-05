@@ -9,6 +9,7 @@ return [
         'nothing_to_collect' => 'The cart has no amount to collect.',
         'no_zone' => 'The cart has no shipping zone, so no shipping option applies to it.',
         'email_required' => 'Provide an email address before completing the cart.',
+        'metadata_invalid' => 'The metadata must be JSON without NUL characters.',
         'metadata_too_large' => 'The metadata payload is too large.',
     ],
 
@@ -19,13 +20,15 @@ return [
     ],
 
     'shipping' => [
-        'method_required' => 'Set a shipping method on the cart before completing it.',
+        'method_required' => 'Set a shipping method on the cart before checking out.',
         'option_not_available' => 'This shipping option is not available for the cart.',
         'option_gone' => 'The selected shipping option is no longer available.',
         'price_changed' => 'The shipping price changed since it was selected. Set the shipping method again to confirm the new price.',
         'origin_missing' => 'Live carrier rates are unavailable: no inventory location can act as the shipment origin.',
         'carrier_unavailable' => 'Rates from ":carrier" are temporarily unavailable.',
         'currency_mismatch' => 'Options priced in :currency were removed: the cart is priced in :cart_currency.',
+        'outside_zone' => 'The shipping address is outside the cart zone. Choose the zone of its country.',
+        'provider_unavailable' => 'Rates from the selected carrier are temporarily unavailable. Try again in a moment.',
     ],
 
     'payment' => [
@@ -37,6 +40,7 @@ return [
         'session_mismatch' => 'The payment session no longer matches the cart total. Create a new payment session and try again.',
         'session_in_progress' => 'Another request is opening the payment session for this cart. Try again in a moment.',
         'session_required' => 'Open a payment session before completing the cart.',
+        'released' => 'Part of the cart went out of stock before the order could be placed. The payment was given back: update the cart and pay again.',
     ],
 
     'order' => [

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Shopper\Api\Actions\CreateCartPaymentSessionAction;
 use Shopper\Api\Concerns\RespondsWithCart;
 use Shopper\Api\Http\Resources\PaymentSessionResource;
+use Shopper\Api\Support\PaymentSession;
 use Shopper\Cart\Exceptions\CartCompletedException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,7 +38,7 @@ final class PaymentSessionController
             abort(Response::HTTP_CONFLICT, (new CartCompletedException)->getMessage());
         }
 
-        $session = $this->action->execute($cart);
+        $session = $this->mutateCart(fn (): PaymentSession => $this->action->execute($cart));
 
         return PaymentSessionResource::make($session)
             ->toResponse($request)

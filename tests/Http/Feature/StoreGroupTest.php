@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\Sanctum;
 use Shopper\Core\Models\Contracts\Zone as ZoneContract;
 use Shopper\Core\Models\Zone;
 use Shopper\Http\Contracts\ZoneResolver;
@@ -73,7 +76,7 @@ it('rejects unauthenticated requests on the authenticated group', function (): v
 
 it('binds the authenticated customer onto the request', function (): void {
     $user = User::factory()->create();
-    $this->actingAs($user, 'sanctum');
+    Sanctum::actingAs($user, ['store']);
 
     ShopperApi::authenticated(function (): void {
         Route::get('/me', fn (Request $request) => response()->json([
@@ -84,4 +87,34 @@ it('binds the authenticated customer onto the request', function (): void {
     $this->getJson('/store/me')
         ->assertOk()
         ->assertJson(['id' => $user->getKey()]);
+});
+
+it('rejects a token without the store ability or from another model on both groups', function (Closure $actor): void {
+    $actor();
+
+    ShopperApi::store(function (): void {
+        Route::get('/ping', fn () => response()->json(['ok' => true]));
+    });
+    ShopperApi::authenticated(function (): void {
+        Route::get('/me', fn () => response()->json(['ok' => true]));
+    });
+
+    $this->getJson('/store/ping')->assertUnauthorized()->assertJsonPath('errors.0.status', '401');
+    $this->getJson('/store/me')->assertUnauthorized()->assertJsonPath('errors.0.status', '401');
+})->with([
+    'missing store ability' => fn () => Sanctum::actingAs(User::factory()->create(), ['admin']),
+    'another tokenable model' => fn () => Sanctum::actingAs(new class extends Authenticatable
+    {
+        use HasApiTokens;
+    }, ['store']),
+]);
+
+it('rejects a bearer token without the store ability on store routes', function (): void {
+    $token = User::factory()->create()->createToken('admin', ['admin'])->plainTextToken;
+
+    ShopperApi::store(function (): void {
+        Route::get('/ping', fn () => response()->json(['ok' => true]));
+    });
+
+    $this->withToken($token)->getJson('/store/ping')->assertUnauthorized();
 });

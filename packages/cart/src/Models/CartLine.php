@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Cart\Database\Factories\CartLineFactory;
 use Shopper\Cart\Models\Contracts\CartLine as CartLineContract;
+use Shopper\Core\Models\Contracts\Product;
+use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Traits\HasModelContract;
 
@@ -24,6 +26,8 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read int $purchasable_id
  * @property-read int $quantity
  * @property-read float|int $unit_price_amount
+ * @property-read bool $is_custom_price
+ * @property-read ?array<string, mixed> $pricing
  * @property-read ?array<string, mixed> $metadata
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
@@ -40,7 +44,12 @@ class CartLine extends Model implements CartLineContract
     use HasModelContract;
     use HasPublicId;
 
-    protected $guarded = [];
+    public const int MAXIMUM_QUANTITY = 1_000_000;
+
+    /**
+     * @var list<string>
+     */
+    protected $guarded = ['is_custom_price', 'pricing'];
 
     public static function configuredClass(): string
     {
@@ -68,6 +77,17 @@ class CartLine extends Model implements CartLineContract
         return $this->morphTo();
     }
 
+    public function productKey(): string
+    {
+        $purchasable = $this->purchasable;
+
+        return match (true) {
+            $purchasable instanceof ProductVariant => 'product:'.$purchasable->getAttribute('product_id'),
+            $purchasable instanceof Product => 'product:'.$purchasable->getKey(),
+            default => $this->purchasable_type.':'.$this->purchasable_id,
+        };
+    }
+
     /**
      * @return HasMany<CartLineAdjustment, $this>
      */
@@ -93,6 +113,8 @@ class CartLine extends Model implements CartLineContract
     {
         return [
             'metadata' => 'array',
+            'is_custom_price' => 'boolean',
+            'pricing' => 'array',
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Shopper\FedEx\FedExDriver;
 use Shopper\Shipping\DataTransferObjects\Address;
@@ -178,14 +179,14 @@ it('skips a rated shipment that carries no charges', function (): void {
 it('surfaces a refused UPS rate request as an api error', function (): void {
     fakeUpsRates(['response' => ['errors' => [['code' => '250002', 'message' => 'Invalid Authentication Information']]]], 401);
 
-    expect(fn () => rateDriver()->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
+    expect(fn (): Collection => rateDriver()->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
         ->toThrow(ShippingException::class, 'API error from [ups]: Invalid Authentication Information');
 });
 
 it('rejects a UPS rate response that carries no rated shipment', function (): void {
     fakeUpsRates(['RateResponse' => ['Response' => ['ResponseStatus' => ['Code' => '1']]]]);
 
-    expect(fn () => rateDriver()->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
+    expect(fn (): Collection => rateDriver()->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
         ->toThrow(ShippingException::class, 'Invalid response received from [ups] API.');
 });
 
@@ -203,7 +204,7 @@ it('quotes against the UPS sandbox host when the driver runs in sandbox mode', f
 it('refuses to quote before the UPS credentials are configured', function (): void {
     Http::fake();
 
-    expect(fn () => (new UpsDriver('', '', '', ''))->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
+    expect(fn (): Collection => (new UpsDriver('', '', '', ''))->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
         ->toThrow(ShippingException::class, 'The [ups] shipping driver is not configured. Please check your .env file.');
 
     Http::assertNothingSent();
@@ -229,7 +230,7 @@ it('never quotes a free or negative UPS charge', function (): void {
         ['Service' => ['Code' => '01'], 'TotalCharges' => ['CurrencyCode' => 'USD', 'MonetaryValue' => '-5.00']],
     ]]]);
 
-    expect(fn () => rateDriver()->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
+    expect(fn (): Collection => rateDriver()->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
         ->toThrow(ShippingException::class, 'Invalid response received from [ups] API.');
 });
 
@@ -444,19 +445,19 @@ it('rates against the FedEx sandbox host when the driver runs in sandbox mode', 
 it('rejects a FedEx rate reply that quotes nothing', function (): void {
     fakeFedExRates(['output' => []]);
 
-    expect(fn () => fedexRateDriver()->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
+    expect(fn (): Collection => fedexRateDriver()->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
         ->toThrow(ShippingException::class);
 });
 
 it('surfaces a FedEx rate outage as a retryable api error', function (): void {
     fakeFedExRates(['errors' => [['code' => 'SYSTEM.UNAVAILABLE', 'message' => 'Service unavailable']]], 503);
 
-    expect(fn () => fedexRateDriver()->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
+    expect(fn (): Collection => fedexRateDriver()->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
         ->toThrow(ShippingException::class, 'Service unavailable');
 });
 
 it('refuses to rate before the FedEx credentials are configured', function (): void {
-    expect(fn () => (new FedExDriver('', '', ''))->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
+    expect(fn (): Collection => (new FedExDriver('', '', ''))->calculateRates(warehouse(), destination(), [new Package(30, 20, 10, 2)]))
         ->toThrow(ShippingException::class);
 
     Http::assertNothingSent();
@@ -652,19 +653,19 @@ it('rates against the USPS test host when the driver runs in sandbox mode', func
 it('rejects a USPS reply that quotes nothing', function (): void {
     fakeUspsRates(['pricingOptions' => []]);
 
-    expect(fn () => uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]))
+    expect(fn (): Collection => uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]))
         ->toThrow(ShippingException::class);
 });
 
 it('surfaces a USPS rate outage as a retryable api error', function (): void {
     fakeUspsRates(['error' => ['message' => 'No valid rates for these parameters']], 503);
 
-    expect(fn () => uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]))
+    expect(fn (): Collection => uspsRateDriver()->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]))
         ->toThrow(ShippingException::class, 'No valid rates for these parameters');
 });
 
 it('refuses to rate before the USPS credentials are configured', function (): void {
-    expect(fn () => (new UspsDriver('', ''))->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]))
+    expect(fn (): Collection => (new UspsDriver('', ''))->calculateRates(uspsWarehouse(), destination(), [new Package(12, 8, 4, 3, 'imperial')]))
         ->toThrow(ShippingException::class);
 
     Http::assertNothingSent();

@@ -68,4 +68,16 @@ final class ReleaseCampaignBudget
             ]);
         });
     }
+
+    public function releaseOrder(int $orderId, ?string $actor = null): void
+    {
+        Campaign::query()
+            ->whereIn('id', CampaignBudgetMovement::query()
+                ->select('campaign_id')
+                ->where('order_id', $orderId)
+                ->where('direction', CampaignBudgetDirection::Reserve->value))
+            ->orderBy('id')
+            ->get()
+            ->each(fn (Campaign $campaign) => $this->execute($campaign, $orderId, $actor));
+    }
 }

@@ -34,6 +34,8 @@ export interface JsonApiError {
   title?: string
   detail?: string
   source?: { pointer?: string; parameter?: string }
+  /** Structured details of a domain error, such as the rule behind `quantity_rule_violated`. */
+  meta?: Record<string, unknown>
 }
 
 export interface JsonApiErrorDocument {

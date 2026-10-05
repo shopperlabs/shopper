@@ -9,6 +9,7 @@ return [
         'nothing_to_collect' => 'El carrito no tiene ningún importe que cobrar.',
         'no_zone' => 'El carrito no tiene zona de envío, ninguna opción de envío se le aplica.',
         'email_required' => 'Indica una dirección de correo electrónico antes de finalizar el carrito.',
+        'metadata_invalid' => 'Los metadatos deben ser JSON sin caracteres NUL.',
         'metadata_too_large' => 'Los metadatos son demasiado grandes.',
     ],
 
@@ -19,13 +20,15 @@ return [
     ],
 
     'shipping' => [
-        'method_required' => 'Selecciona un método de envío antes de completar el carrito.',
+        'method_required' => 'Selecciona un método de envío antes de finalizar la compra.',
         'option_not_available' => 'Esta opción de envío no está disponible para el carrito.',
         'option_gone' => 'La opción de envío seleccionada ya no está disponible.',
         'price_changed' => 'El precio del envío cambió desde su selección. Vuelve a seleccionar el método de envío para confirmar el nuevo precio.',
         'origin_missing' => 'Las tarifas en vivo de los transportistas no están disponibles: ningún almacén puede actuar como origen del envío.',
         'carrier_unavailable' => 'Las tarifas de «:carrier» no están disponibles temporalmente.',
         'currency_mismatch' => 'Las opciones en :currency fueron retiradas: el carrito está en :cart_currency.',
+        'outside_zone' => 'La dirección de envío está fuera de la zona del carrito. Elige la zona de su país.',
+        'provider_unavailable' => 'Las tarifas del transportista seleccionado no están disponibles temporalmente. Inténtalo de nuevo en un momento.',
     ],
 
     'payment' => [
@@ -37,6 +40,7 @@ return [
         'session_mismatch' => 'La sesión de pago ya no coincide con el total del carrito. Crea una nueva sesión de pago e inténtalo de nuevo.',
         'session_in_progress' => 'Otra solicitud está abriendo la sesión de pago de este carrito. Inténtalo de nuevo en un momento.',
         'session_required' => 'Abre una sesión de pago antes de completar el carrito.',
+        'released' => 'Parte del carrito se agotó antes de poder realizar el pedido. El pago ha sido devuelto: actualiza el carrito y vuelve a pagar.',
     ],
 
     'order' => [

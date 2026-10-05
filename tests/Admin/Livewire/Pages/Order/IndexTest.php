@@ -38,6 +38,14 @@ describe(Index::class, function (): void {
             ->assertSet('activeTab', 'all');
     });
 
+    it('renders the tabs in the table toolbar after switching tabs', function (): void {
+        Livewire::test(Index::class)
+            ->loadTable()
+            ->assertSeeHtml('sh-table-tabs')
+            ->set('activeTab', 'paid')
+            ->assertSeeHtml('sh-table-tabs');
+    });
+
     it('hydrates the active tab from the URL query string', function (): void {
         Livewire::withQueryParams(['tab' => 'paid'])
             ->test(Index::class)

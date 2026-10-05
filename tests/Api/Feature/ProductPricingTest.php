@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Cache;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Price;
@@ -242,6 +243,20 @@ it('falls back to the default currency when the zone header references a disable
         ->assertOk()
         ->assertJsonPath('meta.currency', 'USD')
         ->assertJsonPath('data.0.attributes.price_range.min', 5000);
+});
+
+it('resolves the default currency again on a cache that refuses to unserialize models', function (): void {
+    config(['cache.default' => 'array', 'cache.stores.array.serialize' => true, 'cache.serializable_classes' => false]);
+    Cache::forgetDriver('array');
+
+    pricedProduct('Repeated', 5000);
+
+    foreach ([1, 2] as $request) {
+        $this->getJson('/store/products')
+            ->assertOk()
+            ->assertJsonPath('meta.currency', 'USD')
+            ->assertJsonPath('data.0.attributes.price_range.min', 5000);
+    }
 });
 
 it('includes external products in the price sort and price range', function (): void {

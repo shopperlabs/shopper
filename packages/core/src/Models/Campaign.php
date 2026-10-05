@@ -62,6 +62,13 @@ class Campaign extends Model implements CampaignContract
         return $spendReached || $countReached;
     }
 
+    public function canAbsorb(int $spend): bool
+    {
+        return ! $this->budget_type->hasSpendCap()
+            || $this->budget_amount === null
+            || $this->spent_amount + $spend <= $this->budget_amount;
+    }
+
     /**
      * @return HasMany<Discount, $this>
      */

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Support\Collection;
 use Shopper\Payment\Database\Factories\PaymentWebhookEventFactory;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Enum\WebhookAction;
@@ -22,6 +23,7 @@ use Shopper\Payment\Enum\WebhookAction;
  * @property-read ?string $reference
  * @property-read array<string, mixed>|null $payload
  * @property-read ?CarbonInterface $processed_at
+ * @property-read ?CarbonInterface $orphaned_at
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
@@ -63,6 +65,17 @@ class PaymentWebhookEvent extends Model
             ->firstOrFail();
     }
 
+    /**
+     * @param  Collection<int, PaymentWebhookEvent>  $events
+     */
+    public static function refundedAmount(Collection $events): int
+    {
+        return (int) $events->where('type', WebhookAction::Refunded)
+            ->map(fn (PaymentWebhookEvent $event): WebhookResult => $event->toWebhookResult())
+            ->unique(fn (WebhookResult $refund): ?string => $refund->refundId() ?? $refund->eventId)
+            ->sum('amount');
+    }
+
     public function getTable(): string
     {
         return shopper_table('payment_webhook_events');
@@ -98,7 +111,13 @@ class PaymentWebhookEvent extends Model
     {
         $days = (int) config('shopper.payment.reconciliation.prune_after_days', 90);
 
-        return static::query()->where('created_at', '<', now()->subDays($days));
+        return static::query()
+            ->where('created_at', '<', now()->subDays($days))
+            ->where(function (Builder $query): void {
+                $query->whereNotNull('processed_at')
+                    ->orWhereNotNull('orphaned_at')
+                    ->orWhereNotIn('type', [WebhookAction::Authorized->value, WebhookAction::Captured->value]);
+            });
     }
 
     protected static function newFactory(): PaymentWebhookEventFactory
@@ -132,6 +151,7 @@ class PaymentWebhookEvent extends Model
             'type' => WebhookAction::class,
             'payload' => 'array',
             'processed_at' => 'datetime',
+            'orphaned_at' => 'datetime',
         ];
     }
 }

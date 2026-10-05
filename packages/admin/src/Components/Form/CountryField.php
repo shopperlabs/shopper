@@ -65,15 +65,16 @@ class CountryField extends Select
      */
     private function getCountries(): Collection
     {
-        /** @var Collection<int, Country> $countries */
-        $countries = Cache::remember(
-            'shopper.countries.options.'.app()->getLocale(),
+        $countries = Country::hydrate(Cache::remember(
+            'shopper.admin.countries.'.app()->getLocale(),
             now()->addDay(),
-            fn (): Collection => Country::query()
+            fn (): array => Country::query()
                 ->get(['id', 'name', 'cca2', 'region'])
                 ->sortBy(fn (Country $country): string => $country->translated_name, SORT_NATURAL | SORT_FLAG_CASE)
+                ->map(fn (Country $country): array => $country->getAttributes())
                 ->values()
-        );
+                ->all()
+        ));
 
         $only = $this->evaluate($this->only);
         $except = $this->evaluate($this->except);

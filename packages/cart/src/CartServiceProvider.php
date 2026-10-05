@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Cart;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Event;
 use Shopper\Cart\Console\PruneCartsCommand;
 use Shopper\Cart\Discounts\DiscountEligibilityManager;
 use Shopper\Cart\Discounts\DiscountValidator;
@@ -12,6 +13,8 @@ use Shopper\Cart\Discounts\Eligibility\CustomersEligibilityRule;
 use Shopper\Cart\Discounts\Eligibility\EveryoneEligibilityRule;
 use Shopper\Cart\Discounts\PromotionResolver;
 use Shopper\Cart\Events\CartCompleted;
+use Shopper\Cart\Listeners\ForgetRefundedPaymentSession;
+use Shopper\Cart\Listeners\RecognizeOrphanedPayment;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
@@ -19,6 +22,8 @@ use Shopper\Cart\Models\Contracts\CartLine as CartLineContract;
 use Shopper\Cart\Pipelines\CartPipeline;
 use Shopper\Cart\Pipelines\CartPipelineRunner;
 use Shopper\Core\Enum\WebhookEventType;
+use Shopper\Core\Events\Payments\OrphanedPaymentRefunded;
+use Shopper\Core\Events\Payments\PaymentOrphaned;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Shopper\Core\Webhooks\Facades\Webhooks;
 use Spatie\LaravelPackageTools\Package;
@@ -49,6 +54,9 @@ final class CartServiceProvider extends PackageServiceProvider
         });
 
         Webhooks::register(CartCompleted::class, WebhookEventType::CartCompleted->value);
+
+        Event::listen(PaymentOrphaned::class, RecognizeOrphanedPayment::class);
+        Event::listen(OrphanedPaymentRefunded::class, ForgetRefundedPaymentSession::class);
     }
 
     public function packageRegistered(): void

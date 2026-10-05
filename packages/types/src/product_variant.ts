@@ -1,4 +1,4 @@
-import type { Entity, Metadata, Price, ResourceId, ShippingFields } from './common'
+import type { CalculatedPrice, Entity, Metadata, Price, QuantityRule, ResourceId, ShippingFields } from './common'
 import type { Media } from './media'
 import type { Product } from './product'
 
@@ -53,4 +53,8 @@ export interface ProductVariant extends Entity, ShippingFields {
   thumbnail?: Media | null
   /** The prices of the product variant. */
   prices?: Price[]
+  /** The price resolved for the shopper of the request. */
+  calculated_price?: CalculatedPrice | null
+  /** The quantity rule resolved for the shopper of the request. */
+  quantity_rule?: QuantityRule | null
 }

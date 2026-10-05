@@ -9,6 +9,7 @@ return [
     'discount_terms_frozen' => 'Impossible de changer le code, le type ou la valeur d\'une réduction déjà utilisée. Ces termes restent figés pour garder les utilisations passées exactes.',
 
     'campaign_budget_exceeded' => 'La campagne « :name » a atteint son budget et ne peut plus être appliquée.',
+    'payment_provider_unavailable' => 'Le prestataire de paiement est injoignable. Veuillez réessayer.',
 
     'discount_value' => [
         'not_positive' => 'La valeur de la réduction doit être supérieure à zéro.',

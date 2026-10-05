@@ -4,10 +4,12 @@ import type { Category } from './category'
 import type { Channel } from './channel'
 import type { Collection } from './collection'
 import type {
+  CalculatedPrice,
   Entity,
   Metadata,
   Price,
   PriceRange,
+  QuantityRule,
   ResourceId,
   SEOFields,
   ShippingFields,
@@ -99,6 +101,10 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   prices?: Price[]
   /** The min/max price aggregate in the resolved currency. Null when the product has no price in that currency. */
   price_range?: PriceRange | null
+  /** The price resolved for the shopper of the request, on products without variants. */
+  calculated_price?: CalculatedPrice | null
+  /** The quantity rule resolved for the shopper of the request, on products without variants. */
+  quantity_rule?: QuantityRule | null
 }
 
 /** An option of a product, with the values that product uses. */

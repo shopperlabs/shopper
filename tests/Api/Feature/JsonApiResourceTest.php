@@ -12,7 +12,7 @@ uses(Tests\Api\TestCase::class);
 beforeEach(function (): void {
     Route::get(
         '/__test/products/{id}',
-        fn (string $id) => ProductStubResource::make(resolve(ProductContract::class)::query()->findOrFail((int) $id))
+        fn (string $id): ProductStubResource => ProductStubResource::make(resolve(ProductContract::class)::query()->findOrFail((int) $id))
     );
 });
 

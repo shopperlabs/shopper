@@ -20,6 +20,29 @@ final readonly class DiscountValidator
 
     public function validate(Discount $discount, CartPipelineContext $context): DiscountValidationResult
     {
+        $terms = $this->validateTerms($discount, $context);
+
+        if (! $terms->valid) {
+            return $terms;
+        }
+
+        if ($discount->hasReachedLimit()) {
+            return new DiscountValidationResult(false, __('shopper-cart::messages.discount.usage_limit_reached'));
+        }
+
+        if ($discount->campaign?->hasReachedBudget()) {
+            return new DiscountValidationResult(false, __('shopper-cart::messages.discount.campaign_budget_reached'));
+        }
+
+        if ($discount->usage_limit_per_user && $this->customerAlreadyRedeemed($discount, $context->cart)) {
+            return new DiscountValidationResult(false, __('shopper-cart::messages.discount.already_used'));
+        }
+
+        return new DiscountValidationResult(true);
+    }
+
+    public function validateTerms(Discount $discount, CartPipelineContext $context): DiscountValidationResult
+    {
         if (! $discount->is_active) {
             return new DiscountValidationResult(false, __('shopper-cart::messages.discount.not_active'));
         }
@@ -40,22 +63,8 @@ final readonly class DiscountValidator
             return new DiscountValidationResult(false, __('shopper-cart::messages.discount.expired'));
         }
 
-        if ($discount->hasReachedLimit()) {
-            return new DiscountValidationResult(false, __('shopper-cart::messages.discount.usage_limit_reached'));
-        }
-
-        if ($discount->campaign !== null) {
-            if ($discount->campaign->currency_code !== $context->cart->currency_code) {
-                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.currency_mismatch'));
-            }
-
-            if ($discount->campaign->hasReachedBudget()) {
-                return new DiscountValidationResult(false, __('shopper-cart::messages.discount.campaign_budget_reached'));
-            }
-        }
-
-        if ($discount->usage_limit_per_user && $this->customerAlreadyRedeemed($discount, $context->cart)) {
-            return new DiscountValidationResult(false, __('shopper-cart::messages.discount.already_used'));
+        if ($discount->campaign !== null && $discount->campaign->currency_code !== $context->cart->currency_code) {
+            return new DiscountValidationResult(false, __('shopper-cart::messages.discount.currency_mismatch'));
         }
 
         $eligibilityRule = $this->eligibility->for($discount->eligibility);

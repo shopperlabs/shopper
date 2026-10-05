@@ -50,7 +50,7 @@ describe(PriceResolver::class, function (): void {
     });
 
     it('uses the swapped resolver when a cart line is created', function (): void {
-        app()->singleton(PriceResolver::class, fn () => new class implements PriceResolver
+        app()->singleton(PriceResolver::class, fn (): PriceResolver => new class implements PriceResolver
         {
             public function resolve(Priceable&Model $priceable, PricingContext $context): ?ResolvedPrice
             {
@@ -72,7 +72,7 @@ describe(PriceResolver::class, function (): void {
     it('passes the cart context to the resolver', function (): void {
         $holder = new stdClass;
 
-        app()->singleton(PriceResolver::class, fn () => new class($holder) implements PriceResolver
+        app()->singleton(PriceResolver::class, fn (): PriceResolver => new class($holder) implements PriceResolver
         {
             public function __construct(private stdClass $holder) {}
 
