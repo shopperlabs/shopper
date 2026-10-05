@@ -36,7 +36,7 @@ final class AddonWebhookServiceProvider extends ServiceProvider
         Webhooks::register(
             NullPayload::class,
             'null.payload',
-            fn (NullPayload $event) => null,
+            fn (NullPayload $event): null => null,
         );
     }
 }

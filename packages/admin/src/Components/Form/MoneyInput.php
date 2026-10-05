@@ -82,6 +82,11 @@ class MoneyInput extends TextInput
         return $this;
     }
 
+    public function amountRules(): static
+    {
+        return $this->regex(fn (): string => is_no_division_currency($this->getCurrency()) ? '/^\d{1,9}$/' : '/^\d{1,6}(\.\d{0,2})?$/');
+    }
+
     public function isMoney(): bool
     {
         return (bool) $this->evaluate($this->isMoney);

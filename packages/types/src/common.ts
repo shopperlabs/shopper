@@ -75,6 +75,36 @@ export interface PriceRange {
 }
 
 /**
+ * The price resolved for the shopper of the request (customer, zone, channel)
+ * in the resolved currency, in minor units. Listed and detailed products and
+ * variants only.
+ */
+export interface CalculatedPrice {
+  /** The amount the shopper pays. */
+  amount: number
+  /** The amount displayed as struck through, when any. */
+  compare_amount: number | null
+  /** The catalog amount before any price rule. */
+  original_amount: number | null
+  /** The code of the resolved currency. */
+  currency_code: string
+  /** Public details exposed by the price resolver, such as the price list applied. */
+  meta: Record<string, unknown> | null
+}
+
+/**
+ * The quantities a shopper may order of a purchasable.
+ */
+export interface QuantityRule {
+  /** The lowest quantity allowed. */
+  minimum: number
+  /** The highest quantity allowed, when any. */
+  maximum: number | null
+  /** The step every quantity must be a multiple of. */
+  increment: number
+}
+
+/**
  * ShippingFields interface for shipping entity.
  */
 export interface ShippingFields {

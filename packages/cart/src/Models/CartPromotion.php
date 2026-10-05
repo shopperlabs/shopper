@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Cart\Database\Factories\CartPromotionFactory;
+use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Enum\PromotionSource;
 use Shopper\Core\Models\Discount;
 
@@ -20,6 +21,9 @@ use Shopper\Core\Models\Discount;
  * @property-read ?string $code
  * @property-read int $computed_amount
  * @property-read int $sequence
+ * @property-read ?DiscountType $type
+ * @property-read ?int $value
+ * @property-read ?int $campaign_id
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read Cart $cart
@@ -64,6 +68,9 @@ class CartPromotion extends Model
             'source' => PromotionSource::class,
             'computed_amount' => 'integer',
             'sequence' => 'integer',
+            'type' => DiscountType::class,
+            'value' => 'integer',
+            'campaign_id' => 'integer',
         ];
     }
 }

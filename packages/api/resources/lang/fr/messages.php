@@ -9,6 +9,7 @@ return [
         'nothing_to_collect' => 'Le panier n\'a aucun montant à encaisser.',
         'no_zone' => 'Le panier n\'a pas de zone de livraison, aucune option de livraison ne s\'y applique.',
         'email_required' => 'Renseignez une adresse e-mail avant de finaliser le panier.',
+        'metadata_invalid' => 'Les métadonnées doivent être du JSON sans caractère NUL.',
         'metadata_too_large' => 'Les métadonnées sont trop volumineuses.',
     ],
 
@@ -19,13 +20,15 @@ return [
     ],
 
     'shipping' => [
-        'method_required' => 'Choisissez un mode de livraison avant de finaliser le panier.',
+        'method_required' => 'Choisissez un mode de livraison avant de valider la commande.',
         'option_not_available' => 'Cette option de livraison n\'est pas disponible pour le panier.',
         'option_gone' => 'L\'option de livraison sélectionnée n\'est plus disponible.',
         'price_changed' => 'Le prix de la livraison a changé depuis sa sélection. Choisissez à nouveau le mode de livraison pour confirmer le nouveau prix.',
         'origin_missing' => 'Les tarifs transporteurs en direct sont indisponibles : aucun emplacement de stock ne peut servir d\'origine d\'expédition.',
         'carrier_unavailable' => 'Les tarifs de « :carrier » sont temporairement indisponibles.',
         'currency_mismatch' => 'Les options en :currency ont été retirées : le panier est en :cart_currency.',
+        'outside_zone' => 'L\'adresse de livraison est hors de la zone du panier. Choisissez la zone de son pays.',
+        'provider_unavailable' => 'Les tarifs du transporteur choisi sont temporairement indisponibles. Réessayez dans un instant.',
     ],
 
     'payment' => [
@@ -37,6 +40,7 @@ return [
         'session_mismatch' => 'La session de paiement ne correspond plus au total du panier. Créez une nouvelle session de paiement et réessayez.',
         'session_in_progress' => 'Une autre requête ouvre la session de paiement de ce panier. Réessayez dans un instant.',
         'session_required' => 'Ouvrez une session de paiement avant de finaliser le panier.',
+        'released' => 'Une partie du panier n\'est plus en stock et la commande n\'a pas pu être passée. Le paiement a été rendu : mettez à jour le panier et payez à nouveau.',
     ],
 
     'order' => [

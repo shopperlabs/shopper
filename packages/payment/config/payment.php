@@ -17,6 +17,10 @@ return [
     | checks run on the queue configured here, and the event ledger is
     | pruned daily past the retention below.
     |
+    | A payment collected without an order past the grace below is an orphan:
+    | the cart it paid for is completed when it can be, otherwise the orphan
+    | is reported, and given back to the customer when `orphans` is "refund".
+    |
     */
 
     'reconciliation' => [
@@ -25,6 +29,8 @@ return [
         'queue' => env('PAYMENT_RECONCILE_QUEUE'),
         'backoff' => [60, 300, 900],
         'prune_after_days' => env('PAYMENT_WEBHOOK_EVENTS_PRUNE_AFTER_DAYS', 90),
+        'orphan_after_minutes' => env('PAYMENT_ORPHAN_AFTER_MINUTES', 30),
+        'orphans' => env('PAYMENT_ORPHANS', 'alert'),
     ],
 
 ];

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use Shopper\Core\Models\Country;
@@ -42,6 +43,16 @@ describe(General::class, function (): void {
         $component = Livewire::test(General::class);
 
         expect($component->get('data'))->toBeArray();
+    });
+
+    it('renders the country options again on a cache that refuses to unserialize models', function (): void {
+        config(['cache.default' => 'array', 'cache.stores.array.serialize' => true, 'cache.serializable_classes' => false]);
+        Cache::forgetDriver('array');
+        $country = Country::query()->firstOr(fn () => Country::factory()->create());
+
+        foreach ([1, 2] as $render) {
+            Livewire::test(General::class)->assertOk()->assertSee($country->translated_name);
+        }
     });
 
     it('stores the logo on the configured media disk', function (): void {

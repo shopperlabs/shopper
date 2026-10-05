@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Api\Actions;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Shopper\Api\Support\CartPackagesBuilder;
 use Shopper\Api\Support\ShippingAddressFactory;
 use Shopper\Api\Support\ShippingOption;
@@ -13,6 +14,8 @@ use Shopper\Cart\Models\CartLine;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\Product;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiException;
 use Shopper\Shipping\DataTransferObjects\ShippingRate;
 use Shopper\Shipping\Services\CarrierRateService;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +35,7 @@ final readonly class GetCartShippingOptionsAction
      * in another currency than the cart and carriers that failed to quote
      * are dropped and surfaced as warnings instead of failing the request.
      *
-     * @return array{options: Collection<int, ShippingOption>, warnings: array<int, string>}
+     * @return array{options: Collection<int, ShippingOption>, warnings: array<int, string>, unavailable_carriers: array<int, string>}
      */
     public function execute(Cart $cart): array
     {
@@ -45,13 +48,22 @@ final readonly class GetCartShippingOptionsAction
         $lines = $this->shippableLines($cart);
 
         if ($lines->isEmpty()) {
-            return ['options' => collect(), 'warnings' => []];
+            return ['options' => collect(), 'warnings' => [], 'unavailable_carriers' => []];
         }
 
         $warnings = [];
         $origin = null;
 
         $shippingAddress = $cart->shippingAddress();
+
+        if ($shippingAddress?->country_id !== null && ! $zone->countries()->whereKey($shippingAddress->country_id)->exists()) {
+            return [
+                'options' => collect(),
+                'warnings' => [__('shopper-api::messages.shipping.outside_zone')],
+                'unavailable_carriers' => [],
+            ];
+        }
+
         $destination = $shippingAddress ? $this->addressFactory->fromCartAddress($shippingAddress) : null;
 
         if ($destination) {
@@ -101,7 +113,28 @@ final readonly class GetCartShippingOptionsAction
             ]);
         }
 
-        return ['options' => $options, 'warnings' => $warnings];
+        $unavailableCarriers = $zone->carriers
+            ->whereIn('name', $result->failedCarriers)
+            ->map(fn (Carrier $carrier): string => $carrier->slug ?? $carrier->name)
+            ->values()
+            ->all();
+
+        return ['options' => $options, 'warnings' => $warnings, 'unavailable_carriers' => $unavailableCarriers];
+    }
+
+    /**
+     * @param  array<int, string>  $unavailableCarriers
+     */
+    public function guardCarrierOutage(string $optionId, array $unavailableCarriers): void
+    {
+        if (in_array(Str::before($optionId, ':'), $unavailableCarriers, true)) {
+            throw new ApiException(
+                Response::HTTP_SERVICE_UNAVAILABLE,
+                ErrorCode::ShippingProviderUnavailable,
+                __('shopper-api::messages.shipping.provider_unavailable'),
+                ['Retry-After' => 5],
+            );
+        }
     }
 
     /**

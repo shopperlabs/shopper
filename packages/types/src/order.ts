@@ -165,6 +165,8 @@ export interface OrderItem extends Entity {
   order_shipping_id: ResourceId | null
   /** The fulfillment status. */
   fulfillment_status: FulfillmentStatus | null
+  /** The metadata copied from the cart line. */
+  metadata: Metadata
   /** The order. */
   order?: Order
   /** The tax lines. */

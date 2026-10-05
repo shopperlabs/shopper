@@ -2,15 +2,21 @@
 
 declare(strict_types=1);
 
+use Illuminate\Console\Scheduling\Event as ScheduledEvent;
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Exceptions;
+use Shopper\Core\Contracts\PaymentSessionGateway;
 use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
+use Shopper\Core\Exceptions\PaymentProviderUnavailableException;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Product;
+use Tests\Cart\Stubs\FakePaymentSessionGateway;
 
 uses(Tests\Core\TestCase::class);
 
@@ -84,6 +90,34 @@ describe('shopper:orders:reclaim', function (): void {
             ->and($noDriver->refresh()->status)->toBe(OrderStatus::New);
     });
 
+    it('never reclaims an order whose payment the provider collected or is still processing', function (): void {
+        $gateway = new FakePaymentSessionGateway;
+        $gateway->paid = true;
+        $this->app->instance(PaymentSessionGateway::class, $gateway);
+
+        $order = pendingOrder(['created_at' => now()->subHours(100)]);
+
+        $this->artisan('shopper:orders:reclaim', ['--hours' => 72])->assertSuccessful();
+
+        expect($order->refresh()->status)->toBe(OrderStatus::New);
+    });
+
+    it('keeps an order for the next run when the provider cannot be reached, and reclaims the others', function (): void {
+        Exceptions::fake();
+
+        $unreachable = pendingOrder(['created_at' => now()->subHours(100)]);
+        $reclaimable = pendingOrder(['created_at' => now()->subHours(100)]);
+        $gateway = new FakePaymentSessionGateway;
+        $gateway->unavailableOrders = [$unreachable->id];
+        $this->app->instance(PaymentSessionGateway::class, $gateway);
+
+        $this->artisan('shopper:orders:reclaim', ['--hours' => 72])->assertSuccessful();
+
+        expect($unreachable->refresh()->status)->toBe(OrderStatus::New)
+            ->and($reclaimable->refresh()->status)->toBe(OrderStatus::Cancelled);
+        Exceptions::assertReported(PaymentProviderUnavailableException::class);
+    });
+
     it('does nothing when the reclaim window is not configured', function (): void {
         config()->set('shopper.orders.reclaim_pending_after_hours', null);
 
@@ -104,3 +138,13 @@ describe('shopper:orders:reclaim', function (): void {
         expect($order->refresh()->status)->toBe(OrderStatus::Cancelled);
     });
 })->group('workflows', 'orders');
+
+it('schedules the reclaim in the foreground with an overlap lock that expires within the hour', function (): void {
+    $event = collect(resolve(Schedule::class)->events())
+        ->first(fn (ScheduledEvent $event): bool => str_contains((string) $event->command, 'shopper:orders:reclaim'));
+
+    expect($event)
+        ->withoutOverlapping->toBeTrue()
+        ->expiresAt->toBe(60)
+        ->runInBackground->toBeFalse();
+});

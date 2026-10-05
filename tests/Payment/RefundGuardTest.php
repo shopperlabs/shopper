@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use Shopper\Core\Actions\ReserveCampaignBudget;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Models\Campaign;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
@@ -131,6 +133,25 @@ it('allows refunding exactly the remaining amount and marks the order refunded',
     $this->service->refund($order, 'pi_guard', amount: 2000);
 
     expect($order->refresh()->payment_status)->toBe(PaymentStatus::Refunded);
+});
+
+it('releases every campaign the order reserved once it is fully refunded', function (): void {
+    $order = paidOrder($this->method);
+    $first = Campaign::factory()->withSpendBudget(amount: 100_000)->create();
+    $second = Campaign::factory()->withSpendBudget(amount: 100_000)->create();
+
+    resolve(ReserveCampaignBudget::class)->execute($first, spend: 2000, orderId: $order->id);
+    resolve(ReserveCampaignBudget::class)->execute($second, spend: 1000, orderId: $order->id);
+
+    $this->service->refund($order, 'pi_guard', amount: 3000);
+
+    expect($first->fresh()->spent_amount)->toBe(2000)
+        ->and($second->fresh()->spent_amount)->toBe(1000);
+
+    $this->service->refund($order, 'pi_guard', amount: 2000);
+
+    expect($first->fresh()->spent_amount)->toBe(0)
+        ->and($second->fresh()->spent_amount)->toBe(0);
 });
 
 it('caps the refund at the order total for a manually marked paid order', function (): void {

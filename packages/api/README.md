@@ -166,9 +166,13 @@ Lines target a purchasable through its public id and a type discriminator:
 ```
 
 Line operations are idempotent on the purchasable: adding the same product or variant again
-increments the existing line instead of creating a duplicate. The API refuses anything a
+increments the existing line instead of creating a duplicate. Adding it again with different
+`metadata` answers `422 cart_line_metadata_conflict`: update that line or remove it first. The
+line metadata is copied onto the order item when the cart completes. The API refuses anything a
 storefront cannot sell, draft products, external products, products that sell through their
-variants, or a purchasable without a price in the cart currency, with a `422` validation error.
+variants, or a new line the price resolver cannot price in the cart currency, with a `422`
+validation error. The payment session and checkout refuse a line whose price disappeared since
+it was added (`price_missing`), unless its payment was already collected.
 
 ### Ownership
 
@@ -192,6 +196,9 @@ Authorization: Bearer {token}
 
 Tokens carry the `store` ability. The customer is always resolved from the token, so account
 URLs never contain a customer id.
+
+Every store endpoint answers `401` to a token without the `store` ability or issued to a model
+other than `auth.providers.users.model`.
 
 ## JavaScript SDK
 

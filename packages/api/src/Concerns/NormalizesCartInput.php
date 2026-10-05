@@ -42,7 +42,15 @@ trait NormalizesCartInput
             'array',
             'max:50',
             function (string $attribute, mixed $value, Closure $fail): void {
-                if (mb_strlen((string) json_encode($value)) > 4096) {
+                $encoded = json_encode($value, JSON_PRESERVE_ZERO_FRACTION);
+
+                if ($encoded === false || json_decode($encoded, true) !== $value || str_contains(serialize($value), "\0")) {
+                    $fail(__('shopper-api::messages.cart.metadata_invalid'));
+
+                    return;
+                }
+
+                if (mb_strlen($encoded) > 4096) {
                     $fail(__('shopper-api::messages.cart.metadata_too_large'));
                 }
             },

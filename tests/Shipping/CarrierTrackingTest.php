@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Http;
 use Shopper\Core\Enum\ShipmentStatus;
 use Shopper\FedEx\FedExDriver;
 use Shopper\Shipping\DataTransferObjects\TrackingEvent;
+use Shopper\Shipping\DataTransferObjects\TrackingInfo;
 use Shopper\Shipping\Exceptions\ShippingException;
 use Shopper\Shipping\Exceptions\TrackingNotFoundException;
 use Shopper\Ups\UpsDriver;
@@ -341,37 +342,37 @@ it('tracks against the UPS sandbox host when the driver runs in sandbox mode', f
 it('reports a tracking number UPS has no record of as not found', function (): void {
     fakeUps(['response' => ['errors' => [['code' => 'TW0001', 'message' => 'Tracking Information Not Found']]]], 404);
 
-    expect(fn () => upsDriver()->track(UPS_NUMBER))
+    expect(fn (): TrackingInfo => upsDriver()->track(UPS_NUMBER))
         ->toThrow(TrackingNotFoundException::class);
 });
 
 it('never reads a bare UPS 404 as a missing parcel', function (): void {
     fakeUps('<html>Not Found</html>', 404);
 
-    expect(fn () => upsDriver()->track(UPS_NUMBER))
+    expect(fn (): TrackingInfo => upsDriver()->track(UPS_NUMBER))
         ->toThrow(ShippingException::class, 'API error from [ups]: HTTP 404')
-        ->and(fn () => upsDriver()->track(UPS_NUMBER))
+        ->and(fn (): TrackingInfo => upsDriver()->track(UPS_NUMBER))
         ->not->toThrow(TrackingNotFoundException::class);
 });
 
 it('surfaces a UPS outage as a retryable api error', function (): void {
     fakeUps(['response' => ['errors' => [['code' => '250002', 'message' => 'Invalid Authentication Information']]]], 503);
 
-    expect(fn () => upsDriver()->track(UPS_NUMBER))
+    expect(fn (): TrackingInfo => upsDriver()->track(UPS_NUMBER))
         ->toThrow(ShippingException::class, 'API error from [ups]: Invalid Authentication Information');
 });
 
 it('rejects a UPS response that carries no package', function (): void {
     fakeUps(['trackResponse' => ['shipment' => [['inquiryNumber' => UPS_NUMBER]]]]);
 
-    expect(fn () => upsDriver()->track(UPS_NUMBER))
+    expect(fn (): TrackingInfo => upsDriver()->track(UPS_NUMBER))
         ->toThrow(ShippingException::class, 'Invalid response received from [ups] API.');
 });
 
 it('rejects a UPS token response that carries no access token', function (): void {
     fakeUps(upsPackage(), token: ['token_type' => 'Bearer', 'expires_in' => 14399]);
 
-    expect(fn () => upsDriver()->track(UPS_NUMBER))
+    expect(fn (): TrackingInfo => upsDriver()->track(UPS_NUMBER))
         ->toThrow(ShippingException::class, 'Invalid response received from [ups] API.');
 
     Http::assertNotSent(fn ($request): bool => str_contains($request->url(), '/api/track/v1/details/'));
@@ -383,7 +384,7 @@ it('never calls the UPS tracking endpoint when the credentials are refused', fun
         'onlinetools.ups.com/api/track/v1/details/*' => Http::response(upsPackage()),
     ]);
 
-    expect(fn () => upsDriver()->track(UPS_NUMBER))
+    expect(fn (): TrackingInfo => upsDriver()->track(UPS_NUMBER))
         ->toThrow(ShippingException::class, 'API error from [ups]: Unauthorized');
 
     Http::assertNotSent(fn ($request): bool => str_contains($request->url(), '/api/track/v1/details/'));
@@ -476,7 +477,7 @@ it('reports a tracking number FedEx has no record of as not found', function ():
         'error' => ['code' => 'TRACKING.TRACKINGNUMBER.NOTFOUND', 'message' => 'Invalid tracking numbers.'],
     ]));
 
-    expect(fn () => fedexDriver()->track(FEDEX_NUMBER))
+    expect(fn (): TrackingInfo => fedexDriver()->track(FEDEX_NUMBER))
         ->toThrow(TrackingNotFoundException::class);
 });
 
@@ -486,30 +487,30 @@ it('surfaces a FedEx result error as a retryable api error', function (): void {
         'error' => ['code' => 'SYSTEM.UNEXPECTED.ERROR', 'message' => 'The system is temporarily unavailable.'],
     ]));
 
-    expect(fn () => fedexDriver()->track(FEDEX_NUMBER))
+    expect(fn (): TrackingInfo => fedexDriver()->track(FEDEX_NUMBER))
         ->toThrow(ShippingException::class, 'API error from [fedex]: The system is temporarily unavailable.')
-        ->and(fn () => fedexDriver()->track(FEDEX_NUMBER))
+        ->and(fn (): TrackingInfo => fedexDriver()->track(FEDEX_NUMBER))
         ->not->toThrow(TrackingNotFoundException::class);
 });
 
 it('surfaces a FedEx http outage as a retryable api error', function (): void {
     fakeFedEx(['output' => ['alerts' => [['message' => 'Service temporarily unavailable']]]], 500);
 
-    expect(fn () => fedexDriver()->track(FEDEX_NUMBER))
+    expect(fn (): TrackingInfo => fedexDriver()->track(FEDEX_NUMBER))
         ->toThrow(ShippingException::class, 'API error from [fedex]: Service temporarily unavailable');
 });
 
 it('rejects a FedEx response that carries no track result', function (): void {
     fakeFedEx(['output' => ['completeTrackResults' => [['trackResults' => []]]]]);
 
-    expect(fn () => fedexDriver()->track(FEDEX_NUMBER))
+    expect(fn (): TrackingInfo => fedexDriver()->track(FEDEX_NUMBER))
         ->toThrow(ShippingException::class, 'Invalid response received from [fedex] API.');
 });
 
 it('rejects a FedEx token response that carries no access token', function (): void {
     fakeFedEx(fedexPackage(), token: ['token_type' => 'bearer']);
 
-    expect(fn () => fedexDriver()->track(FEDEX_NUMBER))
+    expect(fn (): TrackingInfo => fedexDriver()->track(FEDEX_NUMBER))
         ->toThrow(ShippingException::class, 'Invalid response received from [fedex] API.');
 
     Http::assertNotSent(fn ($request): bool => str_contains($request->url(), '/track/v1/trackingnumbers'));
@@ -521,7 +522,7 @@ it('never calls the FedEx tracking endpoint when the credentials are refused', f
         'apis.fedex.com/track/v1/trackingnumbers' => Http::response(fedexPackage()),
     ]);
 
-    expect(fn () => fedexDriver()->track(FEDEX_NUMBER))
+    expect(fn (): TrackingInfo => fedexDriver()->track(FEDEX_NUMBER))
         ->toThrow(ShippingException::class, 'API error from [fedex]: Bad credentials');
 
     Http::assertNotSent(fn ($request): bool => str_contains($request->url(), '/track/v1/trackingnumbers'));
@@ -530,9 +531,9 @@ it('never calls the FedEx tracking endpoint when the credentials are refused', f
 it('refuses to track before the carrier credentials are configured', function (): void {
     Http::fake();
 
-    expect(fn () => (new UpsDriver('', '', '', ''))->track(UPS_NUMBER))
+    expect(fn (): TrackingInfo => (new UpsDriver('', '', '', ''))->track(UPS_NUMBER))
         ->toThrow(ShippingException::class, 'The [ups] shipping driver is not configured. Please check your .env file.')
-        ->and(fn () => (new FedExDriver('', '', ''))->track(FEDEX_NUMBER))
+        ->and(fn (): TrackingInfo => (new FedExDriver('', '', ''))->track(FEDEX_NUMBER))
         ->toThrow(ShippingException::class, 'The [fedex] shipping driver is not configured. Please check your .env file.');
 
     Http::assertNothingSent();

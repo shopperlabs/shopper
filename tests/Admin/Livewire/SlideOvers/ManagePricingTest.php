@@ -85,6 +85,25 @@ describe(ManagePricing::class, function (): void {
             ->and($product->prices->first()->amount)->toBe(10000);
     });
 
+    it('stores a price beyond a million in a currency without minor unit and rejects a fraction of it', function (): void {
+        setupCurrencies(['XAF'], 'XAF');
+        $product = Product::factory()->create();
+        $xaf = Currency::query()->where('code', 'XAF')->first();
+
+        Livewire::test(ManagePricing::class, [
+            'modelId' => $product->id,
+            'modelType' => Product::class,
+        ])
+            ->fillForm([$xaf->id => ['amount' => 0.5]])
+            ->call('save')
+            ->assertHasErrors(["data.{$xaf->id}.amount"])
+            ->fillForm([$xaf->id => ['amount' => 1_500_000]])
+            ->call('save')
+            ->assertHasNoErrors();
+
+        expect($product->prices()->value('amount'))->toBe(1_500_000);
+    });
+
     it('dispatches event after saving pricing', function (): void {
         $product = Product::factory()->create();
 

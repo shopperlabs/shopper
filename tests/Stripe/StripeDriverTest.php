@@ -403,6 +403,17 @@ describe(StripeDriver::class, function (): void {
                 ->and($result->data['payment_intent'])->toBe('pi_test_123');
         });
 
+        it('accepts a pending refund so a delayed payment method is not refunded twice', function (): void {
+            $driver = createDriver();
+            $mocks = injectMockClient($driver);
+
+            $mocks->refunds->shouldReceive('create')
+                ->once()
+                ->andReturn(Refund::constructFrom(['id' => 're_test_123', 'status' => 'pending', 'amount' => 5000]));
+
+            expect($driver->refundPayment('pi_test_123', 5000)->success)->toBeTrue();
+        });
+
         it('forwards the caller idempotency key so a retried refund collapses at Stripe', function (): void {
             $driver = createDriver();
             $mocks = injectMockClient($driver);
@@ -645,7 +656,7 @@ describe(StripeDriver::class, function (): void {
                 'amount_received' => 5000,
             ], secret: '');
 
-            expect(fn () => $driver->handleWebhook($forged['payload'], $forged['headers']))
+            expect(fn (): WebhookResult => $driver->handleWebhook($forged['payload'], $forged['headers']))
                 ->toThrow(StripeException::class);
         });
 
@@ -656,6 +667,7 @@ describe(StripeDriver::class, function (): void {
                 'object' => 'payment_intent',
                 'amount' => 5000,
                 'amount_received' => 5000,
+                'metadata' => ['cart_id' => 'cart_public_1'],
             ]);
 
             $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
@@ -664,7 +676,26 @@ describe(StripeDriver::class, function (): void {
                 ->and($result->action)->toBe(WebhookAction::Captured)
                 ->and($result->reference)->toBe('pi_test_123')
                 ->and($result->amount)->toBe(5000)
-                ->and($result->data['stripe_event'])->toBe('payment_intent.succeeded');
+                ->and($result->data['stripe_event'])->toBe('payment_intent.succeeded')
+                ->and($result->data['cart_id'])->toBe('cart_public_1');
+        });
+
+        it('handles `payment_intent.amount_capturable_updated` event', function (): void {
+            $driver = createDriver();
+            $webhook = webhookPayload('payment_intent.amount_capturable_updated', [
+                'id' => 'pi_test_123',
+                'object' => 'payment_intent',
+                'amount' => 5000,
+                'amount_capturable' => 5000,
+                'metadata' => ['cart_id' => 'cart_public_1'],
+            ]);
+
+            $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
+
+            expect($result->action)->toBe(WebhookAction::Authorized)
+                ->and($result->reference)->toBe('pi_test_123')
+                ->and($result->amount)->toBe(5000)
+                ->and($result->data['cart_id'])->toBe('cart_public_1');
         });
 
         it('handles `payment_intent.payment_failed` event', function (): void {

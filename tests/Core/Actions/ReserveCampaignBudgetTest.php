@@ -159,3 +159,11 @@ describe(ReserveCampaignBudget::class, function (): void {
             ->and($movements->last()->balance_after)->toBe(50_000);
     });
 })->group('actions', 'campaigns');
+
+it('overdraws an exhausted spend cap for a redemption already paid', function (): void {
+    $campaign = Campaign::factory()->withSpendBudget(100)->create(['spent_amount' => 100]);
+
+    resolve(ReserveCampaignBudget::class)->execute($campaign, 500, overdraw: true);
+
+    expect($campaign->refresh()->spent_amount)->toBe(600);
+});

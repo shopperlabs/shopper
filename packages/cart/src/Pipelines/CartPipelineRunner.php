@@ -22,6 +22,7 @@ final readonly class CartPipelineRunner
             'addresses.country',
             'promotions.discount.campaign',
             'promotions.discount.items',
+            'promotions.discount.zone',
         ]);
 
         $context = new CartPipelineContext($cart);

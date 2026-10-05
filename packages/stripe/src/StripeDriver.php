@@ -176,7 +176,7 @@ final class StripeDriver extends Driver
             ]);
 
             return new PaymentResult(
-                success: $refund->status === 'succeeded',
+                success: in_array($refund->status, ['succeeded', 'pending'], true),
                 status: 'refunded',
                 reference: $refund->id,
                 amount: $refund->amount,
@@ -255,14 +255,14 @@ final class StripeDriver extends Driver
                 action: WebhookAction::Authorized,
                 reference: $object->id,
                 amount: $object->amount_capturable ?? $object->amount,
-                data: ['stripe_event' => $event->type],
+                data: ['stripe_event' => $event->type, 'cart_id' => $object->metadata['cart_id'] ?? null],
                 eventId: $event->id,
             ),
             'payment_intent.succeeded' => new WebhookResult(
                 action: WebhookAction::Captured,
                 reference: $object->id,
                 amount: $object->amount_received ?? $object->amount,
-                data: ['stripe_event' => $event->type],
+                data: ['stripe_event' => $event->type, 'cart_id' => $object->metadata['cart_id'] ?? null],
                 eventId: $event->id,
             ),
             'payment_intent.payment_failed' => new WebhookResult(

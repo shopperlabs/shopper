@@ -70,6 +70,8 @@ export class AuthModule {
    * The id of the cart attached during the last register() or login() call,
    * when a cart_id was sent. It may differ from the id sent: a guest cart
    * folded into the cart the customer already owned is gone after the merge.
+   * A guest cart the transfer could not take (its payment session was
+   * opening) comes back as is, still a guest cart: retry cart.transfer().
    */
   public getCartId(): string | null {
     return this.cartId

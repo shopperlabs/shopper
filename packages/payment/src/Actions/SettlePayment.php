@@ -20,6 +20,8 @@ final readonly class SettlePayment
             ->orderBy('id')
             ->get()
             ->sortBy(fn (PaymentWebhookEvent $event): array => [$event->type?->precedence() ?? PHP_INT_MAX, $event->id])
-            ->each(fn (PaymentWebhookEvent $event) => $this->apply->execute($event));
+            ->each(function (PaymentWebhookEvent $event): void {
+                $this->apply->execute($event);
+            });
     }
 }

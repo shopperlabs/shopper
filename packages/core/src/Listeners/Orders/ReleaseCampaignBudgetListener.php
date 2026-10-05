@@ -16,16 +16,6 @@ final class ReleaseCampaignBudgetListener implements ShouldQueue
 
     public function handle(OrderCancelled $event): void
     {
-        $campaign = $event->order->discount?->campaign;
-
-        if ($campaign === null) {
-            return;
-        }
-
-        $this->releaseCampaignBudget->execute(
-            $campaign,
-            $event->order->getKey(),
-            actor: 'order-cancelled',
-        );
+        $this->releaseCampaignBudget->releaseOrder($event->order->getKey(), actor: 'order-cancelled');
     }
 }

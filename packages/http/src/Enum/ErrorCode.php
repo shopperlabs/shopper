@@ -32,8 +32,11 @@ enum ErrorCode: string
     case PriceMissing = 'price_missing';
     case PriceChanged = 'price_changed';
     case StockInsufficient = 'stock_insufficient';
+    case QuantityRuleViolated = 'quantity_rule_violated';
     case CartEmpty = 'cart_empty';
     case CartCompleted = 'cart_completed';
+    case CartLineLocked = 'cart_line_locked';
+    case CartLineMetadataConflict = 'cart_line_metadata_conflict';
     case CartNothingToCollect = 'cart_nothing_to_collect';
     case EmailRequired = 'email_required';
     case PromotionNotApplicable = 'promotion_not_applicable';
@@ -43,6 +46,7 @@ enum ErrorCode: string
     case ShippingMethodRequired = 'shipping_method_required';
     case ShippingOptionUnavailable = 'shipping_option_unavailable';
     case ShippingPriceChanged = 'shipping_price_changed';
+    case ShippingProviderUnavailable = 'shipping_provider_unavailable';
 
     case PaymentMethodRequired = 'payment_method_required';
     case PaymentMethodUnavailable = 'payment_method_unavailable';
@@ -50,7 +54,9 @@ enum ErrorCode: string
     case PaymentProviderUnavailable = 'payment_provider_unavailable';
     case PaymentSessionMismatch = 'payment_session_mismatch';
     case PaymentSessionInProgress = 'payment_session_in_progress';
+    case PaymentSessionCollected = 'payment_session_collected';
     case PaymentSessionRequired = 'payment_session_required';
+    case PaymentReleased = 'payment_released';
 
     case AvatarInvalid = 'avatar_invalid';
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Http\Controllers\Cart;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Shopper\Api\Actions\UpdateCartAction;
@@ -13,6 +14,7 @@ use Shopper\Api\Http\Requests\Cart\PatchCartRequest;
 use Shopper\Api\Http\Resources\JsonApiResource;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
+use Shopper\Core\Models\Contracts\Channel;
 use Shopper\Core\Models\Zone;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,6 +39,9 @@ final class CartController
         /** @var Zone|null $zone */
         $zone = $request->attributes->get('shopper_zone');
 
+        /** @var (Channel&Model)|null $channel */
+        $channel = $request->attributes->get('shopper_channel');
+
         /** @var Cart $cart */
         $cart = resolve(CartContract::class)::query()->create([
             'currency_code' => $request->validated('currency_code')
@@ -44,6 +49,7 @@ final class CartController
             'email' => $request->validated('email'),
             'customer_id' => $request->user('sanctum')?->getAuthIdentifier(),
             'zone_id' => $zone?->id,
+            'channel_id' => $channel?->getKey(),
             'metadata' => $request->validated('metadata'),
         ]);
 
@@ -67,9 +73,11 @@ final class CartController
     /**
      * Update a cart.
      *
-     * Patches the currency, contact email or metadata. Switching the currency
-     * re-prices the lines and drops the shipping and payment choices bound to
-     * the old currency; it is rejected when a line has no price in the target.
+     * Patches the currency, zone, contact email or metadata. Switching the
+     * currency re-prices the lines and drops the shipping and payment choices
+     * bound to the old currency; it is rejected when a line has no price in
+     * the target. Switching the zone re-prices the lines for that zone and
+     * drops the shipping and payment choices; the currency stays as it is.
      */
     public function update(PatchCartRequest $request, string $cartId): JsonApiResource
     {

@@ -39,8 +39,10 @@ return [
     | orders are automatically cancelled and their reserved stock released.
     | A failed payment attempt never cancels an order on its own, since the
     | customer may still retry: this window is what frees the stock when no
-    | payment ever lands. The `shopper:orders:reclaim` command runs hourly.
-    | Use null to disable. Offline payments (manual driver) are never reclaimed.
+    | payment ever lands. The `shopper:orders:reclaim` command runs hourly,
+    | releases the payment at the provider first, and skips any order whose
+    | payment was collected or is still processing. Use null to disable.
+    | Offline payments (manual driver) are never reclaimed.
     |
     */
 

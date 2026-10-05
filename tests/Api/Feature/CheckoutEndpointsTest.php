@@ -2,31 +2,51 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Exceptions;
 use Illuminate\Support\Sleep;
 use Laravel\Sanctum\Sanctum;
+use Shopper\Cart\CartManager;
+use Shopper\Cart\Contracts\DiscountEligibilityRule;
+use Shopper\Cart\Discounts\DiscountEligibilityManager;
+use Shopper\Cart\Discounts\DiscountValidationResult;
 use Shopper\Cart\Models\Cart;
+use Shopper\Cart\Models\CartPromotion;
+use Shopper\Cart\Pipelines\CartPipelineContext;
+use Shopper\Core\Contracts\Priceable;
+use Shopper\Core\Contracts\PriceResolver;
+use Shopper\Core\Contracts\QuantityRuleResolver;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
+use Shopper\Core\Enum\ProductType;
+use Shopper\Core\Models\Campaign;
 use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Country;
+use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\OrderPromotion;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Product;
+use Shopper\Core\Models\TaxRate;
+use Shopper\Core\Models\TaxZone;
 use Shopper\Core\Models\Zone;
+use Shopper\Core\Pricing\PricingContext;
+use Shopper\Core\Pricing\QuantityRule;
 use Shopper\Payment\Enum\TransactionType;
 use Shopper\Payment\Exceptions\PaymentException;
 use Shopper\Payment\Facades\Payment;
 use Shopper\Payment\Models\PaymentTransaction;
 use Tests\Api\Stubs\FakePaymentDriver;
+use Tests\Cart\Stubs\TieredPriceResolver;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Api\TestCase::class);
@@ -39,6 +59,11 @@ function checkoutCart(Zone $zone, Product $product, int $quantity = 1): Cart
         'zone_id' => $zone->id,
     ]);
 
+    $product->prices()->create([
+        'amount' => 2500,
+        'currency_id' => Currency::query()->where('code', 'USD')->value('id'),
+    ]);
+
     $cart->lines()->create([
         'purchasable_type' => $product->getMorphClass(),
         'purchasable_id' => $product->id,
@@ -47,6 +72,23 @@ function checkoutCart(Zone $zone, Product $product, int $quantity = 1): Cart
     ]);
 
     return $cart;
+}
+
+function recordLockOnFirstZoneRead(Cart $cart, ?bool &$locked): void
+{
+    $lock = Cache::lock("cart:payment-session:{$cart->public_id}", 30);
+
+    Zone::retrieved(function () use ($lock, &$locked): void {
+        if ($locked !== null) {
+            return;
+        }
+
+        $locked = ! $lock->get();
+
+        if (! $locked) {
+            $lock->release();
+        }
+    });
 }
 
 function checkoutAddressPayload(): array
@@ -167,6 +209,31 @@ it('rejects a shipping option the carriers do not quote', function (): void {
     ])->assertUnprocessable()->assertJsonPath('errors.0.code', 'shipping_option_unavailable');
 });
 
+it('rejects a shipping option the zone a concurrent request moved the cart to does not quote', function (): void {
+    $elsewhere = Zone::factory()->create(['is_enabled' => true]);
+    $cartId = $this->cart->id;
+    $moved = false;
+    $locked = null;
+
+    Cart::retrieved(function (Cart $read) use ($cartId, $elsewhere, &$moved): void {
+        if ($read->id === $cartId && ! $moved) {
+            $moved = true;
+            DB::table($read->getTable())->where('id', $cartId)->update(['zone_id' => $elsewhere->id]);
+        }
+    });
+
+    recordLockOnFirstZoneRead($this->cart, $locked);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/shipping-method", [
+        'option_id' => "main-carrier:{$this->option->public_id}",
+    ])->assertUnprocessable()->assertJsonPath('errors.0.code', 'shipping_option_unavailable');
+
+    expect($locked)->toBeTrue()
+        ->and($this->cart->refresh())
+        ->shipping_option_id->toBeNull()
+        ->shipping_amount->toBeNull();
+});
+
 it('lists the payment methods available for the cart zone', function (): void {
     PaymentMethod::factory()->create(['title' => 'Elsewhere', 'is_enabled' => true, 'driver' => 'manual']);
 
@@ -198,6 +265,29 @@ it('rejects a payment method outside the cart offer', function (): void {
     ])->assertUnprocessable()->assertJsonPath('errors.0.code', 'payment_method_unavailable');
 
     expect($this->cart->refresh()->payment_method_id)->toBeNull();
+});
+
+it('rejects a payment method the zone a concurrent request moved the cart to does not offer', function (): void {
+    $elsewhere = Zone::factory()->create(['is_enabled' => true]);
+    $cartId = $this->cart->id;
+    $moved = false;
+    $locked = null;
+
+    Cart::retrieved(function (Cart $read) use ($cartId, $elsewhere, &$moved): void {
+        if ($read->id === $cartId && ! $moved) {
+            $moved = true;
+            DB::table($read->getTable())->where('id', $cartId)->update(['zone_id' => $elsewhere->id]);
+        }
+    });
+
+    recordLockOnFirstZoneRead($this->cart, $locked);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-method", [
+        'payment_method_id' => (string) $this->paymentMethod->public_id,
+    ])->assertUnprocessable()->assertJsonPath('errors.0.code', 'payment_method_unavailable');
+
+    expect($locked)->toBeTrue()
+        ->and($this->cart->refresh()->payment_method_id)->toBeNull();
 });
 
 it('opens a payment session through the payment driver', function (): void {
@@ -234,7 +324,7 @@ it('resumes the payment session while the total is unchanged', function (): void
     $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
     $method->zones()->attach($this->zone);
 
-    $this->cart->update(['payment_method_id' => $method->id]);
+    readyCart($this->cart, $this->option, $method);
 
     $url = "/store/carts/{$this->cart->public_id}/payment-session";
 
@@ -252,7 +342,7 @@ it('opens a fresh session when the cart total changed', function (): void {
     $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
     $method->zones()->attach($this->zone);
 
-    $this->cart->update(['payment_method_id' => $method->id]);
+    readyCart($this->cart, $this->option, $method);
 
     $url = "/store/carts/{$this->cart->public_id}/payment-session";
 
@@ -271,7 +361,31 @@ it('requires a payment method before opening a session', function (): void {
         ->assertJsonPath('errors.0.code', 'payment_method_required');
 });
 
-it('keeps the previous session when the provider refuses to open a new one and replaces it on the next attempt', function (): void {
+it('refuses to open a payment session once a concurrent request cleared the payment method', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    $this->cart->update(['payment_method_id' => $method->id]);
+    $cartId = $this->cart->id;
+    $cleared = false;
+
+    Cart::retrieved(function (Cart $read) use ($cartId, &$cleared): void {
+        if ($read->id === $cartId && ! $cleared) {
+            $cleared = true;
+            DB::table($read->getTable())->where('id', $cartId)->update(['payment_method_id' => null]);
+        }
+    });
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'payment_method_required');
+
+    expect($driver->initiations)->toBe(0);
+});
+
+it('releases the previous session before opening a new one, even when the provider refuses the new one', function (): void {
     Exceptions::fake();
     $driver = new FakePaymentDriver;
     Payment::extend('fake', fn (): FakePaymentDriver => $driver);
@@ -279,7 +393,7 @@ it('keeps the previous session when the provider refuses to open a new one and r
     $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
     $method->zones()->attach($this->zone);
 
-    $this->cart->update(['payment_method_id' => $method->id]);
+    readyCart($this->cart, $this->option, $method);
 
     $url = "/store/carts/{$this->cart->public_id}/payment-session";
 
@@ -294,15 +408,15 @@ it('keeps the previous session when the provider refuses to open a new one and r
 
     Exceptions::assertReported(PaymentException::class);
 
-    expect($driver->cancellations)->toBe(0)
-        ->and($this->cart->refresh()->payment_session['reference'])->toBe('fake_intent_1');
+    expect($driver->cancellations)->toBe(1)
+        ->and($driver->lastCancelledReference)->toBe('fake_intent_1')
+        ->and($this->cart->refresh()->payment_session)->toBeNull();
 
     $driver->throwOnInitiate = false;
 
     $this->postJson($url)->assertCreated()->assertJsonPath('data.id', 'fake_intent_3');
 
     expect($driver->cancellations)->toBe(1)
-        ->and($driver->lastCancelledReference)->toBe('fake_intent_1')
         ->and(array_unique($driver->idempotencyKeys))->toHaveCount(3)
         ->and($this->cart->refresh()->payment_session['reference'])->toBe('fake_intent_3');
 });
@@ -327,7 +441,7 @@ it('drops the payment session and cancels its intent when the payment method cha
     $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
     $method->zones()->attach($this->zone);
 
-    $this->cart->update(['payment_method_id' => $method->id]);
+    readyCart($this->cart, $this->option, $method);
 
     $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
 
@@ -337,6 +451,28 @@ it('drops the payment session and cancels its intent when the payment method cha
 
     expect($this->cart->refresh()->payment_session)->toBeNull()
         ->and($driver->lastCancelledReference)->toBe('fake_intent_1');
+});
+
+it('refuses to switch the payment method while its session may already be paid', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $driver->retrievedStatus = 'captured';
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-method", [
+        'payment_method_id' => (string) $this->paymentMethod->public_id,
+    ])->assertConflict()->assertJsonPath('errors.0.code', 'payment_session_collected');
+
+    expect($this->cart->refresh())
+        ->payment_method_id->toBe($method->id)
+        ->and($this->cart->payment_session['reference'])->toBe('fake_intent_1')
+        ->and($driver->lastCancelledReference)->toBeNull();
 });
 
 it('refuses to complete a cart paid through a provider without a payment session', function (): void {
@@ -414,10 +550,351 @@ it('rejects checkout with a 422 when stock is drained after the line is added', 
 
     $this->postJson("/store/carts/{$this->cart->public_id}/complete")
         ->assertUnprocessable()
-        ->assertJsonPath('errors.0.code', 'stock_insufficient');
+        ->assertJsonPath('errors.0.code', 'stock_insufficient')
+        ->assertJsonMissingPath('errors.0.meta');
 
     expect(Order::query()->count())->toBe(0)
         ->and($this->product->getStock())->toBe(0);
+});
+
+it('rejects checkout with a 422 when the resolved quantity rule refuses a line', function (): void {
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+    $this->app->instance(QuantityRuleResolver::class, new class implements QuantityRuleResolver
+    {
+        public function resolve(Priceable&Model $purchasable, PricingContext $context): QuantityRule
+        {
+            return new QuantityRule(minimum: 12);
+        }
+    });
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'quantity_rule_violated')
+        ->assertJsonPath('errors.0.meta.minimum', 12);
+
+    expect(Order::query()->count())->toBe(0);
+});
+
+it('refuses to collect or complete a cart whose line no resolver prices anymore', function (string $step): void {
+    $resolver = new TieredPriceResolver(base: 2000);
+    $this->app->instance(PriceResolver::class, $resolver);
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+    $resolver->available = false;
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/{$step}")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'price_missing');
+
+    expect(Order::query()->count())->toBe(0);
+})->with(['payment-session', 'complete']);
+
+it('reprices the cart when completion finds a higher price, so the next attempt carries it', function (): void {
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+    $this->app->instance(PriceResolver::class, new TieredPriceResolver(base: 3000));
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'price_changed');
+
+    expect($this->cart->lines()->first()->unit_price_amount)->toBe(3000);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")->assertCreated();
+});
+
+it('reprices the cart before opening a payment session and honours the paid prices at completion', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $resolver = new TieredPriceResolver(base: 2000);
+    $this->app->instance(PriceResolver::class, $resolver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertCreated()
+        ->assertJsonPath('data.attributes.amount', 2700);
+
+    $driver->retrievedStatus = 'captured';
+    $resolver->base = 3000;
+
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertCreated()
+        ->json('data.id');
+
+    expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(2700);
+});
+
+it('refuses an unpaid session whose prices rose, reprices the cart and cancels the session', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $resolver = new TieredPriceResolver(base: 2000);
+    $this->app->instance(PriceResolver::class, $resolver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $resolver->base = 3000;
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'price_changed');
+
+    expect($this->cart->refresh())
+        ->payment_session->toBeNull()
+        ->and($this->cart->lines()->first()->unit_price_amount)->toBe(3000)
+        ->and($driver->lastCancelledReference)->toBe('fake_intent_1')
+        ->and(Order::query()->count())->toBe(0);
+});
+
+it('answers 409 when a completion closes the cart while its payment session opens', function (): void {
+    $this->cart->update(['payment_method_id' => $this->paymentMethod->id]);
+    $cartId = $this->cart->id;
+    $reads = 0;
+
+    Cart::retrieved(function (Cart $cart) use ($cartId, &$reads): void {
+        if ($cart->id === $cartId && ++$reads === 2) {
+            DB::table($cart->getTable())->where('id', $cartId)->update(['completed_at' => now()]);
+        }
+    });
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertConflict()
+        ->assertJsonPath('errors.0.code', 'cart_completed');
+});
+
+it('answers 503 and keeps the session when the provider cannot say whether a changed cart was paid', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $resolver = new TieredPriceResolver(base: 2000);
+    $this->app->instance(PriceResolver::class, $resolver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $driver->throwOnRetrieve = true;
+    $resolver->base = 3000;
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertStatus(503)
+        ->assertJsonPath('errors.0.code', 'payment_provider_unavailable');
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertStatus(503);
+
+    expect($this->cart->refresh()->payment_session['reference'])->toBe('fake_intent_1')
+        ->and($this->cart->lines()->first()->unit_price_amount)->toBe(2000)
+        ->and($driver->cancellations)->toBe(0);
+});
+
+it('keeps the paid shipping price when the carrier quote changed after payment', function (int $price): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $driver->retrievedStatus = 'captured';
+    $this->option->update(['price' => $price]);
+
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertCreated()
+        ->json('data.id');
+
+    expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(3200)
+        ->and($driver->cancellations)->toBe(0);
+})->with([
+    'raised' => 900,
+    'dropped' => 500,
+]);
+
+it('honours the prices of a session whose driver cannot tell whether it was paid', function (): void {
+    $driver = new FakePaymentDriver;
+    $driver->retrieval = false;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $resolver = new TieredPriceResolver(base: 2000);
+    $this->app->instance(PriceResolver::class, $resolver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $resolver->base = 3000;
+
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertCreated()
+        ->json('data.id');
+
+    expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(2700)
+        ->and($driver->cancellations)->toBe(0);
+});
+
+it('keeps a session paid while completion refused a higher price, then honours it', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $resolver = new TieredPriceResolver(base: 2000);
+    $this->app->instance(PriceResolver::class, $resolver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $driver->retrievedStatuses = ['pending', 'captured'];
+    $resolver->base = 3000;
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertConflict()
+        ->assertJsonPath('errors.0.code', 'payment_session_collected');
+
+    expect($driver->cancellations)->toBe(0)
+        ->and($this->cart->refresh()->payment_session['reference'])->toBe('fake_intent_1')
+        ->and($this->cart->lines()->first()->unit_price_amount)->toBe(2000);
+
+    $driver->retrievedStatus = 'captured';
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")->assertCreated();
+});
+
+it('keeps the frozen shipping price for a driver that cannot tell whether it was paid', function (): void {
+    $driver = new FakePaymentDriver;
+    $driver->retrieval = false;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $this->option->update(['price' => 900]);
+
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertCreated()
+        ->json('data.id');
+
+    expect(Order::query()->where('public_id', $orderId)->value('shipping_amount'))->toBe(700);
+});
+
+it('resumes a paid session without repricing the cart', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $resolver = new TieredPriceResolver(base: 2000);
+    $this->app->instance(PriceResolver::class, $resolver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $url = "/store/carts/{$this->cart->public_id}/payment-session";
+    $this->postJson($url)->assertCreated();
+
+    $driver->retrievedStatus = 'captured';
+    $resolver->base = 3000;
+    $this->option->update(['price' => 900]);
+
+    $this->postJson($url)->assertCreated()->assertJsonPath('data.id', 'fake_intent_1');
+
+    expect($this->cart->lines()->first()->unit_price_amount)->toBe(2000)
+        ->and($driver->cancellations)->toBe(0);
+});
+
+it('cancels the previous session when reopening finds a lower price', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $resolver = new TieredPriceResolver(base: 2000);
+    $this->app->instance(PriceResolver::class, $resolver);
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $url = "/store/carts/{$this->cart->public_id}/payment-session";
+    $this->postJson($url)->assertCreated();
+    $resolver->base = 1500;
+
+    $this->postJson($url)
+        ->assertCreated()
+        ->assertJsonPath('data.id', 'fake_intent_2')
+        ->assertJsonPath('data.attributes.amount', 2200);
+
+    expect($driver->lastCancelledReference)->toBe('fake_intent_1');
+});
+
+it('refuses to open a payment session on a price increase the storefront has not shown', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $this->app->instance(PriceResolver::class, new TieredPriceResolver(base: 3000));
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'price_changed');
+
+    expect($this->cart->lines()->first()->unit_price_amount)->toBe(3000)
+        ->and($driver->initiations)->toBe(0);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertCreated()
+        ->assertJsonPath('data.attributes.amount', 3700);
+});
+
+it('records the order total on a manual payment whose cart changed after its session', function (): void {
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $line = $this->cart->lines()->first();
+
+    $this->patchJson("/store/carts/{$this->cart->public_id}/lines/{$line->public_id}", ['quantity' => 2])->assertOk();
+
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")->assertCreated()->json('data.id');
+    $order = Order::query()->where('public_id', $orderId)->first();
+
+    expect($order->price_amount)->toBe(5700)
+        ->and(PaymentTransaction::query()->where('order_id', $order->id)->value('amount'))->toBe(5700);
+});
+
+it('completes a manual payment at a lower live price', function (): void {
+    $this->app->instance(PriceResolver::class, new TieredPriceResolver(base: 2500));
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $this->app->instance(PriceResolver::class, new TieredPriceResolver(base: 2000));
+
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertCreated()
+        ->json('data.id');
+
+    expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(2700);
+});
+
+it('refuses to open a payment session for a quantity the resolved rule refuses', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $this->app->instance(QuantityRuleResolver::class, new class implements QuantityRuleResolver
+    {
+        public function resolve(Priceable&Model $purchasable, PricingContext $context): QuantityRule
+        {
+            return new QuantityRule(minimum: 12);
+        }
+    });
+
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'quantity_rule_violated');
+
+    expect($driver->initiations)->toBe(0);
 });
 
 it('answers the same order when the cart is completed twice', function (): void {
@@ -445,6 +922,119 @@ it('rejects completion when the shipping price increased since selection', funct
         ->assertJsonPath('errors.0.source.pointer', '/data/attributes/shipping_method');
 
     expect($this->cart->refresh()->isCompleted())->toBeFalse();
+});
+
+it('refuses to complete an unpaid cart whose carrier option is gone', function (Closure $remove): void {
+    cardCheckout($this->cart, $this->zone, $this->option);
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $remove($this->option, $this->zone);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'shipping_option_unavailable');
+
+    expect(Order::query()->count())->toBe(0);
+})->with([
+    'option disabled' => [fn (CarrierOption $option) => $option->update(['is_enabled' => false])],
+    'zone deleted' => [function (CarrierOption $option, Zone $zone): void {
+        $option->delete();
+        $zone->delete();
+    }],
+]);
+
+it('refuses to open a payment session for a delivery the cart cannot honour', function (Closure $change, string $code): void {
+    $driver = cardCheckout($this->cart, $this->zone, $this->option);
+    $change($this->option, $this->cart);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', $code);
+
+    expect($driver->initiations)->toBe(0);
+})->with([
+    'price raised' => [fn (CarrierOption $option) => $option->update(['price' => 900]), 'shipping_price_changed'],
+    'option disabled' => [fn (CarrierOption $option) => $option->update(['is_enabled' => false]), 'shipping_option_unavailable'],
+    'address outside the zone' => [fn (CarrierOption $option, Cart $cart): int => $cart->addresses()->update([
+        'country_id' => Country::factory()->create(['cca2' => 'AU'])->id,
+    ]), 'shipping_option_unavailable'],
+    'no delivery chosen' => [fn (CarrierOption $option, Cart $cart): bool => $cart->update([
+        'shipping_option_id' => null,
+        'shipping_amount' => null,
+    ]), 'shipping_method_required'],
+]);
+
+it('opens the payment session at the lower shipping price the carrier now quotes', function (): void {
+    $driver = cardCheckout($this->cart, $this->zone, $this->option);
+    $this->option->update(['price' => 500]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertCreated()
+        ->assertJsonPath('data.attributes.amount', 3000);
+
+    expect($driver->lastAmount)->toBe(3000)
+        ->and($this->cart->refresh()->shipping_amount)->toBe(500);
+});
+
+it('cancels the session opened with a delivery fee once its product stopped shipping', function (): void {
+    $driver = cardCheckout($this->cart, $this->zone, $this->option);
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $this->product->update(['type' => ProductType::Virtual]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'payment_session_required');
+
+    expect($driver->cancellations)->toBe(1)
+        ->and($this->cart->refresh()->shipping_amount)->toBeNull();
+});
+
+it('keeps the paid delivery fee of a product that stopped shipping after payment', function (Closure $pay): void {
+    $driver = cardCheckout($this->cart, $this->zone, $this->option);
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $pay($driver);
+    $this->product->update(['type' => ProductType::Virtual]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertCreated()
+        ->assertJsonPath('data.attributes.shipping_amount', 700)
+        ->assertJsonPath('data.attributes.price_amount', 3200);
+
+    expect($driver->cancellations)->toBe(0);
+})->with([
+    'captured' => [fn (FakePaymentDriver $driver): string => $driver->retrievedStatus = 'captured'],
+    'driver without retrieval' => [fn (FakePaymentDriver $driver): false => $driver->retrieval = false],
+]);
+
+it('drops the delivery fee once the cart holds nothing to ship', function (): void {
+    $virtual = Product::factory()->virtual()->publish()->create();
+    $virtual->prices()->create([
+        'amount' => 2500,
+        'currency_id' => Currency::query()->where('code', 'USD')->value('id'),
+    ]);
+    $driver = cardCheckout($this->cart, $this->zone, $this->option);
+    $this->cart->lines()->create([
+        'purchasable_type' => $virtual->getMorphClass(),
+        'purchasable_id' => $virtual->id,
+        'quantity' => 1,
+        'unit_price_amount' => 2500,
+    ]);
+    $this->cart->lines()->where('purchasable_id', $this->product->id)->delete();
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertCreated()
+        ->assertJsonPath('data.attributes.amount', 2500);
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertCreated()
+        ->assertJsonPath('data.id', 'fake_intent_1');
+
+    expect($driver->cancellations)->toBe(0);
+
+    $driver->retrievedStatus = 'captured';
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertCreated()
+        ->assertJsonPath('data.attributes.shipping_amount', null)
+        ->assertJsonPath('data.attributes.price_amount', 2500);
 });
 
 it('absorbs a shipping price drop at completion', function (): void {
@@ -605,7 +1195,7 @@ it('cancels the replaced payment session at the provider', function (): void {
     $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
     $method->zones()->attach($this->zone);
 
-    $this->cart->update(['payment_method_id' => $method->id]);
+    readyCart($this->cart, $this->option, $method);
 
     $url = "/store/carts/{$this->cart->public_id}/payment-session";
 
@@ -626,7 +1216,7 @@ it('never reuses an idempotency key when the cart total round-trips', function (
     $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
     $method->zones()->attach($this->zone);
 
-    $this->cart->update(['payment_method_id' => $method->id]);
+    readyCart($this->cart, $this->option, $method);
 
     $url = "/store/carts/{$this->cart->public_id}/payment-session";
 
@@ -733,14 +1323,15 @@ it('opens a fresh session when the provider reports the stored one unusable', fu
     $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
     $method->zones()->attach($this->zone);
 
-    $this->cart->update(['payment_method_id' => $method->id]);
+    readyCart($this->cart, $this->option, $method);
 
     $url = "/store/carts/{$this->cart->public_id}/payment-session";
 
     $this->postJson($url)->assertCreated()->assertJsonPath('data.id', 'fake_intent_1');
     $this->postJson($url)->assertCreated()->assertJsonPath('data.id', 'fake_intent_2');
 
-    expect($driver->retrievals)->toBe(1)
+    expect($driver->retrievals)->toBe(2)
+        ->and($driver->cancellations)->toBe(1)
         ->and($driver->initiations)->toBe(2);
 });
 
@@ -830,6 +1421,52 @@ it('stacks two combinable codes and removes one by code', function (): void {
     expect($this->cart->refresh()->promotions->pluck('code')->all())->toBe(['FIVE']);
 });
 
+it('drops a promotion its campaign spend budget can no longer absorb, so the cart still completes', function (): void {
+    $campaign = Campaign::factory()->withSpendBudget(100_000)->create(['spent_amount' => 99_000]);
+    orderDiscount(['code' => 'FIRST', 'type' => DiscountType::FixedAmount, 'value' => 500, 'combinable' => true, 'priority' => 30, 'campaign_id' => $campaign->id]);
+    orderDiscount(['code' => 'SECOND', 'type' => DiscountType::FixedAmount, 'value' => 500, 'combinable' => true, 'priority' => 20, 'campaign_id' => $campaign->id]);
+    orderDiscount(['code' => 'THIRD', 'type' => DiscountType::FixedAmount, 'value' => 300, 'combinable' => true, 'priority' => 10, 'campaign_id' => $campaign->id]);
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'FIRST'])->assertOk();
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SECOND'])->assertOk();
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'THIRD'])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.promotions', [
+            ['code' => 'FIRST', 'source' => 'code', 'amount' => 500, 'status' => 'applied'],
+            ['code' => 'SECOND', 'source' => 'code', 'amount' => 500, 'status' => 'applied'],
+            ['code' => 'THIRD', 'source' => 'code', 'amount' => 0, 'status' => 'suppressed'],
+        ]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")->assertCreated()->json('data.id');
+
+    expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(2200)
+        ->and($campaign->refresh()->spent_amount)->toBe(100_000);
+});
+
+it('leaves the balance of a promotion its campaign cannot absorb to the next promotion', function (): void {
+    $campaign = Campaign::factory()->withSpendBudget(100_000)->create(['spent_amount' => 99_000]);
+    orderDiscount(['code' => 'FIRST', 'type' => DiscountType::FixedAmount, 'value' => 500, 'combinable' => true, 'priority' => 30, 'campaign_id' => $campaign->id]);
+    orderDiscount(['code' => 'SECOND', 'type' => DiscountType::FixedAmount, 'value' => 900, 'combinable' => true, 'priority' => 20, 'campaign_id' => $campaign->id]);
+    orderDiscount(['code' => 'OPEN', 'type' => DiscountType::FixedAmount, 'value' => 1500, 'combinable' => true, 'priority' => 10]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'FIRST'])->assertOk();
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SECOND'])->assertOk();
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'OPEN'])
+        ->assertOk()
+        ->assertJsonPath('data.attributes.discount_total', 2000);
+});
+
+it('refuses a code its campaign spend budget cannot absorb on its own', function (): void {
+    $campaign = Campaign::factory()->withSpendBudget(100_000)->create(['spent_amount' => 99_800]);
+    orderDiscount(['code' => 'FIRST', 'type' => DiscountType::FixedAmount, 'value' => 500, 'campaign_id' => $campaign->id]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'FIRST'])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'promotion_not_applicable');
+});
+
 it('accepts a valid code suppressed by an exclusive one and keeps it on the cart', function (): void {
     orderDiscount(['code' => 'EXCL', 'value' => 30, 'combinable' => false, 'priority' => 30]);
     orderDiscount(['code' => 'SUPP', 'value' => 10, 'combinable' => true, 'priority' => 10]);
@@ -852,7 +1489,7 @@ it('drops only the expired promotion on revalidation and keeps the valid one', f
 
     $expiring->update(['end_at' => now()->subMinute()]);
 
-    resolve(Shopper\Api\Actions\RevalidateCartCouponAction::class)->execute($this->cart->refresh());
+    resolve(CartManager::class)->revalidateCoupons($this->cart->refresh());
 
     expect($this->cart->refresh()->promotions->pluck('code')->all())->toBe(['VALID']);
 });
@@ -883,6 +1520,66 @@ it('answers promotion_limit_reached when the code is exhausted between validatio
 
     expect(Order::query()->count())->toBe(0)
         ->and($discount->refresh()->total_use)->toBe(0);
+});
+
+it('checks the promotion eligibility before the order exists', function (): void {
+    resolve(DiscountEligibilityManager::class)->register(new class implements DiscountEligibilityRule
+    {
+        public function key(): string
+        {
+            return 'first-order';
+        }
+
+        public function label(): string
+        {
+            return 'First order';
+        }
+
+        public function description(): string
+        {
+            return 'Customers without an order yet.';
+        }
+
+        public function discountableType(): ?string
+        {
+            return null;
+        }
+
+        public function passes(Discount $discount, CartPipelineContext $context): DiscountValidationResult
+        {
+            return new DiscountValidationResult(
+                Order::query()->where('email', $context->cart->email)->doesntExist(),
+                'Not a first order.',
+            );
+        }
+    });
+    orderDiscount(['eligibility' => 'first-order']);
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+
+    $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertCreated()
+        ->json('data.id');
+
+    expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(2700);
+});
+
+it('validates the cart promotions without lazy loading their discounts', function (): void {
+    orderDiscount(['combinable' => true]);
+    orderDiscount(['code' => 'ZONE5', 'type' => DiscountType::FixedAmount, 'value' => 500, 'zone_id' => $this->zone->id, 'combinable' => true]);
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'ZONE5'])->assertOk();
+    orderDiscount(['code' => null, 'trigger' => 'automatic', 'value' => 10, 'combinable' => true]);
+    $manager = resolve(CartManager::class);
+    Model::preventLazyLoading();
+
+    try {
+        expect($manager->calculate(Cart::query()->findOrFail($this->cart->id))->discountTotal)->toBe(1250)
+            ->and($manager->calculate(Cart::query()->findOrFail($this->cart->id))->discountTotal)->toBe(1250)
+            ->and($manager->holdsLapsedPromotion(Cart::query()->findOrFail($this->cart->id)))->toBeFalse();
+    } finally {
+        Model::preventLazyLoading(false);
+    }
 });
 
 it('rejects an unknown promotion code', function (): void {
@@ -994,4 +1691,670 @@ it('exposes the order email to the authenticated owner', function (): void {
     $this->getJson("/store/customers/me/orders/{$orderId}")
         ->assertOk()
         ->assertJsonPath('data.attributes.email', 'owner@example.com');
+});
+
+it('refuses to change the lines of a cart whose payment is collected', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $driver->retrievedStatus = 'captured';
+
+    $line = $this->cart->lines()->first();
+
+    $this->patchJson("/store/carts/{$this->cart->public_id}/lines/{$line->public_id}", ['quantity' => 2])
+        ->assertConflict()
+        ->assertJsonPath('errors.0.code', 'payment_session_collected');
+
+    expect((int) $this->cart->lines()->sum('quantity'))->toBe(1)
+        ->and($driver->cancellations)->toBe(0)
+        ->and($this->cart->refresh()->payment_session['reference'])->toBe('fake_intent_1');
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")->assertCreated();
+});
+
+it('honours the previous session when it is paid while a new one opens', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+
+    $url = "/store/carts/{$this->cart->public_id}/payment-session";
+    $this->postJson($url)->assertCreated();
+    $this->cart->lines()->first()->update(['quantity' => 2]);
+    $driver->retrievedStatuses = ['pending', 'pending', 'captured', 'captured'];
+    $driver->throwOnCancel = true;
+
+    $this->postJson($url)->assertCreated()->assertJsonPath('data.id', 'fake_intent_1');
+
+    expect($driver->initiations)->toBe(1)
+        ->and($this->cart->refresh()->payment_session['reference'])->toBe('fake_intent_1');
+});
+
+it('cancels the new intent when the cart completes while the session opens', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+    $cartId = $this->cart->id;
+    $driver->onInitiate = fn () => DB::table($this->cart->getTable())->where('id', $cartId)->update(['completed_at' => now()]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertConflict()
+        ->assertJsonPath('errors.0.code', 'cart_completed');
+
+    expect($driver->lastCancelledReference)->toBe('fake_intent_1')
+        ->and($this->cart->refresh()->payment_session)->toBeNull();
+});
+
+it('keeps the payment session when a promotion code does not apply, and releases it when one does', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+    orderDiscount(['code' => 'FAR', 'min_required' => DiscountRequirement::Price, 'min_required_value' => 1_000_000]);
+    orderDiscount();
+    $url = "/store/carts/{$this->cart->public_id}/promotion";
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+
+    $this->postJson($url, ['code' => 'FAR'])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'promotion_not_applicable');
+
+    expect($driver->cancellations)->toBe(0)
+        ->and($this->cart->refresh()->payment_session['reference'])->toBe('fake_intent_1')
+        ->and($this->cart->promotions()->count())->toBe(0);
+
+    $this->postJson($url, ['code' => 'SAVE20'])->assertOk();
+
+    expect($driver->lastCancelledReference)->toBe('fake_intent_1')
+        ->and($this->cart->refresh()->payment_session)->toBeNull()
+        ->and($this->cart->promotions()->pluck('code')->all())->toBe(['SAVE20']);
+});
+
+it('never cancels the intent of an order when a promotion is sent to its completed cart', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+    orderDiscount();
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")->assertCreated();
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])
+        ->assertConflict()
+        ->assertJsonPath('errors.0.code', 'cart_completed');
+
+    expect($driver->cancellations)->toBe(0);
+});
+
+it('answers 503 when the provider cannot be reached to release the session of a line change', function (): void {
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    readyCart($this->cart, $this->option, $method);
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+    $driver->throwOnRetrieve = true;
+    $line = $this->cart->lines()->first();
+
+    $this->patchJson("/store/carts/{$this->cart->public_id}/lines/{$line->public_id}", ['quantity' => 2])
+        ->assertStatus(503)
+        ->assertJsonPath('errors.0.code', 'payment_provider_unavailable');
+
+    expect($line->refresh()->quantity)->toBe(1)
+        ->and($this->cart->refresh()->payment_session['reference'])->toBe('fake_intent_1');
+});
+
+it('waits for the payment session lock before completing the cart', function (): void {
+    Sleep::fake(syncWithCarbon: true);
+    readyCart($this->cart, $this->option, $this->paymentMethod);
+    Cache::lock("cart:payment-session:{$this->cart->public_id}", 30)->get();
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertConflict()
+        ->assertJsonPath('errors.0.code', 'payment_session_in_progress');
+
+    expect($this->cart->refresh()->isCompleted())->toBeFalse();
+});
+
+function cardCheckout(Cart $cart, Zone $zone, CarrierOption $option): FakePaymentDriver
+{
+    $driver = new FakePaymentDriver;
+    Payment::extend('fake', fn (): FakePaymentDriver => $driver);
+    $method = PaymentMethod::factory()->create(['title' => 'Card', 'is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($zone);
+    readyCart($cart, $option, $method);
+
+    return $driver;
+}
+
+it('reopens an unpaid session at the full price once its promotion lapsed, then resumes it', function (Closure $lapse): void {
+    $discount = orderDiscount(['usage_limit' => 1]);
+    $driver = cardCheckout($this->cart, $this->zone, $this->option);
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertCreated()
+        ->assertJsonPath('data.attributes.amount', 2700);
+    $lapse($discount);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertCreated()
+        ->assertJsonPath('data.id', 'fake_intent_2')
+        ->assertJsonPath('data.attributes.amount', 3200);
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertCreated()
+        ->assertJsonPath('data.id', 'fake_intent_2');
+
+    expect($driver->cancellations)->toBe(1);
+})->with([
+    'usage limit reached' => [fn (Discount $discount) => $discount->update(['total_use' => 1])],
+    'expired' => [fn (Discount $discount) => $discount->update(['end_at' => now()->subMinute()])],
+    'deactivated' => [fn (Discount $discount) => $discount->update(['is_active' => false])],
+    'deleted' => [fn (Discount $discount) => $discount->delete()],
+]);
+
+it('reopens an unpaid session once its campaign can no longer absorb all of its promotions', function (): void {
+    $campaign = Campaign::factory()->withSpendBudget(100_000)->create();
+    orderDiscount(['code' => 'FIRST', 'type' => DiscountType::FixedAmount, 'value' => 500, 'combinable' => true, 'priority' => 20, 'campaign_id' => $campaign->id]);
+    orderDiscount(['code' => 'SECOND', 'type' => DiscountType::FixedAmount, 'value' => 500, 'combinable' => true, 'priority' => 10, 'campaign_id' => $campaign->id]);
+    $driver = cardCheckout($this->cart, $this->zone, $this->option);
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'FIRST'])->assertOk();
+    $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SECOND'])->assertOk();
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertCreated()
+        ->assertJsonPath('data.attributes.amount', 2200);
+    $campaign->update(['spent_amount' => 99_200]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+        ->assertCreated()
+        ->assertJsonPath('data.id', 'fake_intent_2')
+        ->assertJsonPath('data.attributes.amount', 2700);
+
+    expect($driver->cancellations)->toBe(1);
+});
+
+describe('a cart paid before its completion', function (): void {
+    it('honours a promotion exhausted or expired after the payment', function (array $change): void {
+        $discount = orderDiscount(['usage_limit' => 1]);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        $discount->update($change);
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(2700)
+            ->and($discount->refresh()->total_use)->toBe(($change['total_use'] ?? 0) + 1);
+    })->with([
+        'usage limit reached' => [['total_use' => 1]],
+        'expired' => [['end_at' => now()->subMinute()]],
+        'deactivated' => [['is_active' => false]],
+    ]);
+
+    it('charges the promotion it was paid with once the discount changed', function (array $change): void {
+        $discount = orderDiscount();
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        $discount->update($change);
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        $order = Order::query()->where('public_id', $orderId)->firstOrFail();
+
+        expect($order->price_amount)->toBe(2700)
+            ->and($order->getAttribute('discount_value_at_apply'))->toBe(20)
+            ->and($order->getAttribute('discount_type'))->toBe(DiscountType::Percentage->value)
+            ->and($order->promotions()->value('value_at_apply'))->toBe(20)
+            ->and($order->promotions()->value('type'))->toBe(DiscountType::Percentage);
+    })->with([
+        'value raised' => [['value' => 30]],
+        'value lowered' => [['value' => 10]],
+        'became a fixed amount' => [['type' => DiscountType::FixedAmount, 'value' => 100]],
+    ]);
+
+    it('records the discount terms the payment was priced with when they changed before it', function (): void {
+        $discount = orderDiscount();
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $discount->update(['type' => DiscountType::FixedAmount, 'value' => 500]);
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+            ->assertCreated()
+            ->assertJsonPath('data.attributes.amount', 2700);
+        $driver->retrievedStatus = 'captured';
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        $order = Order::query()->where('public_id', $orderId)->firstOrFail();
+
+        expect($order->getAttribute('discount_type'))->toBe(DiscountType::FixedAmount->value)
+            ->and($order->getAttribute('discount_value_at_apply'))->toBe(500);
+    });
+
+    it('takes the discount terms of a promotion applied before its snapshot existed', function (): void {
+        $campaign = Campaign::factory()->create();
+        orderDiscount(['campaign_id' => $campaign->id]);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        CartPromotion::query()->update(['type' => null, 'value' => null, 'campaign_id' => null]);
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        $order = Order::query()->where('public_id', $orderId)->firstOrFail();
+
+        expect($order->getAttribute('discount_value_at_apply'))->toBe(20)
+            ->and($order->getAttribute('discount_type'))->toBe(DiscountType::Percentage->value)
+            ->and($order->promotions()->value('value_at_apply'))->toBe(20)
+            ->and($campaign->refresh()->spent_amount)->toBe(500);
+    });
+
+    it('completes a paid cart whose discount was deleted before its terms were snapshotted', function (): void {
+        $discount = orderDiscount();
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        CartPromotion::query()->update(['type' => null, 'value' => null]);
+        $discount->delete();
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        $order = Order::query()->where('public_id', $orderId)->firstOrFail();
+
+        expect($order->price_amount)->toBe(2700)
+            ->and($order->getAttribute('discount_code'))->toBe('SAVE20')
+            ->and($order->promotions()->count())->toBe(0);
+    });
+
+    it('keeps showing the promotion an open session was priced with once the discount changed', function (): void {
+        $discount = orderDiscount();
+        cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $discount->update(['value' => 30]);
+        $this->travel(16)->minutes();
+
+        $this->getJson("/store/carts/{$this->cart->public_id}")
+            ->assertOk()
+            ->assertJsonPath('data.attributes.total', 2700);
+    });
+
+    it('honours a per-customer limit reached by another order after the payment', function (): void {
+        $discount = orderDiscount(['usage_limit_per_user' => true]);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        Order::factory()->create(['email' => $this->cart->email])->promotions()->create([
+            'discount_id' => $discount->id,
+            'code' => 'SAVE20',
+            'type' => 'percentage',
+            'value_at_apply' => 20,
+            'amount' => 500,
+            'currency_code' => 'USD',
+        ]);
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(2700);
+    });
+
+    it('refuses an unpaid session a promotion ended for, and drops the promotion', function (Closure $end): void {
+        $discount = orderDiscount();
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $end($discount);
+
+        $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertUnprocessable()
+            ->assertJsonPath('errors.0.code', 'promotion_not_applicable');
+
+        expect($driver->lastCancelledReference)->toBe('fake_intent_1')
+            ->and(Order::query()->count())->toBe(0);
+
+        $this->getJson("/store/carts/{$this->cart->public_id}")
+            ->assertJsonPath('data.attributes.discount_total', 0);
+    })->with([
+        'expired' => [fn (Discount $discount) => $discount->update(['end_at' => now()->subMinute()])],
+        'deactivated' => [fn (Discount $discount) => $discount->update(['is_active' => false])],
+        'deleted' => [fn (Discount $discount) => $discount->delete()],
+        'postponed' => [fn (Discount $discount) => $discount->update(['start_at' => now()->addDay()])],
+    ]);
+
+    it('opens the new intent on the live total once the previous one is released', function (): void {
+        $discount = orderDiscount();
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $discount->update(['end_at' => now()->subMinute()]);
+        $driver->failRetrieve = true;
+
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+
+        expect($driver->lastAmount)->toBe(3200)
+            ->and($this->cart->refresh()->payment_session['amount'])->toBe(3200);
+    });
+
+    it('asks the provider about the payment before the order transaction opens', function (): void {
+        orderDiscount(['usage_limit' => 1, 'total_use' => 0]);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        $baseline = DB::transactionLevel();
+        $levels = [];
+        $driver->onRetrieve = function () use (&$levels): void {
+            $levels[] = DB::transactionLevel();
+        };
+        Discount::query()->update(['total_use' => 1]);
+
+        $this->postJson("/store/carts/{$this->cart->public_id}/complete")->assertCreated();
+
+        expect($levels)->not->toBeEmpty()
+            ->and(max($levels))->toBe($baseline);
+    });
+
+    it('honours a campaign whose budget ran out after the payment', function (): void {
+        $campaign = Campaign::factory()->withCountBudget(1)->create();
+        $discount = orderDiscount(['campaign_id' => $campaign->id]);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        $campaign->update(['used_count' => 1]);
+
+        $this->postJson("/store/carts/{$this->cart->public_id}/complete")->assertCreated();
+
+        expect($campaign->refresh()->used_count)->toBe(2)
+            ->and($discount->refresh()->total_use)->toBe(1);
+    });
+
+    it('records the terms and spends the campaign budget of a discount deleted after the payment', function (): void {
+        $campaign = Campaign::factory()->withCountBudget(1)->create();
+        $discount = orderDiscount(['campaign_id' => $campaign->id]);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        $campaign->update(['used_count' => 1]);
+        $discount->delete();
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        $order = Order::query()->where('public_id', $orderId)->firstOrFail();
+
+        expect($order->price_amount)->toBe(2700)
+            ->and(OrderPromotion::query()->where('order_id', $order->id)->sole())
+            ->discount_id->toBeNull()
+            ->code->toBe('SAVE20')
+            ->value_at_apply->toBe(20)
+            ->amount->toBe(500)
+            ->and($campaign->refresh()->used_count)->toBe(2)
+            ->and($campaign->spent_amount)->toBe(500);
+    });
+
+    it('spends the campaign the promotion carried at payment when its discount moved to another campaign', function (): void {
+        $original = Campaign::factory()->create();
+        $moved = Campaign::factory()->create();
+        $discount = orderDiscount(['campaign_id' => $original->id]);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        $discount->update(['campaign_id' => $moved->id]);
+
+        $this->postJson("/store/carts/{$this->cart->public_id}/complete")->assertCreated();
+
+        expect($original->refresh()->spent_amount)->toBe(500)
+            ->and($moved->refresh()->spent_amount)->toBe(0);
+    });
+
+    it('spends no campaign for a promotion paid outside any campaign when its discount joined one later', function (): void {
+        $campaign = Campaign::factory()->create();
+        $discount = orderDiscount();
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        $discount->update(['campaign_id' => $campaign->id]);
+
+        $this->postJson("/store/carts/{$this->cart->public_id}/complete")->assertCreated();
+
+        expect($campaign->refresh()->spent_amount)->toBe(0)
+            ->and($campaign->used_count)->toBe(0);
+    });
+
+    it('completes a paid cart without spending a campaign deleted after the payment', function (): void {
+        $campaign = Campaign::factory()->create();
+        orderDiscount(['campaign_id' => $campaign->id]);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        $campaign->delete();
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        $order = Order::query()->where('public_id', $orderId)->firstOrFail();
+
+        expect($order->price_amount)->toBe(2700)
+            ->and($order->promotions()->sole()->amount)->toBe(500);
+    });
+
+    it('completes without asking the provider when the cart only holds a promotion that no longer applies', function (): void {
+        $discount = orderDiscount();
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $discount->update(['is_active' => false]);
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->throwOnRetrieve = true;
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(3200);
+    });
+
+    it('honours an automatic promotion that ended after the payment', function (): void {
+        $discount = orderDiscount(['code' => null, 'trigger' => 'automatic']);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        $discount->update(['end_at' => now()->subMinute()]);
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(2700);
+    });
+
+    it('never adds an automatic promotion that appeared after the session opened', function (): void {
+        cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        orderDiscount(['code' => null, 'trigger' => 'automatic']);
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(3200);
+    });
+
+    it('releases an unpaid session refused for an exhausted promotion, so the cart drops it', function (): void {
+        $discount = orderDiscount(['usage_limit' => 1]);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $discount->update(['total_use' => 1]);
+
+        $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertUnprocessable()
+            ->assertJsonPath('errors.0.code', 'promotion_limit_reached');
+
+        expect($driver->lastCancelledReference)->toBe('fake_intent_1')
+            ->and($this->cart->refresh()->payment_session)->toBeNull();
+
+        $this->getJson("/store/carts/{$this->cart->public_id}")
+            ->assertJsonPath('data.attributes.discount_total', 0);
+    });
+
+    it('releases an unpaid session refused for a campaign whose budget ran out, so the cart drops it', function (): void {
+        $campaign = Campaign::factory()->withCountBudget(1)->create();
+        $discount = orderDiscount(['campaign_id' => $campaign->id]);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/promotion", ['code' => 'SAVE20'])->assertOk();
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $campaign->update(['used_count' => 1]);
+
+        $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertUnprocessable()
+            ->assertJsonPath('errors.0.code', 'promotion_budget_reached');
+
+        expect($driver->lastCancelledReference)->toBe('fake_intent_1')
+            ->and($this->cart->refresh()->payment_session)->toBeNull()
+            ->and($discount->refresh()->total_use)->toBe(0)
+            ->and(Order::query()->count())->toBe(0);
+
+        $this->getJson("/store/carts/{$this->cart->public_id}")
+            ->assertJsonPath('data.attributes.discount_total', 0);
+    });
+
+    it('gives the payment back when the stock ran out after the payment', function (): void {
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'captured';
+        $this->product->decreaseStock($this->inventory->id, 100);
+
+        $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertUnprocessable()
+            ->assertJsonPath('errors.0.code', 'payment_released');
+
+        expect($driver->refunds)->toHaveCount(1)
+            ->and($driver->refunds[0]['reference'])->toBe('fake_intent_1')
+            ->and($this->cart->refresh()->payment_session)->toBeNull()
+            ->and(Order::query()->count())->toBe(0);
+    });
+
+    it('keeps the payment when the stock ran out and it cannot be given back', function (): void {
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $driver->retrievedStatus = 'processing';
+        $this->product->decreaseStock($this->inventory->id, 100);
+
+        $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertUnprocessable()
+            ->assertJsonPath('errors.0.code', 'stock_insufficient');
+
+        expect($driver->refunds)->toBeEmpty()
+            ->and($this->cart->refresh()->payment_session['reference'])->toBe('fake_intent_1');
+    });
+
+    it('never gives back an unpaid session when the stock ran out', function (): void {
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $this->product->decreaseStock($this->inventory->id, 100);
+
+        $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertUnprocessable()
+            ->assertJsonPath('errors.0.code', 'stock_insufficient');
+
+        expect($driver->refunds)->toBeEmpty()
+            ->and($driver->cancellations)->toBe(0);
+    });
+
+    it('keeps the taxes it paid once the tax zone changed', function (Closure $change): void {
+        $taxZone = TaxZone::factory()->create(['country_id' => $this->country->id, 'is_tax_inclusive' => false]);
+        $rate = TaxRate::factory()->create(['tax_zone_id' => $taxZone->id, 'rate' => 10.00, 'is_default' => true]);
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->cart->shippingAddress()->update(['country_id' => $this->country->id]);
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+            ->assertCreated()
+            ->assertJsonPath('data.attributes.amount', 3450);
+        $driver->retrievedStatus = 'captured';
+        $change($taxZone, $rate);
+        $this->app->forgetScopedInstances();
+        $this->getJson("/store/carts/{$this->cart->public_id}")->assertJsonPath('data.attributes.total', 3450);
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(3450);
+    })->with([
+        'rate raised' => [fn (TaxZone $taxZone, TaxRate $rate) => $rate->update(['rate' => 20.00])],
+        'prices now include the tax' => [fn (TaxZone $taxZone) => $taxZone->update(['is_tax_inclusive' => true])],
+    ]);
+
+    it('prices a manual payment on the live tax zone', function (): void {
+        $taxZone = TaxZone::factory()->create(['country_id' => $this->country->id, 'is_tax_inclusive' => false]);
+        TaxRate::factory()->create(['tax_zone_id' => $taxZone->id, 'rate' => 10.00, 'is_default' => true]);
+        readyCart($this->cart, $this->option, $this->paymentMethod);
+        $this->cart->shippingAddress()->update(['country_id' => $this->country->id]);
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
+            ->assertCreated()
+            ->assertJsonPath('data.attributes.amount', 3450);
+        $taxZone->update(['is_tax_inclusive' => true]);
+        $this->app->forgetScopedInstances();
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(3200);
+    });
+
+    it('keeps the delivery it paid for once the carrier option is gone', function (Closure $remove, Closure $pay): void {
+        $driver = cardCheckout($this->cart, $this->zone, $this->option);
+        $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")->assertCreated();
+        $pay($driver);
+        $remove($this->option, $this->zone);
+
+        $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+            ->assertCreated()
+            ->json('data.id');
+
+        expect(Order::query()->where('public_id', $orderId)->value('shipping_amount'))->toBe(700);
+    })->with([
+        'option disabled' => [fn (CarrierOption $option) => $option->update(['is_enabled' => false])],
+        'zone deleted' => [function (CarrierOption $option, Zone $zone): void {
+            $option->delete();
+            $zone->delete();
+        }],
+    ])->with([
+        'captured' => [fn (FakePaymentDriver $driver): string => $driver->retrievedStatus = 'captured'],
+        'driver without retrieval' => [fn (FakePaymentDriver $driver): false => $driver->retrieval = false],
+    ]);
 });

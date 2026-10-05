@@ -270,13 +270,7 @@ final class PaymentProcessingService
             return;
         }
 
-        $campaign = $order->discount?->campaign;
-
-        if ($campaign === null) {
-            return;
-        }
-
-        resolve(ReleaseCampaignBudget::class)->execute($campaign, $order->getKey(), actor: 'order-refunded');
+        resolve(ReleaseCampaignBudget::class)->releaseOrder($order->getKey(), actor: 'order-refunded');
     }
 
     private function resolveDriver(PaymentMethod $method): PaymentDriver

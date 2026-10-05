@@ -6,8 +6,10 @@ namespace Shopper\Core\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
+use Shopper\Core\Contracts\PaymentSessionGateway;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Events\Orders\OrderCancelled;
+use Shopper\Core\Exceptions\PaymentProviderUnavailableException;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Order;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -20,7 +22,7 @@ final class ReclaimPendingOrdersCommand extends Command
 
     protected $description = 'Cancel unpaid pending orders past the configured window so their reserved stock returns to sale';
 
-    public function handle(): int
+    public function handle(PaymentSessionGateway $payments): int
     {
         $hours = $this->option('hours') !== null
             ? (int) $this->option('hours')
@@ -40,10 +42,20 @@ final class ReclaimPendingOrdersCommand extends Command
             ->whereHas('paymentMethod', function ($query): void {
                 $query->whereNotNull('driver')->where('driver', '<>', 'manual');
             })
-            ->chunkById(100, function (Collection $orders) use (&$reclaimed): void {
+            ->chunkById(100, function (Collection $orders) use (&$reclaimed, $payments): void {
                 /** @var Order $order */
                 foreach ($orders as $order) {
                     if (! $order->canBeCancelled() || ! $order->canTransitionTo(OrderStatus::Cancelled)) {
+                        continue;
+                    }
+
+                    try {
+                        if (! $payments->releaseOrder($order)) {
+                            continue;
+                        }
+                    } catch (PaymentProviderUnavailableException $exception) {
+                        report($exception);
+
                         continue;
                     }
 

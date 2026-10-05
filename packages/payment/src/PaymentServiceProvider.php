@@ -7,6 +7,7 @@ namespace Shopper\Payment;
 use Closure;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
+use Shopper\Core\Contracts\PaymentSessionGateway;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Payment\Console\ReconcilePaymentsCommand;
@@ -23,6 +24,7 @@ final class PaymentServiceProvider extends ServiceProvider
 
         $this->app->singleton(PaymentManager::class, fn (): PaymentManager => new PaymentManager($this->app));
         $this->app->singleton(PaymentProcessingService::class);
+        $this->app->singleton(PaymentSessionGateway::class, ProviderPaymentSessionGateway::class);
 
         $this->app->bind(
             'shopper.payment.logo',
@@ -46,7 +48,7 @@ final class PaymentServiceProvider extends ServiceProvider
 
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
             if (config('shopper.payment.reconciliation.schedule')) {
-                $schedule->command('shopper:payments:reconcile', ['--pull'])->everyFifteenMinutes();
+                $schedule->command('shopper:payments:reconcile', ['--pull'])->everyFifteenMinutes()->withoutOverlapping(60);
             }
 
             $schedule->command('model:prune', ['--model' => [PaymentWebhookEvent::class]])->daily();

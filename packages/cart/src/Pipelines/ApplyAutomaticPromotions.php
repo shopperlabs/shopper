@@ -23,7 +23,9 @@ final readonly class ApplyAutomaticPromotions
      */
     public function handle(CartPipelineContext $context, Closure $next): mixed
     {
-        $this->sync($context);
+        if (! $context->cart->holdsProviderPaymentSession()) {
+            $this->sync($context);
+        }
 
         return $next($context);
     }
@@ -74,7 +76,7 @@ final readonly class ApplyAutomaticPromotions
         }
 
         if ($changed) {
-            $cart->load('promotions.discount.campaign', 'promotions.discount.items');
+            $cart->load('promotions.discount.campaign', 'promotions.discount.items', 'promotions.discount.zone');
         }
     }
 }

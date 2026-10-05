@@ -7,7 +7,6 @@ namespace Shopper\Api\Http\Controllers\Auth;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
@@ -23,6 +22,7 @@ use Shopper\Api\Actions\TransferCartAction;
 use Shopper\Api\Http\Requests\Auth\LoginRequest;
 use Shopper\Api\Http\Requests\Auth\RegisterRequest;
 use Shopper\Api\Http\Resources\CustomerResource;
+use Shopper\Cart\Exceptions\PaymentSessionCollectedException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Http\Enum\ErrorCode;
@@ -33,7 +33,6 @@ use Throwable;
 final class AuthenticationController
 {
     public function __construct(
-        private readonly DatabaseManager $database,
         private readonly TransferCartAction $transferCart,
         private readonly RateLimiter $limiter,
     ) {}
@@ -119,21 +118,26 @@ final class AuthenticationController
      * attached: the cart the transfer answered, otherwise the open cart the
      * customer already owns. A retried call finds the guest cart already
      * merged and still answers the surviving cart, so the client can always
-     * reconcile.
+     * reconcile. A guest cart the transfer could not take is answered as is.
      */
     private function attachCart(Request $request, Model&Authenticatable $customer): ?string
     {
         $publicId = $request->string('cart_id')->toString();
+        $cart = $publicId === '' ? null : $this->requestedCart($publicId, $customer);
 
-        if ($publicId !== '') {
+        if ($cart !== null) {
             try {
-                $cart = $this->database->transaction(fn (): ?Cart => $this->transferRequestedCart($publicId, $customer));
-
-                if ($cart !== null) {
-                    return $cart->public_id;
-                }
+                return $this->transferCart->execute($cart, $customer->getAuthIdentifier())->public_id;
             } catch (Throwable $exception) {
-                report($exception);
+                if (! $exception instanceof PaymentSessionCollectedException) {
+                    report($exception);
+                }
+
+                $guest = $cart->fresh();
+
+                if ($guest && ! $guest->isCompleted() && ($guest->customer_id === null || $guest->belongsToCustomer($customer->getAuthIdentifier()))) {
+                    return $guest->public_id;
+                }
             }
         }
 
@@ -144,7 +148,7 @@ final class AuthenticationController
             ->value('public_id');
     }
 
-    private function transferRequestedCart(string $publicId, Model&Authenticatable $customer): ?Cart
+    private function requestedCart(string $publicId, Model&Authenticatable $customer): ?Cart
     {
         /** @var Cart|null $cart */
         $cart = resolve(CartContract::class)::query()
@@ -153,10 +157,9 @@ final class AuthenticationController
             ->where(fn (Builder $query) => $query
                 ->whereNull('customer_id')
                 ->orWhere('customer_id', $customer->getAuthIdentifier()))
-            ->lockForUpdate()
             ->first();
 
-        return $cart === null ? null : $this->transferCart->execute($cart, (int) $customer->getAuthIdentifier());
+        return $cart;
     }
 
     private function throttled(string $key): ThrottleRequestsException

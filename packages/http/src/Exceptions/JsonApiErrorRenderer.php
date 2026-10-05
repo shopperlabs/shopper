@@ -112,6 +112,7 @@ final class JsonApiErrorRenderer
                     'title' => $this->title($exception->status),
                     'detail' => $message,
                     'source' => ['pointer' => '/data/attributes/'.str_replace('.', '/', $field)],
+                    ...($exception instanceof ApiValidationException && $exception->meta !== [] ? ['meta' => $exception->meta] : []),
                 ];
             }
         }

@@ -8,6 +8,7 @@ use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Events\Orders\OrderPaid;
+use Shopper\Core\Events\Payments\OrphanedPaymentRefunded;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
@@ -84,6 +85,8 @@ describe('PaymentWebhookProcessingTest', function (): void {
     });
 
     it('marks the order `PartiallyRefunded` then `Refunded` as refunds accumulate', function (): void {
+        Event::fake([OrphanedPaymentRefunded::class]);
+
         $this->ingest->execute('fake', new WebhookResult(
             action: WebhookAction::Captured,
             reference: 'pi_123',
@@ -108,6 +111,7 @@ describe('PaymentWebhookProcessingTest', function (): void {
         ));
 
         expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::Refunded);
+        Event::assertNotDispatched(OrphanedPaymentRefunded::class);
     });
 
     it('records a failed attempt and dispatches `PaymentFailed` without cancelling the order', function (): void {

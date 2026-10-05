@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Api\Stubs;
 
+use Closure;
 use RuntimeException;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
@@ -19,7 +20,18 @@ final class FakePaymentDriver extends Driver
 
     public bool $throwOnInitiate = false;
 
+    public bool $throwOnCancel = false;
+
+    public ?Closure $onInitiate = null;
+
+    public ?Closure $onRetrieve = null;
+
+    public bool $retrieval = true;
+
     public ?string $retrievedStatus = null;
+
+    /** @var list<string> */
+    public array $retrievedStatuses = [];
 
     public int $initiations = 0;
 
@@ -30,6 +42,9 @@ final class FakePaymentDriver extends Driver
     public ?int $lastAmount = null;
 
     public ?string $lastCancelledReference = null;
+
+    /** @var list<array{reference: string, amount: int, context: array<string, mixed>}> */
+    public array $refunds = [];
 
     /** @var array<string, mixed> */
     public array $lastContext = [];
@@ -67,6 +82,10 @@ final class FakePaymentDriver extends Driver
             throw PaymentException::apiError($this->code(), 'Provider down.');
         }
 
+        if ($this->onInitiate !== null) {
+            ($this->onInitiate)();
+        }
+
         return new PaymentResult(
             success: true,
             status: 'pending',
@@ -82,10 +101,26 @@ final class FakePaymentDriver extends Driver
         $this->cancellations++;
         $this->lastCancelledReference = $reference;
 
+        if ($this->throwOnCancel) {
+            throw PaymentException::apiError($this->code(), 'Intent can no longer be cancelled.');
+        }
+
         return new PaymentResult(
             success: true,
             status: 'cancelled',
             reference: $reference,
+        );
+    }
+
+    public function refundPayment(string $reference, int $amount, ?string $reason = null, array $context = []): PaymentResult
+    {
+        $this->refunds[] = ['reference' => $reference, 'amount' => $amount, 'context' => $context];
+
+        return new PaymentResult(
+            success: true,
+            status: 'refunded',
+            reference: 're_'.count($this->refunds),
+            amount: $amount,
         );
     }
 
@@ -106,21 +141,25 @@ final class FakePaymentDriver extends Driver
 
     public function supportsRetrieval(): bool
     {
-        return true;
+        return $this->retrieval;
     }
 
     public function retrievePayment(string $reference): PaymentResult
     {
         $this->retrievals++;
 
+        if ($this->onRetrieve !== null) {
+            ($this->onRetrieve)();
+        }
+
         if ($this->throwOnRetrieve) {
             throw new RuntimeException('Provider unreachable.');
         }
 
-        if ($this->retrievedStatus !== null) {
+        if ($this->retrievedStatuses !== [] || $this->retrievedStatus !== null) {
             return new PaymentResult(
                 success: true,
-                status: $this->retrievedStatus,
+                status: array_shift($this->retrievedStatuses) ?? $this->retrievedStatus,
                 reference: $reference,
                 amount: $this->lastAmount,
             );

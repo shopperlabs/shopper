@@ -3,16 +3,21 @@
 declare(strict_types=1);
 
 use Laravel\Sanctum\Sanctum;
+use Shopper\Cart\CartManager;
 use Shopper\Cart\Models\Cart;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Carrier;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\Order;
+use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Zone;
+use Shopper\Payment\Facades\Payment;
 use Shopper\Shipping\DataTransferObjects\ShippingRate;
 use Shopper\Shipping\Facades\Shipping;
+use Tests\Api\Stubs\FakePaymentDriver;
 use Tests\Api\Stubs\FakeShippingDriver;
 use Tests\Core\Stubs\User;
 
@@ -218,6 +223,84 @@ it('keeps manual rates and warns when a carrier API is down', function (): void 
 
     expect($response->json('meta.warnings'))->toHaveCount(1)
         ->and($response->json('meta.warnings.0'))->toContain('Fake Carrier');
+});
+
+it('answers 503 while the carrier of the selected option cannot quote', function (string $endpoint, array $payload): void {
+    Inventory::factory()->create(['is_default' => true, 'country_id' => $this->country->id]);
+    registerFakeCarrier($this->zone, new FakeShippingDriver(fails: true));
+    addShippingAddress($this->cart, $this->country);
+    $method = PaymentMethod::factory()->create(['is_enabled' => true, 'driver' => 'manual']);
+    $method->zones()->attach($this->zone);
+    $this->cart->update([
+        'email' => 'john@example.com',
+        'shipping_option_id' => 'fake-carrier:express',
+        'shipping_amount' => 1295,
+        'payment_method_id' => $method->id,
+    ]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/{$endpoint}", $payload)
+        ->assertStatus(503)
+        ->assertHeader('Retry-After', '5')
+        ->assertJsonPath('errors.0.code', 'shipping_provider_unavailable');
+
+    expect(Order::query()->count())->toBe(0);
+})->with([
+    'shipping method' => ['shipping-method', ['option_id' => 'fake-carrier:express']],
+    'completion' => ['complete', []],
+]);
+
+it('answers 422 for a gone option of a carrier that still quotes while another carrier is down', function (string $endpoint, array $payload): void {
+    Inventory::factory()->create(['is_default' => true, 'country_id' => $this->country->id]);
+    registerFakeCarrier($this->zone, new FakeShippingDriver(fails: true));
+    addShippingAddress($this->cart, $this->country);
+    $method = PaymentMethod::factory()->create(['is_enabled' => true, 'driver' => 'manual']);
+    $method->zones()->attach($this->zone);
+    $this->cart->update([
+        'email' => 'john@example.com',
+        'shipping_option_id' => 'main-carrier:gone',
+        'shipping_amount' => 700,
+        'payment_method_id' => $method->id,
+    ]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/{$endpoint}", $payload)
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'shipping_option_unavailable');
+
+    expect(Order::query()->count())->toBe(0);
+})->with([
+    'shipping method' => ['shipping-method', ['option_id' => 'main-carrier:gone']],
+    'completion' => ['complete', []],
+]);
+
+it('completes a paid cart while the carrier of its delivery cannot quote', function (): void {
+    $inventory = Inventory::factory()->create(['is_default' => true, 'country_id' => $this->country->id]);
+    $this->product->mutateStock($inventory->id, 10);
+    registerFakeCarrier($this->zone, new FakeShippingDriver(fails: true));
+    addShippingAddress($this->cart, $this->country);
+    $payment = new FakePaymentDriver;
+    $payment->retrievedStatus = 'captured';
+    Payment::extend('fake', fn (): FakePaymentDriver => $payment);
+    $method = PaymentMethod::factory()->create(['is_enabled' => true, 'driver' => 'fake']);
+    $method->zones()->attach($this->zone);
+    $this->cart->update([
+        'email' => 'john@example.com',
+        'shipping_option_id' => 'fake-carrier:express',
+        'shipping_amount' => 1295,
+        'payment_method_id' => $method->id,
+    ]);
+    resolve(CartManager::class)->setPaymentSession($this->cart, [
+        'driver' => 'fake',
+        'reference' => 'fake_intent_1',
+        'amount' => 3795,
+        'currency' => 'USD',
+    ]);
+
+    $this->postJson("/store/carts/{$this->cart->public_id}/complete")
+        ->assertCreated()
+        ->assertJsonPath('data.attributes.shipping_amount', 1295)
+        ->assertJsonPath('data.attributes.price_amount', 3795);
+
+    expect($payment->cancellations)->toBe(0);
 });
 
 it('drops options priced in another currency than the cart and warns', function (): void {

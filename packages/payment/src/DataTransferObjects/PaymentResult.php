@@ -35,6 +35,11 @@ final readonly class PaymentResult
         return $this->redirectUrl !== null || $this->status === 'requires_action';
     }
 
+    public function isCollected(): bool
+    {
+        return in_array($this->status, ['authorized', 'captured', 'processing'], true);
+    }
+
     /**
      * @return array<string, mixed>
      */

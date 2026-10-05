@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopper\Api\Actions;
 
 use Shopper\Cart\CartManager;
+use Shopper\Cart\Exceptions\MissingPriceException;
 use Shopper\Cart\Models\Cart;
-use Shopper\Core\Contracts\Priceable;
-use Shopper\Core\Models\Price;
+use Shopper\Core\Models\Zone;
 use Shopper\Http\Enum\ErrorCode;
 use Shopper\Http\Exceptions\ApiValidationException;
 
@@ -15,16 +15,10 @@ final readonly class UpdateCartAction
 {
     public function __construct(
         private CartManager $cartManager,
-        private CancelPaymentSessionAction $cancelSession,
-        private RevalidateCartCouponAction $revalidateCoupon,
     ) {}
 
     /**
-     * Apply a partial update to the cart. Only the keys present in the payload
-     * are touched. Switching the currency re-prices the lines, so it is
-     * rejected when a line has no price in the target currency; the open
-     * payment intent is cancelled and an applied coupon is dropped when it no
-     * longer reduces the re-priced cart.
+     * Apply a partial update to the cart.
      *
      * @param  array<string, mixed>  $attributes
      */
@@ -33,13 +27,35 @@ final readonly class UpdateCartAction
         $currency = $attributes['currency_code'] ?? null;
 
         if (is_string($currency) && $currency !== $cart->currency_code) {
-            $this->guardLinePrices($cart, $currency);
+            $this->cartManager->withPaymentSessionLock($cart, function () use ($cart, $currency): void {
+                if ($cart->unsetRelations()->refresh()->currency_code === $currency) {
+                    return;
+                }
 
-            $session = $cart->payment_session;
+                try {
+                    $this->cartManager->changeCurrency($cart, $currency);
+                } catch (MissingPriceException) {
+                    throw ApiValidationException::withCode(ErrorCode::PriceMissing, [
+                        'currency_code' => __('shopper-api::messages.purchasable.missing_price', ['currency' => $currency]),
+                    ]);
+                }
 
-            $this->cartManager->changeCurrency($cart, $currency);
-            $this->cancelSession->execute($session);
-            $this->revalidateCoupon->execute($cart);
+                $this->cartManager->revalidateCoupons($cart);
+            });
+        }
+
+        $zoneCode = $attributes['zone_code'] ?? null;
+        $zoneId = is_string($zoneCode) ? (int) Zone::query()->where('code', $zoneCode)->value('id') : null;
+
+        if ($zoneId !== null && $zoneId !== $cart->zone_id) {
+            $this->cartManager->withPaymentSessionLock($cart, function () use ($cart, $zoneId): void {
+                if ($cart->unsetRelations()->refresh()->zone_id === $zoneId) {
+                    return;
+                }
+
+                $this->cartManager->changeContext($cart, $zoneId, $cart->channel_id);
+                $this->cartManager->revalidateCoupons($cart);
+            });
         }
 
         if (array_key_exists('email', $attributes) && is_string($attributes['email'])) {
@@ -50,21 +66,6 @@ final readonly class UpdateCartAction
             $metadata = $attributes['metadata'];
 
             $this->cartManager->setMetadata($cart, is_array($metadata) ? $metadata : null);
-        }
-    }
-
-    private function guardLinePrices(Cart $cart, string $currencyCode): void
-    {
-        $cart->loadMissing('lines.purchasable.prices');
-
-        foreach ($cart->lines as $line) {
-            $purchasable = $line->purchasable;
-
-            if (! $purchasable instanceof Priceable || ! $purchasable->getPrice($currencyCode) instanceof Price) {
-                throw ApiValidationException::withCode(ErrorCode::PriceMissing, [
-                    'currency_code' => __('shopper-api::messages.purchasable.missing_price', ['currency' => $currencyCode]),
-                ]);
-            }
         }
     }
 }

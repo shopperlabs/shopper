@@ -43,6 +43,7 @@ class ProductResource extends JsonApiResource
             ...$this->stockPayload(),
             ...$this->priceRangePayload(),
             'prices' => $this->canUseVariants() ? [] : $this->pricesPayload(),
+            ...($this->canUseVariants() ? [] : $this->calculatedPricePayload()),
             'images' => $this->imagesPayload(),
             'thumbnail' => $this->thumbnailPayload(withFallback: true),
             ...($this->isVirtual() ? ['files' => $this->filesPayload()] : []),

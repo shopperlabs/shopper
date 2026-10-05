@@ -22,6 +22,8 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read string $name
  * @property-read int $quantity
  * @property-read int $unit_price_amount
+ * @property-read ?array<string, mixed> $pricing
+ * @property-read ?array<string, mixed> $metadata
  * @property-read int $total
  * @property-read string $sku
  * @property-read int $product_id
@@ -110,6 +112,8 @@ class OrderItem extends Model implements OrderItemContract
     {
         return [
             'fulfillment_status' => FulfillmentStatus::class,
+            'pricing' => 'array',
+            'metadata' => 'array',
         ];
     }
 

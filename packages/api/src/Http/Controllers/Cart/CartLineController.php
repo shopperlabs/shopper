@@ -11,8 +11,11 @@ use Shopper\Api\Http\Requests\Cart\StoreCartLineRequest;
 use Shopper\Api\Http\Requests\Cart\UpdateCartLineRequest;
 use Shopper\Api\Http\Resources\JsonApiResource;
 use Shopper\Cart\CartManager;
+use Shopper\Cart\Exceptions\MissingPriceException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
+use Shopper\Http\Enum\ErrorCode;
+use Shopper\Http\Exceptions\ApiValidationException;
 
 final class CartLineController
 {
@@ -36,15 +39,22 @@ final class CartLineController
         $purchasable = $action->execute(
             type: (string) $request->validated('purchasable_type'),
             publicId: (string) $request->validated('purchasable_id'),
-            currencyCode: $cart->currency_code,
         );
 
-        $this->mutateCart(fn (): CartLine => $this->cartManager->add(
-            cart: $cart,
-            purchasable: $purchasable,
-            quantity: (int) ($request->validated('quantity') ?? 1),
-            metadata: $request->validated('metadata'),
-        ));
+        $this->mutateCart(function () use ($cart, $purchasable, $request): CartLine {
+            try {
+                return $this->cartManager->add(
+                    cart: $cart,
+                    purchasable: $purchasable,
+                    quantity: (int) ($request->validated('quantity') ?? 1),
+                    metadata: $request->validated('metadata'),
+                );
+            } catch (MissingPriceException) {
+                throw ApiValidationException::withCode(ErrorCode::PriceMissing, [
+                    'purchasable_id' => __('shopper-api::messages.purchasable.missing_price', ['currency' => $cart->currency_code]),
+                ]);
+            }
+        });
 
         return $this->cartResource($cart);
     }

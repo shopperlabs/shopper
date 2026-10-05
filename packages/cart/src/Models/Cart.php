@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopper\Cart\Models;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +20,7 @@ use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Traits\HasPublicId;
 use Shopper\Core\Models\Zone;
+use Shopper\Core\Pricing\PricingContext;
 use Shopper\Core\Traits\HasModelContract;
 
 /**
@@ -36,6 +39,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read ?string $shipping_option_id
  * @property-read ?int $shipping_amount
  * @property-read ?array<string, mixed> $payment_session
+ * @property-read ?string $payment_reference
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read Collection<int, CartLine> $lines
@@ -58,7 +62,7 @@ class Cart extends Model implements CartContract
     /**
      * @var list<string>
      */
-    protected $guarded = ['payment_session'];
+    protected $guarded = ['payment_session', 'payment_reference'];
 
     public static function configuredClass(): string
     {
@@ -73,6 +77,71 @@ class Cart extends Model implements CartContract
     public function isCompleted(): bool
     {
         return $this->completed_at !== null;
+    }
+
+    public function holdsProviderPaymentSession(): bool
+    {
+        return $this->payment_session !== null && ($this->payment_session['driver'] ?? 'manual') !== 'manual';
+    }
+
+    public function heldTaxInclusive(): ?bool
+    {
+        if (! $this->holdsProviderPaymentSession() || ! isset($this->payment_session['tax_inclusive'])) {
+            return null;
+        }
+
+        return (bool) $this->payment_session['tax_inclusive'];
+    }
+
+    public function belongsToCustomer(int|string|null $customerId): bool
+    {
+        return $this->customer_id !== null && (string) $this->customer_id === (string) $customerId;
+    }
+
+    public function pricingContext(int $quantity = 1, ?string $currencyCode = null, ?int $productQuantity = null): PricingContext
+    {
+        return new PricingContext(
+            currencyCode: $currencyCode ?? $this->currency_code,
+            customerId: $this->customer_id,
+            quantity: $quantity,
+            channelId: $this->channel_id,
+            zoneId: $this->zone_id,
+            productQuantity: $productQuantity,
+        );
+    }
+
+    /**
+     * @param  array<string, int>|null  $productQuantities
+     */
+    public function pricingContextFor(CartLine $line, ?string $currencyCode = null, ?int $quantity = null, ?array $productQuantities = null): PricingContext
+    {
+        $key = $line->productKey();
+        $quantity ??= $line->quantity;
+
+        return $this->pricingContext(
+            quantity: $quantity,
+            currencyCode: $currencyCode,
+            productQuantity: $quantity + ($productQuantities === null
+                ? (int) $this->lines
+                    ->filter(fn (CartLine $sibling): bool => ! $sibling->is($line) && $sibling->productKey() === $key)
+                    ->sum('quantity')
+                : $productQuantities[$key] - $line->quantity),
+        );
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    public function productQuantities(): array
+    {
+        $quantities = [];
+
+        foreach ($this->lines as $line) {
+            $key = $line->productKey();
+            $quantities[$key] = ($quantities[$key] ?? 0) + $line->quantity;
+        }
+
+        return $quantities;
     }
 
     public function shippingAddress(): ?CartAddress
@@ -152,6 +221,28 @@ class Cart extends Model implements CartContract
     protected static function newFactory(): CartFactory
     {
         return CartFactory::new();
+    }
+
+    /**
+     * @param  Builder<Cart>  $query
+     * @return Builder<Cart>
+     */
+    #[Scope]
+    protected function holdingPaymentReference(Builder $query, string $reference): Builder
+    {
+        return $query->whereNull('completed_at')->where('payment_reference', $reference);
+    }
+
+    /**
+     * @param  Builder<Cart>  $query
+     * @return Builder<Cart>
+     */
+    #[Scope]
+    protected function forPayment(Builder $query, string $reference, ?string $publicId): Builder
+    {
+        return $query->where(fn (Builder $query): Builder => $query
+            ->where(fn (Builder $query): Builder => $query->holdingPaymentReference($reference))
+            ->when($publicId, fn (Builder $query, string $publicId): Builder => $query->orWhere('public_id', $publicId)));
     }
 
     protected function casts(): array

@@ -10,18 +10,21 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Shopper\Cart\CartManager;
+use Shopper\Cart\Discounts\DiscountValidator;
 use Shopper\Cart\Events\CartCompleted;
 use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Exceptions\DiscountLimitReachedException;
 use Shopper\Cart\Exceptions\InsufficientStockException;
-use Shopper\Cart\Exceptions\PriceChangedException;
+use Shopper\Cart\Exceptions\PromotionUnavailableException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartAddress;
 use Shopper\Cart\Models\CartPromotion;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Actions\ReserveCampaignBudget;
-use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Contracts\StockReserver;
+use Shopper\Core\Enum\PromotionSource;
+use Shopper\Core\Exceptions\CampaignBudgetExceededException;
+use Shopper\Core\Models\Campaign;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\ProductVariant;
@@ -30,14 +33,13 @@ use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\OrderAddress;
 use Shopper\Core\Models\OrderPromotion;
 use Shopper\Core\Models\OrderTaxLine;
-use Shopper\Core\Models\ProductVariant as ProductVariantModel;
-use Shopper\Core\Pricing\PricingContext;
 use Throwable;
 
 final readonly class CreateOrderFromCartAction
 {
     public function __construct(
         private CartManager $cartManager,
+        private DiscountValidator $discountValidator,
         private ReserveCampaignBudget $reserveCampaignBudget,
         private StockReserver $stockReserver,
     ) {}
@@ -50,12 +52,17 @@ final readonly class CreateOrderFromCartAction
      *                                                  the same transaction, so anything it persists
      *                                                  (like the payment reference) commits or rolls
      *                                                  back atomically with the order.
+     * @param  (Closure(): bool)|null  $honoursPayment
      *
      * @throws Throwable
      */
-    public function execute(Cart $cart, ?Closure $assertTotals = null, ?Closure $afterCreate = null): Order
+    public function execute(Cart $cart, ?Closure $assertTotals = null, ?Closure $afterCreate = null, ?Closure $honoursPayment = null): Order
     {
-        return DB::transaction(function () use ($cart, $assertTotals, $afterCreate): Order {
+        if ($this->takesForeignKeySharedLocks() && ! $cart->isCompleted() && ! $cart->holdsProviderPaymentSession() && $this->mayAttachAutomaticPromotion($cart)) {
+            $this->cartManager->calculate($cart);
+        }
+
+        return DB::transaction(function () use ($cart, $assertTotals, $afterCreate, $honoursPayment): Order {
             $cart->setRawAttributes(
                 $cart->newQueryWithoutScopes()->lockForUpdate()->findOrFail($cart->getKey())->getAttributes(),
                 true,
@@ -66,7 +73,9 @@ final readonly class CreateOrderFromCartAction
                 throw new CartCompletedException;
             }
 
-            $this->revalidatePrices($cart);
+            $this->lockPromotionCounters($cart);
+
+            $this->cartManager->revalidate($cart, $honoursPayment);
 
             $context = $this->cartManager->calculate($cart);
 
@@ -79,8 +88,11 @@ final readonly class CreateOrderFromCartAction
                 ->sortBy('sequence')
                 ->values();
 
+            $honoured = fn (): bool => $honoursPayment !== null && $honoursPayment();
+            $discounts = $this->assertPromotionTerms($applied, $context, $honoured);
+
             $primary = $applied->sortByDesc('computed_amount')->first();
-            $primaryDiscount = $primary?->discount;
+            $primaryDiscount = $primary === null ? null : $discounts[$primary->id];
 
             $shippingAddress = $this->createOrderAddress($cart->shippingAddress(), $cart->customer_id);
             $billingAddress = $this->createOrderAddress($cart->billingAddress(), $cart->customer_id);
@@ -100,13 +112,13 @@ final readonly class CreateOrderFromCartAction
                 'billing_address_id' => $billingAddress?->id,
                 'discount_id' => $primaryDiscount?->id,
                 'discount_code' => $primary?->code,
-                'discount_type' => $primaryDiscount?->type->value,
-                'discount_value_at_apply' => $primaryDiscount?->value,
+                'discount_type' => ($primary->type ?? $primaryDiscount?->type)?->value,
+                'discount_value_at_apply' => $primary->value ?? $primaryDiscount?->value,
                 'discount_currency_code' => $applied->isNotEmpty() ? $cart->currency_code : null,
             ]);
 
             $cart->lines->loadMorph('purchasable', [
-                ProductVariantModel::class => ['product'],
+                resolve(ProductVariant::class)::class => ['product'],
             ]);
 
             $cart->lines->load('taxLines');
@@ -127,6 +139,8 @@ final readonly class CreateOrderFromCartAction
                     'sku' => $purchasable->sku ?? '',
                     'quantity' => $line->quantity,
                     'unit_price_amount' => $line->unit_price_amount,
+                    'pricing' => $line->pricing,
+                    'metadata' => $line->metadata,
                     'discount_amount' => $discountAmount,
                     'tax_amount' => (int) $taxLines->sum('amount'),
                     'product_type' => $line->purchasable_type,
@@ -165,7 +179,7 @@ final readonly class CreateOrderFromCartAction
                 OrderTaxLine::query()->insert($orderTaxLines);
             }
 
-            $this->reservePromotions($applied, $cart, $order);
+            $this->reservePromotions($applied, $discounts, $cart, $order, $honoured);
 
             $order->refresh();
 
@@ -181,48 +195,7 @@ final readonly class CreateOrderFromCartAction
             CartCompleted::dispatch($cart, $order);
 
             return $order;
-        });
-    }
-
-    private function revalidatePrices(Cart $cart): void
-    {
-        $cart->loadMissing('lines.purchasable.prices');
-
-        foreach ($cart->lines as $line) {
-            $purchasable = $line->purchasable;
-
-            if (! $purchasable instanceof Priceable) {
-                continue;
-            }
-
-            $price = $purchasable->resolvePrice(new PricingContext(
-                currencyCode: $cart->currency_code,
-                customerId: $cart->customer_id,
-                quantity: $line->quantity,
-                channelId: $cart->channel_id,
-                zoneId: $cart->zone_id,
-            ));
-
-            // No resolvable live price means the price cannot be revalidated,
-            // not that it dropped to zero: keep the frozen amount. A genuinely
-            // free item carries a zero-amount price row and is revalidated.
-            if ($price === null) {
-                continue;
-            }
-
-            $live = (int) $price->amount;
-            $frozen = (int) $line->unit_price_amount;
-
-            if ($live === $frozen) {
-                continue;
-            }
-
-            if ($live > $frozen) {
-                throw new PriceChangedException($purchasable, $frozen, $live);
-            }
-
-            $line->update(['unit_price_amount' => $live]);
-        }
+        }, 3);
     }
 
     private function resolveCarrierOptionId(?string $shippingOptionId): ?int
@@ -237,25 +210,78 @@ final readonly class CreateOrderFromCartAction
     }
 
     /**
+     * @param  Collection<int, CartPromotion>  $applied
+     * @param  Closure(): bool  $honoured
+     * @return array<int, Discount|null>
+     */
+    private function assertPromotionTerms(Collection $applied, CartPipelineContext $context, Closure $honoured): array
+    {
+        $discounts = [];
+
+        foreach ($applied as $promotion) {
+            // No lockForUpdate: lockPromotionCounters() already holds these rows on
+            // MySQL and MariaDB, the conditional total_use increment is atomic on
+            // its own, the per-user check is a soft guard, and type/value come from
+            // the cart's snapshot.
+            $discount = Discount::query()
+                ->whereKey($promotion->discount_id)
+                ->first();
+
+            if ($discount === null && ! $honoured()) {
+                throw new PromotionUnavailableException(__('shopper-cart::messages.discount.not_active'));
+            }
+
+            if ($discount !== null) {
+                $terms = $this->discountValidator->validateTerms($discount, $context);
+
+                if (! $terms->valid && ! $honoured()) {
+                    throw new PromotionUnavailableException((string) $terms->failureReason);
+                }
+            }
+
+            $discounts[$promotion->id] = $discount;
+        }
+
+        return $discounts;
+    }
+
+    /**
      * Reserve and snapshot every applied promotion once the order exists
      *
      * @param  Collection<int, CartPromotion>  $applied
+     * @param  array<int, Discount|null>  $discounts
+     * @param  Closure(): bool  $honoured
      */
-    private function reservePromotions(Collection $applied, Cart $cart, Order $order): void
+    private function reservePromotions(Collection $applied, array $discounts, Cart $cart, Order $order, Closure $honoured): void
     {
         $campaignTotals = [];
         $campaigns = [];
 
         foreach ($applied as $promotion) {
-            // No lockForUpdate: the conditional increment below is atomic on its
-            // own, the per-user check is a soft guard, and type/value/code are
-            // frozen config. Locking the row here would only add contention.
-            $discount = Discount::query()
-                ->whereKey($promotion->discount_id)
-                ->first();
+            $discount = $discounts[$promotion->id];
+            $campaignId = $promotion->type !== null ? $promotion->campaign_id : $discount?->campaign_id;
+            $campaign = match (true) {
+                $campaignId === null => null,
+                $campaignId === $discount?->campaign_id => $discount->campaign,
+                default => Campaign::query()->find($campaignId),
+            };
 
-            // Deactivated between the locked recalculation and here: do not charge it.
-            if ($discount === null || ! $discount->is_active) {
+            if ($campaign !== null) {
+                $campaignTotals[$campaign->id] = ($campaignTotals[$campaign->id] ?? 0) + $promotion->computed_amount;
+                $campaigns[$campaign->id] = $campaign;
+            }
+
+            if ($discount === null) {
+                if ($promotion->type !== null) {
+                    $order->promotions()->create([
+                        'code' => $promotion->code,
+                        'type' => $promotion->type->value,
+                        'value_at_apply' => $promotion->value,
+                        'amount' => $promotion->computed_amount,
+                        'currency_code' => $cart->currency_code,
+                    ]);
+                }
+
                 continue;
             }
 
@@ -268,7 +294,7 @@ final readonly class CreateOrderFromCartAction
                     ->whereHas('order', fn (Builder $query) => $query->where($column, $value))
                     ->exists();
 
-                if ($alreadyRedeemed) {
+                if ($alreadyRedeemed && ! $honoured()) {
                     throw DiscountLimitReachedException::perUser($discount->code);
                 }
             }
@@ -281,28 +307,64 @@ final readonly class CreateOrderFromCartAction
                 })
                 ->increment('total_use');
 
-            if ($affected === 0) {
+            if ($affected === 0 && ! $honoured()) {
                 throw DiscountLimitReachedException::global($discount->code);
+            }
+
+            if ($affected === 0) {
+                Discount::query()->whereKey($discount->id)->increment('total_use');
             }
 
             $order->promotions()->create([
                 'discount_id' => $discount->id,
                 'code' => $promotion->code,
-                'type' => $discount->type->value,
-                'value_at_apply' => $discount->value,
+                'type' => ($promotion->type ?? $discount->type)->value,
+                'value_at_apply' => $promotion->value ?? $discount->value,
                 'amount' => $promotion->computed_amount,
                 'currency_code' => $cart->currency_code,
             ]);
-
-            if ($discount->campaign_id !== null && $discount->campaign !== null) {
-                $campaignTotals[$discount->campaign_id] = ($campaignTotals[$discount->campaign_id] ?? 0) + $promotion->computed_amount;
-                $campaigns[$discount->campaign_id] = $discount->campaign;
-            }
         }
+
+        ksort($campaignTotals);
 
         foreach ($campaignTotals as $campaignId => $spend) {
-            $this->reserveCampaignBudget->execute($campaigns[$campaignId], $spend, $order->id);
+            try {
+                $this->reserveCampaignBudget->execute($campaigns[$campaignId], $spend, $order->id);
+            } catch (CampaignBudgetExceededException $exception) {
+                if (! $honoured()) {
+                    throw $exception;
+                }
+
+                $this->reserveCampaignBudget->execute($campaigns[$campaignId], $spend, $order->id, overdraw: true);
+            }
         }
+    }
+
+    private function lockPromotionCounters(Cart $cart): void
+    {
+        if (! $this->takesForeignKeySharedLocks()) {
+            return;
+        }
+
+        Discount::query()
+            ->whereIn('id', CartPromotion::query()->where('cart_id', $cart->getKey())->select('discount_id'))
+            ->orderBy('id')
+            ->lockForUpdate()
+            ->pluck('id');
+    }
+
+    private function mayAttachAutomaticPromotion(Cart $cart): bool
+    {
+        return Discount::query()
+            ->where('trigger', PromotionSource::Automatic->value)
+            ->active()
+            ->whereNotIn('id', CartPromotion::query()->where('cart_id', $cart->getKey())->whereNotNull('discount_id')->select('discount_id'))
+            ->exists();
+    }
+
+    private function takesForeignKeySharedLocks(): bool
+    {
+        return in_array((new Discount)->getConnection()->getDriverName(), ['mysql', 'mariadb'], true);
     }
 
     private function resolveItemName(Model $purchasable): string

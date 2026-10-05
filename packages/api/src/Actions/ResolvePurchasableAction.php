@@ -9,13 +9,12 @@ use Shopper\Core\Contracts\Priceable;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
-use Shopper\Core\Models\Price;
 use Shopper\Http\Enum\ErrorCode;
 use Shopper\Http\Exceptions\ApiValidationException;
 
 final class ResolvePurchasableAction
 {
-    public function execute(string $type, string $publicId, string $currencyCode): Priceable&Model
+    public function execute(string $type, string $publicId): Priceable&Model
     {
         $purchasable = $type === 'variant'
             ? $this->findVariant($publicId)
@@ -30,12 +29,6 @@ final class ResolvePurchasableAction
         if ($purchasable instanceof Product && $purchasable->canUseVariants()) {
             throw ApiValidationException::withCode(ErrorCode::VariantRequired, [
                 'purchasable_id' => __('shopper-api::messages.purchasable.sold_through_variants'),
-            ]);
-        }
-
-        if (! $purchasable->getPrice($currencyCode) instanceof Price) {
-            throw ApiValidationException::withCode(ErrorCode::PriceMissing, [
-                'purchasable_id' => __('shopper-api::messages.purchasable.missing_price', ['currency' => $currencyCode]),
             ]);
         }
 

@@ -54,7 +54,7 @@ it('refuses to create a shipment when every requested item is already attached e
         'order_shipping_id' => $existing->id,
     ]);
 
-    expect(fn () => (new CreateShipmentAction)->execute($order, null, [$item->id]))
+    expect(fn (): OrderShipping => (new CreateShipmentAction)->execute($order, null, [$item->id]))
         ->toThrow(CannotCreateEmptyShipmentException::class)
         ->and($item->refresh()->order_shipping_id)->toBe($existing->id)
         ->and(OrderShipping::query()->count())->toBe(1);

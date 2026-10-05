@@ -10,6 +10,7 @@ use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Enum\ExclusivityClass;
+use Shopper\Core\Models\Campaign;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Inventory;
@@ -218,5 +219,98 @@ describe('PromotionResolver', function (): void {
         expect($byCode['A']->sequence)->toBe(0)
             ->and($byCode['B']->sequence)->toBe(1)
             ->and($context->discountTotal)->toBe(1250);
+    });
+
+    it('lets a promotion an exclusive one suppressed apply once that one is dropped for its campaign budget', function (): void {
+        $campaign = Campaign::factory()->withSpendBudget(100_000)->create(['spent_amount' => 99_500]);
+        ($this->makeDiscount)('EXCLUSIVE', ['value' => 20, 'combinable' => false, 'priority' => 30, 'campaign_id' => $campaign->id]);
+        ($this->makeDiscount)('FIVE', ['type' => DiscountType::FixedAmount, 'value' => 500, 'combinable' => false, 'priority' => 10]);
+
+        $this->cartManager->applyCoupon($this->cart, 'EXCLUSIVE');
+        $this->cartManager->applyCoupon($this->cart, 'FIVE');
+
+        $context = $this->cartManager->calculate($this->cart->refresh());
+
+        $byCode = $this->cart->refresh()->promotions->keyBy('code');
+        expect($context->discountTotal)->toBe(500)
+            ->and($byCode['EXCLUSIVE']->computed_amount)->toBe(0)
+            ->and($byCode['FIVE']->computed_amount)->toBe(500);
+    });
+
+    it('gives the slot of a promotion dropped for its campaign budget to the next one under the cap', function (): void {
+        config()->set('shopper.cart.max_promotions', 1);
+
+        $campaign = Campaign::factory()->withSpendBudget(100_000)->create(['spent_amount' => 99_500]);
+        ($this->makeDiscount)('TWENTY', ['value' => 20, 'combinable' => true, 'priority' => 20, 'campaign_id' => $campaign->id]);
+        ($this->makeDiscount)('TEN', ['value' => 10, 'combinable' => true, 'priority' => 10]);
+
+        $this->cartManager->applyCoupon($this->cart, 'TWENTY');
+        $this->cartManager->applyCoupon($this->cart, 'TEN');
+
+        expect($this->cartManager->calculate($this->cart->refresh())->discountTotal)->toBe(500);
+    });
+
+    it('spends nothing of a campaign for a promotion its exclusivity class suppressed', function (): void {
+        $campaign = Campaign::factory()->withSpendBudget(100_000)->create(['spent_amount' => 99_000]);
+        ($this->makeDiscount)('EXCLUSIVE', ['value' => 10, 'combinable' => false, 'priority' => 30]);
+        ($this->makeDiscount)('SUPPRESSED', ['type' => DiscountType::FixedAmount, 'value' => 800, 'combinable' => true, 'priority' => 20, 'campaign_id' => $campaign->id]);
+        $product = ($this->makeDiscount)('PRODUCT', [
+            'type' => DiscountType::FixedAmount,
+            'value' => 800,
+            'exclusivity_class' => ExclusivityClass::Product,
+            'apply_to' => DiscountApplyTo::Products,
+            'campaign_id' => $campaign->id,
+        ]);
+        $product->items()->create([
+            'discountable_id' => $this->product->id,
+            'discountable_type' => $this->product->getMorphClass(),
+            'condition' => DiscountCondition::ApplyTo,
+        ]);
+
+        $this->cartManager->applyCoupon($this->cart, 'EXCLUSIVE');
+        $this->cartManager->applyCoupon($this->cart, 'SUPPRESSED');
+        $this->cartManager->applyCoupon($this->cart, 'PRODUCT');
+
+        $context = $this->cartManager->calculate($this->cart->refresh());
+
+        $byCode = $this->cart->refresh()->promotions->keyBy('code');
+        expect($context->discountTotal)->toBe(1300)
+            ->and($byCode['SUPPRESSED']->computed_amount)->toBe(0)
+            ->and($byCode['PRODUCT']->computed_amount)->toBe(800);
+    });
+
+    it('lets a promotion apply when the exclusive one in its class discounts nothing', function (): void {
+        $absent = ($this->makeDiscount)('ABSENT', [
+            'value' => 50,
+            'combinable' => false,
+            'priority' => 50,
+            'exclusivity_class' => ExclusivityClass::Product,
+            'apply_to' => DiscountApplyTo::Products,
+        ]);
+        $absent->items()->create([
+            'discountable_id' => Product::factory()->standard()->create()->id,
+            'discountable_type' => $this->product->getMorphClass(),
+            'condition' => DiscountCondition::ApplyTo,
+        ]);
+        $present = ($this->makeDiscount)('PRESENT', [
+            'value' => 10,
+            'exclusivity_class' => ExclusivityClass::Product,
+            'apply_to' => DiscountApplyTo::Products,
+        ]);
+        $present->items()->create([
+            'discountable_id' => $this->product->id,
+            'discountable_type' => $this->product->getMorphClass(),
+            'condition' => DiscountCondition::ApplyTo,
+        ]);
+
+        $this->cartManager->applyCoupon($this->cart, 'ABSENT');
+        $this->cartManager->applyCoupon($this->cart, 'PRESENT');
+
+        $context = $this->cartManager->calculate($this->cart->refresh());
+
+        $byCode = $this->cart->refresh()->promotions->keyBy('code');
+        expect($context->discountTotal)->toBe(500)
+            ->and($byCode['ABSENT']->computed_amount)->toBe(0)
+            ->and($byCode['PRESENT']->sequence)->toBe(0);
     });
 })->group('cart', 'cart-promotions');

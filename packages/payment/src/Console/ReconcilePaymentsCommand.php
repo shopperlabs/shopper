@@ -8,15 +8,22 @@ use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
+use Shopper\Core\Contracts\PaymentSessionGateway;
+use Shopper\Core\Events\Payments\OrphanedPaymentRefunded;
+use Shopper\Core\Events\Payments\PaymentOrphaned;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Order;
 use Shopper\Payment\Actions\SettlePayment;
 use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Enum\WebhookAction;
+use Shopper\Payment\Exceptions\PaymentException;
 use Shopper\Payment\Jobs\SyncPendingPaymentJob;
 use Shopper\Payment\Models\PaymentTransaction;
 use Shopper\Payment\Models\PaymentWebhookEvent;
+use Shopper\Payment\PaymentManager;
 use Shopper\Payment\Services\PaymentProcessingService;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Throwable;
 
 #[AsCommand(name: 'shopper:payments:reconcile')]
 final class ReconcilePaymentsCommand extends Command
@@ -27,12 +34,16 @@ final class ReconcilePaymentsCommand extends Command
 
     protected $description = 'Apply the provider events that arrived before their order existed, and optionally check pending payments against the provider';
 
-    public function handle(PaymentProcessingService $payments, SettlePayment $settle): int
+    public function handle(PaymentProcessingService $payments, SettlePayment $settle, PaymentSessionGateway $gateway, PaymentManager $paymentManager): int
     {
-        ['settled' => $settled, 'unmatched' => $unmatched] = $this->replayEarlyEvents($payments, $settle);
+        ['settled' => $settled, 'unmatched' => $unmatched] = $this->replayEarlyEvents($settle);
 
         $this->components->info("{$settled} ".Str::plural('payment', $settled).' settled from early provider events.');
         $this->components->info("{$unmatched} ".Str::plural('event', $unmatched).' still without an order.');
+
+        $orphaned = $this->resolveOrphans($payments, $gateway, $paymentManager);
+
+        $this->components->info("{$orphaned} orphaned ".Str::plural('payment', $orphaned).' reported.');
 
         if ($this->option('pull')) {
             $queued = $this->queuePendingPayments((int) $this->option('minutes'));
@@ -45,35 +56,109 @@ final class ReconcilePaymentsCommand extends Command
 
     /**
      * Events are settled per reference so the ordering rules of the
-     * settlement apply to the whole history of a payment. The reference list
-     * stays short: events find their order within seconds, only those of
-     * abandoned payment sessions linger.
+     * settlement apply to the whole history of a payment.
      *
      * @return array{settled: int, unmatched: int}
      */
-    private function replayEarlyEvents(PaymentProcessingService $payments, SettlePayment $settle): array
+    private function replayEarlyEvents(SettlePayment $settle): array
     {
-        $settled = 0;
-        $unmatched = 0;
-
-        $references = PaymentWebhookEvent::query()
+        $pending = PaymentWebhookEvent::query()
             ->unprocessed()
-            ->whereNotNull('reference')
+            ->whereNotNull('reference');
+
+        $references = $pending->clone()
+            ->whereIn('reference', PaymentTransaction::query()->whereHas('order')->select('reference'))
             ->distinct()
             ->pluck('reference');
 
+        $unmatched = $pending->distinct()->count('reference') - $references->count();
+
         foreach ($references as $reference) {
-            if ($payments->findOrderByReference($reference) === null) {
-                $unmatched++;
+            $settle->execute($reference);
+        }
+
+        return ['settled' => $references->count(), 'unmatched' => $unmatched];
+    }
+
+    private function resolveOrphans(PaymentProcessingService $payments, PaymentSessionGateway $gateway, PaymentManager $paymentManager): int
+    {
+        $orphaned = 0;
+
+        $candidates = PaymentWebhookEvent::query()
+            ->unprocessed()
+            ->whereNull('orphaned_at')
+            ->whereNotNull('reference')
+            ->whereIn('type', [WebhookAction::Authorized->value, WebhookAction::Captured->value])
+            ->where('created_at', '<', now()->subMinutes((int) config('shopper.payment.reconciliation.orphan_after_minutes', 30)));
+
+        $returns = PaymentWebhookEvent::query()
+            ->whereIn('type', [WebhookAction::Refunded->value, WebhookAction::Canceled->value])
+            ->whereIn('reference', $candidates->clone()->select('reference'))
+            ->get()
+            ->groupBy('reference');
+
+        $seen = [];
+
+        foreach ($candidates->lazyByIdDesc() as $event) {
+            /** @var string $reference */
+            $reference = $event->reference;
+
+            if (isset($seen[$reference])) {
+                continue;
+            }
+
+            $seen[$reference] = true;
+            $result = $event->toWebhookResult();
+            $cartId = is_string($result->data['cart_id'] ?? null) ? $result->data['cart_id'] : null;
+            $returned = $returns->get($reference);
+
+            if ($returned !== null) {
+                if ($cartId !== null && $returned->doesntContain('type', WebhookAction::Canceled) && PaymentWebhookEvent::refundedAmount($returned) < (int) $result->amount) {
+                    report(PaymentException::orphaned($event->driver, $reference));
+                    $orphaned++;
+                }
+
+                PaymentWebhookEvent::query()->forReference($reference)->update(['orphaned_at' => now()]);
 
                 continue;
             }
 
-            $settle->execute($reference);
-            $settled++;
+            $orphan = new PaymentOrphaned($event->driver, $reference, $result->amount, $cartId);
+
+            try {
+                event($orphan);
+
+                if ($orphan->deferred || $payments->findOrderByReference($reference) !== null) {
+                    continue;
+                }
+
+                if ($orphan->recognized && ! $orphan->resolved) {
+                    report(PaymentException::orphaned($event->driver, $reference));
+
+                    if (config('shopper.payment.reconciliation.orphans') === 'refund') {
+                        $refunded = $gateway->refund(['driver' => $event->driver, 'reference' => $reference, 'amount' => $result->amount]);
+
+                        if (! $refunded && $paymentManager->driver($event->driver)->supportsRetrieval()) {
+                            continue;
+                        }
+
+                        if ($refunded) {
+                            event(new OrphanedPaymentRefunded($event->driver, $reference));
+                        }
+                    }
+
+                    $orphaned++;
+                }
+            } catch (Throwable $exception) {
+                report($exception);
+
+                continue;
+            }
+
+            PaymentWebhookEvent::query()->forReference($reference)->update(['orphaned_at' => now()]);
         }
 
-        return ['settled' => $settled, 'unmatched' => $unmatched];
+        return $orphaned;
     }
 
     private function queuePendingPayments(int $minutes): int

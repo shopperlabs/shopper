@@ -28,6 +28,7 @@ class CartLineResource extends JsonApiResource
             'purchasable_type' => $this->purchasable instanceof ProductVariant ? 'variant' : 'product',
             'quantity' => $this->quantity,
             'unit_price_amount' => $this->unit_price_amount,
+            'is_custom_price' => $this->is_custom_price,
             'subtotal' => $subtotal,
             'discount_total' => (int) $this->adjustments->sum('amount'),
             'tax_total' => (int) $this->taxLines->sum('amount'),

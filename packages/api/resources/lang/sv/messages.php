@@ -9,6 +9,7 @@ return [
         'nothing_to_collect' => 'Det finns inget belopp att samla in i varukorgen.',
         'no_zone' => 'Varukorgen har ingen fraktzon, så inget fraktalternativ är tillämpligt.',
         'email_required' => 'E-postadress måste anges innan varukorgen kan slutföras.',
+        'metadata_invalid' => 'Metadata måste vara JSON utan NUL-tecken.',
         'metadata_too_large' => 'Metadata-belastningen är för stor.',
     ],
 
@@ -19,13 +20,15 @@ return [
     ],
 
     'shipping' => [
-        'method_required' => 'Välj ett fraktsätt för varukorgen innan den slutförs.',
+        'method_required' => 'Välj ett fraktsätt för varukorgen innan köpet slutförs.',
         'option_not_available' => 'Detta fraktalternativ är inte tillgängligt för varukorgen.',
         'option_gone' => 'Det valda fraktalternativet är inte längre tillgängligt.',
         'price_changed' => 'Fraktpriset har ändrats sedan det valdes. Välj fraktsätt igen för att bekräfta det nya priset.',
         'origin_missing' => 'Realtidspriser för frakt är inte tillgängliga: ingen lagerplats kan fungera som ursprung för leveransen.',
         'carrier_unavailable' => 'Priser från ":carrier" är tillfälligt otillgängliga.',
         'currency_mismatch' => 'Alternativ prissatta i :currency har tagits bort: varukorgen är prissatt i :cart_currency.',
+        'outside_zone' => 'Leveransadressen ligger utanför varukorgens zon. Välj zonen för dess land.',
+        'provider_unavailable' => 'Priser från den valda transportören är tillfälligt otillgängliga. Försök igen om en stund.',
     ],
 
     'payment' => [
@@ -37,6 +40,7 @@ return [
         'session_mismatch' => 'Betalsessionen matchar inte längre varukorgens totalbelopp. Skapa en ny betalsession och försök igen.',
         'session_in_progress' => 'En annan begäran öppnar betalsessionen för denna varukorg. Försök igen om en stund.',
         'session_required' => 'Öppna en betalsession innan varukorgen slutförs.',
+        'released' => 'En del av varukorgen tog slut i lager innan ordern kunde läggas. Betalningen har återförts: uppdatera varukorgen och betala igen.',
     ],
 
     'order' => [

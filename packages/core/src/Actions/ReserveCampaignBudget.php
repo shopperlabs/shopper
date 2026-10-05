@@ -20,22 +20,22 @@ final class ReserveCampaignBudget
      * only updated while it still fits, and an untouched row (affected === 0)
      * means the budget is exhausted. Only the caps declared by `budget_type`
      * are enforced, and a campaign without caps still records the movement so
-     * per-campaign analytics stay accurate.
+     * per-campaign analytics stay accurate. An overdraw skips the caps.
      */
-    public function execute(Campaign $campaign, int $spend, ?int $orderId = null, ?string $actor = null): void
+    public function execute(Campaign $campaign, int $spend, ?int $orderId = null, ?string $actor = null, bool $overdraw = false): void
     {
         // The counter bump and the audit movement are one unit: if the movement
         // collides with the (campaign, order, direction) unique key on a retry,
         // the increment rolls back too, so a duplicate reservation can never
         // double-spend the budget.
-        DB::transaction(function () use ($campaign, $spend, $orderId, $actor): void {
+        DB::transaction(function () use ($campaign, $spend, $orderId, $actor, $overdraw): void {
             $query = Campaign::query()->whereKey($campaign->getKey());
 
-            if ($campaign->budget_type->hasSpendCap() && $campaign->budget_amount !== null) {
+            if (! $overdraw && $campaign->budget_type->hasSpendCap() && $campaign->budget_amount !== null) {
                 $query->whereRaw('spent_amount + ? <= budget_amount', [$spend]);
             }
 
-            if ($campaign->budget_type->hasCountCap() && $campaign->budget_count !== null) {
+            if (! $overdraw && $campaign->budget_type->hasCountCap() && $campaign->budget_count !== null) {
                 $query->whereColumn('used_count', '<', 'budget_count');
             }
 

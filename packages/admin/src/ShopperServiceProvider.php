@@ -11,6 +11,7 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Notifications\Livewire\DatabaseNotifications;
+use Filament\Resources\Concerns\HasTabs;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\View as SchemaView;
@@ -20,8 +21,10 @@ use Filament\Support\Facades\FilamentView;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\View\TablesRenderHook;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Laravel\Passkeys\Passkeys;
@@ -274,6 +277,19 @@ final class ShopperServiceProvider extends PackageServiceProvider
     protected function registerCustomFilamentItems(): void
     {
         FilamentView::spa();
+
+        FilamentView::registerRenderHook(
+            TablesRenderHook::TOOLBAR_REORDER_TRIGGER_BEFORE,
+            function (): ?View {
+                $component = Livewire::current();
+
+                if (! $component instanceof Pages\AbstractPageComponent || ! in_array(HasTabs::class, class_uses_recursive($component), true)) {
+                    return null;
+                }
+
+                return view('shopper::includes._table-tabs', ['livewire' => $component]);
+            },
+        );
 
         if (config('shopper.admin.notifications.database.enabled')) {
             DatabaseNotifications::trigger('shopper::components.notifications.database-notifications-trigger');
