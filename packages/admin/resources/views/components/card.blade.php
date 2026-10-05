@@ -3,7 +3,7 @@
 @props([
     'title' => null,
     'description' => null,
-    'footer' => null
+    'footer' => null,
 ])
 
 <div
@@ -19,7 +19,7 @@
         </header>
     @endif
 
-    <div class="sh-card-content flex-1 bg-sh-surface ring-sh-border overflow-hidden rounded-[10px] p-4 ring-1">
+    <div class="sh-card-content bg-sh-surface ring-sh-border flex-1 overflow-hidden rounded-[10px] p-4 ring-1">
         {{ $slot }}
     </div>
 

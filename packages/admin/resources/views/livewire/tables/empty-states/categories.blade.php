@@ -12,7 +12,12 @@
         <path class="fill-primary-300" d="M82 110l5 11 11 5-11 5-5 11-5-11-11-5 11-5z" />
         <path class="fill-amber-400" d="M288 138l3.4 7.4 7.4 3.4-7.4 3.4-3.4 7.4-3.4-7.4-7.4-3.4 7.4-3.4z" />
 
-        <path class="stroke-primary-300" d="M180 142v22M118 164h124M118 164v18M242 164v18" stroke-width="3.5" stroke-linecap="round" />
+        <path
+            class="stroke-primary-300"
+            d="M180 142v22M118 164h124M118 164v18M242 164v18"
+            stroke-width="3.5"
+            stroke-linecap="round"
+        />
 
         <path class="fill-primary-600" d="M152 92h28l7 11h-35z" />
         <rect class="fill-primary-500" x="150" y="100" width="60" height="44" rx="9" />

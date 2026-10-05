@@ -1,7 +1,4 @@
-<x-shopper::empty-state
-    :title="__('shopper::pages/tags.title')"
-    :content="__('shopper::pages/tags.content')"
->
+<x-shopper::empty-state :title="__('shopper::pages/tags.title')" :content="__('shopper::pages/tags.content')">
     <svg class="h-44 w-auto sm:h-52" viewBox="0 0 360 300" fill="none" aria-hidden="true">
         <ellipse class="fill-primary-500 opacity-[0.08] dark:opacity-[0.16]" cx="180" cy="160" rx="150" ry="120" />
         <ellipse class="fill-primary-600 opacity-10" cx="180" cy="242" rx="86" ry="16" />

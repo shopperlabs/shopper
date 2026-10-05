@@ -3,7 +3,7 @@
         <header class="px-4 sm:px-6">
             <div class="flex items-start justify-between gap-3">
                 <div>
-                    <h2 class="text-lg font-medium text-sh-fg">
+                    <h2 class="text-sh-fg text-lg font-medium">
                         {{ $panelTitle ?? __('shopper::pages/products.picker.title') }}
                     </h2>
                     <p class="text-sh-fg-secondary mt-1 text-sm">

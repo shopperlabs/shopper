@@ -13,7 +13,7 @@
 
 .fi-tabs.sh-tabs-underline .fi-tabs-item::after {
   @apply absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-transparent transition duration-75;
-  content: "";
+  content: '';
 }
 
 .fi-tabs.sh-tabs-underline .fi-tabs-item.fi-active {

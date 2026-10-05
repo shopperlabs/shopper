@@ -3,14 +3,16 @@
 ])
 
 <div
-    {{ $attributes->twMerge([
-        'class' => 'relative flex flex-col lg:min-h-screen lg:flex-row',
-    ]) }}
+    {{
+        $attributes->twMerge([
+            'class' => 'relative flex flex-col lg:min-h-screen lg:flex-row',
+        ])
+    }}
 >
     @isset($sidebar)
         <aside
             @class([
-                'w-full shrink-0 lg:sticky lg:top-0 lg:max-h-screen lg:w-60 lg:overflow-y-auto lg:self-start',
+                'w-full shrink-0 lg:sticky lg:top-0 lg:max-h-screen lg:w-60 lg:self-start lg:overflow-y-auto',
                 'border-sh-border border-b lg:border-b-0' => $withBorder,
             ])
         >

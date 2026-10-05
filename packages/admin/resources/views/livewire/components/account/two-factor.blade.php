@@ -16,7 +16,7 @@
                                 'bg-sh-fg-muted' => ! $this->enabled,
                             ])
                         ></div>
-                        <h3 class="text-base leading-6 font-medium text-sh-fg">
+                        <h3 class="text-sh-fg text-base leading-6 font-medium">
                             @if ($this->enabled)
                                 {{ __('shopper::pages/auth.account.two_factor_enabled') }}
                             @else
@@ -62,11 +62,11 @@
                             </span>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm leading-5 text-sh-fg-muted">
+                            <p class="text-sh-fg-muted text-sm leading-5">
                                 {{ __('shopper::pages/auth.account.two_factor_secure') }}
                             </p>
                             @if ($this->enabled)
-                                <p class="mt-2 text-sm leading-5 text-sh-fg-muted">
+                                <p class="text-sh-fg-muted mt-2 text-sm leading-5">
                                     {{ __('shopper::pages/auth.account.two_factor_activation_message') }}
                                 </p>
                             @endif
@@ -75,8 +75,8 @@
 
                     @if ($this->enabled)
                         @if ($showingQrCode)
-                            <div class="border-t border-sh-border pt-5">
-                                <p class="max-w-2xl text-sm font-medium text-sh-fg-secondary">
+                            <div class="border-sh-border border-t pt-5">
+                                <p class="text-sh-fg-secondary max-w-2xl text-sm font-medium">
                                     {{ __('shopper::pages/auth.account.two_factor_is_enabled') }}
                                 </p>
 
@@ -87,16 +87,14 @@
                         @endif
 
                         @if ($showingRecoveryCodes)
-                            <div class="border-t border-sh-border pt-5">
-                                <p class="max-w-2xl text-sm font-medium text-sh-fg-secondary">
+                            <div class="border-sh-border border-t pt-5">
+                                <p class="text-sh-fg-secondary max-w-2xl text-sm font-medium">
                                     {{ __('shopper::pages/auth.account.two_factor_store_recovery_codes') }}
                                 </p>
 
-                                <div
-                                    class="mt-4 grid max-w-xl gap-1 rounded-lg bg-sh-muted p-4 text-sm"
-                                >
+                                <div class="bg-sh-muted mt-4 grid max-w-xl gap-1 rounded-lg p-4 text-sm">
                                     @foreach ($this->user->getStoreAuthenticationRecoveryCodes() as $code)
-                                        <span class="leading-5 text-sh-fg-secondary">
+                                        <span class="text-sh-fg-secondary leading-5">
                                             {{ $code }}
                                         </span>
                                     @endforeach

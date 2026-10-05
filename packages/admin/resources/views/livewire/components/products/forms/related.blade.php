@@ -32,7 +32,7 @@
                 @foreach ($relatedProducts as $relatedProduct)
                     <div wire:key="{{ $relatedProduct->slug }}" class="group relative">
                         <div class="relative">
-                            <div class="overflow-hidden bg-sh-muted">
+                            <div class="bg-sh-muted overflow-hidden">
                                 <img
                                     src="{{ $relatedProduct->getThumbnailUrl() }}"
                                     alt="{{ $relatedProduct->name }} Thumbnail"
@@ -55,7 +55,7 @@
                             <div>
                                 <h3 class="text-sm">
                                     <x-shopper::link
-                                        class="font-semibold text-sh-fg hover:text-sh-fg-secondary"
+                                        class="text-sh-fg hover:text-sh-fg-secondary font-semibold"
                                         :href="route('shopper.products.edit', $relatedProduct)"
                                     >
                                         {{ $relatedProduct->name }}

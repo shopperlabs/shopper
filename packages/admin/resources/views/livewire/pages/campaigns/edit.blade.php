@@ -3,11 +3,14 @@
         <div class="space-y-2">
             <x-shopper::heading>
                 <x-slot name="title">
-                    <div class="flex items-center flex-wrap gap-2">
-                        <h2 class="font-heading text-2xl font-bold text-sh-fg sm:truncate sm:text-3xl">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <h2 class="font-heading text-sh-fg text-2xl font-bold sm:truncate sm:text-3xl">
                             {{ $campaign->name }}
                         </h2>
-                        <x-filament::badge :color="$campaign->status->getColor()" :icon="$campaign->status->getIcon()">
+                        <x-filament::badge
+                            :color="$campaign->status->getColor()"
+                            :icon="$campaign->status->getIcon()"
+                        >
                             {{ $campaign->status->getLabel() }}
                         </x-filament::badge>
                     </div>
@@ -27,13 +30,8 @@
         <form wire:submit="save" class="min-w-0 lg:col-span-2">
             {{ $this->form }}
 
-            <div class="mt-10 border-t border-sh-border pt-8 flex justify-end gap-3">
-                <x-filament::button
-                    color="gray"
-                    tag="a"
-                    :href="route('shopper.campaigns.index')"
-                    wire:navigate
-                >
+            <div class="border-sh-border mt-10 flex justify-end gap-3 border-t pt-8">
+                <x-filament::button color="gray" tag="a" :href="route('shopper.campaigns.index')" wire:navigate>
                     {{ __('shopper::forms.actions.cancel') }}
                 </x-filament::button>
                 <x-filament::button type="submit" wire:loading.attr="disabled">

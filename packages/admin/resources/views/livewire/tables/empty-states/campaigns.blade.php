@@ -18,7 +18,9 @@
         <g transform="rotate(8 96 116)">
             <rect class="fill-primary-200" x="74" y="100" width="44" height="30" rx="8" />
             <circle class="fill-sh-surface" cx="85" cy="111" r="4.5" />
-            <text x="100" y="120" font-size="15" font-weight="700" class="fill-primary-700" text-anchor="middle">%</text>
+            <text x="100" y="120" font-size="15" font-weight="700" class="fill-primary-700" text-anchor="middle">
+                %
+            </text>
         </g>
 
         <rect class="fill-primary-700" x="150" y="176" width="14" height="34" rx="6" transform="rotate(10 157 193)" />

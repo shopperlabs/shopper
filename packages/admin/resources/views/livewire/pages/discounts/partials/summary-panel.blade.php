@@ -4,13 +4,7 @@
 ])
 
 @php
-    $hasContent = $summary['code']
-        || $summary['type_label']
-        || $summary['zone_name']
-        || $summary['apply_to']
-        || $summary['eligibility']
-        || $summary['minimum_label']
-        || $summary['start_at'];
+    $hasContent = $summary['code'] || $summary['type_label'] || $summary['zone_name'] || $summary['apply_to'] || $summary['eligibility'] || $summary['minimum_label'] || $summary['start_at'];
 
     $rows = [];
 
@@ -32,10 +26,7 @@
     if ($summary['apply_to']) {
         $applyText = $summary['apply_to']->getLabel();
 
-        if (
-            $summary['apply_to'] === \Shopper\Core\Enum\DiscountApplyTo::Products
-            && $summary['products_count'] > 0
-        ) {
+        if ($summary['apply_to'] === \Shopper\Core\Enum\DiscountApplyTo::Products && $summary['products_count'] > 0) {
             $applyText .= ' (' . $summary['products_count'] . ')';
         }
 
@@ -45,10 +36,7 @@
     if ($summary['eligibility']) {
         $forText = $summary['eligibility']->getLabel();
 
-        if (
-            $summary['eligibility'] === \Shopper\Core\Enum\DiscountEligibility::Customers
-            && $summary['customers_count'] > 0
-        ) {
+        if ($summary['eligibility'] === \Shopper\Core\Enum\DiscountEligibility::Customers && $summary['customers_count'] > 0) {
             $forText .= ' (' . $summary['customers_count'] . ')';
         }
 
@@ -68,9 +56,7 @@
 
     if ($summary['start_at']) {
         $start = \Illuminate\Support\Carbon::parse($summary['start_at'])->translatedFormat('Y-m-d');
-        $end = $summary['end_at']
-            ? \Illuminate\Support\Carbon::parse($summary['end_at'])->translatedFormat('Y-m-d')
-            : null;
+        $end = $summary['end_at'] ? \Illuminate\Support\Carbon::parse($summary['end_at'])->translatedFormat('Y-m-d') : null;
         $rows[] = [
             'label' => __('shopper::pages/discounts.summary.rows.active'),
             'value' => $end ? $start . ' → ' . $end : $start,
@@ -80,10 +66,10 @@
 
 <x-shopper::card>
     <x-slot:title>
-        <span class="text-sh-fg-secondary text-xs font-semibold uppercase tracking-wide">
+        <span class="text-sh-fg-secondary text-xs font-semibold tracking-wide uppercase">
             {{ __('shopper::pages/discounts.summary.title') }}
         </span>
-    </x-slot:title>
+    </x-slot>
 
     @if (! $hasContent && ! $discount?->exists)
         <p class="text-sh-fg-muted text-sm">
@@ -112,14 +98,19 @@
                 </dt>
                 <dd class="min-w-0 flex-1">
                     @if ($discount?->exists)
-                        <x-filament::badge :color="$discount->status->getColor()" :icon="$discount->status->getIcon()">
+                        <x-filament::badge
+                            :color="$discount->status->getColor()"
+                            :icon="$discount->status->getIcon()"
+                        >
                             {{ $discount->status->getLabel() }}
                         </x-filament::badge>
                     @else
                         <x-filament::badge :color="$summary['is_active'] ? 'success' : 'gray'">
-                            {{ $summary['is_active']
-                                ? __('shopper::pages/discounts.summary.visibility_public')
-                                : __('shopper::pages/discounts.summary.visibility_hidden') }}
+                            {{
+                                $summary['is_active']
+                                    ? __('shopper::pages/discounts.summary.visibility_public')
+                                    : __('shopper::pages/discounts.summary.visibility_hidden')
+                            }}
                         </x-filament::badge>
                     @endif
                 </dd>

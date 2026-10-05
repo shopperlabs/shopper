@@ -28,7 +28,9 @@
                                 {{ __('shopper::pages/dashboard.top_products.reviews') }}
                             </span>
                         </th>
-                        <th class="fi-ta-header-cell w-16 px-3 py-2 text-right sm:first-of-type:ps-6 sm:last-of-type:pe-6">
+                        <th
+                            class="fi-ta-header-cell w-16 px-3 py-2 text-right sm:first-of-type:ps-6 sm:last-of-type:pe-6"
+                        >
                             <span class="fi-ta-header-cell-label text-sh-fg text-sm font-semibold">
                                 {{ __('shopper::pages/dashboard.top_products.sales') }}
                             </span>
@@ -38,7 +40,9 @@
                 <tbody class="divide-sh-border divide-y whitespace-nowrap">
                     @foreach ($this->products as $item)
                         <tr>
-                            <td class="fi-ta-cell overflow-hidden p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                            <td
+                                class="fi-ta-cell overflow-hidden p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3"
+                            >
                                 <div class="flex min-w-0 items-center gap-3 px-3 py-2">
                                     <img
                                         class="ring-sh-border size-8 shrink-0 rounded-lg object-cover ring-1"
@@ -50,7 +54,9 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                            <td
+                                class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3"
+                            >
                                 <div class="px-3 py-2">
                                     @if ($item['reviews_count'] > 0)
                                         <div class="flex items-center gap-1.5">
@@ -67,7 +73,9 @@
                                     @endif
                                 </div>
                             </td>
-                            <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                            <td
+                                class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3"
+                            >
                                 <div class="px-3 py-2 text-right">
                                     <span class="text-sh-fg-secondary text-sm font-medium tabular-nums">
                                         {{ number_format($item['sales']) }}

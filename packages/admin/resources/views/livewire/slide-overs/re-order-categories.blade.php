@@ -1,10 +1,10 @@
-<x-shopper::slideover-card class="divide-y divide-sh-border">
+<x-shopper::slideover-card class="divide-sh-border divide-y">
     <div class="h-0 flex-1 overflow-y-auto py-6">
         <header class="px-4 sm:px-6">
             <div class="flex items-start justify-between">
                 <div class="flex items-center gap-2">
-                    <x-untitledui-switch-vertical class="size-5 text-sh-fg-muted" aria-hidden="true" />
-                    <h2 class="text-lg font-medium text-sh-fg">
+                    <x-untitledui-switch-vertical class="text-sh-fg-muted size-5" aria-hidden="true" />
+                    <h2 class="text-sh-fg text-lg font-medium">
                         {{ __('shopper::words.reorder') }}
                     </h2>
                 </div>
@@ -16,26 +16,33 @@
             <div class="flex items-center justify-end gap-2">
                 <button
                     type="button"
-                    class="inline-flex items-center gap-1.5 rounded-lg border border-sh-border bg-sh-surface px-3 py-1.5 text-xs font-medium text-sh-fg-secondary hover:bg-sh-muted"
-                    x-on:click="allCollapsed = true; document.querySelectorAll('[data-children]').forEach(el => el.classList.add('hidden'))"
+                    class="border-sh-border bg-sh-surface text-sh-fg-secondary hover:bg-sh-muted inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium"
+                    x-on:click="
+                        allCollapsed = true
+                        document
+                            .querySelectorAll('[data-children]')
+                            .forEach((el) => el.classList.add('hidden'))
+                    "
                 >
                     <x-untitledui-rows class="size-3" aria-hidden="true" />
                     {{ __('shopper::words.collapse') }}
                 </button>
                 <button
                     type="button"
-                    class="inline-flex items-center gap-1.5 rounded-lg border border-sh-border bg-sh-surface px-3 py-1.5 text-xs font-medium text-sh-fg-secondary hover:bg-sh-muted"
-                    x-on:click="allCollapsed = false; document.querySelectorAll('[data-children]').forEach(el => el.classList.remove('hidden'))"
+                    class="border-sh-border bg-sh-surface text-sh-fg-secondary hover:bg-sh-muted inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium"
+                    x-on:click="
+                        allCollapsed = false
+                        document
+                            .querySelectorAll('[data-children]')
+                            .forEach((el) => el.classList.remove('hidden'))
+                    "
                 >
                     <x-untitledui-expand-06 class="size-3" aria-hidden="true" />
                     {{ __('shopper::words.expand') }}
                 </button>
             </div>
 
-            <ul
-                x-data="nestedSortable({ parentId: null })"
-                class="mt-4 space-y-0.5"
-            >
+            <ul x-data="nestedSortable({ parentId: null })" class="mt-4 space-y-0.5">
                 @foreach ($categories as $category)
                     <x-shopper::category-tree-item :$category />
                 @endforeach

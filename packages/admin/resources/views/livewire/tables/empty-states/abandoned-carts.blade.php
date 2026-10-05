@@ -19,7 +19,13 @@
             <rect x="170" y="136" width="3.4" height="52" />
             <rect x="192" y="136" width="3.4" height="52" />
         </g>
-        <path class="stroke-primary-600" d="M72 108h20l9 26 13 60" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+            class="stroke-primary-600"
+            d="M72 108h20l9 26 13 60"
+            stroke-width="6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
         <circle class="fill-sh-fg" cx="124" cy="210" r="11" />
         <circle class="fill-sh-surface" cx="124" cy="210" r="4" />
         <circle class="fill-sh-fg" cx="186" cy="210" r="11" />

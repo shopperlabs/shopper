@@ -1,6 +1,6 @@
 <div
     x-show="! loading"
-    class="@md:grid-cols-3 @lg:grid-cols-4 @2xl:grid-cols-6 grid max-h-96 grid-cols-2 gap-2 overflow-scroll p-px"
+    class="@md:grid-cols-3 @lg:grid-cols-4 grid max-h-96 grid-cols-2 gap-2 overflow-scroll p-px @2xl:grid-cols-6"
 >
     <template x-for="icon in results" :key="icon.name">
         <div

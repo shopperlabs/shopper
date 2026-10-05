@@ -25,7 +25,7 @@
         <div class="h-0 flex-1 overflow-y-auto px-4 pt-2 pb-6">
             {{ $slot }}
         </div>
-        <div class="border-t border-sh-border flex shrink-0 justify-end gap-3 p-4">
+        <div class="border-sh-border flex shrink-0 justify-end gap-3 border-t p-4">
             <x-filament::button
                 color="gray"
                 wire:click="$dispatch('closePanel')"

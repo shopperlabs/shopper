@@ -1,4 +1,7 @@
-@props(['address', 'isDefault' => false])
+@props([
+    'address',
+    'isDefault' => false,
+])
 
 <x-shopper::card>
     <div class="space-y-2">
@@ -18,6 +21,7 @@
             @if ($address->street_address_plus)
                 <p>{{ $address->street_address_plus }}</p>
             @endif
+
             <p>{{ $address->postal_code }}, {{ $address->city }}</p>
             @if ($address->country)
                 <p class="inline-flex items-center gap-2">

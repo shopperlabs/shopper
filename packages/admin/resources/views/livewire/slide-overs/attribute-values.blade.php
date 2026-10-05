@@ -3,7 +3,7 @@
         <header class="px-4 sm:px-6">
             <div class="flex items-start justify-between">
                 <div class="flex items-center gap-2">
-                    <h2 class="text-lg font-medium text-sh-fg">
+                    <h2 class="text-sh-fg text-lg font-medium">
                         {{ __('shopper::pages/attributes.values.title') }}
                     </h2>
                     <x-filament::badge color="gray">
@@ -13,7 +13,7 @@
                 <x-livewire-slide-over::close-icon />
             </div>
             <div class="mt-1">
-                <p class="text-sm text-sh-fg-muted">
+                <p class="text-sh-fg-muted text-sm">
                     {{ __('shopper::pages/attributes.values.description') }}
                 </p>
             </div>

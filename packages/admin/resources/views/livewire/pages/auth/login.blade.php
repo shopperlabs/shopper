@@ -1,13 +1,15 @@
 <x-shopper::auth-card>
     @if (! $challengedUserId)
-        <header class="flex flex-col justify-center items-center py-3">
-            <div class="bg-sh-surface rounded-lg ring-1 ring-sh-border shadow space-y-2 p-2 flex items-center justify-center">
+        <header class="flex flex-col items-center justify-center py-3">
+            <div
+                class="bg-sh-surface ring-sh-border flex items-center justify-center space-y-2 rounded-lg p-2 shadow ring-1"
+            >
                 <x-phosphor-sign-in class="size-5" aria-hidden="true" />
             </div>
-            <h1 class="mt-4 font-heading text-lg font-medium text-sh-fg">
+            <h1 class="font-heading text-sh-fg mt-4 text-lg font-medium">
                 {{ __('shopper::pages/auth.login.title') }}
             </h1>
-            <p class="mt-1 text-center text-sm text-sh-fg-muted">
+            <p class="text-sh-fg-muted mt-1 text-center text-sm">
                 {{ __('shopper::pages/auth.login.subtitle') }}
             </p>
         </header>
@@ -18,16 +20,11 @@
             <x-filament::button type="submit" class="w-full justify-center" wire:loading.attr="disabled">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3" wire:target="authenticate">
                     <x-untitledui-lock-04
-                        class="text-white/10 group-hover:text-white/20 size-5"
+                        class="size-5 text-white/10 group-hover:text-white/20"
                         aria-hidden="true"
                         wire:loading.remove
                     />
-                    <x-shopper::loader
-                        wire:loading
-                        wire:target="authenticate"
-                        class="text-white"
-                        aria-hidden="true"
-                    />
+                    <x-shopper::loader wire:loading wire:target="authenticate" class="text-white" aria-hidden="true" />
                 </span>
                 {{ __('shopper::pages/auth.login.action') }}
             </x-filament::button>
@@ -36,19 +33,19 @@
         @if (config('shopper.auth.passkeys_enabled'))
             <div
                 x-data="passkeyLogin({
-                    optionsUrl: '{{ route('shopper.passkeys.login-options') }}',
-                    loginUrl: '{{ route('shopper.passkeys.login') }}',
-                })"
+                            optionsUrl: '{{ route('shopper.passkeys.login-options') }}',
+                            loginUrl: '{{ route('shopper.passkeys.login') }}',
+                        })"
                 x-cloak
                 x-show="supported"
                 class="mt-6"
             >
                 <div class="relative">
                     <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                        <div class="w-full border-t border-sh-border"></div>
+                        <div class="border-sh-border w-full border-t"></div>
                     </div>
                     <div class="relative flex justify-center text-sm">
-                        <span class="bg-sh-surface px-2 text-sh-fg-muted">
+                        <span class="bg-sh-surface text-sh-fg-muted px-2">
                             {{ __('shopper::pages/auth.login.or') }}
                         </span>
                     </div>
@@ -75,14 +72,16 @@
             </div>
         @endif
     @else
-        <header class="flex flex-col justify-center items-center py-3">
-            <div class="bg-sh-surface rounded-lg ring-1 ring-sh-border shadow space-y-2 p-2 flex items-center justify-center">
+        <header class="flex flex-col items-center justify-center py-3">
+            <div
+                class="bg-sh-surface ring-sh-border flex items-center justify-center space-y-2 rounded-lg p-2 shadow ring-1"
+            >
                 <x-phosphor-shield-check class="size-5" aria-hidden="true" />
             </div>
-            <h1 class="mt-4 font-heading text-lg font-medium text-sh-fg">
+            <h1 class="font-heading text-sh-fg mt-4 text-lg font-medium">
                 {{ __('shopper::pages/auth.two_factor.subtitle') }}
             </h1>
-            <p class="mt-1 text-center text-sm text-sh-fg-muted">
+            <p class="text-sh-fg-muted mt-1 text-center text-sm">
                 {{
                     $useRecoveryCode
                         ? __('shopper::pages/auth.two_factor.recovery_code')
@@ -95,10 +94,10 @@
             {{ $this->twoFactorForm }}
 
             <div class="flex items-center justify-between">
-                <p class="text-sm leading-5 text-sh-fg-muted">
+                <p class="text-sh-fg-muted text-sm leading-5">
                     @if (! $useRecoveryCode)
                         <button
-                            class="cursor-pointer text-sm text-sh-fg-muted underline hover:text-sh-fg"
+                            class="text-sh-fg-muted hover:text-sh-fg cursor-pointer text-sm underline"
                             type="button"
                             wire:click="$set('useRecoveryCode', true)"
                         >
@@ -106,7 +105,7 @@
                         </button>
                     @else
                         <button
-                            class="cursor-pointer text-sm text-sh-fg-muted underline hover:text-sh-fg"
+                            class="text-sh-fg-muted hover:text-sh-fg cursor-pointer text-sm underline"
                             type="button"
                             wire:click="$set('useRecoveryCode', false)"
                         >

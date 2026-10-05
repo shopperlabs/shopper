@@ -8,7 +8,7 @@
         <x-slot name="title">
             <div class="flex items-center justify-between gap-2">
                 <div class="flex items-start gap-3">
-                    <x-phosphor-truck-trailer class="size-6 text-sh-fg-muted" aria-hidden="true" />
+                    <x-phosphor-truck-trailer class="text-sh-fg-muted size-6" aria-hidden="true" />
                     <x-shopper::section-heading
                         class="space-y-1"
                         :title="__('shopper::pages/settings/zones.shipping_options.title')"
@@ -34,8 +34,8 @@
                 $carrierLogoUrl = $carrier?->logo();
             @endphp
 
-            <div class="overflow-hidden rounded-lg ring-1 ring-sh-border mb-4 last:mb-0">
-                <div class="flex items-center gap-2 bg-sh-muted px-4 py-2.5">
+            <div class="ring-sh-border mb-4 overflow-hidden rounded-lg ring-1 last:mb-0">
+                <div class="bg-sh-muted flex items-center gap-2 px-4 py-2.5">
                     @if ($carrierLogoUrl)
                         <img
                             class="size-5 shrink-0 object-contain"
@@ -43,19 +43,19 @@
                             alt="{{ $carrier->name }}"
                         />
                     @else
-                        <x-untitledui-truck class="size-5 shrink-0 text-sh-fg-muted" aria-hidden="true" />
+                        <x-untitledui-truck class="text-sh-fg-muted size-5 shrink-0" aria-hidden="true" />
                     @endif
-                    <span class="text-sm font-semibold text-sh-fg">
+                    <span class="text-sh-fg text-sm font-semibold">
                         {{ $carrier?->name ?? __('shopper::words.unknown') }}
                     </span>
                 </div>
 
-                <div class="divide-y divide-sh-border">
+                <div class="divide-sh-border divide-y">
                     @foreach ($options as $shippingOption)
-                        <div class="flex items-start justify-between gap-4 bg-sh-surface px-4 py-3">
+                        <div class="bg-sh-surface flex items-start justify-between gap-4 px-4 py-3">
                             <div class="min-w-0 flex-1">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-sm font-medium text-sh-fg">
+                                    <span class="text-sh-fg text-sm font-medium">
                                         {{ $shippingOption->name }}
                                     </span>
                                     @unless ($shippingOption->isEnabled())
@@ -65,13 +65,13 @@
                                     @endunless
                                 </div>
                                 @if ($shippingOption->description)
-                                    <p class="mt-1 text-sm text-sh-fg-muted">
+                                    <p class="text-sh-fg-muted mt-1 text-sm">
                                         {{ $shippingOption->description }}
                                     </p>
                                 @endif
                             </div>
                             <div class="flex shrink-0 items-center gap-3">
-                                <span class="text-sm font-semibold text-sh-fg">
+                                <span class="text-sh-fg text-sm font-semibold">
                                     {{ shopper_money_format($shippingOption->price, $zone->currency->code) }}
                                 </span>
                                 <div class="flex items-center gap-1">

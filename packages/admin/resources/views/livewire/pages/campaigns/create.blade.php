@@ -12,13 +12,8 @@
         <form wire:submit="save" class="min-w-0 lg:col-span-2">
             {{ $this->form }}
 
-            <div class="mt-10 border-t border-sh-border pt-8 flex justify-end gap-3">
-                <x-filament::button
-                    color="gray"
-                    tag="a"
-                    :href="route('shopper.campaigns.index')"
-                    wire:navigate
-                >
+            <div class="border-sh-border mt-10 flex justify-end gap-3 border-t pt-8">
+                <x-filament::button color="gray" tag="a" :href="route('shopper.campaigns.index')" wire:navigate>
                     {{ __('shopper::forms.actions.cancel') }}
                 </x-filament::button>
                 <x-filament::button type="submit" wire:loading.attr="disabled">
@@ -30,9 +25,7 @@
 
         <aside class="mt-6 min-w-0 lg:sticky lg:top-4 lg:col-span-1 lg:mt-0 lg:self-start">
             @include(
-                'shopper::livewire.pages.campaigns.partials.summary-panel',
-                ['summary' => $this->summary, 'campaign' => null]
-            )
+            'shopper::livewire.pages.campaigns.partials.summary-panel', ['summary' => $this->summary, 'campaign' => null]            )
         </aside>
     </div>
 

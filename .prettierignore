@@ -6,3 +6,4 @@ dist
 **/.git
 package-lock.json
 composer.lock
+packages/admin/resources/boost

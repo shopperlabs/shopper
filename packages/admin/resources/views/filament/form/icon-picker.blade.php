@@ -21,7 +21,11 @@
             selectedLabel: @js($selectedIconLabel),
             async loadResults() {
                 this.loading = true
-                this.results = await $wire.callSchemaComponentMethod(@js($key), 'getSearchResultsJs', { search: this.search, set: this.set || null })
+                this.results = await $wire.callSchemaComponentMethod(
+                    @js($key),
+                    'getSearchResultsJs',
+                    { search: this.search, set: this.set || null },
+                )
                 this.loading = false
             },
             toggle() {
@@ -62,7 +66,7 @@
                     x-html="selectedHtml"
                     class="text-sh-fg-muted flex size-5 shrink-0 items-center justify-center [&>svg]:size-5"
                 ></span>
-            </x-slot:prefix>
+            </x-slot>
 
             <x-filament::input
                 type="text"
@@ -83,7 +87,7 @@
                 >
                     <x-filament::icon icon="untitledui-x-close" class="size-4" />
                 </button>
-            </x-slot:suffix>
+            </x-slot>
         </x-filament::input.wrapper>
 
         <div
@@ -108,8 +112,15 @@
                     <div class="border-sh-border flex items-center gap-2 overflow-x-auto border-b px-4 pb-3">
                         <button
                             type="button"
-                            x-on:click="set = ''; loadResults()"
-                            x-bind:class="set === '' ? 'border-primary-500 text-primary-600 dark:text-primary-400' : 'border-sh-border text-sh-fg-secondary hover:bg-sh-muted'"
+                            x-on:click="
+                                set = ''
+                                loadResults()
+                            "
+                            x-bind:class="
+                                set === ''
+                                    ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                                    : 'border-sh-border text-sh-fg-secondary hover:bg-sh-muted'
+                            "
                             class="shrink-0 rounded-lg border px-3 py-1.5 text-sm whitespace-nowrap"
                         >
                             {{ __('shopper::forms.label.all_icons') }}
@@ -117,8 +128,15 @@
                         @foreach ($setOptions as $setName => $setOption)
                             <button
                                 type="button"
-                                x-on:click="set = @js($setName); loadResults()"
-                                x-bind:class="set === @js($setName) ? 'border-primary-500 text-primary-600 dark:text-primary-400' : 'border-sh-border text-sh-fg-secondary hover:bg-sh-muted'"
+                                x-on:click="
+                                    set = @js($setName)
+                                    loadResults()
+                                "
+                                x-bind:class="
+                                    set === @js($setName)
+                                        ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                                        : 'border-sh-border text-sh-fg-secondary hover:bg-sh-muted'
+                                "
                                 class="flex shrink-0 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm whitespace-nowrap"
                             >
                                 {{ $setOption['label'] }}

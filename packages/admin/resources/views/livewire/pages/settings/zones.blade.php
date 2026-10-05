@@ -10,7 +10,7 @@
                 </x-filament::button>
             </x-slot>
         </x-shopper::heading>
-        <p class="text-sm text-sh-fg-muted">
+        <p class="text-sh-fg-muted text-sm">
             {{ __('shopper::pages/settings/zones.description') }}
         </p>
     </div>
@@ -28,28 +28,31 @@
                     </x-filament::input.wrapper>
                 </x-slot>
 
-                <div class="divide-y divide-sh-border">
+                <div class="divide-sh-border divide-y">
                     @forelse ($this->zones as $zone)
                         @php
                             $isSelected = (int) $currentZoneId === (int) $zone->id;
                         @endphp
+
                         <button
                             type="button"
                             wire:key="zone-{{ $zone->id }}"
                             wire:click="$set('currentZoneId', {{ $zone->id }})"
                             @class([
                                 'group flex w-full items-start gap-3 border-l-2 p-4 text-left transition',
-                                'border-l-gray-900 bg-sh-muted dark:border-l-white' => $isSelected,
-                                'border-l-transparent hover:bg-sh-muted' => ! $isSelected,
+                                'bg-sh-muted border-l-gray-900 dark:border-l-white' => $isSelected,
+                                'hover:bg-sh-muted border-l-transparent' => ! $isSelected,
                             ])
                         >
-                            <div class="flex size-6 shrink-0 items-center justify-center rounded-full bg-sh-muted ring-1 ring-sh-border text-xs font-semibold text-sh-fg-secondary">
+                            <div
+                                class="bg-sh-muted ring-sh-border text-sh-fg-secondary flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold ring-1"
+                            >
                                 {{ $zone->code }}
                             </div>
 
                             <div class="min-w-0 flex-1 space-y-1.5">
                                 <div class="flex items-center gap-x-2">
-                                    <span class="text-sm font-semibold text-sh-fg">
+                                    <span class="text-sh-fg text-sm font-semibold">
                                         {{ $zone->name }}
                                     </span>
                                     <x-filament::badge size="sm" :color="$zone->isEnabled() ? 'success' : 'gray'">
@@ -57,7 +60,7 @@
                                     </x-filament::badge>
                                 </div>
 
-                                <p class="text-xs text-sh-fg-muted">
+                                <p class="text-sh-fg-muted text-xs">
                                     {{ trans_choice('shopper::pages/settings/zones.countries_count', $zone->countries->count(), ['count' => $zone->countries->count()]) }}
                                     @if ($zone->currency)
                                         · {{ $zone->currency->code }}
@@ -73,8 +76,9 @@
                                                 class="size-4 rounded-xs object-cover"
                                             />
                                         @endforeach
+
                                         @if ($zone->countries->count() > 8)
-                                            <span class="ml-0.5 text-xs text-sh-fg-muted">
+                                            <span class="text-sh-fg-muted ml-0.5 text-xs">
                                                 +{{ $zone->countries->count() - 8 }}
                                             </span>
                                         @endif

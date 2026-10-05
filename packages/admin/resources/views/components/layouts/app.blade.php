@@ -3,11 +3,7 @@
 ])
 
 <x-shopper::layouts.base :$title>
-    <div
-        class="flex h-screen flex-col overflow-hidden"
-        x-data
-        @keydown.window.escape="$store.sidebar.close()"
-    >
+    <div class="flex h-screen flex-col overflow-hidden" x-data @keydown.window.escape="$store.sidebar.close()">
         {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::BEFORE_HEADER) }}
 
         <x-shopper::layouts.header />

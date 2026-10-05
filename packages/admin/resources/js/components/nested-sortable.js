@@ -26,7 +26,9 @@ const NestedSortable = (config) => {
       items.forEach((item, index) => {
         const card = item.querySelector(':scope > div')
         if (!card) return
-        index === 0 ? card.classList.add('rounded-tl-none', 'border-t-0') : card.classList.remove('rounded-tl-none', 'border-t-0')
+        index === 0
+          ? card.classList.add('rounded-tl-none', 'border-t-0')
+          : card.classList.remove('rounded-tl-none', 'border-t-0')
       })
     },
     destroy() {

@@ -46,7 +46,7 @@
         x-ref="stepsData"
     />
 
-    <div class="sticky top-0 z-40 bg-sh-muted backdrop-blur-lg/75">
+    <div class="bg-sh-muted backdrop-blur-lg/75 sticky top-0 z-40">
         <ol
             @if (filled($label = $getLabel()))
                 aria-label="{{ $label }}"
@@ -70,7 +70,7 @@
                         x-on:click="step = @js($step->getKey())"
                         x-bind:disabled="! isStepAccessible(@js($step->getKey())) || @js($previousAction->isDisabled())"
                         role="step"
-                        class="fi-sc-wizard-header-step-btn inline-flex items-center gap-2 truncate rounded-full bg-sh-surface py-1.5 pr-4 pl-2 text-start ring-1 ring-sh-border hover:bg-sh-muted"
+                        class="fi-sc-wizard-header-step-btn bg-sh-surface ring-sh-border hover:bg-sh-muted inline-flex items-center gap-2 truncate rounded-full py-1.5 pr-4 pl-2 text-start ring-1"
                     >
                         <div
                             class="fi-sc-wizard-header-step-icon-ctn flex size-6 shrink-0 items-center justify-center rounded-full"
@@ -80,8 +80,7 @@
                                 'border': getStepIndex(step) <= {{ $loop->index }},
                                 'border-primary-600 dark:border-primary-500':
                                     getStepIndex(step) === {{ $loop->index }},
-                                'border-sh-border':
-                                    getStepIndex(step) < {{ $loop->index }},
+                                'border-sh-border': getStepIndex(step) < {{ $loop->index }},
                             }"
                         >
                             @php
@@ -108,10 +107,7 @@
                                         attributes: new \Illuminate\View\ComponentAttributeBag([
                                             "x-cloak" => "x-cloak",
                                             "x-show" => "getStepIndex(step) <= {$loop->index}",
-                                            "x-bind:class" => "{
-                                                                                                                        'text-sh-fg-muted': getStepIndex(step) !== {$loop->index},
-                                                                                                                        'text-primary-600 dark:text-primary-500': getStepIndex(step) === {$loop->index},
-                                                                                                                    }",
+                                            "x-bind:class" => "{ 'text-sh-fg-muted': getStepIndex(step) !== {$loop->index}, 'text-primary-600 dark:text-primary-500': getStepIndex(step) === {$loop->index} }",
                                             "class" => "fi-sc-wizard-header-step-icon size-4",
                                         ]),
                                         size: \Filament\Support\Enums\IconSize::Small,
@@ -122,8 +118,7 @@
                                     x-show="getStepIndex(step) <= {{ $loop->index }}"
                                     class="fi-sc-wizard-header-step-number text-sm font-medium"
                                     x-bind:class="{
-                                        'text-sh-fg-muted':
-                                            getStepIndex(step) !== {{ $loop->index }},
+                                        'text-sh-fg-muted': getStepIndex(step) !== {{ $loop->index }},
                                         'text-primary-600 dark:text-primary-500':
                                             getStepIndex(step) === {{ $loop->index }},
                                     }"
@@ -138,8 +133,7 @@
                                 <span
                                     class="fi-sc-wizard-header-step-label text-sm font-medium"
                                     x-bind:class="{
-                                        'text-sh-fg-muted':
-                                            getStepIndex(step) < {{ $loop->index }},
+                                        'text-sh-fg-muted': getStepIndex(step) < {{ $loop->index }},
                                         'text-primary-600 dark:text-primary-400':
                                             getStepIndex(step) === {{ $loop->index }},
                                         'text-sh-fg': getStepIndex(step) > {{ $loop->index }},
@@ -154,7 +148,7 @@
                     @if (! $loop->last)
                         <div aria-hidden="true">
                             <x-untitledui-chevron-right
-                                class="size-5 text-sh-fg-muted rtl:rotate-180"
+                                class="text-sh-fg-muted size-5 rtl:rotate-180"
                                 stroke-width="1.5"
                                 aria-hidden="true"
                             />
@@ -171,7 +165,7 @@
         @endforeach
     </div>
 
-    <div class="fi-sc-wizard-footer flex shrink-0 justify-end gap-3 border-t border-sh-border p-4">
+    <div class="fi-sc-wizard-footer border-sh-border flex shrink-0 justify-end gap-3 border-t p-4">
         <div
             x-cloak
             @if (! $previousAction->isDisabled())

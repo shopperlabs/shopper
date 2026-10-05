@@ -5,13 +5,15 @@
 @php
     $type = $campaign->budget_type;
 
-    $spendPercent = $type->hasSpendCap() && $campaign->budget_amount > 0
-        ? min(100, (int) round($campaign->spent_amount / $campaign->budget_amount * 100))
-        : null;
+    $spendPercent =
+        $type->hasSpendCap() && $campaign->budget_amount > 0
+            ? min(100, (int) round(($campaign->spent_amount / $campaign->budget_amount) * 100))
+            : null;
 
-    $countPercent = $type->hasCountCap() && $campaign->budget_count > 0
-        ? min(100, (int) round($campaign->used_count / $campaign->budget_count * 100))
-        : null;
+    $countPercent =
+        $type->hasCountCap() && $campaign->budget_count > 0
+            ? min(100, (int) round(($campaign->used_count / $campaign->budget_count) * 100))
+            : null;
 
     $fill = fn (int $percent): string => match (true) {
         $percent >= 90 => 'bg-danger-500',
@@ -22,10 +24,10 @@
 
 <x-shopper::card>
     <x-slot:title>
-        <span class="text-sh-fg-secondary text-xs font-semibold uppercase tracking-wide">
+        <span class="text-sh-fg-secondary text-xs font-semibold tracking-wide uppercase">
             {{ __('shopper::pages/campaigns.budget_panel.title') }}
         </span>
-    </x-slot:title>
+    </x-slot>
 
     @if ($spendPercent === null && $countPercent === null)
         <p class="text-sh-fg-muted text-sm">
@@ -36,21 +38,23 @@
             @if ($spendPercent !== null)
                 <div class="space-y-1.5">
                     <div class="flex items-center justify-between">
-                        <span class="text-sh-fg-secondary">{{ __('shopper::pages/campaigns.budget_panel.spend') }}</span>
+                        <span class="text-sh-fg-secondary">
+                            {{ __('shopper::pages/campaigns.budget_panel.spend') }}
+                        </span>
                         <span class="text-sh-fg">
                             {{ shopper_money_format(amount: $campaign->spent_amount, currency: $campaign->currency_code) }}
                             /
                             {{ shopper_money_format(amount: $campaign->budget_amount, currency: $campaign->currency_code) }}
                         </span>
                     </div>
-                    <div class="h-1.5 w-full overflow-hidden rounded-full bg-sh-card">
+                    <div class="bg-sh-card h-1.5 w-full overflow-hidden rounded-full">
                         <div
                             role="progressbar"
                             aria-valuenow="{{ $spendPercent }}"
                             aria-valuemin="0"
                             aria-valuemax="100"
                             aria-label="{{ __('shopper::pages/campaigns.budget_panel.spend') }}"
-                            class="h-full rounded-full w-(--p) {{ $fill($spendPercent) }}"
+                            class="{{ $fill($spendPercent) }} h-full w-(--p) rounded-full"
                             style="--p: {{ $spendPercent }}%"
                         ></div>
                     </div>
@@ -60,17 +64,19 @@
             @if ($countPercent !== null)
                 <div class="space-y-1.5">
                     <div class="flex items-center justify-between">
-                        <span class="text-sh-fg-secondary">{{ __('shopper::pages/campaigns.budget_panel.count') }}</span>
+                        <span class="text-sh-fg-secondary">
+                            {{ __('shopper::pages/campaigns.budget_panel.count') }}
+                        </span>
                         <span class="text-sh-fg">{{ $campaign->used_count }} / {{ $campaign->budget_count }}</span>
                     </div>
-                    <div class="h-1.5 w-full overflow-hidden rounded-full bg-sh-card">
+                    <div class="bg-sh-card h-1.5 w-full overflow-hidden rounded-full">
                         <div
                             role="progressbar"
                             aria-valuenow="{{ $countPercent }}"
                             aria-valuemin="0"
                             aria-valuemax="100"
                             aria-label="{{ __('shopper::pages/campaigns.budget_panel.count') }}"
-                            class="h-full rounded-full w-(--p) {{ $fill($countPercent) }}"
+                            class="{{ $fill($countPercent) }} h-full w-(--p) rounded-full"
                             style="--p: {{ $countPercent }}%"
                         ></div>
                     </div>

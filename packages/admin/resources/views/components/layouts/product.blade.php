@@ -7,10 +7,7 @@
     $groups = resolve(\Shopper\Navigation\Product\ProductSectionManager::class)->groupedForProduct($product);
 
     resolve(\Shopper\Sidebar\Breadcrumbs\Breadcrumbs::class)->prepend(
-        new \Shopper\Sidebar\Breadcrumbs\Breadcrumb(
-            text: $product->name,
-            url: route('shopper.products.edit', $product),
-        )
+        new \Shopper\Sidebar\Breadcrumbs\Breadcrumb(text: $product->name, url: route('shopper.products.edit', $product)),
     );
 
     $editPath = trim(parse_url(route('shopper.products.edit', ['product' => $product]), PHP_URL_PATH) ?? '', '/');
@@ -19,7 +16,7 @@
 @endphp
 
 <x-shopper::layouts.app :$title>
-    <div class="sticky top-0 z-10 bg-sh-surface border-b border-sh-border py-8">
+    <div class="bg-sh-surface border-sh-border sticky top-0 z-10 border-b py-8">
         <x-shopper::container>
             <x-shopper::heading>
                 <x-slot:title>
@@ -34,7 +31,7 @@
                             </x-filament::badge>
                         @endif
 
-                        <h2 class="font-heading text-2xl font-bold text-sh-fg sm:truncate sm:text-3xl sm:leading-9">
+                        <h2 class="font-heading text-sh-fg text-2xl font-bold sm:truncate sm:text-3xl sm:leading-9">
                             {{ $product->name }}
                         </h2>
                     </div>
@@ -50,14 +47,18 @@
     </div>
 
     <div
-        x-data="{ collapsed: localStorage.getItem('shopper-product-section-collapsed') === 'true' }"
-        x-init="$watch('collapsed', (value) => localStorage.setItem('shopper-product-section-collapsed', value))"
+        x-data="{
+            collapsed:
+                localStorage.getItem('shopper-product-section-collapsed') === 'true',
+        }"
+        x-init="
+            $watch('collapsed', (value) =>
+                localStorage.setItem('shopper-product-section-collapsed', value),
+            )
+        "
     >
         <div class="flex py-8">
-            <aside
-                class="shrink-0 pl-4 transition-all duration-200"
-                :class="collapsed ? 'w-15' : 'w-58'"
-            >
+            <aside class="shrink-0 pl-4 transition-all duration-200" :class="collapsed ? 'w-15' : 'w-58'">
                 <div class="sticky top-34 space-y-6">
                     <div class="flex" :class="collapsed ? 'justify-center' : 'justify-end'">
                         <button
@@ -66,7 +67,7 @@
                             class="text-sh-fg-muted hover:bg-sh-sidebar-hover hover:text-sh-fg inline-flex size-8 items-center justify-center rounded-lg transition"
                             :aria-label="collapsed ? @js(__('shopper::words.expand')) : @js(__('shopper::words.collapse'))"
                             x-tooltip="{
-                                content: () => collapsed ? @js(__('shopper::words.expand')) : @js(__('shopper::words.collapse')),
+                                content: () => (collapsed ? @js(__('shopper::words.expand')) : @js(__('shopper::words.collapse'))),
                                 placement: 'right',
                                 theme: $store.theme,
                             }"
@@ -75,17 +76,17 @@
                                 class="inline-flex transition-transform duration-200"
                                 :class="collapsed ? 'rotate-180' : ''"
                             >
-                                <x-filament::icon
-                                    icon="untitledui-chevron-left-double"
-                                    class="size-4"
-                                />
+                                <x-filament::icon icon="untitledui-chevron-left-double" class="size-4" />
                             </span>
                         </button>
                     </div>
 
                     {{ shopper()->getRenderHook(\Shopper\View\ProductRenderHook::EDIT_TABS_BEFORE) }}
 
-                    <nav :class="collapsed ? 'space-y-1' : 'space-y-6'" aria-label="{{ __('shopper::pages/products.single') }}">
+                    <nav
+                        :class="collapsed ? 'space-y-1' : 'space-y-6'"
+                        aria-label="{{ __('shopper::pages/products.single') }}"
+                    >
                         @foreach ($groups as $group)
                             <div>
                                 @if ($group['label'])
@@ -98,13 +99,17 @@
                                     </p>
                                 @endif
 
-                                <ul role="list" class="space-y-0.5" :class="! collapsed && @js((bool) $group['label']) ? 'mt-2' : ''">
+                                <ul
+                                    role="list"
+                                    class="space-y-0.5"
+                                    :class="! collapsed && @js((bool) $group['label']) ? 'mt-2' : ''"
+                                >
                                     @foreach ($group['items'] as $section)
                                         @php
                                             $permission = $section->permission();
                                         @endphp
 
-                                        @if ($permission && ! auth()->user()?->can($permission))
+                                        @if ($permission &&! auth()->user()?->can($permission))
                                             @continue
                                         @endif
 
@@ -135,11 +140,7 @@
                                             >
                                                 <x-filament::icon
                                                     :icon="$section->icon()"
-                                                    @class([
-                                                        'size-5 shrink-0',
-                                                        'text-sh-fg' => $isActive,
-                                                        'text-sh-fg-muted group-hover:text-sh-fg-secondary' => ! $isActive,
-                                                    ])
+                                                    @class(['size-5 shrink-0', 'text-sh-fg' => $isActive, 'text-sh-fg-muted group-hover:text-sh-fg-secondary' => ! $isActive])
                                                 />
 
                                                 <span x-show="! collapsed" x-cloak class="truncate">

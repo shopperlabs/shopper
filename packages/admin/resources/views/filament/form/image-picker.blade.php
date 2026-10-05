@@ -12,7 +12,7 @@
         role="radiogroup"
     >
         @foreach ($getOptions() as $value => $url)
-            <label class="relative block {{ $isDisabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer' }}">
+            <label class="{{ $isDisabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer' }} relative block">
                 <input
                     type="radio"
                     name="{{ $getId() }}"
@@ -26,11 +26,11 @@
                     src="{{ $url }}"
                     alt="{{ basename(parse_url($url, PHP_URL_PATH) ?? '') }}"
                     loading="lazy"
-                    class="aspect-square w-full rounded-xl bg-sh-muted object-cover ring-1 ring-sh-border transition peer-checked:ring-2 peer-checked:ring-primary-500 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500"
+                    class="bg-sh-muted ring-sh-border peer-checked:ring-primary-500 peer-focus-visible:ring-primary-500 aspect-square w-full rounded-xl object-cover ring-1 transition peer-checked:ring-2 peer-focus-visible:ring-2"
                 />
 
                 <span
-                    class="absolute top-2 left-2 hidden size-6 items-center justify-center rounded-full bg-primary-500 text-white shadow-sm peer-checked:flex"
+                    class="bg-primary-500 absolute top-2 left-2 hidden size-6 items-center justify-center rounded-full text-white shadow-sm peer-checked:flex"
                 >
                     <x-filament::icon icon="untitledui-check" class="size-3.5" />
                 </span>

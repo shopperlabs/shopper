@@ -2,7 +2,7 @@
     <x-shopper::container class="space-y-8 py-5">
         <div class="space-y-2">
             <x-shopper::heading :title="__('shopper::pages/reviews.title')" />
-            <p class="max-w-2xl text-sm text-sh-fg-muted">
+            <p class="text-sh-fg-muted max-w-2xl text-sm">
                 {{ __('shopper::pages/reviews.description') }}
             </p>
         </div>
@@ -21,7 +21,7 @@
                         </span>
                         <x-phosphor-sparkle-duotone class="text-sh-fg-secondary size-5" aria-hidden="true" />
                     </div>
-                </x-slot:title>
+                </x-slot>
 
                 <p class="font-heading text-sh-fg text-3xl font-bold">
                     {{ $hasReviews ? number_format($stats['average'], 1) : '—' }}
@@ -31,9 +31,11 @@
                     <x-shopper::rating-stars :rating="$stats['average']" />
 
                     <p class="text-sh-fg-muted text-xs">
-                        {{ $hasReviews
-                            ? __('shopper::pages/reviews.stats.based_on', ['count' => \Illuminate\Support\Number::abbreviate($stats['total'])])
-                            : __('shopper::pages/reviews.stats.no_data') }}
+                        {{
+                            $hasReviews
+                                ? __('shopper::pages/reviews.stats.based_on', ['count' => \Illuminate\Support\Number::abbreviate($stats['total'])])
+                                : __('shopper::pages/reviews.stats.no_data')
+                        }}
                     </p>
                 </div>
             </x-shopper::card>
@@ -46,7 +48,7 @@
                         </span>
                         <x-phosphor-list-star-duotone class="text-sh-fg-secondary size-5" aria-hidden="true" />
                     </div>
-                </x-slot:title>
+                </x-slot>
 
                 <p class="font-heading text-sh-fg text-3xl font-bold">
                     {{ \Illuminate\Support\Number::abbreviate($stats['total']) }}
@@ -72,11 +74,9 @@
                         </span>
                         <x-phosphor-shooting-star-duotone class="text-sh-fg-secondary size-5" aria-hidden="true" />
                     </div>
-                </x-slot:title>
+                </x-slot>
 
-                <p class="font-heading text-sh-fg text-3xl font-bold">
-                    {{ $stats['five_star_percent'] }}%
-                </p>
+                <p class="font-heading text-sh-fg text-3xl font-bold">{{ $stats['five_star_percent'] }}%</p>
 
                 <p class="text-sh-fg-muted mt-3 text-xs">
                     {{ __('shopper::pages/reviews.stats.excellent') }}
@@ -92,18 +92,18 @@
                         <x-phosphor-warning-circle-duotone
                             @class([
                                 'size-5',
-                                'text-amber-500' => $stats['pending'] > 0,
+                                'text-amber-500' => $stats['pending'] !== 0,
                                 'text-sh-fg-secondary' => $stats['pending'] === 0,
                             ])
                             aria-hidden="true"
                         />
                     </div>
-                </x-slot:title>
+                </x-slot>
 
                 <p
                     @class([
                         'font-heading text-3xl font-bold',
-                        'text-amber-600 dark:text-amber-400' => $stats['pending'] > 0,
+                        'text-amber-600 dark:text-amber-400' => $stats['pending'] !== 0,
                         'text-sh-fg' => $stats['pending'] === 0,
                     ])
                 >
@@ -111,9 +111,11 @@
                 </p>
 
                 <p class="text-sh-fg-muted mt-3 text-xs">
-                    {{ $stats['pending'] > 0
-                        ? __('shopper::pages/reviews.stats.pending_description')
-                        : __('shopper::pages/reviews.stats.pending_empty') }}
+                    {{
+                        $stats['pending'] > 0
+                            ? __('shopper::pages/reviews.stats.pending_description')
+                            : __('shopper::pages/reviews.stats.pending_empty')
+                    }}
                 </p>
             </x-shopper::card>
         </div>
@@ -127,12 +129,14 @@
                         <span class="text-sh-fg text-sm font-semibold">
                             {{ __('shopper::pages/reviews.breakdown.title') }}
                         </span>
-                    </x-slot:title>
+                    </x-slot>
 
                     <div class="space-y-3">
                         @foreach ($this->ratingBreakdown as $row)
                             <div class="flex items-center gap-3 text-sm">
-                                <span class="text-sh-fg-secondary flex w-7 shrink-0 items-center gap-1 text-xs font-semibold">
+                                <span
+                                    class="text-sh-fg-secondary flex w-7 shrink-0 items-center gap-1 text-xs font-semibold"
+                                >
                                     {{ $row['rating'] }}
                                     <x-heroicon-s-star class="size-3 text-yellow-400" aria-hidden="true" />
                                 </span>
@@ -155,7 +159,7 @@
                         <span class="text-sh-fg text-sm font-semibold">
                             {{ __('shopper::pages/reviews.recommended.title') }}
                         </span>
-                    </x-slot:title>
+                    </x-slot>
 
                     <div class="flex items-baseline gap-2">
                         <p class="font-heading text-sh-fg text-2xl font-bold">
@@ -169,19 +173,18 @@
                     </div>
 
                     <p class="text-sh-fg-muted mt-1 text-xs">
-                        {{ $hasReviews
-                            ? __('shopper::pages/reviews.recommended.description', ['percent' => $this->recommendedPercent])
-                            : __('shopper::pages/reviews.recommended.empty') }}
+                        {{
+                            $hasReviews
+                                ? __('shopper::pages/reviews.recommended.description', ['percent' => $this->recommendedPercent])
+                                : __('shopper::pages/reviews.recommended.empty')
+                        }}
                     </p>
                 </x-shopper::card>
             </aside>
 
             <div class="mt-6 space-y-4 lg:col-span-3 lg:mt-0">
                 <x-filament::tabs class="sh-tabs-underline">
-                    <x-filament::tabs.item
-                        :active="$activeTab === 'all'"
-                        wire:click="$set('activeTab', 'all')"
-                    >
+                    <x-filament::tabs.item :active="$activeTab === 'all'" wire:click="$set('activeTab', 'all')">
                         {{ __('shopper::pages/reviews.tabs.all') }}
                     </x-filament::tabs.item>
 

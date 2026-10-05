@@ -6,9 +6,9 @@
                     <span class="text-sh-fg-secondary text-sm font-medium">
                         {{ $card['label'] }}
                     </span>
-                    @svg($card['icon'], 'size-5 text-sh-fg-secondary')
+                    @svg($card['icon'], 'text-sh-fg-secondary size-5')
                 </div>
-            </x-slot:title>
+            </x-slot>
 
             <p class="font-heading text-sh-fg text-2xl font-bold">
                 {{ $card['value'] }}
@@ -23,9 +23,7 @@
                         </span>
                     @elseif ($card['trend'] === 'down')
                         <x-untitledui-trend-down class="size-4 text-red-500" />
-                        <span class="text-sm font-medium text-red-600 dark:text-red-400">
-                            {{ $card['change'] }}%
-                        </span>
+                        <span class="text-sm font-medium text-red-600 dark:text-red-400">{{ $card['change'] }}%</span>
                     @else
                         <span class="text-sh-fg-muted text-sm font-medium">0%</span>
                     @endif

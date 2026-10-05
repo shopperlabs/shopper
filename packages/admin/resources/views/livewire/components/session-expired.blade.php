@@ -1,10 +1,5 @@
 <div>
-    <x-filament::modal
-        id="session-expired"
-        :close-by-clicking-away="false"
-        :close-by-escaping="false"
-        width="md"
-    >
+    <x-filament::modal id="session-expired" :close-by-clicking-away="false" :close-by-escaping="false" width="md">
         <x-slot name="heading">
             {{ __('shopper::pages/auth.session_expired.title') }}
         </x-slot>
@@ -38,7 +33,7 @@
                 credentials: 'same-origin',
             })
 
-            if (! response.ok) return
+            if (!response.ok) return
 
             const { token } = await response.json()
 

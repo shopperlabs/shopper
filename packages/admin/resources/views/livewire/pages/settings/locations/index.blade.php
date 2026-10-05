@@ -18,14 +18,14 @@
                     :title="__('shopper::pages/settings/global.location.menu')"
                     :description="__('shopper::pages/settings/global.location.description')"
                 />
-                <x-filament::section.description class="mt-4 text-sm text-sh-fg-muted">
+                <x-filament::section.description class="text-sh-fg-muted mt-4 text-sm">
                     {{ __('shopper::pages/settings/global.location.count', ['count' => $inventories->count()]) }}
                 </x-filament::section.description>
             </div>
         </div>
         <div class="mt-5 lg:col-span-2 lg:mt-0">
             <x-shopper::card class="[&>div:first-of-type]:p-0">
-                <ul class="divide-y divide-sh-border">
+                <ul class="divide-sh-border divide-y">
                     @foreach ($inventories as $inventory)
                         <li class="p-4">
                             <div class="flex items-end gap-6">
@@ -47,9 +47,7 @@
                                     <div class="mt-2 sm:flex sm:justify-between">
                                         <div class="sm:flex sm:gap-x-4">
                                             @if ($inventory->country)
-                                                <div
-                                                    class="flex items-center gap-2 text-sm text-sh-fg-muted"
-                                                >
+                                                <div class="text-sh-fg-muted flex items-center gap-2 text-sm">
                                                     <img
                                                         src="{{ $inventory->country->svg_flag }}"
                                                         alt="{{ $inventory->country->translated_name }} flag"
@@ -59,30 +57,24 @@
                                                 </div>
                                             @endif
 
-                                            <div
-                                                class="mt-2 flex items-center gap-2 text-sm text-sh-fg-muted sm:mt-0"
-                                            >
+                                            <div class="text-sh-fg-muted mt-2 flex items-center gap-2 text-sm sm:mt-0">
                                                 <x-untitledui-marker-pin-02
-                                                    class="size-5 shrink-0 text-sh-fg-muted"
+                                                    class="text-sh-fg-muted size-5 shrink-0"
                                                     aria-hidden="true"
                                                 />
                                                 {{ $inventory->city }}
                                             </div>
-                                            <div
-                                                class="mt-2 flex items-center gap-2 text-sm text-sh-fg-muted sm:mt-0"
-                                            >
+                                            <div class="text-sh-fg-muted mt-2 flex items-center gap-2 text-sm sm:mt-0">
                                                 <x-untitledui-phone
-                                                    class="size-5 shrink-0 text-sh-fg-muted"
+                                                    class="text-sh-fg-muted size-5 shrink-0"
                                                     aria-hidden="true"
                                                 />
                                                 {{ $inventory->phone_number ?? __('shopper::words.number_not_set') }}
                                             </div>
                                         </div>
-                                        <div
-                                            class="mt-2 flex items-center text-sm text-sh-fg-muted sm:mt-0"
-                                        >
+                                        <div class="text-sh-fg-muted mt-2 flex items-center text-sm sm:mt-0">
                                             <x-untitledui-calendar
-                                                class="size-5 shrink-0 text-sh-fg-muted"
+                                                class="text-sh-fg-muted size-5 shrink-0"
                                                 aria-hidden="true"
                                             />
                                             <span class="ml-2">
@@ -100,7 +92,7 @@
                                 <div class="flex items-center gap-2">
                                     <x-shopper::link
                                         :href="route('shopper.settings.locations.edit', $inventory)"
-                                        class="inline-flex size-10 items-center justify-center rounded-full hover:bg-sh-muted"
+                                        class="hover:bg-sh-muted inline-flex size-10 items-center justify-center rounded-full"
                                     >
                                         <x-untitledui-edit-03
                                             class="text-primary-600 dark:text-primary-500 size-5"

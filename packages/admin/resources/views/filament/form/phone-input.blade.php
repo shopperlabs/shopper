@@ -29,8 +29,8 @@
 
                 return this.countries.filter(
                     (country) =>
-                        country.name.toLowerCase().includes(query)
-                        || (digits.length > 0 && country.dial.includes(digits))
+                        country.name.toLowerCase().includes(query) ||
+                        (digits.length > 0 && country.dial.includes(digits)),
                 )
             },
             select(country) {
@@ -63,23 +63,27 @@
         }"
         class="relative"
     >
-        <x-filament::input.wrapper
-            :disabled="$isDisabled"
-            :valid="! $errors->has($statePath)"
-            :inline-prefix="true"
-        >
+        <x-filament::input.wrapper :disabled="$isDisabled" :valid="! $errors->has($statePath)" :inline-prefix="true">
             <x-slot:prefix>
                 <button
                     type="button"
-                    x-on:click="$refs.panel.style.width = $el.closest('.fi-input-wrp').offsetWidth + 'px'; $refs.panel.toggle($event)"
+                    x-on:click="
+                        $refs.panel.style.width = $el.closest('.fi-input-wrp').offsetWidth + 'px'
+                        $refs.panel.toggle($event)
+                    "
                     @disabled($isDisabled)
                     class="flex items-center gap-1.5"
                 >
-                    <img x-bind:src="selectedCountry?.flag" class="size-4 shrink-0 rounded-full object-cover" alt="" x-show="selectedCountry" />
+                    <img
+                        x-bind:src="selectedCountry?.flag"
+                        class="size-4 shrink-0 rounded-full object-cover"
+                        alt=""
+                        x-show="selectedCountry"
+                    />
                     <span class="text-sh-fg-secondary text-sm" x-text="selectedCountry?.dial"></span>
                     <x-filament::icon icon="untitledui-chevron-down" class="text-sh-fg-muted size-3.5 shrink-0" />
                 </button>
-            </x-slot:prefix>
+            </x-slot>
 
             <x-filament::input
                 type="tel"
@@ -115,17 +119,17 @@
                             x-bind:class="{ 'bg-sh-muted': country === phoneCountry.code }"
                             class="hover:bg-sh-muted flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-start"
                         >
-                            <img x-bind:src="phoneCountry.flag" class="size-4 shrink-0 rounded-full object-cover" alt="" />
+                            <img
+                                x-bind:src="phoneCountry.flag"
+                                class="size-4 shrink-0 rounded-full object-cover"
+                                alt=""
+                            />
                             <span class="text-sh-fg flex-1 truncate text-sm" x-text="phoneCountry.name"></span>
                             <span class="text-sh-fg-muted text-sm" x-text="phoneCountry.dial"></span>
                         </button>
                     </li>
                 </template>
-                <li
-                    x-cloak
-                    x-show="filteredCountries.length === 0"
-                    class="text-sh-fg-muted p-4 text-center text-sm"
-                >
+                <li x-cloak x-show="filteredCountries.length === 0" class="text-sh-fg-muted p-4 text-center text-sm">
                     {{ __('shopper::words.empty_space') }}
                 </li>
             </ul>

@@ -1,13 +1,13 @@
-<div class="overflow-hidden rounded-lg divide-y divide-sh-border bg-sh-surface ring-1 ring-sh-border">
-    <div class="p-3 bg-sh-muted">
-        <h4 class="text-base/5 text-sh-fg font-semibold">
+<div class="divide-sh-border bg-sh-surface ring-sh-border divide-y overflow-hidden rounded-lg ring-1">
+    <div class="bg-sh-muted p-3">
+        <h4 class="text-sh-fg text-base/5 font-semibold">
             {{ __('shopper::pages/orders.summary') }}
         </h4>
     </div>
-    <div class="divide-y divide-sh-border">
+    <div class="divide-sh-border divide-y">
         <div class="space-y-4 p-4">
             <div class="flex items-center justify-between">
-                <h3 class="text-sm font-semibold text-sh-fg">
+                <h3 class="text-sh-fg text-sm font-semibold">
                     {{ __('shopper::pages/orders.payment_details') }}
                 </h3>
                 <x-filament::badge
@@ -33,12 +33,13 @@
                                     alt="{{ $order->paymentMethod->title }}"
                                 />
                             @endif
-                            <span class="font-medium text-sh-fg">
+
+                            <span class="text-sh-fg font-medium">
                                 {{ $order->paymentMethod->title }}
                             </span>
                         </div>
                     @else
-                        <span class="text-sm text-sh-fg-muted italic">
+                        <span class="text-sh-fg-muted text-sm italic">
                             {{ __('shopper::pages/orders.no_payment_method') }}
                         </span>
                     @endif
@@ -48,9 +49,11 @@
                     <span class="text-sh-fg-muted">
                         {{ __('shopper::words.subtotal') }}
                         <span class="text-xs">
-                            ({{ $isTaxInclusive
-                                ? __('shopper::pages/settings/taxes.inclusive')
-                                : __('shopper::pages/settings/taxes.exclusive') }})
+                            ({{
+                                $isTaxInclusive
+                                    ? __('shopper::pages/settings/taxes.inclusive')
+                                    : __('shopper::pages/settings/taxes.exclusive')
+                            }})
                         </span>
                     </span>
                     <span class="text-sh-fg">
@@ -73,8 +76,10 @@
                                     alt="{{ $shippingOption->carrier?->name }}"
                                 />
                             @endif
+
                             <span class="text-sh-fg">
-                                {{ $shippingOption->carrier?->name }} &mdash; <span class="text-sh-fg-muted">{{ $shippingOption->name }}</span>
+                                {{ $shippingOption->carrier?->name }} &mdash;
+                                <span class="text-sh-fg-muted">{{ $shippingOption->name }}</span>
                             </span>
                         </div>
                     </div>
@@ -107,10 +112,10 @@
         </div>
 
         <div class="flex items-center justify-between p-4">
-            <span class="text-sm font-semibold text-sh-fg">
+            <span class="text-sh-fg text-sm font-semibold">
                 {{ __('shopper::words.total') }}
             </span>
-            <span class="text-sm font-semibold text-sh-fg">
+            <span class="text-sh-fg text-sm font-semibold">
                 {{ shopper_money_format($total, $order->currency_code) }}
             </span>
         </div>

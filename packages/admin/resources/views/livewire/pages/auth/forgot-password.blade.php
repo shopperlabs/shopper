@@ -1,21 +1,30 @@
 <x-shopper::auth-card>
     <div class="space-y-5">
         <header class="flex flex-col items-center justify-center py-3">
-            <div class="flex items-center justify-center space-y-2 rounded-lg bg-sh-surface p-2 shadow ring-1 ring-sh-border">
+            <div
+                class="bg-sh-surface ring-sh-border flex items-center justify-center space-y-2 rounded-lg p-2 shadow ring-1"
+            >
                 <x-phosphor-key class="size-5" aria-hidden="true" />
             </div>
-            <h1 class="font-heading mt-4 text-lg font-medium text-sh-fg">
+            <h1 class="font-heading text-sh-fg mt-4 text-lg font-medium">
                 {{ __('shopper::pages/auth.email.title') }}
             </h1>
-            <p class="mt-1 text-center text-sm text-sh-fg-muted">
+            <p class="text-sh-fg-muted mt-1 text-center text-sm">
                 {{ __('shopper::pages/auth.email.message') }}
             </p>
         </header>
 
         @if (session()->has('success'))
-            <div class="flex gap-0.5 ring-1 ring-success-200 bg-success-50 rounded-lg p-2 dark:ring-success-400/20 dark:bg-success-800/30">
-                <div class="ps-2 py-2 pe-0">
-                    <svg class="shrink-0 text-success-400 size-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <div
+                class="ring-success-200 bg-success-50 dark:ring-success-400/20 dark:bg-success-800/30 flex gap-0.5 rounded-lg p-2 ring-1"
+            >
+                <div class="py-2 ps-2 pe-0">
+                    <svg
+                        class="text-success-400 size-5 shrink-0"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        aria-hidden="true"
+                    >
                         <path
                             fill-rule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -23,9 +32,9 @@
                         />
                     </svg>
                 </div>
-                <div class="ps-2 flex-1">
-                    <div class="flex-1 py-2 pe-3 @md:pe-4 flex flex-col justify-center gap-2">
-                        <div class="flex items-center gap-2 text-sm font-medium text-success-700 dark:text-success-500">
+                <div class="flex-1 ps-2">
+                    <div class="@md:pe-4 flex flex-1 flex-col justify-center gap-2 py-2 pe-3">
+                        <div class="text-success-700 dark:text-success-500 flex items-center gap-2 text-sm font-medium">
                             {{ session()->get('success') }}
                         </div>
                     </div>

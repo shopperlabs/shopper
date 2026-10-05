@@ -26,42 +26,42 @@
                     <div>
                         <dl class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-6">
                             <div>
-                                <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                                <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                                     {{ __('shopper::forms.label.name') }}
                                 </dt>
-                                <dd class="mt-2 text-sm/5 text-sh-fg-muted sm:mt-3">
+                                <dd class="text-sh-fg-muted mt-2 text-sm/5 sm:mt-3">
                                     {{ $variant->name }}
                                 </dd>
                             </div>
                             <div>
-                                <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                                <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                                     {{ __('shopper::forms.label.ean') }}
                                 </dt>
-                                <dd class="mt-2 text-sm/5 text-sh-fg-muted sm:mt-3">
+                                <dd class="text-sh-fg-muted mt-2 text-sm/5 sm:mt-3">
                                     {{ $variant->ean ?? '-' }}
                                 </dd>
                             </div>
                             <div>
-                                <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                                <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                                     {{ __('shopper::forms.label.upc') }}
                                 </dt>
-                                <dd class="mt-2 text-sm/5 text-sh-fg-muted sm:mt-3">
+                                <dd class="text-sh-fg-muted mt-2 text-sm/5 sm:mt-3">
                                     {{ $variant->upc ?? '-' }}
                                 </dd>
                             </div>
                             <div>
-                                <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                                <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                                     {{ __('shopper::forms.label.position') }}
                                 </dt>
-                                <dd class="mt-2 text-sm/5 text-sh-fg-muted sm:mt-3">
+                                <dd class="text-sh-fg-muted mt-2 text-sm/5 sm:mt-3">
                                     {{ $variant->position }}
                                 </dd>
                             </div>
                             <div>
-                                <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                                <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                                     {{ __('shopper::pages/products.allow_backorder') }}
                                 </dt>
-                                <dd class="mt-2 text-sm/5 text-sh-fg-muted sm:mt-3">
+                                <dd class="text-sh-fg-muted mt-2 text-sm/5 sm:mt-3">
                                     <span
                                         @class([
                                             'relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent',
@@ -74,7 +74,7 @@
                                         <span
                                             aria-hidden="true"
                                             @class([
-                                                'pointer-events-none inline-block size-5 transform rounded-full bg-sh-surface shadow ring-0',
+                                                'bg-sh-surface pointer-events-none inline-block size-5 transform rounded-full shadow ring-0',
                                                 'translate-x-0' => ! $variant->allow_backorder,
                                                 'translate-x-5' => $variant->allow_backorder,
                                             ])
@@ -85,14 +85,12 @@
                         </dl>
 
                         <table
-                            class="fi-ta-table w-full table-auto divide-y divide-sh-border text-start ring-1 ring-sh-border"
+                            class="fi-ta-table divide-sh-border ring-sh-border w-full table-auto divide-y text-start ring-1"
                         >
                             <thead>
                                 <tr>
                                     <th class="fi-ta-header-cell px-3 py-2 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
-                                        <span
-                                            class="fi-ta-header-cell-label text-sm font-semibold text-sh-fg"
-                                        >
+                                        <span class="fi-ta-header-cell-label text-sh-fg text-sm font-semibold">
                                             {{ __('shopper::pages/attributes.menu') }}
                                         </span>
                                     </th>
@@ -101,16 +99,14 @@
                                     ></th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-sh-border whitespace-nowrap">
+                            <tbody class="divide-sh-border divide-y whitespace-nowrap">
                                 @foreach ($variant->values->loadMissing('attribute') as $value)
                                     <tr>
                                         <td
                                             class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3"
                                         >
                                             <div class="grid w-full gap-y-1 px-3 py-2">
-                                                <span
-                                                    class="fi-ta-text-item-label text-sm leading-6 text-sh-fg"
-                                                >
+                                                <span class="fi-ta-text-item-label text-sh-fg text-sm leading-6">
                                                     {{ $value->attribute->name }}
                                                 </span>
                                             </div>
@@ -141,20 +137,20 @@
                     <x-slot name="title">
                         <dl class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                             <div>
-                                <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                                <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                                     {{ __('shopper::forms.label.sku') }}
                                 </dt>
-                                <dd class="mt-2 text-sm/5 text-sh-fg-muted sm:mt-3">
+                                <dd class="text-sh-fg-muted mt-2 text-sm/5 sm:mt-3">
                                     {{ $variant->sku ?? '--' }}
                                 </dd>
                             </div>
                             <div>
-                                <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                                <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                                     {{ __('shopper::forms.label.barcode') }}
                                 </dt>
 
                                 @if ($variant->barcode)
-                                    <dd class="mt-2 space-y-1.5 text-sm/5 text-sh-fg-muted sm:mt-3">
+                                    <dd class="text-sh-fg-muted mt-2 space-y-1.5 text-sm/5 sm:mt-3">
                                         {!! Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($variant->barcode, config('shopper.core.barcode_type')) !!}
                                     </dd>
                                 @endif
@@ -180,6 +176,7 @@
                             @if ($this->useAsThumbnailAction->isVisible())
                                 {{ $this->useAsThumbnailAction }}
                             @endif
+
                             {{ $this->mediaAction }}
                         </div>
                     </div>
@@ -188,15 +185,12 @@
                 <div class="space-y-6">
                     @if ($this->variant->media->isEmpty())
                         <div class="flex gap-3">
-                            <x-phosphor-image-duotone
-                                class="size-5 text-sh-fg-muted"
-                                aria-hidden="true"
-                            />
+                            <x-phosphor-image-duotone class="text-sh-fg-muted size-5" aria-hidden="true" />
                             <div>
-                                <p class="text-sm font-medium text-sh-fg-secondary">
+                                <p class="text-sh-fg-secondary text-sm font-medium">
                                     {{ __('shopper::words.images') }}
                                 </p>
-                                <span class="text-sm leading-3 text-sh-fg-muted">
+                                <span class="text-sh-fg-muted text-sm leading-3">
                                     {{ __('shopper::words.empty_space') }}
                                 </span>
                             </div>
@@ -205,11 +199,11 @@
 
                     @if ($this->variant->getFirstMedia(config('shopper.media.storage.thumbnail_collection')))
                         <div class="space-y-3">
-                            <p class="text-sm/5 font-medium text-sh-fg-secondary">
+                            <p class="text-sh-fg-secondary text-sm/5 font-medium">
                                 {{ __('shopper::forms.label.thumbnail') }}
                             </p>
                             <img
-                                class="size-14 max-w-none rounded-lg object-cover object-center ring-1 ring-sh-border"
+                                class="ring-sh-border size-14 max-w-none rounded-lg object-cover object-center ring-1"
                                 src="{{ $this->variant->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
                                 alt="Thumbnail"
                             />
@@ -218,13 +212,13 @@
 
                     @if ($this->variant->getMedia(config('shopper.media.storage.collection_name'))->isNotEmpty())
                         <div class="space-y-3">
-                            <p class="text-sm/5 font-medium text-sh-fg-secondary">
+                            <p class="text-sh-fg-secondary text-sm/5 font-medium">
                                 {{ __('shopper::words.images') }}
                             </p>
                             <div class="flex flex-wrap gap-4">
                                 @foreach ($this->variant->getMedia(config('shopper.media.storage.collection_name')) as $media)
                                     <img
-                                        class="size-14 max-w-none rounded-lg object-cover object-center ring-1 ring-sh-border"
+                                        class="ring-sh-border size-14 max-w-none rounded-lg object-cover object-center ring-1"
                                         src="{{ $media->getFullUrl() }}"
                                         alt="Thumbnail"
                                     />
@@ -240,42 +234,42 @@
             >
                 <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <div>
-                        <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                        <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                             {{ __('shopper::forms.label.width') }}
                         </dt>
-                        <dd class="mt-1 text-sm/5 text-sh-fg-muted">
+                        <dd class="text-sh-fg-muted mt-1 text-sm/5">
                             {{ $variant->width }}
                         </dd>
                     </div>
                     <div>
-                        <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                        <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                             {{ __('shopper::forms.label.height') }}
                         </dt>
-                        <dd class="mt-1 text-sm/5 text-sh-fg-muted">
+                        <dd class="text-sh-fg-muted mt-1 text-sm/5">
                             {{ $variant->height }}
                         </dd>
                     </div>
                     <div>
-                        <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                        <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                             {{ __('shopper::forms.label.weight') }}
                         </dt>
-                        <dd class="mt-1 text-sm/5 text-sh-fg-muted">
+                        <dd class="text-sh-fg-muted mt-1 text-sm/5">
                             {{ $variant->weight }}
                         </dd>
                     </div>
                     <div>
-                        <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                        <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                             {{ __('shopper::forms.label.volume') }}
                         </dt>
-                        <dd class="mt-1 text-sm/5 text-sh-fg-muted">
+                        <dd class="text-sh-fg-muted mt-1 text-sm/5">
                             {{ $variant->volume }}
                         </dd>
                     </div>
                     <div>
-                        <dt class="text-sm/6 font-medium text-sh-fg-secondary">
+                        <dt class="text-sh-fg-secondary text-sm/6 font-medium">
                             {{ __('shopper::forms.label.depth') }}
                         </dt>
-                        <dd class="mt-1 text-sm/5 text-sh-fg-muted">
+                        <dd class="text-sh-fg-muted mt-1 text-sm/5">
                             {{ $variant->depth }}
                         </dd>
                     </div>

@@ -46,7 +46,7 @@
                                     x-show="open"
                                     x-cloak
                                     x-transition.opacity.duration.150ms
-                                    class="bg-sh-surface ring-sh-border absolute left-0 top-full z-20 mt-2 w-56 origin-top-left rounded-lg py-2 shadow-xl ring-1"
+                                    class="bg-sh-surface ring-sh-border absolute top-full left-0 z-20 mt-2 w-56 origin-top-left rounded-lg py-2 shadow-xl ring-1"
                                 >
                                     @if ($crumb->url)
                                         <a
@@ -57,6 +57,7 @@
                                             @if ($crumb->icon)
                                                 @svg($crumb->icon, 'text-sh-fg-secondary size-4')
                                             @endif
+
                                             <span>{{ $crumb->text }}</span>
                                         </a>
                                         <div class="border-sh-border my-1 border-t"></div>
@@ -71,6 +72,7 @@
                                             @if ($link->icon)
                                                 @svg($link->icon, 'size-4')
                                             @endif
+
                                             <span>{{ $link->text }}</span>
                                         </a>
                                     @endforeach

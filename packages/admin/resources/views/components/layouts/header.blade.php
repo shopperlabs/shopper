@@ -19,7 +19,7 @@
         </button>
     @endif
 
-    <div class="flex-1 flex items-center gap-4">
+    <div class="flex flex-1 items-center gap-4">
         <x-shopper::link
             :href="route('shopper.dashboard')"
             class="flex items-center gap-2.5 font-semibold tracking-tight hover:opacity-80"

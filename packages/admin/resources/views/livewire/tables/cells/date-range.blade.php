@@ -4,7 +4,7 @@
 @endphp
 
 <div class="flex shrink-0 items-center gap-3">
-    <p class="text-sm leading-6 text-sh-fg-muted">
+    <p class="text-sh-fg-muted text-sm leading-6">
         @if ($end)
             <span>{{ $start->format('d M, Y') }}</span>
             <span>-</span>

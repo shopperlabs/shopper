@@ -3,9 +3,7 @@
         <livewire:shopper-initialize-wizard />
     </main>
     <div class="hidden min-h-full p-1.5 lg:col-span-2 lg:flex">
-        <div
-            class="relative flex flex-1 overflow-hidden rounded-2xl bg-sh-muted pt-32 pl-32 ring-1 ring-sh-border"
-        >
+        <div class="bg-sh-muted ring-sh-border relative flex flex-1 overflow-hidden rounded-2xl pt-32 pl-32 ring-1">
             <svg
                 class="absolute inset-0 z-10 h-full w-full mask-[radial-gradient(64rem_64rem_at_top,white,transparent)] stroke-gray-200 dark:stroke-gray-900"
                 aria-hidden="true"
@@ -58,39 +56,35 @@
                     "
                 ></div>
             </div>
-            <div class="relative z-20 flex h-full w-full rounded-tl-2xl bg-sh-surface shadow-xl">
+            <div class="bg-sh-surface relative z-20 flex h-full w-full rounded-tl-2xl shadow-xl">
                 <div class="p-8">
                     <x-shopper::brand class="size-10" aria-hidden="true" />
                 </div>
-                <div
-                    class="flex-1 divide-y divide-sh-border border-l border-sh-border pl-4"
-                >
+                <div class="divide-sh-border border-sh-border flex-1 divide-y border-l pl-4">
                     <div class="px-5 py-8">
-                        <h2 class="font-heading text-xl font-bold text-sh-fg">
+                        <h2 class="font-heading text-sh-fg text-xl font-bold">
                             {{ shopper_setting(key: 'name', withCache: false) ?? config('app.name') }}
                         </h2>
                     </div>
                     <div class="space-y-16 px-5 py-8">
                         <div class="flex items-center space-x-3">
                             <x-untitledui-home-line
-                                class="size-6 text-sh-fg-muted"
+                                class="text-sh-fg-muted size-6"
                                 stroke-width="1.5"
                                 aria-hidden="true"
                             />
-                            <span class="h-3.5 w-1/2 animate-pulse rounded-full bg-sh-skeleton"></span>
+                            <span class="bg-sh-skeleton h-3.5 w-1/2 animate-pulse rounded-full"></span>
                         </div>
                         <div>
-                            <h5
-                                class="text-xs leading-5 font-medium tracking-wider text-sh-fg-muted uppercase"
-                            >
+                            <h5 class="text-sh-fg-muted text-xs leading-5 font-medium tracking-wider uppercase">
                                 {{ __('shopper::layout.sidebar.catalog') }}
                             </h5>
                             <ul class="mt-5 space-y-8">
                                 @foreach (range(0, 8) as $value)
                                     <li class="flex animate-pulse items-center space-x-2">
-                                        <div class="h-3 w-3 rounded-full bg-sh-skeleton"></div>
+                                        <div class="bg-sh-skeleton h-3 w-3 rounded-full"></div>
                                         <span
-                                            class="h-3 w-1/2 rounded-full bg-sh-skeleton"
+                                            class="bg-sh-skeleton h-3 w-1/2 rounded-full"
                                             style="width: {{ collect(range(1, 8))->shuffle()->first() * 10 }}%"
                                         ></span>
                                     </li>

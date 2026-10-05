@@ -13,7 +13,7 @@
                             alt="{{ $taxZone->country->translated_name }}"
                             class="size-6 shrink-0 rounded-full object-cover"
                         />
-                        <x-filament::section.heading class="font-heading font-semibold text-sh-fg">
+                        <x-filament::section.heading class="font-heading text-sh-fg font-semibold">
                             {{ $taxZone->display_name }}
                         </x-filament::section.heading>
                     </div>
@@ -37,14 +37,16 @@
                         :content="$taxZone->province_code"
                     />
                 @endif
+
                 <x-shopper::description-list.item
                     icon="phosphor-receipt"
                     :heading="__('shopper::pages/settings/taxes.tax_behavior')"
                 >
                     <x-filament::badge :color="$taxZone->is_tax_inclusive ? 'success' : 'warning'">
-                        {{ $taxZone->is_tax_inclusive
-                            ? __('shopper::pages/settings/taxes.inclusive')
-                            : __('shopper::pages/settings/taxes.exclusive')
+                        {{
+                            $taxZone->is_tax_inclusive
+                                ? __('shopper::pages/settings/taxes.inclusive')
+                                : __('shopper::pages/settings/taxes.exclusive')
                         }}
                     </x-filament::badge>
                 </x-shopper::description-list.item>

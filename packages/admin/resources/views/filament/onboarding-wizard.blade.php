@@ -1,13 +1,13 @@
 @php
     $key = $getKey();
-    $previousAction = $getAction('previous');
-    $nextAction = $getAction('next');
+    $previousAction = $getAction("previous");
+    $nextAction = $getAction("next");
     $steps = $getChildSchema()->getComponents();
 @endphp
 
 <div
     x-load
-    x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('wizard', 'filament/schemas') }}"
+    x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc("wizard", "filament/schemas") }}"
     x-data="wizardSchemaComponent({
                 isSkippable: @js($isSkippable()),
                 isStepPersistedInQueryString: @js($isStepPersistedInQueryString()),
@@ -20,14 +20,15 @@
     wire:ignore.self
     {{
         $attributes
-            ->merge([
-                'id' => $getId(),
-            ], escape: false)
+            ->merge(
+                [
+                    "id" => $getId(),
+                ],
+                escape: false,
+            )
             ->merge($getExtraAttributes(), escape: false)
             ->merge($getExtraAlpineAttributes(), escape: false)
-            ->class([
-                'fi-sc-wizard fi-sc-wizard-onboarding flex flex-col space-y-10',
-            ])
+            ->class(["fi-sc-wizard fi-sc-wizard-onboarding flex flex-col space-y-10"])
     }}
 >
     <input
@@ -81,10 +82,7 @@
                             aria-hidden="true"
                         />
 
-                        <span
-                            x-cloak
-                            x-show="getStepIndex(step) <= {{ $loop->index }}"
-                        >
+                        <span x-cloak x-show="getStepIndex(step) <= {{ $loop->index }}">
                             {{ $loop->index + 1 }}
                         </span>
                     </span>
@@ -94,8 +92,7 @@
                             class="ml-2 text-sm leading-6"
                             x-bind:class="{
                                 'text-sh-fg': getStepIndex(step) > {{ $loop->index }},
-                                'font-medium text-sh-fg':
-                                    getStepIndex(step) === {{ $loop->index }},
+                                'font-medium text-sh-fg': getStepIndex(step) === {{ $loop->index }},
                                 'text-sh-fg-muted': getStepIndex(step) < {{ $loop->index }},
                             }"
                         >
@@ -107,7 +104,7 @@
                 @if (! $loop->last)
                     <div class="ml-5" aria-hidden="true">
                         <x-untitledui-chevron-right
-                            class="size-5 text-sh-fg-muted"
+                            class="text-sh-fg-muted size-5"
                             stroke-width="1.5"
                             aria-hidden="true"
                         />
@@ -123,7 +120,7 @@
         @endforeach
     </div>
 
-    <div class="mt-8 border-t border-dashed border-sh-border pt-10">
+    <div class="border-sh-border mt-8 border-t border-dashed pt-10">
         <div class="flex items-center justify-between space-x-4">
             <div
                 x-cloak

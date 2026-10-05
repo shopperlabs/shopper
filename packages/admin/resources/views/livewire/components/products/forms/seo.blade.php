@@ -18,11 +18,11 @@
         </form>
 
         <div class="max-w-xl">
-            <h4 class="text-sm leading-5 text-sh-fg-secondary">
+            <h4 class="text-sh-fg-secondary text-sm leading-5">
                 {{ __('shopper::words.seo.sub_description') }}
             </h4>
             <div
-                class="mt-5 flex h-auto flex-col overflow-hidden rounded-xl bg-sh-muted p-1 shadow-sm ring-1 ring-sh-border"
+                class="bg-sh-muted ring-sh-border mt-5 flex h-auto flex-col overflow-hidden rounded-xl p-1 shadow-sm ring-1"
             >
                 <div class="flex w-full items-center justify-between p-1.5">
                     <div class="flex items-center space-x-2">
@@ -30,15 +30,9 @@
                         <div class="size-3 rounded-full bg-yellow-500"></div>
                         <div class="bg-success-500 size-3 rounded-full"></div>
                     </div>
-                    <x-untitledui-google-chrome
-                        class="size-5 text-sh-fg-muted"
-                        strike-width="1.5"
-                        aria-hidden="true"
-                    />
+                    <x-untitledui-google-chrome class="text-sh-fg-muted size-5" strike-width="1.5" aria-hidden="true" />
                 </div>
-                <div
-                    class="mt-1 size-full overflow-auto rounded-lg bg-sh-surface p-4 ring-1 ring-sh-border"
-                >
+                <div class="bg-sh-surface ring-sh-border mt-1 size-full overflow-auto rounded-lg p-4 ring-1">
                     <div class="flex flex-col">
                         <h3 class="text-primary-600 dark:text-primary-500 leading-6 font-medium">
                             {{ $data['seo_title'] }}
@@ -46,7 +40,7 @@
                         <span class="text-success-600 dark:text-success-400 mt-1 truncate text-sm leading-5">
                             {{ config('app.url') }}/{your-custom-prefix}/{{ $data['slug'] }}
                         </span>
-                        <p class="text-whitespace-no-wrap mt-1 text-sm leading-5 text-sh-fg-muted">
+                        <p class="text-whitespace-no-wrap text-sh-fg-muted mt-1 text-sm leading-5">
                             {{ $data['seo_description'] }}
                         </p>
                     </div>

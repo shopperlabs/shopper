@@ -18,7 +18,7 @@
             x-transition:leave-end="scale-95 transform opacity-0"
             @click.outside="dropdownOpen = false"
             x-cloak
-            class="absolute top-10 right-2 z-50 w-74 origin-top-right rounded-xl overflow-hidden bg-sh-card shadow-md ring-1 ring-sh-border"
+            class="bg-sh-card ring-sh-border absolute top-10 right-2 z-50 w-74 origin-top-right overflow-hidden rounded-xl shadow-md ring-1"
             x-ref="items"
             role="menu"
             aria-orientation="vertical"
@@ -26,40 +26,42 @@
             tabindex="-1"
         >
             <div>
-                <div class="rounded-b-lg ring-1 ring-sh-border bg-sh-surface shadow-xs">
+                <div class="ring-sh-border bg-sh-surface rounded-b-lg shadow-xs ring-1">
                     <div class="flex items-center gap-3 p-3">
-                        <img class="size-8 rounded-full object-cover" src="{{ $user->picture }}" alt="{{ $user->email }}" />
+                        <img
+                            class="size-8 rounded-full object-cover"
+                            src="{{ $user->picture }}"
+                            alt="{{ $user->email }}"
+                        />
                         <div class="min-w-0">
-                            <p class="truncate text-sm font-medium text-sh-fg">
+                            <p class="text-sh-fg truncate text-sm font-medium">
                                 {{ $user->full_name }}
                             </p>
-                            <p class="truncate text-xs text-sh-fg-muted">
+                            <p class="text-sh-fg-muted truncate text-xs">
                                 {{ $user->email }}
                             </p>
                         </div>
                     </div>
                     <div class="p-1">
                         <x-shopper::dropdown-link :href="route('shopper.profile')">
-                            <x-phosphor-user-circle class="size-5 text-sh-fg-muted" aria-hidden="true" />
+                            <x-phosphor-user-circle class="text-sh-fg-muted size-5" aria-hidden="true" />
                             {{ __('shopper::layout.account_dropdown.personal_account') }}
                         </x-shopper::dropdown-link>
                         @can('system.users')
                             <x-shopper::dropdown-link :href="route('shopper.settings.users')">
-                                <x-phosphor-users class="size-5 text-sh-fg-muted" aria-hidden="true" />
+                                <x-phosphor-users class="text-sh-fg-muted size-5" aria-hidden="true" />
                                 {{ __('shopper::layout.account_dropdown.manage_users') }}
                             </x-shopper::dropdown-link>
                         @endcan
+
                         <div class="mt-1" role="none">
                             <form id="logout-form" action="{{ route('shopper.logout') }}" method="POST">
                                 @csrf
                                 <button
                                     type="submit"
-                                    class="group flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm leading-5 text-sh-fg-secondary hover:bg-sh-muted"
+                                    class="group text-sh-fg-secondary hover:bg-sh-muted flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm leading-5"
                                 >
-                                    <x-phosphor-sign-out
-                                        class="size-5 text-sh-fg-muted"
-                                        aria-hidden="true"
-                                    />
+                                    <x-phosphor-sign-out class="text-sh-fg-muted size-5" aria-hidden="true" />
                                     {{ __('shopper::layout.account_dropdown.sign_out') }}
                                 </button>
                             </form>

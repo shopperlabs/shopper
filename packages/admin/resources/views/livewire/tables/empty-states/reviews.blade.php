@@ -6,7 +6,10 @@
         <ellipse class="fill-primary-500 opacity-[0.08] dark:opacity-[0.16]" cx="180" cy="160" rx="150" ry="120" />
         <ellipse class="fill-primary-600 opacity-10" cx="170" cy="250" rx="74" ry="15" />
 
-        <path class="fill-primary-200" d="M252 92l8.4 17 18.6 2.7-13.5 13.1 3.2 18.5L252 152.6l-16.7 8.7 3.2-18.5-13.5-13.1 18.6-2.7z" />
+        <path
+            class="fill-primary-200"
+            d="M252 92l8.4 17 18.6 2.7-13.5 13.1 3.2 18.5L252 152.6l-16.7 8.7 3.2-18.5-13.5-13.1 18.6-2.7z"
+        />
 
         <rect class="fill-sh-fg" x="116" y="68" width="106" height="182" rx="24" />
         <rect class="fill-primary-50" x="128" y="84" width="82" height="150" rx="12" />
@@ -33,7 +36,10 @@
             <rect class="fill-primary-300" x="10" y="20" width="24" height="4.5" rx="2.25" />
         </g>
 
-        <path class="fill-amber-400" d="M104 196l4.4 9 9.8 1.4-7.1 6.9 1.7 9.7L104 228.6l-8.6 4.4 1.7-9.7-7.1-6.9 9.8-1.4z" />
+        <path
+            class="fill-amber-400"
+            d="M104 196l4.4 9 9.8 1.4-7.1 6.9 1.7 9.7L104 228.6l-8.6 4.4 1.7-9.7-7.1-6.9 9.8-1.4z"
+        />
         <path class="fill-amber-300" d="M238 198l3.6 7.3 8 1.2-5.8 5.6 1.4 8-7.2-3.8-7.2 3.8 1.4-8-5.8-5.6 8-1.2z" />
     </svg>
 </x-shopper::empty-state>
