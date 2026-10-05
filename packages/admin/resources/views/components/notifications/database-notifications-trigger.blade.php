@@ -11,7 +11,7 @@
 
     @if ($unreadNotificationsCount)
         <span
-            class="bg-primary-600 absolute -top-0.5 -right-0.5 inline-flex min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-semibold leading-4 text-white"
+            class="bg-primary-600 absolute -top-0.5 -right-0.5 inline-flex min-w-4 items-center justify-center rounded-full px-1 text-[10px] leading-4 font-semibold text-white"
         >
             {{ $unreadNotificationsCount > 99 ? '99+' : $unreadNotificationsCount }}
         </span>

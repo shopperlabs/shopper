@@ -4,7 +4,7 @@
     <form wire:submit="store" class="mt-10">
         {{ $this->form }}
 
-        <div class="mt-10 border-t border-sh-border pt-10">
+        <div class="border-sh-border mt-10 border-t pt-10">
             <div class="flex justify-end">
                 <x-filament::button type="submit" wire:loading.attr="disabled">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />

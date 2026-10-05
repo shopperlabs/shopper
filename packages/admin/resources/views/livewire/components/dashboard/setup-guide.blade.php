@@ -1,9 +1,9 @@
-<div class="w-full max-w-2xl mx-auto">
+<div class="mx-auto w-full max-w-2xl">
     <div class="text-center">
-        <h1 class="font-heading text-3xl font-bold tracking-tight text-sh-fg">
+        <h1 class="font-heading text-sh-fg text-3xl font-bold tracking-tight">
             {{ __('shopper::pages/dashboard.welcome_message') }}
         </h1>
-        <p class="mt-2 text-base text-sh-fg-muted">
+        <p class="text-sh-fg-muted mt-2 text-base">
             {{ __('shopper::pages/dashboard.welcome_description') }}
         </p>
     </div>
@@ -11,46 +11,50 @@
     <div
         x-data="{
             expandedStep: @js(
-                collect($this->steps)->search(fn ($step) => ! $step['completed']) !== false
-                    ? collect($this->steps)->search(fn ($step) => ! $step['completed'])
-                    : null
-            ),
+                        collect($this->steps)->search(fn ($step) => ! $step['completed']) !== false
+                            ? collect($this->steps)->search(fn ($step) => ! $step['completed'])
+                            : null
+                    ),
         }"
         x-init="$nextTick(() => $el.classList.add('opacity-100', 'translate-y-0'))"
-        class="mt-10 opacity-0 translate-y-4 transition-all duration-500 ease-out"
+        class="mt-10 translate-y-4 opacity-0 transition-all duration-500 ease-out"
     >
         <x-shopper::card class="[&>div:first-of-type]:p-0">
             <x-slot:title>
                 <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
-                        <div class="bg-primary-50 dark:bg-primary-500/10 flex size-10 items-center justify-center rounded-xl">
+                        <div
+                            class="bg-primary-50 dark:bg-primary-500/10 flex size-10 items-center justify-center rounded-xl"
+                        >
                             <x-phosphor-rocket-duotone class="text-primary-500 size-5" aria-hidden="true" />
                         </div>
                         <div>
-                            <h3 class="font-heading text-base font-semibold text-sh-fg">
+                            <h3 class="font-heading text-sh-fg text-base font-semibold">
                                 {{ __('shopper::pages/dashboard.guide.title') }}
                             </h3>
-                            <p class="mt-0.5 text-sm text-sh-fg-muted">
+                            <p class="text-sh-fg-muted mt-0.5 text-sm">
                                 {{ __('shopper::pages/dashboard.guide.description') }}
                             </p>
                         </div>
                     </div>
-                    <span class="text-sm tabular-nums text-sh-fg-muted">
-                        <span class="font-semibold text-sh-fg">{{ $this->completedCount }}</span>
+                    <span class="text-sh-fg-muted text-sm tabular-nums">
+                        <span class="text-sh-fg font-semibold">{{ $this->completedCount }}</span>
                         {{ __('shopper::pages/dashboard.guide.progress', ['total' => $this->totalSteps]) }}
                     </span>
                 </div>
 
-                <div class="mt-5 h-2 overflow-hidden rounded-full bg-sh-muted">
+                <div class="bg-sh-muted mt-5 h-2 overflow-hidden rounded-full">
                     <div
                         class="bg-primary-500 h-full rounded-full transition-all duration-700 ease-out"
-                        style="width: {{ $this->totalSteps > 0 ? round(($this->completedCount / $this->totalSteps) * 100) : 0 }}%"
+                        style="
+                            width: {{ $this->totalSteps > 0 ? round(($this->completedCount / $this->totalSteps) * 100) : 0 }}%;
+                        "
                     ></div>
                 </div>
-            </x-slot:title>
+            </x-slot>
 
             <div>
-                <div class="divide-y divide-sh-border">
+                <div class="divide-sh-border divide-y">
                     @foreach ($this->steps as $index => $step)
                         @can($step['permission'])
                             <div>
@@ -60,43 +64,49 @@
                                     x-on:click="expandedStep = expandedStep === {{ $index }} ? null : {{ $index }}"
                                 >
                                     @if ($step['completed'])
-                                        <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-green-50 ring-1 ring-green-200 dark:bg-green-500/10 dark:ring-green-500/20">
+                                        <span
+                                            class="flex size-8 shrink-0 items-center justify-center rounded-full bg-green-50 ring-1 ring-green-200 dark:bg-green-500/10 dark:ring-green-500/20"
+                                        >
                                             <x-untitledui-check class="size-4 text-green-600 dark:text-green-400" />
                                         </span>
                                     @else
                                         <span
-                                            class="flex size-8 shrink-0 items-center justify-center rounded-full bg-sh-muted ring-1 ring-sh-border transition-colors duration-150"
-                                            x-bind:class="expandedStep === {{ $index }} && 'bg-primary-50 ring-primary-200 dark:bg-primary-500/10 dark:ring-primary-500/20'"
+                                            class="bg-sh-muted ring-sh-border flex size-8 shrink-0 items-center justify-center rounded-full ring-1 transition-colors duration-150"
+                                            x-bind:class="
+                                                expandedStep === {{ $index }} &&
+                                                    'bg-primary-50 ring-primary-200 dark:bg-primary-500/10 dark:ring-primary-500/20'
+                                            "
                                         >
-                                            @svg($step['icon'], 'size-4 text-sh-fg-muted transition-colors duration-150', ['x-bind:class' => "expandedStep === {$index} && 'text-primary-500 dark:text-primary-400'"])
+                                            @svg($step['icon'], 'text-sh-fg-muted size-4 transition-colors duration-150', ['x-bind:class' => "expandedStep === {$index} && 'text-primary-500 dark:text-primary-400'"])
                                         </span>
                                     @endif
 
-                                    <span @class([
-                                    'flex-1 text-sm font-medium transition-colors duration-150',
-                                    'text-sh-fg-muted' => $step['completed'],
-                                    'text-sh-fg-secondary group-hover:text-sh-fg' => ! $step['completed'],
-                                ])>
-                                    <span @class(['line-through decoration-gray-300 dark:decoration-gray-600' => $step['completed']])>
-                                        {{ __('shopper::pages/dashboard.guide.steps.' . $step['key'] . '.title') }}
+                                    <span
+                                        @class([
+                                            'flex-1 text-sm font-medium transition-colors duration-150',
+                                            'text-sh-fg-muted' => $step['completed'],
+                                            'text-sh-fg-secondary group-hover:text-sh-fg' => ! $step['completed'],
+                                        ])
+                                    >
+                                        <span
+                                            @class(['line-through decoration-gray-300 dark:decoration-gray-600' => $step['completed']])
+                                        >
+                                            {{ __('shopper::pages/dashboard.guide.steps.' . $step['key'] . '.title') }}
+                                        </span>
                                     </span>
-                                </span>
 
                                     @if (! $step['completed'])
                                         <x-untitledui-chevron-down
-                                            class="size-4 text-sh-fg-muted transition-transform duration-200 ease-out"
+                                            class="text-sh-fg-muted size-4 transition-transform duration-200 ease-out"
                                             x-bind:class="{ '-rotate-180': expandedStep === {{ $index }} }"
                                         />
                                     @endif
                                 </button>
 
                                 @if (! $step['completed'])
-                                    <div
-                                        x-show="expandedStep === {{ $index }}"
-                                        x-collapse.duration.300ms
-                                    >
+                                    <div x-show="expandedStep === {{ $index }}" x-collapse.duration.300ms>
                                         <div class="px-6 pb-5 pl-18">
-                                            <p class="text-sm leading-relaxed text-sh-fg-muted">
+                                            <p class="text-sh-fg-muted text-sm leading-relaxed">
                                                 {{ __('shopper::pages/dashboard.guide.steps.' . $step['key'] . '.description') }}
                                             </p>
                                             <a
@@ -115,14 +125,14 @@
                     @endforeach
                 </div>
 
-                <div class="flex items-center justify-between border-t border-sh-border px-6 py-3">
-                    <p class="text-sm/4 text-sh-fg-muted">
+                <div class="border-sh-border flex items-center justify-between border-t px-6 py-3">
+                    <p class="text-sh-fg-muted text-sm/4">
                         {{ __('shopper::pages/dashboard.guide.footer_hint') }}
                     </p>
                     <button
                         type="button"
                         wire:click="complete"
-                        class="text-xs font-medium text-sh-fg-muted transition-colors duration-150 hover:text-sh-fg"
+                        class="text-sh-fg-muted hover:text-sh-fg text-xs font-medium transition-colors duration-150"
                     >
                         {{ __('shopper::pages/dashboard.guide.dismiss') }}
                     </button>
@@ -132,7 +142,7 @@
     </div>
 
     <div class="mt-12">
-        <h3 class="text-lg font-heading font-medium text-sh-fg">
+        <h3 class="font-heading text-sh-fg text-lg font-medium">
             {{ __('shopper::pages/dashboard.addons.title') }}
         </h3>
 
@@ -140,7 +150,7 @@
             <a
                 href="https://docs.laravelshopper.dev/v2/addons/stripe"
                 target="_blank"
-                class="group relative overflow-hidden rounded-xl bg-sh-surface p-5 ring-1 ring-sh-border transition-all duration-200 hover:shadow-xs hover:ring-sh-border"
+                class="group bg-sh-surface ring-sh-border hover:ring-sh-border relative overflow-hidden rounded-xl p-5 ring-1 transition-all duration-200 hover:shadow-xs"
             >
                 <div class="flex items-center gap-4">
                     <img
@@ -148,8 +158,8 @@
                         alt="Stripe"
                         class="size-6 shrink-0 rounded-lg"
                     />
-                    <div class="min-w-0 flex-1 flex items-center gap-2">
-                        <h4 class="text-sm font-semibold text-sh-fg">
+                    <div class="flex min-w-0 flex-1 items-center gap-2">
+                        <h4 class="text-sh-fg text-sm font-semibold">
                             {{ __('shopper::pages/dashboard.addons.stripe.title') }}
                         </h4>
                         <x-filament::badge color="sky" size="sm">
@@ -157,38 +167,58 @@
                         </x-filament::badge>
                     </div>
                 </div>
-                <p class="mt-4 text-sm leading-relaxed text-sh-fg-muted">
+                <p class="text-sh-fg-muted mt-4 text-sm leading-relaxed">
                     {{ __('shopper::pages/dashboard.addons.stripe.description') }}
                 </p>
-                <div class="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-sh-fg-secondary transition-colors duration-150 group-hover:text-sh-fg">
+                <div
+                    class="text-sh-fg-secondary group-hover:text-sh-fg mt-2 inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-150"
+                >
                     {{ __('shopper::pages/dashboard.addons.learn_more') }}
-                    <x-untitledui-arrow-narrow-right class="size-3.5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                    <x-untitledui-arrow-narrow-right
+                        class="size-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+                    />
                 </div>
             </a>
 
             <x-shopper::link
                 :href="route('shopper.settings.carriers')"
                 wire:navigate
-                class="group relative overflow-hidden rounded-xl bg-sh-surface p-5 ring-1 ring-sh-border transition-all duration-200 hover:shadow-xs hover:ring-sh-border"
+                class="group bg-sh-surface ring-sh-border hover:ring-sh-border relative overflow-hidden rounded-xl p-5 ring-1 transition-all duration-200 hover:shadow-xs"
             >
                 <div class="flex items-center gap-4">
-                    <div class="flex p-0.5 -space-x-1 overflow-hidden">
-                        <img src="{{ shopper_panel_assets('/images/carriers/ups.svg') }}" alt="UPS" class="inline-block size-6 rounded-full ring-2 ring-white outline -outline-offset-1 outline-black/5 dark:outline-white/10" />
-                        <img src="{{ shopper_panel_assets('/images/carriers/fedex.svg') }}" alt="FedEx" class="inline-block size-6 rounded-full ring-2 ring-white outline -outline-offset-1 outline-black/5 dark:outline-white/10" />
-                        <img src="{{ shopper_panel_assets('/images/carriers/usps.svg') }}" alt="USPS" class="inline-block size-6 rounded-full ring-2 ring-white outline -outline-offset-1 outline-black/5 dark:outline-white/10" />
+                    <div class="flex -space-x-1 overflow-hidden p-0.5">
+                        <img
+                            src="{{ shopper_panel_assets('/images/carriers/ups.svg') }}"
+                            alt="UPS"
+                            class="inline-block size-6 rounded-full ring-2 ring-white outline -outline-offset-1 outline-black/5 dark:outline-white/10"
+                        />
+                        <img
+                            src="{{ shopper_panel_assets('/images/carriers/fedex.svg') }}"
+                            alt="FedEx"
+                            class="inline-block size-6 rounded-full ring-2 ring-white outline -outline-offset-1 outline-black/5 dark:outline-white/10"
+                        />
+                        <img
+                            src="{{ shopper_panel_assets('/images/carriers/usps.svg') }}"
+                            alt="USPS"
+                            class="inline-block size-6 rounded-full ring-2 ring-white outline -outline-offset-1 outline-black/5 dark:outline-white/10"
+                        />
                     </div>
                     <div class="min-w-0 flex-1">
-                        <h4 class="text-sm font-semibold text-sh-fg">
+                        <h4 class="text-sh-fg text-sm font-semibold">
                             {{ __('shopper::pages/dashboard.addons.carriers.title') }}
                         </h4>
                     </div>
                 </div>
-                <p class="mt-4 text-sm leading-relaxed text-sh-fg-muted">
+                <p class="text-sh-fg-muted mt-4 text-sm leading-relaxed">
                     {{ __('shopper::pages/dashboard.addons.carriers.description') }}
                 </p>
-                <div class="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-sh-fg-secondary transition-colors duration-150 group-hover:text-sh-fg">
+                <div
+                    class="text-sh-fg-secondary group-hover:text-sh-fg mt-2 inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-150"
+                >
                     {{ __('shopper::pages/dashboard.addons.configure') }}
-                    <x-untitledui-arrow-narrow-right class="size-3.5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                    <x-untitledui-arrow-narrow-right
+                        class="size-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+                    />
                 </div>
             </x-shopper::link>
         </div>

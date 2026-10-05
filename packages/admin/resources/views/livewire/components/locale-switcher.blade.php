@@ -6,7 +6,7 @@
         aria-label="{{ __('shopper::layout.locale_switcher') }}"
     >
         <img
-            src="{{ url(shopper()->prefix().'/images/flags/'.($locales[$locale]['flag'] ?? 'gb').'.svg') }}"
+            src="{{ url(shopper()->prefix() . '/images/flags/' . ($locales[$locale]['flag'] ?? 'gb') . '.svg') }}"
             class="size-6 rounded-full object-cover"
             alt="{{ $locale }}"
         />
@@ -40,7 +40,7 @@
                 role="menuitem"
             >
                 <img
-                    src="{{ url(shopper()->prefix().'/images/flags/'.$config['flag'].'.svg') }}"
+                    src="{{ url(shopper()->prefix() . '/images/flags/' . $config['flag'] . '.svg') }}"
                     class="size-5 rounded-full object-cover"
                     alt="{{ $code }}"
                 />

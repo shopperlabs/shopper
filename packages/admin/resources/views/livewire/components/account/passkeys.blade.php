@@ -22,7 +22,7 @@
                                 'bg-sh-fg-muted' => $this->passkeys->isEmpty(),
                             ])
                         ></div>
-                        <h3 class="text-base leading-6 font-medium text-sh-fg">
+                        <h3 class="text-sh-fg text-base leading-6 font-medium">
                             {{ trans_choice('shopper::pages/auth.account.passkeys_count', $this->passkeys->count(), ['count' => $this->passkeys->count()]) }}
                         </h3>
                     </div>
@@ -36,21 +36,24 @@
                             </span>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm leading-5 text-sh-fg-muted">
+                            <p class="text-sh-fg-muted text-sm leading-5">
                                 {{ __('shopper::pages/auth.account.passkeys_secure') }}
                             </p>
                         </div>
                     </div>
 
                     @if ($this->passkeys->isNotEmpty())
-                        <ul class="divide-y divide-sh-border border-t border-sh-border" role="list">
+                        <ul class="divide-sh-border border-sh-border divide-y border-t" role="list">
                             @foreach ($this->passkeys as $passkey)
-                                <li class="flex items-center justify-between gap-x-4 py-4" wire:key="passkey-{{ $passkey->getKey() }}">
+                                <li
+                                    class="flex items-center justify-between gap-x-4 py-4"
+                                    wire:key="passkey-{{ $passkey->getKey() }}"
+                                >
                                     <div class="min-w-0">
-                                        <p class="truncate text-sm font-medium text-sh-fg">
+                                        <p class="text-sh-fg truncate text-sm font-medium">
                                             {{ $passkey->name }}
                                         </p>
-                                        <p class="mt-1 text-xs leading-5 text-sh-fg-muted">
+                                        <p class="text-sh-fg-muted mt-1 text-xs leading-5">
                                             {{ __('shopper::pages/auth.account.passkey_added', ['date' => $passkey->created_at->diffForHumans()]) }}
                                             &middot;
                                             {{
@@ -68,7 +71,7 @@
                 </div>
 
                 <div class="flex items-center justify-between gap-x-4 py-2">
-                    <p x-cloak x-show="! supported" class="text-sm leading-5 text-sh-fg-muted">
+                    <p x-cloak x-show="! supported" class="text-sh-fg-muted text-sm leading-5">
                         {{ __('shopper::pages/auth.account.passkeys_unsupported') }}
                     </p>
                     <div class="ml-auto">

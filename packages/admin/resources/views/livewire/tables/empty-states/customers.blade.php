@@ -14,8 +14,25 @@
 
         <path class="fill-primary-500" d="M256 96c-5-8-19-6-19 5 0 9 19 19 19 19s19-10 19-19c0-11-14-13-19-5z" />
 
-        <rect class="fill-sh-surface stroke-sh-border" x="128" y="120" width="124" height="98" rx="14" transform="rotate(-7 190 169)" stroke-width="1.5" />
-        <rect class="fill-sh-surface stroke-sh-border" x="118" y="122" width="128" height="100" rx="14" stroke-width="1.5" />
+        <rect
+            class="fill-sh-surface stroke-sh-border"
+            x="128"
+            y="120"
+            width="124"
+            height="98"
+            rx="14"
+            transform="rotate(-7 190 169)"
+            stroke-width="1.5"
+        />
+        <rect
+            class="fill-sh-surface stroke-sh-border"
+            x="118"
+            y="122"
+            width="128"
+            height="100"
+            rx="14"
+            stroke-width="1.5"
+        />
         <rect class="fill-primary-100" x="134" y="138" width="50" height="50" rx="11" />
         <circle class="fill-primary-400" cx="159" cy="157" r="11" />
         <path class="fill-primary-300" d="M142 187a17 17 0 0 1 34 0z" />

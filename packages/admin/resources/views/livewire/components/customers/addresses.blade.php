@@ -15,10 +15,13 @@
         @else
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($this->shippingAddresses as $address)
-                    @include('shopper::livewire.components.customers._address-card', [
-                        'address' => $address,
-                        'isDefault' => $address->shipping_default,
-                    ])
+                    @include(
+                        'shopper::livewire.components.customers._address-card',
+                        [
+                            'address' => $address,
+                            'isDefault' => $address->shipping_default,
+                        ]
+                    )
                 @endforeach
             </div>
         @endif
@@ -40,10 +43,13 @@
         @else
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($this->billingAddresses as $address)
-                    @include('shopper::livewire.components.customers._address-card', [
-                        'address' => $address,
-                        'isDefault' => $address->billing_default,
-                    ])
+                    @include(
+                        'shopper::livewire.components.customers._address-card',
+                        [
+                            'address' => $address,
+                            'isDefault' => $address->billing_default,
+                        ]
+                    )
                 @endforeach
             </div>
         @endif

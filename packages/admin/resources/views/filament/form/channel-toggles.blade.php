@@ -24,14 +24,16 @@
             },
         }"
     >
-        <div class="divide-y divide-sh-border">
+        <div class="divide-sh-border divide-y">
             @foreach ($channels as $channel)
                 @php
                     $optionDisabled = $isDisabled || $isOptionDisabled($channel->id, $channel->name);
                     $logo = \Shopper\Core\Channel\Facades\Channels::logoFor($channel->driver);
                 @endphp
 
-                <div class="flex items-center justify-between gap-4 py-3 first:pt-0 last:pb-0 {{ $optionDisabled ? 'opacity-60' : '' }}">
+                <div
+                    class="{{ $optionDisabled ? 'opacity-60' : '' }} flex items-center justify-between gap-4 py-3 first:pt-0 last:pb-0"
+                >
                     <span class="flex min-w-0 items-center gap-3">
                         @if ($logo)
                             <img src="{{ $logo }}" alt="" class="size-8 shrink-0 rounded-lg object-cover" />

@@ -29,15 +29,13 @@
     $isError = $isFailed || $isReturned;
 @endphp
 
-<x-shopper::slideover-card class="divide-y divide-sh-border">
+<x-shopper::slideover-card class="divide-sh-border divide-y">
     <div class="h-0 flex-1 overflow-y-auto py-4">
         <div class="px-4">
             <div class="flex items-start justify-between">
                 <div class="space-y-1">
                     <div class="flex items-center gap-3">
-                        <h2 class="font-heading text-xl font-bold text-sh-fg">
-                            SHP-{{ $this->shipment->id }}
-                        </h2>
+                        <h2 class="font-heading text-sh-fg text-xl font-bold">SHP-{{ $this->shipment->id }}</h2>
                         @if ($this->shipment->status)
                             <x-filament::badge
                                 size="md"
@@ -48,7 +46,7 @@
                             </x-filament::badge>
                         @endif
                     </div>
-                    <p class="flex items-center gap-1 text-sm text-sh-fg-muted">
+                    <p class="text-sh-fg-muted flex items-center gap-1 text-sm">
                         @if ($this->shipment->shipped_at)
                             <span>
                                 {{ __('shopper::forms.label.shipped_at') }}
@@ -56,6 +54,7 @@
                             </span>
                             <span class="text-sh-fg-muted">&middot;</span>
                         @endif
+
                         <span>
                             {{ __('shopper::pages/orders.single') }}
                             <x-shopper::link
@@ -71,12 +70,12 @@
             </div>
 
             @if ($shippingAddress || $carrier)
-                <div class="mt-6 rounded-lg bg-sh-muted p-4">
+                <div class="bg-sh-muted mt-6 rounded-lg p-4">
                     <div class="flex items-center justify-between">
                         @if ($shippingAddress)
                             <div class="flex items-start gap-2">
-                                <div class="mt-1 size-2 shrink-0 rounded-full bg-sh-fg-muted"></div>
-                                <p class="text-sm text-sh-fg-secondary">
+                                <div class="bg-sh-fg-muted mt-1 size-2 shrink-0 rounded-full"></div>
+                                <p class="text-sh-fg-secondary text-sm">
                                     {{ $shippingAddress->street_address }},
                                     {{ $shippingAddress->city }}
                                     {{ $shippingAddress->postal_code }}
@@ -85,7 +84,9 @@
                         @endif
 
                         @if ($carrier)
-                            <div class="flex shrink-0 items-center gap-2 rounded-md border border-sh-border px-2.5 py-1.5">
+                            <div
+                                class="border-sh-border flex shrink-0 items-center gap-2 rounded-md border px-2.5 py-1.5"
+                            >
                                 @if ($carrierLogoUrl)
                                     <img
                                         src="{{ $carrierLogoUrl }}"
@@ -93,7 +94,8 @@
                                         alt="{{ $carrier->name }}"
                                     />
                                 @endif
-                                <span class="text-xs font-medium text-sh-fg-secondary">
+
+                                <span class="text-sh-fg-secondary text-xs font-medium">
                                     {{ $carrier->name }}
                                 </span>
                             </div>
@@ -103,7 +105,7 @@
             @endif
 
             <!-- Stepper -->
-            <div class="mt-6 flex items-center justify-center rounded-lg bg-sh-muted px-6 py-5">
+            <div class="bg-sh-muted mt-6 flex items-center justify-center rounded-lg px-6 py-5">
                 <div class="flex items-center gap-1">
                     @foreach ($steps as $index => $step)
                         @php
@@ -111,57 +113,63 @@
                         @endphp
 
                         <div class="flex flex-col items-center gap-1.5">
-                            <div @class([
-                                'flex size-9 items-center justify-center rounded-full',
-                                'bg-sh-fg text-sh-body' => $isCompleted && ! $isError,
-                                'bg-sh-muted-strong text-sh-fg-muted' => ! $isCompleted && ! $isError,
-                                'bg-danger-100 text-danger-500 dark:bg-danger-500/10 dark:text-danger-400' => $isError,
-                            ])>
+                            <div
+                                @class([
+                                    'flex size-9 items-center justify-center rounded-full',
+                                    'bg-sh-fg text-sh-body' => $isCompleted && ! $isError,
+                                    'bg-sh-muted-strong text-sh-fg-muted' => ! $isCompleted && ! $isError,
+                                    'bg-danger-100 text-danger-500 dark:bg-danger-500/10 dark:text-danger-400' => $isError,
+                                ])
+                            >
                                 <x-filament::icon :icon="$step->getIcon()" class="size-4" aria-hidden="true" />
                             </div>
-                            <span @class([
-                                'text-[10px] font-medium',
-                                'text-sh-fg' => $isCompleted && ! $isError,
-                                'text-sh-fg-muted' => ! $isCompleted && ! $isError,
-                                'text-danger-500 dark:text-danger-400' => $isError,
-                            ])>
+                            <span
+                                @class([
+                                    'text-[10px] font-medium',
+                                    'text-sh-fg' => $isCompleted && ! $isError,
+                                    'text-sh-fg-muted' => ! $isCompleted && ! $isError,
+                                    'text-danger-500 dark:text-danger-400' => $isError,
+                                ])
+                            >
                                 {{ $step->getLabel() }}
                             </span>
                         </div>
 
                         @if (! $loop->last)
-                            <div @class([
-                                'mb-5 h-0.5 w-8',
-                                'bg-sh-fg' => $currentIndex >= 0 && $index < $currentIndex && ! $isError,
-                                'bg-sh-muted-strong' => $currentIndex < 0 || $index >= $currentIndex || $isError,
-                            ])></div>
+                            <div
+                                @class([
+                                    'mb-5 h-0.5 w-8',
+                                    'bg-sh-fg' => $currentIndex >= 0 && $index < $currentIndex && ! $isError,
+                                    'bg-sh-muted-strong' => $currentIndex < 0 || $index >= $currentIndex || $isError,
+                                ])
+                            ></div>
                         @endif
                     @endforeach
                 </div>
             </div>
 
-            <div class="mt-6 grid grid-cols-3 gap-4 border-b border-sh-border pb-6">
+            <div class="border-sh-border mt-6 grid grid-cols-3 gap-4 border-b pb-6">
                 <div>
-                    <dt class="text-xs font-medium text-sh-fg-muted">
+                    <dt class="text-sh-fg-muted text-xs font-medium">
                         {{ __('shopper::forms.label.shipped_at') }}
                     </dt>
-                    <dd class="mt-1 text-sm font-medium text-sh-fg">
+                    <dd class="text-sh-fg mt-1 text-sm font-medium">
                         {{ $this->shipment->shipped_at?->translatedFormat('j M Y H:i') ?? '—' }}
                     </dd>
                 </div>
                 <div>
-                    <dt class="text-xs font-medium text-sh-fg-muted">
+                    <dt class="text-sh-fg-muted text-xs font-medium">
                         {{ __('shopper::forms.label.received_at') }}
                     </dt>
-                    <dd class="mt-1 text-sm font-medium text-sh-fg">
+                    <dd class="text-sh-fg mt-1 text-sm font-medium">
                         {{ $this->shipment->received_at?->translatedFormat('j M Y H:i') ?? '—' }}
                     </dd>
                 </div>
                 <div>
-                    <dt class="text-xs font-medium text-sh-fg-muted">
+                    <dt class="text-sh-fg-muted text-xs font-medium">
                         {{ __('shopper::forms.label.tracking_number') }}
                     </dt>
-                    <dd class="mt-1 text-sm font-medium text-sh-fg">
+                    <dd class="text-sh-fg mt-1 text-sm font-medium">
                         @if ($this->shipment->tracking_number)
                             @if ($this->shipment->tracking_url)
                                 <a
@@ -182,8 +190,8 @@
             </div>
 
             @if ($this->shipment->items->isNotEmpty())
-                <div class="mt-6 border-b border-sh-border pb-6">
-                    <h3 class="text-sm font-medium text-sh-fg">
+                <div class="border-sh-border mt-6 border-b pb-6">
+                    <h3 class="text-sh-fg text-sm font-medium">
                         {{ __('shopper::pages/products.menu') }}
                     </h3>
                     <div class="mt-3 space-y-2.5">
@@ -195,7 +203,7 @@
                                         src="{{ $item->product->getThumbnailUrl() }}"
                                         alt="{{ $item->name }}"
                                     />
-                                    <span class="text-sm text-sh-fg-secondary">
+                                    <span class="text-sh-fg-secondary text-sm">
                                         {{ $item->name }} &times; {{ $item->quantity }}
                                     </span>
                                 </div>
@@ -218,7 +226,7 @@
             <!-- Timeline -->
             <div class="mt-6">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-sm font-medium text-sh-fg">
+                    <h3 class="text-sh-fg text-sm font-medium">
                         {{ __('shopper::pages/orders.shipment.timeline') }}
                     </h3>
                     @if (count($this->shipment->allowedTransitions()) > 0)
@@ -235,16 +243,16 @@
 
                 <div class="mt-4 pl-2">
                     @if ($this->events->isEmpty())
-                        <p class="text-sm text-sh-fg-muted">
+                        <p class="text-sh-fg-muted text-sm">
                             {{ __('shopper::pages/orders.shipment.no_events') }}
                         </p>
                     @else
-                        <ol class="relative border-l border-sh-border">
+                        <ol class="border-sh-border relative border-l">
                             @foreach ($this->events as $event)
                                 <li class="mb-6 ml-6 last:mb-0">
                                     <span
                                         @class([
-                                            'absolute -left-3 flex size-6 items-center justify-center rounded-full ring-4 ring-sh-surface',
+                                            'ring-sh-surface absolute -left-3 flex size-6 items-center justify-center rounded-full ring-4',
                                             'bg-blue-100 dark:bg-blue-900' => $event->status->getColor() === 'info',
                                             'bg-primary-100 dark:bg-primary-900' => $event->status->getColor() === 'primary',
                                             'bg-indigo-100 dark:bg-indigo-900' => $event->status->getColor() === 'indigo',
@@ -257,25 +265,26 @@
                                     >
                                         <x-filament::icon
                                             :icon="$event->status->getIcon()"
-                                            class="size-3.5 text-sh-fg-secondary"
+                                            class="text-sh-fg-secondary size-3.5"
                                             aria-hidden="true"
                                         />
                                     </span>
                                     <div class="flex items-center gap-2">
-                                        <h4 class="text-sm font-medium text-sh-fg">
+                                        <h4 class="text-sh-fg text-sm font-medium">
                                             {{ $event->status->getLabel() }}
                                         </h4>
-                                        <time class="text-xs text-sh-fg-muted">
+                                        <time class="text-sh-fg-muted text-xs">
                                             {{ $event->occurred_at->translatedFormat('j M Y H:i') }}
                                         </time>
                                     </div>
                                     @if ($event->location)
-                                        <p class="mt-0.5 text-xs text-sh-fg-muted">
+                                        <p class="text-sh-fg-muted mt-0.5 text-xs">
                                             {{ $event->location }}
                                         </p>
                                     @endif
+
                                     @if ($event->description)
-                                        <p class="mt-1 text-sm text-sh-fg-secondary">
+                                        <p class="text-sh-fg-secondary mt-1 text-sm">
                                             {{ $event->description }}
                                         </p>
                                     @endif

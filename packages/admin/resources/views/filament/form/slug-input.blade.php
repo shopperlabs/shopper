@@ -60,7 +60,7 @@
                     >
                         <x-filament::icon icon="untitledui-refresh-cw-02" class="size-4" />
                     </button>
-                </x-slot:suffix>
+                </x-slot>
             @endif
         </x-filament::input.wrapper>
     </div>

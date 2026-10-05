@@ -8,22 +8,13 @@
     $hidden = max(0, $count - $displayed->count());
     $toggleShowAll = $isProducts ? 'toggleShowAllProducts' : 'toggleShowAllCustomers';
     $exceptIdsJson = json_encode($items->pluck('id')->all());
-    $pickerComponent = $isProducts
-        ? 'shopper-slide-overs.products-picker'
-        : 'shopper-slide-overs.customers-picker';
+    $pickerComponent = $isProducts ? 'shopper-slide-overs.products-picker' : 'shopper-slide-overs.customers-picker';
     $pickerAbility = $this->discount->exists ? 'discounts.edit' : 'discounts.create';
-    $pickerEvent = $isProducts
-        ? 'shopper.discount.products.selected'
-        : 'shopper.discount.customers.selected';
-    $label = $isProducts
-        ? __('shopper::pages/discounts.select_products')
-        : __('shopper::pages/discounts.select_customers');
-    $addLabel = $isProducts
-        ? __('shopper::pages/discounts.products_picker.button')
-        : __('shopper::pages/discounts.customers_picker.button');
-    $emptyLabel = $isProducts
-        ? __('shopper::pages/discounts.products_picker.empty_field')
-        : __('shopper::pages/discounts.customers_picker.empty_field');
+    $pickerEvent = $isProducts ? 'shopper.discount.products.selected' : 'shopper.discount.customers.selected';
+    $label = $isProducts ? __('shopper::pages/discounts.select_products') : __('shopper::pages/discounts.select_customers');
+    $picker = $isProducts ? 'products_picker' : 'customers_picker';
+    $addLabel = __("shopper::pages/discounts.{$picker}.button");
+    $emptyLabel = __("shopper::pages/discounts.{$picker}.empty_field");
     $removeMethod = $isProducts ? 'removeProductFromDiscount' : 'removeCustomerFromDiscount';
 @endphp
 
@@ -47,7 +38,9 @@
     </div>
 
     @if ($items->isEmpty())
-        <div class="border-sh-border bg-sh-surface flex items-center justify-center rounded-lg border border-dashed px-4 py-6">
+        <div
+            class="border-sh-border bg-sh-surface flex items-center justify-center rounded-lg border border-dashed px-4 py-6"
+        >
             <p class="text-sh-fg-muted text-sm">
                 {{ $emptyLabel }}
             </p>
@@ -56,19 +49,18 @@
         <ul role="list" class="mt-3 flex flex-wrap gap-1.5">
             @foreach ($displayed as $item)
                 @php
-                    $thumbnail = $isProducts
-                        ? $item->getThumbnailUrl()
-                        : $item->picture;
+                    $thumbnail = $isProducts ? $item->getThumbnailUrl() : $item->picture;
                     $name = $isProducts ? $item->name : $item->full_name;
                 @endphp
+
                 <li
                     wire:key="discount-{{ $type }}-{{ $item->id }}"
-                    class="bg-sh-surface ring-sh-border inline-flex min-w-0 max-w-64 items-center gap-2 rounded-full py-1.5 pl-1.5 pr-2 ring-1"
+                    class="bg-sh-surface ring-sh-border inline-flex max-w-64 min-w-0 items-center gap-2 rounded-full py-1.5 pr-2 pl-1.5 ring-1"
                 >
                     <img
                         src="{{ $thumbnail }}"
                         alt=""
-                        class="size-5 shrink-0 object-cover rounded-full"
+                        class="size-5 shrink-0 rounded-full object-cover"
                         aria-hidden="true"
                     />
                     <span class="text-sh-fg min-w-0 flex-1 truncate text-xs font-medium" title="{{ $name }}">

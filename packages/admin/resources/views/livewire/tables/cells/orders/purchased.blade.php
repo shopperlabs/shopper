@@ -3,12 +3,12 @@
 @endphp
 
 @if ($firstItem === null)
-    <span class="text-sm text-sh-fg-muted">—</span>
+    <span class="text-sh-fg-muted text-sm">—</span>
 @else
     @php
-        $label = $order->items->count() > 1
-            ? $firstItem->name.' + '.__('shopper::words.number_more', ['number' => $order->items->count() - 1])
-            : $firstItem->name;
+        $others = $order->items->count() - 1;
+        $more = $others > 0 ? ' + ' . __('shopper::words.number_more', ['number' => $others]) : '';
+        $label = $firstItem->name . $more;
         $isTruncated = mb_strlen($label) > 50;
     @endphp
 
@@ -21,7 +21,7 @@
 
         <span
             @if ($isTruncated) x-data x-tooltip="{{ \Illuminate\Support\Js::from($label) }}" @endif
-            class="max-w-[50ch] truncate font-medium text-sh-fg-secondary"
+            class="text-sh-fg-secondary max-w-[50ch] truncate font-medium"
         >
             {{ $label }}
         </span>

@@ -15,16 +15,10 @@
 
     <div class="mt-10">
         <x-filament::tabs class="sh-tabs-underline">
-            <x-filament::tabs.item
-                :active="$activeTab === 'role'"
-                wire:click="$set('activeTab', 'role')"
-            >
+            <x-filament::tabs.item :active="$activeTab === 'role'" wire:click="$set('activeTab', 'role')">
                 {{ __('shopper::forms.label.role') }}
             </x-filament::tabs.item>
-            <x-filament::tabs.item
-                :active="$activeTab === 'users'"
-                wire:click="$set('activeTab', 'users')"
-            >
+            <x-filament::tabs.item :active="$activeTab === 'users'" wire:click="$set('activeTab', 'users')">
                 {{ __('shopper::words.users') }}
             </x-filament::tabs.item>
             <x-filament::tabs.item

@@ -9,7 +9,13 @@
         <path class="fill-primary-300" d="M84 102l5 11 11 5-11 5-5 11-5-11-11-5 11-5z" />
         <path class="fill-amber-400" d="M300 120l3.4 7.4 7.4 3.4-7.4 3.4-3.4 7.4-3.4-7.4-7.4-3.4 7.4-3.4z" />
 
-        <path class="stroke-primary-300" d="M196 150c34-14 46 22 70 12" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="1 10" />
+        <path
+            class="stroke-primary-300"
+            d="M196 150c34-14 46 22 70 12"
+            stroke-width="3.5"
+            stroke-linecap="round"
+            stroke-dasharray="1 10"
+        />
 
         <path class="fill-primary-300" d="M110 152l36-15 36 15-36 15z" />
         <path class="fill-primary-500" d="M110 152l36 15v42l-36-15z" />

@@ -6,15 +6,12 @@
 <li data-sort-item data-id="{{ $category->id }}">
     <div
         @class([
-            'flex items-center shadow-xm mb-px rounded-xl border border-sh-border bg-sh-surface px-2 py-3',
+            'shadow-xm border-sh-border bg-sh-surface mb-px flex items-center rounded-xl border px-2 py-3',
             'rounded-tl-none border-t-0' => $isFirstChild ?? false,
         ])
     >
         <div class="flex flex-1 items-center gap-2" data-sort-handle>
-            <x-untitledui-dots-grid
-                class="size-5 cursor-grab text-sh-fg-muted"
-                aria-hidden="true"
-            />
+            <x-untitledui-dots-grid class="text-sh-fg-muted size-5 cursor-grab" aria-hidden="true" />
             <div
                 @class([
                     'size-2 shrink-0 rounded-full',
@@ -22,7 +19,7 @@
                     'bg-sh-fg-muted' => ! $category->is_enabled,
                 ])
             ></div>
-            <span class="text-sm font-medium text-sh-fg">
+            <span class="text-sh-fg text-sm font-medium">
                 {{ $category->name }}
             </span>
 
@@ -30,21 +27,21 @@
                 <button
                     type="button"
                     aria-label="{{ __('shopper::words.collapse') }}"
-                    class="rounded p-0.5 text-sh-fg-muted hover:text-sh-fg-secondary"
-                    x-on:click="$el.closest('[data-sort-item]').querySelector('[data-children]').classList.toggle('hidden')"
+                    class="text-sh-fg-muted hover:text-sh-fg-secondary rounded p-0.5"
+                    x-on:click="
+                        $el.closest('[data-sort-item]')
+                            .querySelector('[data-children]')
+                            .classList.toggle('hidden')
+                    "
                 >
                     <x-untitledui-chevron-down class="size-4" aria-hidden="true" />
                 </button>
             @endif
         </div>
-        <span class="ml-auto max-w-48 shrink-0 truncate text-xs text-sh-fg-muted">/{{ $category->slug }}</span>
+        <span class="text-sh-fg-muted ml-auto max-w-48 shrink-0 truncate text-xs">/{{ $category->slug }}</span>
     </div>
 
-    <ul
-        data-children
-        x-data="nestedSortable({ parentId: '{{ $category->id }}' })"
-        class="pl-6"
-    >
+    <ul data-children x-data="nestedSortable({ parentId: '{{ $category->id }}' })" class="pl-6">
         @foreach ($category->children->sortBy('position') as $child)
             <x-shopper::category-tree-item :category="$child" :depth="$depth + 1" :is-first-child="$loop->first" />
         @endforeach

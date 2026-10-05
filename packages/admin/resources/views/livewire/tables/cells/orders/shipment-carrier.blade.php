@@ -7,7 +7,8 @@
     @if ($logoUrl)
         <img src="{{ $logoUrl }}" class="size-6 shrink-0 rounded-md object-cover" alt="{{ $carrier?->name }}" />
     @endif
-    <span class="text-sm text-sh-fg-secondary">
+
+    <span class="text-sh-fg-secondary text-sm">
         {{ $carrier?->name ?? '—' }}
     </span>
 </div>

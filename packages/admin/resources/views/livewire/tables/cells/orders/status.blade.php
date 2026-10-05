@@ -1,9 +1,5 @@
 @if ($record->status === \Shopper\Core\Enum\OrderStatus::Cancelled || $record->status === \Shopper\Core\Enum\OrderStatus::Archived)
-    <x-filament::badge
-        size="sm"
-        :color="$record->status->getColor()"
-        :icon="$record->status->getIcon()"
-    >
+    <x-filament::badge size="sm" :color="$record->status->getColor()" :icon="$record->status->getIcon()">
         {{ $record->status->getLabel() }}
     </x-filament::badge>
 @else

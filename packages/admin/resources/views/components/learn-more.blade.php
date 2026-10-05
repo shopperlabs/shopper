@@ -1,4 +1,4 @@
-@if(! app()->isProduction())
+@if (! app()->isProduction())
     <div class="my-10 flex justify-center text-center">
         <div class="bg-sh-card ring-sh-border flex items-center overflow-hidden rounded-lg shadow ring-1">
             <div class="border-sh-border flex shrink-0 items-center justify-center border-r p-3">

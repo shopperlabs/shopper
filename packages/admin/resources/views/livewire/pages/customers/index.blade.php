@@ -28,7 +28,7 @@
                     </span>
                     <x-phosphor-users-duotone class="text-sh-fg-secondary size-5" aria-hidden="true" />
                 </div>
-            </x-slot:title>
+            </x-slot>
 
             <p class="font-heading text-sh-fg text-3xl font-bold">
                 {{ \Illuminate\Support\Number::abbreviate($stats['total']) }}
@@ -47,7 +47,7 @@
                     </span>
                     <x-phosphor-user-circle-plus-duotone class="text-sh-fg-secondary size-5" aria-hidden="true" />
                 </div>
-            </x-slot:title>
+            </x-slot>
 
             <p class="font-heading text-sh-fg text-3xl font-bold">
                 {{ $hasCustomers ? \Illuminate\Support\Number::abbreviate($stats['new_count']) : '—' }}
@@ -73,7 +73,7 @@
                     </span>
                     <x-phosphor-user-check-duotone class="text-sh-fg-secondary size-5" aria-hidden="true" />
                 </div>
-            </x-slot:title>
+            </x-slot>
 
             <p class="font-heading text-sh-fg text-3xl font-bold">
                 {{ $hasCustomers ? \Illuminate\Support\Number::abbreviate($stats['active_count']) : '—' }}
@@ -82,8 +82,8 @@
             <p class="text-sh-fg-muted mt-3 text-xs">
                 @if ($hasCustomers)
                     <span class="font-medium text-emerald-600 dark:text-emerald-400">
-                            {{ $stats['active_percent'] }}%
-                        </span>
+                        {{ $stats['active_percent'] }}%
+                    </span>
                     {{ __('shopper::pages/customers.stats.active_subtitle') }}
                 @else
                     {{ __('shopper::pages/customers.stats.active_empty') }}
@@ -99,16 +99,18 @@
                     </span>
                     <x-phosphor-money-duotone class="text-sh-fg-secondary size-5" aria-hidden="true" />
                 </div>
-            </x-slot:title>
+            </x-slot>
 
             <p class="font-heading text-sh-fg text-3xl font-bold">
                 {{ $hasCustomers ? shopper_money_format($stats['avg_ltv']) : '—' }}
             </p>
 
             <p class="text-sh-fg-muted mt-3 text-xs">
-                {{ $hasCustomers
-                    ? __('shopper::pages/customers.stats.avg_ltv_subtitle')
-                    : __('shopper::pages/customers.stats.avg_ltv_empty') }}
+                {{
+                    $hasCustomers
+                        ? __('shopper::pages/customers.stats.avg_ltv_subtitle')
+                        : __('shopper::pages/customers.stats.avg_ltv_empty')
+                }}
             </p>
         </x-shopper::card>
     </div>

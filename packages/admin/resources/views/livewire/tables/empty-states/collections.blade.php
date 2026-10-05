@@ -19,7 +19,15 @@
 
         <path class="fill-primary-600" d="M118 108h54l10 16h-64z" />
         <rect class="fill-primary-500" x="118" y="120" width="150" height="112" rx="14" />
-        <rect class="fill-sh-surface stroke-sh-border" x="150" y="118" width="94" height="64" rx="9" stroke-width="1.5" />
+        <rect
+            class="fill-sh-surface stroke-sh-border"
+            x="150"
+            y="118"
+            width="94"
+            height="64"
+            rx="9"
+            stroke-width="1.5"
+        />
         <rect class="fill-primary-100" x="160" y="128" width="36" height="44" rx="6" />
         <path class="fill-primary-400" d="M170 138l5-4 4 4 4-4 5 4-3 5v17h-12v-17z" />
         <rect class="fill-sh-border" x="204" y="132" width="30" height="7" rx="3.5" />

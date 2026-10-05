@@ -1,7 +1,7 @@
-<x-shopper::slideover-card class="divide-y divide-sh-border">
+<x-shopper::slideover-card class="divide-sh-border divide-y">
     <header class="p-4">
         <div class="flex items-start justify-between">
-            <h2 class="text-lg font-medium text-sh-fg">
+            <h2 class="text-sh-fg text-lg font-medium">
                 {{ __('shopper::pages/products.modals.variants.add') }}
             </h2>
             <x-livewire-slide-over::close-icon />

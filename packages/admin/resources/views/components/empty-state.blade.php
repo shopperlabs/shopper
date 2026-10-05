@@ -14,10 +14,10 @@
         {{ $slot }}
     </div>
 
-    <h3 class="font-heading mt-8 text-xl font-semibold text-sh-fg">
+    <h3 class="font-heading text-sh-fg mt-8 text-xl font-semibold">
         {{ $title }}
     </h3>
-    <p class="mt-2 max-w-sm text-base text-sh-fg-muted">
+    <p class="text-sh-fg-muted mt-2 max-w-sm text-base">
         {{ $content }}
     </p>
 
@@ -32,11 +32,7 @@
                     {{ $button }}
                 </x-filament::button>
             @elseif ($panel)
-                <x-filament::button
-                    type="button"
-                    wire:click="$dispatch('openPanel', {{ $panel }})"
-                    class="mt-6"
-                >
+                <x-filament::button type="button" wire:click="$dispatch('openPanel', {{ $panel }})" class="mt-6">
                     {{ $button }}
                 </x-filament::button>
             @endif

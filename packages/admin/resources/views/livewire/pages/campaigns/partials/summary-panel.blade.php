@@ -25,9 +25,7 @@
 
     if ($summary['starts_at']) {
         $start = \Illuminate\Support\Carbon::parse($summary['starts_at'])->translatedFormat('Y-m-d');
-        $end = $summary['ends_at']
-            ? \Illuminate\Support\Carbon::parse($summary['ends_at'])->translatedFormat('Y-m-d')
-            : null;
+        $end = $summary['ends_at'] ? \Illuminate\Support\Carbon::parse($summary['ends_at'])->translatedFormat('Y-m-d') : null;
         $rows[] = [
             'label' => __('shopper::pages/campaigns.summary.rows.schedule'),
             'value' => $end ? $start . ' → ' . $end : $start,
@@ -37,10 +35,10 @@
 
 <x-shopper::card>
     <x-slot:title>
-        <span class="text-sh-fg-secondary text-xs font-semibold uppercase tracking-wide">
+        <span class="text-sh-fg-secondary text-xs font-semibold tracking-wide uppercase">
             {{ __('shopper::pages/campaigns.summary.title') }}
         </span>
-    </x-slot:title>
+    </x-slot>
 
     @if (! $hasContent && ! $campaign?->exists)
         <p class="text-sh-fg-muted text-sm">
@@ -69,14 +67,19 @@
                 </dt>
                 <dd class="min-w-0 flex-1">
                     @if ($campaign?->exists)
-                        <x-filament::badge :color="$campaign->status->getColor()" :icon="$campaign->status->getIcon()">
+                        <x-filament::badge
+                            :color="$campaign->status->getColor()"
+                            :icon="$campaign->status->getIcon()"
+                        >
                             {{ $campaign->status->getLabel() }}
                         </x-filament::badge>
                     @else
                         <x-filament::badge :color="$summary['is_active'] ? 'success' : 'gray'">
-                            {{ $summary['is_active']
-                                ? __('shopper::pages/campaigns.summary.visibility_public')
-                                : __('shopper::pages/campaigns.summary.visibility_hidden') }}
+                            {{
+                                $summary['is_active']
+                                    ? __('shopper::pages/campaigns.summary.visibility_public')
+                                    : __('shopper::pages/campaigns.summary.visibility_hidden')
+                            }}
                         </x-filament::badge>
                     @endif
                 </dd>

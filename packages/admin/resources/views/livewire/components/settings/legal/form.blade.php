@@ -1,9 +1,5 @@
 <div class="lg:grid lg:grid-cols-3 lg:gap-x-12 lg:gap-y-6">
-    <x-shopper::section-heading
-        class="lg:col-span-1"
-        :title="$this->heading"
-        :description="$this->description"
-    />
+    <x-shopper::section-heading class="lg:col-span-1" :title="$this->heading" :description="$this->description" />
 
     <form class="mt-5 max-w-3xl lg:col-span-2" wire:submit="store">
         {{ $this->form }}

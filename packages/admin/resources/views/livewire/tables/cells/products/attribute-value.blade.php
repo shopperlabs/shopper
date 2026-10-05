@@ -9,17 +9,15 @@
             $attributeValue = $record->value;
         @endphp
 
-        <span class="inline-flex items-center gap-2 text-sm leading-6 text-sh-fg-muted">
+        <span class="text-sh-fg-muted inline-flex items-center gap-2 text-sm leading-6">
             @if ($swatch)
                 <img
                     src="{{ $swatch }}"
                     alt="{{ $attributeValue->value }}"
-                    class="size-6 rounded-md object-cover ring-1 ring-sh-border ring-inset"
+                    class="ring-sh-border size-6 rounded-md object-cover ring-1 ring-inset"
                 />
             @elseif ($attributeValue->attribute->type === \Shopper\Core\Enum\FieldType::ColorPicker)
-                <span
-                    class="inline-flex items-center rounded-full p-1 ring-1 ring-sh-border ring-inset"
-                >
+                <span class="ring-sh-border inline-flex items-center rounded-full p-1 ring-1 ring-inset">
                     <x-shopper::icons.contrast
                         class="size-5"
                         style="color: {{ $attributeValue->key }}"
@@ -31,11 +29,11 @@
             {{ $attributeValue->value }}
         </span>
     @elseif ($swatch)
-        <span class="inline-flex items-center gap-2 text-sm leading-6 text-sh-fg-muted">
+        <span class="text-sh-fg-muted inline-flex items-center gap-2 text-sm leading-6">
             <img
                 src="{{ $swatch }}"
                 alt="{{ $record->attribute_custom_value }}"
-                class="size-6 rounded-md object-cover ring-1 ring-sh-border ring-inset"
+                class="ring-sh-border size-6 rounded-md object-cover ring-1 ring-inset"
             />
             {{ $record->attribute_custom_value }}
         </span>

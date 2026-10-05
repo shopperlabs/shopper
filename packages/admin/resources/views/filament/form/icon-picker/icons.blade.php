@@ -1,5 +1,5 @@
 @props([
-    'withTooltips' => true,
+    "withTooltips" => true,
 ])
 
 <div

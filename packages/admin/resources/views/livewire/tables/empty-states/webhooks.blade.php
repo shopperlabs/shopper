@@ -16,9 +16,20 @@
             <path d="M112 174h56M112 192h40" />
         </g>
 
-        <path class="stroke-primary-600" d="M212 172c34 0 34-42 62-46" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 12" />
+        <path
+            class="stroke-primary-600"
+            d="M212 172c34 0 34-42 62-46"
+            stroke-width="6"
+            stroke-linecap="round"
+            stroke-dasharray="2 12"
+        />
         <circle class="fill-amber-400" cx="282" cy="122" r="10" />
-        <path class="stroke-primary-300" d="M296 100a34 34 0 0 1 10 22M268 100a34 34 0 0 0-10 22" stroke-width="6" stroke-linecap="round" />
+        <path
+            class="stroke-primary-300"
+            d="M296 100a34 34 0 0 1 10 22M268 100a34 34 0 0 0-10 22"
+            stroke-width="6"
+            stroke-linecap="round"
+        />
 
         <path class="fill-primary-300" d="M78 92l5 11 11 5-11 5-5 11-5-11-11-5 11-5z" />
         <path class="fill-amber-400" d="M236 226l3.4 7.4 7.4 3.4-7.4 3.4-3.4 7.4-3.4-7.4-7.4-3.4 7.4-3.4z" />

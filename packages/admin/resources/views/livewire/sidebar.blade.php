@@ -23,7 +23,7 @@
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
             @click="$store.sidebar.close()"
-            class="fixed inset-0 z-40 bg-gray-950/50 backdrop-blur-xs/75"
+            class="backdrop-blur-xs/75 fixed inset-0 z-40 bg-gray-950/50"
         ></div>
 
         <!-- Sidebar + Close button container -->

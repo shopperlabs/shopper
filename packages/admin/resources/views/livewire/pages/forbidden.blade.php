@@ -1,21 +1,20 @@
-<x-shopper::container class="flex flex-1 min-h-full flex-col items-center justify-center py-24">
-    <div class="flex flex-col justify-center items-center">
-
-        <div class="bg-sh-muted rounded-full p-1 ring-1 ring-sh-border">
-            <div class="bg-sh-surface rounded-full ring-1 ring-sh-border shadow space-y-2 p-2 flex items-center justify-center">
+<x-shopper::container class="flex min-h-full flex-1 flex-col items-center justify-center py-24">
+    <div class="flex flex-col items-center justify-center">
+        <div class="bg-sh-muted ring-sh-border rounded-full p-1 ring-1">
+            <div
+                class="bg-sh-surface ring-sh-border flex items-center justify-center space-y-2 rounded-full p-2 shadow ring-1"
+            >
                 <x-phosphor-shield-check-duotone class="size-8" aria-hidden="true" />
             </div>
         </div>
 
-        <p class="mt-6 font-semibold uppercase tracking-widest text-sh-fg-muted">
-            403
-        </p>
+        <p class="text-sh-fg-muted mt-6 font-semibold tracking-widest uppercase">403</p>
 
-        <h1 class="mt-2 text-3xl font-bold font-heading text-sh-fg">
+        <h1 class="font-heading text-sh-fg mt-2 text-3xl font-bold">
             {{ __('shopper::errors.403.title') }}
         </h1>
 
-        <p class="mt-3 max-w-md text-center text-base text-sh-fg-muted">
+        <p class="text-sh-fg-muted mt-3 max-w-md text-center text-base">
             {{ __('shopper::errors.403.description') }}
         </p>
 

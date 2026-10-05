@@ -1,18 +1,18 @@
 @props([
-    'menu',
+    "menu",
 ])
 
 @php
     $url = $menu->url();
-    $isCurrent = $url && request()->is(trim(parse_url($url, PHP_URL_PATH), '/') . '*');
+    $isCurrent = $url && request()->is(trim(parse_url($url, PHP_URL_PATH), "/") . "*");
 @endphp
 
 <a
-    href="{{ $url ?? '#' }}"
+    href="{{ $url ?? "#" }}"
     @class([
-        'border-b-[3px] px-1 py-4 text-sm font-medium whitespace-nowrap select-none',
-        'current border-primary-500 text-primary-600 dark:text-primary-500' => $isCurrent,
-        'text-sh-fg-muted hover:border-sh-border hover:text-sh-fg-secondary border-transparent' => ! $isCurrent,
+        "border-b-[3px] px-1 py-4 text-sm font-medium whitespace-nowrap select-none",
+        "current border-primary-500 text-primary-600 dark:text-primary-500" => $isCurrent,
+        "text-sh-fg-muted hover:border-sh-border hover:text-sh-fg-secondary border-transparent" => ! $isCurrent,
     ])
     @if ($isCurrent)
         aria-current="page"
@@ -33,7 +33,7 @@
             >
                 <circle cx="4" cy="4" r="3" />
             </svg>
-            {{ __('shopper::words.soon') }}
+            {{ __("shopper::words.soon") }}
         </span>
     @endif
 </a>

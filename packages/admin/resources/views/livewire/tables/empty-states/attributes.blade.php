@@ -17,7 +17,15 @@
             <circle class="fill-sh-surface" cx="257" cy="106" r="5" />
         </g>
 
-        <rect class="fill-sh-surface stroke-sh-border" x="104" y="104" width="152" height="110" rx="16" stroke-width="1.5" />
+        <rect
+            class="fill-sh-surface stroke-sh-border"
+            x="104"
+            y="104"
+            width="152"
+            height="110"
+            rx="16"
+            stroke-width="1.5"
+        />
         <rect class="fill-primary-100" x="120" y="120" width="64" height="10" rx="5" />
         <circle class="fill-primary-200" cx="130" cy="156" r="11" />
         <circle class="fill-primary-300" cx="158" cy="156" r="11" />

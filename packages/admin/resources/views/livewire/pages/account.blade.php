@@ -1,8 +1,5 @@
 <x-shopper::container class="space-y-5 py-5">
-    <x-shopper::heading
-        :title="__('shopper::pages/auth.account.title')"
-        class="border-b border-sh-border pb-5"
-    />
+    <x-shopper::heading :title="__('shopper::pages/auth.account.title')" class="border-sh-border border-b pb-5" />
 
     {{ shopper()->getRenderHook(\Shopper\View\LayoutRenderHook::ACCOUNT_START) }}
 

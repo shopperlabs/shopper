@@ -61,7 +61,7 @@
                 >
                     <x-filament::icon icon="untitledui-minus" class="size-4" />
                 </button>
-            </x-slot:prefix>
+            </x-slot>
 
             <x-filament::input
                 type="number"
@@ -72,7 +72,7 @@
                 :step="$step"
                 :disabled="$isDisabled"
                 :placeholder="$placeholder"
-                class="text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                class="[appearance:textfield] text-center [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 :attributes="\Filament\Support\prepare_inherited_attributes($getExtraInputAttributeBag())"
             />
 
@@ -86,7 +86,7 @@
                 >
                     <x-filament::icon icon="untitledui-plus" class="size-4" />
                 </button>
-            </x-slot:suffix>
+            </x-slot>
         </x-filament::input.wrapper>
     </div>
 </x-dynamic-component>

@@ -19,13 +19,13 @@
             </x-slot>
         </x-shopper::heading>
 
-        <p class="mt-2 max-w-2xl text-sm text-sh-fg-secondary">
+        <p class="text-sh-fg-secondary mt-2 max-w-2xl text-sm">
             {{ __('shopper::pages/settings/appearance.description') }}
         </p>
 
-        <div class="mt-8 border-b border-sh-border">
+        <div class="border-sh-border mt-8 border-b">
             <nav class="-mb-px flex gap-6" aria-label="Tabs">
-                <span class="border-b-2 border-sh-accent px-1 pb-3 text-sm font-medium text-sh-fg">
+                <span class="border-sh-accent text-sh-fg border-b-2 px-1 pb-3 text-sm font-medium">
                     {{ __('shopper::pages/settings/appearance.themes') }}
                 </span>
             </nav>
@@ -36,15 +36,19 @@
                 <button
                     type="button"
                     x-on:click="apply(@js($theme->id))"
-                    x-bind:class="selected === @js($theme->id) ? 'ring-2 ring-sh-accent bg-sh-muted' : 'ring-1 ring-transparent hover:bg-sh-muted'"
-                    class="group rounded-xl p-1.5 text-left transition focus:outline-none focus-visible:ring-2 focus-visible:ring-sh-accent"
+                    x-bind:class="
+                        selected === @js($theme->id)
+                            ? 'ring-2 ring-sh-accent bg-sh-muted'
+                            : 'ring-1 ring-transparent hover:bg-sh-muted'
+                    "
+                    class="group focus-visible:ring-sh-accent rounded-xl p-1.5 text-left transition focus:outline-none focus-visible:ring-2"
                 >
                     <x-shopper::theme-preview :$theme />
 
                     <div class="px-1 pt-2 pb-1 text-center">
-                        <p class="truncate text-sm font-medium text-sh-fg">
+                        <p class="text-sh-fg truncate text-sm font-medium">
                             {{ $theme->name }}
-                            <span class="text-xs font-normal text-sh-fg-muted">
+                            <span class="text-sh-fg-muted text-xs font-normal">
                                 {{ __('shopper::pages/settings/appearance.by') }} {{ $theme->author }}
                             </span>
                         </p>

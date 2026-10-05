@@ -1,10 +1,7 @@
-<x-shopper::card
-    class="divide-y divide-sh-border ring-sh-border"
-    aria-hidden="true"
->
+<x-shopper::card class="divide-sh-border ring-sh-border divide-y" aria-hidden="true">
     <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
-            <x-shopper::skeleton class="size-6 rounded-full shrink-0" aria-hidden="true" />
+            <x-shopper::skeleton class="size-6 shrink-0 rounded-full" aria-hidden="true" />
             <x-shopper::skeleton class="h-2 w-20" aria-hidden="true" />
         </div>
         <x-shopper::skeleton class="h-3 w-20" aria-hidden="true" />

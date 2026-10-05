@@ -11,6 +11,7 @@
             $prevCustomer = $this->prevCustomer;
             $nextCustomer = $this->nextCustomer;
         @endphp
+
         <div class="lg:flex lg:items-center lg:justify-between">
             <div class="min-w-0 flex-1">
                 <div class="flex items-center gap-4">
@@ -29,9 +30,11 @@
                                 :icon="$isActive ? 'untitledui-check-verified-02' : 'untitledui-user-x-02'"
                                 size="sm"
                             >
-                                {{ $isActive
-                                    ? __('shopper::pages/customers.header.active')
-                                    : __('shopper::pages/customers.header.inactive') }}
+                                {{
+                                    $isActive
+                                        ? __('shopper::pages/customers.header.active')
+                                        : __('shopper::pages/customers.header.inactive')
+                                }}
                             </x-filament::badge>
                             <span aria-hidden="true" class="text-sh-fg-muted">·</span>
                             <span>
@@ -49,9 +52,11 @@
                                 @if ($stats['last_order_at'])
                                     <span aria-hidden="true" class="text-sh-fg-muted">·</span>
                                     <span>
-                                        {{ __('shopper::pages/customers.header.last_order', [
-                                            'time' => $stats['last_order_at']->diffForHumans(),
-                                        ]) }}
+                                        {{
+                                            __('shopper::pages/customers.header.last_order', [
+                                                'time' => $stats['last_order_at']->diffForHumans(),
+                                            ])
+                                        }}
                                     </span>
                                 @endif
                             @endif
@@ -67,7 +72,7 @@
                         @if ($prevCustomer) wire:click="goToCustomer({{ $prevCustomer->id }})" @endif
                         type="button"
                         @class([
-                            'focus:shadow-outline-primary focus:border-primary-300 relative inline-flex items-center rounded-l-lg border border-sh-border px-2 py-2 text-sm font-medium text-sh-fg-muted transition duration-150 ease-in-out hover:text-sh-fg-muted focus:z-10 focus:outline-none',
+                            'focus:shadow-outline-primary focus:border-primary-300 border-sh-border text-sh-fg-muted hover:text-sh-fg-muted relative inline-flex items-center rounded-l-lg border px-2 py-2 text-sm font-medium transition duration-150 ease-in-out focus:z-10 focus:outline-none',
                             'bg-sh-muted disabled:cursor-not-allowed disabled:opacity-50' => ! $prevCustomer,
                             'bg-sh-surface' => $prevCustomer,
                         ])
@@ -80,7 +85,7 @@
                         @if ($nextCustomer) wire:click="goToCustomer({{ $nextCustomer->id }})" @endif
                         type="button"
                         @class([
-                            'focus:shadow-outline-primary focus:border-primary-300 relative -ml-px inline-flex items-center rounded-r-lg border border-sh-border px-2 py-2 text-sm font-medium text-sh-fg-muted transition duration-150 ease-in-out hover:text-sh-fg-muted focus:z-10 focus:outline-none',
+                            'focus:shadow-outline-primary focus:border-primary-300 border-sh-border text-sh-fg-muted hover:text-sh-fg-muted relative -ml-px inline-flex items-center rounded-r-lg border px-2 py-2 text-sm font-medium transition duration-150 ease-in-out focus:z-10 focus:outline-none',
                             'bg-sh-muted disabled:cursor-not-allowed disabled:opacity-50' => ! $nextCustomer,
                             'bg-sh-surface' => $nextCustomer,
                         ])
@@ -92,7 +97,6 @@
                 </span>
             </div>
         </div>
-
     </x-shopper::container>
 
     {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_HEADER_AFTER) }}
@@ -117,7 +121,7 @@
                 </x-filament::tabs>
             </div>
 
-            <div class="px-4 lg:pl-6 lg:pr-0">
+            <div class="px-4 lg:pr-0 lg:pl-6">
                 {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_CONTENT_BEFORE) }}
 
                 <div x-show="currentTab === 'profile'">
@@ -138,16 +142,13 @@
             {{ shopper()->getRenderHook(\Shopper\View\CustomerRenderHook::SHOW_SIDEBAR_BEFORE) }}
 
             <x-shopper::card class="[&>div:first-of-type]:p-0">
-                <div class="divide-y divide-sh-border">
+                <div class="divide-sh-border divide-y">
                     <section class="space-y-3 p-4">
                         <h4 class="text-sh-fg text-sm font-semibold">
                             {{ __('shopper::pages/customers.details.title') }}
                         </h4>
                         <dl class="space-y-3 text-sm">
-                            <div
-                                class="flex items-center justify-between gap-3"
-                                x-data="{ copied: false }"
-                            >
+                            <div class="flex items-center justify-between gap-3" x-data="{ copied: false }">
                                 <dt class="text-sh-fg-secondary">
                                     {{ __('shopper::pages/customers.details.id') }}
                                 </dt>
@@ -157,9 +158,9 @@
                                         type="button"
                                         class="text-sh-fg-muted hover:text-sh-fg transition"
                                         x-on:click="
-                                            navigator.clipboard.writeText('{{ $customer->id }}');
-                                            copied = true;
-                                            setTimeout(() => copied = false, 1500);
+                                            navigator.clipboard.writeText('{{ $customer->id }}')
+                                            copied = true
+                                            setTimeout(() => (copied = false), 1500)
                                         "
                                         :aria-label="copied
                                             ? '{{ __('shopper::pages/customers.details.copied') }}'
@@ -187,10 +188,15 @@
                                     {{ __('shopper::pages/customers.details.email_status') }}
                                 </dt>
                                 <dd>
-                                    <x-filament::badge :color="$customer->email_verified_at ? 'success' : 'warning'" size="sm">
-                                        {{ $customer->email_verified_at
-                                            ? __('shopper::pages/customers.details.email_verified')
-                                            : __('shopper::pages/customers.details.email_unverified') }}
+                                    <x-filament::badge
+                                        :color="$customer->email_verified_at ? 'success' : 'warning'"
+                                        size="sm"
+                                    >
+                                        {{
+                                            $customer->email_verified_at
+                                                ? __('shopper::pages/customers.details.email_verified')
+                                                : __('shopper::pages/customers.details.email_unverified')
+                                        }}
                                     </x-filament::badge>
                                 </dd>
                             </div>
@@ -200,9 +206,11 @@
                                 </dt>
                                 <dd>
                                     <x-filament::badge :color="$customer->opt_in ? 'success' : 'gray'" size="sm">
-                                        {{ $customer->opt_in
-                                            ? __('shopper::pages/customers.details.marketing_on')
-                                            : __('shopper::pages/customers.details.marketing_off') }}
+                                        {{
+                                            $customer->opt_in
+                                                ? __('shopper::pages/customers.details.marketing_on')
+                                                : __('shopper::pages/customers.details.marketing_off')
+                                        }}
                                     </x-filament::badge>
                                 </dd>
                             </div>
@@ -211,10 +219,15 @@
                                     {{ __('shopper::pages/customers.profile.two_factor') }}
                                 </dt>
                                 <dd>
-                                    <x-filament::badge :color="$customer->store_two_factor_secret ? 'success' : 'gray'" size="sm">
-                                        {{ $customer->store_two_factor_secret
-                                            ? __('shopper::pages/customers.details.two_factor_on')
-                                            : __('shopper::pages/customers.details.two_factor_off') }}
+                                    <x-filament::badge
+                                        :color="$customer->store_two_factor_secret ? 'success' : 'gray'"
+                                        size="sm"
+                                    >
+                                        {{
+                                            $customer->store_two_factor_secret
+                                                ? __('shopper::pages/customers.details.two_factor_on')
+                                                : __('shopper::pages/customers.details.two_factor_off')
+                                        }}
                                     </x-filament::badge>
                                 </dd>
                             </div>

@@ -3,11 +3,11 @@
 
     {{ shopper()->getRenderHook(\Shopper\View\CollectionRenderHook::EDIT_FORM_BEFORE) }}
 
-    <form wire:submit="store" class="mt-8 border-t border-sh-border pt-10">
+    <form wire:submit="store" class="border-sh-border mt-8 border-t pt-10">
         <div class="space-y-10">
             {{ $this->form }}
 
-            <div class="border-t border-sh-border py-8">
+            <div class="border-sh-border border-t py-8">
                 <div class="flex justify-end">
                     <x-filament::button type="submit" wire.loading.attr="disabled">
                         <x-shopper::loader wire:loading wire:target="store" class="text-white" />

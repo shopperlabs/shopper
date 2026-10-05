@@ -10,14 +10,14 @@
     {{ $attributes->twMerge(['class' => 'flex items-start space-x-3']) }}
 >
     @if ($icon)
-        @svg($icon, 'mt-0.5 size-5 text-sh-fg-muted', ['aria-hidden' => true])
+        @svg($icon, 'text-sh-fg-muted mt-0.5 size-5', ['aria-hidden' => true])
     @endif
 
     <div class="flex-1">
-        <dt class="text-sm leading-6 font-medium text-sh-fg">
+        <dt class="text-sh-fg text-sm leading-6 font-medium">
             {{ $heading }}
         </dt>
-        <dd class="mt-1 text-sm text-sh-fg-muted">
+        <dd class="text-sh-fg-muted mt-1 text-sm">
             @if ($content)
                 {{ $content }}
             @else

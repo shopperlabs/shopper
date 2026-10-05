@@ -12,7 +12,7 @@
         <span class="text-sh-fg truncate text-sm leading-5 font-medium">
             {{ $user->full_name }}
         </span>
-        @if ($showsCurrentUserBadge() && $user->id === shopper()->auth()->id())
+        @if ($showsCurrentUserBadge() &&$user->id ===shopper()->auth()->id())
             <x-filament::badge color="gray" size="sm">
                 {{ __('shopper::words.me') }}
             </x-filament::badge>

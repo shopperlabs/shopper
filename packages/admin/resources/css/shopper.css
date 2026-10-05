@@ -25,4 +25,4 @@
 @source '../../../../vendor/jaocero/radio-deck/resources/views';
 @source '../../../../vendor/laravelcm/livewire-slide-overs/resources/views';
 
-@source inline("max-w-{md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl}");
+@source inline('max-w-{md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl}');

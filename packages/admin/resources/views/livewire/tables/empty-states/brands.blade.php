@@ -21,6 +21,9 @@
         <path class="fill-primary-600" d="M150 168h60l-12 50-18-14-18 14z" />
         <rect class="fill-primary-500" x="136" y="86" width="88" height="88" rx="22" />
         <rect class="fill-primary-400" x="150" y="100" width="60" height="60" rx="15" />
-        <path class="fill-sh-surface opacity-90" d="M180 112l6.8 13.8 15.2 2.2-11 10.7 2.6 15.1L180 146.6l-13.6 7.2 2.6-15.1-11-10.7 15.2-2.2z" />
+        <path
+            class="fill-sh-surface opacity-90"
+            d="M180 112l6.8 13.8 15.2 2.2-11 10.7 2.6 15.1L180 146.6l-13.6 7.2 2.6-15.1-11-10.7 15.2-2.2z"
+        />
     </svg>
 </x-shopper::empty-state>

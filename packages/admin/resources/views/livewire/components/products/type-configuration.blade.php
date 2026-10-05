@@ -9,7 +9,7 @@
             x-show.transition.out.opacity.duration.1500ms="shown"
             x-transition:leave.opacity.duration.1500ms
             style="display: none"
-            class="text-sm text-sh-fg-muted"
+            class="text-sh-fg-muted text-sm"
         >
             {{ __('shopper::notifications.saved') }}
         </p>

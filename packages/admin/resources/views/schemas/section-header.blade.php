@@ -10,8 +10,11 @@
 <section class="fi-section fi-section-not-contained">
     <header class="fi-section-header">
         {{
-            \Filament\Support\generate_icon_html($icon, attributes: (new \Illuminate\View\ComponentAttributeBag)
-                ->color(IconComponent::class, $getIconColor()), size: $getIconSize() ?? IconSize::Large)
+            \Filament\Support\generate_icon_html(
+                $icon,
+                attributes: (new \Illuminate\View\ComponentAttributeBag())->color(IconComponent::class, $getIconColor()),
+                size: $getIconSize() ?? IconSize::Large,
+            )
         }}
 
         <div class="fi-section-header-text-ctn">

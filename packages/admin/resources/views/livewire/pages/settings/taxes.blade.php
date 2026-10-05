@@ -10,7 +10,7 @@
                 </x-filament::button>
             </x-slot>
         </x-shopper::heading>
-        <p class="text-sm text-sh-fg-muted">
+        <p class="text-sh-fg-muted text-sm">
             {{ __('shopper::pages/settings/taxes.description') }}
         </p>
     </div>
@@ -18,19 +18,20 @@
     <div class="mt-8 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-6">
         <aside class="lg:sticky lg:top-4 lg:self-start">
             <x-shopper::card class="[&_.sh-card-content]:p-0 [&>div:first-of-type]:p-0">
-                <div class="divide-y divide-sh-border">
+                <div class="divide-sh-border divide-y">
                     @forelse ($this->taxZones as $taxZone)
                         @php
                             $isSelected = (int) $currentTaxZoneId === (int) $taxZone->id;
                         @endphp
+
                         <button
                             type="button"
                             wire:key="tax-zone-{{ $taxZone->id }}"
                             wire:click="$set('currentTaxZoneId', {{ $taxZone->id }})"
                             @class([
                                 'group flex w-full items-start gap-4 border-l-2 p-4 text-left transition',
-                                'border-l-gray-900 bg-sh-muted dark:border-l-white' => $isSelected,
-                                'border-l-transparent hover:bg-sh-muted' => ! $isSelected,
+                                'bg-sh-muted border-l-gray-900 dark:border-l-white' => $isSelected,
+                                'hover:bg-sh-muted border-l-transparent' => ! $isSelected,
                             ])
                         >
                             <img
@@ -41,18 +42,22 @@
 
                             <div class="min-w-0 flex-1 space-y-1.5">
                                 <div class="flex items-center gap-x-2">
-                                    <span class="text-sm font-semibold text-sh-fg">
+                                    <span class="text-sh-fg text-sm font-semibold">
                                         {{ $taxZone->display_name }}
                                     </span>
-                                    <x-filament::badge size="sm" :color="$taxZone->is_tax_inclusive ? 'success' : 'warning'">
-                                        {{ $taxZone->is_tax_inclusive
-                                            ? __('shopper::pages/settings/taxes.inclusive')
-                                            : __('shopper::pages/settings/taxes.exclusive')
+                                    <x-filament::badge
+                                        size="sm"
+                                        :color="$taxZone->is_tax_inclusive ? 'success' : 'warning'"
+                                    >
+                                        {{
+                                            $taxZone->is_tax_inclusive
+                                                ? __('shopper::pages/settings/taxes.inclusive')
+                                                : __('shopper::pages/settings/taxes.exclusive')
                                         }}
                                     </x-filament::badge>
                                 </div>
                                 @if ($taxZone->province_code)
-                                    <p class="text-xs text-sh-fg-muted">
+                                    <p class="text-sh-fg-muted text-xs">
                                         {{ $taxZone->province_code }}
                                     </p>
                                 @endif

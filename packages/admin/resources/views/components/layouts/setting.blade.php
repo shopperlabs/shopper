@@ -1,11 +1,11 @@
 @props([
-    'title' => null,
+    "title" => null,
 ])
 
 @php
     $buckets = resolve(\Shopper\Navigation\Setting\SettingManager::class)->grouped();
-    $allItems = $buckets->flatMap(fn (array $bucket) => $bucket['items']);
-    $navLabel = __('shopper::pages/settings/global.menu');
+    $allItems = $buckets->flatMap(fn (array $bucket) => $bucket["items"]);
+    $navLabel = __("shopper::pages/settings/global.menu");
 @endphp
 
 <x-shopper::layouts.app :title="$title">
@@ -20,7 +20,7 @@
                         $permission = $item->permission();
                     @endphp
 
-                    @if ($permission && ! auth()->user()?->can($permission))
+                    @if ($permission &&! auth()->user()?->can($permission))
                         @continue
                     @endif
 
@@ -31,35 +31,35 @@
             <nav class="hidden space-y-6 px-5 py-6 lg:block" aria-label="{{ $navLabel }}">
                 @foreach ($buckets as $bucket)
                     <div>
-                        @if ($bucket['label'])
+                        @if ($bucket["label"])
                             <h3 class="text-sh-fg-muted px-3 text-xs font-semibold tracking-wider uppercase">
-                                {{ $bucket['label'] }}
+                                {{ $bucket["label"] }}
                             </h3>
                         @endif
 
-                        <ul @class(['space-y-0.5', 'mt-2' => $bucket['label']])>
-                            @foreach ($bucket['items'] as $item)
+                        <ul @class(["space-y-0.5", "mt-2" => $bucket["label"]])>
+                            @foreach ($bucket["items"] as $item)
                                 @php
                                     $permission = $item->permission();
                                 @endphp
 
-                                @if ($permission && ! auth()->user()?->can($permission))
+                                @if ($permission &&! auth()->user()?->can($permission))
                                     @continue
                                 @endif
 
                                 @php
                                     $url = $item->url();
-                                    $path = $url ? trim(parse_url($url, PHP_URL_PATH) ?? '', '/') : null;
-                                    $isCurrent = $path !== null && $path !== '' && request()->is($path . '*');
+                                    $path = $url ? trim(parse_url($url, PHP_URL_PATH) ?? "", "/") : null;
+                                    $isCurrent = $path !== null && $path !== "" && request()->is($path . "*");
                                 @endphp
 
                                 <li>
                                     <a
-                                        href="{{ $url ?? '#' }}"
+                                        href="{{ $url ?? "#" }}"
                                         @class([
-                                            'group flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium transition',
-                                            'bg-sh-settings-sidebar-hover text-sh-fg' => $isCurrent,
-                                            'text-sh-fg-secondary hover:bg-sh-settings-sidebar-hover hover:text-sh-fg' => ! $isCurrent,
+                                            "group flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium transition",
+                                            "bg-sh-settings-sidebar-hover text-sh-fg" => $isCurrent,
+                                            "text-sh-fg-secondary hover:bg-sh-settings-sidebar-hover hover:text-sh-fg" => ! $isCurrent,
                                         ])
                                         @if ($isCurrent)
                                             aria-current="page"
@@ -69,16 +69,16 @@
                                         <x-filament::icon
                                             :icon="$item->icon()"
                                             @class([
-                                                'size-5 shrink-0',
-                                                'text-sh-fg' => $isCurrent,
-                                                'text-sh-fg-muted group-hover:text-sh-fg-secondary' => ! $isCurrent,
+                                                "size-5 shrink-0",
+                                                "text-sh-fg" => $isCurrent,
+                                                "text-sh-fg-muted group-hover:text-sh-fg-secondary" => ! $isCurrent,
                                             ])
                                         />
                                         <span class="truncate">{{ $item->name() }}</span>
 
                                         @if (! $url)
                                             <x-filament::badge size="sm" color="gray" class="ml-auto">
-                                                {{ __('shopper::words.soon') }}
+                                                {{ __("shopper::words.soon") }}
                                             </x-filament::badge>
                                         @endif
                                     </a>
