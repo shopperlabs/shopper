@@ -6,6 +6,7 @@ namespace Shopper\Core\Search;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Core\Models\Traits\HasPublicId;
 
 class ScoutIndexer
 {
@@ -36,12 +37,19 @@ class ScoutIndexer
 
     public function getScoutKey(Model $model): mixed
     {
-        return $model->getKey();
+        return $model->getAttribute($this->getScoutKeyName($model));
     }
 
     public function getScoutKeyName(Model $model): string
     {
-        return $model->getKeyName();
+        return in_array(HasPublicId::class, class_uses_recursive($model), true)
+            ? 'public_id'
+            : $model->getKeyName();
+    }
+
+    public function getScoutKeyType(Model $model): string
+    {
+        return $this->getScoutKeyName($model) === 'public_id' ? 'string' : $model->getKeyType();
     }
 
     /**
@@ -74,8 +82,8 @@ class ScoutIndexer
     public function toSearchableArray(Model $model): array
     {
         return array_merge(
-            ['id' => (string) $model->getKey()],
             $model->toArray(),
+            ['id' => (string) $this->getScoutKey($model)],
             array_filter([
                 'created_at' => $model->getAttribute('created_at')?->getTimestamp(),
                 'updated_at' => $model->getAttribute('updated_at')?->getTimestamp(),

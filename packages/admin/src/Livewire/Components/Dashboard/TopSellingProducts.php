@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Dashboard;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -15,6 +14,7 @@ use Livewire\Component;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Contracts\ProductVariant;
+use Shopper\Models\Product;
 
 /**
  * @property-read Collection $products
@@ -25,7 +25,7 @@ final class TopSellingProducts extends Component
     public function products(): Collection
     {
         /** @var array<int, array<string, mixed>> $cached */
-        $cached = Cache::flexible('dashboard:top-selling-products', [300, 1800], fn (): array => $this->buildTopProducts());
+        $cached = Cache::flexible('dashboard:top-products', [300, 1800], fn (): array => $this->buildTopProducts());
 
         return collect($cached);
     }
@@ -63,8 +63,7 @@ final class TopSellingProducts extends Component
 
         $productIds = $topProducts->pluck('parent_product_id')->filter()->all();
 
-        /** @var \Illuminate\Database\Eloquent\Collection<int, Model> $products */
-        // @phpstan-ignore-next-line
+        /** @var \Illuminate\Database\Eloquent\Collection<int, Product> $products */
         $products = resolve(ProductContract::class)::query()
             ->whereIn('id', $productIds)
             ->with([
@@ -80,7 +79,8 @@ final class TopSellingProducts extends Component
                 $approvedRatings = $product?->getRelation('ratings');
 
                 return [
-                    'product' => $product,
+                    'name' => $product?->getAttribute('name'),
+                    'thumbnail' => $product?->getThumbnailUrl(),
                     'sales' => (int) $row->total_sales,
                     'reviews_count' => $approvedRatings?->count() ?? 0,
                     'average_rating' => $approvedRatings?->isNotEmpty()

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Cache;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\TaxZone;
 use Shopper\Core\Taxes\TaxCalculationContext;
@@ -29,4 +30,23 @@ it('serves the resolved tax zone from the cache and invalidates it when a zone c
 
     $fresh = resolve(TaxCalculator::class)->resolveZone($context);
     expect($fresh->is_tax_inclusive)->toBeTrue();
+})->group('core', 'taxes');
+
+it('resolves the tax zone again on a cache that refuses to unserialize models', function (): void {
+    config(['cache.default' => 'array', 'cache.stores.array.serialize' => true, 'cache.serializable_classes' => false]);
+    Cache::forgetDriver('array');
+
+    $country = Country::query()->where('cca2', 'US')->first()
+        ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
+
+    $zone = TaxZone::factory()->create(['country_id' => $country->id, 'is_tax_inclusive' => true]);
+
+    foreach ([1, 2] as $request) {
+        app()->forgetInstance(TaxCalculator::class);
+
+        $resolved = resolve(TaxCalculator::class)->resolveZone(new TaxCalculationContext(countryCode: 'US'));
+
+        expect($resolved->id)->toBe($zone->id)
+            ->and($resolved->is_tax_inclusive)->toBeTrue();
+    }
 })->group('core', 'taxes');

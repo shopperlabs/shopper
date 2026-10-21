@@ -26,28 +26,10 @@ class DefaultBadge implements Badge, Serializable
         'value',
         'class',
         'color',
+        'authorized',
     ];
 
     public function __construct(protected Container $container) {}
-
-    public function __serialize(): array
-    {
-        return [
-            'value' => $this->value,
-            'class' => $this->class,
-            'color' => $this->color,
-        ];
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     */
-    public function __unserialize(array $data): void
-    {
-        $this->value = $data['value'];
-        $this->class = $data['class'];
-        $this->color = $data['color'] ?? null;
-    }
 
     public function getValue(): mixed
     {

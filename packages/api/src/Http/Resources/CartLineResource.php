@@ -43,9 +43,7 @@ class CartLineResource extends JsonApiResource
     public function toRelationships(Request $request): array
     {
         return [
-            'purchasable' => $this->purchasable instanceof ProductVariant
-                ? ProductVariantResource::class
-                : ProductResource::class,
+            'purchasable' => PurchasableResource::class,
         ];
     }
 

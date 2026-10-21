@@ -68,6 +68,7 @@ abstract class TestCase extends BaseTestCase
             'prefix' => '',
             'schema' => 'public',
             'sslmode' => 'prefer',
+            'timezone' => 'UTC',
             'options' => [
                 PDO::ATTR_TIMEOUT => 5,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

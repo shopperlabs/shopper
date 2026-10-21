@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Taxes;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Shopper\Core\Contracts\TaxableItem;
 use Shopper\Core\Contracts\TaxCalculationProvider;
@@ -67,16 +68,21 @@ final class TaxCalculator
 
         $version = (int) Cache::get('shopper.tax-zones.version', 0);
 
-        /** @var array{zone: ?TaxZone} $cached */
+        /** @var array{zone: ?array<string, mixed>} $cached */
         $cached = Cache::flexible(
-            "shopper.tax-zone.{$version}.{$key}",
+            "shopper.tax-zones.{$version}.{$key}",
             [3600, 86400],
-            fn (): array => ['zone' => $this->lookupZone($context)],
+            fn (): array => ['zone' => $this->lookupZone($context)?->getAttributes()],
         );
 
-        return $this->zoneCache[$key] = $cached['zone'];
+        return $this->zoneCache[$key] = $cached['zone'] === null
+            ? null
+            : resolve(TaxZone::class)::hydrate([$cached['zone']])->first();
     }
 
+    /**
+     * @return (Model&TaxZone)|null
+     */
     private function lookupZone(TaxCalculationContext $context): ?TaxZone
     {
         if ($context->provinceCode) {

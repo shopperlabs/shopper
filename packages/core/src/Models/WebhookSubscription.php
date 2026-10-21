@@ -29,7 +29,7 @@ class WebhookSubscription extends Model
     /** @use HasFactory<WebhookSubscriptionFactory> */
     use HasFactory;
 
-    public const string ACTIVE_CACHE_KEY = 'shopper.webhooks.active_subscriptions';
+    public const string ACTIVE_CACHE_KEY = 'shopper.webhooks.active';
 
     protected $guarded = [];
 
@@ -43,11 +43,15 @@ class WebhookSubscription extends Model
      */
     public static function active(): Collection
     {
-        return Cache::remember(
+        return static::hydrate(Cache::remember(
             self::ACTIVE_CACHE_KEY,
             3600,
-            fn (): Collection => static::query()->where('is_active', true)->get(),
-        );
+            fn (): array => static::query()
+                ->where('is_active', true)
+                ->get()
+                ->map(fn (self $subscription): array => $subscription->getAttributes())
+                ->all(),
+        ));
     }
 
     public function getConnectionName(): ?string

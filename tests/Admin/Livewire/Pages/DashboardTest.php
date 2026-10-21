@@ -2,7 +2,12 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Cache;
 use Livewire\Livewire;
+use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Models\Order;
+use Shopper\Core\Models\OrderItem;
+use Shopper\Core\Models\Product;
 use Shopper\Livewire\Components\Dashboard\RecentOrders;
 use Shopper\Livewire\Components\Dashboard\StatCards;
 use Shopper\Livewire\Components\Dashboard\TopSellingProducts;
@@ -44,4 +49,20 @@ describe(Dashboard::class, function (): void {
         TopSellingProducts::class,
         RecentOrders::class,
     ]);
+
+    it('renders the top selling products again on a cache that refuses to unserialize models', function (): void {
+        config(['cache.default' => 'array', 'cache.stores.array.serialize' => true, 'cache.serializable_classes' => false]);
+        Cache::forgetDriver('array');
+
+        $product = Product::factory()->create(['name' => 'Best Seller']);
+
+        OrderItem::factory()->create([
+            'product_id' => $product->id,
+            'order_id' => Order::factory()->create(['payment_status' => PaymentStatus::Paid, 'created_at' => now()])->id,
+        ]);
+
+        foreach ([1, 2] as $render) {
+            Livewire::test(TopSellingProducts::class)->assertOk()->assertSee('Best Seller');
+        }
+    });
 });

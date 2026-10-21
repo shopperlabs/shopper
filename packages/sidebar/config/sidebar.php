@@ -9,10 +9,12 @@ return [
     | Caching
     |--------------------------------------------------------------------------
     |
-    | Define the way the Sidebar should be cached.
-    | The cache store is defined by the Laravel
+    | Here you may choose how the sidebar is cached. "static" shares one copy
+    | with every user, so items hidden by permissions follow the first user
+    | who loads it. "user-based" keeps a copy per user and needs a cache store
+    | that supports tags. The duration is expressed in minutes.
     |
-    | Available: null|static|user-based
+    | Supported: null, "static", "user-based"
     |
     */
 

@@ -34,6 +34,11 @@ trait Searchable
         return $this->indexer()->getScoutKeyName($this);
     }
 
+    public function getScoutKeyType(): string
+    {
+        return $this->indexer()->getScoutKeyType($this);
+    }
+
     /**
      * @return array<string, mixed>
      */

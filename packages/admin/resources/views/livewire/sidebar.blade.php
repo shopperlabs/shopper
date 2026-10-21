@@ -23,7 +23,7 @@
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
             @click="$store.sidebar.close()"
-            class="backdrop-blur-xs/75 fixed inset-0 z-40 bg-gray-950/50"
+            class="fixed inset-0 z-40 bg-gray-950/50 backdrop-blur-xs"
         ></div>
 
         <!-- Sidebar + Close button container -->
@@ -47,11 +47,12 @@
 
             <div class="pointer-events-auto z-10 p-2">
                 <button
+                    type="button"
                     x-show="$store.sidebar.isOpen"
                     @click="$store.sidebar.close()"
-                    class="flex size-10 items-center justify-center rounded-full bg-gray-900/50 text-white hover:bg-gray-900/70 focus:outline-none"
+                    class="flex size-10 items-center justify-center rounded-full bg-gray-900/50 text-white hover:bg-gray-900/70"
                 >
-                    <span class="sr-only">Close sidebar</span>
+                    <span class="sr-only">{{ __('shopper::layout.sidebar.close') }}</span>
                     <x-untitledui-x-close class="size-5" aria-hidden="true" />
                 </button>
             </div>

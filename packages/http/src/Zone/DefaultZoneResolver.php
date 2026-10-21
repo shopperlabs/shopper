@@ -7,6 +7,7 @@ namespace Shopper\Http\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Shopper\Core\Models\Contracts\Zone as ZoneContract;
+use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Zone;
 use Shopper\Http\Contracts\ZoneResolver;
 
@@ -19,7 +20,7 @@ final class DefaultZoneResolver implements ZoneResolver
      */
     public static function cacheKey(string $code): string
     {
-        return 'shopper.http.zone.'.hash('xxh128', $code);
+        return 'shopper.http.zones.'.hash('xxh128', $code);
     }
 
     public function resolve(Request $request): ?ZoneContract
@@ -61,6 +62,23 @@ final class DefaultZoneResolver implements ZoneResolver
             return $query();
         }
 
-        return Cache::remember(self::cacheKey($code), $ttl, $query);
+        /** @var array{zone: array<string, mixed>, currency: ?array<string, mixed>}|null $cached */
+        $cached = Cache::remember(self::cacheKey($code), $ttl, function () use ($query): ?array {
+            $zone = $query();
+
+            return $zone === null ? null : [
+                'zone' => $zone->getAttributes(),
+                'currency' => $zone->currency?->getAttributes(),
+            ];
+        });
+
+        if ($cached === null) {
+            return null;
+        }
+
+        return Zone::hydrate([$cached['zone']])->first()?->setRelation(
+            'currency',
+            $cached['currency'] === null ? null : Currency::hydrate([$cached['currency']])->first(),
+        );
     }
 }

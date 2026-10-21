@@ -31,14 +31,16 @@ class ReOrderCategories extends SlideOverComponent
 
         $categoryModel = resolve(Category::class);
 
-        DB::transaction(function () use ($order, $parentId, $categoryModel): void {
-            foreach ($order as $position => $categoryId) {
-                $categoryModel::query()
-                    ->where('id', (int) $categoryId)
-                    ->update([
-                        'parent_id' => $parentId !== null ? (int) $parentId : null,
-                        'position' => $position + 1,
-                    ]);
+        $positions = array_flip(array_map(intval(...), $order));
+
+        DB::transaction(function () use ($positions, $parentId, $categoryModel): void {
+            foreach ($categoryModel::query()->whereKey(array_keys($positions))->get() as $category) {
+                $category->fill([
+                    'parent_id' => $parentId !== null ? (int) $parentId : null,
+                    'position' => $positions[$category->getKey()] + 1,
+                ]);
+
+                $category->isDirty('parent_id') ? $category->save() : $category->saveQuietly();
             }
         });
     }

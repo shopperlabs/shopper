@@ -14,6 +14,7 @@
         <button
             type="button"
             class="sidebar-toggle-btn"
+            aria-label="Toggle sidebar"
             x-on:click="$store.sidebar.toggleCollapse()"
             x-show="$store.sidebar.collapsible"
         >

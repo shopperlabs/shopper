@@ -214,15 +214,19 @@ class Overview extends Component implements HasActions, HasSchemas
 
         $this->validate();
 
-        $this->product = app()->call(UpdateProductAction::class, [
-            'values' => $this->form->getState(),
-            'product' => $this->product,
-        ]);
+        resolve(Product::class)::withoutSyncingToSearch(function (): void {
+            $this->product = app()->call(UpdateProductAction::class, [
+                'values' => $this->form->getState(),
+                'product' => $this->product,
+            ]);
 
-        /** @var Model&Product $product */
-        $product = $this->product;
+            /** @var Model&Product $product */
+            $product = $this->product;
 
-        $this->form->model($product)->saveRelationships();
+            $this->form->model($product)->saveRelationships();
+        });
+
+        resolve(Product::class)::query()->whereKey($this->product->getKey())->searchable();
 
         $this->dispatch('product.updated');
 

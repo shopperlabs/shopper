@@ -7,6 +7,13 @@ return [
     'sidebar' => [
         'catalog' => 'Katalog',
         'sales' => 'Satışlar',
+        'toggle' => 'Kenar çubuğunu aç/kapat',
+        'open' => 'Kenar çubuğunu aç',
+        'close' => 'Kenar çubuğunu kapat',
+    ],
+
+    'breadcrumb' => [
+        'toggle' => ':label menüsünü aç/kapat',
     ],
 
     'locale_switcher' => 'Dil değiştir',

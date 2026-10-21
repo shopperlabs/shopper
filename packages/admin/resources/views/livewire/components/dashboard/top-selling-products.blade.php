@@ -46,11 +46,11 @@
                                 <div class="flex min-w-0 items-center gap-3 px-3 py-2">
                                     <img
                                         class="ring-sh-border size-8 shrink-0 rounded-lg object-cover ring-1"
-                                        src="{{ $item['product']?->getThumbnailUrl() }}"
-                                        alt="{{ $item['product']?->name }}"
+                                        src="{{ $item['thumbnail'] }}"
+                                        alt="{{ $item['name'] }}"
                                     />
                                     <span class="text-sh-fg truncate text-sm">
-                                        {{ $item['product']?->name ?? '—' }}
+                                        {{ $item['name'] ?? '—' }}
                                     </span>
                                 </div>
                             </td>

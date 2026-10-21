@@ -8,6 +8,8 @@ return [
         'catalog' => 'Catalogue',
         'sales' => 'Ventes',
         'toggle' => 'Basculer la barre latérale',
+        'open' => 'Ouvrir la barre latérale',
+        'close' => 'Fermer la barre latérale',
     ],
 
     'breadcrumb' => [

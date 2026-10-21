@@ -50,7 +50,7 @@ class OrderIndexer extends ScoutIndexer
     {
         /** @var Order $model */
         return [
-            'id' => (string) $model->getKey(),
+            'id' => (string) $this->getScoutKey($model),
             'number' => $model->number,
             'email' => $model->email,
             'status' => $model->status->value,

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Shopper\Core\Models\Channel;
 use Shopper\Http\Contracts\ChannelResolver;
 
@@ -49,4 +50,18 @@ it('ignores disabled channels', function (): void {
     $request->headers->set('X-Shopper-Channel', 'webstore');
 
     expect(app(ChannelResolver::class)->resolve($request))->toBeNull();
+});
+
+it('resolves the channel again on a cache that refuses to unserialize models', function (): void {
+    config(['cache.default' => 'array', 'cache.stores.array.serialize' => true, 'cache.serializable_classes' => false]);
+    Cache::forgetDriver('array');
+
+    $channel = resolvableChannel('webstore');
+
+    $request = Request::create('/store/anything');
+    $request->headers->set('X-Shopper-Channel', 'webstore');
+
+    foreach ([1, 2] as $attempt) {
+        expect(app(ChannelResolver::class)->resolve($request)?->getKey())->toBe($channel->getKey());
+    }
 });

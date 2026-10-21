@@ -205,7 +205,7 @@ final class CarrierRateService
         }
 
         $key = sprintf(
-            'shopper.shipping.rates.%s.%s',
+            'shopper.shipping.quotes.%s.%s',
             $carrier->driver,
             md5(serialize([
                 $from->toArray(),
@@ -214,11 +214,13 @@ final class CarrierRateService
             ])),
         );
 
-        return Cache::remember(
+        return collect(Cache::remember(
             $key,
             $seconds,
-            fn (): Collection => $this->getApiRates($driver, $from, $to, $packages),
-        );
+            fn (): array => $this->getApiRates($driver, $from, $to, $packages)
+                ->map(fn (ShippingRate $rate): array => get_object_vars($rate))
+                ->all(),
+        ))->map(fn (array $rate): ShippingRate => new ShippingRate(...$rate));
     }
 
     /**

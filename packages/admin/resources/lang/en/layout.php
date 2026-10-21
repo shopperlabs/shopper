@@ -8,6 +8,8 @@ return [
         'catalog' => 'Catalog',
         'sales' => 'Sales',
         'toggle' => 'Toggle sidebar',
+        'open' => 'Open sidebar',
+        'close' => 'Close sidebar',
     ],
 
     'breadcrumb' => [

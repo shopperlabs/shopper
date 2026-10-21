@@ -20,7 +20,7 @@ class CustomerIndexer extends ScoutIndexer
     public function toSearchableArray(Model $model): array
     {
         return [
-            'id' => (string) $model->getKey(),
+            'id' => (string) $this->getScoutKey($model),
             'name' => mb_trim(implode(' ', array_filter([$model->getAttribute('first_name'), $model->getAttribute('last_name')]))) ?: null,
             'email' => $model->getAttribute('email'),
             'created_at' => $model->getAttribute('created_at')?->getTimestamp(),
