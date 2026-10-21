@@ -8,7 +8,7 @@
             class="from-sh-sidebar pointer-events-none absolute top-0 right-0.5 left-0 z-10 h-6 bg-linear-to-b to-transparent"
         ></div>
 
-        <div class="h-full overflow-y-auto">
+        <div class="h-full overflow-x-hidden overflow-y-auto">
             <nav class="sh-si-nav px-3 py-3">
                 {!! $renderedSidebar !!}
             </nav>

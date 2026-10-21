@@ -19,7 +19,7 @@
       }
 
       .sh-sidebar-item-label {
-        @apply flex-1;
+        @apply flex-1 truncate;
       }
 
       .sh-sidebar-item-nav {
@@ -43,6 +43,10 @@
       }
 
       > .sh-sidebar-item {
+        > .sh-sidebar-item-link {
+          @apply transition-[padding] duration-200;
+        }
+
         &:not(.sh-sidebar-item-active) {
           @apply text-sh-fg-secondary hover:bg-sh-sidebar-hover hover:text-sh-fg;
 
@@ -141,7 +145,7 @@ html.sidebar-collapsed .sh-si-content,
     }
 
     .sh-sidebar-group-items > .sh-sidebar-item > .sh-sidebar-item-link {
-      @apply justify-center;
+      @apply pl-[calc((var(--sidebar-collapsed-width)_-_2.75rem)/2)];
 
       .sh-sidebar-item-nav {
         @apply hidden;
@@ -153,18 +157,19 @@ html.sidebar-collapsed .sh-si-content,
 
       &::before {
         content: '';
-        @apply bg-sh-border absolute top-0 bottom-0 left-1/2 -z-1 w-px -translate-x-1/2;
+        @apply bg-sh-border absolute top-0 bottom-0 left-[calc(var(--sidebar-collapsed-width)/2_-_0.75rem)] -z-1 w-px -translate-x-1/2;
       }
 
       .sh-sidebar-item {
         .sh-sidebar-item-link {
-          @apply justify-center p-3;
+          @apply p-3 pl-[calc((var(--sidebar-collapsed-width)_-_2.125rem)/2)];
 
           &::before {
             @apply hidden;
           }
         }
 
+        .sh-sidebar-item-label,
         .sh-sidebar-item-nav {
           @apply hidden;
         }
