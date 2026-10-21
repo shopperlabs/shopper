@@ -28,6 +28,10 @@
                 )
                 this.loading = false
             },
+            filter(set) {
+                this.set = set
+                this.loadResults()
+            },
             toggle() {
                 this.open = ! this.open
 
@@ -112,10 +116,7 @@
                     <div class="border-sh-border flex items-center gap-2 overflow-x-auto border-b px-4 pb-3">
                         <button
                             type="button"
-                            x-on:click="
-                                set = ''
-                                loadResults()
-                            "
+                            x-on:click="filter('')"
                             x-bind:class="
                                 set === ''
                                     ? 'border-primary-500 text-primary-600 dark:text-primary-400'
@@ -128,10 +129,7 @@
                         @foreach ($setOptions as $setName => $setOption)
                             <button
                                 type="button"
-                                x-on:click="
-                                    set = @js($setName)
-                                    loadResults()
-                                "
+                                x-on:click="filter(@js($setName))"
                                 x-bind:class="
                                     set === @js($setName)
                                         ? 'border-primary-500 text-primary-600 dark:text-primary-400'

@@ -11,8 +11,8 @@
     aria-label="{{ $label }}"
     type="button"
     x-on:click="
-        theme = @js($theme)
         dropdownOpen = false
+        theme = @js($theme)
     "
     class="fi-theme-switcher-btn hover:bg-sh-muted flex items-center justify-center gap-2 rounded-md px-1.5 py-2 transition duration-75 outline-none"
     x-bind:class="

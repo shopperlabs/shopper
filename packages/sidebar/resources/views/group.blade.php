@@ -12,6 +12,7 @@
             x-bind:disabled="$store.sidebar?.isCollapsed"
         >
             <span
+                class="truncate"
                 x-show="!$store.sidebar?.isCollapsed"
                 x-transition:enter="transition-opacity duration-200"
                 x-transition:enter-start="opacity-0"
@@ -36,6 +37,7 @@
     @elseif ($group->shouldShowHeading())
         <div @class(['sh-sidebar-group-label', $group->getHeadingClass()])>
             <span
+                class="truncate"
                 x-show="!$store.sidebar?.isCollapsed"
                 x-transition:enter="transition-opacity duration-200"
                 x-transition:enter-start="opacity-0"
