@@ -28,26 +28,12 @@ class DefaultMenu implements Menu, Serializable
     /** @var string[] */
     protected array $cacheables = [
         'groups',
+        'authorized',
     ];
 
     public function __construct(protected Container $container)
     {
         $this->groups = new Collection;
-    }
-
-    public function __serialize(): array
-    {
-        return [
-            'groups' => $this->groups,
-        ];
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     */
-    public function __unserialize(array $data): void
-    {
-        $this->groups = $data['groups'];
     }
 
     public function group(string|Closure $name = '', ?Closure $callback = null): Group

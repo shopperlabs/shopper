@@ -50,7 +50,7 @@ return [
     // Caching method: null, 'static', or 'user-based'
     'cache' => [
         'method' => null,
-        'duration' => 1440,
+        'duration' => 1440, // minutes
     ],
 
     // Sidebar dimensions (CSS values)

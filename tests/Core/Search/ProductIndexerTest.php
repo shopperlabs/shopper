@@ -180,6 +180,9 @@ it('reindexes the products and child categories of a deleted category', function
         ->and($engine->documents)->not->toHaveKey($sneakers->public_id);
 
     $shoes->delete();
+
+    expect($engine->documents[$product->public_id]['categories'])->toBe([]);
+
     $archive->delete();
 
     expect($engine->documents[$product->public_id]['categories'])->toBe(['Sneakers'])

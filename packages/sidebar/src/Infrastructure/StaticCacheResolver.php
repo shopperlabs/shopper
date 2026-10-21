@@ -2,27 +2,37 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Infrastructure;
+namespace Shopper\Sidebar\Infrastructure;
 
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Config\Repository as Config;
+use Illuminate\Contracts\Translation\Translator;
+use Illuminate\Support\Carbon;
 use Shopper\Sidebar\Contracts\Sidebar;
-use Shopper\Sidebar\Infrastructure\CacheKey;
-use Shopper\Sidebar\Infrastructure\ContainerResolver;
-use Shopper\Sidebar\Infrastructure\SidebarResolver;
 
 final class StaticCacheResolver implements SidebarResolver
 {
     public function __construct(
         protected ContainerResolver $resolver,
         protected Cache $cache,
-        protected Config $config
+        protected Config $config,
+        protected Translator $translator,
+        protected SidebarSerializer $serializer
     ) {}
 
     public function resolve(string $name): Sidebar
     {
-        $duration = $this->config->get('sidebar.cache.duration');
+        $key = CacheKey::get($name);
+        $locale = $this->translator->getLocale();
+        $payloads = $this->cache->get($key, []);
 
-        return $this->cache->remember(CacheKey::get($name), $duration, fn (): Sidebar => $this->resolver->resolve($name));
+        if (! isset($payloads[$locale])) {
+            $minutes = $this->config->get('sidebar.cache.duration');
+            $payloads[$locale] = $this->serializer->serialize($this->resolver->resolve($name));
+
+            $this->cache->put($key, $payloads, $minutes === null ? null : Carbon::now()->addMinutes((int) $minutes));
+        }
+
+        return $this->serializer->unserialize($payloads[$locale]);
     }
 }

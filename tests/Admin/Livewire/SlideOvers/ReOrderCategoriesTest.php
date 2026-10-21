@@ -92,6 +92,17 @@ describe(ReOrderCategories::class, function (): void {
             ->and($parent->refresh()->position)->toBe(2);
     });
 
+    it('keeps the slug of a category reordered under the same parent', function (): void {
+        $parent = Category::factory()->create(['name' => 'Shoes', 'slug' => 'shoes']);
+        $child = Category::factory()->create(['name' => 'Boots', 'parent_id' => $parent->id]);
+        $parent->update(['slug' => 'footwear']);
+
+        Livewire::test(ReOrderCategories::class)
+            ->call('reorder', [(string) $child->id], (string) $parent->id);
+
+        expect($child->refresh()->slug)->toBe('shoes-boots');
+    });
+
     it('reindexes the products of a category moved under a disabled parent', function (): void {
         $engine = RecordingEngine::register();
         $archive = Category::factory()->create(['is_enabled' => false]);

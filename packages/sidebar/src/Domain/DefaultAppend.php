@@ -33,31 +33,13 @@ class DefaultAppend implements Append, Serializable
         'name',
         'url',
         'icon',
+        'iconClass',
         'type',
+        'class',
+        'authorized',
     ];
 
     public function __construct(protected Container $container) {}
-
-    public function __serialize(): array
-    {
-        return [
-            'name' => $this->name,
-            'url' => $this->url,
-            'icon' => $this->icon,
-            'type' => $this->type,
-        ];
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     */
-    public function __unserialize(array $data): void
-    {
-        $this->name = $data['name'];
-        $this->url = $data['url'];
-        $this->icon = $data['icon'];
-        $this->type = $data['type'];
-    }
 
     public function getName(): string
     {
@@ -71,7 +53,7 @@ class DefaultAppend implements Append, Serializable
         return $this;
     }
 
-    public function getClass(): string
+    public function getClass(): ?string
     {
         return $this->class;
     }

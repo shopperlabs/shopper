@@ -29,6 +29,11 @@ class CategoryObserver
         CategoryTree::flush();
     }
 
+    public function created(Category $category): void
+    {
+        DB::afterCommit(fn () => CategoryTree::flush());
+    }
+
     public function updated(Category $category): void
     {
         if ($category->wasChanged(['name', 'is_enabled', 'parent_id'])) {

@@ -18,7 +18,7 @@ final class DefaultChannelResolver implements ChannelResolver
      */
     public static function cacheKey(string $slug): string
     {
-        return 'shopper.http.channel.'.hash('xxh128', $slug);
+        return 'shopper.http.channels.'.hash('xxh128', $slug);
     }
 
     public function resolve(Request $request): ?ChannelContract
@@ -59,6 +59,9 @@ final class DefaultChannelResolver implements ChannelResolver
             return $query();
         }
 
-        return Cache::remember(self::cacheKey($slug), $ttl, $query);
+        /** @var array<string, mixed>|null $attributes */
+        $attributes = Cache::remember(self::cacheKey($slug), $ttl, fn (): ?array => $query()?->getAttributes());
+
+        return $attributes === null ? null : resolve(ChannelContract::class)::hydrate([$attributes])->first();
     }
 }

@@ -277,11 +277,16 @@ class AddProduct extends SlideOverComponent implements HasActions, HasSchemas
     {
         $this->validate();
 
-        $product = app()->call(CreateProductAction::class, [
-            'values' => $this->form->getState(),
-        ]);
+        /** @var Product $product */
+        $product = resolve(Product::class)::withoutSyncingToSearch(function (): Product {
+            $product = app()->call(CreateProductAction::class, [
+                'values' => $this->form->getState(),
+            ]);
 
-        $this->form->model($product)->saveRelationships();
+            $this->form->model($product)->saveRelationships();
+
+            return $product;
+        });
 
         resolve(Product::class)::query()->whereKey($product->getKey())->searchable();
 

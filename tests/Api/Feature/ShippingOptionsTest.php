@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Cache;
 use Laravel\Sanctum\Sanctum;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Models\Cart;
@@ -353,6 +354,33 @@ it('caches live carrier quotes until the cart content changes', function (): voi
     $this->getJson($url)->assertOk();
 
     expect($driver->calls)->toBe(2);
+});
+
+it('serves cached carrier quotes on a cache that refuses to unserialize objects', function (): void {
+    config(['cache.default' => 'array', 'cache.stores.array.serialize' => true, 'cache.serializable_classes' => false]);
+    Cache::forgetDriver('array');
+
+    Inventory::factory()->create(['is_default' => true, 'country_id' => $this->country->id]);
+
+    $driver = new FakeShippingDriver([
+        new ShippingRate(
+            serviceCode: 'express',
+            serviceName: 'Fake Express',
+            amount: 1295,
+            currency: 'USD',
+            carrierCode: 'fake-carrier',
+        ),
+    ]);
+    registerFakeCarrier($this->zone, $driver);
+    addShippingAddress($this->cart, $this->country);
+
+    foreach ([1, 2] as $request) {
+        $this->getJson("/store/carts/{$this->cart->public_id}/shipping-options")
+            ->assertOk()
+            ->assertJsonFragment(['id' => 'fake-carrier:express']);
+    }
+
+    expect($driver->calls)->toBe(1);
 });
 
 it('rejects a cart that has no zone', function (): void {

@@ -9,7 +9,7 @@ use Shopper\Sidebar\Exceptions\SidebarFlusherNotSupported;
 
 final class SidebarFlusherFactory
 {
-    public static function getClassName(string $name): string
+    public static function getClassName(?string $name = null): string
     {
         if ($name) {
             $class = __NAMESPACE__.'\\'.Str::studly($name).'SidebarFlusher';

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Cache;
 use Shopper\Core\Events\Orders\OrderPaid;
 use Shopper\Core\Events\Orders\OrderShipmentDelivered;
 use Shopper\Core\Events\Products\ProductDeleted;
@@ -52,6 +53,18 @@ describe('Webhook dispatch', function (): void {
         event(new OrderPaid(Order::factory()->create()));
 
         expect(WebhookDelivery::query()->count())->toBe(0);
+    });
+
+    it('queues deliveries again on a cache that refuses to unserialize models', function (): void {
+        config(['cache.default' => 'array', 'cache.stores.array.serialize' => true, 'cache.serializable_classes' => false]);
+        Cache::forgetDriver('array');
+
+        WebhookSubscription::factory()->create(['events' => ['order.paid']]);
+
+        event(new OrderPaid(Order::factory()->create()));
+        event(new OrderPaid(Order::factory()->create()));
+
+        expect(WebhookDelivery::query()->count())->toBe(2);
     });
 
     it('snapshots a deleted product so the delete webhook can still be delivered', function (): void {

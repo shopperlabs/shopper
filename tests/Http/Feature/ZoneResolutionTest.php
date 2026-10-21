@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Zone;
 use Shopper\Http\Contracts\ZoneResolver;
 
@@ -40,4 +42,23 @@ it('ignores disabled zones', function (): void {
     $request->headers->set('X-Shopper-Zone', 'eu');
 
     expect(app(ZoneResolver::class)->resolve($request))->toBeNull();
+});
+
+it('resolves the zone and its currency again on a cache that refuses to unserialize models', function (): void {
+    config(['cache.default' => 'array', 'cache.stores.array.serialize' => true, 'cache.serializable_classes' => false]);
+    Cache::forgetDriver('array');
+
+    $currency = Currency::query()->firstOr(fn () => Currency::factory()->create());
+    $zone = Zone::factory()->create(['code' => 'eu', 'is_enabled' => true, 'currency_id' => $currency->id]);
+
+    $request = Request::create('/store/anything');
+    $request->headers->set('X-Shopper-Zone', 'eu');
+
+    foreach ([1, 2] as $attempt) {
+        $resolved = app(ZoneResolver::class)->resolve($request);
+
+        expect($resolved?->getKey())->toBe($zone->getKey())
+            ->and($resolved->relationLoaded('currency'))->toBeTrue()
+            ->and($resolved->currency->code)->toBe($currency->code);
+    }
 });

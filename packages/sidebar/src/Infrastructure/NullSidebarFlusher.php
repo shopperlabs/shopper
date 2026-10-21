@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Infrastructure;
-
-use Shopper\Sidebar\Infrastructure\SidebarFlusher;
+namespace Shopper\Sidebar\Infrastructure;
 
 final class NullSidebarFlusher implements SidebarFlusher
 {

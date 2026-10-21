@@ -41,34 +41,15 @@ class DefaultGroup implements Group, Serializable
         'weight',
         'heading',
         'collapsible',
+        'class',
+        'itemClass',
+        'headingClass',
+        'authorized',
     ];
 
     public function __construct(protected Container $container)
     {
         $this->items = new Collection;
-    }
-
-    public function __serialize(): array
-    {
-        return [
-            'name' => $this->name,
-            'items' => $this->items,
-            'weight' => $this->weight,
-            'heading' => $this->heading,
-            'collapsible' => $this->collapsible,
-        ];
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     */
-    public function __unserialize(array $data): void
-    {
-        $this->name = $data['name'];
-        $this->items = $data['items'];
-        $this->weight = $data['weight'];
-        $this->heading = $data['heading'];
-        $this->collapsible = $data['collapsible'] ?? false;
     }
 
     public function getName(): string
