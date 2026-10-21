@@ -224,6 +224,8 @@ class Overview extends Component implements HasActions, HasSchemas
 
         $this->form->model($product)->saveRelationships();
 
+        resolve(Product::class)::query()->whereKey($product->getKey())->searchable();
+
         $this->dispatch('product.updated');
 
         Notification::make()

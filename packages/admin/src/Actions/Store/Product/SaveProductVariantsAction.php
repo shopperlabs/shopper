@@ -23,6 +23,22 @@ final class SaveProductVariantsAction
      */
     public function __invoke(array $variants, Product $product): array
     {
+        $variants = resolve(Product::class)::withoutSyncingToSearch(fn (): array => $this->saveVariants($variants, $product));
+
+        resolve(Product::class)::query()->whereKey($product->getKey())->searchable();
+
+        return $variants;
+    }
+
+    /**
+     * @param  array<string, mixed>  $variants
+     * @param  Model&Product  $product
+     * @return array<string, mixed>
+     *
+     * @throws Throwable
+     */
+    private function saveVariants(array $variants, Product $product): array
+    {
         DB::beginTransaction();
 
         try {

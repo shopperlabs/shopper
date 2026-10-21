@@ -34,8 +34,8 @@ class ReOrderCategories extends SlideOverComponent
         DB::transaction(function () use ($order, $parentId, $categoryModel): void {
             foreach ($order as $position => $categoryId) {
                 $categoryModel::query()
-                    ->where('id', (int) $categoryId)
-                    ->update([
+                    ->find((int) $categoryId)
+                    ?->update([
                         'parent_id' => $parentId !== null ? (int) $parentId : null,
                         'position' => $position + 1,
                     ]);

@@ -24,6 +24,7 @@ use Shopper\Core\Contracts\WebhookPayloadSerializer;
 use Shopper\Core\Import\ImportManager;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Attribute;
+use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Discount;
@@ -35,6 +36,7 @@ use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Models\TaxZone;
 use Shopper\Core\Observers\AddressObserver;
 use Shopper\Core\Observers\AttributeObserver;
+use Shopper\Core\Observers\BrandObserver;
 use Shopper\Core\Observers\CategoryObserver;
 use Shopper\Core\Observers\ChannelObserver;
 use Shopper\Core\Observers\DiscountObserver;
@@ -163,6 +165,7 @@ final class CoreServiceProvider extends PackageServiceProvider
     protected function registerObservers(): void
     {
         Address::observeUsingConfiguredClass(AddressObserver::class);
+        Brand::observeUsingConfiguredClass(BrandObserver::class);
         Category::observeUsingConfiguredClass(CategoryObserver::class);
         Channel::observeUsingConfiguredClass(ChannelObserver::class);
         Inventory::observeUsingConfiguredClass(InventoryObserver::class);

@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Livewire\Livewire;
 use Shopper\Core\Models\Category;
 use Shopper\Livewire\SlideOvers\ReOrderCategories;
+use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\RecordingEngine;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
@@ -88,5 +90,23 @@ describe(ReOrderCategories::class, function (): void {
         expect($child->refresh()->parent_id)->toBeNull()
             ->and($child->refresh()->position)->toBe(1)
             ->and($parent->refresh()->position)->toBe(2);
+    });
+
+    it('reindexes the products of a category moved under a disabled parent', function (): void {
+        $engine = RecordingEngine::register();
+        $archive = Category::factory()->create(['is_enabled' => false]);
+        $shoes = Category::factory()->create(['name' => 'Shoes', 'is_enabled' => true]);
+
+        $product = Product::factory()->publish()->create();
+        $product->categories()->attach($shoes);
+        $product->searchable();
+
+        expect($engine->documents[$product->public_id]['categories'])->toBe(['Shoes']);
+
+        Livewire::test(ReOrderCategories::class)
+            ->call('reorder', [(string) $shoes->id], (string) $archive->id);
+
+        expect($engine->documents[$product->public_id]['categories'])->toBe([])
+            ->and($engine->documents)->not->toHaveKey($shoes->public_id);
     });
 })->group('livewire', 'slideovers', 'products');

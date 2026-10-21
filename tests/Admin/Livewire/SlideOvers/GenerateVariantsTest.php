@@ -6,6 +6,7 @@ use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Livewire\SlideOvers\GenerateVariants;
 use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\RecordingEngine;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
@@ -57,6 +58,20 @@ describe(GenerateVariants::class, function (): void {
 
         expect($component->get('variants'))->not->toHaveKey(0)
             ->and($component->get('variants'))->toHaveKey(1);
+    });
+
+    it('indexes the generated variant skus on the product', function (): void {
+        $engine = RecordingEngine::register();
+        $product = Product::factory()->publish()->create(['type' => ProductType::Variant]);
+
+        Livewire::test(GenerateVariants::class, ['product' => $product])
+            ->set('variants', [
+                ['key' => 'red', 'variant_id' => null, 'name' => 'Red', 'sku' => 'AIR-RED', 'price' => 1000, 'stock' => 0, 'values' => []],
+                ['key' => 'blue', 'variant_id' => null, 'name' => 'Blue', 'sku' => 'AIR-BLUE', 'price' => 1000, 'stock' => 0, 'values' => []],
+            ])
+            ->call('generate');
+
+        expect($engine->documents[$product->public_id]['skus'])->toBe(['AIR-RED', 'AIR-BLUE']);
     });
 
     it('redirects to product variants tab after generating', function (): void {

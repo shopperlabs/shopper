@@ -12,7 +12,7 @@ class CollectionIndexer extends ScoutIndexer
     public function shouldBeSearchable(Model $model): bool
     {
         /** @var Collection $model */
-        return $model->published_at->isPast();
+        return $model->published_at?->isPast() ?? false;
     }
 
     /**
@@ -30,7 +30,7 @@ class CollectionIndexer extends ScoutIndexer
     {
         /** @var Collection $model */
         return [
-            'id' => (string) $model->getKey(),
+            'id' => (string) $this->getScoutKey($model),
             'name' => $model->name,
             'slug' => $model->slug,
             'description' => strip_tags((string) $model->description) ?: null,

@@ -37,7 +37,7 @@ final class ProductRowImporter
         }
 
         /** @var Model&ProductContract $product */
-        $product = DB::transaction(function () use ($row): ProductContract {
+        $product = resolve(ProductContract::class)::withoutSyncingToSearch(fn (): ProductContract => DB::transaction(function () use ($row): ProductContract {
             $product = $this->upsertProduct($row);
 
             $this->syncCategories($product, $row->categories);
@@ -52,7 +52,9 @@ final class ProductRowImporter
             }
 
             return $product;
-        });
+        }));
+
+        resolve(ProductContract::class)::query()->whereKey($product->getKey())->searchable();
 
         $this->dispatchImageDownloads($product, $row);
 

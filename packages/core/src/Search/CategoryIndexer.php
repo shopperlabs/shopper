@@ -6,13 +6,13 @@ namespace Shopper\Core\Search;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Models\Category;
+use Shopper\Core\Queries\CategoryTree;
 
 class CategoryIndexer extends ScoutIndexer
 {
     public function shouldBeSearchable(Model $model): bool
     {
-        /** @var Category $model */
-        return $model->is_enabled;
+        return resolve(CategoryTree::class)->depth($model->getKey()) !== null;
     }
 
     /**
@@ -30,7 +30,7 @@ class CategoryIndexer extends ScoutIndexer
     {
         /** @var Category $model */
         return [
-            'id' => (string) $model->getKey(),
+            'id' => (string) $this->getScoutKey($model),
             'name' => $model->name,
             'slug' => $model->slug,
             'description' => strip_tags((string) $model->description) ?: null,

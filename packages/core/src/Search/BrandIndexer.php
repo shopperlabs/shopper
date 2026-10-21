@@ -30,7 +30,7 @@ class BrandIndexer extends ScoutIndexer
     {
         /** @var Brand $model */
         return [
-            'id' => (string) $model->getKey(),
+            'id' => (string) $this->getScoutKey($model),
             'name' => $model->name,
             'slug' => $model->slug,
             'description' => strip_tags((string) $model->description) ?: null,

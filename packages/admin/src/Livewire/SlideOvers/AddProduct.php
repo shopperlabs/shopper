@@ -37,6 +37,7 @@ use Shopper\Components\SlideOverWizard;
 use Shopper\Components\Wizard\StepColumn;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Contracts\Channel;
+use Shopper\Core\Models\Contracts\Product;
 use Shopper\Feature;
 use Shopper\Livewire\Components\Products\ProductTypeConfiguration;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -281,6 +282,8 @@ class AddProduct extends SlideOverComponent implements HasActions, HasSchemas
         ]);
 
         $this->form->model($product)->saveRelationships();
+
+        resolve(Product::class)::query()->whereKey($product->getKey())->searchable();
 
         Notification::make()
             ->title(__('shopper::notifications.create', ['item' => $product->name]))

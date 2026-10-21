@@ -7,6 +7,7 @@ namespace Shopper\Core\Search;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Models\Product;
+use Shopper\Core\Queries\CategoryTree;
 
 class ProductIndexer extends ScoutIndexer
 {
@@ -24,7 +25,7 @@ class ProductIndexer extends ScoutIndexer
      */
     public function makeAllSearchableUsing(Builder $query): Builder
     {
-        return $query->with(['brand', 'categories', 'variants']);
+        return $query->with(['brand', 'categories', 'channels', 'variants']);
     }
 
     /** @return list<string> */
@@ -42,15 +43,17 @@ class ProductIndexer extends ScoutIndexer
     /** @return list<string> */
     public function getFilterableFields(): array
     {
-        return ['brand', 'categories', 'type'];
+        return ['brand', 'categories', 'channels', 'type'];
     }
 
     /** @return array<string, mixed> */
     public function toSearchableArray(Model $model): array
     {
         /** @var Product $model */
+        $hiddenCategories = resolve(CategoryTree::class)->hiddenIds();
+
         return [
-            'id' => (string) $model->getKey(),
+            'id' => (string) $this->getScoutKey($model),
             'name' => $model->name,
             'slug' => $model->slug,
             'sku' => $model->sku,
@@ -58,8 +61,13 @@ class ProductIndexer extends ScoutIndexer
             'description' => strip_tags((string) $model->description),
             'summary' => strip_tags((string) $model->summary) ?: null,
             'type' => $model->type?->value,
-            'brand' => $model->brand?->name,
-            'categories' => $model->categories->pluck('name')->all(),
+            'brand' => $model->brand?->is_enabled ? $model->brand->name : null,
+            'categories' => $model->categories
+                ->reject(fn (Model $category): bool => in_array($category->getKey(), $hiddenCategories))
+                ->pluck('name')
+                ->values()
+                ->all(),
+            'channels' => $model->channels->pluck('public_id')->all(),
             'published_at' => $model->published_at?->getTimestamp(),
             'created_at' => $model->created_at->getTimestamp(),
         ];
