@@ -8,6 +8,8 @@ return [
         'catalog' => 'Katalog',
         'sales' => 'Försäljning',
         'toggle' => 'Växla sidofält',
+        'open' => 'Öppna sidofält',
+        'close' => 'Stäng sidofält',
     ],
 
     'breadcrumb' => [

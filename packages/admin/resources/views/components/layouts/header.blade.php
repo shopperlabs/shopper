@@ -4,7 +4,7 @@
     <button
         @click.stop="$store.sidebar.open()"
         class="hover:bg-sh-header-hover text-sh-header-fg-muted hover:text-sh-header-fg -ml-2 inline-flex size-9 items-center justify-center rounded-md lg:hidden"
-        aria-label="Open sidebar"
+        aria-label="{{ __('shopper::layout.sidebar.open') }}"
     >
         <x-untitledui-menu-03 class="size-5" aria-hidden="true" />
     </button>
