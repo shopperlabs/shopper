@@ -48,6 +48,7 @@ describe(WebhookUrl::class, function (): void {
         'https://10.0.0.1/hook',
         'https://192.168.1.1/hook',
         'https://169.254.169.254/latest/meta-data',
+        'https://100.100.100.200/latest/meta-data',
     ]);
 
     it('pins the vetted address for hostname urls and never for ip literals', function (): void {

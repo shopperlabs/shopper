@@ -34,9 +34,9 @@ final class WebhookUrl
      *
      * Rejects the URL unless: scheme is https, the host resolves, and every
      * resolved address — both A and AAAA records, since curl may connect
-     * over either family — passes `FILTER_FLAG_NO_PRIV_RANGE` and
-     * `FILTER_FLAG_NO_RES_RANGE` (blocks RFC 1918, loopback, link-local —
-     * including cloud metadata endpoints such as 169.254.169.254).
+     * over either family — passes `FILTER_FLAG_GLOBAL_RANGE` (blocks RFC 1918,
+     * loopback, link-local and shared address space, including cloud metadata
+     * endpoints such as 169.254.169.254 and 100.100.100.200).
      *
      * Must run at subscription time and again at delivery time: DNS may be
      * re-pointed to a private address between the two (DNS rebinding). At
@@ -76,7 +76,7 @@ final class WebhookUrl
         }
 
         foreach ($addresses as $address) {
-            if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) === false) {
+            if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_GLOBAL_RANGE) !== $address) {
                 return null;
             }
         }
