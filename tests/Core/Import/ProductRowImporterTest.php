@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Queue;
 use Shopper\Core\Enum\Dimension\Weight;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Exceptions\ProductImportException;
+use Shopper\Core\Import\ImageRow;
 use Shopper\Core\Import\ProductRow;
 use Shopper\Core\Import\ProductRowImporter;
 use Shopper\Core\Import\Sources\CsvSource;
 use Shopper\Core\Import\VariantRow;
-use Shopper\Core\Jobs\DownloadProductImageJob;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
@@ -102,10 +102,33 @@ describe(ProductRowImporter::class, function (): void {
             ->and($variant->values)->toHaveCount(2);
     });
 
-    it('dispatches a download job per product image', function (): void {
-        $this->importer->import($this->rows[0]);
+    it('downloads each distinct image url once', function (): void {
+        $row = new ProductRow(handle: 'tee', name: 'Tee', images: [
+            new ImageRow('https://cdn.test/front.png'),
+            new ImageRow('https://cdn.test/front.png', position: 2),
+            new ImageRow('https://cdn.test/back.png', position: 3),
+        ]);
 
-        Queue::assertPushed(DownloadProductImageJob::class, 1);
+        $jobs = $this->importer->imageDownloads($this->importer->import($row), $row);
+
+        expect($jobs)->toHaveCount(2)
+            ->and($jobs[1]->url)->toBe('https://cdn.test/back.png')
+            ->and($jobs[1]->position)->toBe(3);
+    });
+
+    it('downloads each variant image on its own variant', function (): void {
+        $row = new ProductRow(handle: 'tee', name: 'Tee', optionNames: ['Size'], variants: [
+            new VariantRow(options: ['Size' => 'Small'], sku: 'TEE-S', imageUrl: 'https://cdn.test/small.png'),
+            new VariantRow(options: ['Size' => 'Large'], imageUrl: 'https://cdn.test/large.png'),
+        ]);
+
+        $jobs = $this->importer->imageDownloads($this->importer->import($row), $row);
+
+        expect($jobs)->toHaveCount(2)
+            ->and($jobs[0]->model->sku)->toBe('TEE-S')
+            ->and($jobs[0]->url)->toBe('https://cdn.test/small.png')
+            ->and($jobs[1]->model->name)->toBe('Large')
+            ->and($jobs[1]->url)->toBe('https://cdn.test/large.png');
     });
 
     it('rejects a product without a name', function (): void {
