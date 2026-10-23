@@ -6,6 +6,7 @@
     "php": "^8.3",
     "ext-intl": "*",
     "giggsey/libphonenumber-for-php": "^9.0",
+    "guzzlehttp/psr7": "^2.9|^3.0",
     "illuminate/broadcasting": "^12.68|^13.27",
     "illuminate/bus": "^12.68|^13.27",
     "illuminate/cache": "^12.68|^13.27",

@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Str;
+use Shopper\Core\Import\ImageDownloader;
 use Spatie\MediaLibrary\HasMedia;
 
 final class DownloadProductImageJob implements ShouldQueue
@@ -25,24 +27,32 @@ final class DownloadProductImageJob implements ShouldQueue
         public ?string $name = null,
     ) {}
 
-    public function handle(): void
+    public function handle(ImageDownloader $downloader): void
     {
         if (! $this->model instanceof HasMedia) {
             return;
         }
 
-        $fileName = basename((string) parse_url($this->url, PHP_URL_PATH));
+        $fileName = basename(urldecode((string) parse_url($this->url, PHP_URL_PATH)));
 
         if ($fileName !== '' && $this->model->media()->where('file_name', $fileName)->exists()) {
             return;
         }
 
-        $media = $this->model->addMediaFromUrl($this->url); // @phpstan-ignore-line
+        $path = $downloader->download($this->url);
 
-        if ($this->name !== null) {
-            $media->usingName($this->name);
+        try {
+            if (! str_contains($fileName, '.')) {
+                $fileName = ($fileName ?: 'file').'.'.Str::after((string) mime_content_type($path), '/');
+            }
+
+            $this->model->addMedia($path)
+                ->preservingOriginal()
+                ->usingFileName($fileName)
+                ->usingName($this->name ?? pathinfo($fileName, PATHINFO_FILENAME))
+                ->toMediaCollection((string) config('shopper.media.storage.collection_name', 'default'));
+        } finally {
+            unlink($path);
         }
-
-        $media->toMediaCollection((string) config('shopper.media.storage.collection_name', 'default'));
     }
 }
