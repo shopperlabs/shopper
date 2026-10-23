@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopper\Core\Import;
 
 use Illuminate\Bus\Batch;
+use Illuminate\Bus\PendingBatch;
+use Illuminate\Queue\DeferredQueue;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\LazyCollection;
 use Shopper\Core\Enum\ImportStatus;
@@ -23,16 +26,16 @@ final class StartProductImport
 
     public function execute(ProductImport $import): void
     {
-        $source = $this->manager->source($import->source);
-
-        if ($source instanceof SupportsColumnMapping && $import->mapping) {
-            $source = $source->withMapping($import->mapping);
-        }
-
-        $path = Storage::disk($import->disk)->path($import->file_path);
         $chunkSize = (int) config('shopper.core.import.chunk_size', 25);
 
         try {
+            $source = $this->manager->source($import->source);
+
+            if ($source instanceof SupportsColumnMapping && $import->mapping) {
+                $source = $source->withMapping($import->mapping);
+            }
+
+            $path = Storage::disk($import->disk)->path($import->file_path);
             $total = 0;
 
             $jobs = $source->read($path)
@@ -45,13 +48,19 @@ final class StartProductImport
                 })
                 ->all();
         } catch (Throwable $e) {
+            $this->fail($import, $e);
+        }
+
+        if ($jobs === []) {
             $import->update([
-                'status' => ImportStatus::Failed,
-                'errors' => [['handle' => '*', 'message' => $e->getMessage()]],
+                'status' => ImportStatus::Completed,
+                'started_at' => now(),
                 'finished_at' => now(),
             ]);
 
-            throw $e;
+            event(new ProductImportCompleted($import));
+
+            return;
         }
 
         $import->update([
@@ -62,9 +71,12 @@ final class StartProductImport
 
         $importId = $import->id;
 
-        $batch = Bus::batch($jobs)
+        $pending = Bus::batch($jobs)
             ->name("product-import-{$import->id}")
             ->allowFailures()
+            ->before(function (Batch $batch) use ($importId): void {
+                ProductImport::query()->whereKey($importId)->update(['batch_id' => $batch->id]);
+            })
             ->finally(function (Batch $batch) use ($importId): void {
                 /** @var ?ProductImport $import */
                 $import = ProductImport::query()->find($importId);
@@ -74,16 +86,51 @@ final class StartProductImport
                 }
 
                 $import->update([
-                    'status' => $import->failed_count > 0 || $batch->failedJobs > 0
+                    'status' => filled($import->errors) || $batch->failedJobs > 0
                         ? ImportStatus::CompletedWithErrors
                         : ImportStatus::Completed,
                     'finished_at' => now(),
                 ]);
 
                 event(new ProductImportCompleted($import));
-            })
-            ->dispatch();
+            });
 
-        $import->update(['batch_id' => $batch->id]);
+        if (Queue::connection() instanceof DeferredQueue) {
+            defer(function () use ($pending, $import): void {
+                $connection = Queue::getDefaultDriver();
+
+                Queue::setDefaultDriver('sync');
+
+                try {
+                    $this->dispatch($pending, $import);
+                } finally {
+                    Queue::setDefaultDriver($connection);
+                }
+            }, always: true);
+
+            return;
+        }
+
+        $this->dispatch($pending, $import);
+    }
+
+    private function dispatch(PendingBatch $pending, ProductImport $import): void
+    {
+        try {
+            $pending->dispatch();
+        } catch (Throwable $e) {
+            $this->fail($import, $e);
+        }
+    }
+
+    private function fail(ProductImport $import, Throwable $e): never
+    {
+        $import->update([
+            'status' => ImportStatus::Failed,
+            'errors' => [['handle' => '*', 'message' => $e->getMessage()]],
+            'finished_at' => now(),
+        ]);
+
+        throw $e;
     }
 }

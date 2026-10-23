@@ -61,6 +61,8 @@ jobs:
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "pestphp/pest:${{ matrix.pest }}" "pestphp/pest-plugin-laravel:${{ matrix.pest-plugin-laravel }}" --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+      - name: Link the Testbench vendor directory
+        run: php -r 'require "vendor/autoload.php"; Orchestra\Testbench\Foundation\Application::createVendorSymlink(null, getcwd()."/vendor");'
       - name: Run PHPStan
         run: composer test:types
 

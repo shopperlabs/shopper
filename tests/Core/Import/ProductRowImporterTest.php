@@ -116,6 +116,21 @@ describe(ProductRowImporter::class, function (): void {
             ->and($jobs[1]->position)->toBe(3);
     });
 
+    it('downloads each variant image on its own variant', function (): void {
+        $row = new ProductRow(handle: 'tee', name: 'Tee', optionNames: ['Size'], variants: [
+            new VariantRow(options: ['Size' => 'Small'], sku: 'TEE-S', imageUrl: 'https://cdn.test/small.png'),
+            new VariantRow(options: ['Size' => 'Large'], imageUrl: 'https://cdn.test/large.png'),
+        ]);
+
+        $jobs = $this->importer->imageDownloads($this->importer->import($row), $row);
+
+        expect($jobs)->toHaveCount(2)
+            ->and($jobs[0]->model->sku)->toBe('TEE-S')
+            ->and($jobs[0]->url)->toBe('https://cdn.test/small.png')
+            ->and($jobs[1]->model->name)->toBe('Large')
+            ->and($jobs[1]->url)->toBe('https://cdn.test/large.png');
+    });
+
     it('rejects a product without a name', function (): void {
         $this->importer->import(new ProductRow(
             handle: 'broken-product',

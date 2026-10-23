@@ -58,4 +58,18 @@ describe(ImportProductsChunkJob::class, function (): void {
 
         Queue::assertNotPushed(DownloadProductImageJob::class);
     });
+
+    it('skips its rows once its import has failed', function (): void {
+        $import = ProductImport::query()->create([
+            'source' => 'csv',
+            'disk' => 'local',
+            'file_path' => 'imports/products.csv',
+            'status' => ImportStatus::Failed,
+        ]);
+
+        (new ImportProductsChunkJob($import->id, [new ProductRow(handle: 'tee', name: 'Tee')]))
+            ->handle(resolve(ProductRowImporter::class));
+
+        expect(Product::query()->where('slug', 'tee')->exists())->toBeFalse();
+    });
 });

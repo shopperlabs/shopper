@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use Shopper\Core\Enum\ImportStatus;
 use Shopper\Core\Import\ProductRow;
 use Shopper\Core\Import\ProductRowImporter;
 use Shopper\Core\Models\ProductImport;
@@ -34,7 +35,7 @@ final class ImportProductsChunkJob implements ShouldQueue
 
     public function handle(ProductRowImporter $importer): void
     {
-        if ($this->batch()?->cancelled()) {
+        if ($this->batch()?->cancelled() || ProductImport::query()->useWritePdo()->whereKey($this->importId)->value('status') === ImportStatus::Failed) {
             return;
         }
 
@@ -52,10 +53,6 @@ final class ImportProductsChunkJob implements ShouldQueue
             }
         }
 
-        if ($images !== []) {
-            $this->batch()?->add($images);
-        }
-
         if ($imported > 0) {
             ProductImport::query()->whereKey($this->importId)->increment('imported_count', $imported);
         }
@@ -70,6 +67,10 @@ final class ImportProductsChunkJob implements ShouldQueue
                     'errors' => [...($import->errors ?? []), ...$errors],
                 ]);
             });
+        }
+
+        if ($images !== []) {
+            $this->batch()?->add($images);
         }
     }
 }

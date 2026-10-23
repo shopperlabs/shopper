@@ -3,12 +3,16 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Event;
+use Shopper\Core\Enum\ImportStatus;
 use Shopper\Core\Events\Orders\OrderCreated;
 use Shopper\Core\Events\Orders\OrderPaid;
+use Shopper\Core\Events\Products\ProductImportCompleted;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\ProductImport;
 use Shopper\Listeners\Notifications\SendNewOrderNotification;
 use Shopper\Listeners\Notifications\SendOrderPaidNotification;
 use Shopper\Listeners\Notifications\SendPaymentFailedNotification;
+use Shopper\Listeners\Notifications\SendProductImportCompletedNotification;
 use Shopper\Payment\Enum\TransactionType;
 use Shopper\Payment\Events\PaymentFailed;
 use Tests\Core\Stubs\User;
@@ -73,6 +77,17 @@ it('uses the refund copy when a refund fails', function (): void {
     expect($this->admin->fresh()->notifications->first()->data)
         ->toHaveKey('title', __('shopper::notifications.database.refund_failed.title'));
 });
+
+it('warns when an import completed with errors even if every row was imported', function (ImportStatus $status, string $expected): void {
+    $import = new ProductImport(['status' => $status, 'imported_count' => 3, 'failed_count' => 0]);
+
+    (new SendProductImportCompletedNotification)->handle(new ProductImportCompleted($import));
+
+    expect($this->admin->fresh()->notifications->first()->data)->toHaveKey('status', $expected);
+})->with([
+    'image downloads failed' => [ImportStatus::CompletedWithErrors, 'warning'],
+    'everything imported' => [ImportStatus::Completed, 'success'],
+]);
 
 it('does not send notifications when there is no administrator', function (): void {
     $this->admin->removeRole(config('shopper.admin.roles.admin'));
