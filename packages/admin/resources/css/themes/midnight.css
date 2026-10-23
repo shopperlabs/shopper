@@ -46,6 +46,18 @@
   --theme-sh-card: var(--color-slate-100);
   --theme-sh-table-header: var(--color-slate-100);
   --theme-sh-skeleton: var(--color-slate-200);
+
+  --gray-50: var(--color-slate-50);
+  --gray-100: var(--color-slate-100);
+  --gray-200: var(--color-slate-200);
+  --gray-300: var(--color-slate-300);
+  --gray-400: var(--color-slate-400);
+  --gray-500: var(--color-slate-500);
+  --gray-600: var(--color-slate-600);
+  --gray-700: var(--color-slate-700);
+  --gray-800: var(--color-slate-800);
+  --gray-900: var(--color-slate-900);
+  --gray-950: var(--color-slate-950);
 }
 
 .dark[data-theme='midnight'] {

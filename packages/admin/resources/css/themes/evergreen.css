@@ -48,6 +48,18 @@
   --theme-sh-card: var(--color-stone-50);
   --theme-sh-table-header: var(--color-stone-50);
   --theme-sh-skeleton: var(--color-stone-200);
+
+  --gray-50: var(--color-stone-50);
+  --gray-100: var(--color-stone-100);
+  --gray-200: var(--color-stone-200);
+  --gray-300: var(--color-stone-300);
+  --gray-400: var(--color-stone-400);
+  --gray-500: var(--color-stone-500);
+  --gray-600: var(--color-stone-600);
+  --gray-700: var(--color-stone-700);
+  --gray-800: var(--color-stone-800);
+  --gray-900: var(--color-stone-900);
+  --gray-950: var(--color-stone-950);
 }
 
 .dark[data-theme='evergreen'] {
@@ -66,4 +78,9 @@
   --theme-sh-card: #15180f;
   --theme-sh-table-header: #15180f;
   --theme-sh-skeleton: #2f3825;
+
+  --gray-700: #3a4230;
+  --gray-800: #2a3122;
+  --gray-900: #1e2418;
+  --gray-950: #15180f;
 }

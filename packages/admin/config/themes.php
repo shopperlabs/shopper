@@ -23,8 +23,9 @@ return [
     |
     | Each theme maps to a `[data-theme='id']` block in the compiled admin
     | stylesheet (see resources/css/themes/*.css). Add your own theme by
-    | creating a CSS file that overrides the `--theme-sh-*` tokens, importing
-    | it in resources/css/shopper.css, then registering it here.
+    | creating a CSS file that overrides the `--theme-sh-*` tokens and the
+    | `--gray-*` ramp used by Filament components, importing it in
+    | resources/css/shopper.css, then registering it here.
     |
     | Community packages may register themes at runtime through the
     | ThemeManager: `resolve(ThemeManager::class)->register(new Theme(...))`.
