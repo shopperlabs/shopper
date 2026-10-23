@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Jobs;
 
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
@@ -16,15 +17,22 @@ use Spatie\MediaLibrary\HasMedia;
 
 final class DownloadProductImageJob implements ShouldQueue
 {
+    use Batchable;
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
 
+    public int $tries = 3;
+
+    /** @var array<int, int> */
+    public array $backoff = [10, 60];
+
     public function __construct(
         public Model $model,
         public string $url,
         public ?string $name = null,
+        public ?int $position = null,
     ) {}
 
     public function handle(ImageDownloader $downloader): void
@@ -33,12 +41,11 @@ final class DownloadProductImageJob implements ShouldQueue
             return;
         }
 
-        $fileName = basename(urldecode((string) parse_url($this->url, PHP_URL_PATH)));
-
-        if ($fileName !== '' && $this->model->media()->where('file_name', $fileName)->exists()) {
+        if ($this->model->media()->where('custom_properties->source_url', $this->url)->exists()) {
             return;
         }
 
+        $fileName = basename(urldecode((string) parse_url($this->url, PHP_URL_PATH)));
         $path = $downloader->download($this->url);
 
         try {
@@ -50,6 +57,8 @@ final class DownloadProductImageJob implements ShouldQueue
                 ->preservingOriginal()
                 ->usingFileName($fileName)
                 ->usingName($this->name ?? pathinfo($fileName, PATHINFO_FILENAME))
+                ->withCustomProperties(['source_url' => $this->url])
+                ->setOrder($this->position)
                 ->toMediaCollection((string) config('shopper.media.storage.collection_name', 'default'));
         } finally {
             unlink($path);

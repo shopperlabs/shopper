@@ -56,9 +56,42 @@ final class ProductRowImporter
 
         resolve(ProductContract::class)::query()->whereKey($product->getKey())->searchable();
 
-        $this->dispatchImageDownloads($product, $row);
-
         return $product;
+    }
+
+    /**
+     * @param  Model&ProductContract  $product
+     * @return array<int, DownloadProductImageJob>
+     */
+    public function imageDownloads(ProductContract $product, ProductRow $row): array
+    {
+        $jobs = collect($row->images)
+            ->unique('url')
+            ->map(fn (ImageRow $image): DownloadProductImageJob => new DownloadProductImageJob($product, $image->url, $image->alt, $image->position))
+            ->values()
+            ->all();
+
+        if ($row->isStandard()) {
+            return $jobs;
+        }
+
+        foreach ($row->variants as $variantRow) {
+            if ($variantRow->imageUrl === null) {
+                continue;
+            }
+
+            /** @var (Model&ProductVariantContract)|null $variant */
+            $variant = $product->variants()
+                ->when($variantRow->sku !== null, fn ($query) => $query->where('sku', $variantRow->sku))
+                ->when($variantRow->sku === null, fn ($query) => $query->where('name', $variantRow->name($row->name)))
+                ->first();
+
+            if ($variant !== null) {
+                $jobs[] = new DownloadProductImageJob($variant, $variantRow->imageUrl);
+            }
+        }
+
+        return $jobs;
     }
 
     /**
@@ -326,35 +359,5 @@ final class ProductRowImporter
     private function toCents(?float $amount): ?int
     {
         return $amount === null ? null : (int) round($amount * 100);
-    }
-
-    /**
-     * @param  Model&ProductContract  $product
-     */
-    private function dispatchImageDownloads(ProductContract $product, ProductRow $row): void
-    {
-        foreach ($row->images as $image) {
-            DownloadProductImageJob::dispatch($product, $image->url, $image->alt);
-        }
-
-        if ($row->isStandard()) {
-            return;
-        }
-
-        foreach ($row->variants as $variantRow) {
-            if ($variantRow->imageUrl === null) {
-                continue;
-            }
-
-            /** @var (Model&ProductVariantContract)|null $variant */
-            $variant = $product->variants()
-                ->when($variantRow->sku !== null, fn ($query) => $query->where('sku', $variantRow->sku))
-                ->when($variantRow->sku === null, fn ($query) => $query->where('name', $variantRow->name($row->name)))
-                ->first();
-
-            if ($variant !== null) {
-                DownloadProductImageJob::dispatch($variant, $variantRow->imageUrl);
-            }
-        }
     }
 }

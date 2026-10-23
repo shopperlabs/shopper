@@ -109,14 +109,29 @@ describe(DownloadProductImageJob::class, function (): void {
 
         $product = Product::factory()->create();
 
-        (new DownloadProductImageJob($product, 'https://93.184.216.34/images/blue-shirt', 'Blue shirt'))
+        (new DownloadProductImageJob($product, 'https://93.184.216.34/images/blue-shirt', 'Blue shirt', 3))
             ->handle(new ImageDownloader);
 
         $media = Media::query()->sole();
 
         expect($media->collection_name)->toBe(config('shopper.media.storage.collection_name'))
             ->and($media->file_name)->toBe('blue-shirt.png')
-            ->and($media->name)->toBe('Blue shirt');
+            ->and($media->name)->toBe('Blue shirt')
+            ->and($media->order_column)->toBe(3);
+    });
+
+    it('skips an image already imported from the same url', function (): void {
+        Http::fake(fn () => Http::response(onePixelPng()));
+
+        $product = Product::factory()->create();
+
+        foreach (['a/front', 'b/front', 'a/front'] as $path) {
+            (new DownloadProductImageJob($product, "https://93.184.216.34/{$path}"))->handle(new ImageDownloader);
+        }
+
+        expect(Media::query()->count())->toBe(2);
+
+        Http::assertSentCount(2);
     });
 
     it('removes the downloaded file when the media collection refuses it', function (): void {

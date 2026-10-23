@@ -9,6 +9,7 @@ use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Shopper\Concerns\ResolvesAdministrators;
+use Shopper\Core\Enum\ImportStatus;
 use Shopper\Core\Events\Products\ProductImportCompleted;
 
 final class SendProductImportCompletedNotification implements ShouldQueue
@@ -34,7 +35,7 @@ final class SendProductImportCompletedNotification implements ShouldQueue
             ]))
             ->icon(Heroicon::OutlinedArrowDownTray);
 
-        $import->failed_count > 0 ? $notification->warning() : $notification->success();
+        $import->status === ImportStatus::CompletedWithErrors ? $notification->warning() : $notification->success();
 
         $notification
             ->actions([

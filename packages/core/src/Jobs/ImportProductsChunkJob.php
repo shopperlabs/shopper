@@ -40,14 +40,20 @@ final class ImportProductsChunkJob implements ShouldQueue
 
         $imported = 0;
         $errors = [];
+        $images = [];
 
         foreach ($this->rows as $row) {
             try {
-                $importer->import($row);
+                $product = $importer->import($row);
+                $images = [...$images, ...$importer->imageDownloads($product, $row)];
                 $imported++;
             } catch (Throwable $e) {
                 $errors[] = ['handle' => $row->handle, 'message' => $e->getMessage()];
             }
+        }
+
+        if ($images !== []) {
+            $this->batch()?->add($images);
         }
 
         if ($imported > 0) {
