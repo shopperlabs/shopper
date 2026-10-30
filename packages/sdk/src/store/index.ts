@@ -20,6 +20,7 @@ import { CustomerModule } from './customer'
 import { OrderModule } from './order'
 import { ProductResource } from './product'
 import { ReviewModule } from './review'
+import { ShipmentModule } from './shipment'
 import { SingletonResource } from './singleton'
 
 export { CartModule } from './cart'
@@ -41,6 +42,7 @@ export { OrderModule } from './order'
 export { ProductResource } from './product'
 export type { ProductList, ReviewList } from './product'
 export { ReviewModule } from './review'
+export { ShipmentModule } from './shipment'
 export { SingletonResource } from './singleton'
 
 /**
@@ -83,6 +85,8 @@ export class StoreModule {
 
   public readonly order: OrderModule
 
+  public readonly shipment: ShipmentModule
+
   public constructor(private readonly client: HttpClient) {
     const prefix = `/${client.storePrefix}`
 
@@ -101,6 +105,7 @@ export class StoreModule {
     this.customer = new CustomerModule(client)
     this.cart = new CartModule(client)
     this.order = new OrderModule(client)
+    this.shipment = new ShipmentModule(client)
   }
 
   /**

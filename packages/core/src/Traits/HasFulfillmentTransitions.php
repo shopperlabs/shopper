@@ -30,6 +30,7 @@ trait HasFulfillmentTransitions
             ],
             ShipmentStatus::PickedUp->value => [
                 ShipmentStatus::InTransit,
+                ShipmentStatus::OutForDelivery,
                 ShipmentStatus::DeliveryFailed,
                 ShipmentStatus::Returned,
             ],

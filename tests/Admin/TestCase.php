@@ -22,6 +22,7 @@ use JaOcero\RadioDeck\RadioDeckServiceProvider;
 use Laravel\Passkeys\PasskeysServiceProvider;
 use Laravelcm\LivewireSlideOvers\LivewireSlideOverServiceProvider;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsServiceProvider;
+use Livewire\Blaze\BlazeServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Livewire\Mechanisms\DataStore;
 use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
@@ -70,6 +71,7 @@ abstract class TestCase extends \Tests\TestCase
     {
         return [
             LivewireServiceProvider::class,
+            BlazeServiceProvider::class,
             ActionsServiceProvider::class,
             BarcodeServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
