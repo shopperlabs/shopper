@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Http\Resources;
 
+use ArrayAccess;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -55,6 +56,11 @@ abstract class JsonApiResource extends BaseJsonApiResource
         if ($request->attributes->get('shopper_calculated_prices') === true) {
             Vary::add($response, 'Authorization');
         }
+    }
+
+    public function offsetExists($offset): bool
+    {
+        return (is_array($this->resource) || $this->resource instanceof ArrayAccess) && parent::offsetExists($offset);
     }
 
     /**
