@@ -57,16 +57,19 @@ describe('Shipment state machine — invalid transitions', function (): void {
             ->and($shipment->canTransitionTo(ShipmentStatus::Delivered))->toBeFalse();
     });
 
-    it('rejects skipping in-transit to go directly from picked up to out for delivery', function (): void {
+    it('lets a picked up shipment go out for delivery without passing through transit', function (): void {
         $shipment = OrderShipping::query()->create([
             'order_id' => Order::factory()->create()->id,
             'status' => ShipmentStatus::PickedUp,
             'shipped_at' => now(),
         ]);
 
-        expect($shipment->canTransitionTo(ShipmentStatus::OutForDelivery))->toBeFalse()
-            ->and($shipment->canTransitionTo(ShipmentStatus::Delivered))->toBeFalse()
-            ->and($shipment->canTransitionTo(ShipmentStatus::InTransit))->toBeTrue();
+        expect($shipment->canTransitionTo(ShipmentStatus::Delivered))->toBeFalse();
+
+        $event = (new RecordShipmentEventAction)->execute($shipment, ShipmentStatus::OutForDelivery);
+
+        expect($event)->not->toBeNull()
+            ->and($shipment->refresh()->status)->toBe(ShipmentStatus::OutForDelivery);
     });
 
     it('allows retry after delivery failure', function (): void {
