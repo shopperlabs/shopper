@@ -65,7 +65,7 @@ class Devices extends Component implements HasActions, HasSchemas
     }
 
     /**
-     * @return Collection<int, object>
+     * @return Collection<int, covariant object>
      */
     #[Computed]
     public function sessions(): Collection

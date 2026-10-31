@@ -19,6 +19,7 @@ use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use JaOcero\RadioDeck\RadioDeckServiceProvider;
 use Laravelcm\LivewireSlideOvers\LivewireSlideOverServiceProvider;
+use Livewire\Blaze\BlazeServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Livewire\Mechanisms\DataStore;
 use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
@@ -64,6 +65,7 @@ abstract class TestCase extends \Tests\TestCase
     {
         return [
             LivewireServiceProvider::class,
+            BlazeServiceProvider::class,
             ActionsServiceProvider::class,
             BarcodeServiceProvider::class,
             BladeHeroiconsServiceProvider::class,

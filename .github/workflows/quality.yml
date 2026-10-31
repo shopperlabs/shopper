@@ -24,6 +24,7 @@ jobs:
             testbench: 10.*
           - laravel: 11.*
             testbench: 9.*
+            advisories-block: '0'
           - php: 8.5
             pest: ^4.0
             pest-plugin-laravel: ^4.0
@@ -60,6 +61,8 @@ jobs:
           tools: composer:v2
           coverage: none
       - name: Install dependencies
+        env:
+          COMPOSER_POLICY_ADVISORIES_BLOCK: ${{ matrix.advisories-block }}
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "pestphp/pest:${{ matrix.pest }}" "pestphp/pest-plugin-laravel:${{ matrix.pest-plugin-laravel }}" --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
