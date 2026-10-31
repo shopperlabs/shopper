@@ -20,7 +20,7 @@
 
         <livewire:shopper-account.password />
 
-        @if (config('shopper.auth.2fa_enabled'))
+        @if ($twoFactorEnabled)
             <x-shopper::separator />
 
             <livewire:shopper-account.two-factor />

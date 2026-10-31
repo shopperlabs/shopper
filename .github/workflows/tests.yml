@@ -25,6 +25,7 @@ jobs:
             testbench: 10.*
           - laravel: 11.*
             testbench: 9.*
+            advisories-block: '0'
         exclude:
           - laravel: 11.*
             php: 8.5
@@ -62,6 +63,8 @@ jobs:
           tools: composer:v2
           coverage: xdebug
       - name: Install Composer dependencies
+        env:
+          COMPOSER_POLICY_ADVISORIES_BLOCK: ${{ matrix.advisories-block }}
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
