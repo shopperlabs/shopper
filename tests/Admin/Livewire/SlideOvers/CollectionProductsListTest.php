@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Livewire\SlideOvers\CollectionProductsList;
@@ -124,5 +125,15 @@ describe(CollectionProductsList::class, function (): void {
         expect($collection->products)->toHaveCount(2)
             ->and($collection->products->pluck('id')->toArray())
             ->toContain($existingProduct->id, $newProduct->id);
+    });
+
+    it('hides the add action once `collections.edit` is revoked', function (): void {
+        $collection = Collection::factory(['type' => CollectionType::Manual])->create();
+
+        $component = Livewire::test(CollectionProductsList::class, ['collection' => $collection]);
+
+        $this->user->revokePermissionTo('collections.edit');
+
+        $component->refresh()->assertActionHidden(TestAction::make('add')->table()->bulk());
     });
 })->group('livewire', 'slide-overs', 'collections');
