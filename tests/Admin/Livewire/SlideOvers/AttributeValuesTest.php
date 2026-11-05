@@ -176,6 +176,14 @@ describe(AttributeValues::class, function (): void {
             ->assertTableBulkActionHidden('delete');
     });
 
+    it('hides the add action once `edit_attributes` is revoked', function (): void {
+        $component = Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id]);
+
+        $this->user->revokePermissionTo('edit_attributes');
+
+        $component->refresh()->assertTableActionHidden('add');
+    });
+
     it('can remove value via method', function (): void {
         $this->user->givePermissionTo('delete_attributes');
 
