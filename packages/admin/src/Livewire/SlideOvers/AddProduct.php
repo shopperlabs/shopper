@@ -284,6 +284,8 @@ class AddProduct extends SlideOverComponent implements HasActions, HasSchemas
 
     public function store(): void
     {
+        $this->authorize('add_products');
+
         $this->validate();
 
         $product = app()->call(CreateProductAction::class, [

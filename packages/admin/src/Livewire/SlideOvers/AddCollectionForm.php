@@ -134,6 +134,8 @@ class AddCollectionForm extends SlideOverComponent implements HasActions, HasSch
 
     public function store(): void
     {
+        $this->authorize('add_collections');
+
         /** @var Model&Collection $collection */
         $collection = resolve(Collection::class)::query()->create($this->form->getState());
         $this->form->model($collection)->saveRelationships();

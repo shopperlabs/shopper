@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aaf8157b2cfbd9deaf1b95a9005dd101",
+    "content-hash": "9edcf97fd28e9deae06db958d3e0fff3",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -3412,16 +3412,16 @@
         },
         {
             "name": "laravelcm/livewire-slide-overs",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravelcm/livewire-slide-overs.git",
-                "reference": "b4996da0b0f02349f208aab974b30ab095ff16e3"
+                "reference": "7492ea1299e15fe34d6fcbf437318f0b4cd912dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravelcm/livewire-slide-overs/zipball/b4996da0b0f02349f208aab974b30ab095ff16e3",
-                "reference": "b4996da0b0f02349f208aab974b30ab095ff16e3",
+                "url": "https://api.github.com/repos/laravelcm/livewire-slide-overs/zipball/7492ea1299e15fe34d6fcbf437318f0b4cd912dd",
+                "reference": "7492ea1299e15fe34d6fcbf437318f0b4cd912dd",
                 "shasum": ""
             },
             "require": {
@@ -3431,7 +3431,7 @@
             },
             "require-dev": {
                 "laravel/pint": "^1.1",
-                "orchestra/testbench": "^9.0|^10.0|^11.0",
+                "orchestra/testbench": "^10.0|^11.0",
                 "pestphp/pest": "^4.0",
                 "pestphp/pest-plugin-livewire": "^4.0",
                 "phpstan/phpstan": "^2.1.27"
@@ -3467,7 +3467,7 @@
             ],
             "support": {
                 "issues": "https://github.com/laravelcm/livewire-slide-overs/issues",
-                "source": "https://github.com/laravelcm/livewire-slide-overs/tree/v2.1.0"
+                "source": "https://github.com/laravelcm/livewire-slide-overs/tree/v2.1.1"
             },
             "funding": [
                 {
@@ -3475,7 +3475,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-13T09:37:42+00:00"
+            "time": "2026-11-05T19:28:17+00:00"
         },
         {
             "name": "league/commonmark",

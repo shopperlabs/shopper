@@ -27,6 +27,16 @@ beforeEach(function (): void {
 });
 
 describe(AddProduct::class, function (): void {
+    it('authorizes store even when mount() is skipped', function (): void {
+        $this->actingAs(User::factory()->create());
+
+        Livewire::test(AddProduct::class, ['lazy' => true])
+            ->call('store')
+            ->assertForbidden();
+
+        expect(Product::query()->count())->toBe(0);
+    });
+
     it('mounts when a default product type is stored in settings', function (): void {
         Setting::factory()->create([
             'key' => 'default_product_type',
