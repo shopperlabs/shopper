@@ -28,6 +28,16 @@ describe(ImportCsv::class, function (): void {
             ->assertForbidden();
     });
 
+    it('authorizes store even when mount() is skipped', function (): void {
+        $this->actingAs(User::factory()->create());
+
+        Livewire::test(ImportCsv::class, ['lazy' => true])
+            ->call('store')
+            ->assertForbidden();
+
+        expect(ProductImport::query()->count())->toBe(0);
+    });
+
     it('requires a file', function (): void {
         Livewire::test(ImportCsv::class)
             ->call('store')

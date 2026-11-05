@@ -19,6 +19,18 @@ beforeEach(function (): void {
 });
 
 describe(AddCollectionForm::class, function (): void {
+    it('authorizes store even when mount() is skipped', function (): void {
+        $this->actingAs(User::factory()->create());
+
+        Livewire::test(AddCollectionForm::class, ['lazy' => true])
+            ->set('data.name', 'Injected')
+            ->set('data.type', CollectionType::Manual())
+            ->call('store')
+            ->assertForbidden();
+
+        expect(resolve(CollectionContract::class)::query()->count())->toBe(0);
+    });
+
     it('can validate required fields on add collection form', function (): void {
         Livewire::test(AddCollectionForm::class)
             ->fillForm()

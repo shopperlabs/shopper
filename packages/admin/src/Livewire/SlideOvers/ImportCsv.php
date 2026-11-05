@@ -138,6 +138,8 @@ class ImportCsv extends SlideOverComponent implements HasActions, HasSchemas
 
     public function store(): void
     {
+        $this->authorize('products.create');
+
         $this->validate();
 
         $file = $this->uploadedFile();
