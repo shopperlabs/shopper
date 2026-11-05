@@ -137,6 +137,7 @@ class AttributeValues extends SlideOverComponent implements HasActions, HasSchem
             ])
             ->headerActions([
                 Action::make('add')
+                    ->authorize('attributes.edit')
                     ->label(__('shopper::forms.actions.add_label', ['label' => __('shopper::forms.label.value')]))
                     ->badge()
                     ->modalHeading(__('shopper::modals.attributes.new_value', ['attribute' => $this->attribute->name]))
