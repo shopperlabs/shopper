@@ -62,6 +62,8 @@ class CustomersPicker extends SlideOverComponent implements HasActions, HasSchem
      */
     public function mount(array $exceptIds = [], ?string $ability = null, ?string $title = null, ?string $description = null, ?string $event = null): void
     {
+        $this->authorize('customers.browse');
+
         if ($ability !== null) {
             $this->authorize($ability);
         }

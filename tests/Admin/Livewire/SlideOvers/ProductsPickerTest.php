@@ -12,7 +12,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('products.edit');
+    $this->user->givePermissionTo('products.browse', 'products.edit');
     $this->actingAs($this->user);
 });
 
@@ -52,5 +52,12 @@ describe(ProductsPicker::class, function (): void {
     it('shows the title passed by the caller', function (): void {
         Livewire::test(ProductsPicker::class, ['ability' => 'products.edit', 'title' => 'Add Similar Products'])
             ->assertSet('panelTitle', 'Add Similar Products');
+    });
+
+    it('requires `products.browse` whatever ability the caller passes', function (): void {
+        $this->user->revokePermissionTo('products.browse');
+
+        Livewire::test(ProductsPicker::class)->assertForbidden();
+        Livewire::test(ProductsPicker::class, ['ability' => 'products.edit'])->assertForbidden();
     });
 })->group('livewire', 'slide-overs', 'products');

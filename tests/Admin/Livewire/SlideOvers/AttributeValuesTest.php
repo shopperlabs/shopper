@@ -238,4 +238,12 @@ describe(AttributeValues::class, function (): void {
         expect($component->get('values')->count())->toBe(1)
             ->and($component->get('values')->first()->key)->toBe('attr1');
     });
+
+    it('hides the add action once `attributes.edit` is revoked', function (): void {
+        $component = Livewire::test(AttributeValues::class, ['attributeId' => $this->attribute->id]);
+
+        $this->user->revokePermissionTo('attributes.edit');
+
+        $component->refresh()->assertActionHidden(TestAction::make('add')->table());
+    });
 })->group('livewire', 'slideovers', 'attributes');

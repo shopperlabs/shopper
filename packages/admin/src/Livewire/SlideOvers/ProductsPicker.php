@@ -63,6 +63,8 @@ class ProductsPicker extends SlideOverComponent implements HasActions, HasSchema
      */
     public function mount(array $exceptIds = [], ?string $ability = null, ?string $title = null, ?string $description = null, ?string $event = null): void
     {
+        $this->authorize('products.browse');
+
         if ($ability !== null) {
             $this->authorize($ability);
         }
