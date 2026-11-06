@@ -50,6 +50,8 @@ describe(GenerateVariants::class, function (): void {
     });
 
     it('cannot update a variant of another product', function (): void {
+        $this->withoutExceptionHandling();
+
         $foreign = ProductVariant::factory()->create(['product_id' => Product::factory()->create()->id]);
 
         expect(fn () => Livewire::test(GenerateVariants::class, ['product' => $this->product])
