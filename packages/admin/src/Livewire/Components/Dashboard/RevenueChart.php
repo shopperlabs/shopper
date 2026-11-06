@@ -23,6 +23,8 @@ final class RevenueChart extends ApexChartWidget
 
     public function mount(): void
     {
+        $this->authorize('browse_orders');
+
         $this->filter = shopper_currency();
 
         parent::mount();

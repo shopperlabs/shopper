@@ -50,11 +50,13 @@ class SupplierForm extends SlideOverComponent implements HasActions, HasSchemas,
 
     public function mount(?Supplier $supplier = null): void
     {
-        $user = shopper()->auth()->user();
-
-        abort_unless($user->can('add_suppliers') || $user->can('edit_suppliers'), 403);
-
         $this->supplier = $supplier ?? resolve(Supplier::class)::query()->newModelInstance();
+
+        if ($this->supplier->exists) {
+            $this->authorize('edit_suppliers', $this->supplier);
+        } else {
+            $this->authorize('add_suppliers');
+        }
 
         $this->title = $this->supplier->id
             ? $this->supplier->name

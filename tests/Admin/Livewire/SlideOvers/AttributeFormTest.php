@@ -86,14 +86,16 @@ describe(AttributeForm::class, function (): void {
         ]);
 
         Livewire::test(AttributeForm::class, ['attributeId' => $attribute->id])
-            ->fillForm([
-                'name' => 'Hacked Name',
-                'type' => FieldType::Select(),
-                'description' => 'Updated description',
-            ])
-            ->call('store');
+            ->assertForbidden();
+    });
 
-        expect($attribute->refresh()->name)->toBe('Old Name');
+    it('lets a user with only `edit_attributes` open an existing attribute', function (): void {
+        $user = User::factory()->create();
+        $user->givePermissionTo('edit_attributes');
+        $this->actingAs($user);
+
+        Livewire::test(AttributeForm::class, ['attributeId' => Attribute::factory()->create()->id])
+            ->assertOk();
     });
 
     it('can edit existing attribute', function (): void {

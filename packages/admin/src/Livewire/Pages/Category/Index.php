@@ -162,6 +162,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->label(__('shopper::words.reorder'))
                     ->icon(Untitledui::SwitchVertical)
                     ->color('gray')
+                    ->authorize('edit_categories')
                     ->action(
                         fn () => $this->dispatch(
                             'openPanel',

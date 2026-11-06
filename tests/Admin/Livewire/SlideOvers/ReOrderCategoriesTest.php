@@ -16,6 +16,12 @@ beforeEach(function (): void {
 });
 
 describe(ReOrderCategories::class, function (): void {
+    it('requires edit_categories to open the category tree', function (): void {
+        $this->user->revokePermissionTo('edit_categories');
+
+        Livewire::test(ReOrderCategories::class)->assertForbidden();
+    });
+
     it('can render reorder categories slideover', function (): void {
         Livewire::test(ReOrderCategories::class)
             ->assertOk();
