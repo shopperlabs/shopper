@@ -17,6 +17,11 @@ use Shopper\Core\Models\Contracts\Order;
  */
 final class RecentOrders extends Component
 {
+    public function mount(): void
+    {
+        $this->authorize('orders.browse');
+    }
+
     #[Computed]
     public function orders(): Collection
     {

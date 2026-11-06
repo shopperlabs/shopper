@@ -126,6 +126,7 @@ trait InteractsWithDiscountItems
         }
 
         return config('auth.providers.users.model')::query()
+            ->scopes('customers')
             ->whereIn('id', $ids)
             ->get();
     }

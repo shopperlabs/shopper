@@ -21,6 +21,11 @@ use Shopper\Models\Product;
  */
 final class TopSellingProducts extends Component
 {
+    public function mount(): void
+    {
+        $this->authorize('orders.browse');
+    }
+
     #[Computed]
     public function products(): Collection
     {

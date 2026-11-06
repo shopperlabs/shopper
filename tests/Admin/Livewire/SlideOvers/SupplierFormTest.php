@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
+use Shopper\Core\Models\Supplier;
 use Shopper\Livewire\SlideOvers\SupplierForm;
 use Tests\Core\Stubs\User;
 
@@ -13,6 +14,15 @@ describe(SupplierForm::class, function (): void {
         $this->actingAs(User::factory()->create());
 
         Livewire::test(SupplierForm::class)
+            ->assertForbidden();
+    });
+
+    it('requires suppliers.edit to open an existing supplier', function (): void {
+        $user = User::factory()->create();
+        $user->givePermissionTo('suppliers.create');
+        $this->actingAs($user);
+
+        Livewire::test(SupplierForm::class, ['supplier' => Supplier::factory()->create()])
             ->assertForbidden();
     });
 })->group('livewire', 'slideovers', 'security');

@@ -18,6 +18,12 @@ beforeEach(function (): void {
 });
 
 describe(ReOrderCategories::class, function (): void {
+    it('requires categories.edit to open the category tree', function (): void {
+        $this->user->revokePermissionTo('categories.edit');
+
+        Livewire::test(ReOrderCategories::class)->assertForbidden();
+    });
+
     it('loads only parent categories ordered by position', function (): void {
         $parent1 = Category::factory()->create(['parent_id' => null, 'position' => 1]);
         $parent2 = Category::factory()->create(['parent_id' => null, 'position' => 2]);

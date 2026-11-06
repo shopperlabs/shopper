@@ -19,6 +19,7 @@ use Shopper\Actions\Store\Product\SavePricingAction;
 use Shopper\Components\Form\CurrenciesField;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Contracts\Priceable;
+use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Core\Models\Currency;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 use Shopper\Traits\InteractsWithSlideOverForm;
@@ -63,6 +64,11 @@ class ManagePricing extends SlideOverComponent implements HasActions, HasSchemas
         $this->authorize('products.edit');
 
         $this->model = $modelType::with('prices')->find($modelId);
+
+        if ($this->model instanceof ProductVariant) {
+            $this->authorize('products.variants.edit');
+        }
+
         $this->title = __('shopper::pages/products.pricing.title');
         $this->currencyId = $currencyId;
 
@@ -98,6 +104,10 @@ class ManagePricing extends SlideOverComponent implements HasActions, HasSchemas
     public function save(): void
     {
         $this->authorize('products.edit');
+
+        if ($this->model instanceof ProductVariant) {
+            $this->authorize('products.variants.edit');
+        }
 
         $this->validate();
 

@@ -64,7 +64,7 @@ final class SaveProductVariantsAction
             foreach ($variants as $key => $variantState) {
                 /** @var ProductVariant $variant */
                 $variant = $variantState['variant_id']
-                    ? resolve(ProductVariant::class)::query()->findOrFail($variantState['variant_id'])
+                    ? $product->variants()->findOrFail($variantState['variant_id'])
                     : resolve(ProductVariant::class)::query()->create([
                         'name' => $variantState['name'],
                         'product_id' => $product->id,

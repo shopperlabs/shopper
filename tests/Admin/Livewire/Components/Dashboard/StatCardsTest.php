@@ -18,7 +18,9 @@ uses(Tests\Admin\TestCase::class);
 beforeEach(function (): void {
     Carbon::setTestNow('2026-07-15 12:00:00');
 
-    $this->actingAs(User::factory()->create(), config('shopper.auth.guard'));
+    $this->user = User::factory()->create();
+    $this->user->givePermissionTo('orders.browse', 'products.browse', 'customers.browse');
+    $this->actingAs($this->user, config('shopper.auth.guard'));
 });
 
 afterEach(fn () => Carbon::setTestNow());
@@ -37,6 +39,15 @@ function createDashboardOrder(array $attributes = []): Order
 }
 
 describe(StatCards::class, function (): void {
+    it('only shows the cards of the resources the user can browse', function (): void {
+        $this->user->syncPermissions('products.browse');
+
+        $cards = Livewire::test(StatCards::class)->instance()->cards;
+
+        expect($cards)->toHaveCount(1)
+            ->and($cards[0]['label'])->toBe(__('shopper::pages/dashboard.stats.products'));
+    });
+
     it('keeps refunded orders in revenue and deducts settled refund amounts', function (): void {
         $currency = shopper_currency();
 

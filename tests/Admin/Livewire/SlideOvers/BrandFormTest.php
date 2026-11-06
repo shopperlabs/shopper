@@ -18,6 +18,13 @@ beforeEach(function (): void {
 });
 
 describe(BrandForm::class, function (): void {
+    it('requires brands.edit to open an existing brand', function (): void {
+        $this->user->revokePermissionTo('brands.edit');
+
+        Livewire::test(BrandForm::class, ['brand' => Brand::factory()->create()])
+            ->assertForbidden();
+    });
+
     it('can validate required fields on brand form', function (): void {
         Livewire::test(BrandForm::class)
             ->assertSchemaExists('form')

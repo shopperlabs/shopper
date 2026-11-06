@@ -26,7 +26,7 @@ final class StatCards extends Component
     {
         $currency = shopper_currency();
 
-        return Cache::flexible('dashboard:stat-cards:'.app()->getLocale().':'.$currency, [300, 1800], function () use ($currency) {
+        $cards = Cache::flexible('dashboard:stat-cards:'.app()->getLocale().':'.$currency, [300, 1800], function () use ($currency) {
             $now = Carbon::now();
 
             return [
@@ -36,6 +36,14 @@ final class StatCards extends Component
                 $this->buildCustomersCard($now),
             ];
         });
+
+        $permissions = ['orders.browse', 'products.browse', 'orders.browse', 'customers.browse'];
+        $user = shopper()->auth()->user();
+
+        return collect($cards)
+            ->filter(fn (array $card, int $position): bool => $user->can($permissions[$position]))
+            ->values()
+            ->all();
     }
 
     public function placeholder(): View
