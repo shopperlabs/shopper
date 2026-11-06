@@ -20,6 +20,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Core\Models\Price;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
@@ -35,6 +36,8 @@ class Pricing extends Component implements HasActions, HasSchemas, HasTable
 
     public function table(Table $table): Table
     {
+        $ability = $this->model instanceof ProductVariant ? 'products.variants.edit' : 'products.edit';
+
         return $table
             ->heading(__('shopper::pages/products.pricing.title'))
             ->description(__('shopper::pages/products.pricing.description'))
@@ -55,7 +58,7 @@ class Pricing extends Component implements HasActions, HasSchemas, HasTable
             ])
             ->recordActions([
                 Action::make('edit')
-                    ->authorize('products.edit')
+                    ->authorize($ability)
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon(Untitledui::Edit03)
                     ->iconButton()
@@ -71,14 +74,14 @@ class Pricing extends Component implements HasActions, HasSchemas, HasTable
                         )
                     ),
                 DeleteAction::make()
-                    ->authorize('products.edit')
+                    ->authorize($ability)
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
                     ->iconButton(),
             ])
             ->headerActions([
                 Action::make('add')
-                    ->authorize('products.edit')
+                    ->authorize($ability)
                     ->label(__('shopper::pages/products.pricing.add'))
                     ->color('gray')
                     ->action(

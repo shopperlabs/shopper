@@ -8,7 +8,9 @@ use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\Product;
+use Shopper\Core\Models\Setting;
 use Shopper\Livewire\Components\Dashboard\RecentOrders;
+use Shopper\Livewire\Components\Dashboard\RevenueChart;
 use Shopper\Livewire\Components\Dashboard\StatCards;
 use Shopper\Livewire\Components\Dashboard\TopSellingProducts;
 use Shopper\Livewire\Pages\Dashboard;
@@ -18,6 +20,7 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
+    $this->user->givePermissionTo('orders.browse');
     $this->actingAs($this->user);
 });
 
@@ -49,6 +52,29 @@ describe(Dashboard::class, function (): void {
         TopSellingProducts::class,
         RecentOrders::class,
     ]);
+
+    it('requires orders.browse to render the order widgets', function (string $component): void {
+        $this->user->revokePermissionTo('orders.browse');
+
+        Livewire::test($component)->assertForbidden();
+    })->with([
+        RevenueChart::class,
+        TopSellingProducts::class,
+        RecentOrders::class,
+    ]);
+
+    it('renders the dashboard without the order widgets for users who cannot browse orders', function (): void {
+        $this->user->revokePermissionTo('orders.browse');
+
+        Setting::query()->create([
+            'key' => 'setup_guide_done',
+            'value' => true,
+            'display_name' => 'Setup guide done',
+            'locked' => true,
+        ]);
+
+        Livewire::test(Dashboard::class)->assertOk();
+    });
 
     it('renders the top selling products again on a cache that refuses to unserialize models', function (): void {
         config(['cache.default' => 'array', 'cache.stores.array.serialize' => true, 'cache.serializable_classes' => false]);

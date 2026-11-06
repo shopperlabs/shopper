@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Livewire\Livewire;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Livewire\SlideOvers\GenerateVariants;
 use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\ProductVariant;
 use Tests\Core\Stubs\RecordingEngine;
 use Tests\Core\Stubs\User;
 
@@ -16,13 +18,49 @@ beforeEach(function (): void {
     setupCurrencies();
 
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo('products.variants.edit');
+    $this->user->givePermissionTo('products.variants.edit', 'products.variants.create');
     $this->actingAs($this->user);
 
     $this->product = Product::factory()->create(['type' => ProductType::Variant]);
 });
 
 describe(GenerateVariants::class, function (): void {
+    it('requires products.variants.delete to drop the existing variants', function (): void {
+        $variant = ProductVariant::factory()->create(['product_id' => $this->product->id]);
+
+        Livewire::test(GenerateVariants::class, ['product' => $this->product])
+            ->set('variants', [
+                ['key' => 'red', 'variant_id' => null, 'name' => 'Red', 'sku' => 'NEW-RED', 'price' => 1000, 'stock' => 0, 'values' => []],
+            ])
+            ->call('generate');
+
+        expect($this->product->variants()->pluck('id')->all())->toBe([$variant->id]);
+    });
+
+    it('requires products.variants.create to add variants', function (): void {
+        $this->user->revokePermissionTo('products.variants.create');
+
+        Livewire::test(GenerateVariants::class, ['product' => $this->product])
+            ->set('variants', [
+                ['key' => 'red', 'variant_id' => null, 'name' => 'Red', 'sku' => 'NEW-RED', 'price' => 1000, 'stock' => 0, 'values' => []],
+            ])
+            ->call('generate');
+
+        expect($this->product->variants()->count())->toBe(0);
+    });
+
+    it('cannot update a variant of another product', function (): void {
+        $foreign = ProductVariant::factory()->create(['product_id' => Product::factory()->create()->id]);
+
+        expect(fn () => Livewire::test(GenerateVariants::class, ['product' => $this->product])
+            ->set('variants', [
+                ['key' => 'red', 'variant_id' => $foreign->id, 'name' => 'Red', 'sku' => 'RED', 'price' => 1, 'stock' => 0, 'values' => []],
+            ])
+            ->call('generate'))->toThrow(ModelNotFoundException::class);
+
+        expect($foreign->prices()->where('amount', 1)->exists())->toBeFalse();
+    });
+
     it('loads product with options and values', function (): void {
         $component = Livewire::test(GenerateVariants::class, ['product' => $this->product]);
 

@@ -25,6 +25,13 @@ describe(CategoryForm::class, function (): void {
             ->assertForbidden();
     });
 
+    it('requires categories.edit to open an existing category', function (): void {
+        $this->user->revokePermissionTo('categories.edit');
+
+        Livewire::test(CategoryForm::class, ['category' => Category::factory()->create()])
+            ->assertForbidden();
+    });
+
     it('can validate required fields on add category form', function (): void {
         Livewire::test(CategoryForm::class)
             ->fillForm()

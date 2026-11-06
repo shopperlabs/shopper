@@ -21,6 +21,11 @@ class ReOrderCategories extends SlideOverComponent
         return '3xl';
     }
 
+    public function mount(): void
+    {
+        $this->authorize('categories.edit');
+    }
+
     /**
      * @param  array<int, string>  $order
      */

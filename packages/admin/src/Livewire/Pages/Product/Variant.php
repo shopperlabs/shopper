@@ -63,7 +63,7 @@ class Variant extends AbstractPageComponent implements HasActions, HasSchemas
         return Action::make('updateStock')
             ->label(__('shopper::forms.actions.edit'))
             ->color('gray')
-            ->authorize('products.edit')
+            ->authorize('products.variants.edit')
             ->modalWidth(Width::Large)
             ->fillForm([
                 'sku' => $this->variant->sku,

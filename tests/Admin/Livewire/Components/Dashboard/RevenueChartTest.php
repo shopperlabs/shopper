@@ -18,7 +18,9 @@ uses(Tests\Admin\TestCase::class);
 beforeEach(function (): void {
     Carbon::setTestNow('2026-07-15 12:00:00');
 
-    $this->actingAs(User::factory()->create(), config('shopper.auth.guard'));
+    $user = User::factory()->create();
+    $user->givePermissionTo('orders.browse');
+    $this->actingAs($user, config('shopper.auth.guard'));
 });
 
 afterEach(fn () => Carbon::setTestNow());

@@ -57,7 +57,17 @@ describe(Variant::class, function (): void {
             ->assertForbidden();
     });
 
+    it('hides the stock action for users without `products.variants.edit`', function (): void {
+        Livewire::test(Variant::class, [
+            'product' => $this->product,
+            'variant' => $this->variant,
+        ])
+            ->assertActionHidden('updateStock');
+    });
+
     it('can update variant stock information', function (): void {
+        $this->user->givePermissionTo('products.variants.edit');
+
         Livewire::test(Variant::class, [
             'product' => $this->product,
             'variant' => $this->variant,
@@ -75,6 +85,8 @@ describe(Variant::class, function (): void {
     });
 
     it('validates unique sku when updating stock', function (): void {
+        $this->user->givePermissionTo('products.variants.edit');
+
         $existingVariant = ProductVariant::factory()->create([
             'product_id' => $this->product->id,
             'sku' => 'EXISTING-SKU',
@@ -91,6 +103,8 @@ describe(Variant::class, function (): void {
     });
 
     it('validates unique barcode when updating stock', function (): void {
+        $this->user->givePermissionTo('products.variants.edit');
+
         ProductVariant::factory()->create([
             'product_id' => $this->product->id,
             'barcode' => '9999999999',
