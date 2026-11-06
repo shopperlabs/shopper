@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Sidebar\Livewire;
 
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Sidebar\Contracts\Sidebar;
@@ -12,12 +13,16 @@ use Shopper\Sidebar\Presentation\SidebarRenderer;
 
 class SidebarComponent extends Component
 {
+    #[Locked]
     public string $sidebarClass;
 
+    #[Locked]
     public string $class = '';
 
+    #[Locked]
     public bool $collapsible = true;
 
+    #[Locked]
     public string $view = 'sidebar::livewire.sidebar';
 
     public function mount(

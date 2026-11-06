@@ -21,6 +21,15 @@ beforeEach(function (): void {
 });
 
 describe(ManagePricing::class, function (): void {
+    it('requires edit_product_variants to price a variant', function (): void {
+        $variant = ProductVariant::factory()->create(['product_id' => Product::factory()->create()->id]);
+
+        Livewire::test(ManagePricing::class, [
+            'modelId' => $variant->id,
+            'modelType' => ProductVariant::class,
+        ])->assertForbidden();
+    });
+
     it('can render manage pricing for product', function (): void {
         $product = Product::factory()->create();
 
@@ -32,6 +41,8 @@ describe(ManagePricing::class, function (): void {
     });
 
     it('can render manage pricing for variant', function (): void {
+        $this->user->givePermissionTo('edit_product_variants');
+
         $variant = ProductVariant::factory()->create();
 
         Livewire::test(ManagePricing::class, [

@@ -301,6 +301,7 @@ class DiscountForm extends SlideOverComponent implements HasActions, HasSchemas,
                             )
                             ->getOptionLabelsUsing(
                                 fn (array $values): array => config('auth.providers.users.model')::query()
+                                    ->scopes('customers')
                                     ->whereIn('id', $values)
                                     ->get()
                                     ->pluck('full_name', 'id')

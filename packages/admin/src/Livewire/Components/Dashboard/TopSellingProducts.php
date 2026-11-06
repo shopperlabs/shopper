@@ -21,6 +21,11 @@ use Shopper\Core\Models\Contracts\ProductVariant;
  */
 final class TopSellingProducts extends Component
 {
+    public function mount(): void
+    {
+        $this->authorize('browse_orders');
+    }
+
     #[Computed]
     public function products(): Collection
     {

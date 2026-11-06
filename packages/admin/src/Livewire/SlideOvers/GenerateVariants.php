@@ -48,6 +48,16 @@ class GenerateVariants extends SlideOverComponent
     {
         $this->authorize('edit_product_variants');
 
+        $keptIds = collect($this->variants)->pluck('variant_id')->filter()->all();
+
+        if ($this->product->variants()->whereKeyNot($keptIds)->exists()) {
+            $this->authorize('delete_product_variants');
+        }
+
+        if (collect($this->variants)->contains(fn (array $variant): bool => blank($variant['variant_id'] ?? null))) {
+            $this->authorize('add_product_variants');
+        }
+
         $this->variants = app()->call(SaveProductVariantsAction::class, [
             'product' => $this->product,
             'variants' => $this->variants,
