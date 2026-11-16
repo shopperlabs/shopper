@@ -1,6 +1,6 @@
 # Shopper Stripe
 
-The Stripe payment driver for [Shopper](https://laravelshopper.dev). It authorizes and captures
+The Stripe payment driver for [Shopper](https://shopperphp.com). It authorizes and captures
 payments through Payment Intents, refunds them, and settles the provider events Stripe pushes
 to the store webhook endpoint.
 
@@ -57,5 +57,5 @@ This publishes `config/shopper/stripe.php`.
 
 ## Documentation
 
-Read the [payment documentation](https://docs.laravelshopper.dev) for the checkout flow, the
+Read the [payment documentation](https://docs.shopperphp.com) for the checkout flow, the
 order payment states and the reconciliation command.

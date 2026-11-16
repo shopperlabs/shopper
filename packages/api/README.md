@@ -1,6 +1,6 @@
 # Shopper API
 
-The headless Store API for [Shopper](https://laravelshopper.dev). It exposes the catalog, geo data,
+The headless Store API for [Shopper](https://shopperphp.com). It exposes the catalog, geo data,
 cart, customer authentication and account endpoints as a [JSON:API](https://jsonapi.org) under
 the `/store` prefix, ready to be consumed by any storefront or by the official
 [`@shopperlabs/shopper-sdk`](https://www.npmjs.com/package/@shopperlabs/shopper-sdk) JavaScript client.

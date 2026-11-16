@@ -43,7 +43,7 @@ final class UserCommand extends Command
 
         $email = text(
             label: 'Your Email Address',
-            placeholder: 'admin@laravelshopper.dev',
+            placeholder: 'admin@shopperphp.com',
             required: true,
             validate: fn (string $value): ?string => $userModel::query()->where('email', $value)->exists()
                     ? 'A user with that email already exists.'

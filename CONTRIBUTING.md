@@ -4,7 +4,7 @@ Contributions are welcome and will be fully credited.
 
 Contributions are accepted via Pull Requests on [Github](https://github.com/shopperlabs/shopper).
 
-Read the [contribution guide](https://docs.laravelshopper.dev/3.x/contributing) before you start.
+Read the [contribution guide](https://docs.shopperphp.com/3.x/contributing) before you start.
 
 ## Pull Requests
 

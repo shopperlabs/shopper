@@ -1,6 +1,6 @@
 # Shopper Upgrade
 
-The upgrade assistant for [Shopper](https://laravelshopper.dev). It moves a 2.x store to 3.x:
+The upgrade assistant for [Shopper](https://shopperphp.com). It moves a 2.x store to 3.x:
 database migrations, class renames in your application code, and the data migrations the new
 version expects. Remove it once the upgrade is done.
 
@@ -40,5 +40,5 @@ changes without writing a file, and `--force` skips the confirmations for CI.
 
 ## Documentation
 
-Read the [upgrade guide](https://docs.laravelshopper.dev) for the breaking changes of 3.x and
+Read the [upgrade guide](https://docs.shopperphp.com) for the breaking changes of 3.x and
 the manual steps the assistant cannot do for you.

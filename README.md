@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://laravelshopper.dev" title="Shopper Dashboard Screenshoot"><img src="https://github.com/shopperlabs/art/blob/main/socialcard.png"></a>
+    <a href="https://shopperphp.com" title="Shopper Dashboard Screenshoot"><img src="https://github.com/shopperlabs/art/blob/main/socialcard.png"></a>
 </p>
 
 <p align="center">
@@ -22,13 +22,13 @@
 
 ## Introduction
 
-[Shopper](https://laravelshopper.dev) is a Headless e-commerce Admin Panel build for Laravel 11.0+ which includes all the necessary for your online store application.
+[Shopper](https://shopperphp.com) is a Headless e-commerce Admin Panel build for Laravel 11.0+ which includes all the necessary for your online store application.
 Web Application has made using Laravel. We feel building ecommerce websites has become a convoluted and confusing process that leaves developers unsatisfied.
 We want to turn you around to the simpler side and get back to basics.
 
 ## Installation
 
-Instructions on how to install Shopper can be found at the [installation guide](https://docs.laravelshopper.dev).
+Instructions on how to install Shopper can be found at the [installation guide](https://docs.shopperphp.com).
 
 ### Quick start installation
 
@@ -44,7 +44,7 @@ Run this command to install Shopper in your project
 php artisan shopper:install
 ```
 
-The best place to learn Shopper is by [reading the documentation](https://docs.laravelshopper.dev) or following some tutorials.
+The best place to learn Shopper is by [reading the documentation](https://docs.shopperphp.com) or following some tutorials.
 
 ## Foundation library
 
@@ -55,7 +55,7 @@ The Framework uses [Laravel](https://laravel.com) as a foundation PHP framework.
 You can communicate with us using the following mediums:
 
 - [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
-- [Join us on Discord](https://laravelshopper.dev/discord) to chat with us.
+- [Join us on Discord](https://shopperphp.com/discord) to chat with us.
 
 ## Contributing
 

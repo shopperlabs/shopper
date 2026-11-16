@@ -7,7 +7,7 @@
             <div class="bg-sh-surface text-sh-fg-muted px-4 py-3 text-sm dark:bg-transparent">
                 {{ __('shopper::words.learn_more') }}
                 <a
-                    href="https://docs.laravelshopper.dev/{{ shopper()->version() }}/{{ $link }}"
+                    href="https://docs.shopperphp.com/{{ shopper()->version() }}/{{ $link }}"
                     target="_blank"
                     class="text-primary-600 hover:text-primary-500 ml-1 inline-flex items-center"
                 >

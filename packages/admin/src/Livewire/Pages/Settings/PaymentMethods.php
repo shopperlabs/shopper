@@ -167,7 +167,7 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
                 ->allowHtml(),
             TextInput::make('link_url')
                 ->label(__('shopper::forms.label.payment_doc'))
-                ->placeholder('https://laravelshopper.dev')
+                ->placeholder('https://shopperphp.com')
                 ->url()
                 ->columnSpanFull(),
             Textarea::make('description')

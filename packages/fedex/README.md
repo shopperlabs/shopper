@@ -1,6 +1,6 @@
 # Shopper FedEx
 
-The FedEx shipping driver for [Shopper](https://laravelshopper.dev). It quotes real time rates
+The FedEx shipping driver for [Shopper](https://shopperphp.com). It quotes real time rates
 at checkout and pulls the tracking timeline of every shipment into the order.
 
 ## Requirements
@@ -45,5 +45,5 @@ This publishes `config/shopper/fedex.php`.
 
 ## Documentation
 
-Read the [shipping documentation](https://docs.laravelshopper.dev) for carriers, fulfillment
+Read the [shipping documentation](https://docs.shopperphp.com) for carriers, fulfillment
 and the tracking scheduler.
