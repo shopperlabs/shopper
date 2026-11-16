@@ -557,7 +557,7 @@ Enable/disable features in `config/shopper/features.php`:
 - `{{ $assist->artisanCommand('shopper:install') }}` - Install Shopper
 - `{{ $assist->artisanCommand('shopper:user') }}` - Create admin user
 - `{{ $assist->artisanCommand('shopper:publish') }}` - Publish assets and config
-- `{{ $assist->artisanCommand('shopper:link') }}` - Create storage symlink
+- `{{ $assist->artisanCommand('shopper:link') }}` - Create the storage link and link the panel assets to `public/vendor/shopper`
 - `{{ $assist->artisanCommand('make:shopper-page {PageName}') }}` - Create custom admin page
 - `{{ $assist->artisanCommand('shopper:component:publish') }}` - Publish specific components
 - `{{ $assist->artisanCommand('shopper:starter-kit:install') }}` - Install frontend starter kit

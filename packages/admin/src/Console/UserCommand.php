@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Shopper\Console;
 
-use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
+use Shopper\Database\Seeders\AuthTableSeeder;
+use Shopper\Models\Role;
 
+use function Laravel\Prompts\error;
 use function Laravel\Prompts\info;
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\text;
@@ -19,11 +20,21 @@ final class UserCommand extends Command
 
     protected $description = 'Create user with admin role and all permissions.';
 
-    public function handle(): void
+    public function handle(): int
     {
+        $role = config('shopper.admin.roles.admin');
+
+        if (Role::query()->where('name', $role)->doesntExist()) {
+            error("The [{$role}] role does not exist. Run `php artisan db:seed --class=\"".AuthTableSeeder::class.'"` first.');
+
+            return self::FAILURE;
+        }
+
         info('Create Admin User for Shopper administration panel');
         $this->createUser();
         info('User created successfully.');
+
+        return self::SUCCESS;
     }
 
     protected function createUser(): void
@@ -73,12 +84,8 @@ final class UserCommand extends Command
             'last_login_ip' => request()->getClientIp(),
         ];
 
-        try {
-            $user = tap((new $userModel)->forceFill($userData))->save(); // @phpstan-ignore-line
+        $user = tap((new $userModel)->forceFill($userData))->save(); // @phpstan-ignore-line
 
-            $user->assignRole(config('shopper.admin.roles.admin'));
-        } catch (Exception|QueryException $e) {
-            $this->error($e->getMessage());
-        }
+        $user->assignRole(config('shopper.admin.roles.admin'));
     }
 }

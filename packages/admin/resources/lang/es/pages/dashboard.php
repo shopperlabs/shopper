@@ -49,7 +49,7 @@ return [
     ],
 
     'stats' => [
-        'revenue' => 'Ingresos totales',
+        'revenue' => 'Ingresos del mes',
         'products' => 'Total productos',
         'orders' => 'Total pedidos',
         'customers' => 'Total clientes',

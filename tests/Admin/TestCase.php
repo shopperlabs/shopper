@@ -40,7 +40,6 @@ use Shopper\Usps\UspsServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\PermissionServiceProvider;
-use TailwindMerge\Laravel\TailwindMergeServiceProvider;
 use Tests\Core\Stubs\User;
 use Tests\Database\Seeders\TestSeeder;
 
@@ -99,7 +98,6 @@ abstract class TestCase extends \Tests\TestCase
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
             MediaLibraryServiceProvider::class,
-            TailwindMergeServiceProvider::class,
             RadioDeckServiceProvider::class,
             FilamentApexChartsServiceProvider::class,
             FilamentSelectTreeServiceProvider::class,

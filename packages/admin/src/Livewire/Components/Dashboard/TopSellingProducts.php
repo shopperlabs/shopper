@@ -50,13 +50,13 @@ final class TopSellingProducts extends Component
      */
     private function buildTopProducts(): array
     {
-        $variantClass = resolve(ProductVariant::class)::class;
+        $variantType = resolve(ProductVariant::class)->getMorphClass();
 
         $topProducts = DB::table(shopper_table('order_items').' as oi')
             ->join(shopper_table('orders').' as o', 'o.id', '=', 'oi.order_id')
-            ->leftJoin(shopper_table('product_variants').' as pv', function (JoinClause $join) use ($variantClass): void {
+            ->leftJoin(shopper_table('product_variants').' as pv', function (JoinClause $join) use ($variantType): void {
                 $join->on('pv.id', '=', 'oi.product_id')
-                    ->where('oi.product_type', '=', $variantClass);
+                    ->where('oi.product_type', '=', $variantType);
             })
             ->whereIn('o.payment_status', array_map(fn (PaymentStatus $status): string => $status->value, PaymentStatus::revenueBearing()))
             ->where('o.created_at', '>=', now()->subDays(90))

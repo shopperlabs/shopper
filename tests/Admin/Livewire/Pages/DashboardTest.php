@@ -8,6 +8,7 @@ use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\Product;
+use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Models\Setting;
 use Shopper\Livewire\Components\Dashboard\RecentOrders;
 use Shopper\Livewire\Components\Dashboard\RevenueChart;
@@ -90,5 +91,22 @@ describe(Dashboard::class, function (): void {
         foreach ([1, 2] as $render) {
             Livewire::test(TopSellingProducts::class)->assertOk()->assertSee('Best Seller');
         }
+    });
+
+    it('counts the sale of a variant for its parent product', function (): void {
+        Product::factory()->count(3)->create();
+        $product = Product::factory()->create(['name' => 'Parent Product']);
+        $variant = ProductVariant::factory()->create(['product_id' => $product->id]);
+
+        OrderItem::factory()->create([
+            'product_id' => $variant->id,
+            'product_type' => $variant->getMorphClass(),
+            'quantity' => 4,
+            'order_id' => Order::factory()->create(['payment_status' => PaymentStatus::Paid, 'created_at' => now()])->id,
+        ]);
+
+        $topProducts = Livewire::test(TopSellingProducts::class)->assertOk()->instance()->products;
+
+        expect(collect($topProducts)->pluck('sales', 'name')->all())->toBe(['Parent Product' => 4]);
     });
 });

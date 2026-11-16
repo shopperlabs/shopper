@@ -42,7 +42,7 @@
                         >
                             <x-slot name="footer">
                                 <a
-                                    href="https://docs.laravelshopper.dev/v2/acl"
+                                    href="https://docs.laravelshopper.dev/3.x/acl"
                                     target="_blank"
                                     class="text-info-700 hover:text-info-600 dark:text-info-400 text-sm font-medium"
                                 >

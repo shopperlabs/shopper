@@ -2,9 +2,22 @@
 
 declare(strict_types=1);
 
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\DB;
 
 uses(Tests\Upgrade\TestCase::class);
+
+beforeEach(function (): void {
+    $this->publicPath = sys_get_temp_dir().'/shopper-upgrade-test-'.uniqid();
+    mkdir($this->publicPath, 0755, true);
+
+    $this->app->usePublicPath($this->publicPath);
+    config()->set('filesystems.links', [$this->publicPath.'/storage' => storage_path('app/public')]);
+});
+
+afterEach(function (): void {
+    (new Filesystem)->deleteDirectory($this->publicPath);
+});
 
 describe('shopper:upgrade', function (): void {
     it('chains the data migrations when forced', function (): void {
@@ -57,6 +70,13 @@ describe('shopper:upgrade', function (): void {
                 ->where('stockable_id', 1)
                 ->value('quantity')
         )->toBe(10);
+    });
+
+    it('runs shopper:link as part of the upgrade', function (): void {
+        $this->artisan('shopper:upgrade', ['--force' => true, '--path' => 'rector-target-that-does-not-exist'])
+            ->assertSuccessful();
+
+        expect(is_link($this->publicPath.'/storage'))->toBeTrue();
     });
 
     it('never asks for a carrier package that is already installed', function (): void {

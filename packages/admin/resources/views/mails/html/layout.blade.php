@@ -205,7 +205,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="social-link">
-                                                        <a href="https://discord.gg/AqWpFVR">Discord</a>
+                                                        <a href="https://laravelshopper.dev/discord">Discord</a>
                                                     </td>
                                                 </tr>
                                             </tbody>

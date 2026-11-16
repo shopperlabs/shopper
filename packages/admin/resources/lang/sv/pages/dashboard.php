@@ -49,7 +49,7 @@ return [
     ],
 
     'stats' => [
-        'revenue' => 'Total omsättning',
+        'revenue' => 'Omsättning denna månad',
         'products' => 'Totala produkter',
         'orders' => 'Totala beställningar',
         'customers' => 'Totala kunder',

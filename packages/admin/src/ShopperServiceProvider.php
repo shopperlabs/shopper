@@ -27,6 +27,7 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\ComponentAttributeBag;
 use Laravel\Passkeys\Passkeys;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
@@ -54,6 +55,8 @@ use Shopper\Traits\LoadComponents;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use TailwindMerge\Contracts\TailwindMergeContract;
+use TailwindMerge\TailwindMerge;
 
 final class ShopperServiceProvider extends PackageServiceProvider
 {
@@ -103,6 +106,15 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->registerCustomFilamentItems();
         $this->registerErrorPages();
 
+        if (! ComponentAttributeBag::hasMacro('twMerge')) {
+            ComponentAttributeBag::macro('twMerge', function (...$classes): ComponentAttributeBag {
+                /** @var ComponentAttributeBag $this */
+                $this->offsetSet('class', resolve(TailwindMergeContract::class)->merge($classes, $this->get('class', '')));
+
+                return $this;
+            });
+        }
+
         Shopper::serving(function (): void {
             Shopper::setServingStatus();
         });
@@ -128,6 +140,11 @@ final class ShopperServiceProvider extends PackageServiceProvider
         );
 
         $this->app->bind(LoginResponseContract::class, LoginResponse::class);
+
+        $this->app->singletonIf(
+            TailwindMergeContract::class,
+            fn ($app): TailwindMergeContract => TailwindMerge::factory()->withCache($app['cache']->store())->make()
+        );
 
         $this->app->register(SidebarServiceProvider::class);
         $this->app->register(ComponentsServiceProvider::class);

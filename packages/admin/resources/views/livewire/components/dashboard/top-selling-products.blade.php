@@ -60,7 +60,10 @@
                                 <div class="px-3 py-2">
                                     @if ($item['reviews_count'] > 0)
                                         <div class="flex items-center gap-1.5">
-                                            <x-phosphor-star class="size-4 text-amber-400" aria-hidden="true" />
+                                            <x-phosphor-star
+                                                class="size-4 shrink-0 text-amber-400"
+                                                aria-hidden="true"
+                                            />
                                             <span class="text-sh-fg-secondary text-sm font-medium tabular-nums">
                                                 {{ $item['average_rating'] }}
                                             </span>
