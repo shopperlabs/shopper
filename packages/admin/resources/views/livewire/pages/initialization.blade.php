@@ -1,5 +1,6 @@
+@php($storeName = shopper_setting(key: 'name', withCache: false) ?? config('app.name'))
 <div class="min-h-screen lg:grid lg:grid-cols-5 lg:gap-x-20">
-    <main class="mx-auto px-4 py-12 sm:px-6 lg:col-span-3 lg:max-w-xl">
+    <main class="mx-auto px-4 py-12 sm:px-6 lg:col-span-3 lg:max-w-2xl">
         <livewire:shopper-initialize-wizard />
     </main>
     <div class="hidden min-h-full p-1.5 lg:col-span-2 lg:flex">
@@ -62,8 +63,13 @@
                 </div>
                 <div class="divide-sh-border border-sh-border flex-1 divide-y border-l pl-4">
                     <div class="px-5 py-8">
-                        <h2 class="font-heading text-sh-fg text-xl font-bold">
-                            {{ shopper_setting(key: 'name', withCache: false) ?? config('app.name') }}
+                        <h2
+                            class="font-heading text-sh-fg text-xl font-bold"
+                            x-data="{ saved: @js($storeName), name: @js($storeName) }"
+                            x-on:store-name-typed.window="name = $event.detail.name || saved"
+                            x-text="name"
+                        >
+                            {{ $storeName }}
                         </h2>
                     </div>
                     <div class="space-y-16 px-5 py-8">

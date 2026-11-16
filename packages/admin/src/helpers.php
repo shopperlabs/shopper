@@ -51,10 +51,10 @@ if (! function_exists('shopper_fallback_url')) {
     }
 }
 
-if (! function_exists('shopper_panel_asset')) {
+if (! function_exists('shopper_panel_assets')) {
     function shopper_panel_assets(string $asset): string
     {
-        return url(shopper()->prefix().$asset);
+        return url('vendor/shopper'.$asset);
     }
 }
 

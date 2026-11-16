@@ -163,7 +163,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="social-link">
-                                                        <a href="https://laravelshopper.io">Website</a>
+                                                        <a href="https://shopperphp.com">Website</a>
                                                         <span>·</span>
                                                     </td>
                                                 </tr>
@@ -205,7 +205,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="social-link">
-                                                        <a href="https://discord.gg/AqWpFVR">Discord</a>
+                                                        <a href="https://shopperphp.com/discord">Discord</a>
                                                     </td>
                                                 </tr>
                                             </tbody>

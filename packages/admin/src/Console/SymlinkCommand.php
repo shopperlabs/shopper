@@ -15,12 +15,16 @@ final class SymlinkCommand extends Command
                 {--relative : Create the symbolic link using relative paths}
                 {--force : Recreate existing symbolic links}';
 
-    protected $description = 'Create a symbolic link from "vendor/shopper" to public folder';
+    protected $description = 'Create the storage link and the "public/vendor/shopper" link to the panel assets';
 
     public function handle(Filesystem $files): int
     {
-        $prefix = shopper()->prefix();
-        $link = public_path($prefix);
+        $this->call('storage:link', [
+            '--relative' => $this->option('relative'),
+            '--force' => $this->option('force'),
+        ]);
+
+        $link = public_path('vendor/shopper');
         $target = base_path('vendor/shopper/framework/public');
 
         if (! is_dir($target)) {
@@ -30,7 +34,7 @@ final class SymlinkCommand extends Command
         }
 
         if (file_exists($link) && ! $this->isRemovableSymlink($link)) {
-            $this->components->error("The [public/$prefix] link already exists.");
+            $this->components->error('The [public/vendor/shopper] link already exists.');
 
             return self::FAILURE;
         }
@@ -39,15 +43,32 @@ final class SymlinkCommand extends Command
             $files->delete($link);
         }
 
+        $this->removeLinkNamedAfterPrefix($files, $target);
+
+        $files->ensureDirectoryExists(dirname($link));
+
         if ($this->option('relative')) {
             $files->relativeLink($target, $link);
         } else {
             $files->link($target, $link);
         }
 
-        $this->components->info("The [public/$prefix] link has been connected to [$target].");
+        $this->components->info("The [public/vendor/shopper] link has been connected to [$target].");
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Earlier releases linked the assets at public/{prefix}, a real directory
+     * the web server served instead of the panel's own /{prefix} route.
+     */
+    private function removeLinkNamedAfterPrefix(Filesystem $files, string $target): void
+    {
+        $link = public_path(shopper()->prefix());
+
+        if (is_link($link) && realpath($link) === realpath($target)) {
+            $files->delete($link);
+        }
     }
 
     private function isRemovableSymlink(string $link): bool

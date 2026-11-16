@@ -148,7 +148,7 @@
 
         <div class="mt-4 grid gap-4 sm:grid-cols-2">
             <a
-                href="https://docs.laravelshopper.dev/v2/addons/stripe"
+                href="https://docs.shopperphp.com/3.x/addons/stripe"
                 target="_blank"
                 class="group bg-sh-surface ring-sh-border hover:ring-sh-border relative overflow-hidden rounded-xl p-5 ring-1 transition-all duration-200 hover:shadow-xs"
             >

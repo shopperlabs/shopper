@@ -119,6 +119,7 @@ final class InitializationWizard extends Component implements HasActions, HasSch
                                         ->prefixIcon(Untitledui::Shop)
                                         ->inlinePrefix()
                                         ->maxLength(100)
+                                        ->extraInputAttributes(['x-on:input' => "\$dispatch('store-name-typed', { name: \$event.target.value })"])
                                         ->required(),
                                     TextInput::make('email')
                                         ->label(__('shopper::forms.label.email'))

@@ -64,7 +64,7 @@
                 </div>
 
                 <a
-                    href="https://laravelshopper.dev"
+                    href="https://shopperphp.com"
                     target="_blank"
                     class="group relative text-white/70 hover:text-white dark:text-gray-950/60 dark:hover:text-gray-950"
                 >

@@ -19,7 +19,7 @@
   </a>
 </p>
 
-Official JavaScript SDK for the [Shopper](https://laravelshopper.dev) headless commerce API.
+Official JavaScript SDK for the [Shopper](https://shopperphp.com) headless commerce API.
 
 The SDK talks to the Shopper API (JSON:API) and returns the plain, nested shapes declared by [`@shopperlabs/shopper-types`](https://www.npmjs.com/package/@shopperlabs/shopper-types).
 You work with `product.variants` as an array of full variants the SDK handles the JSON:API normalization (relationships + `included`) for you. It runs in any
@@ -55,7 +55,7 @@ product.variants?.forEach((variant) => console.log(variant.name, variant.prices)
 
 ## Documentation
 
-The full SDK documentation — configuration, authentication, cart and checkout, custom endpoints, error handling lives at [docs.laravelshopper.dev](https://docs.laravelshopper.dev).
+The full SDK documentation — configuration, authentication, cart and checkout, custom endpoints, error handling lives at [docs.shopperphp.com](https://docs.shopperphp.com).
 
 ## License
 

@@ -243,7 +243,7 @@ class LoyaltyAddon extends BaseAddon
 }
 ```
 
-See documentation at https://docs.laravelshopper.dev for the complete addon lifecycle and AddonManager API.
+See documentation at https://docs.shopperphp.com for the complete addon lifecycle and AddonManager API.
 
 ## Custom Routes
 

@@ -49,7 +49,7 @@ return [
     ],
 
     'stats' => [
-        'revenue' => 'Toplam Gelir',
+        'revenue' => 'Bu Ayki Gelir',
         'products' => 'Toplam Ürün',
         'orders' => 'Toplam Sipariş',
         'customers' => 'Toplam Müşteri',

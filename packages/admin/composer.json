@@ -15,7 +15,7 @@
   "authors": [
     {
       "name": "Shopper",
-      "homepage": "https://laravelshopper.dev/"
+      "homepage": "https://shopperphp.com/"
     }
   ],
   "support": {
@@ -28,9 +28,9 @@
     "codeat3/blade-phosphor-icons": "^2.3",
     "codewithdennis/filament-select-tree": "^4.0",
     "danharrin/livewire-rate-limiting": "^2.0",
-    "filament/filament": "^5.8",
-    "filament/spatie-laravel-media-library-plugin": "^5.8",
-    "gehrisandro/tailwind-merge-laravel": "^1.3",
+    "filament/filament": "^5.11",
+    "filament/spatie-laravel-media-library-plugin": "^5.11",
+    "gehrisandro/tailwind-merge-php": "^1.2",
     "illuminate/auth": "^12.68|^13.27",
     "illuminate/bus": "^12.68|^13.27",
     "illuminate/cache": "^12.68|^13.27",

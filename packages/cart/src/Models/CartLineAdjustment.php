@@ -57,7 +57,7 @@ class CartLineAdjustment extends Model
      */
     public function discount(): BelongsTo
     {
-        return $this->belongsTo(config('shopper.models.discount'), 'discount_id');
+        return $this->belongsTo(Discount::class, 'discount_id');
     }
 
     protected static function newFactory(): CartLineAdjustmentFactory

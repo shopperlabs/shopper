@@ -4,7 +4,7 @@
 
 ## Shopper
 
-Shopper is a headless e-commerce framework providing a complete admin panel built with Filament and Livewire. For detailed documentation, refer to https://docs.laravelshopper.dev
+Shopper is a headless e-commerce framework providing a complete admin panel built with Filament and Livewire. For detailed documentation, refer to https://docs.shopperphp.com
 
 ### Installation
 
@@ -557,7 +557,7 @@ Enable/disable features in `config/shopper/features.php`:
 - `{{ $assist->artisanCommand('shopper:install') }}` - Install Shopper
 - `{{ $assist->artisanCommand('shopper:user') }}` - Create admin user
 - `{{ $assist->artisanCommand('shopper:publish') }}` - Publish assets and config
-- `{{ $assist->artisanCommand('shopper:link') }}` - Create storage symlink
+- `{{ $assist->artisanCommand('shopper:link') }}` - Create the storage link and link the panel assets to `public/vendor/shopper`
 - `{{ $assist->artisanCommand('make:shopper-page {PageName}') }}` - Create custom admin page
 - `{{ $assist->artisanCommand('shopper:component:publish') }}` - Publish specific components
 - `{{ $assist->artisanCommand('shopper:starter-kit:install') }}` - Install frontend starter kit
@@ -629,7 +629,7 @@ When testing Shopper functionality, use factories and respect the model contract
 
 ### Advanced Topics
 
-For detailed guides on building a complete e-commerce site, refer to the documentation at https://docs.laravelshopper.dev:
+For detailed guides on building a complete e-commerce site, refer to the documentation at https://docs.shopperphp.com:
 
 - **Payment system** - Payment drivers (Manual, Stripe), creating custom gateways, PaymentProcessingService, transaction lifecycle
 - **Shipping & carriers** - Shipping drivers (Manual, UPS, FedEx, USPS), custom carrier integration, real-time rate calculation

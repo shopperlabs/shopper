@@ -48,7 +48,7 @@ class Country extends Model implements CountryContract
 
     public function countryFlag(): string
     {
-        return url(shopper()->prefix().'/images/flags/'.mb_strtolower($this->cca2).'.svg');
+        return url('vendor/shopper/images/flags/'.mb_strtolower($this->cca2).'.svg');
     }
 
     protected static function newFactory(): CountryFactory

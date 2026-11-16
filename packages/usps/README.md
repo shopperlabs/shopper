@@ -1,6 +1,6 @@
 # Shopper USPS
 
-The USPS shipping driver for [Shopper](https://laravelshopper.dev). It quotes real time rates
+The USPS shipping driver for [Shopper](https://shopperphp.com). It quotes real time rates
 at checkout.
 
 ## Requirements
@@ -41,4 +41,4 @@ This publishes `config/shopper/usps.php`.
 
 ## Documentation
 
-Read the [shipping documentation](https://docs.laravelshopper.dev) for carriers and fulfillment.
+Read the [shipping documentation](https://docs.shopperphp.com) for carriers and fulfillment.

@@ -8,6 +8,7 @@ use Closure;
 use Illuminate\Console\Command;
 use Shopper\Core\Database\Seeders\ShopperSeeder;
 use Shopper\Database\Seeders\AuthTableSeeder;
+use Shopper\Traits\InteractsWithShopper;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
 
@@ -42,6 +43,7 @@ final class InstallCommand extends Command
             $this->line('  <fg=#475569>To publish assets or run migrations manually, use:</>');
             $this->line('  <fg=#60A5FA>php artisan vendor:publish --tag=shopper-config</>');
             $this->line('  <fg=#60A5FA>php artisan migrate</>');
+            $this->line('  <fg=#60A5FA>php artisan shopper:link</>');
             $this->newLine();
 
             return;
@@ -65,7 +67,7 @@ final class InstallCommand extends Command
             $this->callSilently('filament:assets');
         });
 
-        $this->task('Creating storage symlink', function (): void {
+        $this->task('Linking storage and panel assets', function (): void {
             $this->callSilently('shopper:link');
         });
 
@@ -126,10 +128,14 @@ final class InstallCommand extends Command
         $this->newLine();
         $this->line('  <fg=#475569>Next steps:</>');
         $this->newLine();
-        $this->line('  <fg=#3B82F6>→</> Add <options=bold>InteractsWithShopper</> to your <options=bold>User</> model');
+
+        if (! in_array(InteractsWithShopper::class, class_uses_recursive(config('auth.providers.users.model')))) {
+            $this->line('  <fg=#3B82F6>→</> Add <options=bold>InteractsWithShopper</> to your <options=bold>User</> model');
+        }
+
         $this->line('  <fg=#3B82F6>→</> Run <fg=#60A5FA>php artisan shopper:user</> to create your first admin');
         $prefix = config('shopper.admin.prefix', 'cpanel');
-        $adminUrl = mb_rtrim(config('app.url'), '/').'/'.$prefix;
+        $adminUrl = mb_rtrim(config('app.url'), '/').'/'.$prefix.'/login';
         $this->line("  <fg=#3B82F6>→</> Visit <fg=#60A5FA>{$adminUrl}</> to access the panel");
         $this->newLine();
         $this->line('  ⭐ Star us on GitHub: <fg=#3B82F6>https://github.com/shopperlabs/shopper</>');
