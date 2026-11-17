@@ -45,6 +45,7 @@ return [
 
     'order' => [
         'restricted_includes' => 'Seul `items` peut être inclus sur la consultation de confirmation de commande. Utilisez l\'endpoint de commande du compte pour la commande complète.',
+        'files_unavailable' => 'Les fichiers de cette commande sont disponibles une fois le paiement reçu.',
     ],
 
     'catalog' => [

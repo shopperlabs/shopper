@@ -74,6 +74,16 @@ export class CustomerModule {
     return flatten<Customer>(document as NonNullable<typeof document>) as Customer
   }
 
+  /**
+   * A temporary link to download a file of a paid order. It expires after
+   * five minutes: request one per download and send the browser to its url.
+   */
+  public async fileLink(orderId: string, itemId: string, fileId: string): Promise<{ url: string, expires_at: string }> {
+    const document = await this.client.request(`${this.path}/orders/${orderId}/items/${itemId}/files/${fileId}`)
+
+    return document.data as unknown as { url: string, expires_at: string }
+  }
+
   /** Remove the uploaded photo and fall back to the generated avatar. */
   public async removeAvatar(): Promise<Customer> {
     const document = await this.client.send('DELETE', `${this.path}/avatar`)

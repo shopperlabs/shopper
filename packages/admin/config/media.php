@@ -10,7 +10,9 @@ return [
     |--------------------------------------------------------------------------
     |
     | Specifies the configuration for resources storage, this will be to store
-    | all media of your products, brands, categories, etc.
+    | all media of your products, brands, categories, etc. The files sold with
+    | virtual products are stored on their own disk, which should never be
+    | publicly accessible: they are delivered through temporary links.
     |
     */
 
@@ -18,6 +20,7 @@ return [
         'collection_name' => 'uploads',
         'thumbnail_collection' => 'thumbnail',
         'disk_name' => 'public',
+        'files_disk' => 'local',
     ],
 
     /*

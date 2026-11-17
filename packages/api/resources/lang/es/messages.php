@@ -45,6 +45,7 @@ return [
 
     'order' => [
         'restricted_includes' => 'Solo `items` puede incluirse en la consulta de confirmación del pedido. Usa el endpoint de pedidos de la cuenta para el pedido completo.',
+        'files_unavailable' => 'Los archivos de este pedido están disponibles una vez pagado.',
     ],
 
     'catalog' => [

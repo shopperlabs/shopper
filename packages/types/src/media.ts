@@ -14,3 +14,15 @@ export interface Media {
   created_at?: string
   updated_at?: string
 }
+
+/**
+ * A file sold with a virtual product. It never carries a url: the customer
+ * who paid for it requests a temporary link from the account endpoint.
+ */
+export interface ProductFile {
+  id: string
+  name: string
+  extension: string
+  /** The size in bytes. */
+  size: number
+}

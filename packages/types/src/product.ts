@@ -14,7 +14,7 @@ import type {
   SEOFields,
   ShippingFields,
 } from './common'
-import type { Media } from './media'
+import type { Media, ProductFile } from './media'
 import type { ProductTag } from './product_tag'
 import type { ProductVariant } from './product_variant'
 import type { Review } from './review'
@@ -90,7 +90,7 @@ export interface Product extends Entity, SEOFields, ShippingFields {
   /** The thumbnail of the product. */
   thumbnail?: Media | null
   /** The downloadable files of the product. */
-  files?: Media[] | null
+  files?: ProductFile[] | null
   /** The reviews of the product. */
   reviews?: Review[]
   /** The average approved rating (null when there are no approved reviews). */

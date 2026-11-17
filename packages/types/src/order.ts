@@ -2,6 +2,7 @@ import type { CarrierOption } from './carrier'
 import type { Channel } from './channel'
 import type { Entity, Metadata, ResourceId } from './common'
 import type { Customer } from './customer'
+import type { ProductFile } from './media'
 import type { PaymentMethod } from './payment_method'
 import type { OrderTaxLine } from './tax'
 import type { Zone } from './zone'
@@ -167,6 +168,8 @@ export interface OrderItem extends Entity {
   fulfillment_status: FulfillmentStatus | null
   /** The metadata copied from the cart line. */
   metadata: Metadata
+  /** The files to download, on a virtual product line of a paid order retrieved from the account. */
+  files?: ProductFile[]
   /** The order. */
   order?: Order
   /** The tax lines. */

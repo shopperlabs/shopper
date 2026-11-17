@@ -10,6 +10,8 @@ use Shopper\Api\Concerns\RespondsWithOrder;
 use Shopper\Api\Http\Resources\JsonApiResource;
 use Shopper\Api\Http\Resources\JsonApiResourceCollection;
 use Shopper\Api\Http\Resources\OrderResource;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
+use Shopper\Core\Models\Order;
 
 final class OrderController
 {
@@ -49,6 +51,17 @@ final class OrderController
 
         $this->applyPublicIncludes('order', $query);
 
-        return OrderResource::make($query->firstOrFail());
+        /** @var Order $order */
+        $order = $query->firstOrFail();
+
+        if ($order->allowsDownloads() && $order->relationLoaded('items')) {
+            $product = resolve(ProductContract::class);
+
+            $order->items->loadMorph('product', [
+                $product::class => method_exists($product, 'getMedia') ? ['media'] : [],
+            ]);
+        }
+
+        return OrderResource::make($order);
     }
 }
