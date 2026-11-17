@@ -92,7 +92,7 @@ it('delivers a file through a temporary signed link to the customer who paid for
 
     $this->get($link['url'])
         ->assertOk()
-        ->assertHeader('Content-Disposition', 'attachment; filename="ebook.txt"');
+        ->assertHeader('Content-Disposition', 'attachment; filename=ebook.txt');
 
     $this->get(strtok($link['url'], '?'))->assertForbidden();
 
@@ -101,15 +101,37 @@ it('delivers a file through a temporary signed link to the customer who paid for
     $this->get($link['url'])->assertForbidden();
 });
 
+it('names the download after the file instead of its stored name', function (): void {
+    $file = $this->product
+        ->addMedia(UploadedFile::fake()->createWithContent('guide.txt', 'paid content'))
+        ->usingName("Guide: été\n 100%")
+        ->usingFileName('kR8fQ2xZ.txt')
+        ->toMediaCollection('files');
+
+    Sanctum::actingAs($this->customer, ['store']);
+
+    $url = $this->getJson(fileEndpoint(orderedFile($this->product, ['customer_id' => $this->customer->id]), $file->uuid))
+        ->assertOk()
+        ->json('data.url');
+
+    $this->get($url)->assertOk()->assertHeader(
+        'Content-Disposition',
+        "attachment; filename=\"Guide: ete 100.txt\"; filename*=utf-8''Guide%3A%20%C3%A9t%C3%A9%20100%25.txt",
+    );
+});
+
 it('signs the link on the bucket itself when the files live on s3', function (): void {
     $this->freezeTime();
 
-    Storage::fake('s3');
+    Storage::fake('s3')->buildTemporaryUrlsUsing(
+        fn (string $path, DateTimeInterface $expiration, array $options): string => 'https://bucket.test/'.$path.'?'.http_build_query($options + ['expires' => $expiration->getTimestamp()]),
+    );
     config(['shopper.media.storage.files_disk' => 's3']);
 
     $product = Product::factory()->publish()->create(['type' => ProductType::Virtual]);
     $file = $product
         ->addMedia(UploadedFile::fake()->createWithContent('fonts.txt', 'paid content'))
+        ->usingFileName('kR8fQ2xZ.txt')
         ->toMediaCollection('files');
 
     Sanctum::actingAs($this->customer, ['store']);
@@ -118,7 +140,54 @@ it('signs the link on the bucket itself when the files live on s3', function ():
         ->assertOk()
         ->json('data.url');
 
-    expect($url)->toBe($file->getTemporaryUrl(now()->addMinutes(5)));
+    parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
+
+    expect($url)->toStartWith('https://bucket.test/'.$file->getPathRelativeToRoot())
+        ->and($query['ResponseContentDisposition'])->toBe('attachment; filename=fonts.txt')
+        ->and((int) $query['expires'])->toBe(now()->addMinutes(5)->getTimestamp());
+});
+
+it('delivers the files of a partially refunded order', function (): void {
+    $item = orderedFile($this->product, ['customer_id' => $this->customer->id, 'payment_status' => PaymentStatus::PartiallyRefunded]);
+
+    Sanctum::actingAs($this->customer, ['store']);
+
+    $this->getJson(fileEndpoint($item, $this->file->uuid))->assertOk()->assertJsonStructure(['data' => ['url', 'expires_at']]);
+});
+
+it('streams a file from the disk it is stored on', function (): void {
+    config(['shopper.media.storage.files_disk' => 'public']);
+
+    $product = Product::factory()->publish()->create(['type' => ProductType::Virtual]);
+    $file = $product
+        ->addMedia(UploadedFile::fake()->createWithContent('template.txt', 'paid content'))
+        ->toMediaCollection('files');
+
+    config(['shopper.media.storage.files_disk' => 'local']);
+
+    Sanctum::actingAs($this->customer, ['store']);
+
+    $url = $this->getJson(fileEndpoint(orderedFile($product, ['customer_id' => $this->customer->id]), $file->uuid))
+        ->assertOk()
+        ->json('data.url');
+
+    $this->get($url)->assertOk()->assertStreamedContent('paid content');
+});
+
+it('refuses a file requested through the line of another order', function (): void {
+    $other = Product::factory()->publish()->create(['type' => ProductType::Virtual]);
+    $other->addMedia(UploadedFile::fake()->createWithContent('course.txt', 'paid content'))->toMediaCollection('files');
+
+    $paid = orderedFile($other, ['customer_id' => $this->customer->id]);
+    $pending = orderedFile($this->product, ['customer_id' => $this->customer->id, 'payment_status' => PaymentStatus::Pending]);
+    $foreign = orderedFile($this->product, ['customer_id' => User::factory()->create()->id]);
+
+    Sanctum::actingAs($this->customer, ['store']);
+
+    $through = fn (OrderItem $item): string => "/store/customers/me/orders/{$paid->order->public_id}/items/{$item->public_id}/files/{$this->file->uuid}";
+
+    $this->getJson($through($pending))->assertNotFound();
+    $this->getJson($through($foreign))->assertNotFound();
 });
 
 it('refuses a file while the order is not paid or once it is refunded', function (PaymentStatus $status): void {

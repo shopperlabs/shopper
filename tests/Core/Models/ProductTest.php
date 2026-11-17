@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
@@ -455,6 +457,23 @@ describe(Product::class, function (): void {
         $product->delete();
 
         expect(Price::query()->where('priceable_id', $product->id)->count())->toBe(0);
+    });
+
+    it('deletes the media files from the disk when product is deleted', function (): void {
+        Storage::fake('local');
+
+        $product = Product::factory()->create(['type' => ProductType::Virtual]);
+        $file = $product
+            ->addMedia(UploadedFile::fake()->createWithContent('ebook.txt', 'paid content'))
+            ->toMediaCollection('files');
+
+        Storage::disk('local')->assertExists($file->getPathRelativeToRoot());
+
+        $product->delete();
+
+        expect($product->media()->count())->toBe(0);
+
+        Storage::disk('local')->assertMissing($file->getPathRelativeToRoot());
     });
 
     it('clears stock when product is deleted', function (): void {

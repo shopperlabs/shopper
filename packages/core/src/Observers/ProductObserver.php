@@ -16,7 +16,7 @@ class ProductObserver
 
     public function deleting(Product $product): void
     {
-        $product->media()->delete();
+        $product->media()->get()->each->delete();
         $product->prices()->delete();
         $product->clearStock();
     }

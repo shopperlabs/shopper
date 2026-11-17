@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+use Shopper\Api\Concerns\NamesProductFiles;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Order;
@@ -18,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class OrderFileController
 {
+    use NamesProductFiles;
+
     private const int LINK_LIFETIME_IN_MINUTES = 5;
 
     /**
@@ -52,7 +55,7 @@ final class OrderFileController
 
         $url = config("filesystems.disks.{$file->disk}.driver") === 's3'
             ? $file->getTemporaryUrl($expiresAt, options: [
-                'ResponseContentDisposition' => 'attachment; filename="'.$file->file_name.'"',
+                'ResponseContentDisposition' => $this->contentDisposition($file),
             ])
             : URL::temporarySignedRoute('shopper.store.files.download', $expiresAt, ['fileId' => $file->uuid]);
 
