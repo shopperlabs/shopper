@@ -44,6 +44,7 @@ class Files extends Component implements HasSchemas
             ->components([
                 SpatieMediaLibraryFileUpload::make('files')
                     ->collection('files')
+                    ->visibility('private')
                     ->label(__('shopper::words.files'))
                     ->helperText(__('shopper::pages/products.files_helpText'))
                     ->acceptedFileTypes(config('shopper.media.accepts_file_types', []))

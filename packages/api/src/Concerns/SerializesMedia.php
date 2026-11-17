@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Api\Concerns;
 
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 trait SerializesMedia
@@ -35,13 +36,25 @@ trait SerializesMedia
     }
 
     /**
-     * Every media in the files collection.
-     *
      * @return array<int, array<string, mixed>>
      */
-    protected function filesPayload(): array
+    protected function filesPayload(?Model $owner = null): array
     {
-        return $this->mediaPayload('files');
+        $owner ??= $this->resource;
+
+        if (! method_exists($owner, 'getMedia')) {
+            return [];
+        }
+
+        return $owner->getMedia('files')
+            ->map(fn (Media $media): array => [
+                'id' => $media->uuid,
+                'name' => $media->name,
+                'extension' => $media->extension,
+                'size' => $media->size,
+            ])
+            ->values()
+            ->all();
     }
 
     /**

@@ -45,6 +45,7 @@ return [
 
     'order' => [
         'restricted_includes' => 'Only `items` can be included on the order confirmation lookup. Use the account order endpoint for the full order.',
+        'files_unavailable' => 'The files of this order are available once it is paid.',
     ],
 
     'catalog' => [

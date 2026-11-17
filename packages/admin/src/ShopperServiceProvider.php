@@ -92,6 +92,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
                 Console\KitInitCommand::class,
                 Console\KitInstallCommand::class,
                 Console\PublishCommand::class,
+                Console\SecureProductFilesCommand::class,
                 Console\MakePageCommand::class,
                 Console\MakeShopperPageCommand::class,
                 Console\SymlinkCommand::class,

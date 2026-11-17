@@ -38,6 +38,8 @@ interface Order
 
     public function isPaid(): bool;
 
+    public function allowsDownloads(): bool;
+
     public function isPaymentPending(): bool;
 
     public function isPaymentAuthorized(): bool;

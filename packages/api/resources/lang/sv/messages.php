@@ -45,6 +45,7 @@ return [
 
     'order' => [
         'restricted_includes' => 'Endast `items` kan inkluderas vid sökning av orderbekräftelse. Använd konto-orderslutpunkten för hela ordern.',
+        'files_unavailable' => 'Filerna i den här ordern blir tillgängliga när den är betald.',
     ],
 
     'catalog' => [

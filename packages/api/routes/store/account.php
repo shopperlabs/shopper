@@ -7,6 +7,7 @@ use Shopper\Api\Http\Controllers\Account\AddressController;
 use Shopper\Api\Http\Controllers\Account\AvatarController;
 use Shopper\Api\Http\Controllers\Account\CustomerController;
 use Shopper\Api\Http\Controllers\Account\OrderController;
+use Shopper\Api\Http\Controllers\Account\OrderFileController;
 use Shopper\Api\Http\Controllers\Auth\AuthenticationController;
 use Shopper\Api\Http\Controllers\Cart\CartTransferController;
 use Shopper\Http\Enum\RateLimit;
@@ -26,4 +27,5 @@ Route::prefix('customers/me')->group(function (): void {
     Route::delete('/addresses/{address}', [AddressController::class, 'destroy']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{orderId}', [OrderController::class, 'show']);
+    Route::get('/orders/{orderId}/items/{itemId}/files/{fileId}', OrderFileController::class);
 });
