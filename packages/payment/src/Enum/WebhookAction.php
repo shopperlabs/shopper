@@ -23,9 +23,7 @@ enum WebhookAction: string
     /**
      * The order in which the events of one payment are replayed when they
      * were journalized before their order existed. Providers do not promise
-     * delivery order, and a refund can only ever follow a capture. A refund
-     * that failed comes last: a provider takes back a refund it confirmed,
-     * never the reverse.
+     * delivery order, and a refund can only ever follow a capture.
      */
     public function precedence(): int
     {

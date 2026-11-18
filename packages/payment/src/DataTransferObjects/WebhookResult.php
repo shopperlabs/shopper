@@ -56,11 +56,6 @@ final readonly class WebhookResult
         return is_string($refundId) ? $refundId : null;
     }
 
-    /**
-     * The idempotency key the refund was requested with, when the provider
-     * hands it back. A refund journalized by its webhook carries it, so the
-     * retry of an attempt whose answer was lost finds the refund on file.
-     */
     public function idempotencyKey(): ?string
     {
         $idempotencyKey = $this->data['idempotency_key'] ?? null;

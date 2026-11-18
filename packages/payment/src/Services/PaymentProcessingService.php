@@ -149,15 +149,7 @@ final class PaymentProcessingService
     }
 
     /**
-     * Refund a captured payment. The idempotency key names the refund
-     * request: a call that repeats a key already on file for the order is a
-     * retry and gets the state of that refund, without a second call to the
-     * provider. Without a key every call is a new refund. The order row
-     * stays locked across the provider call: a concurrent refund waits and
-     * finds this one in the ceiling, and the webhook that confirms it is
-     * applied after its row is written. A refund already on file under the
-     * provider's id was journalized by its webhook after an earlier attempt
-     * was lost: the row takes its author and its key.
+     * Refund a captured payment.
      */
     public function refund(Order $order, string $reference, int $amount, ?string $reason = null, ?string $idempotencyKey = null): PaymentResult
     {
@@ -364,8 +356,6 @@ final class PaymentProcessingService
      * backstop: the payment must be in a refundable state, and the cumulative
      * refunds can never exceed what was captured. Orders marked paid manually
      * carry no capture transaction, so the order total is the ceiling there.
-     * A refund the provider has not settled yet holds its amount until it
-     * fails, so a second refund cannot overdraw the payment meanwhile.
      */
     private function assertRefundable(Order $order, int $amount): void
     {
@@ -427,13 +417,6 @@ final class PaymentProcessingService
             ->first();
     }
 
-    /**
-     * A webhook names its refund by the provider's refund id, or by the
-     * idempotency key the driver sent with the refund and got back. The key
-     * only stands in for the id on a row that holds none: a row filed under
-     * another refund id is a different refund the provider created for the
-     * same key, and merging the two would hide a double refund.
-     */
     private function findWebhookRefund(Order $order, WebhookResult $result): ?PaymentTransaction
     {
         $refundId = $result->refundId();
@@ -452,12 +435,6 @@ final class PaymentProcessingService
             : null;
     }
 
-    /**
-     * The key a refund journalized by its webhook is filed under. A key
-     * another refund of the order already holds means the provider issued
-     * two refunds for one request: the second is journalized without it and
-     * reported, since the customer was refunded twice.
-     */
     private function webhookIdempotencyKey(Order $order, string $driver, WebhookResult $result): ?string
     {
         $idempotencyKey = $result->idempotencyKey();
@@ -556,11 +533,6 @@ final class PaymentProcessingService
         $this->syncPaymentStatus($order, $type, $paymentResult);
     }
 
-    /**
-     * A failed refund stays failed: a provider takes back a refund it
-     * confirmed, never the reverse, so a confirmation delivered after the
-     * failure is the older of the two.
-     */
     private function processWebhookRefund(Order $order, string $driver, WebhookResult $result): void
     {
         $refund = $this->findWebhookRefund($order, $result);
@@ -576,14 +548,6 @@ final class PaymentProcessingService
         $this->releaseCampaignBudget($order);
     }
 
-    /**
-     * A failure is final, including on a refund the provider had confirmed:
-     * the bank can return the funds days later, and the customer then holds
-     * nothing while the order says refunded. A refund the shop never issued
-     * is journalized as failed so the failure stays on record. A failure
-     * that names no refund cannot be applied and is reported: left silent,
-     * its pending refund would hold the refundable balance for good.
-     */
     private function processWebhookRefundFailure(Order $order, string $driver, WebhookResult $result): void
     {
         $refund = $this->findWebhookRefund($order, $result);
@@ -621,15 +585,6 @@ final class PaymentProcessingService
         $this->restorePaymentStatus($order);
     }
 
-    /**
-     * The transition table only moves a payment toward refunds, so a late
-     * capture can never reopen a refunded order. A refund the provider took
-     * back is the one case where the status steps back, hence the direct
-     * write. `OrderPaid` is not dispatched again, so an order whose items
-     * were delivered while it read refunded is completed here. The campaign
-     * budget released by the refund is not reserved again: the campaign may
-     * have spent it since.
-     */
     private function restorePaymentStatus(Order $order): void
     {
         if (! in_array($order->payment_status, [PaymentStatus::PartiallyRefunded, PaymentStatus::Refunded], strict: true)) {

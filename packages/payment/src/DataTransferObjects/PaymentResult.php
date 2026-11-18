@@ -31,10 +31,6 @@ final readonly class PaymentResult
     }
 
     /**
-     * A refund the provider accepted but settles later. The reference is the
-     * provider's id for the refund itself, never the payment reference: the
-     * webhook that reports the outcome is matched to the refund through it.
-     *
      * @param  array<string, mixed>  $data
      */
     public static function pendingRefund(string $reference, ?int $amount = null, array $data = []): self
