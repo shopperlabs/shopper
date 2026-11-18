@@ -68,25 +68,54 @@ beforeEach(function (): void {
     $this->service = resolve(PaymentProcessingService::class);
 });
 
-it('moves the refund idempotency key forward once a refund is journalized', function (): void {
+it('gives every refund made without a key an idempotency key of its own', function (): void {
     $this->service->refund($this->order, 'pi_abc', amount: 1000);
     $this->service->refund($this->order, 'pi_abc', amount: 1000);
 
-    expect($this->keys->all())->toBe([
-        "refund:{$this->order->id}:pi_abc:1000:0",
-        "refund:{$this->order->id}:pi_abc:1000:1",
-    ]);
+    expect($this->keys->filter()->unique())->toHaveCount(2);
 });
 
-it('reuses the same idempotency key when the previous attempt was never journalized', function (): void {
+it('sends the caller key again when the previous attempt was never journalized', function (): void {
     $this->shouldTimeout = true;
 
-    expect(fn () => $this->service->refund($this->order, 'pi_abc', amount: 1000))
+    expect(fn () => $this->service->refund($this->order, 'pi_abc', amount: 1000, idempotencyKey: 'req_1'))
         ->toThrow(PaymentException::class);
 
     $this->shouldTimeout = false;
 
-    $this->service->refund($this->order, 'pi_abc', amount: 1000);
+    $this->service->refund($this->order, 'pi_abc', amount: 1000, idempotencyKey: 'req_1');
 
-    expect($this->keys->unique()->count())->toBe(1);
+    expect($this->keys->all())->toBe(['req_1', 'req_1']);
+});
+
+it('refunds once when a key already journalized is submitted again', function (): void {
+    $this->service->refund($this->order, 'pi_abc', amount: 1000, idempotencyKey: 'req_1');
+
+    $retry = $this->service->refund($this->order, 'pi_abc', amount: 1000, idempotencyKey: 'req_1');
+
+    expect($this->keys)->toHaveCount(1)
+        ->and($retry->success)->toBeTrue()
+        ->and($retry->amount)->toBe(1000)
+        ->and($this->service->getTransactions($this->order))->toHaveCount(1);
+});
+
+it('refunds two partial amounts of the same payment under two keys', function (): void {
+    $this->service->refund($this->order, 'pi_abc', amount: 1000, idempotencyKey: 'req_1');
+    $this->service->refund($this->order, 'pi_abc', amount: 1000, idempotencyKey: 'req_2');
+
+    expect($this->service->getTransactions($this->order))->toHaveCount(2);
+});
+
+it('scopes an idempotency key to its order', function (): void {
+    $other = Order::factory()->create([
+        'payment_method_id' => $this->order->payment_method_id,
+        'price_amount' => 5000,
+        'payment_status' => PaymentStatus::Paid,
+    ]);
+
+    $this->service->refund($this->order, 'pi_abc', amount: 1000, idempotencyKey: 'req_1');
+    $this->service->refund($other, 'pi_def', amount: 1000, idempotencyKey: 'req_1');
+
+    expect($this->keys)->toHaveCount(2)
+        ->and($other->refresh()->payment_status)->toBe(PaymentStatus::PartiallyRefunded);
 });

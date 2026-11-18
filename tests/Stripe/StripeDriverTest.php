@@ -403,18 +403,24 @@ describe(StripeDriver::class, function (): void {
                 ->and($result->data['payment_intent'])->toBe('pi_test_123');
         });
 
-        it('accepts a pending refund so a delayed payment method is not refunded twice', function (): void {
+        it('reports a refund Stripe has not settled as pending under the refund id', function (string $status): void {
             $driver = createDriver();
             $mocks = injectMockClient($driver);
 
             $mocks->refunds->shouldReceive('create')
                 ->once()
-                ->andReturn(Refund::constructFrom(['id' => 're_test_123', 'status' => 'pending', 'amount' => 5000]));
+                ->andReturn(Refund::constructFrom(['id' => 're_test_123', 'status' => $status, 'amount' => 5000]));
 
-            expect($driver->refundPayment('pi_test_123', 5000)->success)->toBeTrue();
-        });
+            $result = $driver->refundPayment('pi_test_123', 5000);
 
-        it('forwards the caller idempotency key so a retried refund collapses at Stripe', function (): void {
+            expect($result->isPending())->toBeTrue()
+                ->and($result->status)->toBe($status)
+                ->and($result->reference)->toBe('re_test_123')
+                ->and($result->amount)->toBe(5000)
+                ->and($result->data['payment_intent'])->toBe('pi_test_123');
+        })->with(['pending', 'requires_action']);
+
+        it('sends the caller idempotency key as the request key and in the refund metadata', function (): void {
             $driver = createDriver();
             $mocks = injectMockClient($driver);
 
@@ -426,13 +432,14 @@ describe(StripeDriver::class, function (): void {
 
             $mocks->refunds->shouldReceive('create')
                 ->twice()
-                ->with(Mockery::type('array'), Mockery::on(
-                    fn (array $opts): bool => $opts['idempotency_key'] === 'refund:1:pi_test_123:5000:0'
-                ))
+                ->with(
+                    Mockery::on(fn (array $params): bool => $params['metadata'] === ['idempotency_key' => 'req_1']),
+                    Mockery::on(fn (array $opts): bool => $opts['idempotency_key'] === 'req_1'),
+                )
                 ->andReturn($refund);
 
-            $driver->refundPayment('pi_test_123', 5000, null, ['idempotency_key' => 'refund:1:pi_test_123:5000:0']);
-            $driver->refundPayment('pi_test_123', 5000, null, ['idempotency_key' => 'refund:1:pi_test_123:5000:0']);
+            $driver->refundPayment('pi_test_123', 5000, null, ['idempotency_key' => 'req_1']);
+            $driver->refundPayment('pi_test_123', 5000, null, ['idempotency_key' => 'req_1']);
         });
 
         it('creates a partial refund with reason', function (): void {
@@ -461,13 +468,13 @@ describe(StripeDriver::class, function (): void {
                 ->and($result->amount)->toBe(2500);
         });
 
-        it('is not successful when refund fails', function (): void {
+        it('is not successful when refund fails', function (string $status): void {
             $driver = createDriver();
             $mocks = injectMockClient($driver);
 
             $refund = Refund::constructFrom([
                 'id' => 're_test_789',
-                'status' => 'failed',
+                'status' => $status,
                 'amount' => 5000,
             ]);
 
@@ -475,8 +482,9 @@ describe(StripeDriver::class, function (): void {
 
             $result = $driver->refundPayment('pi_test_123', 5000);
 
-            expect($result->success)->toBeFalse();
-        });
+            expect($result->success)->toBeFalse()
+                ->and($result->isPending())->toBeFalse();
+        })->with(['failed', 'canceled']);
 
         it('throws `StripeException` on API error', function (): void {
             $driver = createDriver();
@@ -748,19 +756,104 @@ describe(StripeDriver::class, function (): void {
                 ->and($result->refundId())->toBe('re_test_123');
         });
 
-        it('ignores a refund that has not succeeded yet', function (): void {
+        it('hands back the idempotency key a refund was created with', function (string $status): void {
             $driver = createDriver();
             $webhook = webhookPayload('refund.updated', [
                 'id' => 're_test_123',
                 'object' => 'refund',
                 'payment_intent' => 'pi_test_123',
                 'amount' => 2500,
-                'status' => 'pending',
+                'status' => $status,
+                'metadata' => ['idempotency_key' => 'req_1'],
+            ]);
+
+            $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
+
+            expect($result->idempotencyKey())->toBe('req_1');
+        })->with(['succeeded', 'failed']);
+
+        it('has no idempotency key to hand back for a refund created outside the shop', function (): void {
+            $driver = createDriver();
+            $webhook = webhookPayload('refund.updated', [
+                'id' => 're_test_123',
+                'object' => 'refund',
+                'payment_intent' => 'pi_test_123',
+                'amount' => 2500,
+                'status' => 'succeeded',
+            ]);
+
+            expect($driver->handleWebhook($webhook['payload'], $webhook['headers'])->idempotencyKey())->toBeNull();
+        });
+
+        it('ignores a refund that has not succeeded yet', function (string $status): void {
+            $driver = createDriver();
+            $webhook = webhookPayload('refund.updated', [
+                'id' => 're_test_123',
+                'object' => 'refund',
+                'payment_intent' => 'pi_test_123',
+                'amount' => 2500,
+                'status' => $status,
             ]);
 
             $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
 
             expect($result->isIgnored())->toBeTrue();
+        })->with(['pending', 'requires_action']);
+
+        it('reports a failed or canceled refund with its id and failure reason', function (string $type, string $status): void {
+            $driver = createDriver();
+            $webhook = webhookPayload($type, [
+                'id' => 're_test_123',
+                'object' => 'refund',
+                'payment_intent' => 'pi_test_123',
+                'amount' => 2500,
+                'status' => $status,
+                'failure_reason' => 'lost_or_stolen_card',
+            ]);
+
+            $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
+
+            expect($result->action)->toBe(WebhookAction::RefundFailed)
+                ->and($result->reference)->toBe('pi_test_123')
+                ->and($result->amount)->toBe(2500)
+                ->and($result->refundId())->toBe('re_test_123')
+                ->and($result->data['failure_message'])->toBe('lost_or_stolen_card');
+        })->with([
+            ['refund.failed', 'failed'],
+            ['refund.updated', 'failed'],
+            ['refund.updated', 'canceled'],
+        ]);
+
+        it('reports a canceled refund without a failure reason', function (): void {
+            $driver = createDriver();
+            $webhook = webhookPayload('refund.updated', [
+                'id' => 're_test_123',
+                'object' => 'refund',
+                'payment_intent' => 'pi_test_123',
+                'amount' => 2500,
+                'status' => 'canceled',
+            ]);
+
+            $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
+
+            expect($result->action)->toBe(WebhookAction::RefundFailed)
+                ->and($result->data['failure_message'])->toBeNull();
+        });
+
+        it('handles a succeeded `refund.updated` event', function (): void {
+            $driver = createDriver();
+            $webhook = webhookPayload('refund.updated', [
+                'id' => 're_test_123',
+                'object' => 'refund',
+                'payment_intent' => 'pi_test_123',
+                'amount' => 2500,
+                'status' => 'succeeded',
+            ]);
+
+            $result = $driver->handleWebhook($webhook['payload'], $webhook['headers']);
+
+            expect($result->action)->toBe(WebhookAction::Refunded)
+                ->and($result->refundId())->toBe('re_test_123');
         });
 
         it('returns ignored result for unknown events', function (): void {

@@ -56,6 +56,13 @@ final readonly class WebhookResult
         return is_string($refundId) ? $refundId : null;
     }
 
+    public function idempotencyKey(): ?string
+    {
+        $idempotencyKey = $this->data['idempotency_key'] ?? null;
+
+        return is_string($idempotencyKey) ? $idempotencyKey : null;
+    }
+
     public function toPaymentResult(): PaymentResult
     {
         return new PaymentResult(

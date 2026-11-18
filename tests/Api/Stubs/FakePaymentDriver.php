@@ -41,6 +41,8 @@ final class FakePaymentDriver extends Driver
 
     public ?int $lastAmount = null;
 
+    public string $refundStatus = 'refunded';
+
     public ?string $lastCancelledReference = null;
 
     /** @var list<array{reference: string, amount: int, context: array<string, mixed>}> */
@@ -118,7 +120,7 @@ final class FakePaymentDriver extends Driver
 
         return new PaymentResult(
             success: true,
-            status: 'refunded',
+            status: $this->refundStatus,
             reference: 're_'.count($this->refunds),
             amount: $amount,
         );

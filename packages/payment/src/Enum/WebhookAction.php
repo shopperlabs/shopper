@@ -16,6 +16,8 @@ enum WebhookAction: string
 
     case Failed = 'failed';
 
+    case RefundFailed = 'refund_failed';
+
     case Ignored = 'ignored';
 
     /**
@@ -31,7 +33,8 @@ enum WebhookAction: string
             self::Failed => 3,
             self::Canceled => 4,
             self::Refunded => 5,
-            self::Ignored => 6,
+            self::RefundFailed => 6,
+            self::Ignored => 7,
         };
     }
 }

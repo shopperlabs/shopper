@@ -171,19 +171,36 @@ final class StripeDriver extends Driver
                 $params['reason'] = $reason;
             }
 
-            $refund = $this->getClient()->refunds->create($params, [
-                'idempotency_key' => $context['idempotency_key'] ?? Str::uuid()->toString(),
-            ]);
+            $idempotencyKey = $context['idempotency_key'] ?? Str::uuid()->toString();
+            $params['metadata'] = ['idempotency_key' => $idempotencyKey];
+
+            $refund = $this->getClient()->refunds->create($params, ['idempotency_key' => $idempotencyKey]);
+
+            $data = [
+                'stripe_status' => $refund->status,
+                'payment_intent' => $reference,
+            ];
+
+            if ($refund->status === 'pending') {
+                return PaymentResult::pendingRefund($refund->id, $refund->amount, $data);
+            }
+
+            if ($refund->status === 'requires_action') {
+                return new PaymentResult(
+                    success: true,
+                    status: 'requires_action',
+                    reference: $refund->id,
+                    amount: $refund->amount,
+                    data: $data,
+                );
+            }
 
             return new PaymentResult(
-                success: in_array($refund->status, ['succeeded', 'pending'], true),
+                success: $refund->status === 'succeeded',
                 status: 'refunded',
                 reference: $refund->id,
                 amount: $refund->amount,
-                data: [
-                    'stripe_status' => $refund->status,
-                    'payment_intent' => $reference,
-                ],
+                data: $data,
             );
         } catch (ApiErrorException $e) {
             throw StripeException::fromApiError($e);
@@ -282,15 +299,32 @@ final class StripeDriver extends Driver
                 data: ['stripe_event' => $event->type],
                 eventId: $event->id,
             ),
-            'refund.created', 'refund.updated' => $object->status === 'succeeded'
-                ? new WebhookResult(
+            'refund.created', 'refund.updated', 'refund.failed' => match ($object->status) {
+                'succeeded' => new WebhookResult(
                     action: WebhookAction::Refunded,
                     reference: $object->payment_intent,
                     amount: $object->amount,
-                    data: ['stripe_event' => $event->type, 'refund_id' => $object->id],
+                    data: [
+                        'stripe_event' => $event->type,
+                        'refund_id' => $object->id,
+                        'idempotency_key' => $object->metadata['idempotency_key'] ?? null,
+                    ],
                     eventId: $event->id,
-                )
-                : WebhookResult::ignored(),
+                ),
+                'failed', 'canceled' => new WebhookResult(
+                    action: WebhookAction::RefundFailed,
+                    reference: $object->payment_intent,
+                    amount: $object->amount,
+                    data: [
+                        'stripe_event' => $event->type,
+                        'refund_id' => $object->id,
+                        'idempotency_key' => $object->metadata['idempotency_key'] ?? null,
+                        'failure_message' => $object->failure_reason ?? null,
+                    ],
+                    eventId: $event->id,
+                ),
+                default => WebhookResult::ignored(),
+            },
             default => WebhookResult::ignored(),
         };
     }

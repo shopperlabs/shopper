@@ -30,6 +30,25 @@ final readonly class PaymentResult
         );
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public static function pendingRefund(string $reference, ?int $amount = null, array $data = []): self
+    {
+        return new self(
+            success: true,
+            status: 'pending',
+            reference: $reference,
+            amount: $amount,
+            data: $data,
+        );
+    }
+
+    public function isPending(): bool
+    {
+        return $this->success && in_array($this->status, ['pending', 'requires_action'], true);
+    }
+
     public function requiresAction(): bool
     {
         return $this->redirectUrl !== null || $this->status === 'requires_action';
