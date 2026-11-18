@@ -95,6 +95,16 @@ it('refunds a captured session once, whatever the number of attempts', function 
         ->and($this->driver->cancellations)->toBe(0);
 });
 
+it('counts a refund the provider has yet to settle as given back, unless the customer must act first', function (string $status, bool $givenBack): void {
+    $this->driver->retrievedStatus = 'captured';
+    $this->driver->refundStatus = $status;
+
+    expect($this->gateway->refund($this->session))->toBe($givenBack);
+})->with([
+    ['pending', true],
+    ['requires_action', false],
+]);
+
 it('voids an authorized session instead of refunding it', function (): void {
     $this->driver->retrievedStatus = 'authorized';
 

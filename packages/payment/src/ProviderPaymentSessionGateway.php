@@ -8,6 +8,7 @@ use Shopper\Core\Contracts\PaymentSessionGateway;
 use Shopper\Core\Exceptions\PaymentProviderUnavailableException;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Payment\Contracts\PaymentDriver;
+use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\Enum\TransactionType;
 use Shopper\Payment\Models\PaymentTransaction;
 use Throwable;
@@ -94,7 +95,11 @@ final readonly class ProviderPaymentSessionGateway implements PaymentSessionGate
             throw new PaymentProviderUnavailableException($exception);
         }
 
-        return $result->success ?? in_array($payment->status, ['pending', 'requires_action', 'canceled', 'failed', 'refunded'], true);
+        if ($result instanceof PaymentResult) {
+            return $result->success && $result->status !== 'requires_action';
+        }
+
+        return in_array($payment->status, ['pending', 'requires_action', 'canceled', 'failed', 'refunded'], true);
     }
 
     public function releaseOrder(Order $order): bool

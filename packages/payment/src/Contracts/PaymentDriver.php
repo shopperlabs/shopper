@@ -55,6 +55,16 @@ interface PaymentDriver
     /**
      * Refund a captured payment (full or partial).
      *
+     * A provider that settles refunds later returns PaymentResult::pendingRefund()
+     * with its own id for the refund, then reports the outcome from handleWebhook()
+     * as WebhookAction::Refunded or WebhookAction::RefundFailed, with the payment
+     * reference in `reference` and that same refund id in `data['refund_id']`.
+     *
+     * `$context['idempotency_key']` names the refund request: sent to the
+     * provider as its idempotency key, it makes a retry return the same refund
+     * instead of a second one. A provider that can attach data to a refund
+     * hands the key back in `data['idempotency_key']` of its webhooks.
+     *
      * @param  array<string, mixed>  $context
      */
     public function refundPayment(string $reference, int $amount, ?string $reason = null, array $context = []): PaymentResult;

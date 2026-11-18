@@ -43,9 +43,20 @@ Point a Stripe webhook endpoint at `/store/webhooks/stripe` and subscribe it to:
 - `payment_intent.canceled`
 - `refund.created`
 - `refund.updated`
+- `refund.failed`
 
 Every event is verified against `STRIPE_WEBHOOK_SECRET` before it is applied. The driver refuses
 to run without it.
+
+A refund Stripe has not settled yet is journalized as pending. The order's payment status changes when
+`refund.updated` confirms it, and `refund.failed` marks it failed and gives its amount back to the
+refundable balance. Without these three refund events a pending refund never settles.
+
+The driver sends the idempotency key of a refund to Stripe as the request key and stores it in the
+refund's metadata under `idempotency_key`, so the refund events carry it back to the store.
+Stripe forgets a request key after 24 hours: past that delay, the retry of a refund whose answer was
+lost and whose events have not reached the store yet creates a second refund. The store journalizes
+both and reports the duplicate.
 
 ## Configuration
 

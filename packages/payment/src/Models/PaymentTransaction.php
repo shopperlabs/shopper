@@ -24,6 +24,7 @@ use Shopper\Payment\Enum\TransactionType;
  * @property-read int $amount
  * @property-read string $currency_code
  * @property-read ?string $reference
+ * @property-read ?string $idempotency_key
  * @property-read array<string, mixed>|null $data
  * @property-read ?string $notes
  * @property-read array<string, mixed>|null $metadata
