@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Foundation\Testing\RefreshDatabaseState;
+use Illuminate\Support\Facades\DB;
 use Shopper\Core\Contracts\StockReserver;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
@@ -9,6 +11,7 @@ use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\Product;
+use Shopper\Core\Models\StockLevel;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Core\TestCase::class);
@@ -96,4 +99,25 @@ describe('StockReservationTest', function (): void {
 
         expect($reserved)->toBe(0);
     });
+
+    it('reserves against the committed stock when the transaction already read it', function (): void {
+        DB::commit();
+        RefreshDatabaseState::$migrated = false;
+
+        config(['database.connections.competitor' => DB::connection()->getConfig()]);
+
+        $reserved = DB::transaction(function (): int {
+            $this->product->getStock();
+
+            DB::connection('competitor')
+                ->table((new StockLevel)->getTable())
+                ->where('stockable_id', $this->product->id)
+                ->update(['quantity' => 0]);
+
+            return $this->reserver->reserve($this->product, 1, $this->order, $this->user->id);
+        });
+
+        expect($reserved)->toBe(0)
+            ->and($this->product->getStock())->toBe(0);
+    })->skip(fn (): bool => DB::getDriverName() === 'sqlite', 'Needs two connections on the same database.');
 })->group('workflows', 'stock-allocation');

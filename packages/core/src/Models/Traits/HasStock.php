@@ -120,6 +120,7 @@ trait HasStock
         if ($date === null) {
             return (int) $this->stockLevels()
                 ->where('inventory_id', $inventoryId)
+                ->when($this->getConnection()->transactionLevel() > 0, fn ($query) => $query->lockForUpdate())
                 ->value('quantity');
         }
 
