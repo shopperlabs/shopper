@@ -28,6 +28,11 @@ class PaymentException extends Exception
         return new self("The [{$driver}] payment [{$reference}] was collected but no order was placed for it.");
     }
 
+    public static function orphanRefundFailed(string $driver, string $reference): self
+    {
+        return new self("The [{$driver}] provider failed to refund the payment [{$reference}], which no order was placed for.");
+    }
+
     public static function invalidResponse(string $driver): self
     {
         return new self("Invalid response received from [{$driver}] API.");

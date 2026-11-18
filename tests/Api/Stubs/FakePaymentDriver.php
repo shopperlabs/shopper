@@ -6,13 +6,14 @@ namespace Tests\Api\Stubs;
 
 use Closure;
 use RuntimeException;
+use Shopper\Payment\Contracts\RetrievesRefunds;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Drivers\Driver;
 use Shopper\Payment\Enum\WebhookAction;
 use Shopper\Payment\Exceptions\PaymentException;
 
-final class FakePaymentDriver extends Driver
+final class FakePaymentDriver extends Driver implements RetrievesRefunds
 {
     public bool $failRetrieve = false;
 
@@ -42,6 +43,14 @@ final class FakePaymentDriver extends Driver
     public ?int $lastAmount = null;
 
     public string $refundStatus = 'refunded';
+
+    public string $retrievedRefundStatus = 'pending';
+
+    /** @var list<string> */
+    public array $unreachableRefunds = [];
+
+    /** @var list<string> */
+    public array $refundRetrievals = [];
 
     public ?string $lastCancelledReference = null;
 
@@ -124,6 +133,21 @@ final class FakePaymentDriver extends Driver
             reference: 're_'.count($this->refunds),
             amount: $amount,
         );
+    }
+
+    public function retrieveRefund(string $refundId): PaymentResult
+    {
+        $this->refundRetrievals[] = $refundId;
+
+        if (in_array($refundId, $this->unreachableRefunds, true)) {
+            throw new RuntimeException('Provider unreachable.');
+        }
+
+        if ($this->retrievedRefundStatus === 'failed') {
+            return PaymentResult::failed('insufficient_funds', $refundId);
+        }
+
+        return new PaymentResult(success: true, status: $this->retrievedRefundStatus, reference: $refundId);
     }
 
     public function handleWebhook(array $payload, array $headers = []): WebhookResult

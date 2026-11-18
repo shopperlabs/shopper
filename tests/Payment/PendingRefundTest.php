@@ -788,3 +788,16 @@ it('journalizes a pending result that names no refund of its own as a settled re
     expect(pendingRefundRows($this->order)->sole()->status)->toBe(TransactionStatus::Success)
         ->and($this->order->refresh()->payment_status)->toBe(PaymentStatus::PartiallyRefunded);
 })->with([null, 'pay_1']);
+
+it('leaves alone the pending refund of a driver that cannot retrieve refunds', function (): void {
+    Exceptions::fake();
+    $this->service->refund($this->order, 'pay_1', amount: 2000);
+    $this->travel(16)->minutes();
+
+    $this->artisan('shopper:payments:reconcile', ['--pull' => true])
+        ->expectsOutputToContain('0 pending refunds settled')
+        ->assertSuccessful();
+
+    expect(pendingRefundRows($this->order)->sole()->status)->toBe(TransactionStatus::Pending);
+    Exceptions::assertNothingReported();
+});

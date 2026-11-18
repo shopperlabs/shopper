@@ -7,6 +7,7 @@ namespace Shopper\Payment\Actions;
 use Shopper\Core\Events\Payments\OrphanedPaymentRefunded;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Enum\WebhookAction;
+use Shopper\Payment\Exceptions\PaymentException;
 use Shopper\Payment\Models\PaymentWebhookEvent;
 use Shopper\Payment\Services\PaymentProcessingService;
 
@@ -23,6 +24,8 @@ final readonly class IngestPaymentEvent
             return;
         }
 
+        $delivered = $result->eventId === null;
+
         if ($result->eventId === null) {
             $order = $this->payments->findOrderByReference($result->reference);
 
@@ -33,8 +36,13 @@ final readonly class IngestPaymentEvent
             $event = PaymentWebhookEvent::journal($driver, $result);
 
             if ($event !== null) {
+                $delivered = true;
                 $this->apply->execute($event);
             }
+        }
+
+        if ($delivered && $result->action === WebhookAction::RefundFailed && $this->payments->findOrderByReference($result->reference) === null) {
+            report(PaymentException::orphanRefundFailed($driver, $result->reference));
         }
 
         if ($result->action === WebhookAction::Refunded && $this->payments->findOrderByReference($result->reference) === null) {
