@@ -476,6 +476,7 @@ describe(StripeDriver::class, function (): void {
                 'id' => 're_test_789',
                 'status' => $status,
                 'amount' => 5000,
+                'failure_reason' => 'insufficient_funds',
             ]);
 
             $mocks->refunds->shouldReceive('create')->andReturn($refund);
@@ -483,7 +484,8 @@ describe(StripeDriver::class, function (): void {
             $result = $driver->refundPayment('pi_test_123', 5000);
 
             expect($result->success)->toBeFalse()
-                ->and($result->isPending())->toBeFalse();
+                ->and($result->isPending())->toBeFalse()
+                ->and($result->message)->toBe('insufficient_funds');
         })->with(['failed', 'canceled']);
 
         it('throws `StripeException` on API error', function (): void {
@@ -545,6 +547,48 @@ describe(StripeDriver::class, function (): void {
                 ->andThrow(new InvalidRequestException('Cannot cancel'));
 
             $driver->cancelPayment('pi_test_123');
+        })->throws(StripeException::class);
+    });
+
+    describe('`retrieveRefund()` method', function (): void {
+        it('maps the state of a refund', function (string $stripeStatus, bool $success, bool $pending, ?string $message): void {
+            $driver = createDriver();
+            $mocks = injectMockClient($driver);
+
+            $mocks->refunds->shouldReceive('retrieve')
+                ->once()
+                ->with('re_test_123')
+                ->andReturn(Refund::constructFrom([
+                    'id' => 're_test_123',
+                    'status' => $stripeStatus,
+                    'amount' => 2000,
+                    'failure_reason' => $message,
+                ]));
+
+            $result = $driver->retrieveRefund('re_test_123');
+
+            expect($result->success)->toBe($success)
+                ->and($result->isPending())->toBe($pending)
+                ->and($result->reference)->toBe('re_test_123')
+                ->and($result->amount)->toBe(2000)
+                ->and($result->message)->toBe($message)
+                ->and($result->data['stripe_status'])->toBe($stripeStatus);
+        })->with([
+            'succeeded' => ['succeeded', true, false, null],
+            'pending' => ['pending', true, true, null],
+            'requires_action' => ['requires_action', true, true, null],
+            'failed' => ['failed', false, false, 'insufficient_funds'],
+            'canceled' => ['canceled', false, false, 'merchant_request'],
+        ]);
+
+        it('throws on API error', function (): void {
+            $driver = createDriver();
+            $mocks = injectMockClient($driver);
+
+            $mocks->refunds->shouldReceive('retrieve')
+                ->andThrow(new InvalidRequestException('No such refund'));
+
+            $driver->retrieveRefund('re_invalid');
         })->throws(StripeException::class);
     });
 

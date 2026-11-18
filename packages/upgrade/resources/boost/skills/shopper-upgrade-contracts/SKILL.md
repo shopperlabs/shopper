@@ -73,6 +73,21 @@ return new WebhookResult(
 );
 ```
 
+A driver can also implement the optional `Shopper\Payment\Contracts\RetrievesRefunds` contract. `shopper:payments:reconcile --pull` then asks it for the state of the refunds left pending past the `--minutes` delay, and settles them when the webhook never came:
+
+```php
+public function retrieveRefund(string $refundId): PaymentResult
+{
+    // pending: PaymentResult::pendingRefund($refundId)
+    // confirmed: new PaymentResult(success: true, status: 'refunded', reference: $refundId)
+    // failed: PaymentResult::failed($reason, $refundId)
+}
+```
+
+A successful result is settled as a confirmed refund and a failed one as a final failure, which gives the amount back to the refundable balance. Any provider state that is neither (processing, queued, a lookup that did not answer) must come back as `PaymentResult::pendingRefund()` or throw.
+
+A driver without it is left alone: its pending refunds wait for the webhook.
+
 A driver whose refunds settle at once keeps returning `success: true` with any status other than `pending`.
 
 A `WebhookAction::RefundFailed` is final, including on a refund the provider had confirmed: the transaction becomes failed, `PaymentFailed` is dispatched, and the order's payment status steps back from `refunded` or `partially_refunded` to what the remaining refunds give. Code that treats `refunded` as a terminal payment status must allow for that.

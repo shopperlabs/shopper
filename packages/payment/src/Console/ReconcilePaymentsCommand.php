@@ -14,6 +14,9 @@ use Shopper\Core\Events\Payments\PaymentOrphaned;
 use Shopper\Core\Models\Contracts\Order as OrderContract;
 use Shopper\Core\Models\Order;
 use Shopper\Payment\Actions\SettlePayment;
+use Shopper\Payment\Contracts\RetrievesRefunds;
+use Shopper\Payment\DataTransferObjects\WebhookResult;
+use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
 use Shopper\Payment\Enum\WebhookAction;
 use Shopper\Payment\Exceptions\PaymentException;
@@ -29,10 +32,10 @@ use Throwable;
 final class ReconcilePaymentsCommand extends Command
 {
     protected $signature = 'shopper:payments:reconcile
-                            {--pull : Queue a provider check for pending payments whose driver supports retrieval}
-                            {--minutes=15 : Only pull orders that have been pending for at least this many minutes}';
+                            {--pull : Check pending payments and pending refunds against the provider, for the drivers that support retrieval}
+                            {--minutes=15 : Only pull payments and refunds that have been pending for at least this many minutes}';
 
-    protected $description = 'Apply the provider events that arrived before their order existed, and optionally check pending payments against the provider';
+    protected $description = 'Apply the provider events that arrived before their order existed, and optionally check pending payments and refunds against the provider';
 
     public function handle(PaymentProcessingService $payments, SettlePayment $settle, PaymentSessionGateway $gateway, PaymentManager $paymentManager): int
     {
@@ -49,6 +52,10 @@ final class ReconcilePaymentsCommand extends Command
             $queued = $this->queuePendingPayments((int) $this->option('minutes'));
 
             $this->components->info("{$queued} pending ".Str::plural('payment', $queued).' queued for a provider check.');
+
+            $refunds = $this->settlePendingRefunds($payments, $paymentManager, (int) $this->option('minutes'));
+
+            $this->components->info("{$refunds} pending ".Str::plural('refund', $refunds).' settled from the provider.');
         }
 
         return self::SUCCESS;
@@ -92,7 +99,7 @@ final class ReconcilePaymentsCommand extends Command
             ->where('created_at', '<', now()->subMinutes((int) config('shopper.payment.reconciliation.orphan_after_minutes', 30)));
 
         $returns = PaymentWebhookEvent::query()
-            ->whereIn('type', [WebhookAction::Refunded->value, WebhookAction::Canceled->value])
+            ->whereIn('type', [WebhookAction::Refunded->value, WebhookAction::RefundFailed->value, WebhookAction::Canceled->value])
             ->whereIn('reference', $candidates->clone()->select('reference'))
             ->get()
             ->groupBy('reference');
@@ -112,7 +119,7 @@ final class ReconcilePaymentsCommand extends Command
             $cartId = is_string($result->data['cart_id'] ?? null) ? $result->data['cart_id'] : null;
             $returned = $returns->get($reference);
 
-            if ($returned !== null) {
+            if ($returned !== null && PaymentWebhookEvent::returnsPayment($returned)) {
                 if ($cartId !== null && $returned->doesntContain('type', WebhookAction::Canceled) && PaymentWebhookEvent::refundedAmount($returned) < (int) $result->amount) {
                     report(PaymentException::orphaned($event->driver, $reference));
                     $orphaned++;
@@ -159,6 +166,46 @@ final class ReconcilePaymentsCommand extends Command
         }
 
         return $orphaned;
+    }
+
+    private function settlePendingRefunds(PaymentProcessingService $payments, PaymentManager $paymentManager, int $minutes): int
+    {
+        $settled = 0;
+
+        $pending = PaymentTransaction::query()
+            ->with('order')
+            ->where('type', TransactionType::Refund)
+            ->where('status', TransactionStatus::Pending)
+            ->whereNotNull('reference')
+            ->where('created_at', '<', now()->subMinutes($minutes));
+
+        foreach ($pending->lazyById(100) as $refund) {
+            try {
+                $driver = $paymentManager->driver($refund->driver);
+
+                if (! $driver instanceof RetrievesRefunds || $refund->order === null || $refund->reference === null) {
+                    continue;
+                }
+
+                $state = $driver->retrieveRefund($refund->reference);
+
+                if ($state->isPending()) {
+                    continue;
+                }
+
+                $payments->apply($refund->order, $refund->driver, new WebhookResult(
+                    action: $state->success ? WebhookAction::Refunded : WebhookAction::RefundFailed,
+                    amount: $refund->amount,
+                    data: ['refund_id' => $refund->reference, 'failure_message' => $state->message],
+                ));
+
+                $settled++;
+            } catch (Throwable $exception) {
+                report($exception);
+            }
+        }
+
+        return $settled;
     }
 
     private function queuePendingPayments(int $minutes): int

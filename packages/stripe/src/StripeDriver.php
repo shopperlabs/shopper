@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Stripe;
 
 use Illuminate\Support\Str;
+use Shopper\Payment\Contracts\RetrievesRefunds;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Drivers\Driver;
@@ -13,10 +14,11 @@ use Shopper\Payment\Enum\WebhookAction;
 use Shopper\Stripe\Exceptions\StripeException;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\SignatureVerificationException;
+use Stripe\Refund;
 use Stripe\StripeClient;
 use Stripe\Webhook;
 
-final class StripeDriver extends Driver
+final class StripeDriver extends Driver implements RetrievesRefunds
 {
     private ?StripeClient $client = null;
 
@@ -176,32 +178,16 @@ final class StripeDriver extends Driver
 
             $refund = $this->getClient()->refunds->create($params, ['idempotency_key' => $idempotencyKey]);
 
-            $data = [
-                'stripe_status' => $refund->status,
-                'payment_intent' => $reference,
-            ];
+            return $this->refundResult($refund, ['payment_intent' => $reference]);
+        } catch (ApiErrorException $e) {
+            throw StripeException::fromApiError($e);
+        }
+    }
 
-            if ($refund->status === 'pending') {
-                return PaymentResult::pendingRefund($refund->id, $refund->amount, $data);
-            }
-
-            if ($refund->status === 'requires_action') {
-                return new PaymentResult(
-                    success: true,
-                    status: 'requires_action',
-                    reference: $refund->id,
-                    amount: $refund->amount,
-                    data: $data,
-                );
-            }
-
-            return new PaymentResult(
-                success: $refund->status === 'succeeded',
-                status: 'refunded',
-                reference: $refund->id,
-                amount: $refund->amount,
-                data: $data,
-            );
+    public function retrieveRefund(string $refundId): PaymentResult
+    {
+        try {
+            return $this->refundResult($this->getClient()->refunds->retrieve($refundId));
         } catch (ApiErrorException $e) {
             throw StripeException::fromApiError($e);
         }
@@ -332,6 +318,37 @@ final class StripeDriver extends Driver
     private function getClient(): StripeClient
     {
         return $this->client ??= new StripeClient($this->secretKey);
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    private function refundResult(Refund $refund, array $data = []): PaymentResult
+    {
+        $data = ['stripe_status' => $refund->status, ...$data];
+
+        if ($refund->status === 'pending') {
+            return PaymentResult::pendingRefund($refund->id, $refund->amount, $data);
+        }
+
+        if ($refund->status === 'requires_action') {
+            return new PaymentResult(
+                success: true,
+                status: 'requires_action',
+                reference: $refund->id,
+                amount: $refund->amount,
+                data: $data,
+            );
+        }
+
+        return new PaymentResult(
+            success: $refund->status === 'succeeded',
+            status: 'refunded',
+            reference: $refund->id,
+            amount: $refund->amount,
+            message: $refund->status === 'succeeded' ? null : $refund->failure_reason ?? null,
+            data: $data,
+        );
     }
 
     private function mapIntentStatus(string $status): string

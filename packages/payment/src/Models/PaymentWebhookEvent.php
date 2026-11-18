@@ -70,10 +70,15 @@ class PaymentWebhookEvent extends Model
      */
     public static function refundedAmount(Collection $events): int
     {
-        return (int) $events->where('type', WebhookAction::Refunded)
-            ->map(fn (PaymentWebhookEvent $event): WebhookResult => $event->toWebhookResult())
-            ->unique(fn (WebhookResult $refund): ?string => $refund->refundId() ?? $refund->eventId)
-            ->sum('amount');
+        return (int) self::standingRefunds($events)->sum('amount');
+    }
+
+    /**
+     * @param  Collection<int, PaymentWebhookEvent>  $events
+     */
+    public static function returnsPayment(Collection $events): bool
+    {
+        return $events->contains('type', WebhookAction::Canceled) || self::standingRefunds($events)->isNotEmpty();
     }
 
     public function getTable(): string
@@ -153,5 +158,22 @@ class PaymentWebhookEvent extends Model
             'processed_at' => 'datetime',
             'orphaned_at' => 'datetime',
         ];
+    }
+
+    /**
+     * @param  Collection<int, PaymentWebhookEvent>  $events
+     * @return Collection<int, WebhookResult>
+     */
+    private static function standingRefunds(Collection $events): Collection
+    {
+        $failed = $events->where('type', WebhookAction::RefundFailed)
+            ->map(fn (PaymentWebhookEvent $event): ?string => $event->toWebhookResult()->refundId())
+            ->filter()
+            ->all();
+
+        return $events->where('type', WebhookAction::Refunded)
+            ->map(fn (PaymentWebhookEvent $event): WebhookResult => $event->toWebhookResult())
+            ->unique(fn (WebhookResult $refund): ?string => $refund->refundId() ?? $refund->eventId)
+            ->reject(fn (WebhookResult $refund): bool => in_array($refund->refundId(), $failed, true));
     }
 }

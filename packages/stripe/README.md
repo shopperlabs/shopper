@@ -50,7 +50,10 @@ to run without it.
 
 A refund Stripe has not settled yet is journalized as pending. The order's payment status changes when
 `refund.updated` confirms it, and `refund.failed` marks it failed and gives its amount back to the
-refundable balance. Without these three refund events a pending refund never settles.
+refundable balance. Without these three refund events the pending refund of an order settles only
+when `php artisan shopper:payments:reconcile --pull` asks Stripe for its state, once it has been
+pending for the `--minutes` delay (15 by default). The automatic refund of a payment left without an
+order has no transaction to check: its failure is only known from `refund.failed`.
 
 The driver sends the idempotency key of a refund to Stripe as the request key and stores it in the
 refund's metadata under `idempotency_key`, so the refund events carry it back to the store.

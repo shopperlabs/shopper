@@ -29,6 +29,7 @@ use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Zone;
 use Shopper\Core\Pricing\PricingContext;
 use Shopper\Core\Pricing\QuantityRule;
+use Shopper\Payment\Actions\IngestPaymentEvent;
 use Shopper\Payment\Actions\SettlePayment;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
 use Shopper\Payment\Enum\TransactionStatus;
@@ -38,6 +39,7 @@ use Shopper\Payment\Exceptions\PaymentException;
 use Shopper\Payment\Facades\Payment;
 use Shopper\Payment\Models\PaymentTransaction;
 use Shopper\Payment\Models\PaymentWebhookEvent;
+use Shopper\Payment\Services\PaymentProcessingService;
 use Tests\Api\Stubs\FakePaymentDriver;
 
 uses(Tests\Api\TestCase::class);
@@ -595,6 +597,128 @@ describe('orphaned payments', function (): void {
             ->and($this->cart->refresh()->isCompleted())->toBeFalse();
     });
 
+    it('reports once an orphan whose refund the provider took back', function (?string $eventId, int $reports): void {
+        config()->set('shopper.payment.reconciliation.orphans', 'refund');
+        $this->cart->update(['email' => null]);
+        $this->driver->retrievedStatus = 'captured';
+        $this->driver->refundStatus = 'pending';
+        earlyEvent(WebhookAction::Captured, $this->reference, 'evt_orphan');
+        $this->travel(31)->minutes();
+        $this->artisan('shopper:payments:reconcile')->assertSuccessful();
+        Exceptions::fake();
+
+        $failure = new WebhookResult(
+            action: WebhookAction::RefundFailed,
+            reference: $this->reference,
+            amount: 3200,
+            data: ['refund_id' => 're_1'],
+            eventId: $eventId,
+        );
+
+        resolve(IngestPaymentEvent::class)->execute('fake', $failure);
+        resolve(IngestPaymentEvent::class)->execute('fake', $failure);
+
+        Exceptions::assertReportedCount($reports);
+        Exceptions::assertReported(fn (PaymentException $exception): bool => str_contains($exception->getMessage(), $this->reference)
+            && str_contains($exception->getMessage(), 'failed to refund'));
+    })->with([
+        'journaled' => ['evt_refund_failed', 1],
+        'without an event id' => [null, 2],
+    ]);
+
+    it('says nothing about a failed refund whose payment has an order', function (): void {
+        $this->driver->retrievedStatus = 'captured';
+        $this->postJson($this->completeUrl)->assertCreated();
+
+        resolve(IngestPaymentEvent::class)->execute('fake', new WebhookResult(
+            action: WebhookAction::RefundFailed,
+            reference: $this->reference,
+            amount: 3200,
+            data: ['refund_id' => 're_1'],
+            eventId: 'evt_refund_failed',
+        ));
+
+        Exceptions::assertNothingReported();
+    });
+
+    it('completes the cart of an orphan whose only refund failed', function (): void {
+        earlyEvent(WebhookAction::Captured, $this->reference, 'evt_orphan');
+        earlyEvent(WebhookAction::Refunded, $this->reference, 'evt_refunded', 3200, ['refund_id' => 're_bounced']);
+        earlyEvent(WebhookAction::RefundFailed, $this->reference, 'evt_refund_failed', 3200, ['refund_id' => 're_bounced']);
+        $this->travel(31)->minutes();
+
+        $this->artisan('shopper:payments:reconcile')
+            ->expectsOutputToContain('0 orphaned payments reported')
+            ->assertSuccessful();
+
+        expect($this->cart->refresh()->order?->payment_status)->toBe(PaymentStatus::Paid);
+    });
+
+    it('never completes the cart of a refunded orphan', function (array $refunds): void {
+        earlyEvent(WebhookAction::Captured, $this->reference, 'evt_orphan');
+
+        foreach ($refunds as $index => [$action, $amount, $refundId]) {
+            earlyEvent($action, $this->reference, "evt_refund_{$index}", $amount, array_filter(['refund_id' => $refundId]));
+        }
+
+        $this->travel(31)->minutes();
+
+        $this->artisan('shopper:payments:reconcile')
+            ->expectsOutputToContain('0 orphaned payments reported')
+            ->assertSuccessful();
+
+        expect($this->cart->refresh()->order)->toBeNull()
+            ->and(PaymentWebhookEvent::query()->whereNull('orphaned_at')->count())->toBe(0);
+    })->with([
+        'without an amount' => [[[WebhookAction::Refunded, null, 're_a']]],
+        'without an amount nor a refund id' => [[[WebhookAction::Refunded, null, null]]],
+        'again after its first refund failed' => [[
+            [WebhookAction::Refunded, 3200, 're_a'],
+            [WebhookAction::RefundFailed, 3200, 're_a'],
+            [WebhookAction::Refunded, 3200, 're_b'],
+        ]],
+    ]);
+
+    it('neither refunds again nor reports again an orphan whose refund failed', function (): void {
+        config()->set('shopper.payment.reconciliation.orphans', 'refund');
+        $this->cart->update(['email' => null]);
+        $this->driver->retrievedStatus = 'captured';
+        $this->driver->refundStatus = 'pending';
+        earlyEvent(WebhookAction::Captured, $this->reference, 'evt_orphan');
+        $this->travel(31)->minutes();
+        $this->artisan('shopper:payments:reconcile')->assertSuccessful();
+
+        resolve(IngestPaymentEvent::class)->execute('fake', new WebhookResult(
+            action: WebhookAction::RefundFailed,
+            reference: $this->reference,
+            amount: 3200,
+            data: ['refund_id' => 're_1'],
+            eventId: 'evt_refund_failed',
+        ));
+        Exceptions::fake();
+
+        $this->artisan('shopper:payments:reconcile')
+            ->expectsOutputToContain('0 orphaned payments reported')
+            ->assertSuccessful();
+
+        expect($this->driver->refunds)->toHaveCount(1);
+        Exceptions::assertNothingReported();
+    });
+
+    it('keeps the payment session of a cart whose refund failed before its order exists', function (): void {
+        earlyEvent(WebhookAction::RefundFailed, $this->reference, 'evt_refund_failed', 3200, ['refund_id' => 're_bounced']);
+
+        resolve(IngestPaymentEvent::class)->execute('fake', new WebhookResult(
+            action: WebhookAction::Refunded,
+            reference: $this->reference,
+            amount: 3200,
+            data: ['refund_id' => 're_bounced'],
+            eventId: 'evt_refunded_late',
+        ));
+
+        expect($this->cart->refresh()->payment_session['reference'])->toBe($this->reference);
+    });
+
     it('forgets the payment session of a cart whose payment is refunded before its order exists', function (?string $eventId, ?int $amount): void {
         $this->postJson('/store/webhooks/fake', [
             'action' => 'refunded',
@@ -712,6 +836,139 @@ describe('orphaned payments', function (): void {
         expect($this->driver->refunds)->toHaveCount(1)
             ->and($event->refresh()->orphaned_at)->not->toBeNull();
         Exceptions::assertNothingReported();
+    });
+});
+
+describe('pending refunds', function (): void {
+    beforeEach(function (): void {
+        Exceptions::fake();
+        $this->driver->retrievedStatus = 'captured';
+        $this->driver->refundStatus = 'pending';
+
+        $orderId = $this->postJson($this->completeUrl)->assertCreated()->json('data.id');
+        $this->order = Order::query()->where('public_id', $orderId)->firstOrFail();
+
+        resolve(PaymentProcessingService::class)->refund($this->order, $this->reference, 3200);
+    });
+
+    it('settles a pending refund from the provider past the threshold', function (string $state, TransactionStatus $status, PaymentStatus $paymentStatus, string $output): void {
+        $this->driver->retrievedRefundStatus = $state;
+
+        $this->artisan('shopper:payments:reconcile', ['--pull' => true])->assertSuccessful();
+
+        expect($this->driver->refundRetrievals)->toBeEmpty();
+
+        $this->travel(16)->minutes();
+
+        $this->artisan('shopper:payments:reconcile', ['--pull' => true])
+            ->expectsOutputToContain($output)
+            ->assertSuccessful();
+
+        expect($this->driver->refundRetrievals)->toBe(['re_1'])
+            ->and(transactionsOf($this->order, TransactionType::Refund, $status))->toBe(1)
+            ->and($this->order->refresh()->payment_status)->toBe($paymentStatus);
+        Exceptions::assertNothingReported();
+    })->with([
+        'confirmed' => ['refunded', TransactionStatus::Success, PaymentStatus::Refunded, '1 pending refund settled'],
+        'failed' => ['failed', TransactionStatus::Failed, PaymentStatus::Paid, '1 pending refund settled'],
+        'still pending' => ['pending', TransactionStatus::Pending, PaymentStatus::Paid, '0 pending refunds settled'],
+        'waiting for the customer' => ['requires_action', TransactionStatus::Pending, PaymentStatus::Paid, '0 pending refunds settled'],
+    ]);
+
+    it('keeps the reason of a refund the provider failed', function (): void {
+        $this->driver->retrievedRefundStatus = 'failed';
+        $this->travel(16)->minutes();
+
+        $this->artisan('shopper:payments:reconcile', ['--pull' => true])->assertSuccessful();
+
+        expect(PaymentTransaction::query()->where('reference', 're_1')->sole()->notes)->toBe('insufficient_funds');
+    });
+
+    it('leaves pending refunds alone without the pull option', function (): void {
+        $this->driver->retrievedRefundStatus = 'refunded';
+        $this->travel(16)->minutes();
+
+        $this->artisan('shopper:payments:reconcile')->assertSuccessful();
+
+        expect($this->driver->refundRetrievals)->toBeEmpty()
+            ->and(transactionsOf($this->order, TransactionType::Refund, TransactionStatus::Pending))->toBe(1);
+    });
+
+    it('reports an unreachable provider and keeps the refund pending', function (): void {
+        $this->driver->unreachableRefunds = ['re_1'];
+        $this->travel(16)->minutes();
+
+        $this->artisan('shopper:payments:reconcile', ['--pull' => true])
+            ->expectsOutputToContain('0 pending refunds settled')
+            ->assertSuccessful();
+
+        Exceptions::assertReported(RuntimeException::class);
+        expect(transactionsOf($this->order, TransactionType::Refund, TransactionStatus::Pending))->toBe(1);
+    });
+
+    it('settles a refund once when its webhook already did', function (): void {
+        $this->driver->retrievedRefundStatus = 'refunded';
+        resolve(IngestPaymentEvent::class)->execute('fake', new WebhookResult(
+            action: WebhookAction::Refunded,
+            reference: $this->reference,
+            amount: 3200,
+            data: ['refund_id' => 're_1'],
+            eventId: 'evt_refunded',
+        ));
+        $this->travel(16)->minutes();
+
+        $this->artisan('shopper:payments:reconcile', ['--pull' => true])->assertSuccessful();
+
+        expect($this->driver->refundRetrievals)->toBeEmpty()
+            ->and(transactionsOf($this->order, TransactionType::Refund, TransactionStatus::Success))->toBe(1);
+    });
+});
+
+describe('pending partial refunds', function (): void {
+    beforeEach(function (): void {
+        Exceptions::fake();
+        $this->driver->retrievedStatus = 'captured';
+        $this->driver->refundStatus = 'pending';
+
+        $orderId = $this->postJson($this->completeUrl)->assertCreated()->json('data.id');
+        $this->order = Order::query()->where('public_id', $orderId)->firstOrFail();
+
+        resolve(PaymentProcessingService::class)->refund($this->order, $this->reference, 1000);
+        resolve(PaymentProcessingService::class)->refund($this->order, $this->reference, 1200);
+
+        $this->driver->retrievedRefundStatus = 'refunded';
+        $this->travel(16)->minutes();
+    });
+
+    it('settles each pending refund for its own amount', function (): void {
+        $this->artisan('shopper:payments:reconcile', ['--pull' => true])
+            ->expectsOutputToContain('2 pending refunds settled')
+            ->assertSuccessful();
+
+        expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::PartiallyRefunded)
+            ->and((int) PaymentTransaction::query()
+                ->where('order_id', $this->order->id)
+                ->where('type', TransactionType::Refund)
+                ->where('status', TransactionStatus::Success)
+                ->sum('amount'))->toBe(2200);
+    });
+
+    it('settles the other pending refunds when the provider fails on one', function (): void {
+        $this->driver->unreachableRefunds = ['re_1'];
+
+        $this->artisan('shopper:payments:reconcile', ['--pull' => true])
+            ->expectsOutputToContain('1 pending refund settled')
+            ->assertSuccessful();
+
+        expect(PaymentTransaction::query()->where('reference', 're_1')->sole()->status)->toBe(TransactionStatus::Pending)
+            ->and(PaymentTransaction::query()->where('reference', 're_2')->sole()->status)->toBe(TransactionStatus::Success);
+        Exceptions::assertReportedCount(1);
+    });
+
+    it('only pulls the pending refunds older than the minutes option', function (): void {
+        $this->artisan('shopper:payments:reconcile', ['--pull' => true, '--minutes' => 60])->assertSuccessful();
+
+        expect($this->driver->refundRetrievals)->toBeEmpty();
     });
 });
 
