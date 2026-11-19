@@ -102,10 +102,15 @@ trait HasStock
             $date = Carbon::create($date);
         }
 
-        return (int) $this->inventoryHistories()
+        $histories = $this->inventoryHistories()
             ->where('created_at', '<=', $date->format('Y-m-d H:i:s'))
-            ->where('inventory_id', $inventoryId)
-            ->sum('quantity');
+            ->where('inventory_id', $inventoryId);
+
+        if ($this->getConnection()->transactionLevel() === 0) {
+            return (int) $histories->sum('quantity');
+        }
+
+        return (int) $histories->lockForUpdate()->pluck('quantity')->sum();
     }
 
     public function mutateStock(
