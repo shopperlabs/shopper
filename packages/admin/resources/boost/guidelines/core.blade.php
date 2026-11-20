@@ -6,6 +6,11 @@
 
 Shopper is a headless e-commerce framework providing a complete admin panel built with Filament and Livewire. For detailed documentation, refer to https://docs.laravelshopper.dev
 
+### Documentation
+
+- The Shopper documentation is available as an MCP server at `https://docs.laravelshopper.dev/mcp`. When it is configured, use its search tool to look up Shopper APIs and features before writing code, and prefer the 2.x pages (paths starting with `/v2/`).
+- Without MCP, fetch the page index at https://docs.laravelshopper.dev/llms.txt, or any page as Markdown by appending `.md` to its URL.
+
 ### Installation
 
 - Use `{{ $assist->composerCommand('require shopper/framework --with-dependencies') }}` to install Shopper.
