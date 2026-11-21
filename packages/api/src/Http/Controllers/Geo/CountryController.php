@@ -19,7 +19,7 @@ final class CountryController
     public function index(): JsonApiResourceCollection
     {
         return CountryResource::collection(
-            $this->paginated('country', Country::query())
+            $this->paginated(CountryResource::class, Country::query())
         );
     }
 
@@ -28,9 +28,9 @@ final class CountryController
         $code = mb_strtoupper($code);
 
         /** @var Builder<Model> $query */
-        $query = Country::query()->with($this->requestedIncludeLoads('country'));
+        $query = Country::query();
 
-        $this->applyPublicIncludes('country', $query);
+        $this->applyPublicIncludes(CountryResource::class, $query);
 
         $country = $query
             ->where(fn (Builder $inner) => $inner->where('cca2', $code)->orWhere('cca3', $code))

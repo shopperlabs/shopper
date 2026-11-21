@@ -1,3 +1,5 @@
+import type { ResourceId } from './common'
+
 /**
  * A social network link, in the order the merchant arranged them in the admin.
  */
@@ -37,7 +39,7 @@ export interface SettingsMedia {
  */
 export interface StoreSettings {
   /** Always "store": the settings are a singleton, not a row. */
-  id: string
+  id: ResourceId
   /** The public store name. */
   name: string | null
   /** The registered company name, for legal notices and invoices. */

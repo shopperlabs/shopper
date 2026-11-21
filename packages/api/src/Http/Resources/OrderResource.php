@@ -6,12 +6,47 @@ namespace Shopper\Api\Http\Resources;
 
 use Illuminate\Http\Request;
 use Shopper\Core\Models\Order;
+use Spatie\QueryBuilder\AllowedFilter;
 
 /**
  * @mixin Order
  */
 class OrderResource extends JsonApiResource
 {
+    public static function filters(): array
+    {
+        return [
+            AllowedFilter::exact('status'),
+        ];
+    }
+
+    public static function sorts(): array
+    {
+        return [
+            'created_at',
+        ];
+    }
+
+    public static function includes(): array
+    {
+        return [
+            'items',
+            'shippingAddress',
+            'billingAddress',
+            'paymentMethod',
+            'shippings',
+            'shippings.events',
+            'refund',
+        ];
+    }
+
+    public static function includeLoads(): array
+    {
+        return [
+            'shippings' => ['shippings.carrier'],
+        ];
+    }
+
     final public function toType(Request $request): string
     {
         return 'orders';

@@ -17,7 +17,7 @@ final class ZoneController
     public function index(): JsonApiResourceCollection
     {
         return ZoneResource::collection(
-            $this->paginated('zone', Zone::query()->enabled()->with('currency'))
+            $this->paginated(ZoneResource::class, Zone::query()->enabled()->with('currency'))
         );
     }
 
@@ -26,10 +26,9 @@ final class ZoneController
         $query = Zone::query()
             ->enabled()
             ->with('currency')
-            ->with($this->requestedIncludeLoads('zone'))
             ->where('code', $code);
 
-        $this->applyPublicIncludes('zone', $query);
+        $this->applyPublicIncludes(ZoneResource::class, $query);
 
         return ZoneResource::make($query->firstOrFail());
     }

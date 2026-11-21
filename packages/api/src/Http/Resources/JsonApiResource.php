@@ -14,9 +14,52 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Shopper\Api\Support\ResourceManifest;
 use Shopper\Http\Support\Vary;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
 abstract class JsonApiResource extends BaseJsonApiResource
 {
+    /**
+     * @return array<int, AllowedFilter|string>
+     */
+    public static function filters(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<int, AllowedSort|string>
+     */
+    public static function sorts(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<int, AllowedInclude|string>
+     */
+    public static function includes(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<string, array<int, string>>
+     */
+    public static function includeLoads(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public static function eagerLoads(): array
+    {
+        return [];
+    }
+
     public static function make(...$parameters): static
     {
         $resolved = app(ResourceManifest::class)->for(static::class);

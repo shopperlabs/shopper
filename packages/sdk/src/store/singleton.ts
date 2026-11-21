@@ -1,6 +1,6 @@
 import type { HttpClient } from '../client'
 import type { FetchInit, RequestParams } from '../http'
-import { flatten } from '../json-api'
+import { flatten, type Flattened } from '../json-api'
 
 /**
  * Read-only resource for endpoints that answer with one entity rather than a
@@ -17,12 +17,12 @@ export class SingletonResource<T> {
     protected readonly path: string,
   ) {}
 
-  public async retrieve(params?: RequestParams, init?: FetchInit): Promise<T> {
-    return flatten<T>(await this.client.request(this.path, params, init)) as T
+  public async retrieve(params?: RequestParams, init?: FetchInit): Promise<Flattened<T>> {
+    return flatten<T>(await this.client.request(this.path, params, init)) as Flattened<T>
   }
 
   /** Read a single key, for the many places a page needs just one value. */
-  public async get<K extends keyof T>(key: K, init?: FetchInit): Promise<T[K]> {
+  public async get<K extends keyof Flattened<T>>(key: K, init?: FetchInit): Promise<Flattened<T>[K]> {
     return (await this.retrieve(undefined, init))[key]
   }
 }

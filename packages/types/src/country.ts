@@ -1,10 +1,11 @@
+import type { ResourceId } from './common'
 import type { Zone } from './zone'
 
 /**
  * Country model.
  */
 export interface Country {
-  id: number
+  id: ResourceId
   /** The stable public identifier (ULID) exposed by the API. */
   public_id?: string
   /** The name of the country. */

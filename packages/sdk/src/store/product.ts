@@ -1,7 +1,7 @@
 import type { Product, Review, ReviewAggregates } from '@shopperlabs/shopper-types'
 
 import type { FetchInit, RequestParams } from '../http'
-import { flatten } from '../json-api'
+import { flatten, type Flattened } from '../json-api'
 import { CollectionResource, type Paginated } from './collection'
 
 /**
@@ -10,7 +10,7 @@ import { CollectionResource, type Paginated } from './collection'
  * filtered result, is only present with `include: 'price_range'`, and
  * ignores `price_min`/`price_max`.
  */
-export interface ProductList extends Paginated<Product> {
+export interface ProductList extends Paginated<Flattened<Product>> {
   meta: {
     currency: string | null
     price_range?: { min: number; max: number; currency_code: string | null } | null
@@ -21,7 +21,7 @@ export interface ProductList extends Paginated<Product> {
  * A paginated reviews listing: the rows plus the server-computed aggregates
  * (count, average, star distribution) merged into the JSON:API meta.
  */
-export interface ReviewList extends Paginated<Review> {
+export interface ReviewList extends Paginated<Flattened<Review>> {
   meta: ReviewAggregates & Record<string, unknown>
 }
 
@@ -51,7 +51,7 @@ export class ProductResource extends CollectionResource<Product> {
     const document = await this.client.request(`${this.path}/${slug}/reviews`, params, init)
 
     return {
-      data: (flatten<Review>(document) ?? []) as Review[],
+      data: (flatten<Review>(document) ?? []) as Flattened<Review>[],
       meta: (document.meta ?? {}) as ReviewList['meta'],
       links: document.links,
     }

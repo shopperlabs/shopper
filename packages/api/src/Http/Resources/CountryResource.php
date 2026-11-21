@@ -5,13 +5,39 @@ declare(strict_types=1);
 namespace Shopper\Api\Http\Resources;
 
 use Illuminate\Http\Request;
+use Shopper\Api\Http\Includes\EnabledRelation;
 use Shopper\Core\Models\Country;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
 
 /**
  * @mixin Country
  */
 class CountryResource extends JsonApiResource
 {
+    public static function filters(): array
+    {
+        return [
+            AllowedFilter::partial('name'),
+            AllowedFilter::exact('cca2'),
+            AllowedFilter::exact('cca3'),
+            AllowedFilter::exact('region'),
+            AllowedFilter::exact('zone', 'zones.code'),
+        ];
+    }
+
+    public static function sorts(): array
+    {
+        return ['name'];
+    }
+
+    public static function includes(): array
+    {
+        return [
+            AllowedInclude::custom('zones', new EnabledRelation),
+        ];
+    }
+
     final public function toType(Request $request): string
     {
         return 'countries';

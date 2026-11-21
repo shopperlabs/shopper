@@ -23,7 +23,7 @@ final class OrderController
      * method and shipments are reserved to the authenticated account
      * endpoint. Only the order lines can be expanded here.
      */
-    private const ALLOWED_INCLUDES = ['items'];
+    private const array ALLOWED_INCLUDES = ['items'];
 
     /**
      * Retrieve an order by its public id.

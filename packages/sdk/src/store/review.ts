@@ -2,7 +2,7 @@ import type { Review } from '@shopperlabs/shopper-types'
 
 import type { HttpClient } from '../client'
 import type { FetchInit, RequestParams } from '../http'
-import { flatten } from '../json-api'
+import { flatten, type Flattened } from '../json-api'
 
 /**
  * Shop-wide reviews. Product reviews live on the product resource
@@ -16,9 +16,9 @@ export class ReviewModule {
    * The most recent approved reviews across the shop, capped server-side and
    * never paginated: the shape a testimonials widget needs.
    */
-  public async latest(params?: RequestParams, init?: FetchInit): Promise<Review[]> {
+  public async latest(params?: RequestParams, init?: FetchInit): Promise<Flattened<Review>[]> {
     const document = await this.client.request(`/${this.client.storePrefix}/reviews`, params, init)
 
-    return (flatten<Review>(document) ?? []) as Review[]
+    return (flatten<Review>(document) ?? []) as Flattened<Review>[]
   }
 }

@@ -6,8 +6,14 @@ namespace Shopper\Api\Http\Resources;
 
 use Illuminate\Http\Request;
 use Shopper\Api\Concerns\SerializesMedia;
+use Shopper\Api\Http\Includes\EnabledAncestors;
+use Shopper\Api\Http\Includes\EnabledRelation;
+use Shopper\Api\Http\Includes\PublicProducts;
+use Shopper\Api\Http\Includes\SubtreeProductsCount;
 use Shopper\Core\Models\Category;
 use Shopper\Core\Queries\CategoryTree;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
 
 /**
  * @mixin Category
@@ -15,6 +21,38 @@ use Shopper\Core\Queries\CategoryTree;
 class CategoryResource extends JsonApiResource
 {
     use SerializesMedia;
+
+    public static function filters(): array
+    {
+        return [
+            AllowedFilter::partial('name'),
+        ];
+    }
+
+    public static function sorts(): array
+    {
+        return ['name', 'position'];
+    }
+
+    public static function includes(): array
+    {
+        return [
+            AllowedInclude::custom('parent', new EnabledRelation),
+            AllowedInclude::custom('children', new EnabledRelation),
+            AllowedInclude::custom('ancestors', new EnabledAncestors),
+            AllowedInclude::custom('products', new PublicProducts),
+            AllowedInclude::custom('products_count', new SubtreeProductsCount),
+        ];
+    }
+
+    public static function includeLoads(): array
+    {
+        return [
+            'parent' => ['parent.parent'],
+            'children' => ['children.parent'],
+            'ancestors' => ['ancestors.parent', 'ancestors.media'],
+        ];
+    }
 
     final public function toType(Request $request): string
     {

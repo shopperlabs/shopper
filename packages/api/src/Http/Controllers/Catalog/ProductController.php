@@ -40,9 +40,7 @@ final class ProductController
             ]);
         }
 
-        $query = $this->withMediaIfSupported(
-            resolve(Product::class)::query()->publish()->with('prices.currency')
-        );
+        $query = resolve(Product::class)::query()->publish();
 
         $this->applyChannelScope($query);
 
@@ -51,11 +49,11 @@ final class ProductController
         }
 
         $range = $this->wantsPriceRange() && $currency !== null
-            ? $this->priceRange('product', clone $query, $currency->id)
+            ? $this->priceRange(ProductResource::class, clone $query, $currency->id)
             : null;
 
         $products = $this->paginated(
-            'product',
+            ProductResource::class,
             $query,
             extraFilters: $currency !== null ? $this->priceFilters($currency->id) : [],
         );
@@ -80,14 +78,12 @@ final class ProductController
     {
         $currency = $this->resolvedCurrency();
 
-        $query = $this->withMediaIfSupported(
-            resolve(Product::class)::query()->publish()->with('prices.currency')
-        )
-            ->with($this->requestedIncludeLoads('product'))
+        $query = resolve(Product::class)::query()
+            ->publish()
             ->where('slug', $slug);
 
         $this->applyChannelScope($query);
-        $this->applyPublicIncludes('product', $query);
+        $this->applyPublicIncludes(ProductResource::class, $query);
 
         $product = $query->firstOrFail();
 

@@ -2,7 +2,7 @@ import type { Order } from '@shopperlabs/shopper-types'
 
 import type { HttpClient } from '../client'
 import type { RequestParams } from '../http'
-import { flatten } from '../json-api'
+import { flatten, type Flattened } from '../json-api'
 
 /**
  * Order confirmation lookup. An order is addressed by the public id returned
@@ -17,7 +17,7 @@ export class OrderModule {
     this.path = `/${client.storePrefix}/orders`
   }
 
-  public async retrieve(id: string, params?: RequestParams): Promise<Order> {
-    return flatten<Order>(await this.client.request(`${this.path}/${id}`, params)) as Order
+  public async retrieve(id: string, params?: RequestParams): Promise<Flattened<Order>> {
+    return flatten<Order>(await this.client.request(`${this.path}/${id}`, params)) as Flattened<Order>
   }
 }

@@ -6,6 +6,7 @@ namespace Shopper\Api\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Api\Http\Resources\JsonApiResource;
 use Shopper\Core\Contracts\ProductPriceIndex;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilderRequest;
@@ -45,6 +46,7 @@ trait HandlesPriceQueries
     }
 
     /**
+     * @param  class-string<JsonApiResource>  $resource
      * @param  Builder<Model>  $query
      * @return array{min: int, max: int}|null
      */

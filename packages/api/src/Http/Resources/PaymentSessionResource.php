@@ -24,7 +24,7 @@ class PaymentSessionResource extends JsonApiResource
      * ids, charge references, whatever a third-party driver stuffed in)
      * stays server-side.
      */
-    private const PUBLIC_DATA = ['publishable_key', 'idempotency_key', 'stripe_status'];
+    private const array PUBLIC_DATA = ['publishable_key', 'idempotency_key', 'stripe_status'];
 
     public function toId(Request $request): string
     {

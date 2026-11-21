@@ -12,6 +12,9 @@ final class ResourceManifest
     /** @var array<class-string<JsonApiResource>, class-string<JsonApiResource>> */
     private array $replacements = [];
 
+    /** @var array<class-string<JsonApiResource>, array<int, string>> */
+    private array $eagerLoads = [];
+
     /**
      * @param  class-string<JsonApiResource>|array<class-string<JsonApiResource>, class-string<JsonApiResource>>  $resource
      * @param  class-string<JsonApiResource>|null  $replacement
@@ -42,5 +45,26 @@ final class ResourceManifest
     public function for(string $resource): string
     {
         return $this->replacements[$resource] ?? $resource;
+    }
+
+    /**
+     * @param  class-string<JsonApiResource>  $resource
+     * @param  array<int, string>  $relations
+     */
+    public function eagerLoad(string $resource, array $relations): void
+    {
+        $this->eagerLoads[$resource] = [...$this->eagerLoads[$resource] ?? [], ...$relations];
+    }
+
+    /**
+     * @param  class-string<JsonApiResource>  $resource
+     * @return array<int, string>
+     */
+    public function eagerLoadsFor(string $resource): array
+    {
+        return array_values(array_unique([
+            ...$this->for($resource)::eagerLoads(),
+            ...$this->eagerLoads[$resource] ?? [],
+        ]));
     }
 }

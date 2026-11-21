@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Country;
+use Shopper\Core\Models\ProductTag;
 use Shopper\Core\Models\Zone;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Core\Stubs\Brand;
@@ -136,4 +137,13 @@ it('respects sparse fieldsets on an included resource', function (): void {
     $included = collect($this->getJson('/store/products/'.$product->slug.'?include=categories&fields[categories]=name')->assertOk()->json('included'))->sole();
 
     expect($included['attributes'])->toBe(['name' => 'Sofas']);
+});
+
+it('respects sparse fieldsets on a relation included in a listing', function (): void {
+    $product = Product::factory()->publish()->create(['name' => 'P', 'type' => ProductType::Standard]);
+    $product->tags()->attach(ProductTag::factory()->create(['name' => 'Summer']));
+
+    $included = collect($this->getJson('/store/products?include=tags&fields[tags]=name')->assertOk()->json('included'))->sole();
+
+    expect($included['attributes'])->toBe(['name' => 'Summer']);
 });

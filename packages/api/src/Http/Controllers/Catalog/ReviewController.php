@@ -28,7 +28,7 @@ final class ReviewController
             ->where('reviewrateable_id', $product->getKey())
             ->with('author');
 
-        $reviews = $this->paginated('review', $query, defaultSort: '-created_at');
+        $reviews = $this->paginated(ReviewResource::class, $query, defaultSort: '-created_at');
 
         return ReviewResource::collection($reviews)
             ->additional(['meta' => $this->aggregates($product)]);
@@ -41,7 +41,7 @@ final class ReviewController
      */
     public function latest(): JsonApiResourceCollection
     {
-        $limit = max(1, (int) config('shopper.api.resources.review.latest_limit', 20));
+        $limit = max(1, (int) config('shopper.api.reviews.latest_limit', 20));
 
         $reviews = Review::query()
             ->approved()

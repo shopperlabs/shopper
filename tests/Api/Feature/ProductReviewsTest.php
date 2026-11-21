@@ -93,7 +93,7 @@ it('returns a 404 for an unpublished product reviews listing', function (): void
 });
 
 it('caps the latest reviews endpoint and never paginates it', function (): void {
-    config(['shopper.api.resources.review.latest_limit' => 3]);
+    config(['shopper.api.reviews.latest_limit' => 3]);
 
     $product = reviewedProduct();
 

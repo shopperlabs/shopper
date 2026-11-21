@@ -20,14 +20,14 @@ final class CollectionController
     {
         $query = $this->withMediaIfSupported(resolve(Collection::class)::query()->published());
 
-        return CollectionResource::collection($this->paginated('collection', $query));
+        return CollectionResource::collection($this->paginated(CollectionResource::class, $query));
     }
 
     public function show(string $slug): JsonApiResource
     {
         $query = $this->withMediaIfSupported(resolve(Collection::class)::query()->published());
 
-        $this->applyPublicIncludes('collection', $query);
+        $this->applyPublicIncludes(CollectionResource::class, $query);
 
         return CollectionResource::make($query->where('slug', $slug)->firstOrFail());
     }

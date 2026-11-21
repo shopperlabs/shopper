@@ -1,5 +1,7 @@
+import type { ResourceId } from './common'
+
 export interface Media {
-  id: string | number
+  id: ResourceId
   /** The original file, at the size it was uploaded. */
   url: string
   /**
@@ -20,7 +22,7 @@ export interface Media {
  * who paid for it requests a temporary link from the account endpoint.
  */
 export interface ProductFile {
-  id: string
+  id: ResourceId
   name: string
   extension: string
   /** The size in bytes. */

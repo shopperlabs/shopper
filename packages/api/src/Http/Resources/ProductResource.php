@@ -7,9 +7,20 @@ namespace Shopper\Api\Http\Resources;
 use Illuminate\Http\Request;
 use Shopper\Api\Concerns\SerializesMedia;
 use Shopper\Api\Concerns\SerializesPrices;
+use Shopper\Api\Http\Includes\EnabledRelation;
+use Shopper\Api\Http\Includes\ListingPriceRange;
+use Shopper\Api\Http\Includes\PublicProducts;
+use Shopper\Api\Http\Includes\PublishedRelation;
+use Shopper\Api\Http\Includes\RatingAggregate;
+use Shopper\Api\Http\Includes\ScopedOptions;
+use Shopper\Api\Http\Includes\VisibleCategories;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
+use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Product;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
 /**
  * @mixin Product
@@ -18,6 +29,64 @@ class ProductResource extends JsonApiResource
 {
     use SerializesMedia;
     use SerializesPrices;
+
+    public static function filters(): array
+    {
+        return [
+            AllowedFilter::partial('name'),
+            AllowedFilter::exact('sku'),
+            AllowedFilter::scope('q', 'matching'),
+            AllowedFilter::exact('featured'),
+            AllowedFilter::scope('in_stock', 'availability'),
+            AllowedFilter::scope('category'),
+            AllowedFilter::scope('category_tree', 'categoryTree'),
+            AllowedFilter::scope('collection'),
+            AllowedFilter::scope('brand', 'byBrand'),
+            AllowedFilter::scope('tag'),
+            AllowedFilter::scope('option'),
+        ];
+    }
+
+    public static function sorts(): array
+    {
+        return [
+            'name',
+            'created_at',
+            'published_at',
+            AllowedSort::field('price', 'min_price'),
+        ];
+    }
+
+    public static function includes(): array
+    {
+        return [
+            AllowedInclude::custom('brand', new EnabledRelation),
+            'variants',
+            AllowedInclude::custom('categories', new VisibleCategories),
+            AllowedInclude::custom('collections', new PublishedRelation),
+            AllowedInclude::custom('options', new ScopedOptions),
+            'tags',
+            AllowedInclude::custom('relatedProducts', new PublicProducts),
+            AllowedInclude::custom('rating', new RatingAggregate),
+            AllowedInclude::custom('price_range', new ListingPriceRange),
+        ];
+    }
+
+    public static function includeLoads(): array
+    {
+        return [
+            'variants' => ['variants.prices.currency', 'variants.values.attribute'],
+            'categories' => ['categories.parent'],
+        ];
+    }
+
+    public static function eagerLoads(): array
+    {
+        return [
+            'prices.currency',
+            ...(method_exists(resolve(ProductContract::class), 'getMedia') ? ['media'] : []),
+        ];
+    }
 
     final public function toType(Request $request): string
     {

@@ -73,9 +73,31 @@ and answer in `application/vnd.api+json`.
 | Account | `GET/PATCH /store/customers/me`, `POST/DELETE /store/customers/me/avatar`, addresses CRUD, `GET /store/customers/me/orders`   |
 
 Lists support the JSON:API query family: `filter[...]`, `sort`, `include`,
-`page[number]`/`page[size]` and sparse fieldsets via `fields[type]`. The allowed filters,
-sorts and includes per resource are driven by the `shopper.api.resources` config and can be
-extended in your application.
+`page[number]`/`page[size]` and sparse fieldsets via `fields[type]`. Each resource class
+declares the filters, sorts and includes it accepts through `filters()`, `sorts()` and
+`includes()`. Extend the resource and register it with `ApiResource::replace()` to change them:
+
+```php
+use Shopper\Api\Facades\ApiResource;
+use Shopper\Api\Http\Resources\ProductResource;
+use Spatie\QueryBuilder\AllowedFilter;
+
+class StoreProductResource extends ProductResource
+{
+    public static function filters(): array
+    {
+        return [...parent::filters(), AllowedFilter::exact('barcode')];
+    }
+}
+
+ApiResource::replace(ProductResource::class, StoreProductResource::class);
+```
+
+An include added to `includes()` also needs its entry in `toRelationships()`, otherwise the
+response leaves it out.
+
+An add-on that serializes extra relations on a resource registers their eager loads with
+`ApiResource::eagerLoad(ProductResource::class, ['mediaHotspots'])`.
 
 ## Configuration
 
@@ -83,7 +105,7 @@ extended in your application.
 php artisan vendor:publish --tag=shopper-config
 ```
 
-This publishes `config/shopper/api.php` (pagination, per-resource query allowlists) and
+This publishes `config/shopper/api.php` (pagination, latest reviews limit, public settings) and
 `config/shopper/http.php` (route prefix, rate limiters, zone resolution, extra middleware).
 
 ### Pricing context
