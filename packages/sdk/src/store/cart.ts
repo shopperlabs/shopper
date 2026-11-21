@@ -9,7 +9,7 @@ import type {
 
 import type { HttpClient } from '../client'
 import type { RequestParams } from '../http'
-import { flatten } from '../json-api'
+import { flatten, type Flattened } from '../json-api'
 
 export type CreateCartPayload = {
   /** ISO currency code the cart prices in. Defaults to the zone or shop currency. */
@@ -66,14 +66,14 @@ export type SetCartAddressesPayload = {
 
 /** Delivery choices for a cart plus the non-fatal notices raised while quoting. */
 export interface ShippingOptionList {
-  data: ShippingOption[]
+  data: Flattened<ShippingOption>[]
   /** Carriers that failed to quote, options dropped for currency mismatch, ... */
   warnings: string[]
 }
 
 /** The customer cart after a transfer plus the lines repriced by it. */
 export interface CartTransfer {
-  cart: Cart
+  cart: Flattened<Cart>
   /** Lines whose unit price moved in the same currency: show them before checkout. */
   price_changes: CartPriceChange[]
 }
@@ -98,14 +98,14 @@ export class CartModule {
     this.path = `/${client.storePrefix}/carts`
   }
 
-  public async create(payload: CreateCartPayload = {}, params?: RequestParams): Promise<Cart> {
+  public async create(payload: CreateCartPayload = {}, params?: RequestParams): Promise<Flattened<Cart>> {
     const document = await this.client.send('POST', this.path, payload, this.params(params))
 
-    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+    return flatten<Cart>(document as NonNullable<typeof document>) as Flattened<Cart>
   }
 
-  public async retrieve(id: string, params?: RequestParams): Promise<Cart> {
-    return flatten<Cart>(await this.client.request(`${this.path}/${id}`, this.params(params))) as Cart
+  public async retrieve(id: string, params?: RequestParams): Promise<Flattened<Cart>> {
+    return flatten<Cart>(await this.client.request(`${this.path}/${id}`, this.params(params))) as Flattened<Cart>
   }
 
   /**
@@ -113,10 +113,10 @@ export class CartModule {
    * re-prices the lines and drops the shipping and payment choices bound to the
    * old currency; it is rejected when a line has no price in the target.
    */
-  public async update(id: string, payload: UpdateCartPayload, params?: RequestParams): Promise<Cart> {
+  public async update(id: string, payload: UpdateCartPayload, params?: RequestParams): Promise<Flattened<Cart>> {
     const document = await this.client.send('PATCH', `${this.path}/${id}`, payload, this.params(params))
 
-    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+    return flatten<Cart>(document as NonNullable<typeof document>) as Flattened<Cart>
   }
 
   /**
@@ -130,15 +130,15 @@ export class CartModule {
     const document = await this.client.send('POST', `${this.path}/${cartId}/transfer`, undefined, this.params(params))
 
     return {
-      cart: flatten<Cart>(document as NonNullable<typeof document>) as Cart,
+      cart: flatten<Cart>(document as NonNullable<typeof document>) as Flattened<Cart>,
       price_changes: (document?.meta?.price_changes as CartPriceChange[] | undefined) ?? [],
     }
   }
 
-  public async createLineItem(cartId: string, payload: CreateCartLinePayload, params?: RequestParams): Promise<Cart> {
+  public async createLineItem(cartId: string, payload: CreateCartLinePayload, params?: RequestParams): Promise<Flattened<Cart>> {
     const document = await this.client.send('POST', `${this.path}/${cartId}/lines`, payload, this.params(params))
 
-    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+    return flatten<Cart>(document as NonNullable<typeof document>) as Flattened<Cart>
   }
 
   public async updateLineItem(
@@ -146,7 +146,7 @@ export class CartModule {
     lineId: string,
     payload: UpdateCartLinePayload,
     params?: RequestParams,
-  ): Promise<Cart> {
+  ): Promise<Flattened<Cart>> {
     const document = await this.client.send(
       'PATCH',
       `${this.path}/${cartId}/lines/${lineId}`,
@@ -154,10 +154,10 @@ export class CartModule {
       this.params(params),
     )
 
-    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+    return flatten<Cart>(document as NonNullable<typeof document>) as Flattened<Cart>
   }
 
-  public async deleteLineItem(cartId: string, lineId: string, params?: RequestParams): Promise<Cart> {
+  public async deleteLineItem(cartId: string, lineId: string, params?: RequestParams): Promise<Flattened<Cart>> {
     const document = await this.client.send(
       'DELETE',
       `${this.path}/${cartId}/lines/${lineId}`,
@@ -165,7 +165,7 @@ export class CartModule {
       this.params(params),
     )
 
-    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+    return flatten<Cart>(document as NonNullable<typeof document>) as Flattened<Cart>
   }
 
   /**
@@ -178,7 +178,7 @@ export class CartModule {
     const document = await this.client.request(`${this.path}/${cartId}/shipping-options`, params)
 
     return {
-      data: (flatten<ShippingOption>(document) ?? []) as ShippingOption[],
+      data: (flatten<ShippingOption>(document) ?? []) as Flattened<ShippingOption>[],
       warnings: (document.meta?.warnings as string[] | undefined) ?? [],
     }
   }
@@ -188,17 +188,17 @@ export class CartModule {
    * `billing_address` or both; each one replaces the address of its type.
    * The shipping address unlocks live carrier rates in shippingOptions().
    */
-  public async setAddresses(cartId: string, payload: SetCartAddressesPayload, params?: RequestParams): Promise<Cart> {
+  public async setAddresses(cartId: string, payload: SetCartAddressesPayload, params?: RequestParams): Promise<Flattened<Cart>> {
     const document = await this.client.send('POST', `${this.path}/${cartId}/addresses`, payload, this.params(params))
 
-    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+    return flatten<Cart>(document as NonNullable<typeof document>) as Flattened<Cart>
   }
 
   /**
    * Pick a delivery choice from the ids quoted by shippingOptions(). The
    * price is re-resolved server-side and folded into the cart totals.
    */
-  public async setShippingMethod(cartId: string, optionId: string, params?: RequestParams): Promise<Cart> {
+  public async setShippingMethod(cartId: string, optionId: string, params?: RequestParams): Promise<Flattened<Cart>> {
     const document = await this.client.send(
       'POST',
       `${this.path}/${cartId}/shipping-method`,
@@ -206,21 +206,21 @@ export class CartModule {
       this.params(params),
     )
 
-    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+    return flatten<Cart>(document as NonNullable<typeof document>) as Flattened<Cart>
   }
 
   /**
    * List the payment methods available for the cart: enabled methods with a
    * configured driver, restricted to the cart zone when it has one.
    */
-  public async paymentMethods(cartId: string, params?: RequestParams): Promise<PaymentMethod[]> {
+  public async paymentMethods(cartId: string, params?: RequestParams): Promise<Flattened<PaymentMethod>[]> {
     const document = await this.client.request(`${this.path}/${cartId}/payment-methods`, params)
 
-    return (flatten<PaymentMethod>(document) ?? []) as PaymentMethod[]
+    return (flatten<PaymentMethod>(document) ?? []) as Flattened<PaymentMethod>[]
   }
 
   /** Set the payment method of the cart by the id listed in paymentMethods(). */
-  public async setPaymentMethod(cartId: string, paymentMethodId: string, params?: RequestParams): Promise<Cart> {
+  public async setPaymentMethod(cartId: string, paymentMethodId: string, params?: RequestParams): Promise<Flattened<Cart>> {
     const document = await this.client.send(
       'POST',
       `${this.path}/${cartId}/payment-method`,
@@ -228,7 +228,7 @@ export class CartModule {
       this.params(params),
     )
 
-    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+    return flatten<Cart>(document as NonNullable<typeof document>) as Flattened<Cart>
   }
 
   /**
@@ -236,7 +236,7 @@ export class CartModule {
    * code is rejected and the cart is left unchanged; on success the discount
    * is folded into the cart totals (`cart.discount_total`).
    */
-  public async applyPromotion(cartId: string, code: string, params?: RequestParams): Promise<Cart> {
+  public async applyPromotion(cartId: string, code: string, params?: RequestParams): Promise<Flattened<Cart>> {
     const document = await this.client.send(
       'POST',
       `${this.path}/${cartId}/promotion`,
@@ -244,11 +244,11 @@ export class CartModule {
       this.params(params),
     )
 
-    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+    return flatten<Cart>(document as NonNullable<typeof document>) as Flattened<Cart>
   }
 
   /** Remove the promotion code applied to the cart. */
-  public async removePromotion(cartId: string, params?: RequestParams): Promise<Cart> {
+  public async removePromotion(cartId: string, params?: RequestParams): Promise<Flattened<Cart>> {
     const document = await this.client.send(
       'DELETE',
       `${this.path}/${cartId}/promotion`,
@@ -256,7 +256,7 @@ export class CartModule {
       this.params(params),
     )
 
-    return flatten<Cart>(document as NonNullable<typeof document>) as Cart
+    return flatten<Cart>(document as NonNullable<typeof document>) as Flattened<Cart>
   }
 
   /**
@@ -266,10 +266,10 @@ export class CartModule {
    * url. Calling it again while the total is unchanged resumes the same
    * session; after the cart moved it opens a fresh one.
    */
-  public async createPaymentSession(cartId: string, params?: RequestParams): Promise<PaymentSession> {
+  public async createPaymentSession(cartId: string, params?: RequestParams): Promise<Flattened<PaymentSession>> {
     const document = await this.client.send('POST', `${this.path}/${cartId}/payment-session`, undefined, params)
 
-    return flatten<PaymentSession>(document as NonNullable<typeof document>) as PaymentSession
+    return flatten<PaymentSession>(document as NonNullable<typeof document>) as Flattened<PaymentSession>
   }
 
   /**
@@ -279,10 +279,10 @@ export class CartModule {
    * duplicating it. Persist the returned order id: it is the key to the
    * order confirmation lookup (sdk.store.order.retrieve()).
    */
-  public async complete(cartId: string, params?: RequestParams): Promise<Order> {
+  public async complete(cartId: string, params?: RequestParams): Promise<Flattened<Order>> {
     const document = await this.client.send('POST', `${this.path}/${cartId}/complete`, undefined, params)
 
-    return flatten<Order>(document as NonNullable<typeof document>) as Order
+    return flatten<Order>(document as NonNullable<typeof document>) as Flattened<Order>
   }
 
   private params(params?: RequestParams): RequestParams {

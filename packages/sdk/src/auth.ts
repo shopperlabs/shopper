@@ -1,7 +1,7 @@
 import type { Customer } from '@shopperlabs/shopper-types'
 
 import type { HttpClient } from './client'
-import { flatten } from './json-api'
+import { flatten, type Flattened } from './json-api'
 
 export interface RegisterPayload {
   first_name?: string
@@ -36,11 +36,11 @@ export class AuthModule {
 
   public constructor(private readonly client: HttpClient) {}
 
-  public async register(payload: RegisterPayload): Promise<Customer> {
+  public async register(payload: RegisterPayload): Promise<Flattened<Customer>> {
     return this.authenticate('register', { ...payload })
   }
 
-  public async login(payload: LoginPayload): Promise<Customer> {
+  public async login(payload: LoginPayload): Promise<Flattened<Customer>> {
     return this.authenticate('login', { ...payload })
   }
 
@@ -77,7 +77,7 @@ export class AuthModule {
     return this.cartId
   }
 
-  private async authenticate(endpoint: string, payload: Record<string, unknown>): Promise<Customer> {
+  private async authenticate(endpoint: string, payload: Record<string, unknown>): Promise<Flattened<Customer>> {
     const document = await this.client.send('POST', `/${this.client.storePrefix}/auth/${endpoint}`, payload)
 
     if (document === null) {
@@ -94,6 +94,6 @@ export class AuthModule {
 
     this.cartId = typeof cartId === 'string' ? cartId : null
 
-    return flatten<Customer>(document) as Customer
+    return flatten<Customer>(document) as Flattened<Customer>
   }
 }

@@ -1,3 +1,4 @@
+import type { ResourceId } from './common'
 import type { Zone } from './zone'
 
 /**
@@ -14,7 +15,7 @@ export function isNoDivisionCurrency(currency: string): boolean {
  * Currency model.
  */
 export interface Currency {
-  id: number
+  id: ResourceId
   /** The stable public identifier (ULID) exposed by the API. */
   public_id?: string
   /** The name of the currency. */

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Support\Facades\DB;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
@@ -52,6 +54,24 @@ it('shows a brand and includes its products on demand', function (): void {
         ->assertJsonPath('data.id', $brand->public_id)
         ->assertJsonPath('included.0.type', 'products')
         ->assertJsonPath('included.0.id', $product->public_id);
+});
+
+it('loads the media of included products in a single query', function (): void {
+    $brand = Brand::factory()->create(['slug' => 'brand-media', 'is_enabled' => true]);
+    Product::factory()->publish()->count(3)->create(['brand_id' => $brand->id]);
+
+    $productMorph = (new Product)->getMorphClass();
+    $productMediaQueries = 0;
+
+    DB::listen(function (QueryExecuted $query) use ($productMorph, &$productMediaQueries): void {
+        $productMediaQueries += (int) (str_contains($query->sql, 'media') && in_array($productMorph, $query->bindings, true));
+    });
+
+    $this->getJson('/store/brands/'.$brand->slug.'?include=products')
+        ->assertOk()
+        ->assertJsonCount(3, 'included');
+
+    expect($productMediaQueries)->toBe(1);
 });
 
 it('hides disabled brands from the listing', function (): void {

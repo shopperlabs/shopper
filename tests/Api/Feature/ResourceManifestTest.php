@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Support\Facades\DB;
 use Shopper\Api\Facades\ApiResource;
 use Shopper\Api\Http\Resources\BrandResource;
 use Shopper\Api\Http\Resources\ProductResource;
 use Shopper\Core\Models\Brand;
+use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Product;
@@ -105,4 +108,89 @@ it('serializes the included relationships of a listing with the replacement reso
     $this->getJson('/store/products?include=brand')
         ->assertOk()
         ->assertJsonPath('included.0.attributes.brand_flag', 'custom');
+});
+
+it('eager loads the relations registered for the product resource wherever the replacement resource reads them', function (string $endpoint): void {
+    ApiResource::replace(ProductResource::class, CustomProductResource::class);
+    ApiResource::eagerLoad(ProductResource::class, ['brand']);
+
+    $brand = Brand::factory()->create(['name' => 'BrandEager', 'is_enabled' => true]);
+    $category = Category::factory()->create(['slug' => 'eager-category', 'is_enabled' => true]);
+
+    Product::factory()->publish()->count(3)->create(['brand_id' => $brand->id])
+        ->each(fn (Product $product) => $product->categories()->attach($category));
+
+    $brandQueries = 0;
+    DB::listen(function (QueryExecuted $query) use (&$brandQueries): void {
+        $brandQueries += (int) str_contains($query->sql, shopper_table('brands'));
+    });
+
+    $response = $this->getJson($endpoint)->assertOk();
+
+    $products = collect($response->json('included') ?? $response->json('data'))->where('type', 'products');
+
+    expect($products)->toHaveCount(3)
+        ->and($products->pluck('attributes.brand_name')->unique()->all())->toBe(['BrandEager'])
+        ->and($brandQueries)->toBe(1);
+})->with([
+    'product listing' => '/store/products',
+    'included products' => '/store/categories/eager-category?include=products',
+]);
+
+it('accepts the filters a replacement resource adds to the allowlist', function (): void {
+    ApiResource::replace(ProductResource::class, CustomProductResource::class);
+
+    $match = Product::factory()->publish()->create(['barcode' => '4006381333931']);
+    Product::factory()->publish()->create(['barcode' => '5901234123457']);
+
+    $this->getJson('/store/products?filter[barcode]=4006381333931')
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.id', $match->public_id);
+});
+
+it('accepts the includes a replacement resource adds to the allowlist', function (string $endpoint): void {
+    ApiResource::replace(ProductResource::class, CustomProductResource::class);
+
+    Product::factory()->publish()->create(['slug' => 'supplied']);
+
+    $this->getJson($endpoint)->assertOk();
+})->with([
+    'product listing' => '/store/products?include=supplier',
+    'product detail' => '/store/products/supplied?include=supplier',
+]);
+
+it('eager loads the relations registered for the product resource on the products of the cart lines', function (): void {
+    ApiResource::replace(ProductResource::class, CustomProductResource::class);
+    ApiResource::eagerLoad(ProductResource::class, ['brand']);
+
+    setupCurrencies();
+    $currency = Currency::query()->where('code', 'USD')->first();
+    $inventory = Inventory::factory()->create();
+    $brand = Brand::factory()->create(['name' => 'BrandCart', 'is_enabled' => true]);
+
+    $cartId = $this->postJson('/store/carts')->json('data.id');
+
+    Product::factory()->standard()->publish()->count(3)->create(['brand_id' => $brand->id])
+        ->each(function (Product $product) use ($cartId, $currency, $inventory): void {
+            $product->prices()->create(['amount' => 2500, 'currency_id' => $currency->id]);
+            $product->mutateStock($inventory->id, 50);
+
+            $this->postJson("/store/carts/{$cartId}/lines", [
+                'purchasable_type' => 'product',
+                'purchasable_id' => $product->public_id,
+            ])->assertOk();
+        });
+
+    $brandQueries = 0;
+    DB::listen(function (QueryExecuted $query) use (&$brandQueries): void {
+        $brandQueries += (int) str_contains($query->sql, shopper_table('brands'));
+    });
+
+    $products = collect($this->getJson("/store/carts/{$cartId}?include=lines.purchasable")->assertOk()->json('included'))
+        ->where('type', 'products');
+
+    expect($products)->toHaveCount(3)
+        ->and($products->pluck('attributes.brand_name')->unique()->all())->toBe(['BrandCart'])
+        ->and($brandQueries)->toBe(1);
 });

@@ -1,3 +1,5 @@
+import type { ResourceId } from './common'
+
 /**
  * A delivery choice computed for a cart by `GET /store/carts/{id}/shipping-options`.
  *
@@ -9,7 +11,7 @@
  */
 export interface ShippingOption {
   /** Composite identifier `{carrier_code}:{service_code}`. */
-  id: string
+  id: ResourceId
   /** The display name of the service (e.g. "Standard", "UPS Ground"). */
   name: string
   /** The display name of the carrier. */

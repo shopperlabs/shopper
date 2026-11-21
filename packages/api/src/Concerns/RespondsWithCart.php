@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Shopper\Api\Http\Resources\CartResource;
+use Shopper\Api\Http\Resources\ProductResource;
+use Shopper\Api\Support\ResourceManifest;
 use Shopper\Cart\CartManager;
 use Shopper\Cart\Exceptions\CartCompletedException;
 use Shopper\Cart\Exceptions\CartLineLockedException;
@@ -139,7 +141,7 @@ trait RespondsWithCart
     private function cartIncludes(): Collection
     {
         $requested = QueryBuilderRequest::fromRequest(request())->includes();
-        $allowed = new Collection((array) config('shopper.api.resources.cart.includes', []));
+        $allowed = new Collection(app(ResourceManifest::class)->for(CartResource::class)::includes());
         $unknown = $requested->diff($allowed);
 
         if ($unknown->isNotEmpty()) {
@@ -162,7 +164,7 @@ trait RespondsWithCart
         $product = resolve(ProductContract::class);
         $variant = resolve(ProductVariantContract::class);
 
-        $productLoads = $this->serializedLoads($product);
+        $productLoads = app(ResourceManifest::class)->eagerLoadsFor(ProductResource::class);
         $variantLoads = [...$this->serializedLoads($variant), 'values.attribute'];
 
         if ($includes->contains('lines.purchasable.product')) {

@@ -16,6 +16,20 @@ class CartResource extends JsonApiResource
 {
     private ?CartPipelineContext $totals = null;
 
+    /**
+     * @return array<int, string>
+     */
+    public static function includes(): array
+    {
+        return [
+            'lines',
+            'lines.purchasable',
+            'lines.purchasable.product',
+            'addresses',
+            'paymentMethod',
+        ];
+    }
+
     final public function toType(Request $request): string
     {
         return 'carts';

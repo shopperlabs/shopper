@@ -1,8 +1,10 @@
+import type { ResourceId } from './common'
+
 /**
  * A legal page (terms, privacy, refund, shipping) managed from the admin.
  */
 export interface Legal {
-  id: string
+  id: ResourceId
   /** The page title. */
   title: string
   /** The public identifier used to retrieve the page. */

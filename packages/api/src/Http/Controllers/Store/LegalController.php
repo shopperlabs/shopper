@@ -17,7 +17,7 @@ final class LegalController
     public function index(): JsonApiResourceCollection
     {
         return LegalResource::collection(
-            $this->paginated('legal', Legal::query()->enabled())
+            $this->paginated(LegalResource::class, Legal::query()->enabled())
         );
     }
 
@@ -25,7 +25,7 @@ final class LegalController
     {
         $query = Legal::query()->enabled()->where('slug', $slug);
 
-        $this->applyPublicIncludes('legal', $query);
+        $this->applyPublicIncludes(LegalResource::class, $query);
 
         return LegalResource::make($query->firstOrFail());
     }

@@ -17,7 +17,7 @@ final class CurrencyController
     public function index(): JsonApiResourceCollection
     {
         return CurrencyResource::collection(
-            $this->paginated('currency', Currency::query())
+            $this->paginated(CurrencyResource::class, Currency::query())
         );
     }
 
@@ -25,7 +25,7 @@ final class CurrencyController
     {
         $query = Currency::query()->where('code', mb_strtoupper($code));
 
-        $this->applyPublicIncludes('currency', $query);
+        $this->applyPublicIncludes(CurrencyResource::class, $query);
 
         return CurrencyResource::make($query->firstOrFail());
     }

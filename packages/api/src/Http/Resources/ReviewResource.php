@@ -6,12 +6,25 @@ namespace Shopper\Api\Http\Resources;
 
 use Illuminate\Http\Request;
 use Shopper\Core\Models\Review;
+use Spatie\QueryBuilder\AllowedFilter;
 
 /**
  * @mixin Review
  */
 class ReviewResource extends JsonApiResource
 {
+    public static function filters(): array
+    {
+        return [
+            AllowedFilter::exact('rating'),
+        ];
+    }
+
+    public static function sorts(): array
+    {
+        return ['created_at', 'rating'];
+    }
+
     final public function toType(Request $request): string
     {
         return 'reviews';

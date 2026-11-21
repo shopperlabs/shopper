@@ -6,7 +6,10 @@ namespace Shopper\Api\Http\Resources;
 
 use Illuminate\Http\Request;
 use Shopper\Api\Concerns\SerializesMedia;
+use Shopper\Api\Http\Includes\PublicProducts;
 use Shopper\Core\Models\Brand;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
 
 /**
  * @mixin Brand
@@ -14,6 +17,25 @@ use Shopper\Core\Models\Brand;
 class BrandResource extends JsonApiResource
 {
     use SerializesMedia;
+
+    public static function filters(): array
+    {
+        return [
+            AllowedFilter::partial('name'),
+        ];
+    }
+
+    public static function sorts(): array
+    {
+        return ['name', 'position'];
+    }
+
+    public static function includes(): array
+    {
+        return [
+            AllowedInclude::custom('products', new PublicProducts),
+        ];
+    }
 
     final public function toType(Request $request): string
     {

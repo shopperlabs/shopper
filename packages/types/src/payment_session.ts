@@ -1,3 +1,5 @@
+import type { ResourceId } from './common'
+
 /**
  * A payment session opened for a cart
  *
@@ -8,7 +10,7 @@
  */
 export interface PaymentSession {
   /** The driver reference of the session (e.g. a Stripe payment intent id). */
-  id: string
+  id: ResourceId
   /** The payment driver that opened the session (e.g. "stripe", "manual"). */
   driver: string
   /** The driver-reported status of the session. */

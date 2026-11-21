@@ -42,6 +42,18 @@ export interface JsonApiErrorDocument {
   errors: JsonApiError[]
 }
 
+/**
+ * The shape flatten() returns: JSON:API ids are always strings, so the `id` of
+ * the entity and of its related entities, a `ResourceId` in the base type, is
+ * typed `string`. Objects without an `id` (dates, metadata) stay as they are, so
+ * the result remains assignable to its base type.
+ */
+export type Flattened<T> = T extends (infer U)[]
+  ? Flattened<U>[]
+  : 'id' extends keyof T
+    ? { [K in keyof T]: K extends 'id' ? string : Flattened<T[K]> }
+    : T
+
 function identifier(resource: ResourceIdentifier): string {
   return `${resource.type}:${resource.id}`
 }

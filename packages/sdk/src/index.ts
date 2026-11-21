@@ -69,5 +69,6 @@ export type {
   JsonApiResource,
   JsonApiError,
   JsonApiErrorDocument,
+  Flattened,
   ResourceIdentifier,
 } from './json-api'

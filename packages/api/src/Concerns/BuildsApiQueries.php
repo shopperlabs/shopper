@@ -11,13 +11,13 @@ use Illuminate\Pagination\CursorPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Shopper\Api\Http\Resources\JsonApiResource;
+use Shopper\Api\Support\ResourceManifest;
 use Shopper\Http\Enum\ErrorCode;
 use Shopper\Http\Exceptions\ApiValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
-use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\Exceptions\InvalidIncludeQuery;
-use Spatie\QueryBuilder\Includes\IncludeInterface;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\QueryBuilderRequest;
 
@@ -26,27 +26,25 @@ trait BuildsApiQueries
     private const int MAX_FILTER_VALUES = 50;
 
     /**
-     * Wrap an Eloquent query with the spatie query builder, applying the
-     * filter / sort / include allowlist configured for the given resource.
-     * Sparse fieldsets are handled on the response side by the resources.
-     *
      * @template TModel of Model
      *
+     * @param  class-string<JsonApiResource>  $resource
      * @param  Builder<TModel>  $query
+     * @param  array<int, AllowedFilter>  $extraFilters
      */
     protected function apiQuery(string $resource, Builder $query, array $extraFilters = []): QueryBuilder
     {
         $this->guardFilterBreadth();
 
-        $allowlist = (array) config('shopper.api.resources.'.$resource, []);
-        $request = QueryBuilderRequest::fromRequest(request());
+        $manifest = app(ResourceManifest::class);
+        $resolved = $manifest->for($resource);
 
-        $query->with($this->requestedIncludeLoads($resource));
+        $query->with($manifest->eagerLoadsFor($resource))->with($this->requestedIncludeLoads($resource));
 
-        return QueryBuilder::for($query, $request)
-            ->allowedFilters(...$this->allowedFilters((array) ($allowlist['filters'] ?? [])), ...$extraFilters)
-            ->allowedSorts(...$this->allowedSorts((array) ($allowlist['sorts'] ?? [])))
-            ->allowedIncludes(...$this->allowedIncludes((array) ($allowlist['includes'] ?? [])));
+        return QueryBuilder::for($query, $this->requestWithoutSparseFieldsets())
+            ->allowedFilters(...$resolved::filters(), ...$extraFilters)
+            ->allowedSorts(...$resolved::sorts())
+            ->allowedIncludes(...$resolved::includes());
     }
 
     /**
@@ -55,12 +53,12 @@ trait BuildsApiQueries
      * spatie's allowedIncludes would otherwise leave on those nested attributes.
      * Usable from both list (apiQuery) and show endpoints.
      *
+     * @param  class-string<JsonApiResource>  $resource
      * @return array<int, string>
      */
     protected function requestedIncludeLoads(string $resource): array
     {
-        /** @var array<string, array<int, string>> $map */
-        $map = (array) config('shopper.api.resources.'.$resource.'.include_loads', []);
+        $map = app(ResourceManifest::class)->for($resource)::includeLoads();
 
         if ($map === []) {
             return [];
@@ -87,49 +85,32 @@ trait BuildsApiQueries
     }
 
     /**
-     * Install the custom includes configured for a resource on an endpoint that
-     * reads a single record. Only a listing goes through the spatie query
-     * builder, which is what installs them; a show endpoint resolves its
-     * includes straight from the query string, so without this the relations
-     * are lazy-loaded at serialization time with no constraint at all.
-     *
      * @template TModel of Model
      *
+     * @param  class-string<JsonApiResource>  $resource
      * @param  Builder<TModel>  $query
      * @return Builder<TModel>
      */
     protected function applyPublicIncludes(string $resource, Builder $query): Builder
     {
+        $manifest = app(ResourceManifest::class);
+
+        $includes = (new Collection($manifest->for($resource)::includes()))
+            ->keyBy(fn (AllowedInclude|string $include): string => $include instanceof AllowedInclude ? $include->getName() : $include);
+
         $requested = $this->requestedIncludes();
-
-        /** @var array<int|string, string> $includes */
-        $includes = (array) config('shopper.api.resources.'.$resource.'.includes', []);
-
-        $allowed = (new Collection($includes))
-            ->map(fn (string $value, int|string $name): string => is_int($name) ? $value : $name)
-            ->values();
-
-        $unknown = $requested->diff($allowed);
+        $unknown = $requested->diff($includes->keys());
 
         if ($unknown->isNotEmpty()) {
-            throw InvalidIncludeQuery::includesNotAllowed($unknown, $allowed);
+            throw InvalidIncludeQuery::includesNotAllowed($unknown, $includes->keys());
         }
 
-        foreach ($includes as $name => $class) {
-            if (is_int($name)) {
-                $query->when($requested->contains($class), fn (Builder $query) => $query->with($class));
+        $query->with($manifest->eagerLoadsFor($resource))->with($this->requestedIncludeLoads($resource));
 
-                continue;
-            }
+        $builder = QueryBuilder::for($query, $this->requestWithoutSparseFieldsets());
 
-            if (! $requested->contains($name)) {
-                continue;
-            }
-
-            /** @var IncludeInterface<TModel> $include */
-            $include = resolve($class);
-
-            $include($query, $name);
+        foreach ($includes->only($requested->all()) as $include) {
+            $include instanceof AllowedInclude ? $include->include($builder) : $query->with($include);
         }
 
         return $query;
@@ -161,7 +142,9 @@ trait BuildsApiQueries
      *
      * @template TModel of Model
      *
+     * @param  class-string<JsonApiResource>  $resource
      * @param  Builder<TModel>  $query
+     * @param  array<int, AllowedFilter>  $extraFilters
      */
     protected function paginated(string $resource, Builder $query, ?string $defaultSort = null, array $extraFilters = []): CursorPaginator|LengthAwarePaginator
     {
@@ -198,6 +181,14 @@ trait BuildsApiQueries
             ->withQueryString();
     }
 
+    private function requestWithoutSparseFieldsets(): QueryBuilderRequest
+    {
+        $request = QueryBuilderRequest::fromRequest(request());
+        $request->query->remove(config('query-builder.parameters.fields', 'fields'));
+
+        return $request;
+    }
+
     private function guardFilterBreadth(): void
     {
         QueryBuilderRequest::fromRequest(request())->filters()
@@ -211,87 +202,5 @@ trait BuildsApiQueries
                     ]);
                 }
             });
-    }
-
-    /**
-     * Build the spatie include list from a config descriptor map. A plain
-     * string entry is a relationship include; a `name => class-string` entry
-     * is a custom include (IncludeInterface) applied to the query on demand,
-     * e.g. the opt-in rating aggregates.
-     *
-     * @param  array<int|string, string>  $includes
-     * @return array<int, string|AllowedInclude>
-     */
-    private function allowedIncludes(array $includes): array
-    {
-        $allowed = [];
-
-        foreach ($includes as $key => $value) {
-            if (is_int($key)) {
-                $allowed[] = $value;
-
-                continue;
-            }
-
-            /** @var IncludeInterface $include */
-            $include = resolve($value);
-
-            $allowed[] = AllowedInclude::custom($key, $include);
-        }
-
-        return $allowed;
-    }
-
-    /**
-     * Build the spatie sort list from a config descriptor map. A plain string
-     * entry sorts by the column of the same name; a `name => ['field', 'alias']`
-     * entry sorts by another column or select alias, e.g. the price sort
-     * ordering by the `min_price` aggregate.
-     *
-     * @param  array<int|string, string|array{0: string, 1: string}>  $sorts
-     * @return array<int, string|AllowedSort>
-     */
-    private function allowedSorts(array $sorts): array
-    {
-        $allowed = [];
-
-        foreach ($sorts as $key => $value) {
-            $allowed[] = is_int($key) ? $value : AllowedSort::field($key, $value[1]);
-        }
-
-        return $allowed;
-    }
-
-    /**
-     * Build spatie AllowedFilter instances from a config descriptor map.
-     * Each entry is `key => type` where type is 'partial' (default), 'exact',
-     * 'scope', or an array carrying the internal name: ['scope', 'internalScopeName']
-     * or ['exact', 'relation.column']. A plain string entry (no key) is treated
-     * as a partial filter for backward compatibility.
-     *
-     * @param  array<int|string, string|array{0: string, 1?: string}>  $filters
-     * @return array<int, AllowedFilter>
-     */
-    private function allowedFilters(array $filters): array
-    {
-        $allowed = [];
-
-        foreach ($filters as $key => $type) {
-            if (is_int($key)) {
-                $allowed[] = AllowedFilter::partial((string) $type);
-
-                continue;
-            }
-
-            [$kind, $internal] = is_array($type) ? [$type[0], $type[1] ?? null] : [$type, null];
-
-            $allowed[] = match ($kind) {
-                'exact' => AllowedFilter::exact($key, $internal),
-                'scope' => $internal !== null ? AllowedFilter::scope($key, $internal) : AllowedFilter::scope($key),
-                default => AllowedFilter::partial($key),
-            };
-        }
-
-        return $allowed;
     }
 }

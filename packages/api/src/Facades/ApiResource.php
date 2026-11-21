@@ -10,6 +10,8 @@ use Shopper\Api\Support\ResourceManifest;
 /**
  * @method static void replace(string|array $resource, ?string $replacement = null)
  * @method static string for(string $resource)
+ * @method static void eagerLoad(string $resource, array $relations)
+ * @method static array eagerLoadsFor(string $resource)
  *
  * @see ResourceManifest
  */

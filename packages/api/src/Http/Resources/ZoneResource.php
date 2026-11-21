@@ -6,12 +6,31 @@ namespace Shopper\Api\Http\Resources;
 
 use Illuminate\Http\Request;
 use Shopper\Core\Models\Zone;
+use Spatie\QueryBuilder\AllowedFilter;
 
 /**
  * @mixin Zone
  */
 class ZoneResource extends JsonApiResource
 {
+    public static function filters(): array
+    {
+        return [
+            AllowedFilter::partial('name'),
+            AllowedFilter::exact('code'),
+        ];
+    }
+
+    public static function sorts(): array
+    {
+        return ['name'];
+    }
+
+    public static function includes(): array
+    {
+        return ['currency', 'countries'];
+    }
+
     final public function toType(Request $request): string
     {
         return 'zones';

@@ -34,132 +34,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Resource query allowlists
+    | Latest reviews
     |--------------------------------------------------------------------------
     |
-    | Filters, sorts, and includes a client is allowed to request per resource
-    | (spatie/laravel-query-builder). Sparse fieldsets (fields[type]) are handled
-    | on the response side by the JSON:API resources. Extend these to expose more
-    | of your own columns and relations.
+    | Here you may set how many approved reviews the /store/reviews endpoint
+    | returns, newest first. This endpoint is not paginated, so the limit
+    | bounds every response.
     |
     */
-    'resources' => [
-        'product' => [
-            'filters' => [
-                'name' => 'partial',
-                'sku' => 'exact',
-                'q' => ['scope', 'matching'],
-                'featured' => 'exact',
-                'in_stock' => ['scope', 'availability'],
-                'category' => 'scope',
-                'category_tree' => ['scope', 'categoryTree'],
-                'collection' => ['scope', 'collection'],
-                'brand' => ['scope', 'byBrand'],
-                'tag' => ['scope', 'tag'],
-                'option' => ['scope', 'option'],
-            ],
-            'sorts' => ['name', 'created_at', 'published_at', 'price' => ['field', 'min_price']],
-            'includes' => [
-                'brand' => Shopper\Api\Http\Includes\EnabledRelation::class,
-                'variants',
-                'categories' => Shopper\Api\Http\Includes\VisibleCategories::class,
-                'collections' => Shopper\Api\Http\Includes\PublishedRelation::class,
-                'options' => Shopper\Api\Http\Includes\ScopedOptions::class,
-                'tags',
-                'relatedProducts' => Shopper\Api\Http\Includes\PublicProducts::class,
-                'rating' => Shopper\Api\Http\Includes\RatingAggregate::class,
-                'price_range' => Shopper\Api\Http\Includes\ListingPriceRange::class,
-            ],
-            'include_loads' => [
-                'variants' => ['variants.prices.currency', 'variants.values.attribute'],
-                'categories' => ['categories.parent'],
-            ],
-        ],
-        'category' => [
-            'filters' => ['name' => 'partial'],
-            'sorts' => ['name', 'position'],
-            'includes' => [
-                'parent' => Shopper\Api\Http\Includes\EnabledRelation::class,
-                'children' => Shopper\Api\Http\Includes\EnabledRelation::class,
-                'ancestors' => Shopper\Api\Http\Includes\EnabledAncestors::class,
-                'products' => Shopper\Api\Http\Includes\PublicProducts::class,
-                'products_count' => Shopper\Api\Http\Includes\SubtreeProductsCount::class,
-            ],
-            'include_loads' => [
-                'parent' => ['parent.parent'],
-                'children' => ['children.parent'],
-                'ancestors' => ['ancestors.parent', 'ancestors.media'],
-            ],
-        ],
-        'collection' => [
-            'filters' => ['name' => 'partial'],
-            'sorts' => ['name'],
-            'includes' => [
-                'products' => Shopper\Api\Http\Includes\PublicProducts::class,
-            ],
-        ],
-        'brand' => [
-            'filters' => ['name' => 'partial'],
-            'sorts' => ['name', 'position'],
-            'includes' => [
-                'products' => Shopper\Api\Http\Includes\PublicProducts::class,
-            ],
-        ],
-        'attribute' => [
-            'filters' => ['name' => 'partial'],
-            'sorts' => ['name'],
-            'includes' => [],
-        ],
-        'tag' => [
-            'filters' => ['name' => 'partial'],
-            'sorts' => ['name'],
-            'includes' => [
-                'products' => Shopper\Api\Http\Includes\PublicProducts::class,
-            ],
-        ],
-        'country' => [
-            'filters' => [
-                'name' => 'partial',
-                'cca2' => 'exact',
-                'cca3' => 'exact',
-                'region' => 'exact',
-                'zone' => ['exact', 'zones.code'],
-            ],
-            'sorts' => ['name'],
-            'includes' => ['zones' => Shopper\Api\Http\Includes\EnabledRelation::class],
-        ],
-        'zone' => [
-            'filters' => ['name' => 'partial', 'code' => 'exact'],
-            'sorts' => ['name'],
-            'includes' => ['currency', 'countries'],
-        ],
-        'currency' => [
-            'filters' => ['name' => 'partial', 'code' => 'exact'],
-            'sorts' => ['name', 'code'],
-            'includes' => [],
-        ],
-        'cart' => [
-            'includes' => ['lines', 'lines.purchasable', 'lines.purchasable.product', 'addresses', 'paymentMethod'],
-        ],
-        'order' => [
-            'filters' => ['status' => 'exact'],
-            'sorts' => ['created_at'],
-            'includes' => ['items', 'shippingAddress', 'billingAddress', 'paymentMethod', 'shippings', 'shippings.events', 'refund'],
-            'include_loads' => [
-                'shippings' => ['shippings.carrier'],
-            ],
-        ],
-        'review' => [
-            'filters' => ['rating' => 'exact'],
-            'sorts' => ['created_at', 'rating'],
-            'includes' => [],
-            'latest_limit' => 20,
-        ],
-        'legal' => [
-            'filters' => ['title' => 'partial'],
-            'sorts' => ['title', 'updated_at'],
-            'includes' => [],
-        ],
+    'reviews' => [
+        'latest_limit' => 20,
     ],
 
     /*

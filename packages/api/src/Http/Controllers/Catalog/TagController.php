@@ -15,6 +15,6 @@ final class TagController
 
     public function index(): JsonApiResourceCollection
     {
-        return TagResource::collection($this->paginated('tag', ProductTag::query()));
+        return TagResource::collection($this->paginated(TagResource::class, ProductTag::query()));
     }
 }

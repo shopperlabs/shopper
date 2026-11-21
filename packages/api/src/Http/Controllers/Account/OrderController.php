@@ -30,7 +30,7 @@ final class OrderController
             ->where('customer_id', $request->user()?->getAuthIdentifier());
 
         return OrderResource::collection(
-            $this->paginated('order', $query, defaultSort: '-created_at')
+            $this->paginated(OrderResource::class, $query, defaultSort: '-created_at')
         );
     }
 
@@ -45,11 +45,10 @@ final class OrderController
     public function show(Request $request, string $orderId): JsonApiResource
     {
         $query = $this->orderQuery()
-            ->with($this->requestedIncludeLoads('order'))
             ->where('customer_id', $request->user()?->getAuthIdentifier())
             ->where('public_id', $orderId);
 
-        $this->applyPublicIncludes('order', $query);
+        $this->applyPublicIncludes(OrderResource::class, $query);
 
         /** @var Order $order */
         $order = $query->firstOrFail();

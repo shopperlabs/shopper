@@ -1,6 +1,6 @@
 import type { HttpClient } from '../client'
 import type { FetchInit, RequestParams } from '../http'
-import { flatten } from '../json-api'
+import { flatten, type Flattened } from '../json-api'
 
 /** A paginated list result: flattened entities plus JSON:API meta and links. */
 export interface Paginated<T> {
@@ -19,14 +19,14 @@ export class CollectionResource<T> {
     protected readonly path: string,
   ) {}
 
-  public async list(params?: RequestParams, init?: FetchInit): Promise<Paginated<T>> {
+  public async list(params?: RequestParams, init?: FetchInit): Promise<Paginated<Flattened<T>>> {
     const document = await this.client.request(this.path, params, init)
 
-    return { data: (flatten<T>(document) ?? []) as T[], meta: document.meta, links: document.links }
+    return { data: (flatten<T>(document) ?? []) as Flattened<T>[], meta: document.meta, links: document.links }
   }
 
   /** Retrieve a single entity by its public identifier (slug for catalog, code for geo). */
-  public async retrieve(identifier: string, params?: RequestParams, init?: FetchInit): Promise<T> {
-    return flatten<T>(await this.client.request(`${this.path}/${identifier}`, params, init)) as T
+  public async retrieve(identifier: string, params?: RequestParams, init?: FetchInit): Promise<Flattened<T>> {
+    return flatten<T>(await this.client.request(`${this.path}/${identifier}`, params, init)) as Flattened<T>
   }
 }

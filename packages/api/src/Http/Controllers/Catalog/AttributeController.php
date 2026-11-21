@@ -21,6 +21,6 @@ final class AttributeController
             ->whereIn('type', Attribute::fieldsWithValues())
             ->with('values');
 
-        return AttributeResource::collection($this->paginated('attribute', $query));
+        return AttributeResource::collection($this->paginated(AttributeResource::class, $query));
     }
 }

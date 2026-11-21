@@ -22,7 +22,7 @@ final class BrandController
     {
         $query = $this->withMediaIfSupported(resolve(Brand::class)::query()->enabled());
 
-        $brands = $this->paginated('brand', $query);
+        $brands = $this->paginated(BrandResource::class, $query);
 
         $this->loadStockThroughRelation($brands->getCollection());
 
@@ -31,10 +31,9 @@ final class BrandController
 
     public function show(string $slug): JsonApiResource
     {
-        $query = $this->withMediaIfSupported(resolve(Brand::class)::query()->enabled())
-            ->with($this->requestedIncludeLoads('brand'));
+        $query = $this->withMediaIfSupported(resolve(Brand::class)::query()->enabled());
 
-        $this->applyPublicIncludes('brand', $query);
+        $this->applyPublicIncludes(BrandResource::class, $query);
 
         $brand = $query->where('slug', $slug)->firstOrFail();
 

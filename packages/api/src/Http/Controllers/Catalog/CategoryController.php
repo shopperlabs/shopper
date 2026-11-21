@@ -27,7 +27,7 @@ final class CategoryController
 
     public function index(): JsonApiResourceCollection
     {
-        $categories = $this->paginated('category', $this->publicQuery());
+        $categories = $this->paginated(CategoryResource::class, $this->publicQuery());
 
         $this->loadStockThroughRelation($categories->getCollection());
         $this->loadSubtreeProductsCount($categories->getCollection());
@@ -52,9 +52,9 @@ final class CategoryController
 
     public function show(string $slug): JsonApiResource
     {
-        $query = $this->publicQuery()->with($this->requestedIncludeLoads('category'));
+        $query = $this->publicQuery();
 
-        $this->applyPublicIncludes('category', $query);
+        $this->applyPublicIncludes(CategoryResource::class, $query);
 
         $category = $query->where('slug', $slug)->firstOrFail();
 

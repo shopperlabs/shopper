@@ -2,7 +2,7 @@ import type { Address, Customer, Order, ResourceId } from '@shopperlabs/shopper-
 
 import type { HttpClient } from '../client'
 import type { RequestParams } from '../http'
-import { flatten } from '../json-api'
+import { flatten, type Flattened } from '../json-api'
 import { CollectionResource } from './collection'
 
 class CustomerAddressResource {
@@ -11,20 +11,20 @@ class CustomerAddressResource {
     private readonly path: string,
   ) {}
 
-  public async list(params?: RequestParams): Promise<Address[]> {
-    return (flatten<Address>(await this.client.request(this.path, params)) ?? []) as Address[]
+  public async list(params?: RequestParams): Promise<Flattened<Address>[]> {
+    return (flatten<Address>(await this.client.request(this.path, params)) ?? []) as Flattened<Address>[]
   }
 
-  public async create(payload: Record<string, unknown>): Promise<Address> {
+  public async create(payload: Record<string, unknown>): Promise<Flattened<Address>> {
     const document = await this.client.send('POST', this.path, payload)
 
-    return flatten<Address>(document as NonNullable<typeof document>) as Address
+    return flatten<Address>(document as NonNullable<typeof document>) as Flattened<Address>
   }
 
-  public async update(id: string, payload: Record<string, unknown>): Promise<Address> {
+  public async update(id: string, payload: Record<string, unknown>): Promise<Flattened<Address>> {
     const document = await this.client.send('PATCH', `${this.path}/${id}`, payload)
 
-    return flatten<Address>(document as NonNullable<typeof document>) as Address
+    return flatten<Address>(document as NonNullable<typeof document>) as Flattened<Address>
   }
 
   public async delete(id: string): Promise<void> {
@@ -54,24 +54,24 @@ export class CustomerModule {
     this.orders = new CollectionResource<Order>(client, `${this.path}/orders`)
   }
 
-  public async me(params?: RequestParams): Promise<Customer> {
-    return flatten<Customer>(await this.client.request(this.path, params)) as Customer
+  public async me(params?: RequestParams): Promise<Flattened<Customer>> {
+    return flatten<Customer>(await this.client.request(this.path, params)) as Flattened<Customer>
   }
 
-  public async update(payload: Record<string, unknown>): Promise<Customer> {
+  public async update(payload: Record<string, unknown>): Promise<Flattened<Customer>> {
     const document = await this.client.send('PATCH', this.path, payload)
 
-    return flatten<Customer>(document as NonNullable<typeof document>) as Customer
+    return flatten<Customer>(document as NonNullable<typeof document>) as Flattened<Customer>
   }
 
   /** Upload a profile photo (image, max 1 MB). Returns the customer with the new avatar URL. */
-  public async updateAvatar(file: Blob, filename?: string): Promise<Customer> {
+  public async updateAvatar(file: Blob, filename?: string): Promise<Flattened<Customer>> {
     const form = new FormData()
     form.append('avatar', file, filename ?? 'avatar')
 
     const document = await this.client.send('POST', `${this.path}/avatar`, form)
 
-    return flatten<Customer>(document as NonNullable<typeof document>) as Customer
+    return flatten<Customer>(document as NonNullable<typeof document>) as Flattened<Customer>
   }
 
   /**
@@ -85,9 +85,9 @@ export class CustomerModule {
   }
 
   /** Remove the uploaded photo and fall back to the generated avatar. */
-  public async removeAvatar(): Promise<Customer> {
+  public async removeAvatar(): Promise<Flattened<Customer>> {
     const document = await this.client.send('DELETE', `${this.path}/avatar`)
 
-    return flatten<Customer>(document as NonNullable<typeof document>) as Customer
+    return flatten<Customer>(document as NonNullable<typeof document>) as Flattened<Customer>
   }
 }

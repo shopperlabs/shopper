@@ -7,12 +7,25 @@ namespace Shopper\Api\Http\Resources;
 use Illuminate\Http\Request;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
+use Spatie\QueryBuilder\AllowedFilter;
 
 /**
  * @mixin Attribute
  */
 class AttributeResource extends JsonApiResource
 {
+    public static function filters(): array
+    {
+        return [
+            AllowedFilter::partial('name'),
+        ];
+    }
+
+    public static function sorts(): array
+    {
+        return ['name'];
+    }
+
     final public function toType(Request $request): string
     {
         return 'attributes';
