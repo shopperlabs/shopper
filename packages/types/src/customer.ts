@@ -23,12 +23,12 @@ export interface Customer extends Entity {
   gender: GenderType | null
   /** The phone number of the customer. */
   phone_number: string | null
-  /** The birthdate of the customer. */
-  birth_date: Date | null
-  /** The date the email was verified. */
-  email_verified_at: Date | null
-  /** Whether the email is verified (store API). */
-  email_verified?: boolean
+  /** The birthdate of the customer (YYYY-MM-DD). */
+  birth_date: string | null
+  /** The ISO 8601 date the email was verified. */
+  email_verified_at: string | null
+  /** Whether the email is verified. */
+  email_verified: boolean
   /** The avatar URL (uploaded file, or a generated fallback). */
   avatar: string
   /** The avatar type: storage|avatar_ui. */

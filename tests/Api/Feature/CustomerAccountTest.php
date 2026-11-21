@@ -53,6 +53,24 @@ it('shows and updates the authenticated customer profile', function (): void {
     expect($this->customer->fresh()->email)->toBe($this->customer->email);
 });
 
+it('exposes when the customer verified their email', function (): void {
+    $this->customer->forceFill(['email_verified_at' => '2026-11-20 09:30:00'])->save();
+
+    Sanctum::actingAs($this->customer, ['store']);
+
+    $this->getJson('/store/customers/me')
+        ->assertOk()
+        ->assertJsonPath('data.attributes.email_verified', true)
+        ->assertJsonPath('data.attributes.email_verified_at', $this->customer->fresh()->email_verified_at->toIso8601String());
+
+    $this->customer->forceFill(['email_verified_at' => null])->save();
+
+    $this->getJson('/store/customers/me')
+        ->assertOk()
+        ->assertJsonPath('data.attributes.email_verified', false)
+        ->assertJsonPath('data.attributes.email_verified_at', null);
+});
+
 it('uploads a profile photo and replaces the previous one', function (): void {
     Storage::fake(config('shopper.media.storage.disk_name'));
     Sanctum::actingAs($this->customer, ['store']);
