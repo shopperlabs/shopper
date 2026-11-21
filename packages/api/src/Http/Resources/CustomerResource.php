@@ -44,6 +44,7 @@ class CustomerResource extends JsonApiResource
             'birth_date' => $this->birth_date?->toDateString(),
             'opt_in' => (bool) $this->opt_in,
             'email_verified' => $this->email_verified_at !== null,
+            'email_verified_at' => $this->email_verified_at?->toIso8601String(),
             'created_at' => $this->created_at?->toIso8601String(),
         ];
     }

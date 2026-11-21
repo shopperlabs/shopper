@@ -23,11 +23,11 @@ export interface Customer extends Entity {
   gender: GenderType | null
   /** The phone number of the customer. */
   phone_number: string | null
-  /** The birthdate of the customer. */
-  birth_date: Date | null
-  /** The date the email was verified. */
-  email_verified_at: Date | null
-  /** Whether the email is verified (store API). */
+  /** The birthdate of the customer (YYYY-MM-DD). */
+  birth_date: string | null
+  /** The ISO 8601 date the email was verified. */
+  email_verified_at: string | null
+  /** Whether the email is verified. */
   email_verified?: boolean
   /** The avatar URL (uploaded file, or a generated fallback). */
   avatar: string
@@ -38,7 +38,7 @@ export interface Customer extends Entity {
   /** Whether the customer has opted in to marketing. */
   opt_in: boolean
   /** The last login date. */
-  last_login_at: string | null
+  last_login_at?: string | null
   /** The last login IP address. */
   last_login_ip?: string | null
   /** The customer's addresses. */
