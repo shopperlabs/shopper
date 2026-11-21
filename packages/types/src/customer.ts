@@ -28,7 +28,7 @@ export interface Customer extends Entity {
   /** The ISO 8601 date the email was verified. */
   email_verified_at: string | null
   /** Whether the email is verified. */
-  email_verified: boolean
+  email_verified?: boolean
   /** The avatar URL (uploaded file, or a generated fallback). */
   avatar: string
   /** The avatar type: storage|avatar_ui. */
@@ -38,7 +38,7 @@ export interface Customer extends Entity {
   /** Whether the customer has opted in to marketing. */
   opt_in: boolean
   /** The last login date. */
-  last_login_at: string | null
+  last_login_at?: string | null
   /** The last login IP address. */
   last_login_ip?: string | null
   /** The customer's addresses. */
