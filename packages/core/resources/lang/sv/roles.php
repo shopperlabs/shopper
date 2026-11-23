@@ -9,7 +9,7 @@ return [
     ],
     'manager' => [
         'display_name' => 'Butikschef',
-        'description' => 'Butikschef med tillgång till butikens adminpanel och publiceringsmenyer.',
+        'description' => 'Butikschef med tillgång till katalogen, ordrar, rabatter och kunder. Inställningar och teamhantering är förbehållna administratörer.',
     ],
     'user' => [
         'display_name' => 'Användare',

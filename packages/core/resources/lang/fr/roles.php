@@ -9,7 +9,7 @@ return [
     ],
     'manager' => [
         'display_name' => 'Responsable',
-        'description' => 'Responsable du site ayant accès au panneau d\'administration de la boutique et aux menus de publication.',
+        'description' => 'Responsable de la boutique avec accès au catalogue, aux commandes, aux réductions et aux clients. Les paramètres et la gestion de l\'équipe restent réservés aux administrateurs.',
     ],
     'user' => [
         'display_name' => 'Utilisateur',

@@ -9,7 +9,7 @@ return [
     ],
     'manager' => [
         'display_name' => 'Manager',
-        'description' => 'Site manager with access to shop admin panel and publishing menus.',
+        'description' => 'Store manager with access to the catalog, orders, discounts and customers. Settings and team management stay with administrators.',
     ],
     'user' => [
         'display_name' => 'User',
