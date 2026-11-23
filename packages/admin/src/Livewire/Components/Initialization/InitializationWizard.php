@@ -322,6 +322,7 @@ final class InitializationWizard extends Component implements HasActions, HasSch
                 'email' => $state['email'],
                 'street_address' => $state['street_address'],
                 'postal_code' => $state['postal_code'],
+                'state' => $state['state'] ?? null,
                 'city' => $state['city'],
                 'phone_number' => $state['phone_number'] ?? null,
                 'country_id' => $state['country_id'] ?? null,
