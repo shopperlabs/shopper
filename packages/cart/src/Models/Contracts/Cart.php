@@ -13,6 +13,8 @@ interface Cart
 
     public function addresses(): HasMany;
 
+    public function shippingTaxLines(): HasMany;
+
     public function customer(): BelongsTo;
 
     public function channel(): BelongsTo;

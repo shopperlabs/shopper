@@ -20,6 +20,7 @@ final readonly class CartPipelineRunner
             'lines.adjustments',
             'lines.taxLines',
             'addresses.country',
+            'shippingTaxLines',
             'promotions.discount.campaign',
             'promotions.discount.items',
             'promotions.discount.zone',

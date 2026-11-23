@@ -45,6 +45,7 @@ use Shopper\Core\Traits\HasModelContract;
  * @property-read Collection<int, CartLine> $lines
  * @property-read Collection<int, CartPromotion> $promotions
  * @property-read Collection<int, CartAddress> $addresses
+ * @property-read Collection<int, CartShippingTaxLine> $shippingTaxLines
  * @property-read ?Model $customer
  * @property-read ?Channel $channel
  * @property-read ?Zone $zone
@@ -176,6 +177,14 @@ class Cart extends Model implements CartContract
     public function addresses(): HasMany
     {
         return $this->hasMany(CartAddress::class);
+    }
+
+    /**
+     * @return HasMany<CartShippingTaxLine, $this>
+     */
+    public function shippingTaxLines(): HasMany
+    {
+        return $this->hasMany(CartShippingTaxLine::class, 'cart_id');
     }
 
     /**

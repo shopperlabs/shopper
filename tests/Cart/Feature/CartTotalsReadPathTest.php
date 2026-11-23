@@ -84,14 +84,61 @@ describe('Cart totals read path', function (): void {
     });
 
     it('returns the same totals from the read path and the pipeline', function (): void {
+        $this->cart->update(['shipping_amount' => 1000]);
+
         $calculated = $this->cartManager->calculate($this->cart->refresh());
         $read = $this->cartManager->totals(Cart::query()->findOrFail($this->cart->id));
 
-        expect($read->subtotal)->toBe($calculated->subtotal)
+        expect($calculated->taxTotal)->toBe(2000 + 200)
+            ->and($read->subtotal)->toBe($calculated->subtotal)
             ->and($read->discountTotal)->toBe($calculated->discountTotal)
             ->and($read->taxTotal)->toBe($calculated->taxTotal)
             ->and($read->taxInclusive)->toBe($calculated->taxInclusive)
             ->and($read->total)->toBe($calculated->total);
+    });
+
+    it('reads the tax lines the pipeline just wrote on the same cart instance', function (): void {
+        $this->cart->update(['shipping_amount' => 1000]);
+
+        $cart = $this->cart->refresh();
+        $calculated = $this->cartManager->calculate($cart);
+        $read = $this->cartManager->totals($cart);
+
+        expect($calculated->taxTotal)->toBe(2000 + 200)
+            ->and($read->taxTotal)->toBe($calculated->taxTotal)
+            ->and($read->total)->toBe($calculated->total);
+    });
+
+    it('drops the shipping tax from the read path when the shipping method is removed', function (): void {
+        $this->cartManager->setShippingMethod($this->cart, 'fedex:ground', 1000);
+
+        $withShipping = $this->cartManager->totals(Cart::query()->findOrFail($this->cart->id));
+
+        expect($withShipping->taxTotal)->toBe(2000 + 200)
+            ->and($withShipping->total)->toBe(10000 + 2200 + 1000);
+
+        $this->cartManager->removeShippingMethod($this->cart->refresh());
+
+        $withoutShipping = $this->cartManager->totals(Cart::query()->findOrFail($this->cart->id));
+
+        expect($withoutShipping->taxTotal)->toBe(2000)
+            ->and($withoutShipping->total)->toBe(12000)
+            ->and($this->cart->shippingTaxLines()->count())->toBe(0);
+    });
+
+    it('drops the tax lines once the shipping address no longer has a country', function (): void {
+        $this->cart->update(['shipping_amount' => 1000]);
+        $this->cartManager->calculate($this->cart->refresh());
+
+        $this->cart->shippingAddress()->update(['country_id' => null]);
+
+        $context = $this->cartManager->calculate($this->cart->refresh());
+        $read = $this->cartManager->totals(Cart::query()->findOrFail($this->cart->id));
+
+        expect($context->taxTotal)->toBe(0)
+            ->and($read->taxTotal)->toBe(0)
+            ->and($this->cart->shippingTaxLines()->count())->toBe(0)
+            ->and($this->cart->lines()->first()->taxLines()->count())->toBe(0);
     });
 
     it('recalculates once after a mutation invalidated the totals', function (): void {

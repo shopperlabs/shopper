@@ -6,6 +6,7 @@ use Shopper\Core\Models\Country;
 use Shopper\Core\Models\TaxRate;
 use Shopper\Core\Models\TaxRateRule;
 use Shopper\Core\Models\TaxZone;
+use Shopper\Core\Taxes\ShippingTaxableItem;
 use Shopper\Core\Taxes\SystemTaxProvider;
 use Shopper\Core\Taxes\TaxCalculationContext;
 use Shopper\Core\Taxes\TaxCalculator;
@@ -153,6 +154,46 @@ describe('SystemTaxProvider', function (): void {
             ->and($virtualLines[0]->name)->toBe('Reduced VAT')
             ->and($virtualLines[0]->rate)->toBe(5.0)
             ->and($virtualLines[0]->amount)->toBe(571);
+    });
+
+    it('applies a shipping override rate to the shipping only', function (): void {
+        $uk = Country::query()->where('cca2', 'GB')->first();
+
+        $zone = TaxZone::factory()->create([
+            'country_id' => $uk->id,
+            'is_tax_inclusive' => false,
+        ]);
+
+        TaxRate::factory()->create([
+            'name' => 'Standard VAT',
+            'rate' => 20.0,
+            'is_default' => true,
+            'tax_zone_id' => $zone->id,
+        ]);
+
+        $shippingRate = TaxRate::factory()->create([
+            'name' => 'Shipping VAT',
+            'rate' => 5.0,
+            'is_default' => false,
+            'tax_zone_id' => $zone->id,
+        ]);
+
+        TaxRateRule::factory()->create([
+            'tax_rate_id' => $shippingRate->id,
+            'reference_type' => 'shipping',
+            'reference_id' => 'shipping',
+        ]);
+
+        $provider = new SystemTaxProvider;
+        $context = new TaxCalculationContext(countryCode: 'GB', resolvedZone: $zone);
+
+        $shippingLines = $provider->getTaxLines(new ShippingTaxableItem(1000), $context);
+        $productLines = $provider->getTaxLines(new TaxableItemStub(amount: 1000, productType: 'standard'), $context);
+
+        expect($shippingLines[0]->name)->toBe('Shipping VAT')
+            ->and($shippingLines[0]->amount)->toBe(50)
+            ->and($productLines[0]->name)->toBe('Standard VAT')
+            ->and($productLines[0]->amount)->toBe(200);
     });
 
     it('multiplies by quantity for multi-unit orders', function (): void {

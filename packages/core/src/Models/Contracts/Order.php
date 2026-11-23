@@ -7,6 +7,7 @@ namespace Shopper\Core\Models\Contracts;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 
@@ -73,4 +74,6 @@ interface Order
     public function promotions(): HasMany;
 
     public function shippingOption(): BelongsTo;
+
+    public function taxLines(): MorphMany;
 }

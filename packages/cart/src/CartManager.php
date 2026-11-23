@@ -154,7 +154,7 @@ final readonly class CartManager
             return $this->calculate($cart);
         }
 
-        $cart->loadMissing(['lines.adjustments', 'lines.taxLines', 'addresses.country']);
+        $cart->loadMissing(['lines.adjustments', 'lines.taxLines', 'addresses.country', 'shippingTaxLines']);
 
         $context = new CartPipelineContext($cart);
 
@@ -167,6 +167,7 @@ final readonly class CartManager
             $context->taxTotal += (int) $line->taxLines->sum('amount');
         }
 
+        $context->taxTotal += (int) $cart->shippingTaxLines->sum('amount');
         $context->taxInclusive = $cart->heldTaxInclusive() ?? $this->resolveTaxInclusive($cart);
         $context->shippingTotal = $cart->shipping_amount ?? 0;
 

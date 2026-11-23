@@ -80,6 +80,7 @@ final class SystemTaxProvider implements TaxCalculationProvider
             'product_type' => $item->getProductType() === $rule->reference_id,
             'product' => $item->getProductId() !== null && (string) $item->getProductId() === $rule->reference_id,
             'category' => in_array((int) $rule->reference_id, $item->getCategoryIds(), true),
+            'shipping' => $item instanceof ShippingTaxableItem,
             default => false,
         };
     }
