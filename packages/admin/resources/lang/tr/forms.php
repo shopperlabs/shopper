@@ -187,6 +187,7 @@ return [
         'start_processing' => 'İşlemeye başla',
         'mark_paid' => 'Ödendi olarak işaretle',
         'capture_payment' => 'Ödemeyi tahsil et',
+        'refund' => 'İade et',
         'mark_complete' => 'Tamamlandı olarak işaretle',
         'cancel_order' => 'Siparişi İptal Et',
         'mark_delivered' => 'Teslim edildi olarak işaretle',

@@ -190,6 +190,7 @@ return [
         'start_processing' => 'Börja bearbeta',
         'mark_paid' => 'Markera som betald',
         'capture_payment' => 'Registrera betalning',
+        'refund' => 'Återbetala',
         'mark_complete' => 'Markera som klar',
         'cancel_order' => 'Avbryt order',
         'mark_delivered' => 'Markera som levererad',

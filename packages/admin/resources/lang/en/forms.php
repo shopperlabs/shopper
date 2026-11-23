@@ -190,6 +190,7 @@ return [
         'start_processing' => 'Start processing',
         'mark_paid' => 'Mark as paid',
         'capture_payment' => 'Capture payment',
+        'refund' => 'Refund',
         'mark_complete' => 'Mark complete',
         'cancel_order' => 'Cancel Order',
         'mark_delivered' => 'Mark as delivered',

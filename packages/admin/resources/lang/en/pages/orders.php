@@ -59,6 +59,8 @@ return [
         'paid_notice' => 'The payment will be recorded as received and a new order will move to processing. Only confirm if you have collected the payment outside of Shopper.',
         'complete_heading' => 'Complete order :number',
         'complete_notice' => 'The order will be marked as completed.',
+        'refund_heading' => 'Refund order :number',
+        'refund_notice' => 'The amount goes back to the customer through the order\'s payment method. A manual payment is recorded as refunded and must be paid back outside of Shopper. This action cannot be undone.',
     ],
 
     'shipment' => [
@@ -76,6 +78,19 @@ return [
         'occurred_at' => 'Occurred at',
         'event_added' => 'Tracking event has been added.',
         'no_events' => 'No tracking events yet.',
+    ],
+
+    'refund' => [
+        'refundable' => 'Refundable: :refundable of :captured collected.',
+        'reason' => 'Reason',
+        'reasons' => [
+            'requested_by_customer' => 'Requested by customer',
+            'duplicate' => 'Duplicate',
+            'fraudulent' => 'Fraudulent',
+        ],
+        'refunded' => 'Refunded',
+        'pending' => 'Pending',
+        'net_collected' => 'Net collected',
     ],
 
     'abandoned_carts' => [
@@ -101,6 +116,9 @@ return [
         'captured' => 'The payment has been captured successfully!',
         'capture_failed' => 'Failed to capture the payment.',
         'capture_no_reference' => 'No payment reference found for this order.',
+        'refunded' => 'The refund has been issued!',
+        'refund_pending' => 'The refund is pending with the payment provider.',
+        'refund_failed' => 'Failed to refund the payment.',
         'completed' => 'The order is marked as completed!',
         'shipment_created' => 'The shipment has been created successfully!',
         'shipment_delivered' => 'The shipment has been marked as delivered!',

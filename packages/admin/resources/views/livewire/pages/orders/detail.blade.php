@@ -41,6 +41,8 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
+                    {{ $this->refundPaymentAction }}
+
                     @if (! $order->isCompleted())
                         <div class="hidden sm:flex sm:items-center sm:gap-3">
                             @if ($order->isPaymentAuthorized())

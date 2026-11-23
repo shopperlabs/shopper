@@ -35,11 +35,6 @@ final class ManualDriver extends Driver
         return false;
     }
 
-    public function supportsRefunds(): bool
-    {
-        return false;
-    }
-
     public function initiatePayment(int $amount, string $currency, array $context = []): PaymentResult
     {
         return new PaymentResult(
@@ -65,6 +60,16 @@ final class ManualDriver extends Driver
             success: true,
             status: 'captured',
             reference: $reference,
+            amount: $amount,
+        );
+    }
+
+    public function refundPayment(string $reference, int $amount, ?string $reason = null, array $context = []): PaymentResult
+    {
+        return new PaymentResult(
+            success: true,
+            status: 'refunded',
+            reference: 'manual_'.Str::ulid(),
             amount: $amount,
         );
     }

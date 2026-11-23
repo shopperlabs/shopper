@@ -119,5 +119,45 @@
                 {{ shopper_money_format($total, $order->currency_code) }}
             </span>
         </div>
+
+        @if ($refunds->isNotEmpty())
+            <div class="space-y-3 p-4">
+                @foreach ($refunds as $refund)
+                    <div wire:key="refund-{{ $refund->id }}" class="flex items-start justify-between gap-4 text-sm">
+                        <div class="min-w-0 space-y-0.5">
+                            <div class="flex items-center gap-2">
+                                <span class="text-sh-fg">
+                                    {{ __('shopper::pages/orders.refund.refunded') }}
+                                </span>
+                                @unless ($refund->isSuccessful())
+                                    <x-filament::badge size="sm" color="warning">
+                                        {{ __('shopper::pages/orders.refund.pending') }}
+                                    </x-filament::badge>
+                                @endunless
+                            </div>
+                            <p class="text-sh-fg-muted text-xs">
+                                {{ $refund->created_at->translatedFormat('j M Y') }}
+                                @isset($refund->metadata['reason'])
+                                    &middot;
+                                    {{ __('shopper::pages/orders.refund.reasons.' . $refund->metadata['reason']) }}
+                                @endisset
+                            </p>
+                        </div>
+                        <span class="text-sh-fg tabular-nums">
+                            -{{ shopper_money_format($refund->amount, $refund->currency_code) }}
+                        </span>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="flex items-center justify-between p-4">
+                <span class="text-sh-fg text-sm font-semibold">
+                    {{ __('shopper::pages/orders.refund.net_collected') }}
+                </span>
+                <span class="text-sh-fg text-sm font-semibold tabular-nums">
+                    {{ shopper_money_format($netCollected, $order->currency_code) }}
+                </span>
+            </div>
+        @endif
     </div>
 </div>

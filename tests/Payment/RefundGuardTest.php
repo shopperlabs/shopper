@@ -207,3 +207,19 @@ it('records the acting user on payment transactions', function (): void {
 
     expect($refund->user_id)->toBe($admin->id);
 });
+
+it('refunds against the capture when the authorization was written in the same second', function (): void {
+    $this->freezeSecond();
+
+    $order = Order::factory()->create(['payment_method_id' => $this->method->id]);
+
+    foreach ([[TransactionType::Authorize, 'auth_guard'], [TransactionType::Capture, 'pi_guard']] as [$type, $reference]) {
+        PaymentTransaction::factory()->create([
+            'order_id' => $order->id,
+            'type' => $type,
+            'reference' => $reference,
+        ]);
+    }
+
+    expect($this->service->getLatestReference($order))->toBe('pi_guard');
+});

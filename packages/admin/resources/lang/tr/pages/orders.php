@@ -59,6 +59,8 @@ return [
         'paid_notice' => 'Ödeme alınmış olarak kaydedilecek ve yeni bir sipariş işleme alınacak. Yalnızca ödemeyi Shopper dışında tahsil ettiyseniz onaylayın.',
         'complete_heading' => ':number numaralı siparişi tamamla',
         'complete_notice' => 'Sipariş tamamlandı olarak işaretlenecek.',
+        'refund_heading' => ':number siparişini iade et',
+        'refund_notice' => 'Tutar, siparişin ödeme yöntemiyle müşteriye iade edilir. Manuel ödeme iade edildi olarak kaydedilir ve Shopper dışında geri ödenmelidir. Bu işlem geri alınamaz.',
     ],
 
     'shipment' => [
@@ -74,6 +76,19 @@ return [
         'occurred_at' => 'Gerçekleşme zamanı',
         'event_added' => 'Takip etkinliği eklendi.',
         'no_events' => 'Henüz takip etkinliği yok.',
+    ],
+
+    'refund' => [
+        'refundable' => 'İade edilebilir: tahsil edilen :captured tutarın :refundable kadarı.',
+        'reason' => 'Neden',
+        'reasons' => [
+            'requested_by_customer' => 'Müşteri talebi',
+            'duplicate' => 'Mükerrer',
+            'fraudulent' => 'Dolandırıcılık',
+        ],
+        'refunded' => 'İade edildi',
+        'pending' => 'Beklemede',
+        'net_collected' => 'Net tahsilat',
     ],
 
     'abandoned_carts' => [
@@ -98,6 +113,9 @@ return [
         'captured' => 'Ödeme başarıyla tahsil edildi!',
         'capture_failed' => 'Ödeme tahsil edilemedi.',
         'capture_no_reference' => 'Bu sipariş için ödeme referansı bulunamadı.',
+        'refunded' => 'İade başarıyla yapıldı!',
+        'refund_pending' => 'İade, ödeme sağlayıcısında beklemede.',
+        'refund_failed' => 'Ödeme iade edilemedi.',
         'completed' => 'Sipariş tamamlandı olarak işaretlendi!',
         'shipment_created' => 'Gönderi başarıyla oluşturuldu!',
         'shipment_delivered' => 'Gönderi teslim edildi olarak işaretlendi!',
