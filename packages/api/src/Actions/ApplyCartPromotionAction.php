@@ -59,6 +59,8 @@ final readonly class ApplyCartPromotionAction
         $this->database->beginTransaction();
 
         try {
+            $cart->newQueryWithoutScopes()->whereKey($cart->getKey())->lockForUpdate()->value('id');
+
             $cart->promotions()->firstOrCreate(
                 ['discount_id' => $discount->id],
                 ['source' => PromotionSource::Code->value, 'code' => $code],

@@ -139,11 +139,21 @@ final readonly class CartManager
 
     public function calculate(Cart $cart): CartPipelineContext
     {
-        $context = $this->pipelineRunner->run($cart);
+        return DB::transaction(function () use ($cart): CartPipelineContext {
+            $cart->setRawAttributes(
+                $cart->newQueryWithoutScopes()->lockForUpdate()->findOrFail($cart->getKey())->getAttributes(),
+                true,
+            );
+            $cart->unsetRelations();
 
-        $cart->updateQuietly(['calculated_at' => now()]);
+            $this->sharePromotionDiscountLocks($cart);
 
-        return $context;
+            $context = $this->pipelineRunner->run($cart);
+
+            $cart->updateQuietly(['calculated_at' => now()]);
+
+            return $context;
+        }, 3);
     }
 
     public function totals(Cart $cart): CartPipelineContext
@@ -672,6 +682,19 @@ final readonly class CartManager
             ->filter(fn (CartPromotion $promotion): bool => $promotion->discount->campaign !== null)
             ->groupBy(fn (CartPromotion $promotion): int => $promotion->discount->campaign_id)
             ->contains(fn (Collection $promotions): bool => ! $promotions->first()->discount->campaign->canAbsorb((int) $promotions->sum('computed_amount')));
+    }
+
+    private function sharePromotionDiscountLocks(Cart $cart): void
+    {
+        if (! in_array($cart->getConnection()->getDriverName(), ['mysql', 'mariadb'], true)) {
+            return;
+        }
+
+        Discount::query()
+            ->whereIn('id', CartPromotion::query()->where('cart_id', $cart->getKey())->select('discount_id'))
+            ->orderBy('id')
+            ->sharedLock()
+            ->pluck('id');
     }
 
     /**
