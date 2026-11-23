@@ -20,6 +20,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
@@ -28,6 +29,7 @@ use Shopper\Components\Tables\UserColumn;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Review;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
@@ -145,8 +147,8 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                         query: fn (Builder $query, string $search): Builder => $query->orWhereHas(
                             'author',
                             fn (Builder $query): Builder => $query
-                                ->where('first_name', 'like', "%{$search}%")
-                                ->orWhere('last_name', 'like', "%{$search}%"),
+                                ->whereLike('first_name', "%{$search}%")
+                                ->orWhereLike('last_name', "%{$search}%"),
                         ),
                     )
                     ->sortable(
@@ -158,12 +160,14 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                 TextColumn::make('reviewrateable.name')
                     ->label(__('shopper::words.product'))
                     ->searchable(
-                        query: fn (Builder $query, string $search): Builder => $query->orWhereIn(
-                            'reviewrateable_id',
-                            resolve(Product::class)::query()
-                                ->select('id')
-                                ->where('name', 'like', "%{$search}%"),
-                        ),
+                        query: fn (Builder $query, string $search): Builder => $query
+                            ->where('reviewrateable_type', resolve(Product::class)->getMorphClass())
+                            ->whereIn(
+                                'reviewrateable_id',
+                                resolve(Product::class)::query()
+                                    ->select('id')
+                                    ->whereLike('name', "%{$search}%"),
+                            ),
                     )
                     ->sortable(
                         query: fn (Builder $query, string $direction): Builder => $query->orderBy(
@@ -171,10 +175,9 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                             $direction,
                         ),
                     )
-                    ->url(fn (Review $record): string => route(
-                        name: 'shopper.products.edit',
-                        parameters: ['product' => $record->reviewrateable]
-                    )),
+                    ->url(fn (Review $record): ?string => $record->reviewrateable
+                        ? route(name: 'shopper.products.edit', parameters: ['product' => $record->reviewrateable])
+                        : null),
                 RatingColumn::make('rating')
                     ->label(__('shopper::pages/products.reviews.rating')),
                 TextColumn::make('content')
@@ -249,27 +252,49 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ]),
                 SelectFilter::make('reviewrateable_id')
                     ->label(__('shopper::words.product'))
-                    ->options(
-                        fn (): array => resolve(Product::class)::query()
-                            ->whereHas('ratings')
-                            ->pluck('name', 'id')
-                            ->all()
-                    )
                     ->multiple()
                     ->searchable()
-                    ->preload(),
+                    ->getSearchResultsUsing(fn (string $search): array => resolve(Product::class)::query()
+                        ->whereHas('ratings')
+                        ->whereLike('name', "%{$search}%")
+                        ->limit(50)
+                        ->pluck('name', 'id')
+                        ->all())
+                    ->getOptionLabelsUsing(fn (array $values): array => $this->productNames($values))
+                    ->query(fn (Builder $query, array $data): Builder => $query->when(
+                        $data['values'] ?? null,
+                        fn (Builder $query, array $ids): Builder => $query
+                            ->where('reviewrateable_type', resolve(Product::class)->getMorphClass())
+                            ->whereIn('reviewrateable_id', $ids),
+                    ))
+                    ->indicateUsing(function (array $state): ?string {
+                        $names = $this->productNames($state['values'] ?? []);
+
+                        return $names === [] ? null : __('shopper::words.product').': '.collect($names)->join(', ', ' & ');
+                    }),
                 SelectFilter::make('author_id')
                     ->label(__('shopper::words.customer'))
-                    ->options(
-                        fn (): array => Review::query()
-                            ->with('author')
-                            ->get()
-                            ->pluck('author.full_name', 'author_id')
-                            ->unique()
-                            ->all()
-                    )
                     ->searchable()
-                    ->preload(),
+                    ->getSearchResultsUsing(fn (string $search): array => $this->reviewAuthors()
+                        ->where(fn (Builder $query): Builder => $query
+                            ->whereLike('first_name', "%{$search}%")
+                            ->orWhereLike('last_name', "%{$search}%"))
+                        ->limit(50)
+                        ->get()
+                        ->pluck('full_name', $this->userModel()->getKeyName())
+                        ->all())
+                    ->getOptionLabelUsing(fn (int|string $value): ?string => $this->reviewAuthorName($value))
+                    ->query(fn (Builder $query, array $data): Builder => $query->when(
+                        $data['value'] ?? null,
+                        fn (Builder $query, int|string $id): Builder => $query
+                            ->where('author_type', $this->userModel()->getMorphClass())
+                            ->where('author_id', $id),
+                    ))
+                    ->indicateUsing(function (array $state): ?string {
+                        $name = filled($state['value'] ?? null) ? $this->reviewAuthorName($state['value']) : null;
+
+                        return $name === null ? null : __('shopper::words.customer').': '.$name;
+                    }),
                 TernaryFilter::make('is_recommended')
                     ->label(__('shopper::pages/products.reviews.is_recommended')),
             ])
@@ -283,12 +308,11 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
     }
 
     /**
-     * @return Builder<\Illuminate\Database\Eloquent\Model>
+     * @return Builder<Model>
      */
     private function authorNameSubQuery(): Builder
     {
-        /** @var \Illuminate\Database\Eloquent\Model $user */
-        $user = resolve(config('auth.providers.users.model'));
+        $user = $this->userModel();
 
         return $user::query()
             ->select('first_name')
@@ -296,7 +320,47 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
     }
 
     /**
-     * @return Builder<\Illuminate\Database\Eloquent\Model>
+     * @param  array<int|string>  $ids
+     * @return array<int|string, string>
+     */
+    private function productNames(array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        return resolve(Product::class)::query()->whereKey($ids)->pluck('name', 'id')->all();
+    }
+
+    /**
+     * @return Builder<Model>
+     */
+    private function reviewAuthors(): Builder
+    {
+        $user = $this->userModel();
+
+        return $user::query()->whereIn(
+            $user->getKeyName(),
+            Review::query()->select('author_id')->where('author_type', $user->getMorphClass()),
+        );
+    }
+
+    private function userModel(): Model
+    {
+        /** @var Model */
+        return resolve(config('auth.providers.users.model'));
+    }
+
+    private function reviewAuthorName(int|string $id): ?string
+    {
+        /** @var (Model&ShopperUser)|null $author */
+        $author = $this->reviewAuthors()->find($id);
+
+        return $author?->full_name;
+    }
+
+    /**
+     * @return Builder<Model>
      */
     private function productNameSubQuery(): Builder
     {

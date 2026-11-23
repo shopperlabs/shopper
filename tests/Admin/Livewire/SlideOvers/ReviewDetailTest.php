@@ -38,6 +38,13 @@ describe(ReviewDetail::class, function (): void {
             ->and($component->get('review')->reviewrateable)->not->toBeNull();
     });
 
+    it('shows a review whose product was deleted', function (): void {
+        $this->product->delete();
+
+        Livewire::test(ReviewDetail::class, ['review' => $this->review])
+            ->assertOk();
+    });
+
     it('can approve a pending review', function (): void {
         expect($this->review->approved)->toBeFalse();
 

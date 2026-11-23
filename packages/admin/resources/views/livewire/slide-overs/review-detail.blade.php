@@ -3,7 +3,7 @@
         <div class="px-4">
             <div class="flex items-start justify-between">
                 <h2 class="font-heading text-sh-fg text-2xl font-bold">
-                    {{ $review->reviewrateable->name }}
+                    {{ $review->reviewrateable?->name }}
                 </h2>
                 <x-livewire-slide-over::close-icon />
             </div>
@@ -21,12 +21,12 @@
                             </dt>
                             <dd class="text-sh-fg flex flex-col text-sm sm:col-span-2 sm:mt-0">
                                 <span class="grow">
-                                    {{ $review->reviewrateable->name }}
+                                    {{ $review->reviewrateable?->name }}
                                 </span>
                                 <p class="text-sh-fg-muted mt-1 flex items-center space-x-4 text-sm">
-                                    @if ($review->reviewrateable->sku)
+                                    @if ($review->reviewrateable?->sku)
                                         <span>
-                                            {{ $review->reviewrateable->sku }}
+                                            {{ $review->reviewrateable?->sku }}
                                             -
                                         </span>
                                     @endif
