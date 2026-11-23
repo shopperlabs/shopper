@@ -55,6 +55,12 @@ return [
         'two_factor_generate' => 'Has regenerado exitosamente tus códigos de recuperación de autenticación de dos factores.',
     ],
 
+    'passkeys' => [
+        'registered' => 'Tu llave de acceso se ha registrado correctamente',
+        'deleted' => 'Tu llave de acceso se ha eliminado correctamente',
+        'failed' => 'No se pudo registrar tu llave de acceso',
+    ],
+
     'orders' => [
         'archived' => 'Pedido archivado exitosamente',
     ],

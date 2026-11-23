@@ -75,6 +75,7 @@ return [
     'male' => 'Masculino',
     'female' => 'Femenino',
     'not_defined' => 'No definido',
+    'unknown' => 'Desconocido',
     'unlimited' => 'Ilimitado',
     'used' => 'usado',
     'once_per_user' => 'Una vez por usuario',

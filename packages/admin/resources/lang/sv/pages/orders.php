@@ -92,6 +92,7 @@ return [
     ],
 
     'notifications' => [
+        'shipment_empty' => 'Dessa artiklar finns redan i en annan leverans. Uppdatera ordern och försök igen.',
         'archived' => 'Beställningarna har arkiverats!',
         'cancelled' => 'Beställningen har avbrutits!',
         'note_added' => 'Anteckningen har lagts till på denna order.',

@@ -14,6 +14,7 @@ return [
         'failed' => 'Estas credenciales no coinciden con nuestros registros.',
         'throttled' => 'Demasiados intentos de inicio de sesión. Por favor inténtalo de nuevo en :seconds segundos.',
         'return_login' => 'Volver al inicio de sesión',
+        'passkey_action' => 'Iniciar sesión con una llave de acceso',
     ],
 
     'session_expired' => [
@@ -81,6 +82,21 @@ return [
         'two_factor_activation_message' => 'Cuando la autenticación de dos factores está habilitada, se te pedirá un token seguro y aleatorio durante la autenticación. Puedes obtener este token desde la aplicación Google Authenticator de tu teléfono.',
         'two_factor_is_enabled' => 'La autenticación de dos factores está ahora habilitada. Escanea el siguiente código QR usando la aplicación de autenticación de tu teléfono.',
         'two_factor_store_recovery_codes' => 'Guarda estos códigos de recuperación en un gestor de contraseñas seguro. Se pueden usar para recuperar el acceso a tu cuenta si pierdes tu dispositivo de autenticación de dos factores.',
+
+        'passkeys_title' => 'Llaves de Acceso',
+        'passkeys_description' => 'Inicia sesión sin contraseña con Face ID, Touch ID, Windows Hello o una llave de seguridad física.',
+        'passkeys_count' => '{0} Ninguna llave de acceso registrada|{1} :count llave de acceso registrada|[2,*] :count llaves de acceso registradas',
+        'passkeys_secure' => 'Las llaves de acceso son credenciales resistentes al phishing guardadas en tu dispositivo. Solo tú puedes aprobar un inicio de sesión, con tu huella digital, tu rostro o el PIN de tu dispositivo.',
+        'passkeys_unsupported' => 'Tu navegador no admite llaves de acceso.',
+        'passkey_add' => 'Añadir llave de acceso',
+        'passkey_add_description' => 'Ponle un nombre a esta llave de acceso para reconocerla más tarde y luego sigue las instrucciones de tu navegador.',
+        'passkey_name_placeholder' => 'p. ej. MacBook Pro',
+        'passkey_added' => 'Añadida :date',
+        'passkey_last_used' => 'Último uso :date',
+        'passkey_never_used' => 'Nunca usada',
+        'passkey_delete' => 'Eliminar llave de acceso',
+        'passkey_delete_confirmation' => 'Esta llave de acceso ya no podrá usarse para iniciar sesión en tu cuenta. Ingresa tu contraseña para confirmar.',
+        'passkey_password_confirmation_required' => 'Confirma tu contraseña antes de gestionar tus llaves de acceso.',
 
         'profile_title' => 'Información del Perfil',
         'profile_description' => 'Actualiza la información del perfil de tu cuenta y la dirección de correo electrónico.',
