@@ -108,7 +108,11 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
         return Action::make('markPaid')
             ->label(__('shopper::forms.actions.mark_paid'))
             ->authorize('orders.edit')
-            ->visible($this->order->isPaymentPending())
+            ->visible(
+                $this->order->isNotCancelled()
+                && ! $this->order->isArchived()
+                && ($this->order->isPaymentPending() || $this->order->payment_status === PaymentStatus::Voided)
+            )
             ->requiresConfirmation()
             ->modalHeading(__('shopper::pages/orders.modals.paid_heading', ['number' => $this->order->number]))
             ->modalDescription(__('shopper::pages/orders.modals.paid_notice'))

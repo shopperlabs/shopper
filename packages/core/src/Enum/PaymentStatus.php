@@ -54,7 +54,7 @@ enum PaymentStatus: string implements HasColor, HasIcon, HasLabel
             self::Paid->value => [self::PartiallyRefunded, self::Refunded],
             self::PartiallyRefunded->value => [self::PartiallyRefunded, self::Refunded],
             self::Refunded->value => [],
-            self::Voided->value => [],
+            self::Voided->value => [self::Paid],
         ];
     }
 

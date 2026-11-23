@@ -247,6 +247,33 @@ describe(Detail::class, function (): void {
             ->assertActionHidden('markComplete');
     });
 
+    it('marks a voided order paid once the money is collected another way', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::Processing,
+            'payment_status' => PaymentStatus::Voided,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->callAction('markPaid');
+
+        expect($order->refresh()->payment_status)->toBe(PaymentStatus::Paid);
+    });
+
+    it('`markPaid` action is hidden on a cancelled or archived order', function (OrderStatus $status, PaymentStatus $paymentStatus): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => $status,
+            'payment_status' => $paymentStatus,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->assertActionHidden('markPaid');
+    })->with([
+        'voided and cancelled' => [OrderStatus::Cancelled, PaymentStatus::Voided],
+        'voided and archived' => [OrderStatus::Archived, PaymentStatus::Voided],
+        'pending and cancelled' => [OrderStatus::Cancelled, PaymentStatus::Pending],
+        'pending and archived' => [OrderStatus::Archived, PaymentStatus::Pending],
+    ]);
+
     it('`markPaid` action is hidden for an authorized payment', function (): void {
         $order = Order::factory()->hasItems(1)->create([
             'status' => OrderStatus::New,

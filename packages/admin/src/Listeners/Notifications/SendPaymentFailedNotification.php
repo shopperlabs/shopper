@@ -14,7 +14,11 @@ final class SendPaymentFailedNotification extends SendsOrderNotification
     public function handle(PaymentFailed $event): void
     {
         $order = $event->order;
-        $key = $event->type === TransactionType::Refund ? 'refund_failed' : 'payment_failed';
+        $key = match ($event->type) {
+            TransactionType::Refund => 'refund_failed',
+            TransactionType::Cancel => 'payment_voided',
+            default => 'payment_failed',
+        };
 
         $this->send(
             Notification::make()
