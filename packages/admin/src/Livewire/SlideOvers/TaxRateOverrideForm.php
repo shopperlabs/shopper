@@ -126,6 +126,7 @@ class TaxRateOverrideForm extends SlideOverComponent implements HasActions, HasS
                                 'product_type' => __('shopper::pages/settings/taxes.overrides.product_types'),
                                 'product' => __('shopper::pages/settings/taxes.overrides.products'),
                                 'category' => __('shopper::pages/settings/taxes.overrides.categories'),
+                                'shipping' => __('shopper::pages/settings/taxes.overrides.shipping'),
                             ])
                             ->required()
                             ->live()
@@ -160,6 +161,9 @@ class TaxRateOverrideForm extends SlideOverComponent implements HasActions, HasS
                                         ->limit(50)
                                         ->pluck('name', 'id')
                                         ->all(),
+                                    'shipping' => in_array('shipping', $usedIds, true)
+                                        ? []
+                                        : ['shipping' => __('shopper::pages/settings/taxes.overrides.shipping_fees')],
                                     default => [],
                                 };
                             })

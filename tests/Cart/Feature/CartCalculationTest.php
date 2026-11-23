@@ -18,6 +18,7 @@ use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\TaxRate;
+use Shopper\Core\Models\TaxRateRule;
 use Shopper\Core\Models\TaxZone;
 use Tests\Core\Stubs\User;
 
@@ -327,7 +328,7 @@ describe(CalculateLines::class, function (): void {
             ->and($context->total)->toBe($context->subtotal);
     });
 
-    it('adds shipping on top of the goods total in tax-inclusive mode', function (): void {
+    it('extracts the shipping tax from the shipping amount in tax-inclusive mode', function (): void {
         $country = Country::query()->where('cca2', 'FR')->first()
             ?? Country::factory()->create(['cca2' => 'FR', 'name' => 'France']);
 
@@ -355,11 +356,95 @@ describe(CalculateLines::class, function (): void {
 
         $context = $this->cartManager->calculate($this->cart->refresh());
 
-        // The inclusive tax lives inside the goods prices and must never
-        // apply to the shipping amount stacked on top.
         expect($context->taxInclusive)->toBeTrue()
             ->and($context->shippingTotal)->toBe(800)
+            ->and($context->taxTotal)->toBe(417 + 133)
             ->and($context->total)->toBe($context->subtotal + 800);
+    });
+
+    it('adds the shipping tax to the total in tax-exclusive mode', function (): void {
+        $country = Country::query()->where('cca2', 'US')->first()
+            ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
+
+        $taxZone = TaxZone::factory()->create([
+            'country_id' => $country->id,
+            'is_tax_inclusive' => false,
+        ]);
+
+        TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 10.00,
+            'is_default' => true,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product, quantity: 1);
+        $this->cartManager->addAddress($this->cart, AddressType::Shipping, [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'address_1' => '123 Main St',
+            'city' => 'New York',
+            'postal_code' => '10001',
+            'country_id' => $country->id,
+        ]);
+        $this->cart->update(['shipping_amount' => 700]);
+
+        $context = $this->cartManager->calculate($this->cart->refresh());
+
+        expect($context->taxTotal)->toBe(250 + 70)
+            ->and($context->total)->toBe(2500 + 320 + 700);
+
+        $this->cart->update(['shipping_amount' => null]);
+
+        $context = $this->cartManager->calculate($this->cart->refresh());
+
+        expect($context->taxTotal)->toBe(250)
+            ->and($context->total)->toBe(2750)
+            ->and($this->cart->shippingTaxLines()->count())->toBe(0);
+    });
+
+    it('taxes the shipping at the rate of a shipping override', function (): void {
+        $country = Country::query()->where('cca2', 'US')->first()
+            ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
+
+        $taxZone = TaxZone::factory()->create([
+            'country_id' => $country->id,
+            'is_tax_inclusive' => false,
+        ]);
+
+        TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 20.00,
+            'is_default' => true,
+        ]);
+
+        $shippingRate = TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 5.00,
+            'is_default' => false,
+        ]);
+
+        TaxRateRule::factory()->create([
+            'tax_rate_id' => $shippingRate->id,
+            'reference_type' => 'shipping',
+            'reference_id' => 'shipping',
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product, quantity: 1);
+        $this->cartManager->addAddress($this->cart, AddressType::Shipping, [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'address_1' => '123 Main St',
+            'city' => 'New York',
+            'postal_code' => '10001',
+            'country_id' => $country->id,
+        ]);
+        $this->cart->update(['shipping_amount' => 1000]);
+
+        $context = $this->cartManager->calculate($this->cart->refresh());
+
+        expect($context->taxTotal)->toBe(500 + 50)
+            ->and($context->total)->toBe(2500 + 550 + 1000)
+            ->and($this->cart->shippingTaxLines()->sole()->tax_rate_id)->toBe($shippingRate->id);
     });
 
     it('skips tax calculation when no shipping address', function (): void {

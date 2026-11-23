@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Core\Database\Factories\OrderFactory;
 use Shopper\Core\Enum\OrderStatus;
@@ -65,6 +66,7 @@ use Shopper\Core\Traits\HasPaymentStatusTransitions;
  * @property-read Collection<int, OrderItem> $items
  * @property-read Collection<int, OrderPromotion> $promotions
  * @property-read Collection<int, OrderShipping> $shippings
+ * @property-read Collection<int, OrderTaxLine> $taxLines
  * @property-read Collection<int, Order> $children
  */
 class Order extends Model implements OrderContract
@@ -305,6 +307,14 @@ class Order extends Model implements OrderContract
     public function shippings(): HasMany
     {
         return $this->hasMany(OrderShipping::class);
+    }
+
+    /**
+     * @return MorphMany<OrderTaxLine, $this>
+     */
+    public function taxLines(): MorphMany
+    {
+        return $this->morphMany(OrderTaxLine::class, 'taxable');
     }
 
     /**

@@ -422,6 +422,43 @@ describe(CreateOrderFromCartAction::class, function (): void {
             ->and((float) $taxLines->sole()->rate)->toBe(20.0);
     });
 
+    it('freezes the shipping tax onto the order', function (): void {
+        $country = Country::query()->where('cca2', 'US')->first()
+            ?? Country::factory()->create(['cca2' => 'US', 'name' => 'United States']);
+
+        $taxZone = TaxZone::factory()->create([
+            'country_id' => $country->id,
+            'is_tax_inclusive' => false,
+        ]);
+
+        $rate = TaxRate::factory()->create([
+            'tax_zone_id' => $taxZone->id,
+            'rate' => 10.00,
+            'is_default' => true,
+        ]);
+
+        $this->cartManager->add($this->cart, $this->product);
+        $this->cartManager->addAddress($this->cart, AddressType::Shipping, [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'address_1' => '123 Main St',
+            'city' => 'New York',
+            'postal_code' => '10001',
+            'country_id' => $country->id,
+        ]);
+        $this->cart->update(['shipping_amount' => 700]);
+
+        $order = $this->action->execute($this->cart->refresh());
+
+        $shippingTaxLine = $order->taxLines()->sole();
+
+        expect($order->tax_amount)->toBe(3 + 70)
+            ->and($order->price_amount)->toBe(25 + 73 + 700)
+            ->and($shippingTaxLine->amount)->toBe(70)
+            ->and((float) $shippingTaxLine->rate)->toBe(10.0)
+            ->and($shippingTaxLine->tax_rate_id)->toBe($rate->id);
+    });
+
     it('passes a price drop since add-to-cart on to the customer', function (): void {
         $this->cartManager->add($this->cart, $this->product, quantity: 2);
 

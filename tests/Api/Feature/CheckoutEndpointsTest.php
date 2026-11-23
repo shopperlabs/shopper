@@ -2302,17 +2302,17 @@ describe('a cart paid before its completion', function (): void {
         $this->cart->shippingAddress()->update(['country_id' => $this->country->id]);
         $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
             ->assertCreated()
-            ->assertJsonPath('data.attributes.amount', 3450);
+            ->assertJsonPath('data.attributes.amount', 3520);
         $driver->retrievedStatus = 'captured';
         $change($taxZone, $rate);
         $this->app->forgetScopedInstances();
-        $this->getJson("/store/carts/{$this->cart->public_id}")->assertJsonPath('data.attributes.total', 3450);
+        $this->getJson("/store/carts/{$this->cart->public_id}")->assertJsonPath('data.attributes.total', 3520);
 
         $orderId = $this->postJson("/store/carts/{$this->cart->public_id}/complete")
             ->assertCreated()
             ->json('data.id');
 
-        expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(3450);
+        expect(Order::query()->where('public_id', $orderId)->value('price_amount'))->toBe(3520);
     })->with([
         'rate raised' => [fn (TaxZone $taxZone, TaxRate $rate) => $rate->update(['rate' => 20.00])],
         'prices now include the tax' => [fn (TaxZone $taxZone) => $taxZone->update(['is_tax_inclusive' => true])],
@@ -2325,7 +2325,7 @@ describe('a cart paid before its completion', function (): void {
         $this->cart->shippingAddress()->update(['country_id' => $this->country->id]);
         $this->postJson("/store/carts/{$this->cart->public_id}/payment-session")
             ->assertCreated()
-            ->assertJsonPath('data.attributes.amount', 3450);
+            ->assertJsonPath('data.attributes.amount', 3520);
         $taxZone->update(['is_tax_inclusive' => true]);
         $this->app->forgetScopedInstances();
 

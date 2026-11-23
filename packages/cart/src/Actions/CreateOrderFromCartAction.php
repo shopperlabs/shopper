@@ -19,6 +19,7 @@ use Shopper\Cart\Exceptions\PromotionUnavailableException;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartAddress;
 use Shopper\Cart\Models\CartPromotion;
+use Shopper\Cart\Models\CartShippingTaxLine;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Actions\ReserveCampaignBudget;
 use Shopper\Core\Contracts\StockReserver;
@@ -122,7 +123,19 @@ final readonly class CreateOrderFromCartAction
             ]);
 
             $cart->lines->load('taxLines');
-            $orderTaxLines = [];
+            $cart->load('shippingTaxLines');
+
+            $orderTaxLines = $cart->shippingTaxLines->map(fn (CartShippingTaxLine $taxLine): array => [
+                'taxable_type' => $order->getMorphClass(),
+                'taxable_id' => $order->id,
+                'code' => $taxLine->code,
+                'name' => $taxLine->name,
+                'rate' => $taxLine->rate,
+                'amount' => $taxLine->amount,
+                'tax_rate_id' => $taxLine->tax_rate_id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ])->all();
 
             $lines = $cart->lines->sortBy([
                 ['purchasable_type', 'asc'],
