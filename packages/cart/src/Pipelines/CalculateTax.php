@@ -6,6 +6,7 @@ namespace Shopper\Cart\Pipelines;
 
 use Closure;
 use Shopper\Cart\Models\CartLine;
+use Shopper\Cart\Models\CartLineTaxLine;
 use Shopper\Cart\Taxes\CartLineTaxAdapter;
 use Shopper\Core\Taxes\TaxCalculationContext;
 use Shopper\Core\Taxes\TaxCalculator;
@@ -44,14 +45,13 @@ final readonly class CalculateTax
 
     private function taxLines(CartPipelineContext $context, TaxCalculationContext $taxContext): void
     {
+        CartLineTaxLine::query()
+            ->whereKey(CartLineTaxLine::query()->whereIn('cart_line_id', $context->cart->lines->modelKeys())->pluck('id'))
+            ->delete();
+
         foreach ($context->cart->lines as $line) {
             $discountAmount = (int) $line->adjustments->sum('amount');
             $taxableAmount = ($context->lineSubtotals[$line->id] ?? 0) - $discountAmount;
-
-            // Clear before the taxable guard: a line discounted to zero since
-            // the last run must not keep stale tax lines behind, they would
-            // otherwise be frozen onto the order.
-            $line->taxLines()->delete();
 
             if ($taxableAmount <= 0) {
                 continue;

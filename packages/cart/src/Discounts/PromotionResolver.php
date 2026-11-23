@@ -54,7 +54,7 @@ final readonly class PromotionResolver
         }
 
         CartLineAdjustment::query()
-            ->whereIn('cart_line_id', $cart->lines->pluck('id'))
+            ->whereKey(CartLineAdjustment::query()->whereIn('cart_line_id', $cart->lines->modelKeys())->pluck('id'))
             ->delete();
 
         // The runner eager-loads `lines.adjustments`; drop the cached relation so
