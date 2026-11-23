@@ -12,16 +12,15 @@ return [
 
     'overview' => 'Resumen del perfil',
     'overview_description' => 'Usa una dirección permanente donde el cliente pueda recibir correo.',
-    'security_title' => 'Seguridad',
-    'security_description' => 'Ingresa una contraseña aleatoria que este usuario usará para iniciar sesión en su cuenta.',
     'address_title' => 'Dirección',
     'address_description' => 'La dirección principal de este cliente. Esta dirección se definirá como dirección de envío por defecto.',
     'notification_title' => 'Notificaciones',
     'notification_description' => 'Informa a tus clientes sobre su cuenta.',
     'marketing_email' => 'El cliente aceptó recibir correos de marketing.',
     'marketing_description' => 'Deberías pedir permiso a tus clientes antes de suscribirlos a tus correos de marketing si tienes uno.',
-    'send_credentials' => 'Enviar credenciales al cliente.',
-    'credential_description' => 'Se enviará un correo a este cliente con estas credenciales de conexión.',
+    'send_invitation' => 'Enviar un correo de invitación.',
+    'invitation_description' => 'El cliente recibe un enlace para elegir su contraseña. Sin este correo, puede usar la página de contraseña olvidada de tu tienda.',
+    'invitation_not_sent' => 'El cliente se ha creado, pero no se ha enviado el correo de invitación.',
 
     'period' => 'Cliente por :period',
 

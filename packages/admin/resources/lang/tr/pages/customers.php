@@ -11,16 +11,15 @@ return [
 
     'overview' => 'Profil genel bakış',
     'overview_description' => 'Müşterinin posta alabileceği kalıcı bir adres kullanın.',
-    'security_title' => 'Güvenlik',
-    'security_description' => 'Bu kullanıcının hesabına giriş yapmak için kullanacağı rastgele bir şifre girin.',
     'address_title' => 'Adres',
     'address_description' => 'Bu müşterinin birincil adresi. Bu adres varsayılan teslimat adresi olarak tanımlanacaktır.',
     'notification_title' => 'Bildirimler',
     'notification_description' => 'Müşterilerinizi hesapları hakkında bilgilendirin.',
     'marketing_email' => 'Müşteri pazarlama e-postaları almayı kabul etti.',
     'marketing_description' => 'Varsa pazarlama e-postalarınıza abone olmadan önce müşterilerinizden izin almalısınız.',
-    'send_credentials' => 'Müşteri kimlik bilgilerini gönder.',
-    'credential_description' => 'Bu müşteriye bu bağlantı kimlik bilgileriyle birlikte bir e-posta gönderilecektir.',
+    'send_invitation' => 'Davet e-postası gönder.',
+    'invitation_description' => 'Müşteri, şifresini belirlemek için bir bağlantı alır. Bu e-posta olmadan mağazanızın şifremi unuttum sayfasını kullanabilir.',
+    'invitation_not_sent' => 'Müşteri oluşturuldu, ancak davet e-postası gönderilmedi.',
 
     'period' => ':period süredir müşteri',
 

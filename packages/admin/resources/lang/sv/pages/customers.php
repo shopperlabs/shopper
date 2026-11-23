@@ -12,16 +12,15 @@ return [
 
     'overview' => 'Profilöversikt',
     'overview_description' => 'Använd en permanent adress där kunden kan ta emot post.',
-    'security_title' => 'Säkerhet',
-    'security_description' => 'Ange ett slumpmässigt lösenord som användaren kommer att använda för att logga in på sitt konto.',
     'address_title' => 'Adress',
     'address_description' => 'Den primära adressen för kunden. Denna adress definieras som standardleveransadress.',
     'notification_title' => 'Aviseringar',
     'notification_description' => 'Informera kunderna om deras konto.',
     'marketing_email' => 'Kunden har godkänt att ta emot marknadsförings-e-post.',
     'marketing_description' => 'Användare bör tillfrågas om tillåtelse innan de registreras för marknadsförings-e-post.',
-    'send_credentials' => 'Skicka inloggningsuppgifter till kunden.',
-    'credential_description' => 'Ett e-postmeddelande kommer att skickas till denna kund med inloggningsuppgifterna.',
+    'send_invitation' => 'Skicka en inbjudan via e-post.',
+    'invitation_description' => 'Kunden får en länk för att välja ett lösenord. Utan inbjudan kan kunden använda sidan för glömt lösenord i butiken.',
+    'invitation_not_sent' => 'Kunden har skapats, men inbjudan har inte skickats.',
 
     'period' => 'Kund sedan :period',
 

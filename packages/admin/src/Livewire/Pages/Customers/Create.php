@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Customers;
 
-use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
@@ -91,34 +92,6 @@ class Create extends AbstractPageComponent implements HasActions, HasSchemas
                         GenderField::make(),
                     ]),
                 Separator::make(),
-                Section::make(__('shopper::pages/customers.security_title'))
-                    ->aside()
-                    ->compact()
-                    ->description(__('shopper::pages/customers.security_description'))
-                    ->extraAttributes(['class' => 'sh-section-aside'])
-                    ->schema([
-                        TextInput::make('password')
-                            ->label(__('shopper::forms.label.password'))
-                            ->password()
-                            ->revealable()
-                            ->required()
-                            ->hintAction(
-                                Action::make(__('shopper::words.generate'))
-                                    ->color('info')
-                                    ->action(function (Set $set): void {
-                                        $set('password', Str::password(12));
-                                    }),
-                            )
-                            ->confirmed()
-                            ->dehydrateStateUsing(fn (string $state): string => Hash::make($state)),
-                        TextInput::make('password_confirmation')
-                            ->label(__('shopper::forms.label.confirm_password'))
-                            ->password()
-                            ->revealable()
-                            ->required(),
-                        Hidden::make('_password'),
-                    ]),
-                Separator::make(),
                 Section::make(__('shopper::pages/customers.address_title'))
                     ->aside()
                     ->compact()
@@ -138,8 +111,9 @@ class Create extends AbstractPageComponent implements HasActions, HasSchemas
                             ->label(__('shopper::pages/customers.marketing_email'))
                             ->helperText(__('shopper::pages/customers.marketing_description')),
                         Checkbox::make('send_mail')
-                            ->label(__('shopper::pages/customers.send_credentials'))
-                            ->helperText(__('shopper::pages/customers.credential_description')),
+                            ->label(__('shopper::pages/customers.send_invitation'))
+                            ->helperText(__('shopper::pages/customers.invitation_description'))
+                            ->visible(fn (): bool => ResetPassword::$createUrlCallback !== null || Route::has('password.reset')),
                     ]),
             ])
             ->statePath('data')
@@ -153,7 +127,6 @@ class Create extends AbstractPageComponent implements HasActions, HasSchemas
         /** @var array<string, mixed> $data */
         $data = $this->form->getState();
         $sendMail = data_get($data, 'send_mail');
-        $password = data_get($data, 'password_confirmation');
 
         $customerData = Arr::only($data, [
             'first_name',
@@ -161,7 +134,6 @@ class Create extends AbstractPageComponent implements HasActions, HasSchemas
             'email',
             'phone_number',
             'gender',
-            'password',
             'opt_in',
         ]);
         $address = array_merge(Arr::only($data, ['address'])['address'], [
@@ -173,18 +145,37 @@ class Create extends AbstractPageComponent implements HasActions, HasSchemas
         $userModel = config('auth.providers.users.model');
 
         /** @var ShopperUser $customer */
-        $customer = $userModel::create(array_merge(
-            $customerData,
-            ['email_verified_at' => now()->toDateTimeString()],
-        ));
+        $customer = DB::transaction(function () use ($userModel, $customerData, $address): ShopperUser {
+            /** @var ShopperUser $customer */
+            $customer = $userModel::create(array_merge(
+                $customerData,
+                [
+                    'password' => Hash::make(Str::password()),
+                    'email_verified_at' => now()->toDateTimeString(),
+                ],
+            ));
 
-        $customer->assignRole(config('shopper.admin.roles.user'));
-        $customer->addresses()->create($address);
+            $customer->assignRole(config('shopper.admin.roles.user'));
+            $customer->addresses()->create($address);
+
+            return $customer;
+        });
 
         event(new CustomerRegistered($customer));
 
         if ($sendMail) {
-            $customer->notify(new CustomerSendCredentials($password));
+            $status = Password::sendResetLink(
+                ['email' => $customer->email],
+                fn (ShopperUser $customer, string $token) => $customer->notify(new CustomerSendCredentials($token)),
+            );
+
+            if ($status !== Password::RESET_LINK_SENT) {
+                Notification::make()
+                    ->title(__('shopper::pages/customers.invitation_not_sent'))
+                    ->body(__($status))
+                    ->warning()
+                    ->send();
+            }
         }
 
         Notification::make()

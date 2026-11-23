@@ -12,16 +12,15 @@ return [
 
     'overview' => 'Profile overview',
     'overview_description' => 'Use a permanent address where customer can receive mail.',
-    'security_title' => 'Security',
-    'security_description' => 'Enter a random password that this user will use to login to his account.',
     'address_title' => 'Address',
     'address_description' => 'The primary address of this customer. This address will defined as default shipping address.',
     'notification_title' => 'Notifications',
     'notification_description' => 'Inform your customers about their account.',
     'marketing_email' => 'Customer agreed to receive marketing emails.',
     'marketing_description' => 'You should ask your customers for permission before you subscribe them to your marketing emails if you got one.',
-    'send_credentials' => 'Send customer credentials.',
-    'credential_description' => 'An email will be sent to this customer with these connection credentials.',
+    'send_invitation' => 'Send an invitation email.',
+    'invitation_description' => 'The customer receives a link to choose their password. Without it, they can use the forgot password page of your store.',
+    'invitation_not_sent' => 'The customer was created, but the invitation email was not sent.',
 
     'period' => 'Customer for :period',
 
