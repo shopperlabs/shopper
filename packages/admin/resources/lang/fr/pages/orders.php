@@ -59,6 +59,8 @@ return [
         'paid_notice' => 'Le paiement sera enregistré comme reçu et une nouvelle commande passera en traitement. Ne confirmez que si vous avez encaissé le paiement en dehors de Shopper.',
         'complete_heading' => 'Terminer la commande :number',
         'complete_notice' => 'La commande sera marquée comme terminée.',
+        'refund_heading' => 'Rembourser la commande :number',
+        'refund_notice' => 'Le montant est rendu au client via le moyen de paiement de la commande. Un paiement manuel est enregistré comme remboursé et doit être rendu en dehors de Shopper. Cette action est irréversible.',
     ],
 
     'shipment' => [
@@ -76,6 +78,19 @@ return [
         'occurred_at' => 'Date',
         'event_added' => "L'événement de suivi a été ajouté.",
         'no_events' => 'Aucun événement de suivi.',
+    ],
+
+    'refund' => [
+        'refundable' => 'Remboursable : :refundable sur :captured encaissés.',
+        'reason' => 'Motif',
+        'reasons' => [
+            'requested_by_customer' => 'Demande du client',
+            'duplicate' => 'Doublon',
+            'fraudulent' => 'Fraude',
+        ],
+        'refunded' => 'Remboursé',
+        'pending' => 'En attente',
+        'net_collected' => 'Net encaissé',
     ],
 
     'abandoned_carts' => [
@@ -101,6 +116,9 @@ return [
         'captured' => 'Le paiement a été capturé avec succès !',
         'capture_failed' => 'Échec de la capture du paiement.',
         'capture_no_reference' => 'Aucune référence de paiement trouvée pour cette commande.',
+        'refunded' => 'Le remboursement a été effectué avec succès !',
+        'refund_pending' => 'Le remboursement est en attente chez le prestataire de paiement.',
+        'refund_failed' => 'Échec du remboursement.',
         'completed' => 'La commande est marquée comme complète !',
         'shipment_created' => "L'expédition a été créée avec succès !",
         'shipment_delivered' => "L'expédition a été marquée comme livrée !",

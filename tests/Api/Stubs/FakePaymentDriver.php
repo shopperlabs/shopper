@@ -44,6 +44,10 @@ final class FakePaymentDriver extends Driver implements RetrievesRefunds
 
     public string $refundStatus = 'refunded';
 
+    public bool $failRefund = false;
+
+    public bool $timeOutNextRefund = false;
+
     public string $retrievedRefundStatus = 'pending';
 
     /** @var list<string> */
@@ -54,7 +58,7 @@ final class FakePaymentDriver extends Driver implements RetrievesRefunds
 
     public ?string $lastCancelledReference = null;
 
-    /** @var list<array{reference: string, amount: int, context: array<string, mixed>}> */
+    /** @var list<array{reference: string, amount: int, reason: ?string, context: array<string, mixed>}> */
     public array $refunds = [];
 
     /** @var array<string, mixed> */
@@ -125,7 +129,17 @@ final class FakePaymentDriver extends Driver implements RetrievesRefunds
 
     public function refundPayment(string $reference, int $amount, ?string $reason = null, array $context = []): PaymentResult
     {
-        $this->refunds[] = ['reference' => $reference, 'amount' => $amount, 'context' => $context];
+        $this->refunds[] = ['reference' => $reference, 'amount' => $amount, 'reason' => $reason, 'context' => $context];
+
+        if ($this->timeOutNextRefund) {
+            $this->timeOutNextRefund = false;
+
+            throw PaymentException::apiError($this->code(), 'Request timed out');
+        }
+
+        if ($this->failRefund) {
+            return PaymentResult::failed('Card issuer declined the refund', $reference);
+        }
 
         return new PaymentResult(
             success: true,

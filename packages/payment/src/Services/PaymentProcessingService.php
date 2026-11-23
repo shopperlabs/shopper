@@ -19,6 +19,7 @@ use Shopper\Core\Models\Zone;
 use Shopper\Payment\Contracts\PaymentDriver;
 use Shopper\Payment\DataTransferObjects\PaymentResult;
 use Shopper\Payment\DataTransferObjects\WebhookResult;
+use Shopper\Payment\Enum\RefundReason;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
 use Shopper\Payment\Enum\WebhookAction;
@@ -152,7 +153,7 @@ final class PaymentProcessingService
     /**
      * Refund a captured payment.
      */
-    public function refund(Order $order, string $reference, int $amount, ?string $reason = null, ?string $idempotencyKey = null): PaymentResult
+    public function refund(Order $order, string $reference, int $amount, ?RefundReason $reason = null, ?string $idempotencyKey = null): PaymentResult
     {
         $idempotencyKey ??= Str::uuid()->toString();
 
@@ -175,7 +176,7 @@ final class PaymentProcessingService
             $paymentMethod = $order->paymentMethod;
             $driver = $this->resolveDriver($paymentMethod);
 
-            $result = $driver->refundPayment($reference, $amount, $reason, [
+            $result = $driver->refundPayment($reference, $amount, $reason?->value, [
                 'idempotency_key' => $idempotencyKey,
             ]);
 
@@ -186,6 +187,7 @@ final class PaymentProcessingService
                 $refund->update([
                     'user_id' => $refund->user_id ?? auth()->id(),
                     'idempotency_key' => $refund->idempotency_key ?? $idempotencyKey,
+                    'metadata' => $refund->metadata ?? $this->refundMetadata($reason),
                 ]);
 
                 return $this->refundResult($refund);
@@ -203,6 +205,7 @@ final class PaymentProcessingService
                 actorId: auth()->id(),
                 status: $pending ? TransactionStatus::Pending : null,
                 idempotencyKey: $idempotencyKey,
+                metadata: $this->refundMetadata($reason),
             );
 
             if ($pending) {
@@ -289,15 +292,34 @@ final class PaymentProcessingService
     }
 
     /**
-     * Get the latest successful reference for an order.
+     * Get the reference of the latest successful payment operation on an order.
+     * Refunds carry the provider's refund id, never the payment's.
      */
     public function getLatestReference(Order $order): ?string
     {
         return PaymentTransaction::query()
             ->where('order_id', $order->id)
+            ->whereNot('type', TransactionType::Refund)
             ->successful()
             ->latest()
+            ->latest('id')
             ->value('reference');
+    }
+
+    public function refundableAmount(Order $order): int
+    {
+        return $this->capturedTotal($order) - $this->refundedTotal($order) - $this->pendingRefundTotal($order);
+    }
+
+    public function capturedTotal(Order $order): int
+    {
+        $captured = (int) PaymentTransaction::query()
+            ->where('order_id', $order->getKey())
+            ->where('type', TransactionType::Capture)
+            ->where('status', TransactionStatus::Success)
+            ->sum('amount');
+
+        return $captured ?: $order->price_amount;
     }
 
     /**
@@ -364,22 +386,11 @@ final class PaymentProcessingService
             throw PaymentException::refundNotAllowed($order->payment_status->value);
         }
 
-        $refundable = $this->capturedTotal($order) - $this->refundedTotal($order) - $this->pendingRefundTotal($order);
+        $refundable = $this->refundableAmount($order);
 
         if ($amount > $refundable) {
             throw PaymentException::refundExceedsRefundable($amount, $refundable);
         }
-    }
-
-    private function capturedTotal(Order $order): int
-    {
-        $captured = (int) PaymentTransaction::query()
-            ->where('order_id', $order->getKey())
-            ->where('type', TransactionType::Capture)
-            ->where('status', TransactionStatus::Success)
-            ->sum('amount');
-
-        return $captured ?: $order->price_amount;
     }
 
     private function refundedTotal(Order $order): int
@@ -398,6 +409,14 @@ final class PaymentProcessingService
             ->where('type', TransactionType::Refund)
             ->where('status', TransactionStatus::Pending)
             ->sum('amount');
+    }
+
+    /**
+     * @return array{reason: string}|null
+     */
+    private function refundMetadata(?RefundReason $reason): ?array
+    {
+        return $reason instanceof RefundReason ? ['reason' => $reason->value] : null;
     }
 
     private function findRefund(Order $order, string $refundId): ?PaymentTransaction
@@ -473,6 +492,7 @@ final class PaymentProcessingService
         ?int $actorId = null,
         ?TransactionStatus $status = null,
         ?string $idempotencyKey = null,
+        ?array $metadata = null,
     ): void {
         PaymentTransaction::query()->create([
             'order_id' => $order->id,
@@ -487,6 +507,7 @@ final class PaymentProcessingService
             'idempotency_key' => $idempotencyKey,
             'data' => $result->data ?: null,
             'notes' => $result->message,
+            'metadata' => $metadata,
         ]);
     }
 

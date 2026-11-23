@@ -59,6 +59,8 @@ return [
         'paid_notice' => 'El pago se registrará como recibido y un pedido nuevo pasará a procesamiento. Confirme solo si ha cobrado el pago fuera de Shopper.',
         'complete_heading' => 'Completar el pedido :number',
         'complete_notice' => 'El pedido se marcará como completado.',
+        'refund_heading' => 'Reembolsar el pedido :number',
+        'refund_notice' => 'El importe se devuelve al cliente mediante el método de pago del pedido. Un pago manual se registra como reembolsado y debe devolverse fuera de Shopper. Esta acción no se puede deshacer.',
     ],
 
     'shipment' => [
@@ -76,6 +78,19 @@ return [
         'occurred_at' => 'Fecha',
         'event_added' => 'El evento de seguimiento ha sido agregado.',
         'no_events' => 'Aún no hay eventos de seguimiento.',
+    ],
+
+    'refund' => [
+        'refundable' => 'Reembolsable: :refundable de :captured cobrados.',
+        'reason' => 'Motivo',
+        'reasons' => [
+            'requested_by_customer' => 'Solicitado por el cliente',
+            'duplicate' => 'Duplicado',
+            'fraudulent' => 'Fraudulento',
+        ],
+        'refunded' => 'Reembolsado',
+        'pending' => 'Pendiente',
+        'net_collected' => 'Neto cobrado',
     ],
 
     'abandoned_carts' => [
@@ -101,6 +116,9 @@ return [
         'captured' => '¡El pago se ha capturado exitosamente!',
         'capture_failed' => 'Error al capturar el pago.',
         'capture_no_reference' => 'No se encontró referencia de pago para este pedido.',
+        'refunded' => '¡El reembolso se ha realizado exitosamente!',
+        'refund_pending' => 'El reembolso está pendiente en el proveedor de pago.',
+        'refund_failed' => 'No se pudo reembolsar el pago.',
         'completed' => '¡El pedido está marcado como completado!',
         'shipment_created' => '¡El envío se ha creado exitosamente!',
         'shipment_delivered' => '¡El envío ha sido marcado como entregado!',

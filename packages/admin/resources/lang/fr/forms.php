@@ -190,6 +190,7 @@ return [
         'start_processing' => 'Commencer le traitement',
         'mark_paid' => 'Marquer comme payée',
         'capture_payment' => 'Capturer le paiement',
+        'refund' => 'Rembourser',
         'mark_complete' => 'Marquer comme terminée',
         'cancel_order' => 'Annuler',
         'mark_delivered' => 'Marquer comme livré',

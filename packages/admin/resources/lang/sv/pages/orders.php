@@ -59,6 +59,8 @@ return [
         'paid_notice' => 'Betalningen registreras som mottagen och en ny order flyttas till bearbetning. Bekräfta endast om du har tagit emot betalningen utanför Shopper.',
         'complete_heading' => 'Slutför order :number',
         'complete_notice' => 'Ordern markeras som slutförd.',
+        'refund_heading' => 'Återbetala order :number',
+        'refund_notice' => 'Beloppet betalas tillbaka till kunden via orderns betalningsmetod. En manuell betalning registreras som återbetald och måste betalas tillbaka utanför Shopper. Åtgärden kan inte ångras.',
     ],
 
     'shipment' => [
@@ -76,6 +78,19 @@ return [
         'occurred_at' => 'Inträffade den',
         'event_added' => 'Spårningshändelse har lagts till.',
         'no_events' => 'Inga spårningshändelser ännu.',
+    ],
+
+    'refund' => [
+        'refundable' => 'Återbetalningsbart: :refundable av :captured mottaget.',
+        'reason' => 'Orsak',
+        'reasons' => [
+            'requested_by_customer' => 'Begärd av kunden',
+            'duplicate' => 'Dubblett',
+            'fraudulent' => 'Bedräglig',
+        ],
+        'refunded' => 'Återbetald',
+        'pending' => 'Väntande',
+        'net_collected' => 'Netto mottaget',
     ],
 
     'abandoned_carts' => [
@@ -101,6 +116,9 @@ return [
         'captured' => 'Betalningen har bokförts framgångsrikt!',
         'capture_failed' => 'Det gick inte att debitera betalningen.',
         'capture_no_reference' => 'Ingen betalningsreferens hittades för denna order.',
+        'refunded' => 'Återbetalningen har genomförts framgångsrikt!',
+        'refund_pending' => 'Återbetalningen väntar hos betalningsleverantören.',
+        'refund_failed' => 'Det gick inte att återbetala betalningen.',
         'completed' => 'Ordern är markerad som slutförd!',
         'shipment_created' => 'Leveransen har skapats framgångsrikt!',
         'shipment_delivered' => 'Leveransen har markerats som levererad!',

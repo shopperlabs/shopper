@@ -10,6 +10,10 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\TaxZone;
+use Shopper\Payment\Enum\TransactionStatus;
+use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Models\PaymentTransaction;
+use Shopper\Payment\Services\PaymentProcessingService;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class OrderSummary extends Component
@@ -31,6 +35,12 @@ class OrderSummary extends Component
         $shippingPrice = $this->order->shipping_amount ?? $shippingOption?->price ?? 0; // @phpstan-ignore nullsafe.neverNull
         $taxAmount = $this->order->tax_amount ?? 0;
         $isTaxInclusive = $this->resolveTaxInclusivity();
+        $refunds = PaymentTransaction::query()
+            ->where('order_id', $this->order->id)
+            ->where('type', TransactionType::Refund)
+            ->whereIn('status', [TransactionStatus::Success, TransactionStatus::Pending])
+            ->oldest()
+            ->get();
 
         return view('shopper::livewire.components.orders.order-summary', [
             'subtotal' => $subtotal,
@@ -44,6 +54,11 @@ class OrderSummary extends Component
             'total' => $this->order->price_amount !== null
                 ? $this->order->price_amount
                 : ($subtotal + $shippingPrice + ($isTaxInclusive ? 0 : $taxAmount)),
+            'refunds' => $refunds,
+            'netCollected' => $refunds->isEmpty()
+                ? null
+                : resolve(PaymentProcessingService::class)->capturedTotal($this->order)
+                    - $refunds->filter->isSuccessful()->sum('amount'),
         ]);
     }
 
