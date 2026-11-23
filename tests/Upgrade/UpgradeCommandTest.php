@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\DB;
+use Shopper\Core\Models\Price;
+use Shopper\Core\Models\Product;
 
 uses(Tests\Upgrade\TestCase::class);
 
@@ -70,6 +72,23 @@ describe('shopper:upgrade', function (): void {
                 ->where('stockable_id', 1)
                 ->value('quantity')
         )->toBe(10);
+    });
+
+    it('leaves zero-decimal amounts untouched', function (): void {
+        $product = Product::factory()->create();
+        $xaf = DB::table(shopper_table('currencies'))->where('code', 'XAF')->value('id');
+
+        Price::factory()->create([
+            'priceable_id' => $product->id,
+            'priceable_type' => $product->getMorphClass(),
+            'currency_id' => $xaf,
+            'amount' => 600,
+        ]);
+
+        $this->artisan('shopper:upgrade', ['--force' => true, '--path' => 'rector-target-that-does-not-exist'])
+            ->assertSuccessful();
+
+        expect(DB::table(shopper_table('prices'))->where('currency_id', $xaf)->value('amount'))->toBe(600);
     });
 
     it('runs shopper:link as part of the upgrade', function (): void {

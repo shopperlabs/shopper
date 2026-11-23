@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\DB;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLineAdjustment;
@@ -206,6 +207,56 @@ describe('shopper:upgrade:fix-zero-decimal-currencies', function (): void {
             ->toBe(16300)
             ->and(DB::table(shopper_table('orders'))->find($order->id)->price_amount)
             ->toBe(16300);
+    });
+
+    it('never divides amounts twice, even with `--force`', function (): void {
+        $product = Product::factory()->create();
+        Price::factory()->create([
+            'priceable_id' => $product->id,
+            'priceable_type' => $product->getMorphClass(),
+            'currency_id' => $this->xaf->id,
+            'amount' => 60000,
+        ]);
+
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])->assertSuccessful();
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])->assertSuccessful();
+
+        expect(DB::table(shopper_table('prices'))->where('currency_id', $this->xaf->id)->value('amount'))
+            ->toBe(600);
+    });
+
+    it('marks the fix as applied when there is nothing to fix, except on a dry run', function (): void {
+        $applied = fn (): bool => DB::table(shopper_table('settings'))->where('key', 'zero_decimal_fix_applied')->exists();
+
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--dry-run' => true])->assertSuccessful();
+
+        expect($applied())->toBeFalse();
+
+        $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])->assertSuccessful();
+
+        expect($applied())->toBeTrue();
+    });
+
+    it('rolls back every table and the marker when a fix fails midway', function (): void {
+        $product = Product::factory()->create();
+        Price::factory()->create([
+            'priceable_id' => $product->id,
+            'priceable_type' => $product->getMorphClass(),
+            'currency_id' => $this->xaf->id,
+            'amount' => 60000,
+        ]);
+
+        DB::listen(function (QueryExecuted $query): void {
+            if (str_starts_with($query->sql, 'update') && str_contains($query->sql, shopper_table('orders'))) {
+                throw new RuntimeException('Connection lost');
+            }
+        });
+
+        expect(fn () => $this->artisan('shopper:upgrade:fix-zero-decimal-currencies', ['--force' => true])->run())
+            ->toThrow(RuntimeException::class, 'Connection lost');
+
+        expect(DB::table(shopper_table('prices'))->where('currency_id', $this->xaf->id)->value('amount'))->toBe(60000)
+            ->and(DB::table(shopper_table('settings'))->where('key', 'zero_decimal_fix_applied')->exists())->toBeFalse();
     });
 
     it('cancels when user refuses confirmation', function (): void {

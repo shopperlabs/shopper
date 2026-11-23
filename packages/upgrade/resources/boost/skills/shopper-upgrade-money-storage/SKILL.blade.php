@@ -134,14 +134,23 @@ echo shopper_money_format($subtotal, $cart->currency_code);
 
 ### Step 7: Fix zero-decimal currency data
 
-If the project uses zero-decimal currencies (XAF, JPY, KRW, etc.), existing data in the database has been incorrectly multiplied by 100 by the old setters.
+Only for a store whose zero-decimal amounts (XAF, JPY, KRW, etc.) were all written before 2.7 and never fixed: the old setters multiplied them by 100. The command divides every amount in a zero-decimal currency by 100. It cannot tell a wrong row from a correct one, and the dry run only counts those rows.
 
-Run the Shopper upgrade command:
+Do not run it when:
+- the store was created on 2.7 or later: every amount is already correct;
+- the store wrote amounts after moving to 2.7 (prices edited, orders or carts created): old and new rows are mixed and the correct ones would be divided. Stop and let the developer correct the old rows by hand.
+
+Ask the developer to check one amount they know: a 10 000 XAF price stored as `1000000` needs the fix, stored as `10000` does not. Ask them to back up the database, then show them the dry run:
+```bash
+php artisan shopper:upgrade:fix-zero-decimal-currencies --dry-run
+```
+
+The developer runs the apply command in their own terminal and answers the prompt. Never run it for them, never pass `--force`, never delete the `zero_decimal_fix_applied` setting:
 ```bash
 php artisan shopper:upgrade:fix-zero-decimal-currencies
 ```
 
-This command corrects the stored values for all zero-decimal currency amounts.
+The command runs once and refuses to run again.
 
 ### Step 8: Update seeders and factories
 
