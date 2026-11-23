@@ -31,9 +31,9 @@ it('denies granting a permission the acting user does not hold', function (): vo
     $this->actingAs($this->staff);
 
     Livewire::test(RolePermissions::class, ['role' => $this->managerRole])
-        ->call('togglePermission', Permission::query()->where('name', 'orders.delete')->firstOrFail()->id);
+        ->call('togglePermission', Permission::query()->where('name', 'customers.delete')->firstOrFail()->id);
 
-    expect($this->managerRole->fresh()->hasPermissionTo('orders.delete'))->toBeFalse();
+    expect($this->managerRole->fresh()->hasPermissionTo('customers.delete'))->toBeFalse();
 });
 
 it('allows granting a permission the acting user already holds', function (): void {
@@ -105,7 +105,7 @@ it('denies a non administrator assigning a role with a permission they do not ho
         'display_name' => 'Support',
         'can_be_removed' => true,
     ]);
-    $support->givePermissionTo('orders.delete');
+    $support->givePermissionTo('customers.delete');
 
     $this->actingAs($this->staff);
 

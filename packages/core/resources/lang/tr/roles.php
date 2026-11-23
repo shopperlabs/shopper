@@ -8,8 +8,8 @@ return [
         'description' => 'Mağaza yönetim paneline ve geliştirici araçlarına erişimi olan site yöneticisi.',
     ],
     'manager' => [
-        'display_name' => 'Yönetici',
-        'description' => 'Mağaza yönetim paneline ve yayınlama menülerine erişimi olan site yöneticisi.',
+        'display_name' => 'Müdür',
+        'description' => 'Kataloğa, siparişlere, indirimlere ve müşterilere erişimi olan mağaza müdürü. Ayarlar ve ekip yönetimi yöneticilere ayrılmıştır.',
     ],
     'user' => [
         'display_name' => 'Kullanıcı',

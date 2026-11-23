@@ -63,6 +63,7 @@ trait AuthorizesTeamManagement
         }
 
         return ! $role->isAdmin()
+            && $role->permissions->isNotEmpty()
             && $role->permissions->pluck('name')->every(fn (string $permission): bool => $this->actingUser()?->can($permission) ?? false);
     }
 

@@ -14,10 +14,10 @@ uses(Tests\Admin\TestCase::class);
 
 beforeEach(function (): void {
     $this->user = User::factory()->create();
-    $this->user->givePermissionTo(['system.users', 'system.settings']);
-    $this->actingAs($this->user);
-
     $this->role = Role::query()->where('name', 'manager')->first();
+
+    $this->user->givePermissionTo(['system.users', 'system.settings', ...$this->role->permissions]);
+    $this->actingAs($this->user);
 });
 
 describe(CreateTeamMember::class, function (): void {

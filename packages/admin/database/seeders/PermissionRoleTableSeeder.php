@@ -19,10 +19,18 @@ final class PermissionRoleTableSeeder extends Seeder
             ->where('name', config('shopper.admin.roles.admin'))
             ->firstOrFail();
 
-        $permissions = Permission::all();
+        $administrator->syncPermissions(Permission::all());
 
-        $administrator->permissions()
-            ->sync($permissions->pluck('id')->all());
+        $manager = Role::query()
+            ->where('name', config('shopper.admin.roles.manager'))
+            ->firstOrFail();
+
+        $manager->syncPermissions(
+            Permission::query()
+                ->whereIn('group_name', ['catalog', 'products', 'sales'])
+                ->orWhereIn('name', ['system.dashboard', 'customers.browse', 'customers.read', 'customers.create', 'customers.edit'])
+                ->get()
+        );
 
         Schema::enableForeignKeyConstraints();
     }
