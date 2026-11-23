@@ -137,6 +137,7 @@ return [
         'stock_description' => 'Gestion des stocks dans vos différents inventaires.',
         'empty' => 'Aucun ajustement n\'a été effectué sur l\'inventaire.',
         'movement' => 'Mouvement des quantités',
+        'stock_after' => 'Stock après',
         'initial' => 'Stock initial',
         'add' => 'Ajout manuel',
         'remove' => 'Retrait manuel',

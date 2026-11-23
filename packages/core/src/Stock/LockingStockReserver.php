@@ -71,7 +71,6 @@ final readonly class LockingStockReserver implements StockReserver
             $product->decreaseStock(
                 inventoryId: $allocation->inventoryId,
                 quantity: $allocation->quantity,
-                oldQuantity: $product->stockInventory($allocation->inventoryId),
                 event: __('shopper-core::status.stock.reserved'),
                 userId: $userId,
                 reference: $reference,

@@ -62,7 +62,6 @@ return [
     'previous_order' => 'Pedido anterior',
     'next_order' => 'Pedido siguiente',
     'event' => 'Evento',
-    'adjustment' => 'Ajuste',
     'is_enabled' => 'Habilitado',
     'is_disabled' => 'Deshabilitado',
 

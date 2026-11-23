@@ -57,13 +57,11 @@ class VariantStock extends Component implements HasActions, HasSchemas
             ->action(function (array $data): void {
                 $inventoryId = (int) $data['inventory'];
                 $quantity = (int) $data['quantity'];
-                $currentStock = $this->variant->stockInventory($inventoryId);
 
                 if ($quantity >= 0) {
                     $this->variant->mutateStock(
                         inventoryId: $inventoryId,
                         quantity: $quantity,
-                        oldQuantity: $currentStock,
                         event: __('shopper::pages/products.inventory.add'),
                         userId: auth()->id(),
                     );
@@ -71,7 +69,6 @@ class VariantStock extends Component implements HasActions, HasSchemas
                     $this->variant->decreaseStock(
                         inventoryId: $inventoryId,
                         quantity: $quantity,
-                        oldQuantity: $currentStock,
                         event: __('shopper::pages/products.inventory.remove'),
                         userId: auth()->id(),
                     );

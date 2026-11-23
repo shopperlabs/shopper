@@ -137,6 +137,7 @@ return [
         'stock_description' => 'Lagerhantering på dina olika lagerplatser.',
         'empty' => 'Inga justeringar har gjorts i lagret.',
         'movement' => 'Lagersaldorörelse',
+        'stock_after' => 'Saldo efter',
         'initial' => 'Initialt lager',
         'add' => 'Manuellt tillagt',
         'remove' => 'Manuellt borttaget',

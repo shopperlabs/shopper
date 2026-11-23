@@ -62,7 +62,6 @@ return [
     'previous_order' => 'Föregående order',
     'next_order' => 'Nästa order',
     'event' => 'Händelse',
-    'adjustment' => 'Justering',
     'is_enabled' => 'Aktiverad',
     'is_disabled' => 'Inaktiverad',
 

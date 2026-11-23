@@ -39,7 +39,6 @@ final class RestoreOrderStockListener implements ShouldQueue
                     $item->product->mutateStock(
                         inventoryId: $reservation->inventory_id,
                         quantity: abs($reservation->quantity),
-                        oldQuantity: $item->product->stockInventory($reservation->inventory_id),
                         event: __('shopper-core::status.stock.cancelled'),
                         reference: $order,
                     );

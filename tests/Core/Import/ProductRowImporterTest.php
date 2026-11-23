@@ -102,6 +102,16 @@ describe(ProductRowImporter::class, function (): void {
             ->and($variant->values)->toHaveCount(2);
     });
 
+    it('records the stock before a re-import changes it', function (): void {
+        $this->importer->import(new ProductRow(handle: 'mug', name: 'Mug', variants: [new VariantRow(quantity: 5)]));
+        $this->importer->import(new ProductRow(handle: 'mug', name: 'Mug', variants: [new VariantRow(quantity: 8)]));
+
+        $movement = Product::findBySlug('mug')->inventoryHistories()->latest('id')->firstOrFail();
+
+        expect($movement->old_quantity)->toBe(5)
+            ->and($movement->stock_after)->toBe(8);
+    });
+
     it('downloads each distinct image url once', function (): void {
         $row = new ProductRow(handle: 'tee', name: 'Tee', images: [
             new ImageRow('https://cdn.test/front.png'),

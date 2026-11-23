@@ -62,7 +62,6 @@ return [
     'previous_order' => 'Commande précédente',
     'next_order' => 'Commande suivante',
     'event' => 'Action',
-    'adjustment' => 'Ajustement',
     'is_enabled' => 'Activé',
     'is_disabled' => 'Désactivé',
 

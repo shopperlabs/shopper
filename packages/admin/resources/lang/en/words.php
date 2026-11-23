@@ -62,7 +62,6 @@ return [
     'previous_order' => 'Previous order',
     'next_order' => 'Next order',
     'event' => 'Event',
-    'adjustment' => 'Adjustment',
     'is_enabled' => 'Enabled',
     'is_disabled' => 'Disabled',
 

@@ -99,7 +99,7 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
                 InventoryHistory::with(['inventory', 'stockable'])
                     ->where('stockable_id', $this->product->id)
                     ->where('stockable_type', 'product')
-                    ->latest()
+                    ->latest('id')
             )
             ->columns([
                 TextColumn::make('created_at')
@@ -110,16 +110,6 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
                     ->label(__('shopper::words.event')),
                 TextColumn::make('inventory.name')
                     ->label(__('shopper::pages/settings/menu.location')),
-                TextColumn::make('adjustment')
-                    ->label(__('shopper::words.adjustment'))
-                    ->color(function (InventoryHistory $record): string {
-                        if ($record->old_quantity <= 0) {
-                            return 'danger';
-                        }
-
-                        return 'success';
-                    })
-                    ->alignRight(),
                 TextColumn::make('quantity')
                     ->label(__('shopper::pages/products.inventory.movement'))
                     ->color(fn (InventoryHistory $record): string => $record->quantity <= 0 ? 'danger' : 'gray')
@@ -129,6 +119,9 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
                             ->label(__('shopper::words.total'))
                             ->numeric(),
                     ]),
+                TextColumn::make('stock_after')
+                    ->label(__('shopper::pages/products.inventory.stock_after'))
+                    ->alignRight(),
             ])
             ->headerActions([
                 Action::make('stock')
@@ -151,13 +144,11 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
                     ->action(function (array $data): void {
                         $inventoryId = (int) $data['inventory'];
                         $quantity = (int) $data['quantity'];
-                        $currentStock = $this->product->stockInventory($inventoryId);
 
                         if ($quantity >= 0) {
                             $this->product->mutateStock(
                                 inventoryId: $inventoryId,
                                 quantity: $quantity,
-                                oldQuantity: $currentStock,
                                 event: __('shopper::pages/products.inventory.add'),
                                 userId: auth()->id(),
                             );
@@ -165,7 +156,6 @@ class Inventory extends Component implements HasActions, HasSchemas, HasTable
                             $this->product->decreaseStock(
                                 inventoryId: $inventoryId,
                                 quantity: $quantity,
-                                oldQuantity: $currentStock,
                                 event: __('shopper::pages/products.inventory.remove'),
                                 userId: auth()->id(),
                             );

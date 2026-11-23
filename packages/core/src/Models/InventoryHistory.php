@@ -21,7 +21,7 @@ use Shopper\Core\Models\Contracts\InventoryHistory as InventoryHistoryContract;
  * @property-read ?string $description
  * @property-read int $user_id
  * @property-read int $inventory_id
- * @property-read string|int $adjustment
+ * @property-read int $stock_after
  * @property-read string $stockable_type
  * @property-read int $stockable_id
  * @property-read string $reference_type
@@ -81,12 +81,10 @@ class InventoryHistory extends Model implements InventoryHistoryContract
         return InventoryHistoryFactory::new();
     }
 
-    protected function adjustment(): Attribute
+    protected function stockAfter(): Attribute
     {
         return Attribute::make(
-            get: fn (): string|int => $this->old_quantity > 0
-                ? '+'.$this->old_quantity
-                : $this->old_quantity
+            get: fn (): int => (int) $this->old_quantity + $this->quantity,
         );
     }
 }
