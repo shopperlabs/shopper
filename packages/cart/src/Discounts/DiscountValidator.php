@@ -7,6 +7,7 @@ namespace Shopper\Cart\Discounts;
 use Illuminate\Database\Eloquent\Builder;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Pipelines\CartPipelineContext;
+use Shopper\Core\Enum\CampaignStatus;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
@@ -61,6 +62,17 @@ final readonly class DiscountValidator
 
         if ($discount->end_at !== null && $discount->end_at->isPast()) {
             return new DiscountValidationResult(false, __('shopper-cart::messages.discount.expired'));
+        }
+
+        $campaignStatusMessage = match ($discount->campaign?->status) {
+            CampaignStatus::Disabled => __('shopper-cart::messages.discount.not_active'),
+            CampaignStatus::Scheduled => __('shopper-cart::messages.discount.not_started'),
+            CampaignStatus::Expired => __('shopper-cart::messages.discount.expired'),
+            default => null,
+        };
+
+        if ($campaignStatusMessage !== null) {
+            return new DiscountValidationResult(false, $campaignStatusMessage);
         }
 
         if ($discount->campaign !== null && $discount->campaign->currency_code !== $context->cart->currency_code) {
