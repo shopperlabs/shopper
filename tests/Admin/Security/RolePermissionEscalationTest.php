@@ -98,3 +98,104 @@ it('denies a non administrator assigning the administrator role to a new member'
 
     expect(User::query()->where('email', 'intruder@example.com')->exists())->toBeFalse();
 });
+
+it('denies a non administrator assigning a role with a permission they do not hold', function (): void {
+    $support = Role::create([
+        'name' => 'support',
+        'display_name' => 'Support',
+        'can_be_removed' => true,
+    ]);
+    $support->givePermissionTo('orders.delete');
+
+    $this->actingAs($this->staff);
+
+    Livewire::test(CreateTeamMember::class)
+        ->fillForm([
+            'email' => 'intruder@example.com',
+            'password' => 'password12345678',
+            'first_name' => 'Intruder',
+            'last_name' => 'Doe',
+            'roles' => [$support->id],
+            'send_mail' => false,
+        ])
+        ->call('store')
+        ->assertHasFormErrors(['roles.0' => 'in']);
+
+    expect(User::query()->where('email', 'intruder@example.com')->exists())->toBeFalse();
+});
+
+it('allows assigning a role whose permissions the acting user holds', function (): void {
+    $support = Role::create([
+        'name' => 'support',
+        'display_name' => 'Support',
+        'can_be_removed' => true,
+    ]);
+    $support->givePermissionTo('system.users');
+
+    $this->actingAs($this->staff);
+
+    Livewire::test(CreateTeamMember::class)
+        ->fillForm([
+            'email' => 'support@example.com',
+            'password' => 'password12345678',
+            'first_name' => 'Support',
+            'last_name' => 'Doe',
+            'roles' => [$support->id],
+            'send_mail' => false,
+        ])
+        ->call('store')
+        ->assertHasNoFormErrors();
+
+    expect(User::query()->where('email', 'support@example.com')->firstOrFail()->hasRole('support'))->toBeTrue();
+});
+
+it('allows an administrator to assign the administrator role and any other role', function (): void {
+    $support = Role::create([
+        'name' => 'support',
+        'display_name' => 'Support',
+        'can_be_removed' => true,
+    ]);
+    $support->givePermissionTo('orders.delete');
+
+    $this->asAdmin();
+
+    Livewire::test(CreateTeamMember::class)
+        ->fillForm([
+            'email' => 'new-admin@example.com',
+            'password' => 'password12345678',
+            'first_name' => 'New',
+            'last_name' => 'Admin',
+            'roles' => [$this->administratorRole->id, $support->id],
+            'send_mail' => false,
+        ])
+        ->call('store')
+        ->assertHasNoFormErrors();
+
+    $member = User::query()->where('email', 'new-admin@example.com')->firstOrFail();
+
+    expect($member->hasRole($this->administratorRole->name))->toBeTrue()
+        ->and($member->hasRole('support'))->toBeTrue();
+});
+
+it('refuses any permission change on the customer role, even from an administrator', function (): void {
+    $this->asAdmin();
+
+    $customerRole = Role::query()
+        ->where('name', config('shopper.admin.roles.user'))
+        ->firstOrFail();
+
+    Livewire::test(RolePermissions::class, ['role' => $customerRole])
+        ->call('togglePermission', Permission::query()->where('name', 'system.dashboard')->firstOrFail()->id);
+
+    expect($customerRole->fresh()->permissions)->toBeEmpty();
+});
+
+it('keeps the name of a system role', function (): void {
+    $this->asAdmin();
+
+    Livewire::test(RolePermission::class, ['role' => $this->administratorRole])
+        ->set('data.name', 'renamed')
+        ->call('save');
+
+    expect($this->administratorRole->fresh()->name)->toBe(config('shopper.admin.roles.admin'));
+});

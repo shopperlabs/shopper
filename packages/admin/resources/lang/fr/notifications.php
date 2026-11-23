@@ -87,6 +87,7 @@ return [
         'title' => 'Non autorisé',
         'body' => 'Vous n\'avez pas la permission d\'effectuer cette action.',
         'administrator_role' => 'Seul un administrateur peut gérer le rôle administrateur.',
+        'customer_role' => 'Le rôle client ne peut pas être géré depuis les paramètres de l\'équipe.',
         'administrator_only' => 'Seul un administrateur peut créer ou supprimer une permission.',
         'permission_scope' => 'Vous ne pouvez accorder qu\'une permission que vous détenez vous-même.',
         'protected_permission' => 'Cette permission est nécessaire au panel et ne peut pas être supprimée.',

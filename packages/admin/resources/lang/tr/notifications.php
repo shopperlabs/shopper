@@ -75,6 +75,7 @@ return [
         'title' => 'Yetkisiz',
         'body' => 'Bu işlemi gerçekleştirme izniniz bulunmuyor.',
         'administrator_role' => 'Yönetici rolünü yalnızca bir yönetici yönetebilir.',
+        'customer_role' => 'Müşteri rolü ekip ayarlarından yönetilemez.',
         'administrator_only' => 'Yalnızca bir yönetici izin oluşturabilir veya silebilir.',
         'permission_scope' => 'Yalnızca kendinizde bulunan bir izni verebilirsiniz.',
         'protected_permission' => 'Bu izin panel için gereklidir ve silinemez.',

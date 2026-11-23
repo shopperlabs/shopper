@@ -16,7 +16,6 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -72,6 +71,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
                         TextInput::make('email')
                             ->label(__('shopper::forms.label.email'))
                             ->email()
+                            ->unique(config('auth.providers.users.model'), 'email')
                             ->required(),
                         TextInput::make('password')
                             ->label(__('shopper::forms.label.password'))
@@ -109,11 +109,10 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
                             ->label(__('shopper::pages/settings/staff.choose_role'))
                             ->options(
                                 Role::query()
+                                    ->with('permissions')
                                     ->where('name', '<>', config('shopper.admin.roles.user'))
-                                    ->unless(
-                                        $this->actingUserIsAdmin(),
-                                        fn (Builder $query): Builder => $query->where('name', '<>', config('shopper.admin.roles.admin'))
-                                    )
+                                    ->get()
+                                    ->filter(fn (Role $role): bool => $this->canAssignRole($role))
                                     ->pluck('display_name', 'id')
                             )
                             ->columns()
@@ -134,9 +133,9 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
         $userModel = config('auth.providers.users.model');
 
         /** @var Collection<int, Role> $roles */
-        $roles = Role::query()->findMany($data['roles']);
+        $roles = Role::query()->with('permissions')->findMany($data['roles']);
 
-        $roles->each(fn (Role $role) => $this->authorizeTeamAccess($role));
+        $roles->each(fn (Role $role) => $this->authorizeRoleAssignment($role));
 
         /** @var ShopperUser $user */
         $user = $userModel::query()->create([
@@ -151,7 +150,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
             'email_verified_at' => now()->toDateTimeString(),
         ]);
 
-        $user->assignRole($roles->pluck('name')->all());
+        $user->assignRole($roles);
 
         $this->dispatch('teamUpdate');
 
