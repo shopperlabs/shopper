@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use Shopper\Core\Models\Review;
 use Shopper\Livewire\Pages\Reviews\Index;
 use Tests\Core\Stubs\Product;
+use Tests\Core\Stubs\ProductVariant;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
@@ -245,13 +247,120 @@ describe(Index::class, function (): void {
             'author_type' => $otherAuthor->getMorphClass(),
         ]);
 
+        $variantReview = Review::factory()->create([
+            'reviewrateable_id' => $product->id,
+            'reviewrateable_type' => (new ProductVariant)->getMorphClass(),
+            'author_id' => $otherAuthor->id,
+            'author_type' => $otherAuthor->getMorphClass(),
+        ]);
+
         Livewire::test(Index::class)
             ->loadTable()
-            ->searchTable('Zebra')
+            ->searchTable('zebra')
             ->assertCanSeeTableRecords([$match])
-            ->assertCanNotSeeTableRecords([$other])
-            ->searchTable('Zinedine')
+            ->assertCanNotSeeTableRecords([$other, $variantReview])
+            ->searchTable('zinedine')
             ->assertCanSeeTableRecords([$match])
             ->assertCanNotSeeTableRecords([$other]);
+    });
+
+    it('filters reviews by product and customer', function (): void {
+        $author = User::factory()->create(['first_name' => 'Zinedine', 'last_name' => 'Zidane']);
+        $otherAuthor = User::factory()->create(['first_name' => 'Karim']);
+        $product = Product::factory()->create(['name' => 'Zebra Mug']);
+        $otherProduct = Product::factory()->create(['name' => 'Apple Case']);
+
+        $match = Review::factory()->create([
+            'reviewrateable_id' => $product->id,
+            'reviewrateable_type' => $product->getMorphClass(),
+            'author_id' => $author->id,
+            'author_type' => $author->getMorphClass(),
+        ]);
+
+        $other = Review::factory()->create([
+            'reviewrateable_id' => $otherProduct->id,
+            'reviewrateable_type' => $otherProduct->getMorphClass(),
+            'author_id' => $otherAuthor->id,
+            'author_type' => $otherAuthor->getMorphClass(),
+        ]);
+
+        $variantReview = Review::factory()->create([
+            'reviewrateable_id' => $product->id,
+            'reviewrateable_type' => (new ProductVariant)->getMorphClass(),
+            'author_id' => $otherAuthor->id,
+            'author_type' => $otherAuthor->getMorphClass(),
+        ]);
+
+        Livewire::test(Index::class)
+            ->loadTable()
+            ->filterTable('reviewrateable_id', [$product->id])
+            ->assertCanSeeTableRecords([$match])
+            ->assertCanNotSeeTableRecords([$other, $variantReview])
+            ->assertSeeText(__('shopper::words.product').': Zebra Mug')
+            ->resetTableFilters()
+            ->filterTable('author_id', $author->id)
+            ->assertCanSeeTableRecords([$match])
+            ->assertCanNotSeeTableRecords([$other])
+            ->assertSeeText(__('shopper::words.customer').': Zinedine Zidane');
+    });
+
+    it('searches the product and customer filters among reviewed records only', function (): void {
+        $author = User::factory()->create(['first_name' => 'Zinedine']);
+        User::factory()->create(['first_name' => 'Zinedane']);
+        $product = Product::factory()->create(['name' => 'Zebra Mug']);
+        Product::factory()->create(['name' => 'Zebra Case']);
+
+        Review::factory()->create([
+            'reviewrateable_id' => $product->id,
+            'reviewrateable_type' => $product->getMorphClass(),
+            'author_id' => $author->id,
+            'author_type' => $author->getMorphClass(),
+        ]);
+
+        $table = Livewire::test(Index::class)->loadTable()->instance()->getTable();
+        $products = $table->getFilter('reviewrateable_id');
+        $authors = $table->getFilter('author_id');
+
+        expect($products->evaluate($products->getSearchResultsUsingCallback(), ['search' => 'zebra']))
+            ->toBe([$product->id => 'Zebra Mug'])
+            ->and($authors->evaluate($authors->getSearchResultsUsingCallback(), ['search' => 'zined']))
+            ->toBe([$author->id => $author->full_name]);
+    });
+
+    it('lists reviews whose product was deleted', function (): void {
+        $product = Product::factory()->create();
+
+        $review = Review::factory()->create([
+            'reviewrateable_id' => $product->id,
+            'reviewrateable_type' => $product->getMorphClass(),
+            'author_id' => $this->user->id,
+            'author_type' => $this->user->getMorphClass(),
+        ]);
+
+        $product->delete();
+
+        Livewire::test(Index::class)
+            ->loadTable()
+            ->assertCanSeeTableRecords([$review]);
+    });
+
+    it('renders the filters without loading every review', function (): void {
+        $product = Product::factory()->create();
+
+        User::factory()->count(30)->create()->each(fn (User $author) => Review::factory()->create([
+            'reviewrateable_id' => $product->id,
+            'reviewrateable_type' => $product->getMorphClass(),
+            'author_id' => $author->id,
+            'author_type' => $author->getMorphClass(),
+        ]));
+
+        $retrieved = 0;
+        Event::listen('eloquent.retrieved: '.Review::class, function () use (&$retrieved): void {
+            $retrieved++;
+        });
+
+        Livewire::test(Index::class)->loadTable()->assertOk();
+
+        expect($retrieved)->toBeLessThan(30);
     });
 })->group('livewire', 'reviews');
