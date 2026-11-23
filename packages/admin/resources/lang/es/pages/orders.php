@@ -63,6 +63,8 @@ return [
 
     'shipment' => [
         'detail_title' => 'Detalle del envío',
+        'empty' => 'Aún no hay envíos',
+        'empty_description' => 'Los envíos aparecen aquí cuando los pedidos se empaquetan y se entregan a un transportista.',
         'shipping_from' => 'Remitente',
         'shipping_to' => 'Destinatario',
         'timeline' => 'Seguimiento del envío',
@@ -90,6 +92,7 @@ return [
     ],
 
     'notifications' => [
+        'shipment_empty' => 'Estos artículos ya están en otro envío. Actualiza el pedido e inténtalo de nuevo.',
         'archived' => '¡El pedido se ha archivado exitosamente!',
         'cancelled' => '¡El pedido se ha cancelado exitosamente!',
         'note_added' => 'Tu nota se ha añadido a este pedido.',
