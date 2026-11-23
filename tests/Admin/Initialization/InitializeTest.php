@@ -98,6 +98,7 @@ it('can save settings and create a default inventory through the wizard', functi
             'default_currency_id' => $currencies[0],
             'street_address' => '34 Douala, Bonamoussadi',
             'postal_code' => '00237',
+            'state' => 'Littoral',
             'city' => 'Douala',
             'phone_number' => '+237 600 000 000',
             'social_links' => [
@@ -119,8 +120,8 @@ it('can save settings and create a default inventory through the wizard', functi
         ->toBe('Douala')
         ->and(Inventory::query()->count())
         ->toBe(1)
-        ->and(Inventory::query()->where('is_default', true)->exists())
-        ->toBeTrue();
+        ->and(Inventory::query()->where('is_default', true)->value('state'))
+        ->toBe('Littoral');
 });
 
 it('does not create a duplicate `Inventory` when `save()` runs twice', function (): void {

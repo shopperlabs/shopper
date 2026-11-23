@@ -329,6 +329,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'pink' => Color::Pink,
             'mauve' => Color::Mauve,
             'olive' => Color::Olive,
+            'orange' => Color::Orange,
         ]);
 
         Field::configureUsing(

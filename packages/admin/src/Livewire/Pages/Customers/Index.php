@@ -117,8 +117,10 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                 Filter::make('created_at')
                     ->schema([
                         DatePicker::make('created_from')
+                            ->label(__('shopper::words.from'))
                             ->native(false),
                         DatePicker::make('created_until')
+                            ->label(__('shopper::words.to'))
                             ->native(false),
                     ])
                     ->query(fn (Builder $query, array $data): Builder => $query
