@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Country;
@@ -35,16 +39,12 @@ describe(Create::class, function (): void {
     });
 
     it('can create a customer successfully', function (): void {
-        $password = 'secure-password-123';
-
         Livewire::test(Create::class)
             ->fillForm([
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'email' => 'john.doe@example.com',
                 'phone_number' => '+12125550123',
-                'password' => $password,
-                'password_confirmation' => $password,
                 'address' => [
                     'street_address' => '123 Main St',
                     'city' => 'Douala',
@@ -68,15 +68,11 @@ describe(Create::class, function (): void {
     });
 
     it('assigns customer role to newly created customer', function (): void {
-        $password = 'secure-password-123';
-
         Livewire::test(Create::class)
             ->fillForm([
                 'first_name' => 'Jane',
                 'last_name' => 'Smith',
                 'email' => 'jane.smith@example.com',
-                'password' => $password,
-                'password_confirmation' => $password,
                 'address' => [
                     'street_address' => '456 Oak Ave',
                     'city' => 'Boston',
@@ -92,15 +88,11 @@ describe(Create::class, function (): void {
     });
 
     it('creates customer address with correct type', function (): void {
-        $password = 'secure-password-123';
-
         Livewire::test(Create::class)
             ->fillForm([
                 'first_name' => 'Bob',
                 'last_name' => 'Johnson',
                 'email' => 'bob.johnson@example.com',
-                'password' => $password,
-                'password_confirmation' => $password,
                 'address' => [
                     'street_address' => '789 Pine Rd',
                     'city' => 'Chicago',
@@ -129,15 +121,12 @@ describe(Create::class, function (): void {
                 'first_name' => '',
                 'last_name' => '',
                 'email' => '',
-                'password' => '',
-                'password_confirmation' => '',
             ])
             ->call('store')
             ->assertHasFormErrors([
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'email' => 'required',
-                'password' => 'required',
             ]);
     });
 
@@ -165,20 +154,15 @@ describe(Create::class, function (): void {
             ->assertForbidden();
     });
 
-    it('validates password confirmation', function (): void {
+    it('hides the invitation option when the application cannot build a password reset link', function (): void {
         Livewire::test(Create::class)
-            ->fillForm([
-                'password' => 'password123',
-                'password_confirmation' => 'different-password',
-            ])
-            ->call('store')
-            ->assertHasFormErrors(['password' => 'confirmed']);
+            ->assertFormFieldHidden('send_mail');
     });
 
-    it('sends customer credentials notification when send_mail is true', function (): void {
+    it('sends an invitation link instead of a password when send_mail is true', function (): void {
         Notification::fake();
-
-        $password = 'test-password-123';
+        Route::get('/reset-password/{token}', fn (): string => '')->name('password.reset');
+        Route::getRoutes()->refreshNameLookups();
 
         Livewire::test(Create::class)
             ->fillForm([
@@ -186,8 +170,6 @@ describe(Create::class, function (): void {
                 'last_name' => 'Doe',
                 'email' => 'john.doe@example.com',
                 'phone_number' => '+12125550123',
-                'password' => $password,
-                'password_confirmation' => $password,
                 'address' => [
                     'street_address' => '123 Main St',
                     'city' => 'New York',
@@ -196,21 +178,52 @@ describe(Create::class, function (): void {
                 ],
                 'send_mail' => true,
             ])
-            ->call('store');
+            ->call('store')
+            ->assertHasNoFormErrors();
 
-        $customer = User::query()->where('email', 'john.doe@example.com')->first();
+        $customer = User::query()->where('email', 'john.doe@example.com')->firstOrFail();
 
         Notification::assertSentTo(
             $customer,
             CustomerSendCredentials::class,
-            fn (CustomerSendCredentials $notification): bool => $notification->password === $password
+            fn (CustomerSendCredentials $notification): bool => Password::tokenExists($customer, $notification->token)
+                && $notification->toMail($customer)->actionUrl === url(route('password.reset', ['token' => $notification->token, 'email' => $customer->email], false))
         );
+    });
+
+    it('warns that the invitation was not sent when the password broker refuses it', function (): void {
+        Notification::fake();
+        Route::get('/reset-password/{token}', fn (): string => '')->name('password.reset');
+        Route::getRoutes()->refreshNameLookups();
+        DB::table(config('auth.passwords.users.table'))->insert([
+            'email' => 'john.doe@example.com',
+            'token' => Hash::make('previous-token'),
+            'created_at' => now(),
+        ]);
+
+        Livewire::test(Create::class)
+            ->fillForm([
+                'first_name' => 'John',
+                'last_name' => 'Doe',
+                'email' => 'john.doe@example.com',
+                'phone_number' => '+12125550123',
+                'address' => [
+                    'street_address' => '123 Main St',
+                    'city' => 'New York',
+                    'postal_code' => '10001',
+                    'country_id' => $this->country->id,
+                ],
+                'send_mail' => true,
+            ])
+            ->call('store')
+            ->assertHasNoFormErrors()
+            ->assertNotified(__('shopper::pages/customers.invitation_not_sent'));
+
+        Notification::assertNothingSent();
     });
 
     it('does not send customer credentials notification when send_mail is false', function (): void {
         Notification::fake();
-
-        $password = 'test-password-123';
 
         Livewire::test(Create::class)
             ->fillForm([
@@ -218,8 +231,6 @@ describe(Create::class, function (): void {
                 'last_name' => 'Smith',
                 'email' => 'jane.smith@example.com',
                 'phone_number' => '+16175550142',
-                'password' => $password,
-                'password_confirmation' => $password,
                 'address' => [
                     'street_address' => '456 Oak Ave',
                     'city' => 'Boston',

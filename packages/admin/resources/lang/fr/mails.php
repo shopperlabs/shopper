@@ -10,10 +10,9 @@ return [
         'subject' => 'Bienvenue sur :name',
         'greeting' => 'Bonjour :name',
         'account_created' => 'Un compte a été créé pour vous sur le site :website',
-        'credentials' => 'E-mail : :email - Mot de passe : :password',
-        'can_login' => 'Vous pouvez accéder au site pour vous connecter',
-        'action' => 'Parcourir le site',
-        'change_password' => 'Après votre connexion, vous devez changer votre mot de passe.',
+        'set_password' => 'Choisissez un mot de passe pour vous connecter à votre compte.',
+        'set_password_action' => 'Choisir mon mot de passe',
+        'link_expiry' => 'Ce lien expire dans :count minutes. Passé ce délai, demandez-en un nouveau depuis la page mot de passe oublié.',
     ],
 
     'admin' => [

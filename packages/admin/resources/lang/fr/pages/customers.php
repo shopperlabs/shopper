@@ -12,16 +12,15 @@ return [
 
     'overview' => 'Aperçu du profil',
     'overview_description' => 'Utilisez une adresse permanente où le client peut recevoir du courrier.',
-    'security_title' => 'Sécurité',
-    'security_description' => 'Entrez un mot de passe aléatoire que cet utilisateur utilisera pour se connecter à son compte.',
     'address_title' => 'Adresse',
     'address_description' => 'L\'adresse principale de ce client. Cette adresse sera définie comme adresse de livraison par défaut.',
     'notification_title' => 'Notifications',
     'notification_description' => 'Informez le client de son compte.',
     'marketing_email' => 'Le client a accepté de recevoir des e-mails marketing.',
     'marketing_description' => 'Vous devez demander l\'autorisation au client avant de l\'abonner à vos e-mails marketing si vous en avez un.',
-    'send_credentials' => 'Envoyer les informations d\'identification du client.',
-    'credential_description' => 'Un email sera envoyé à ce client avec ces identifiants de connexion.',
+    'send_invitation' => "Envoyer un e-mail d'invitation.",
+    'invitation_description' => 'Le client reçoit un lien pour choisir son mot de passe. Sans cet e-mail, il peut passer par la page mot de passe oublié de votre boutique.',
+    'invitation_not_sent' => "Le client a été créé, mais l'e-mail d'invitation n'a pas été envoyé.",
 
     'period' => 'Client depuis :period',
 

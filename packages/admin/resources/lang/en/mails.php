@@ -10,10 +10,9 @@ return [
         'subject' => 'Welcome to :name',
         'greeting' => 'Hello :name',
         'account_created' => 'An account has been created for you on the website :website',
-        'credentials' => 'Email: :email - Password: :password',
-        'can_login' => 'You can access to the website to login',
-        'action' => 'Browse the website',
-        'change_password' => 'After logging in you have to change your password.',
+        'set_password' => 'Choose a password to sign in to your account.',
+        'set_password_action' => 'Choose my password',
+        'link_expiry' => 'This link expires in :count minutes. After that, request a new one from the forgot password page.',
     ],
 
     'admin' => [

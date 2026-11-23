@@ -10,10 +10,9 @@ return [
         'subject' => 'Välkommen till :name',
         'greeting' => 'Hej :name',
         'account_created' => 'Ett konto har skapats på webbplatsen :website',
-        'credentials' => 'E-post: :email - Lösenord: :password',
-        'can_login' => 'Inloggning kan ske på webbplatsen',
-        'action' => 'Besök webbplatsen',
-        'change_password' => 'Efter inloggning bör lösenordet ändras.',
+        'set_password' => 'Välj ett lösenord för att logga in på kontot.',
+        'set_password_action' => 'Välj lösenord',
+        'link_expiry' => 'Länken går ut om :count minuter. Därefter kan en ny länk begäras från sidan för glömt lösenord.',
     ],
 
     'admin' => [

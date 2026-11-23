@@ -4,34 +4,26 @@ declare(strict_types=1);
 
 namespace Shopper\Notifications;
 
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 use Shopper\Models\Contracts\ShopperUser;
 
-final class CustomerSendCredentials extends Notification
+final class CustomerSendCredentials extends ResetPassword
 {
-    public function __construct(
-        public string $password
-    ) {}
-
     /**
-     * @return array<string>
+     * @param  ShopperUser&Model  $notifiable
      */
-    public function via(object $notifiable): array
-    {
-        return ['mail'];
-    }
-
-    public function toMail(ShopperUser&Model $notifiable): MailMessage
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject(__('shopper::mails.customer.subject', ['name' => config('app.name')]))
             ->greeting(__('shopper::mails.customer.greeting', ['name' => $notifiable->full_name]))
             ->line(__('shopper::mails.customer.account_created', ['website' => config('app.url')]))
-            ->line(__('shopper::mails.customer.credentials', ['email' => $notifiable->email, 'password' => $this->password]))
-            ->line(__('shopper::mails.customer.can_login'))
-            ->action(__('shopper::mails.customer.action'), url('/'))
-            ->line(__('shopper::mails.customer.change_password'));
+            ->line(__('shopper::mails.customer.set_password'))
+            ->action(__('shopper::mails.customer.set_password_action'), $this->resetUrl($notifiable))
+            ->line(__('shopper::mails.customer.link_expiry', [
+                'count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire'),
+            ]));
     }
 }
