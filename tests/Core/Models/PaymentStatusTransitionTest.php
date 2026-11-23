@@ -32,11 +32,16 @@ describe('PaymentStatus transitions', function (): void {
             ->and(PaymentStatus::PartiallyRefunded->canTransitionTo(PaymentStatus::Paid))->toBeFalse();
     });
 
-    it('treats `Refunded` and `Voided` as terminal states', function (): void {
+    it('treats `Refunded` as a terminal state', function (): void {
         expect(PaymentStatus::Refunded->canTransitionTo(PaymentStatus::Paid))->toBeFalse()
-            ->and(PaymentStatus::Refunded->canTransitionTo(PaymentStatus::Pending))->toBeFalse()
-            ->and(PaymentStatus::Voided->canTransitionTo(PaymentStatus::Paid))->toBeFalse()
-            ->and(PaymentStatus::Voided->canTransitionTo(PaymentStatus::Pending))->toBeFalse();
+            ->and(PaymentStatus::Refunded->canTransitionTo(PaymentStatus::Pending))->toBeFalse();
+    });
+
+    it('lets a `Voided` payment only move to `Paid` once collected another way', function (): void {
+        expect(PaymentStatus::Voided->canTransitionTo(PaymentStatus::Paid))->toBeTrue()
+            ->and(PaymentStatus::Voided->canTransitionTo(PaymentStatus::Pending))->toBeFalse()
+            ->and(PaymentStatus::Voided->canTransitionTo(PaymentStatus::Authorized))->toBeFalse()
+            ->and(PaymentStatus::Voided->canTransitionTo(PaymentStatus::Refunded))->toBeFalse();
     });
 });
 

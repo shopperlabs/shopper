@@ -78,6 +78,17 @@ it('uses the refund copy when a refund fails', function (): void {
         ->toHaveKey('title', __('shopper::notifications.database.refund_failed.title'));
 });
 
+it('uses the voided copy when an authorization is voided after shipping', function (): void {
+    $order = Order::factory()->create();
+
+    (new SendPaymentFailedNotification)->handle(
+        new PaymentFailed($order, TransactionType::Cancel)
+    );
+
+    expect($this->admin->fresh()->notifications->first()->data)
+        ->toHaveKey('title', __('shopper::notifications.database.payment_voided.title'));
+});
+
 it('warns when an import completed with errors even if every row was imported', function (ImportStatus $status, string $expected): void {
     $import = new ProductImport(['status' => $status, 'imported_count' => 3, 'failed_count' => 0]);
 

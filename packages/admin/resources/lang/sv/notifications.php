@@ -113,6 +113,10 @@ return [
             'title' => 'Betalning misslyckades',
             'body' => 'Ett betalningsförsök för order :number har misslyckats.',
         ],
+        'payment_voided' => [
+            'title' => 'Betalningsauktorisering makulerad',
+            'body' => 'Betalningsauktoriseringen för order :number makulerades efter att ordern skickats. Ta betalt på annat sätt och markera sedan ordern som betald.',
+        ],
         'refund_failed' => [
             'title' => 'Återbetalning misslyckades',
             'body' => 'Ett återbetalningsförsök för order :number har misslyckats.',

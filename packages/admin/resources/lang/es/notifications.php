@@ -107,6 +107,10 @@ return [
             'title' => 'Pago fallido',
             'body' => 'Un intento de pago para el pedido :number ha fallado.',
         ],
+        'payment_voided' => [
+            'title' => 'Autorización de pago anulada',
+            'body' => 'La autorización de pago del pedido :number se anuló después del envío. Cobra el pago por otra vía y luego marca el pedido como pagado.',
+        ],
         'refund_failed' => [
             'title' => 'Reembolso fallido',
             'body' => 'Un intento de reembolso para el pedido :number ha fallado.',

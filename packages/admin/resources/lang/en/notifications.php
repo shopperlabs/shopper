@@ -113,6 +113,10 @@ return [
             'title' => 'Payment failed',
             'body' => 'A payment attempt for order :number has failed.',
         ],
+        'payment_voided' => [
+            'title' => 'Payment voided',
+            'body' => 'The payment authorization for order :number was voided after the order shipped. Collect the payment another way, then mark the order as paid.',
+        ],
         'refund_failed' => [
             'title' => 'Refund failed',
             'body' => 'A refund attempt for order :number has failed.',

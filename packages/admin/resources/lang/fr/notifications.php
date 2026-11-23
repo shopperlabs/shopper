@@ -113,6 +113,10 @@ return [
             'title' => 'Échec du paiement',
             'body' => 'Une tentative de paiement pour la commande :number a échoué.',
         ],
+        'payment_voided' => [
+            'title' => 'Autorisation de paiement annulée',
+            'body' => 'L\'autorisation de paiement de la commande :number a été annulée après l\'expédition. Encaissez le paiement autrement, puis marquez la commande comme payée.',
+        ],
         'refund_failed' => [
             'title' => 'Échec du remboursement',
             'body' => 'Une tentative de remboursement pour la commande :number a échoué.',

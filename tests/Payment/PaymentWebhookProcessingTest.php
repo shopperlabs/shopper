@@ -268,6 +268,87 @@ describe('PaymentWebhookProcessingTest', function (): void {
             ->and($product->getStock())->toBe(7);
     });
 
+    it('keeps a shipped order and its stock when its authorization is voided', function (ShippingStatus $shippingStatus): void {
+        Event::fake([PaymentFailed::class]);
+
+        $inventory = Inventory::factory()->create(['is_default' => true, 'priority' => 0]);
+        $product = Product::factory()->standard()->create();
+        $product->mutateStock($inventory->id, 10, event: 'Initial');
+
+        OrderItem::factory()->create([
+            'order_id' => $this->order->id,
+            'product_type' => $product->getMorphClass(),
+            'product_id' => $product->id,
+            'quantity' => 3,
+        ]);
+
+        resolve(StockReserver::class)->reserve($product, 3, $this->order, $this->user->id);
+
+        $this->order->update([
+            'status' => OrderStatus::Processing,
+            'payment_status' => PaymentStatus::Authorized,
+            'shipping_status' => $shippingStatus,
+        ]);
+
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Canceled,
+            reference: 'pi_123',
+            amount: 5000,
+            eventId: 'evt_expired_1',
+        ));
+
+        expect($this->order->refresh()->status)->toBe(OrderStatus::Processing)
+            ->and($this->order->payment_status)->toBe(PaymentStatus::Voided)
+            ->and($product->getStock())->toBe(7);
+        Event::assertDispatched(PaymentFailed::class, fn (PaymentFailed $event): bool => $event->type === TransactionType::Cancel);
+    })->with([
+        'shipped' => [ShippingStatus::Shipped],
+        'partially shipped' => [ShippingStatus::PartiallyShipped],
+        'delivered' => [ShippingStatus::Delivered],
+    ]);
+
+    it('voids a returned order silently since the goods are back', function (): void {
+        Event::fake([PaymentFailed::class]);
+
+        $this->order->update([
+            'status' => OrderStatus::Processing,
+            'payment_status' => PaymentStatus::Authorized,
+            'shipping_status' => ShippingStatus::Returned,
+        ]);
+
+        $this->ingest->execute('fake', new WebhookResult(
+            action: WebhookAction::Canceled,
+            reference: 'pi_123',
+            amount: 5000,
+            eventId: 'evt_expired_returned',
+        ));
+
+        expect($this->order->refresh()->payment_status)->toBe(PaymentStatus::Voided)
+            ->and($this->order->status)->toBe(OrderStatus::Processing);
+        Event::assertNotDispatched(PaymentFailed::class);
+    });
+
+    it('raises a voided authorization on a shipped order once across redeliveries', function (): void {
+        Event::fake([PaymentFailed::class]);
+
+        $this->order->update([
+            'status' => OrderStatus::Processing,
+            'payment_status' => PaymentStatus::Authorized,
+            'shipping_status' => ShippingStatus::Shipped,
+        ]);
+
+        foreach (['evt_expired_2', 'evt_expired_3'] as $eventId) {
+            $this->ingest->execute('fake', new WebhookResult(
+                action: WebhookAction::Canceled,
+                reference: 'pi_123',
+                amount: 5000,
+                eventId: $eventId,
+            ));
+        }
+
+        Event::assertDispatchedTimes(PaymentFailed::class, 1);
+    });
+
     it('dispatches `OrderPaid` when a captured webhook marks the order paid', function (): void {
         Event::fake([OrderPaid::class]);
 

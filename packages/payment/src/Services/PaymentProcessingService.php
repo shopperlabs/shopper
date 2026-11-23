@@ -11,6 +11,7 @@ use Shopper\Core\Actions\CompleteOrderIfFulfilledAction;
 use Shopper\Core\Actions\ReleaseCampaignBudget;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Events\Orders\OrderCancelled;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\PaymentMethod;
@@ -605,7 +606,20 @@ final class PaymentProcessingService
     private function processWebhookCancellation(Order $order, string $driver, WebhookResult $result): void
     {
         $this->recordWebhookOutcome($order, $driver, TransactionType::Cancel, $result);
-        $this->cancelOrder($order);
+
+        if ($order->isShippingPending()) {
+            $this->cancelOrder($order);
+
+            return;
+        }
+
+        if ($order->wasChanged('payment_status')
+            && $order->isNotCancelled()
+            && ! $order->isArchived()
+            && $order->shipping_status !== ShippingStatus::Returned
+        ) {
+            event(new PaymentFailed($order, TransactionType::Cancel));
+        }
     }
 
     /**
