@@ -13,7 +13,6 @@ use Shopper\Core\Models\Contracts\Product as ProductContract;
 use Shopper\Core\Models\Contracts\TaxZone as TaxZoneContract;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Models\Zone;
-use Shopper\Models\Contracts\ShopperUser;
 use Shopper\Traits\AuthorizesSettingsAccess;
 use Shopper\Traits\SaveSettings;
 
@@ -39,9 +38,7 @@ final class SetupGuide extends Component
             return;
         }
 
-        $user = shopper()->auth()->user();
-
-        if ($this->isComplete && $user instanceof ShopperUser && ($user->isAdmin() || $user->can('system.settings'))) {
+        if ($this->isComplete && $this->canAccessSettings()) {
             $this->markComplete();
         }
     }

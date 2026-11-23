@@ -7,16 +7,18 @@ namespace Shopper\Livewire\Pages;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+use Shopper\Traits\AuthorizesSettingsAccess;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 class Dashboard extends AbstractPageComponent
 {
+    use AuthorizesSettingsAccess;
     use HandlesAuthorizationExceptions;
 
     #[Computed]
     public function showSetupGuide(): bool
     {
-        return ! shopper_setting('setup_guide_done');
+        return ! shopper_setting('setup_guide_done') && $this->canAccessSettings();
     }
 
     #[On('setup-guide-completed')]

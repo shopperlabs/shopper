@@ -24,6 +24,11 @@ class Dashboard
                 return response(__('shopper::notifications.unauthorized.title'), Response::HTTP_UNAUTHORIZED);
             }
 
+            if (! $user->isAdmin() && ! $user->can('system.settings')) {
+                return redirect()->route('shopper.forbidden')
+                    ->with('shopper_forbidden', __('shopper::errors.403.store_not_initialized'));
+            }
+
             return redirect()->route('shopper.initialize');
         }
 

@@ -10,11 +10,13 @@ trait AuthorizesSettingsAccess
 {
     protected function authorizeSettingsAccess(): void
     {
+        abort_unless($this->canAccessSettings(), 403);
+    }
+
+    protected function canAccessSettings(): bool
+    {
         $user = shopper()->auth()->user();
 
-        abort_unless(
-            $user instanceof ShopperUser && ($user->isAdmin() || $user->can('system.settings')),
-            403,
-        );
+        return $user instanceof ShopperUser && ($user->isAdmin() || $user->can('system.settings'));
     }
 }
