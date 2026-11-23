@@ -8,6 +8,7 @@ use Closure;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLine;
 use Shopper\Cart\Models\CartLineTaxLine;
+use Shopper\Cart\Models\CartShippingTaxLine;
 use Shopper\Cart\Taxes\CartLineTaxAdapter;
 use Shopper\Core\Taxes\ShippingTaxableItem;
 use Shopper\Core\Taxes\TaxCalculationContext;
@@ -56,8 +57,13 @@ final readonly class CalculateTax
 
     private function clearTaxLines(Cart $cart): void
     {
-        CartLineTaxLine::query()->whereIn('cart_line_id', $cart->lines->modelKeys())->delete();
-        $cart->shippingTaxLines()->delete();
+        CartLineTaxLine::query()
+            ->whereKey(CartLineTaxLine::query()->whereIn('cart_line_id', $cart->lines->modelKeys())->pluck('id'))
+            ->delete();
+
+        CartShippingTaxLine::query()
+            ->whereKey($cart->shippingTaxLines()->pluck('id'))
+            ->delete();
 
         $cart->lines->each(fn (CartLine $line) => $line->unsetRelation('taxLines'));
         $cart->unsetRelation('shippingTaxLines');
@@ -65,10 +71,6 @@ final readonly class CalculateTax
 
     private function taxLines(CartPipelineContext $context, TaxCalculationContext $taxContext): void
     {
-        CartLineTaxLine::query()
-            ->whereKey(CartLineTaxLine::query()->whereIn('cart_line_id', $context->cart->lines->modelKeys())->pluck('id'))
-            ->delete();
-
         foreach ($context->cart->lines as $line) {
             $discountAmount = (int) $line->adjustments->sum('amount');
             $taxableAmount = ($context->lineSubtotals[$line->id] ?? 0) - $discountAmount;
