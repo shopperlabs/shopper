@@ -10,6 +10,7 @@ use Shopper\Cart\CartManager;
 use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\CartLineAdjustment;
 use Shopper\Cart\Models\CartLineTaxLine;
+use Shopper\Cart\Models\CartShippingTaxLine;
 use Shopper\Cart\Pipelines\CartPipelineContext;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Enum\DiscountApplyTo;
@@ -131,6 +132,15 @@ describe('Concurrent cart calculations', function (): void {
                         'cart_line_id' => $otherLineId,
                         'amount' => 500,
                     ]);
+
+                    $competitor->table((new CartShippingTaxLine)->getTable())->insert([
+                        'cart_id' => $this->otherCart->id,
+                        'tax_rate_id' => $this->taxRate->id,
+                        'code' => 'VAT',
+                        'name' => 'VAT',
+                        'rate' => 20,
+                        'amount' => 200,
+                    ]);
                 });
             } catch (QueryException $exception) {
                 throw_unless($exception->getCode() === '55P03' || ($exception->errorInfo[1] ?? null) === 1205, $exception);
@@ -144,6 +154,76 @@ describe('Concurrent cart calculations', function (): void {
         $this->cartManager->calculate($this->cart);
 
         expect($waited)->toBeFalse();
+    });
+
+    it('lets a customer remove a coupon while another cart rewrites its discount rows', function (): void {
+        $waited = false;
+
+        Discount::factory()->create([
+            'code' => 'SAVE10',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'start_at' => now()->subDay(),
+        ]);
+
+        foreach ([$this->cart, $this->otherCart] as $cart) {
+            $this->cartManager->applyCoupon($cart, 'SAVE10');
+            $this->cartManager->calculate($cart);
+        }
+
+        $competitor = DB::connection('competitor');
+        $competitor->beginTransaction();
+        $competitor->table((new CartLineAdjustment)->getTable())
+            ->whereIn('id', CartLineAdjustment::query()->whereIn('cart_line_id', $this->otherCart->lines()->select('id'))->pluck('id'))
+            ->delete();
+
+        DB::statement(DB::getDriverName() === 'pgsql' ? "set lock_timeout = '1s'" : 'set innodb_lock_wait_timeout = 1');
+
+        try {
+            $this->cartManager->removeCoupon($this->cart, 'SAVE10');
+        } catch (QueryException $exception) {
+            throw_unless($exception->getCode() === '55P03' || ($exception->errorInfo[1] ?? null) === 1205, $exception);
+
+            $waited = true;
+        } finally {
+            $competitor->rollBack();
+        }
+
+        expect($waited)->toBeFalse();
+    });
+
+    it('removes a coupon only once the calculation holding the cart has finished', function (): void {
+        Discount::factory()->create([
+            'code' => 'SAVE10',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'start_at' => now()->subDay(),
+        ]);
+
+        $this->cartManager->applyCoupon($this->cart, 'SAVE10');
+        $this->cartManager->calculate($this->cart);
+
+        $competitor = DB::connection('competitor');
+        $competitor->beginTransaction();
+        $competitor->table($this->cart->getTable())->where('id', $this->cart->getKey())->lockForUpdate()->first();
+
+        DB::statement(DB::getDriverName() === 'pgsql' ? "set lock_timeout = '1s'" : 'set innodb_lock_wait_timeout = 1');
+
+        try {
+            expect(fn () => $this->cartManager->removeCoupon($this->cart, 'SAVE10'))->toThrow(QueryException::class);
+        } finally {
+            $competitor->rollBack();
+        }
+
+        expect($this->cart->promotions()->count())->toBe(1);
     });
 })
     ->skip(fn (): bool => DB::getDriverName() === 'sqlite', 'Needs two connections on the same database.')

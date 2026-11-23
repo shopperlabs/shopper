@@ -615,15 +615,19 @@ final readonly class CartManager
         $this->changeTotal(
             $cart,
             function () use ($cart, $codes): void {
-                if ($codes()->delete() === 0) {
-                    return;
-                }
+                DB::transaction(function () use ($cart, $codes): void {
+                    $cart->newQueryWithoutScopes()->whereKey($cart->getKey())->lockForUpdate()->value('id');
 
-                $this->invalidateTotals($cart);
+                    if ($codes()->delete() === 0) {
+                        return;
+                    }
 
-                CartLineAdjustment::query()
-                    ->whereIn('cart_line_id', $cart->lines()->select('id'))
-                    ->delete();
+                    $this->invalidateTotals($cart);
+
+                    CartLineAdjustment::query()
+                        ->whereKey(CartLineAdjustment::query()->whereIn('cart_line_id', $cart->lines()->select('id'))->pluck('id'))
+                        ->delete();
+                });
             },
             fn (): bool => $codes()->exists(),
         );
