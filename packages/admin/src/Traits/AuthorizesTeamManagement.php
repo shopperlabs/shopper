@@ -15,14 +15,14 @@ trait AuthorizesTeamManagement
     {
         $this->authorize('system.users');
 
-        $this->denyAdministratorRole($role);
+        $this->denyProtectedRole($role);
     }
 
     protected function authorizeTeamManagement(?Role $role = null): void
     {
         $this->authorize('system.settings');
 
-        $this->denyAdministratorRole($role);
+        $this->denyProtectedRole($role);
     }
 
     protected function authorizePermissionDefinition(): void
@@ -47,6 +47,25 @@ trait AuthorizesTeamManagement
         }
     }
 
+    protected function authorizeRoleAssignment(Role $role): void
+    {
+        $this->authorizeTeamAccess($role);
+
+        if (! $this->canAssignRole($role)) {
+            throw new AuthorizationException(__('shopper::notifications.unauthorized.permission_scope'));
+        }
+    }
+
+    protected function canAssignRole(Role $role): bool
+    {
+        if ($this->actingUserIsAdmin()) {
+            return true;
+        }
+
+        return ! $role->isAdmin()
+            && $role->permissions->pluck('name')->every(fn (string $permission): bool => $this->actingUser()?->can($permission) ?? false);
+    }
+
     protected function actingUserIsAdmin(): bool
     {
         return $this->actingUser()?->isAdmin() ?? false;
@@ -60,8 +79,12 @@ trait AuthorizesTeamManagement
         return $user;
     }
 
-    private function denyAdministratorRole(?Role $role): void
+    private function denyProtectedRole(?Role $role): void
     {
+        if ($role?->name === config('shopper.admin.roles.user')) {
+            throw new AuthorizationException(__('shopper::notifications.unauthorized.customer_role'));
+        }
+
         if ($role?->isAdmin() && ! $this->actingUserIsAdmin()) {
             throw new AuthorizationException(__('shopper::notifications.unauthorized.administrator_role'));
         }

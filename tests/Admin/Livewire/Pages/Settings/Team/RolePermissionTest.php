@@ -65,6 +65,15 @@ describe(RolePermission::class, function (): void {
             ->assertHasErrors(['data.name']);
     });
 
+    it('validates unique role name', function (): void {
+        Livewire::test(RolePermission::class, ['role' => $this->role])
+            ->set('data.name', config('shopper.admin.roles.manager'))
+            ->call('save')
+            ->assertHasErrors(['data.name' => 'unique']);
+
+        expect($this->role->fresh()->name)->toBe('editor');
+    });
+
     it('validates required display name field', function (): void {
         Livewire::test(RolePermission::class, ['role' => $this->role])
             ->set('data.display_name', '')

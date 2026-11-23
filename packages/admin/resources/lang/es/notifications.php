@@ -81,6 +81,7 @@ return [
         'title' => 'No autorizado',
         'body' => 'No tienes permiso para realizar esta acción.',
         'administrator_role' => 'Solo un administrador puede gestionar el rol de administrador.',
+        'customer_role' => 'El rol de cliente no se puede gestionar desde los ajustes del equipo.',
         'administrator_only' => 'Solo un administrador puede crear o eliminar un permiso.',
         'permission_scope' => 'Solo puedes conceder un permiso que tú mismo posees.',
         'protected_permission' => 'El panel necesita este permiso y no se puede eliminar.',

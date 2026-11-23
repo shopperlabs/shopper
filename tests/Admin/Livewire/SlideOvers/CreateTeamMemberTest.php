@@ -77,6 +77,19 @@ describe(CreateTeamMember::class, function (): void {
             ->assertHasFormErrors(['email' => 'email']);
     });
 
+    it('validates email uniqueness', function (): void {
+        Livewire::test(CreateTeamMember::class)
+            ->fillForm([
+                'email' => $this->user->email,
+                'password' => 'password123',
+                'first_name' => 'John',
+                'last_name' => 'Doe',
+                'roles' => [$this->role->id],
+            ])
+            ->call('store')
+            ->assertHasFormErrors(['email' => 'unique']);
+    });
+
     it('hashes password before storing', function (): void {
         Livewire::test(CreateTeamMember::class)
             ->fillForm([

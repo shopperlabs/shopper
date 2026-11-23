@@ -87,6 +87,7 @@ return [
         'title' => 'Unauthorized',
         'body' => 'You do not have permission to perform this action.',
         'administrator_role' => 'Only an administrator can manage the administrator role.',
+        'customer_role' => 'The customer role cannot be managed from the team settings.',
         'administrator_only' => 'Only an administrator can create or delete a permission.',
         'permission_scope' => 'You can only grant a permission that you hold yourself.',
         'protected_permission' => 'This permission is required by the panel and cannot be deleted.',

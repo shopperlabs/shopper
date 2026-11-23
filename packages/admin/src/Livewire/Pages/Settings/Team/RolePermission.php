@@ -84,6 +84,8 @@ class RolePermission extends Component implements HasActions, HasSchemas
                 TextInput::make('name')
                     ->label(__('shopper::modals.roles.labels.name'))
                     ->placeholder('manager')
+                    ->unique(table: Role::class, column: 'name', ignoreRecord: true)
+                    ->disabled(! $this->role->can_be_removed)
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('display_name', Str::title($state)))
                     ->required(),
