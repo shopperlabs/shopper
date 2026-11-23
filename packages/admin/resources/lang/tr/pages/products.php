@@ -137,6 +137,7 @@ return [
         'stock_description' => 'Farklı envanterlerinizde stok yönetimi.',
         'empty' => 'Envanterde düzenleme yapılmadı.',
         'movement' => 'Miktar Hareketi',
+        'stock_after' => 'Hareket sonrası stok',
         'initial' => 'Başlangıç envanteri',
         'add' => 'Manuel eklendi',
         'remove' => 'Manuel kaldırıldı',

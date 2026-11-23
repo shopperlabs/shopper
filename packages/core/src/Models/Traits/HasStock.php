@@ -182,14 +182,17 @@ trait HasStock
         ?int $userId = null,
         ?Model $reference = null,
     ): ?InventoryHistory {
-        $currentStock = $this->stock;
-        $deltaStock = $newQuantity - $currentStock;
+        return DB::transaction(function () use ($newQuantity, $inventoryId, $oldQuantity, $event, $description, $userId, $reference): ?InventoryHistory {
+            $this->newQuery()->lockForUpdate()->find($this->getKey());
 
-        if (! $deltaStock) {
-            return null;
-        }
+            $deltaStock = $newQuantity - $this->stockInventory($inventoryId);
 
-        return $this->createStockMutation($deltaStock, $inventoryId, $oldQuantity, $event, $description, $userId, $reference);
+            if (! $deltaStock) {
+                return null;
+            }
+
+            return $this->createStockMutation($deltaStock, $inventoryId, $oldQuantity, $event, $description, $userId, $reference);
+        });
     }
 
     public function createStockMutation(
@@ -203,7 +206,6 @@ trait HasStock
     ): InventoryHistory {
         $createArguments = [
             'quantity' => $quantity,
-            'old_quantity' => $oldQuantity,
             'description' => $description,
             'event' => $event,
             'inventory_id' => $inventoryId,
@@ -216,11 +218,12 @@ trait HasStock
         }
 
         return DB::transaction(function () use ($createArguments, $inventoryId, $quantity): InventoryHistory {
-            $history = $this->inventoryHistories()->create($createArguments);
-
             $this->applyToStockLevel($inventoryId, $quantity);
 
-            return $history;
+            return $this->inventoryHistories()->create([
+                ...$createArguments,
+                'old_quantity' => $this->stockInventory($inventoryId) - $quantity,
+            ]);
         });
     }
 
@@ -260,7 +263,7 @@ trait HasStock
         }
 
         try {
-            StockLevel::query()->create([...$constraint, 'quantity' => $delta]);
+            DB::transaction(fn () => StockLevel::query()->create([...$constraint, 'quantity' => $delta]));
         } catch (QueryException) {
             StockLevel::query()->where($constraint)->increment('quantity', $delta);
         }

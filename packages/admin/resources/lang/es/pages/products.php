@@ -137,6 +137,7 @@ return [
         'stock_description' => 'Gestión de stock en tus diferentes inventarios.',
         'empty' => 'Sin ajustes realizados al inventario.',
         'movement' => 'Movimiento de cantidad',
+        'stock_after' => 'Stock resultante',
         'initial' => 'Inventario inicial',
         'add' => 'Añadido manualmente',
         'remove' => 'Eliminado manualmente',

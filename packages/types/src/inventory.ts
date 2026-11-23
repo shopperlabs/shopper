@@ -45,9 +45,9 @@ export interface Inventory extends Entity {
  * InventoryHistory model.
  */
 export interface InventoryHistory extends Entity {
-  /** The new quantity after the adjustment. */
+  /** The signed quantity of the movement. */
   quantity: number
-  /** The old quantity before the adjustment. */
+  /** The stock of the inventory before the movement. */
   old_quantity: number | null
   /** The event that triggered this history entry. */
   event: string | null
@@ -65,8 +65,8 @@ export interface InventoryHistory extends Entity {
   reference_id?: ResourceId | null
   /** The type of the reference entity. */
   reference_type?: string | null
-  /** The computed adjustment display. */
-  adjustment?: string | number
+  /** The stock of the inventory once this movement is applied. */
+  stock_after?: number
   /** The inventory location. */
   inventory?: Inventory
 }

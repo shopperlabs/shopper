@@ -39,6 +39,7 @@ describe(CreateNewVariant::class, function (): void {
 
         expect($variant->sku)->toBe('VAR-001')
             ->and($variant->stock)->toBe(10)
+            ->and($variant->inventoryHistories()->sole()->stock_after)->toBe(10)
             ->and($variant->prices()->count())->toBe(1);
     });
 

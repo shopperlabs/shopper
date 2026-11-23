@@ -19,7 +19,6 @@ final class InitialQuantityInventory
             $product->mutateStock(
                 inventoryId: $inventory->id,
                 quantity: $quantity,
-                oldQuantity: $quantity,
                 event: __('shopper::pages/products.inventory.initial'),
             );
         }

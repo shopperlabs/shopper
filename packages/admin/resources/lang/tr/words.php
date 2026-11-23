@@ -54,7 +54,6 @@ return [
     'in_stock' => 'stokta',
     'out_stock' => 'stok dışı',
     'event' => 'Etkinlik',
-    'adjustment' => 'Düzenleme',
     'is_enabled' => 'Aktif',
     'is_disabled' => 'Devre Dışı',
 

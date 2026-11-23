@@ -137,6 +137,7 @@ return [
         'stock_description' => 'Stock management in your different inventories.',
         'empty' => 'No adjustments made to inventory.',
         'movement' => 'Quantity Movement',
+        'stock_after' => 'Stock after',
         'initial' => 'Initial inventory',
         'add' => 'Manually added',
         'remove' => 'Manually removed',

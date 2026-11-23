@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Support\Facades\DB;
 use Shopper\Core\Events\Orders\OrderCancelled;
 use Shopper\Core\Listeners\Orders\RestoreOrderStockListener;
 use Shopper\Core\Models\Inventory;
@@ -81,6 +83,74 @@ describe('Stock levels snapshot', function (): void {
 
         expect($models->firstWhere('id', $this->product->id)->stock)->toBe(10)
             ->and($models->firstWhere('id', $other->id)->stock)->toBe(4);
+    });
+
+    it('drops the stock of a deleted inventory', function (): void {
+        $secondInventory = Inventory::factory()->create(['priority' => 1]);
+
+        $this->product->mutateStock($this->inventory->id, 10);
+        $this->product->mutateStock($secondInventory->id, 5);
+
+        $secondInventory->delete();
+
+        expect($this->product->getStock())->toBe(10)
+            ->and(StockLevel::query()->where('stockable_id', $this->product->id)->count())->toBe(1);
+    });
+
+    it('records the stock of the inventory before each movement', function (): void {
+        $secondInventory = Inventory::factory()->create(['priority' => 1]);
+
+        $initial = $this->product->mutateStock($this->inventory->id, 10);
+        $elsewhere = $this->product->mutateStock($secondInventory->id, 4);
+        $restock = $this->product->mutateStock($this->inventory->id, 5);
+        $sale = $this->product->decreaseStock($this->inventory->id, 3);
+
+        expect([$initial->old_quantity, $initial->stock_after])->toBe([0, 10])
+            ->and([$elsewhere->old_quantity, $elsewhere->stock_after])->toBe([0, 4])
+            ->and([$restock->old_quantity, $restock->stock_after])->toBe([10, 15])
+            ->and([$sale->old_quantity, $sale->stock_after])->toBe([15, 12]);
+    });
+
+    it('sets the stock of one inventory without touching the others', function (): void {
+        $secondInventory = Inventory::factory()->create(['priority' => 1]);
+
+        $this->product->mutateStock($this->inventory->id, 10);
+        $this->product->mutateStock($secondInventory->id, 5);
+
+        $movement = $this->product->setStock(12, $this->inventory->id);
+
+        expect($movement->quantity)->toBe(2)
+            ->and($movement->stock_after)->toBe(12)
+            ->and($this->product->stockInventory($secondInventory->id))->toBe(5)
+            ->and($this->product->getStock())->toBe(17);
+    });
+
+    it('records a movement when another writer creates the stock level first', function (): void {
+        $table = (new StockLevel)->getTable();
+        $competing = true;
+
+        DB::listen(function (QueryExecuted $query) use ($table, &$competing): void {
+            if (! $competing || ! str_starts_with($query->sql, 'update') || ! str_contains($query->sql, $table)) {
+                return;
+            }
+
+            $competing = false;
+
+            DB::table($table)->insert([
+                'stockable_type' => $this->product->getMorphClass(),
+                'stockable_id' => $this->product->id,
+                'inventory_id' => $this->inventory->id,
+                'quantity' => 7,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        });
+
+        $movement = $this->product->mutateStock($this->inventory->id, 3);
+
+        expect($this->product->stockInventory($this->inventory->id))->toBe(10)
+            ->and($movement->old_quantity)->toBe(7)
+            ->and($movement->stock_after)->toBe(10);
     });
 });
 
