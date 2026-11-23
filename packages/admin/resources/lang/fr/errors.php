@@ -7,6 +7,7 @@ return [
     '403' => [
         'title' => 'Accès interdit',
         'description' => 'Vous n\'avez pas la permission d\'accéder à cette page. Contactez votre administrateur si vous pensez qu\'il s\'agit d\'une erreur.',
+        'store_not_initialized' => 'Cette boutique n\'est pas encore configurée. Un administrateur doit terminer sa configuration avant que vous puissiez utiliser le tableau de bord.',
         'back' => 'Retour au tableau de bord',
         'go_back' => 'Revenir en arrière',
     ],

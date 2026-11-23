@@ -15,7 +15,7 @@
         </h1>
 
         <p class="text-sh-fg-muted mt-3 max-w-md text-center text-base">
-            {{ __('shopper::errors.403.description') }}
+            {{ session('shopper_forbidden', __('shopper::errors.403.description')) }}
         </p>
 
         <div class="mt-8 flex items-center justify-center gap-3">

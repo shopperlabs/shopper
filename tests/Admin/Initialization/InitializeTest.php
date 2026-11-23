@@ -37,6 +37,20 @@ it('can not access dashboard with unfinished configuration', function (): void {
         ->toBeNull();
 });
 
+it('sends staff who cannot manage settings to the forbidden page while the store is not set up', function (): void {
+    $staff = User::factory()->create();
+    $staff->givePermissionTo('system.dashboard');
+    $this->actingAs($staff);
+
+    $this->get($this->prefix.'/dashboard')
+        ->assertRedirect($this->prefix.'/forbidden');
+
+    $this->followingRedirects()
+        ->get($this->prefix.'/dashboard')
+        ->assertOk()
+        ->assertSee(__('shopper::errors.403.store_not_initialized'));
+});
+
 it('can view the initialization wizard with all steps', function (): void {
     $this->asAdmin();
 

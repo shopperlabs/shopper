@@ -32,7 +32,13 @@ describe(Dashboard::class, function (): void {
             ->assertViewIs('shopper::livewire.pages.dashboard');
     });
 
-    it('has correct page title', function (): void {
+    it('shows the setup guide only to users who can manage settings', function (): void {
+        Livewire::test(Dashboard::class)
+            ->assertOk()
+            ->assertSet('showSetupGuide', false);
+
+        $this->user->givePermissionTo('system.settings');
+
         Livewire::test(Dashboard::class)
             ->assertOk()
             ->assertSet('showSetupGuide', true);
