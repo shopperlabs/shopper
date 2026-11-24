@@ -152,7 +152,8 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([
-                TernaryFilter::make('is_enabled'),
+                TernaryFilter::make('is_enabled')
+                    ->label(__('shopper::words.is_enabled')),
             ])
             ->persistFiltersInSession()
             ->emptyState(view('shopper::livewire.tables.empty-states.brands'));

@@ -25,7 +25,7 @@ return [
         'external_id' => 'Id externo del producto',
         'slug' => 'Slug',
         'website' => 'Sitio web',
-        'url' => 'Url',
+        'url' => 'URL',
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
         'published_at' => 'Publicado el',

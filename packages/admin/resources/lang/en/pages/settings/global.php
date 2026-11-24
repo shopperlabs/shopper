@@ -42,6 +42,7 @@ return [
         'set_default_summary' => 'Inventory at this location is available for sale online and will use as default',
         'priority_summary' => 'Lower values are fulfilled first when allocating stock across multiple locations.',
         'is_default' => 'This is your default location. To change whether you fulfill online orders from this location, select another default location first.',
+        'remove_stock' => 'The stock held at this location (:count units) and its stock history will be deleted.',
     ],
 
     'analytics' => [

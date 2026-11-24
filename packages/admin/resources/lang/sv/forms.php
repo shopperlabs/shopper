@@ -25,7 +25,7 @@ return [
         'external_id' => 'Externt produkt-ID',
         'slug' => 'Slug',
         'website' => 'Webbplats',
-        'url' => 'Url',
+        'url' => 'URL',
         'created_at' => 'Skapad den',
         'updated_at' => 'Uppdaterad den',
         'published_at' => 'Publicerad den',

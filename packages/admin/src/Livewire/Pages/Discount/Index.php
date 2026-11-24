@@ -206,7 +206,8 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([
-                TernaryFilter::make('is_active'),
+                TernaryFilter::make('is_active')
+                    ->label(__('shopper::forms.label.active')),
                 SelectFilter::make('trigger')
                     ->label(__('shopper::pages/discounts.method'))
                     ->options([
