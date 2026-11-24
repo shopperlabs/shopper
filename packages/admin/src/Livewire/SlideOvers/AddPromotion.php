@@ -24,7 +24,6 @@ use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
@@ -388,10 +387,6 @@ class AddPromotion extends SlideOverComponent implements HasActions, HasSchemas
      */
     protected function campaignOptions(): array
     {
-        return Cache::remember(
-            'shopper.campaigns.options',
-            now()->addMinutes(5),
-            fn (): array => Campaign::query()->orderBy('name')->pluck('name', 'id')->all(),
-        );
+        return Campaign::query()->orderBy('name')->pluck('name', 'id')->all();
     }
 }

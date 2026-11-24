@@ -366,4 +366,21 @@ describe(DiscountValidator::class, function (): void {
         expect($result->valid)->toBeFalse()
             ->and($result->failureReason)->toBe(__('shopper-cart::messages.discount.currency_mismatch'));
     });
+
+    it('rejects a discount whose campaign is not running', function (array $campaignAttributes, string $reason): void {
+        $campaign = Campaign::factory()->create($campaignAttributes);
+
+        $discount = Discount::factory()->create(array_merge(validDiscountAttributes(), [
+            'campaign_id' => $campaign->id,
+        ]));
+
+        expect($this->validator->validate($discount, $this->context)->failureReason)
+            ->toBe(__('shopper-cart::messages.discount.'.$reason))
+            ->and($this->validator->validateTerms($discount, $this->context)->valid)
+            ->toBeFalse();
+    })->with([
+        'disabled' => [['is_active' => false], 'not_active'],
+        'scheduled' => [['starts_at' => now()->addDay()], 'not_started'],
+        'ended' => [['starts_at' => now()->subMonth(), 'ends_at' => now()->subDay()], 'expired'],
+    ]);
 })->group('cart', 'cart-discount-validator');

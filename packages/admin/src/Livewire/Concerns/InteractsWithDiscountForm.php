@@ -21,7 +21,6 @@ use Filament\Schemas\Components\View as SchemaView;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\SaveAndDispatchDiscountAction;
@@ -277,11 +276,7 @@ trait InteractsWithDiscountForm
                                 ? __('shopper::pages/discounts.campaign_locked_helper')
                                 : __('shopper::pages/discounts.campaign_helptext'))
                             ->placeholder(__('shopper::pages/discounts.campaign_none'))
-                            ->options(fn (): array => Cache::remember(
-                                'shopper.campaigns.options',
-                                now()->addMinutes(5),
-                                fn (): array => Campaign::query()->orderBy('name')->pluck('name', 'id')->all(),
-                            ))
+                            ->options(fn (): array => Campaign::query()->orderBy('name')->pluck('name', 'id')->all())
                             ->disabled(fn (): bool => $this->isCampaignLocked())
                             ->native(false)
                             ->searchable(),
