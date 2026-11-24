@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
-use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\CheckboxList;
@@ -12,13 +11,14 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Callout;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Shopper\Components\Form\GenderField;
@@ -73,21 +73,9 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
                             ->email()
                             ->unique(config('auth.providers.users.model'), 'email')
                             ->required(),
-                        TextInput::make('password')
-                            ->label(__('shopper::forms.label.password'))
-                            ->password()
-                            ->revealable()
-                            ->inlineSuffix()
-                            ->required()
-                            ->hintAction(
-                                Action::make(__('shopper::words.generate'))
-                                    ->color('info')
-                                    ->action(function (Set $set): void {
-                                        $set('password', Str::password(16));
-                                    }),
-                            ),
                         Toggle::make('send_mail')
                             ->label(__('shopper::pages/settings/staff.send_invite'))
+                            ->default(true)
                             ->helperText(__('shopper::pages/settings/staff.send_invite_summary')),
                     ]),
                 Section::make(__('shopper::pages/settings/staff.personal_information'))
@@ -138,24 +126,38 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
         $roles->each(fn (Role $role) => $this->authorizeRoleAssignment($role));
 
         /** @var ShopperUser $user */
-        $user = $userModel::query()->create([
-            'email' => $data['email'],
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'password' => Hash::make(
-                value: $data['password']
-            ),
-            'phone_number' => $data['phone_number'] ?? null,
-            'gender' => $data['gender'] ?? null,
-            'email_verified_at' => now()->toDateTimeString(),
-        ]);
+        $user = DB::transaction(function () use ($userModel, $data, $roles): ShopperUser {
+            /** @var ShopperUser $user */
+            $user = $userModel::query()->create([
+                'email' => $data['email'],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'password' => Hash::make(Str::password()),
+                'phone_number' => $data['phone_number'] ?? null,
+                'gender' => $data['gender'] ?? null,
+                'email_verified_at' => now()->toDateTimeString(),
+            ]);
 
-        $user->assignRole($roles);
+            $user->assignRole($roles);
+
+            return $user;
+        });
 
         $this->dispatch('teamUpdate');
 
         if ($data['send_mail']) {
-            $user->notify(new AdminSendCredentials($data['password']));
+            $status = Password::sendResetLink(
+                ['email' => $user->email],
+                fn (ShopperUser $user, string $token) => $user->notify(new AdminSendCredentials($token)),
+            );
+
+            if ($status !== Password::RESET_LINK_SENT) {
+                Notification::make()
+                    ->title(__('shopper::pages/settings/staff.invitation_not_sent'))
+                    ->body(__($status))
+                    ->warning()
+                    ->send();
+            }
         }
 
         /** @var Model $user */
