@@ -42,6 +42,7 @@ return [
         'set_default_summary' => 'El inventario en esta ubicación está disponible para la venta en línea y se usará como predeterminado',
         'priority_summary' => 'Los valores más bajos se procesan primero al asignar stock entre múltiples ubicaciones.',
         'is_default' => 'Esta es tu ubicación por defecto. Para cambiar si cumples pedidos en línea desde esta ubicación, selecciona otra ubicación por defecto primero.',
+        'remove_stock' => 'El stock de esta ubicación (:count unidades) y su historial se eliminarán.',
     ],
 
     'analytics' => [

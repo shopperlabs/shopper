@@ -15,6 +15,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Core\Models\Contracts\Inventory;
+use Shopper\Core\Models\StockLevel;
 use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
 use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -46,8 +47,11 @@ class Index extends Component implements HasActions, HasSchemas
             ->icon(Untitledui::Trash03)
             ->color('danger')
             ->requiresConfirmation()
+            ->modalDescription(fn (array $arguments): string => __('shopper::pages/settings/global.location.remove_stock', [
+                'count' => (int) StockLevel::query()->where('inventory_id', $arguments['id'])->sum('quantity'),
+            ]))
             ->action(function (array $arguments): void {
-                resolve(Inventory::class)::query()->find($arguments['id'])->delete();
+                resolve(Inventory::class)::query()->find($arguments['id'])?->delete();
 
                 Notification::make()
                     ->title(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/global.location.single')]))

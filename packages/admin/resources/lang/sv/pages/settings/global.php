@@ -42,6 +42,7 @@ return [
         'set_default_summary' => 'Lager på denna plats är tillgängligt för försäljning online och kommer att användas som standard',
         'priority_summary' => 'Lägre värden hanteras först vid allokering av lager över flera platser.',
         'is_default' => 'Detta är standardlagerplatsen. Om du vill ändra varifrån onlineordrar skickas, välj först en annan standardlagerplats.',
+        'remove_stock' => 'Lagret på den här lagerplatsen (:count enheter) och dess historik raderas.',
     ],
 
     'analytics' => [

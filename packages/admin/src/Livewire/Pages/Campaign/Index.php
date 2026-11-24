@@ -118,7 +118,8 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([
-                TernaryFilter::make('is_active'),
+                TernaryFilter::make('is_active')
+                    ->label(__('shopper::forms.label.active')),
                 SelectFilter::make('budget_type')
                     ->label(__('shopper::pages/campaigns.budget_type'))
                     ->options(CampaignBudgetType::options()),

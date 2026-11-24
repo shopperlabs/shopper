@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
 use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\Product;
 use Shopper\Livewire\Pages\Settings\Locations\Index;
 use Tests\Core\Stubs\User;
 
@@ -30,5 +32,16 @@ describe(Index::class, function (): void {
 
         expect($inventories)->toBeInstanceOf(Illuminate\Database\Eloquent\Collection::class)
             ->and($inventories->count())->toBeGreaterThan(0);
+    });
+
+    it('tells how many units the removal deletes before confirming', function (): void {
+        $this->user->givePermissionTo('inventories.delete');
+        $inventory = Inventory::factory()->create();
+        Product::factory()->create()->setStock(newQuantity: 12, inventoryId: $inventory->id);
+        Product::factory()->create()->setStock(newQuantity: 3, inventoryId: $inventory->id);
+
+        Livewire::test(Index::class)
+            ->mountAction(TestAction::make('remove')->arguments(['id' => $inventory->id]))
+            ->assertMountedActionModalSee(__('shopper::pages/settings/global.location.remove_stock', ['count' => 15]));
     });
 })->group('livewire', 'settings', 'locations');

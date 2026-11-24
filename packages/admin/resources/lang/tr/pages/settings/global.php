@@ -41,6 +41,7 @@ return [
         'set_default_summary' => 'Bu konumdaki envanter çevrimiçi satışa uygundur ve varsayılan olarak kullanılacaktır',
         'priority_summary' => 'Stok birden fazla konuma tahsis edilirken düşük değerler önce karşılanır.',
         'is_default' => 'Bu sizin varsayılan konumunuz. Çevrimiçi siparişleri bu konumdan karşılayıp karşılamayacağınızı değiştirmek için önce başka bir varsayılan konum seçin.',
+        'remove_stock' => 'Bu konumdaki stok (:count adet) ve stok geçmişi silinecek.',
     ],
 
     'analytics' => [
