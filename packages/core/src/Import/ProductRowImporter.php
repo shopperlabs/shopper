@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Import;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Shopper\Core\Enum\Dimension\Weight;
@@ -227,12 +229,21 @@ final class ProductRowImporter
             return;
         }
 
-        $product->update($this->provided($row, [
+        $attributes = $this->provided($row, [
             'sku' => $variant->sku,
             'barcode' => $variant->barcode,
             'allow_backorder' => $variant->allowBackorder,
-            ...$this->weightData($variant),
-        ]));
+            ...$this->weightData($row, $variant),
+        ]);
+
+        $this->ensureCodesAreFree(
+            $row,
+            resolve(ProductContract::class)::query()->withTrashed(),
+            Arr::only($attributes, ['sku', 'barcode']),
+            $product->getKey(),
+        );
+
+        $product->update($attributes);
 
         $this->applyPricing($product, $row, $variant);
         $this->applyStock($product, $variant->quantity);
@@ -268,8 +279,15 @@ final class ProductRowImporter
             'ean' => $row->ean,
             'upc' => $row->upc,
             'allow_backorder' => $row->allowBackorder,
-            ...$this->weightData($row),
+            ...$this->weightData($productRow, $row),
         ]);
+
+        $this->ensureCodesAreFree(
+            $productRow,
+            resolve(ProductVariantContract::class)::query()->with(['product' => fn ($query) => $query->withTrashed()]),
+            Arr::only($data, ['sku', 'barcode', 'ean', 'upc']),
+            $variant?->getKey(),
+        );
 
         if ($variant === null) {
             /** @var Model&ProductVariantContract $variant */
@@ -324,24 +342,29 @@ final class ProductRowImporter
      */
     private function applyPricing(ProductContract|ProductVariantContract $model, ProductRow $productRow, VariantRow $row): void
     {
-        if ($row->price === null) {
-            return;
-        }
-
-        if (min($row->price, $row->compareAtPrice ?? 0, $row->costPerItem ?? 0) < 0) {
+        if (min($row->price ?? 0, $row->compareAtPrice ?? 0, $row->costPerItem ?? 0) < 0) {
             throw new ProductImportException("Product [{$productRow->handle}] has a negative price.");
         }
 
         $currency = $row->currency === null ? shopper_currency() : mb_strtoupper($row->currency);
 
-        $model->prices()->updateOrCreate(
-            ['currency_id' => $this->resolveCurrencyId($row->currency)],
-            $this->provided($productRow, [
-                'amount' => $this->toMinorUnits($row->price, $currency),
-                'compare_amount' => $this->toMinorUnits($row->compareAtPrice, $currency),
-                'cost_amount' => $this->toMinorUnits($row->costPerItem, $currency),
-            ])
-        );
+        $amounts = $this->provided($productRow, [
+            'amount' => $this->toMinorUnits($row->price, $currency),
+            'compare_amount' => $this->toMinorUnits($row->compareAtPrice, $currency),
+            'cost_amount' => $this->toMinorUnits($row->costPerItem, $currency),
+        ]);
+
+        if ($row->price !== null) {
+            $model->prices()->updateOrCreate(['currency_id' => $this->resolveCurrencyId($row->currency)], $amounts);
+
+            return;
+        }
+
+        $amounts = Arr::except($amounts, 'amount');
+
+        if ($amounts !== []) {
+            $model->prices()->where('currency_id', $this->resolveCurrencyId($row->currency))->first()?->update($amounts);
+        }
     }
 
     /**
@@ -381,17 +404,51 @@ final class ProductRowImporter
     }
 
     /**
+     * @param  Builder<Model>  $query
+     * @param  array<string, ?string>  $codes
+     */
+    private function ensureCodesAreFree(ProductRow $row, Builder $query, array $codes, mixed $ignore): void
+    {
+        foreach (array_filter($codes) as $column => $code) {
+            $owner = $query->clone()
+                ->where($column, $code)
+                ->when($ignore !== null, fn (Builder $query) => $query->whereKeyNot($ignore))
+                ->first();
+
+            if ($owner === null) {
+                continue;
+            }
+
+            /** @var Model&ProductContract $product */
+            $product = $owner instanceof ProductVariantContract ? $owner->product : $owner;
+
+            throw new ProductImportException(sprintf(
+                'Product [%s] uses the %s [%s] of product [%s]%s.',
+                $row->handle,
+                $column,
+                $code,
+                $product->slug,
+                $product->trashed() ? ', which is deleted' : '',
+            ));
+        }
+    }
+
+    /**
      * @return array<string, mixed>
      */
-    private function weightData(VariantRow $row): array
+    private function weightData(ProductRow $productRow, VariantRow $row): array
     {
         if ($row->weightValue === null) {
             return [];
         }
 
+        $unit = $row->weightUnit === null
+            ? Weight::G
+            : Weight::tryFrom(mb_strtolower($row->weightUnit)) ?? throw new ProductImportException("Product [{$productRow->handle}] has an unknown weight unit [{$row->weightUnit}].");
+
         return [
             'weight_value' => $row->weightValue,
-            'weight_unit' => Weight::tryFrom(mb_strtolower((string) $row->weightUnit)) ?? Weight::G,
+            'weight_unit' => $unit,
         ];
     }
 

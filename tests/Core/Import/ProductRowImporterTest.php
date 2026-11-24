@@ -316,6 +316,48 @@ describe(ProductRowImporter::class, function (): void {
             ->and($product->stock)->toBe(5);
     });
 
+    it('names the deleted product that holds the SKU of a row', function (): void {
+        $this->importer->import(new ProductRow(handle: 'mug', name: 'Mug', variants: [new VariantRow(sku: 'MUG-1')]));
+        Product::findBySlug('mug')->delete();
+
+        $this->importer->import(new ProductRow(handle: 'cup', name: 'Cup', variants: [new VariantRow(sku: 'MUG-1')]));
+    })->throws(ProductImportException::class, 'Product [cup] uses the sku [MUG-1] of product [mug], which is deleted.');
+
+    it('rejects a variant barcode held by another product', function (): void {
+        $this->importer->import($this->rows[0]);
+
+        $this->importer->import(new ProductRow(
+            handle: 'hoodie',
+            name: 'Hoodie',
+            optionNames: ['Size'],
+            variants: [new VariantRow(options: ['Size' => 'Small'], sku: 'HOODIE-S', barcode: '1234567890101')],
+        ));
+    })->throws(ProductImportException::class, 'Product [hoodie] uses the barcode [1234567890101] of product [graphic-t-shirt].');
+
+    it('rejects an unknown weight unit', function (): void {
+        $this->importer->import(new ProductRow(
+            handle: 'mug',
+            name: 'Mug',
+            variants: [new VariantRow(weightValue: 1.5, weightUnit: 'kgs')],
+        ));
+    })->throws(ProductImportException::class, 'Product [mug] has an unknown weight unit [kgs].');
+
+    it('updates the compare-at price and the cost of a row without price', function (): void {
+        foreach (importRowsFromCsv("handle,name,price,compare_at_price,cost_per_item\nmug,Mug,12,15,5\n") as $row) {
+            $this->importer->import($row);
+        }
+
+        foreach (importRowsFromCsv("handle,name,price,compare_at_price,cost_per_item\nmug,Mug,,18,6\n") as $row) {
+            $this->importer->import($row);
+        }
+
+        $price = Product::findBySlug('mug')->prices()->sole();
+
+        expect($price->amount)->toBe(1200)
+            ->and($price->compare_amount)->toBe(1800)
+            ->and($price->cost_amount)->toBe(600);
+    });
+
     it('rounds a price half up to the cents of its currency', function (float $price, int $amount): void {
         $this->importer->import(new ProductRow(
             handle: 'mug',
