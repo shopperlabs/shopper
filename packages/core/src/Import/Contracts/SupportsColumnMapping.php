@@ -12,7 +12,7 @@ interface SupportsColumnMapping
     public function headers(string $path): array;
 
     /**
-     * @param  array<string, string>  $mapping  Shopper field => file column
+     * @param  array<string, ?string>  $mapping  Shopper field => file column
      */
     public function withMapping(array $mapping): static;
 }

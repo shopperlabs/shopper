@@ -113,6 +113,50 @@ describe(CsvSource::class, function (): void {
             ->and($products[1]->handle)->toBe('MUG-RED');
     });
 
+    it('reads a quantity written with leading zeros or a zero decimal', function (string $quantity): void {
+        $path = tempnam(sys_get_temp_dir(), 'import');
+        file_put_contents($path, "handle,name,quantity\nmug,Mug,{$quantity}\n");
+
+        expect((new CsvSource)->read($path)->first()->variants[0]->quantity)->toBe(12);
+    })->with(['012', '12.0']);
+
+    it('rejects a cell it cannot read', function (string $column, string $value): void {
+        $path = tempnam(sys_get_temp_dir(), 'import');
+        file_put_contents($path, "handle,name,{$column}\nmug,Mug,{$value}\n");
+
+        (new CsvSource)->read($path)->all();
+    })->with([
+        ['quantity', '5.5'],
+        ['published', 'active'],
+        ['allow_backorder', 'maybe'],
+    ])->throws(ProductImportException::class);
+
+    it('reads the published and backorder values other platforms export', function (string $column, string $value, bool $expected): void {
+        $path = tempnam(sys_get_temp_dir(), 'import');
+        file_put_contents($path, "handle,name,{$column}\nmug,Mug,{$value}\n");
+
+        $product = (new CsvSource)->read($path)->first();
+
+        expect($column === 'published' ? $product->published : $product->variants[0]->allowBackorder)->toBe($expected);
+    })->with([
+        ['published', '1', true],
+        ['published', '-1', false],
+        ['published', '2', false],
+        ['allow_backorder', 'continue', true],
+        ['allow_backorder', 'notify', true],
+        ['allow_backorder', 'deny', false],
+    ]);
+
+    it('leaves out a column mapped to nothing', function (): void {
+        $path = tempnam(sys_get_temp_dir(), 'import');
+        file_put_contents($path, "handle,name,price\nmug,Mug,12\n");
+
+        $product = (new CsvSource)->withMapping(['price' => null])->read($path)->first();
+
+        expect($product->provides('price'))->toBeFalse()
+            ->and($product->variants[0]->price)->toBeNull();
+    });
+
     it('rejects a file without the required columns', function (): void {
         $path = tempnam(sys_get_temp_dir(), 'import');
         file_put_contents($path, "foo,bar\n1,2\n");

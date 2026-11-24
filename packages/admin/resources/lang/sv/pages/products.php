@@ -207,6 +207,7 @@ return [
         'download_template' => 'Ladda ner en exempelfil',
         'submit' => 'Importera produkter',
         'not_mapped' => 'Ej matchad',
+        'invalid_header' => 'Filens första rad måste ge varje kolumn ett eget namn.',
         'mapping_description' => 'Matcha kolumnerna i filen med produktfälten. Varianter, alternativ och bilder detekteras automatiskt.',
         'steps' => [
             'upload' => 'Ladda upp',
@@ -230,6 +231,7 @@ return [
             'cost_per_item' => 'Kostnad per produkt',
             'currency' => 'Valuta',
             'quantity' => 'Antal',
+            'allow_backorder' => 'Tillåt restorder (köp vid slut i lager)',
             'weight_value' => 'Vikt',
             'weight_unit' => 'Viktenhet',
             'seo_title' => 'SEO-titel',
@@ -240,6 +242,7 @@ return [
             'variants' => 'Varianter',
             'stock' => 'Lagerenheter',
             'unnamed' => '{1} :count produkt saknar namn och kommer att hoppas över.|[2,*] :count produkter saknar namn och kommer att hoppas över.',
+            'unsupported_currency' => '{1} :count produkt har ett pris i en valuta som inte är aktiverad i butiken och kommer att hoppas över.|[2,*] :count produkter har ett pris i en valuta som inte är aktiverad i butiken och kommer att hoppas över.',
             'more' => 'Och :count fler produkter…',
         ],
         'progress' => [

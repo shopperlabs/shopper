@@ -16,4 +16,9 @@ return [
         'percentage_out_of_range' => 'Une réduction en pourcentage ne peut pas dépasser 100 %.',
     ],
 
+    'import' => [
+        'invalid_number' => 'La colonne :column du produit « :handle » contient « :value », qui n\'est pas un nombre valide.',
+        'invalid_boolean' => 'La colonne :column du produit « :handle » contient « :value », qui n\'est ni TRUE ni FALSE.',
+    ],
+
 ];

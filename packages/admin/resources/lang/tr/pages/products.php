@@ -207,6 +207,7 @@ return [
         'download_template' => 'Örnek dosya indir',
         'submit' => 'Ürünleri içe aktar',
         'not_mapped' => 'Eşlenmedi',
+        'invalid_header' => 'Dosyanın ilk satırı her sütuna ayrı bir ad vermelidir.',
         'mapping_description' => 'Dosyanızın sütunlarını ürün alanlarıyla eşleştirin. Varyantlar, seçenekler ve görseller otomatik olarak algılanır.',
         'steps' => [
             'upload' => 'Dosya',
@@ -230,6 +231,7 @@ return [
             'cost_per_item' => 'Ürün başına maliyet',
             'currency' => 'Para birimi',
             'quantity' => 'Miktar',
+            'allow_backorder' => 'Arka siparişe izin ver',
             'weight_value' => 'Ağırlık',
             'weight_unit' => 'Ağırlık birimi',
             'seo_title' => 'SEO başlığı',
@@ -240,6 +242,7 @@ return [
             'variants' => 'Varyantlar',
             'stock' => 'Stok adedi',
             'unnamed' => '{1} :count adsız ürün atlanacak.|[2,*] :count adsız ürün atlanacak.',
+            'unsupported_currency' => '{1} :count ürünün fiyatı mağazada etkin olmayan bir para biriminde, bu ürün atlanacak.|[2,*] :count ürünün fiyatı mağazada etkin olmayan bir para biriminde, bu ürünler atlanacak.',
             'more' => 'Ve :count ürün daha…',
         ],
         'progress' => [

@@ -207,6 +207,7 @@ return [
         'download_template' => 'Télécharger un fichier d\'exemple',
         'submit' => 'Importer les produits',
         'not_mapped' => 'Non associée',
+        'invalid_header' => 'La première ligne du fichier doit donner un nom distinct à chaque colonne.',
         'mapping_description' => 'Associez les colonnes de votre fichier aux champs produit. Les variantes, options et images sont détectées automatiquement.',
         'steps' => [
             'upload' => 'Fichier',
@@ -230,6 +231,7 @@ return [
             'cost_per_item' => 'Coût par article',
             'currency' => 'Devise',
             'quantity' => 'Quantité',
+            'allow_backorder' => 'Autoriser les commandes différées',
             'weight_value' => 'Poids',
             'weight_unit' => 'Unité de poids',
             'seo_title' => 'Titre SEO',
@@ -240,6 +242,7 @@ return [
             'variants' => 'Variantes',
             'stock' => 'Unités en stock',
             'unnamed' => '{1} :count produit sans nom sera ignoré.|[2,*] :count produits sans nom seront ignorés.',
+            'unsupported_currency' => '{1} :count produit a un prix dans une devise non activée sur la boutique et sera ignoré.|[2,*] :count produits ont un prix dans une devise non activée sur la boutique et seront ignorés.',
             'more' => 'Et :count autres produits…',
         ],
         'progress' => [

@@ -30,6 +30,15 @@
         </div>
     @endif
 
+    @if (($preview['unsupported_currency'] ?? 0) > 0)
+        <div
+            class="bg-warning-50 text-warning-700 dark:bg-warning-400/10 dark:text-warning-400 flex items-center gap-2 rounded-lg p-3 text-sm"
+        >
+            <x-untitledui-alert-triangle class="size-4 shrink-0" aria-hidden="true" />
+            {{ trans_choice('shopper::pages/products.import.review.unsupported_currency', $preview['unsupported_currency'], ['count' => $preview['unsupported_currency']]) }}
+        </div>
+    @endif
+
     <div class="border-sh-border max-h-96 overflow-y-auto rounded-xl border">
         <table class="fi-ta-table divide-sh-border w-full table-auto divide-y text-start">
             <thead class="bg-sh-surface sticky top-0 z-10">
@@ -82,7 +91,7 @@
                         >
                             <div class="px-3 py-2 text-end">
                                 <span class="text-sh-fg-secondary text-sm font-medium tabular-nums">
-                                    {{ $product['price'] !== null ? shopper_money_format((int) round($product['price'] * 100)) : '—' }}
+                                    {{ $product['price'] ?? '—' }}
                                 </span>
                             </div>
                         </td>

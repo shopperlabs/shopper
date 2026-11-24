@@ -207,6 +207,7 @@ return [
         'download_template' => 'Descargar un archivo de ejemplo',
         'submit' => 'Importar productos',
         'not_mapped' => 'Sin asignar',
+        'invalid_header' => 'La primera fila del archivo debe dar un nombre distinto a cada columna.',
         'mapping_description' => 'Asocie las columnas de su archivo con los campos del producto. Las variantes, opciones e imágenes se detectan automáticamente.',
         'steps' => [
             'upload' => 'Archivo',
@@ -230,6 +231,7 @@ return [
             'cost_per_item' => 'Costo por artículo',
             'currency' => 'Moneda',
             'quantity' => 'Cantidad',
+            'allow_backorder' => 'Permitir pedido en espera (backorder)',
             'weight_value' => 'Peso',
             'weight_unit' => 'Unidad de peso',
             'seo_title' => 'Título SEO',
@@ -240,6 +242,7 @@ return [
             'variants' => 'Variantes',
             'stock' => 'Unidades en stock',
             'unnamed' => '{1} :count producto sin nombre será omitido.|[2,*] :count productos sin nombre serán omitidos.',
+            'unsupported_currency' => '{1} :count producto tiene un precio en una moneda no activada en la tienda y será omitido.|[2,*] :count productos tienen un precio en una moneda no activada en la tienda y serán omitidos.',
             'more' => 'Y :count productos más…',
         ],
         'progress' => [

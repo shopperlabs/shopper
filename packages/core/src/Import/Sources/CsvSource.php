@@ -7,6 +7,7 @@ namespace Shopper\Core\Import\Sources;
 use Generator;
 use Illuminate\Support\LazyCollection;
 use League\Csv\Reader;
+use League\Csv\SyntaxError;
 use Shopper\Core\Exceptions\ProductImportException;
 use Shopper\Core\Import\Contracts\ImportSource;
 use Shopper\Core\Import\Contracts\SupportsColumnMapping;
@@ -18,7 +19,7 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
 {
     private const array REQUIRED_COLUMNS = ['handle', 'name'];
 
-    /** @var array<string, string> */
+    /** @var array<string, ?string> */
     private array $mapping = [];
 
     public function code(): string
@@ -54,13 +55,23 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
         $reader = Reader::from($path);
         $reader->setHeaderOffset(0);
 
-        return array_values(array_filter($reader->getHeader()));
+        try {
+            $header = $reader->getHeader();
+        } catch (SyntaxError $e) {
+            throw new ProductImportException('The file has no header row.', previous: $e);
+        }
+
+        if ($header !== array_unique($header)) {
+            throw new ProductImportException('Several columns of the file have the same name or no name.');
+        }
+
+        return array_values(array_filter($header));
     }
 
     public function withMapping(array $mapping): static
     {
         $clone = clone $this;
-        $clone->mapping = array_filter($mapping);
+        $clone->mapping = $mapping;
 
         return $clone;
     }
@@ -71,7 +82,14 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
             $reader = Reader::from($path);
             $reader->setHeaderOffset(0);
 
-            $this->validateHeader($reader->getHeader());
+            $header = $reader->getHeader();
+
+            $this->validateHeader($header);
+
+            $fields = array_values(array_filter(
+                array_unique([...array_keys($this->mapping), ...$header]),
+                fn (string $field): bool => in_array($this->column($field), $header, true),
+            ));
 
             $handle = null;
             $buffer = [];
@@ -84,7 +102,7 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
                 }
 
                 if ($handle !== null && $rowHandle !== $handle && $buffer !== []) {
-                    yield $this->makeProduct($buffer);
+                    yield $this->makeProduct($buffer, $fields);
                     $buffer = [];
                 }
 
@@ -93,7 +111,7 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
             }
 
             if ($buffer !== []) {
-                yield $this->makeProduct($buffer);
+                yield $this->makeProduct($buffer, $fields);
             }
         });
     }
@@ -116,15 +134,16 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
         }
     }
 
-    private function column(string $key): string
+    private function column(string $key): ?string
     {
-        return $this->mapping[$key] ?? $key;
+        return array_key_exists($key, $this->mapping) ? $this->mapping[$key] : $key;
     }
 
     /**
      * @param  array<int, array<string, ?string>>  $rows
+     * @param  array<int, string>  $fields
      */
-    private function makeProduct(array $rows): ProductRow
+    private function makeProduct(array $rows, array $fields): ProductRow
     {
         $first = $rows[0];
 
@@ -164,12 +183,13 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
                 mb_trim(...),
                 explode(',', (string) $this->value($first, 'tags'))
             ))),
-            published: $this->boolean($first, 'published', default: true),
+            published: $this->boolean($first, 'published'),
             seoTitle: $this->value($first, 'seo_title'),
             seoDescription: $this->value($first, 'seo_description'),
             optionNames: $optionNames,
             variants: $variants,
             images: $images,
+            fields: $fields,
         );
     }
 
@@ -199,10 +219,10 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
             compareAtPrice: $this->float($row, 'compare_at_price'),
             costPerItem: $this->float($row, 'cost_per_item'),
             currency: $this->value($row, 'currency'),
-            quantity: (int) ($this->value($row, 'quantity') ?? 0),
+            quantity: $this->quantity($row),
             weightValue: $this->float($row, 'weight_value'),
             weightUnit: $this->value($row, 'weight_unit'),
-            requiresShipping: $this->boolean($row, 'requires_shipping', default: true),
+            allowBackorder: $this->backorder($row),
             imageUrl: $this->value($row, 'variant_image_url'),
         );
     }
@@ -238,7 +258,13 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
      */
     private function value(array $row, string $key): ?string
     {
-        $value = mb_trim((string) ($row[$this->column($key)] ?? ''));
+        $column = $this->column($key);
+
+        if ($column === null) {
+            return null;
+        }
+
+        $value = mb_trim((string) ($row[$column] ?? ''));
 
         return $value === '' ? null : $value;
     }
@@ -246,13 +272,32 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
     /**
      * @param  array<string, ?string>  $row
      */
-    private function boolean(array $row, string $key, bool $default = false): bool
+    private function boolean(array $row, string $key): ?bool
     {
         $value = $this->value($row, $key);
 
-        return $value === null
-            ? $default
-            : filter_var($value, FILTER_VALIDATE_BOOLEAN);
+        if ($value === null) {
+            return null;
+        }
+
+        if (is_numeric($value)) {
+            return (int) $value === 1;
+        }
+
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE)
+            ?? throw ProductImportException::invalidBoolean(...$this->cell($row, $key, $value));
+    }
+
+    /**
+     * @param  array<string, ?string>  $row
+     */
+    private function backorder(array $row): bool
+    {
+        return match (mb_strtolower((string) $this->value($row, 'allow_backorder'))) {
+            'continue', 'notify' => true,
+            'deny' => false,
+            default => $this->boolean($row, 'allow_backorder') ?? false,
+        };
     }
 
     /**
@@ -262,6 +307,42 @@ final class CsvSource implements ImportSource, SupportsColumnMapping
     {
         $value = $this->value($row, $key);
 
-        return $value === null ? null : (float) $value;
+        if ($value === null) {
+            return null;
+        }
+
+        if (! is_numeric($value)) {
+            throw ProductImportException::invalidNumber(...$this->cell($row, $key, $value));
+        }
+
+        return (float) $value;
+    }
+
+    /**
+     * @param  array<string, ?string>  $row
+     */
+    private function quantity(array $row): ?int
+    {
+        $quantity = $this->float($row, 'quantity');
+
+        if ($quantity !== null && floor($quantity) !== $quantity) {
+            throw ProductImportException::invalidNumber(...$this->cell($row, 'quantity', (string) $this->value($row, 'quantity')));
+        }
+
+        return $quantity === null ? null : (int) $quantity;
+    }
+
+    /**
+     * @param  array<string, ?string>  $row
+     * @return array{handle: string, field: string, column: string, value: string}
+     */
+    private function cell(array $row, string $key, string $value): array
+    {
+        return [
+            'handle' => (string) $this->value($row, 'handle'),
+            'field' => $key,
+            'column' => (string) $this->column($key),
+            'value' => $value,
+        ];
     }
 }

@@ -16,4 +16,9 @@ return [
         'percentage_out_of_range' => 'A percentage discount cannot exceed 100%.',
     ],
 
+    'import' => [
+        'invalid_number' => 'The :column column of product ":handle" holds ":value", which is not a valid number.',
+        'invalid_boolean' => 'The :column column of product ":handle" holds ":value", which is neither TRUE nor FALSE.',
+    ],
+
 ];

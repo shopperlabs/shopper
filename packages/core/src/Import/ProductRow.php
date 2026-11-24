@@ -12,6 +12,7 @@ final readonly class ProductRow
      * @param  array<int, string>  $optionNames
      * @param  array<int, VariantRow>  $variants
      * @param  array<int, ImageRow>  $images
+     * @param  array<int, string>|null  $fields
      */
     public function __construct(
         public string $handle,
@@ -20,13 +21,19 @@ final readonly class ProductRow
         public ?string $brand = null,
         public array $categories = [],
         public array $tags = [],
-        public bool $published = false,
+        public ?bool $published = false,
         public ?string $seoTitle = null,
         public ?string $seoDescription = null,
         public array $optionNames = [],
         public array $variants = [],
         public array $images = [],
+        public ?array $fields = null,
     ) {}
+
+    public function provides(string $field): bool
+    {
+        return $this->fields === null || in_array($field, $this->fields, true);
+    }
 
     public function isStandard(): bool
     {

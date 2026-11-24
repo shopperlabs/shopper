@@ -20,6 +20,17 @@ use Shopper\Core\Models\Product;
 
 uses(Tests\Core\TestCase::class);
 
+/**
+ * @return array<int, ProductRow>
+ */
+function importRowsFromCsv(string $contents): array
+{
+    $path = tempnam(sys_get_temp_dir(), 'import');
+    file_put_contents($path, $contents);
+
+    return (new CsvSource)->read($path)->all();
+}
+
 beforeEach(function (): void {
     Queue::fake();
     setupCurrencies();
@@ -176,6 +187,31 @@ describe(ProductRowImporter::class, function (): void {
         expect($price->currency_id)->toBe((int) shopper_setting('default_currency_id'));
     });
 
+    it('stores a zero-decimal currency price as given in the file', function (): void {
+        setupCurrencies(['USD', 'JPY']);
+
+        $this->importer->import(new ProductRow(
+            handle: 'yen-lamp',
+            name: 'Yen Lamp',
+            variants: [new VariantRow(price: 4900, compareAtPrice: 5900, currency: 'jpy')],
+        ));
+
+        $price = Product::findBySlug('yen-lamp')->prices()->firstOrFail();
+
+        expect($price->amount)->toBe(4900)
+            ->and($price->compare_amount)->toBe(5900);
+    });
+
+    it('updates the product of a handle that is not written as a slug', function (): void {
+        $this->importer->import(new ProductRow(handle: 'Mug Red', name: 'Mug'));
+        $this->importer->import(new ProductRow(handle: 'Mug Red', name: 'Red mug'));
+
+        $product = Product::query()->sole();
+
+        expect($product->slug)->toBe('mug-red')
+            ->and($product->name)->toBe('Red mug');
+    });
+
     it('rejects a price whose currency is not enabled on the store', function (): void {
         $this->importer->import(new ProductRow(
             handle: 'yen-lamp',
@@ -183,4 +219,156 @@ describe(ProductRowImporter::class, function (): void {
             variants: [new VariantRow(price: 4900, currency: 'JPY')],
         ));
     })->throws(ProductImportException::class, 'Currency [JPY] is not enabled on this store.');
+
+    it('rejects a handle that cannot be used in a URL', function (): void {
+        $this->importer->import(new ProductRow(handle: '!!!', name: 'Mug'));
+    })->throws(ProductImportException::class, 'Product [!!!] has a handle that cannot be used in a URL.');
+
+    it('restores a deleted product instead of creating a second one', function (): void {
+        $this->importer->import(new ProductRow(handle: 'mug', name: 'Mug'));
+        Product::findBySlug('mug')->delete();
+
+        $this->importer->import(new ProductRow(handle: 'mug', name: 'Red mug'));
+
+        $product = Product::withTrashed()->sole();
+
+        expect($product->trashed())->toBeFalse()
+            ->and($product->name)->toBe('Red mug');
+    });
+
+    it('rejects a negative price', function (): void {
+        $this->importer->import(new ProductRow(
+            handle: 'mug',
+            name: 'Mug',
+            variants: [new VariantRow(price: 12.0, compareAtPrice: -5.0)],
+        ));
+    })->throws(ProductImportException::class, 'Product [mug] has a negative price.');
+
+    it('keeps the values of the columns a re-import leaves out', function (): void {
+        foreach (importRowsFromCsv("handle,name,published,price,compare_at_price,quantity\nmug,Mug,FALSE,12,15,5\n") as $row) {
+            $this->importer->import($row);
+        }
+
+        foreach (importRowsFromCsv("handle,name,price\nmug,Mug,10\n") as $row) {
+            $this->importer->import($row);
+        }
+
+        $product = Product::findBySlug('mug');
+        $price = $product->prices()->sole();
+
+        expect($product->is_visible)->toBeFalse()
+            ->and($product->stock)->toBe(5)
+            ->and($price->amount)->toBe(1000)
+            ->and($price->compare_amount)->toBe(1500);
+    });
+
+    it('keeps the options of a variant product re-imported with blank option cells', function (): void {
+        $this->importer->import($this->rows[0]);
+
+        foreach (importRowsFromCsv("handle,name,sku,price,option1_name,option1_value\ngraphic-t-shirt,Graphic T-Shirt,TSHIRT-S-GREEN,21,,\n") as $row) {
+            $this->importer->import($row);
+        }
+
+        $product = Product::findBySlug('graphic-t-shirt');
+        $variant = $product->variants()->where('sku', 'TSHIRT-S-GREEN')->firstOrFail();
+
+        expect($product->type)->toBe(ProductType::Variant)
+            ->and($product->variants)->toHaveCount(12)
+            ->and($variant->name)->toBe('Small / green')
+            ->and($variant->values)->toHaveCount(2)
+            ->and($variant->prices()->sole()->amount)->toBe(2100);
+    });
+
+    it('updates a variant product from a file without variant columns', function (): void {
+        $this->importer->import($this->rows[0]);
+
+        foreach (importRowsFromCsv("handle,name,description,sku\ngraphic-t-shirt,Graphic T-Shirt,New copy,\n") as $row) {
+            $this->importer->import($row);
+        }
+
+        $product = Product::findBySlug('graphic-t-shirt');
+
+        expect($product->description)->toBe('New copy')
+            ->and($product->type)->toBe(ProductType::Variant)
+            ->and($product->variants)->toHaveCount(12);
+    });
+
+    it('rejects a price for a variant product row without SKU or options', function (): void {
+        $this->importer->import($this->rows[0]);
+
+        foreach (importRowsFromCsv("handle,name,price\ngraphic-t-shirt,Graphic T-Shirt,25\n") as $row) {
+            $this->importer->import($row);
+        }
+    })->throws(ProductImportException::class, 'has a variant without SKU or options');
+
+    it('keeps the stock and the visibility when their cells are blank', function (): void {
+        foreach (importRowsFromCsv("handle,name,published,quantity\nmug,Mug,FALSE,5\n") as $row) {
+            $this->importer->import($row);
+        }
+
+        foreach (importRowsFromCsv("handle,name,published,quantity\nmug,Mug,,\n") as $row) {
+            $this->importer->import($row);
+        }
+
+        $product = Product::findBySlug('mug');
+
+        expect($product->is_visible)->toBeFalse()
+            ->and($product->stock)->toBe(5);
+    });
+
+    it('names the deleted product that holds the SKU of a row', function (): void {
+        $this->importer->import(new ProductRow(handle: 'mug', name: 'Mug', variants: [new VariantRow(sku: 'MUG-1')]));
+        Product::findBySlug('mug')->delete();
+
+        $this->importer->import(new ProductRow(handle: 'cup', name: 'Cup', variants: [new VariantRow(sku: 'MUG-1')]));
+    })->throws(ProductImportException::class, 'Product [cup] uses the sku [MUG-1] of product [mug], which is deleted.');
+
+    it('rejects a variant barcode held by another product', function (): void {
+        $this->importer->import($this->rows[0]);
+
+        $this->importer->import(new ProductRow(
+            handle: 'hoodie',
+            name: 'Hoodie',
+            optionNames: ['Size'],
+            variants: [new VariantRow(options: ['Size' => 'Small'], sku: 'HOODIE-S', barcode: '1234567890101')],
+        ));
+    })->throws(ProductImportException::class, 'Product [hoodie] uses the barcode [1234567890101] of product [graphic-t-shirt].');
+
+    it('rejects an unknown weight unit', function (): void {
+        $this->importer->import(new ProductRow(
+            handle: 'mug',
+            name: 'Mug',
+            variants: [new VariantRow(weightValue: 1.5, weightUnit: 'kgs')],
+        ));
+    })->throws(ProductImportException::class, 'Product [mug] has an unknown weight unit [kgs].');
+
+    it('updates the compare-at price and the cost of a row without price', function (): void {
+        foreach (importRowsFromCsv("handle,name,price,compare_at_price,cost_per_item\nmug,Mug,12,15,5\n") as $row) {
+            $this->importer->import($row);
+        }
+
+        foreach (importRowsFromCsv("handle,name,price,compare_at_price,cost_per_item\nmug,Mug,,18,6\n") as $row) {
+            $this->importer->import($row);
+        }
+
+        $price = Product::findBySlug('mug')->prices()->sole();
+
+        expect($price->amount)->toBe(1200)
+            ->and($price->compare_amount)->toBe(1800)
+            ->and($price->cost_amount)->toBe(600);
+    });
+
+    it('rounds a price half up to the cents of its currency', function (float $price, int $amount): void {
+        $this->importer->import(new ProductRow(
+            handle: 'mug',
+            name: 'Mug',
+            variants: [new VariantRow(price: $price)],
+        ));
+
+        expect(Product::findBySlug('mug')->prices()->sole()->amount)->toBe($amount);
+    })->with([
+        [0.285, 29],
+        [1.005, 101],
+        [8.3333, 833],
+    ]);
 });

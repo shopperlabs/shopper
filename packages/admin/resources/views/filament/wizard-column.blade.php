@@ -37,6 +37,10 @@
             ->class(["fi-sc-wizard-step"])
     }}
 >
+    @if (filled($description = $getDescription()))
+        <p class="text-sh-fg-muted mb-6 text-sm">{{ $description }}</p>
+    @endif
+
     {{ $getChildSchema() }}
 
     @if (filled($alpineSubmitHandler))
