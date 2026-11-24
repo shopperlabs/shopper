@@ -135,6 +135,7 @@ class Webhooks extends Component implements HasActions, HasSchemas, HasTable
                     ->color('gray')
                     ->iconButton()
                     ->authorize('system.settings')
+                    ->visible(fn (WebhookSubscription $record): bool => $record->is_active)
                     ->action(fn (WebhookSubscription $record) => $this->redeliver($record)),
                 Action::make('regenerateSecret')
                     ->label(__('shopper::pages/settings/webhooks.regenerate_secret'))
@@ -201,6 +202,11 @@ class Webhooks extends Component implements HasActions, HasSchemas, HasTable
             ->first();
 
         if ($lastDelivery === null) {
+            Notification::make()
+                ->title(__('shopper::pages/settings/webhooks.no_delivery'))
+                ->warning()
+                ->send();
+
             return;
         }
 
