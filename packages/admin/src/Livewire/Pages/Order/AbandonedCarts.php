@@ -99,7 +99,7 @@ class AbandonedCarts extends AbstractPageComponent implements HasActions, HasSch
                         ->whereNotNull('customer_id')
                         ->with('customer')
                         ->get()
-                        ->pluck('customer.name', 'customer_id')
+                        ->pluck('customer.full_name', 'customer_id')
                         ->filter()
                         ->all())
                     ->searchable(),
