@@ -77,6 +77,24 @@ describe(Webhooks::class, function (): void {
             ->and(mb_strlen($newSecret))->toBeGreaterThanOrEqual(32);
     });
 
+    it('keeps the signing secret out of the edit form', function (): void {
+        $subscription = WebhookSubscription::factory()->create(['secret' => 'signing-secret']);
+
+        $component = Livewire::test(Webhooks::class)
+            ->mountAction(TestAction::make('edit')->table($subscription));
+
+        expect($component->get('mountedActions.0.data'))
+            ->toHaveKey('url', $subscription->url)
+            ->not->toHaveKey('secret');
+    });
+
+    it('hides redeliver while the webhook is inactive', function (): void {
+        $subscription = WebhookSubscription::factory()->create(['is_active' => false]);
+
+        Livewire::test(Webhooks::class)
+            ->assertActionHidden(TestAction::make('redeliver')->table($subscription));
+    });
+
     it('rejects a webhook url resolving to a private address', function (): void {
         WebhookUrl::resolveHostUsing(fn (): array => ['169.254.169.254']);
 

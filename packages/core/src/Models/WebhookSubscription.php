@@ -33,6 +33,8 @@ class WebhookSubscription extends Model
 
     protected $guarded = [];
 
+    protected $hidden = ['secret'];
+
     /**
      * The active subscriptions, cached so the dispatch listener adds zero
      * queries to the domain-event hot path (checkout, payment). Invalidated
