@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Password;
 use Livewire\Livewire;
 use Shopper\Livewire\SlideOvers\CreateTeamMember;
 use Shopper\Models\Role;
@@ -28,7 +30,6 @@ describe(CreateTeamMember::class, function (): void {
             ->assertSchemaExists('form')
             ->fillForm([
                 'email' => 'member@example.com',
-                'password' => 'password123',
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'gender' => 'male',
@@ -57,7 +58,6 @@ describe(CreateTeamMember::class, function (): void {
             ->call('store')
             ->assertHasFormErrors([
                 'email' => 'required',
-                'password' => 'required',
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'roles' => 'required',
@@ -68,7 +68,6 @@ describe(CreateTeamMember::class, function (): void {
         Livewire::test(CreateTeamMember::class)
             ->fillForm([
                 'email' => 'invalid-email',
-                'password' => 'password123',
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'roles' => [$this->role->id],
@@ -81,7 +80,6 @@ describe(CreateTeamMember::class, function (): void {
         Livewire::test(CreateTeamMember::class)
             ->fillForm([
                 'email' => $this->user->email,
-                'password' => 'password123',
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'roles' => [$this->role->id],
@@ -90,30 +88,12 @@ describe(CreateTeamMember::class, function (): void {
             ->assertHasFormErrors(['email' => 'unique']);
     });
 
-    it('hashes password before storing', function (): void {
-        Livewire::test(CreateTeamMember::class)
-            ->fillForm([
-                'email' => 'test@example.com',
-                'password' => 'plainpassword',
-                'first_name' => 'Jane',
-                'last_name' => 'Smith',
-                'roles' => [$this->role->id],
-                'send_mail' => false,
-            ])
-            ->call('store');
-
-        $newUser = User::query()->where('email', 'test@example.com')->first();
-
-        expect(Hash::check('plainpassword', $newUser->password))->toBeTrue();
-    });
-
-    it('sends email when send_mail is true', function (): void {
+    it('invites the new member with a password reset link', function (): void {
         Notification::fake();
 
         Livewire::test(CreateTeamMember::class)
             ->fillForm([
                 'email' => 'notify@example.com',
-                'password' => 'password123',
                 'first_name' => 'Bob',
                 'last_name' => 'Wilson',
                 'roles' => [$this->role->id],
@@ -123,7 +103,38 @@ describe(CreateTeamMember::class, function (): void {
 
         $newUser = User::query()->where('email', 'notify@example.com')->first();
 
-        Notification::assertSentTo($newUser, AdminSendCredentials::class);
+        Notification::assertSentTo(
+            $newUser,
+            AdminSendCredentials::class,
+            fn (AdminSendCredentials $notification): bool => Password::tokenExists($newUser, $notification->token)
+                && $notification->toMail($newUser)->actionUrl === route('shopper.password.reset', [
+                    'token' => $notification->token,
+                    'email' => $newUser->email,
+                ]),
+        );
+    });
+
+    it('warns when the invitation link was refused', function (): void {
+        Notification::fake();
+        DB::table(config('auth.passwords.users.table'))->insert([
+            'email' => 'recreated@example.com',
+            'token' => Hash::make('previous-token'),
+            'created_at' => now(),
+        ]);
+
+        Livewire::test(CreateTeamMember::class)
+            ->fillForm([
+                'email' => 'recreated@example.com',
+                'first_name' => 'Bob',
+                'last_name' => 'Wilson',
+                'roles' => [$this->role->id],
+                'send_mail' => true,
+            ])
+            ->call('store')
+            ->assertHasNoFormErrors()
+            ->assertNotified(__('shopper::pages/settings/staff.invitation_not_sent'));
+
+        Notification::assertNothingSent();
     });
 
     it('does not send email when send_mail is false', function (): void {
@@ -132,13 +143,35 @@ describe(CreateTeamMember::class, function (): void {
         Livewire::test(CreateTeamMember::class)
             ->fillForm([
                 'email' => 'nomail@example.com',
-                'password' => 'password123',
                 'first_name' => 'Alice',
                 'last_name' => 'Johnson',
                 'roles' => [$this->role->id],
                 'send_mail' => false,
             ])
             ->call('store');
+
+        Notification::assertNothingSent();
+    });
+
+    it('asks for the password when the admin password reset is disabled', function (): void {
+        Notification::fake();
+        config(['shopper.auth.password_reset' => false]);
+
+        Livewire::test(CreateTeamMember::class)
+            ->assertFormFieldHidden('send_mail')
+            ->fillForm([
+                'email' => 'local@example.com',
+                'password' => 'plainpassword',
+                'first_name' => 'Jane',
+                'last_name' => 'Smith',
+                'roles' => [$this->role->id],
+            ])
+            ->call('store')
+            ->assertHasNoFormErrors();
+
+        $newUser = User::query()->where('email', 'local@example.com')->first();
+
+        expect(Hash::check('plainpassword', $newUser->password))->toBeTrue();
 
         Notification::assertNothingSent();
     });
@@ -150,7 +183,6 @@ describe(CreateTeamMember::class, function (): void {
         Livewire::test(CreateTeamMember::class)
             ->fillForm([
                 'email' => 'role@example.com',
-                'password' => 'password123',
                 'first_name' => 'Role',
                 'last_name' => 'User',
                 'roles' => [$secondRole->id],

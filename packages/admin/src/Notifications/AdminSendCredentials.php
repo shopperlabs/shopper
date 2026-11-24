@@ -12,7 +12,7 @@ use Shopper\Models\Contracts\ShopperUser;
 final class AdminSendCredentials extends Notification
 {
     public function __construct(
-        public string $password
+        public string $token
     ) {}
 
     /**
@@ -29,9 +29,13 @@ final class AdminSendCredentials extends Notification
             ->subject(__('shopper::mails.admin.subject'))
             ->greeting(__('shopper::mails.admin.greeting', ['name' => $notifiable->full_name]))
             ->line(__('shopper::mails.admin.account_created', ['website' => config('app.url')]))
-            ->line(__('shopper::mails.admin.credentials', ['email' => $notifiable->email, 'password' => $this->password]))
-            ->line(__('shopper::mails.admin.login_link'))
-            ->action(__('shopper::mails.admin.action'), route('shopper.login'))
-            ->line(__('shopper::mails.admin.change_password'));
+            ->line(__('shopper::mails.admin.set_password'))
+            ->action(
+                __('shopper::mails.admin.set_password_action'),
+                route('shopper.password.reset', ['token' => $this->token, 'email' => $notifiable->email])
+            )
+            ->line(__('shopper::mails.admin.link_expiry', [
+                'count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire'),
+            ]));
     }
 }
