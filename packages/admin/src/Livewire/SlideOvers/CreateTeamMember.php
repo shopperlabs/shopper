@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
+use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\CheckboxList;
@@ -11,6 +12,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Callout;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
@@ -73,9 +75,24 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
                             ->email()
                             ->unique(config('auth.providers.users.model'), 'email')
                             ->required(),
+                        TextInput::make('password')
+                            ->label(__('shopper::forms.label.password'))
+                            ->password()
+                            ->revealable()
+                            ->inlineSuffix()
+                            ->required()
+                            ->visible(fn (): bool => ! config('shopper.auth.password_reset', true))
+                            ->hintAction(
+                                Action::make(__('shopper::words.generate'))
+                                    ->color('info')
+                                    ->action(function (Set $set): void {
+                                        $set('password', Str::password(16));
+                                    }),
+                            ),
                         Toggle::make('send_mail')
                             ->label(__('shopper::pages/settings/staff.send_invite'))
                             ->default(true)
+                            ->visible(fn (): bool => config('shopper.auth.password_reset', true))
                             ->helperText(__('shopper::pages/settings/staff.send_invite_summary')),
                     ]),
                 Section::make(__('shopper::pages/settings/staff.personal_information'))
@@ -132,7 +149,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
                 'email' => $data['email'],
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
-                'password' => Hash::make(Str::password()),
+                'password' => Hash::make($data['password'] ?? Str::password()),
                 'phone_number' => $data['phone_number'] ?? null,
                 'gender' => $data['gender'] ?? null,
                 'email_verified_at' => now()->toDateTimeString(),
@@ -145,7 +162,7 @@ class CreateTeamMember extends SlideOverComponent implements HasActions, HasSche
 
         $this->dispatch('teamUpdate');
 
-        if ($data['send_mail']) {
+        if ($data['send_mail'] ?? false) {
             $status = Password::sendResetLink(
                 ['email' => $user->email],
                 fn (ShopperUser $user, string $token) => $user->notify(new AdminSendCredentials($token)),

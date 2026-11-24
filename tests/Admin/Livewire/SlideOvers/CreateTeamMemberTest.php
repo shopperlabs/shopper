@@ -153,6 +153,29 @@ describe(CreateTeamMember::class, function (): void {
         Notification::assertNothingSent();
     });
 
+    it('asks for the password when the admin password reset is disabled', function (): void {
+        Notification::fake();
+        config(['shopper.auth.password_reset' => false]);
+
+        Livewire::test(CreateTeamMember::class)
+            ->assertFormFieldHidden('send_mail')
+            ->fillForm([
+                'email' => 'local@example.com',
+                'password' => 'plainpassword',
+                'first_name' => 'Jane',
+                'last_name' => 'Smith',
+                'roles' => [$this->role->id],
+            ])
+            ->call('store')
+            ->assertHasNoFormErrors();
+
+        $newUser = User::query()->where('email', 'local@example.com')->first();
+
+        expect(Hash::check('plainpassword', $newUser->password))->toBeTrue();
+
+        Notification::assertNothingSent();
+    });
+
     it('assigns role to new user', function (): void {
         /** @var Role $secondRole */
         $secondRole = Role::query()->skip(1)->first();
