@@ -229,16 +229,18 @@
                     <h3 class="text-sh-fg text-sm font-medium">
                         {{ __('shopper::pages/orders.shipment.timeline') }}
                     </h3>
-                    @if (count($this->shipment->allowedTransitions()) > 0)
-                        <x-filament::button
-                            wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.shipment-add-event', arguments: { shipment: {{ $this->shipment->id }} } })"
-                            size="sm"
-                            color="gray"
-                            icon="untitledui-plus"
-                        >
-                            {{ __('shopper::pages/orders.shipment.add_event') }}
-                        </x-filament::button>
-                    @endif
+                    @can('orders.edit')
+                        @if (count($this->shipment->allowedTransitions()) > 0)
+                            <x-filament::button
+                                wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.shipment-add-event', arguments: { shipment: {{ $this->shipment->id }} } })"
+                                size="sm"
+                                color="gray"
+                                icon="untitledui-plus"
+                            >
+                                {{ __('shopper::pages/orders.shipment.add_event') }}
+                            </x-filament::button>
+                        @endif
+                    @endcan
                 </div>
 
                 <div class="mt-4 pl-2">

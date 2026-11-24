@@ -41,21 +41,26 @@
                             <p class="text-sh-fg-muted text-sm">{{ $customer->email }}</p>
                         @endif
                     @else
+                        @if ($this->cart->email)
+                            <p class="text-sh-fg text-sm font-medium">{{ $this->cart->email }}</p>
+                        @endif
+
                         <p class="text-sh-fg-muted text-sm">
                             {{ __('shopper::pages/orders.abandoned_carts.guest') }}
                         </p>
                     @endif
                 </div>
-                @if ($this->cart->channel)
-                    <div class="mt-3 flex items-center gap-2">
+                <div class="mt-3 flex items-center gap-2">
+                    @if ($this->cart->channel)
                         <x-filament::badge color="gray" icon="phosphor-storefront-duotone">
                             {{ $this->cart->channel->name }}
                         </x-filament::badge>
-                        <x-filament::badge color="gray">
-                            {{ $this->cart->currency_code }}
-                        </x-filament::badge>
-                    </div>
-                @endif
+                    @endif
+
+                    <x-filament::badge color="gray">
+                        {{ $this->cart->currency_code }}
+                    </x-filament::badge>
+                </div>
             </div>
 
             @if ($lines->isNotEmpty())

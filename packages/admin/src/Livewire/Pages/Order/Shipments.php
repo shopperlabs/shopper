@@ -112,7 +112,7 @@ class Shipments extends AbstractPageComponent implements HasActions, HasSchemas,
                 TextColumn::make('id')
                     ->label(__('shopper::pages/orders.shipment_id'))
                     ->formatStateUsing(fn (OrderShipping $record): string => 'SHP-'.$record->id)
-                    ->searchable()
+                    ->searchable(query: fn (Builder $query, string $search): Builder => $query->whereKey((int) preg_replace('/\D/', '', $search)))
                     ->sortable(),
                 ViewColumn::make('shipment_event')
                     ->label(__('shopper::pages/orders.shipment_event'))

@@ -60,7 +60,7 @@ class ShipmentAddEvent extends SlideOverComponent implements HasActions, HasSche
 
     public function mount(): void
     {
-        $this->authorize('orders.read');
+        $this->authorize('orders.edit');
 
         $this->form->fill();
 

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
+use Shopper\Core\Models\OrderShipping;
 use Shopper\Livewire\Pages\Order\Shipments;
 use Tests\Core\Stubs\User;
 
@@ -24,5 +25,14 @@ describe(Shipments::class, function (): void {
         Livewire::withQueryParams(['tab' => 'pending'])
             ->test(Shipments::class)
             ->assertSet('activeTab', 'pending');
+    });
+
+    it('finds a shipment by the reference it displays', function (): void {
+        $shipments = OrderShipping::factory()->count(2)->create();
+
+        Livewire::test(Shipments::class)
+            ->searchTable('SHP-'.$shipments[0]->id)
+            ->assertCanSeeTableRecords([$shipments[0]])
+            ->assertCanNotSeeTableRecords([$shipments[1]]);
     });
 })->group('livewire', 'orders');
