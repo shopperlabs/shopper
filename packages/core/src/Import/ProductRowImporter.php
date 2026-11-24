@@ -6,6 +6,7 @@ namespace Shopper\Core\Import;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Shopper\Core\Enum\Dimension\Weight;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Enum\ProductType;
@@ -24,6 +25,16 @@ use Shopper\Core\Models\ProductTag;
 
 final class ProductRowImporter
 {
+    private const array FIELDS = [
+        'brand_id' => 'brand',
+        'is_visible' => 'published',
+        'published_at' => 'published',
+        'weight_unit' => 'weight_value',
+        'amount' => 'price',
+        'compare_amount' => 'compare_at_price',
+        'cost_amount' => 'cost_per_item',
+    ];
+
     /** @var array<string, int> */
     private array $currencyIds = [];
 
@@ -43,12 +54,12 @@ final class ProductRowImporter
             $this->syncCategories($product, $row->categories);
             $this->syncTags($product, $row->tags);
 
-            if ($row->isStandard()) {
-                $this->applyStandardData($product, $row->variants[0] ?? null);
-            } else {
+            if ($product->type === ProductType::Variant) {
                 foreach ($row->variants as $variant) {
                     $this->upsertVariant($product, $variant, $row);
                 }
+            } else {
+                $this->applyStandardData($product, $row, $row->variants[0] ?? null);
             }
 
             return $product;
@@ -71,7 +82,7 @@ final class ProductRowImporter
             ->values()
             ->all();
 
-        if ($row->isStandard()) {
+        if ($product->type !== ProductType::Variant) {
             return $jobs;
         }
 
@@ -99,14 +110,21 @@ final class ProductRowImporter
      */
     private function upsertProduct(ProductRow $row): ProductContract
     {
+        $slug = Str::slug($row->handle);
+
+        if ($slug === '') {
+            throw new ProductImportException("Product [{$row->handle}] has a handle that cannot be used in a URL.");
+        }
+
         /** @var (Model&ProductContract)|null $product */
-        $product = resolve(ProductContract::class)::query()->where('slug', $row->handle)->first();
+        $product = resolve(ProductContract::class)::query()->withTrashed()->where('slug', $slug)->first();
+
+        $type = $row->isStandard() ? ProductType::Standard : ProductType::Variant;
 
         $data = [
             'name' => $row->name,
             'description' => $row->description,
-            'type' => $row->isStandard() ? ProductType::Standard : ProductType::Variant,
-            'is_visible' => $row->published,
+            'is_visible' => $row->published ?? $product->is_visible ?? true,
             'brand_id' => $this->resolveBrand($row->brand),
             'seo_title' => $row->seoTitle,
             'seo_description' => $row->seoDescription,
@@ -115,14 +133,24 @@ final class ProductRowImporter
 
         if ($product === null) {
             /** @var Model&ProductContract $product */
-            $product = resolve(ProductContract::class)::query()->create([...$data, 'slug' => $row->handle]);
+            $product = resolve(ProductContract::class)::query()->create([...$data, 'type' => $type, 'slug' => $slug]);
 
             event(new ProductCreated($product));
 
             return $product;
         }
 
-        $product->update($data);
+        if ($product->trashed()) {
+            $product->restore();
+        }
+
+        $attributes = $this->provided($row, $data);
+
+        if ($product->type === ProductType::Standard) {
+            $attributes['type'] = $type;
+        }
+
+        $product->update($attributes);
 
         return $product;
     }
@@ -193,20 +221,20 @@ final class ProductRowImporter
     /**
      * @param  Model&ProductContract  $product
      */
-    private function applyStandardData(ProductContract $product, ?VariantRow $variant): void
+    private function applyStandardData(ProductContract $product, ProductRow $row, ?VariantRow $variant): void
     {
         if ($variant === null) {
             return;
         }
 
-        $product->update([
+        $product->update($this->provided($row, [
             'sku' => $variant->sku,
             'barcode' => $variant->barcode,
             'allow_backorder' => $variant->allowBackorder,
             ...$this->weightData($variant),
-        ]);
+        ]));
 
-        $this->applyPricing($product, $variant);
+        $this->applyPricing($product, $row, $variant);
         $this->applyStock($product, $variant->quantity);
     }
 
@@ -216,6 +244,17 @@ final class ProductRowImporter
     private function upsertVariant(ProductContract $product, VariantRow $row, ProductRow $productRow): void
     {
         $name = $row->name($productRow->name);
+        $options = $productRow->optionNames !== [];
+
+        if ($row->sku === null && ! $options) {
+            $values = [$row->barcode, $row->ean, $row->upc, $row->price, $row->quantity, $row->weightValue, $row->imageUrl];
+
+            if (array_filter($values, fn (mixed $value): bool => $value !== null) === []) {
+                return;
+            }
+
+            throw new ProductImportException("Product [{$productRow->handle}] has a variant without SKU or options.");
+        }
 
         /** @var (Model&ProductVariantContract)|null $variant */
         $variant = $product->variants()
@@ -223,29 +262,31 @@ final class ProductRowImporter
             ->when($row->sku === null, fn ($query) => $query->where('name', $name))
             ->first();
 
-        $data = [
-            'name' => $name,
+        $data = $this->provided($productRow, [
             'sku' => $row->sku,
             'barcode' => $row->barcode,
             'ean' => $row->ean,
             'upc' => $row->upc,
             'allow_backorder' => $row->allowBackorder,
             ...$this->weightData($row),
-        ];
+        ]);
 
         if ($variant === null) {
             /** @var Model&ProductVariantContract $variant */
             $variant = $product->variants()->create([
                 ...$data,
+                'name' => $name,
                 'position' => (int) $product->variants()->max('position') + 1,
             ]);
         } else {
-            $variant->update($data);
+            $variant->update($options ? [...$data, 'name' => $name] : $data);
         }
 
-        $variant->values()->sync($this->resolveOptionValues($row->options));
+        if ($options) {
+            $variant->values()->sync($this->resolveOptionValues($row->options));
+        }
 
-        $this->applyPricing($variant, $row);
+        $this->applyPricing($variant, $productRow, $row);
         $this->applyStock($variant, $row->quantity);
     }
 
@@ -281,27 +322,37 @@ final class ProductRowImporter
     /**
      * @param  (Model&ProductContract)|(Model&ProductVariantContract)  $model
      */
-    private function applyPricing(ProductContract|ProductVariantContract $model, VariantRow $row): void
+    private function applyPricing(ProductContract|ProductVariantContract $model, ProductRow $productRow, VariantRow $row): void
     {
         if ($row->price === null) {
             return;
         }
 
+        if (min($row->price, $row->compareAtPrice ?? 0, $row->costPerItem ?? 0) < 0) {
+            throw new ProductImportException("Product [{$productRow->handle}] has a negative price.");
+        }
+
+        $currency = $row->currency === null ? shopper_currency() : mb_strtoupper($row->currency);
+
         $model->prices()->updateOrCreate(
             ['currency_id' => $this->resolveCurrencyId($row->currency)],
-            [
-                'amount' => $this->toCents($row->price),
-                'compare_amount' => $this->toCents($row->compareAtPrice),
-                'cost_amount' => $this->toCents($row->costPerItem),
-            ]
+            $this->provided($productRow, [
+                'amount' => $this->toMinorUnits($row->price, $currency),
+                'compare_amount' => $this->toMinorUnits($row->compareAtPrice, $currency),
+                'cost_amount' => $this->toMinorUnits($row->costPerItem, $currency),
+            ])
         );
     }
 
     /**
      * @param  (Model&ProductContract)|(Model&ProductVariantContract)  $model
      */
-    private function applyStock(ProductContract|ProductVariantContract $model, int $quantity): void
+    private function applyStock(ProductContract|ProductVariantContract $model, ?int $quantity): void
     {
+        if ($quantity === null) {
+            return;
+        }
+
         /** @var (Model&InventoryContract)|null $inventory */
         $inventory = resolve(InventoryContract::class)::query()->scopes('default')->first();
 
@@ -313,6 +364,19 @@ final class ProductRowImporter
             newQuantity: $quantity,
             inventoryId: $inventory->id,
             event: __('shopper-core::import.inventory_event'),
+        );
+    }
+
+    /**
+     * @param  array<string, mixed>  $attributes
+     * @return array<string, mixed>
+     */
+    private function provided(ProductRow $row, array $attributes): array
+    {
+        return array_filter(
+            $attributes,
+            fn (string $attribute): bool => $row->provides(self::FIELDS[$attribute] ?? $attribute),
+            ARRAY_FILTER_USE_KEY,
         );
     }
 
@@ -356,8 +420,14 @@ final class ProductRowImporter
         return $this->currencyIds[$code] = $currency->id;
     }
 
-    private function toCents(?float $amount): ?int
+    private function toMinorUnits(?float $amount, string $currency): ?int
     {
-        return $amount === null ? null : (int) round($amount * 100);
+        if ($amount === null) {
+            return null;
+        }
+
+        $decimals = is_no_division_currency($currency) ? 0 : 2;
+
+        return (int) round(round($amount, $decimals) * 10 ** $decimals);
     }
 }

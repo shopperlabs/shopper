@@ -19,7 +19,7 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read int $total_products
  * @property-read int $imported_count
  * @property-read int $failed_count
- * @property-read array<string, string>|null $mapping
+ * @property-read array<string, ?string>|null $mapping
  * @property-read array<int, array{handle: string, message: string}>|null $errors
  * @property-read ?string $batch_id
  * @property-read ?int $user_id

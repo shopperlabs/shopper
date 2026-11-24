@@ -16,4 +16,9 @@ return [
         'percentage_out_of_range' => 'Un descuento porcentual no puede superar el 100 %.',
     ],
 
+    'import' => [
+        'invalid_number' => 'La columna :column del producto «:handle» contiene «:value», que no es un número válido.',
+        'invalid_boolean' => 'La columna :column del producto «:handle» contiene «:value», que no es TRUE ni FALSE.',
+    ],
+
 ];

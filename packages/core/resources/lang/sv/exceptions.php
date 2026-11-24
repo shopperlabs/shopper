@@ -16,4 +16,9 @@ return [
         'percentage_out_of_range' => 'En procentuell rabatt får inte överstiga 100%.',
     ],
 
+    'import' => [
+        'invalid_number' => 'Kolumnen :column för produkten ":handle" innehåller ":value", vilket inte är ett giltigt tal.',
+        'invalid_boolean' => 'Kolumnen :column för produkten ":handle" innehåller ":value", vilket varken är TRUE eller FALSE.',
+    ],
+
 ];

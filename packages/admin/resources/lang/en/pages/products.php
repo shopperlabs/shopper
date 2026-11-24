@@ -207,6 +207,7 @@ return [
         'download_template' => 'Download a sample file',
         'submit' => 'Import products',
         'not_mapped' => 'Not mapped',
+        'invalid_header' => 'The first row of the file must give each column its own name.',
         'mapping_description' => 'Match the columns of your file with the product fields. Variants, options and images are detected automatically.',
         'steps' => [
             'upload' => 'Upload',
@@ -230,6 +231,7 @@ return [
             'cost_per_item' => 'Cost per item',
             'currency' => 'Currency',
             'quantity' => 'Quantity',
+            'allow_backorder' => 'Allow backorder',
             'weight_value' => 'Weight',
             'weight_unit' => 'Weight unit',
             'seo_title' => 'SEO title',
@@ -240,6 +242,7 @@ return [
             'variants' => 'Variants',
             'stock' => 'Stock units',
             'unnamed' => '{1} :count product has no name and will be skipped.|[2,*] :count products have no name and will be skipped.',
+            'unsupported_currency' => '{1} :count product has a price in a currency that is not enabled on the store and will be skipped.|[2,*] :count products have a price in a currency that is not enabled on the store and will be skipped.',
             'more' => 'And :count more products…',
         ],
         'progress' => [

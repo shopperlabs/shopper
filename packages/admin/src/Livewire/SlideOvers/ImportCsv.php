@@ -17,16 +17,20 @@ use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Number;
+use Illuminate\Validation\ValidationException;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
 use Shopper\Components\SlideOverWizard;
 use Shopper\Components\Wizard\StepColumn;
 use Shopper\Core\Enum\ImportStatus;
+use Shopper\Core\Exceptions\ProductImportException;
 use Shopper\Core\Import\ImportManager;
 use Shopper\Core\Import\ProductRow;
 use Shopper\Core\Import\Sources\CsvSource;
 use Shopper\Core\Import\StartProductImport;
+use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\ProductImport;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
@@ -58,6 +62,7 @@ class ImportCsv extends SlideOverComponent implements HasActions, HasSchemas
         'cost_per_item',
         'currency',
         'quantity',
+        'allow_backorder',
         'weight_value',
         'weight_unit',
         'seo_title',
@@ -158,7 +163,7 @@ class ImportCsv extends SlideOverComponent implements HasActions, HasSchemas
             'source' => 'csv',
             'disk' => 'local',
             'file_path' => $path,
-            'mapping' => array_filter($this->data['mapping'] ?? []),
+            'mapping' => $this->data['mapping'] ?? [],
             'status' => ImportStatus::Pending,
             'user_id' => auth()->id(),
         ]);
@@ -192,7 +197,13 @@ class ImportCsv extends SlideOverComponent implements HasActions, HasSchemas
         /** @var CsvSource $source */
         $source = resolve(ImportManager::class)->source('csv');
 
-        $this->fileHeaders = $source->headers($file->getRealPath());
+        try {
+            $this->fileHeaders = $source->headers($file->getRealPath());
+        } catch (ProductImportException) {
+            throw ValidationException::withMessages([
+                'data.file' => __('shopper::pages/products.import.invalid_header'),
+            ]);
+        }
 
         foreach (self::MAPPABLE_FIELDS as $field) {
             if (blank($this->data['mapping'][$field] ?? null) && in_array($field, $this->fileHeaders, true)) {
@@ -211,32 +222,61 @@ class ImportCsv extends SlideOverComponent implements HasActions, HasSchemas
 
         /** @var CsvSource $source */
         $source = resolve(ImportManager::class)->source('csv');
-        $source = $source->withMapping(array_filter($this->data['mapping'] ?? []));
+        $source = $source->withMapping($this->data['mapping'] ?? []);
 
         $products = [];
         $totalProducts = 0;
         $totalVariants = 0;
         $totalStock = 0;
         $unnamed = 0;
+        $unsupportedCurrency = 0;
 
-        $source->read($file->getRealPath())->each(function (ProductRow $row) use (&$products, &$totalProducts, &$totalVariants, &$totalStock, &$unnamed): void {
-            $totalProducts++;
-            $totalVariants += count($row->variants);
-            $totalStock += array_sum(array_map(fn ($variant): int => $variant->quantity, $row->variants));
+        $currencies = Currency::query()
+            ->whereIn('id', shopper_setting('currencies') ?? [])
+            ->pluck('code')
+            ->all();
 
-            if ($row->name === '') {
-                $unnamed++;
-            }
+        try {
+            $source->read($file->getRealPath())->each(function (ProductRow $row) use (&$products, &$totalProducts, &$totalVariants, &$totalStock, &$unnamed, &$unsupportedCurrency, $currencies): void {
+                $totalProducts++;
+                $totalVariants += count($row->variants);
+                $totalStock += array_sum(array_map(fn ($variant): int => $variant->quantity ?? 0, $row->variants));
 
-            if (count($products) < self::PREVIEW_LIMIT) {
-                $products[] = [
-                    'name' => $row->name,
-                    'brand' => $row->brand,
-                    'price' => $row->variants[0]->price ?? null,
-                    'variants_count' => count($row->variants),
-                ];
-            }
-        });
+                if ($row->name === '') {
+                    $unnamed++;
+                }
+
+                $unsupported = collect($row->variants)->contains(
+                    fn ($variant): bool => $variant->price !== null
+                        && $variant->currency !== null
+                        && ! in_array(mb_strtoupper($variant->currency), $currencies, true)
+                );
+
+                if ($unsupported) {
+                    $unsupportedCurrency++;
+                }
+
+                if (count($products) < self::PREVIEW_LIMIT) {
+                    $variant = $row->variants[0] ?? null;
+                    $currency = $variant?->currency === null ? shopper_currency() : mb_strtoupper($variant->currency);
+
+                    $products[] = [
+                        'name' => $row->name,
+                        'brand' => $row->brand,
+                        'price' => $variant?->price === null || $unsupported ? null : Number::currency(
+                            round($variant->price, is_no_division_currency($currency) ? 0 : 2),
+                            in: $currency,
+                            locale: app()->getLocale(),
+                        ),
+                        'variants_count' => count($row->variants),
+                    ];
+                }
+            });
+        } catch (ProductImportException $e) {
+            throw ValidationException::withMessages([
+                "data.mapping.{$e->field}" => $e->getMessage(),
+            ]);
+        }
 
         $this->preview = [
             'products' => $products,
@@ -244,6 +284,7 @@ class ImportCsv extends SlideOverComponent implements HasActions, HasSchemas
             'total_variants' => $totalVariants,
             'total_stock' => $totalStock,
             'unnamed' => $unnamed,
+            'unsupported_currency' => $unsupportedCurrency,
         ];
     }
 
@@ -265,7 +306,7 @@ class ImportCsv extends SlideOverComponent implements HasActions, HasSchemas
                 ->options(fn (): array => array_combine($this->fileHeaders, $this->fileHeaders))
                 ->native(false)
                 ->placeholder(__('shopper::pages/products.import.not_mapped'))
-                ->required($field === 'name'),
+                ->required(in_array($field, ['name', 'handle'], true)),
             self::MAPPABLE_FIELDS
         );
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Number;
 use Livewire\Livewire;
 use Shopper\Core\Enum\ImportStatus;
 use Shopper\Core\Models\ProductImport;
@@ -44,6 +45,58 @@ describe(ImportCsv::class, function (): void {
             ->assertHasFormErrors(['file' => 'required']);
     });
 
+    it('rejects a file whose first row does not name each column once', function (string $contents): void {
+        Livewire::test(ImportCsv::class)
+            ->fillForm(['file' => UploadedFile::fake()->createWithContent('products.csv', $contents)])
+            ->goToNextWizardStep()
+            ->assertHasFormErrors(['file']);
+    })->with([
+        'no header row' => "\n\n",
+        'duplicate columns' => "handle,name,sku,sku\nmug,Mug,MUG-1,MUG-2\n",
+    ]);
+
+    it('requires the handle column to be mapped', function (): void {
+        Livewire::test(ImportCsv::class)
+            ->set('fileHeaders', ['name', 'handle'])
+            ->fillForm(['mapping' => ['name' => 'name']])
+            ->call('store')
+            ->assertHasFormErrors(['mapping.handle' => 'required']);
+    });
+
+    it('shows the column of a value it cannot read', function (string $field, string $contents): void {
+        Livewire::test(ImportCsv::class)
+            ->fillForm(['file' => UploadedFile::fake()->createWithContent('products.csv', $contents)])
+            ->goToNextWizardStep()
+            ->goToNextWizardStep()
+            ->assertHasFormErrors(["mapping.{$field}"]);
+    })->with([
+        ['price', "handle,name,price\nmug,Mug,\"19,99\"\n"],
+        ['published', "handle,name,published\nmug,Mug,active\n"],
+    ]);
+
+    it('counts the products priced in a currency the store does not accept', function (): void {
+        setupCurrencies();
+
+        Livewire::test(ImportCsv::class)
+            ->fillForm(['file' => UploadedFile::fake()->createWithContent('products.csv', "handle,name,price,currency\nmug,Mug,4900,JPY\nlamp,Lamp,10,\n")])
+            ->goToNextWizardStep()
+            ->goToNextWizardStep()
+            ->assertHasNoFormErrors()
+            ->assertSet('preview.unsupported_currency', 1)
+            ->assertSet('preview.products.0.price', null);
+    });
+
+    it('shows the price the import stores', function (): void {
+        setupCurrencies();
+
+        Livewire::test(ImportCsv::class)
+            ->fillForm(['file' => UploadedFile::fake()->createWithContent('products.csv', "handle,name,price\nmug,Mug,0.285\n")])
+            ->goToNextWizardStep()
+            ->goToNextWizardStep()
+            ->assertHasNoFormErrors()
+            ->assertSet('preview.products.0.price', Number::currency(0.29, in: shopper_currency(), locale: app()->getLocale()));
+    });
+
     it('creates a pending import with its mapping and dispatches the batch', function (): void {
         Bus::fake();
         Storage::fake('local');
@@ -66,7 +119,7 @@ describe(ImportCsv::class, function (): void {
         $import = ProductImport::query()->sole();
 
         expect($import->source)->toBe('csv')
-            ->and($import->mapping)->toBe(['name' => 'name', 'handle' => 'handle'])
+            ->and($import->mapping)->toMatchArray(['name' => 'name', 'handle' => 'handle', 'price' => null])
             ->and($import->status)->toBe(ImportStatus::Processing)
             ->and($import->total_products)->toBe(3)
             ->and($import->user_id)->toBe($this->user->id);
