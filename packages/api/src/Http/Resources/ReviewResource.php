@@ -44,10 +44,9 @@ class ReviewResource extends JsonApiResource
 
     /**
      * The reviewer reduced to a display name (first name and last initial)
-     * and their picture, uploaded file or generated fallback alike. The
-     * author id, type and full surname never reach the public payload:
-     * published together they would let anyone rebuild a customer's
-     * purchase history.
+     * and their uploaded picture. The author id, type and full surname
+     * never reach the public payload: published together they would let
+     * anyone rebuild a customer's purchase history.
      *
      * @return array{name: ?string, avatar: ?string}|null
      */
@@ -65,7 +64,7 @@ class ReviewResource extends JsonApiResource
 
         return [
             'name' => $name !== '' ? $name : null,
-            'avatar' => $author->getAttribute('picture'),
+            'avatar' => $author->getAttribute('avatar_type') === 'storage' ? $author->getAttribute('picture') : null,
         ];
     }
 }

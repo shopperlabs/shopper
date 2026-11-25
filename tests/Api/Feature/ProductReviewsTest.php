@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\Sanctum;
 use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Review;
@@ -110,25 +113,37 @@ it('caps the latest reviews endpoint and never paginates it', function (): void 
     expect($response->json('links.next'))->toBeNull();
 });
 
-it('exposes the uploaded avatar or the generated fallback through the picture attribute', function (): void {
+it('shows the reviewer photo only while one is uploaded and never the surname', function (): void {
+    Storage::fake(config('shopper.media.storage.disk_name'));
+
     $product = reviewedProduct();
+    $author = User::factory()->create(['first_name' => 'Jane', 'last_name' => 'Ravelonarivo']);
+    approvedReview($product, [], $author);
 
-    $withUpload = User::factory()->create([
-        'first_name' => 'Jane',
-        'last_name' => 'Doe',
-        'avatar_type' => 'storage',
-        'avatar_location' => 'avatars/jane.jpg',
-    ]);
+    $endpoints = ['/store/products/'.$product->slug.'/reviews', '/store/reviews'];
 
-    approvedReview($product, ['rating' => 4], $withUpload);
-    approvedReview($product, ['rating' => 5]);
+    Sanctum::actingAs($author, ['store']);
 
-    $avatars = collect(
-        $this->getJson('/store/products/'.$product->slug.'/reviews?sort=rating')->assertOk()->json('data')
-    )->pluck('attributes.author.avatar');
+    $this->post('/store/customers/me/avatar', ['avatar' => UploadedFile::fake()->image('jane.jpg')])->assertOk();
+    $path = $author->fresh()->avatar_location;
+    $this->app->make('auth')->forgetGuards();
 
-    expect($avatars[0])->toContain('avatars/jane.jpg')
-        ->and($avatars[1])->toContain('ui-avatars.com');
+    foreach ($endpoints as $endpoint) {
+        $response = $this->getJson($endpoint)->assertOk()->assertJsonPath('data.0.attributes.author.name', 'Jane R.');
+
+        expect($response->json('data.0.attributes.author.avatar'))->toContain($path)
+            ->and($response->getContent())->not->toContain('Ravelonarivo');
+    }
+
+    Sanctum::actingAs($author, ['store']);
+    $this->deleteJson('/store/customers/me/avatar')->assertOk();
+    $this->app->make('auth')->forgetGuards();
+
+    foreach ($endpoints as $endpoint) {
+        $response = $this->getJson($endpoint)->assertOk()->assertJsonPath('data.0.attributes.author.avatar', null);
+
+        expect($response->getContent())->not->toContain('Ravelonarivo');
+    }
 });
 
 it('anonymizes gracefully when the author is missing', function (): void {
