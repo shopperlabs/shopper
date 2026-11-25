@@ -8,6 +8,7 @@ use Closure;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
+use Shopper\Http\Support\DashboardAccess;
 use Symfony\Component\HttpFoundation\Response;
 
 final class ResolveCustomer
@@ -29,6 +30,9 @@ final class ResolveCustomer
     {
         $model = (string) config('auth.providers.users.model');
 
-        return $customer instanceof $model && method_exists($customer, 'tokenCan') && $customer->tokenCan('store');
+        return $customer instanceof $model
+            && method_exists($customer, 'tokenCan')
+            && $customer->tokenCan('store')
+            && ! DashboardAccess::granted($customer);
     }
 }

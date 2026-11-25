@@ -62,7 +62,7 @@ trait InteractsWithShopper
     {
         return $this->isAdmin()
             || $this->isManager()
-            || $this->hasPermissionTo('system.dashboard');
+            || $this->checkPermissionTo('system.dashboard', config('shopper.auth.guard'));
     }
 
     public function isVerified(): bool

@@ -6,6 +6,9 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Sleep;
+use Shopper\Models\Permission;
+use Shopper\Models\Role;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Api\TestCase::class);
@@ -162,3 +165,94 @@ it('resets the password and revokes every token', function (): void {
         'password' => 'another-password',
     ])->assertUnprocessable();
 });
+
+it('takes a customer from registration through a password reset to a new session', function (): void {
+    Notification::fake();
+
+    $token = $this->postJson('/store/auth/register', [
+        'last_name' => 'Doe',
+        'email' => 'jane@example.com',
+        'password' => 'first-password',
+    ])->assertCreated()->json('meta.token');
+
+    $this->postJson('/store/auth/logout', [], ['Authorization' => 'Bearer '.$token])->assertNoContent();
+
+    $this->postJson('/store/auth/forgot-password', ['email' => 'jane@example.com'])->assertStatus(202);
+
+    $customer = User::query()->where('email', 'jane@example.com')->firstOrFail();
+    $resetToken = null;
+
+    Notification::assertSentTo($customer, ResetPassword::class, function (ResetPassword $notification) use (&$resetToken): bool {
+        $resetToken = $notification->token;
+
+        return true;
+    });
+
+    $this->postJson('/store/auth/reset-password', [
+        'email' => 'jane@example.com',
+        'token' => $resetToken,
+        'password' => 'second-password',
+    ])->assertNoContent();
+
+    $this->postJson('/store/auth/login', ['email' => 'jane@example.com', 'password' => 'first-password'])
+        ->assertUnprocessable();
+
+    $token = $this->postJson('/store/auth/login', ['email' => 'jane@example.com', 'password' => 'second-password'])
+        ->assertOk()
+        ->json('meta.token');
+
+    $this->app->make('auth')->forgetGuards();
+
+    $this->getJson('/store/customers/me', ['Authorization' => 'Bearer '.$token])
+        ->assertOk()
+        ->assertJsonPath('data.id', $customer->public_id);
+});
+
+it('serves customers on a store whose permissions were never migrated', function (): void {
+    Permission::findByName('system.dashboard')->delete();
+
+    $this->postJson('/store/auth/register', [
+        'last_name' => 'Doe',
+        'email' => 'jane@example.com',
+        'password' => 'first-password',
+    ])->assertCreated();
+
+    $token = $this->postJson('/store/auth/login', ['email' => 'jane@example.com', 'password' => 'first-password'])
+        ->assertOk()
+        ->json('meta.token');
+
+    $this->app->make('auth')->forgetGuards();
+
+    $this->getJson('/store/customers/me', ['Authorization' => 'Bearer '.$token])->assertOk();
+});
+
+it('keeps team members out of the store API', function (string $role): void {
+    config(['auth.guards.sanctum.provider' => 'users']);
+    Notification::fake();
+    Sleep::fake();
+
+    $member = User::factory()->create(['email' => 'staff@example.com', 'password' => Hash::make('correct-password')]);
+    $member->assignRole($role);
+    $invitation = Password::createToken($member);
+
+    $this->travel(2)->minutes();
+
+    $this->postJson('/store/auth/login', ['email' => 'staff@example.com', 'password' => 'correct-password'])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.0.code', 'credentials_invalid');
+
+    $this->postJson('/store/auth/forgot-password', ['email' => 'staff@example.com'])->assertStatus(202);
+
+    Notification::assertNothingSent();
+    Sleep::assertSleptTimes(1);
+
+    expect($member->tokens()->count())->toBe(0)
+        ->and(Password::tokenExists($member, $invitation))->toBeTrue();
+
+    $storeToken = $member->createToken('store', ['store'])->plainTextToken;
+
+    $this->getJson('/store/customers/me', ['Authorization' => 'Bearer '.$storeToken])->assertUnauthorized();
+})->with([
+    'administrator' => fn (): string => config('shopper.admin.roles.admin'),
+    'role with dashboard access' => fn (): string => Role::create(['name' => 'support'])->givePermissionTo('system.dashboard')->name,
+]);

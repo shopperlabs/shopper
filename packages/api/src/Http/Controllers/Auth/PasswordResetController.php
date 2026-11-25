@@ -9,11 +9,13 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Timebox;
 use Laravel\Sanctum\PersonalAccessToken;
 use Shopper\Api\Http\Requests\Auth\ForgotPasswordRequest;
 use Shopper\Api\Http\Requests\Auth\ResetPasswordRequest;
 use Shopper\Http\Enum\ErrorCode;
 use Shopper\Http\Exceptions\ApiValidationException;
+use Shopper\Http\Support\DashboardAccess;
 use Symfony\Component\HttpFoundation\Response;
 
 final class PasswordResetController
@@ -22,9 +24,17 @@ final class PasswordResetController
      * Always answers 202 whether the email exists or not, so the endpoint
      * cannot be used to enumerate accounts.
      */
-    public function send(ForgotPasswordRequest $request): Response
+    public function send(ForgotPasswordRequest $request, Timebox $timebox): Response
     {
-        Password::sendResetLink($request->only('email'));
+        $credentials = $request->only('email');
+
+        $timebox->call(function () use ($credentials): void {
+            $user = Password::getUser($credentials);
+
+            if ($user === null || ! DashboardAccess::granted($user)) {
+                Password::sendResetLink($credentials);
+            }
+        }, (int) config('auth.timebox_duration', 200000));
 
         return response()->noContent(Response::HTTP_ACCEPTED);
     }

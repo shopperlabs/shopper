@@ -27,6 +27,7 @@ use Shopper\Cart\Models\Cart;
 use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Http\Enum\ErrorCode;
 use Shopper\Http\Exceptions\ApiValidationException;
+use Shopper\Http\Support\DashboardAccess;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -83,7 +84,11 @@ final class AuthenticationController
         /** @var (Model&Authenticatable)|null $customer */
         $customer = $model::query()->firstWhere('email', $email);
 
-        if ($customer === null || ! Hash::check($request->string('password')->toString(), $customer->getAuthPassword())) {
+        if (
+            $customer === null
+            || ! Hash::check($request->string('password')->toString(), $customer->getAuthPassword())
+            || DashboardAccess::granted($customer)
+        ) {
             $this->limiter->hit($throttleKey);
 
             throw ApiValidationException::withCode(ErrorCode::CredentialsInvalid, ['email' => __('auth.failed')]);
