@@ -109,7 +109,7 @@ class UpdateVariant extends SlideOverComponent implements HasActions, HasSchemas
                                         ->options(
                                             collect($option['values'])->mapWithKeys(
                                                 fn (array $value): array => [$value['id'] => $value['value']]
-                                            )
+                                            )->union($this->variant?->values->where('attribute_id', $option['id'])->pluck('value', 'id') ?? [])
                                         )
                                         ->native(false)
                                 )->toArray()
@@ -153,6 +153,13 @@ class UpdateVariant extends SlideOverComponent implements HasActions, HasSchemas
         $this->authorize('products.variants.edit');
 
         $values = data_get($this->form->getState(), 'values');
+
+        if ($values) {
+            $values += $this->variant->values
+                ->whereNotIn('attribute_id', $this->options->pluck('id'))
+                ->pluck('id', 'attribute_id')
+                ->all();
+        }
 
         if ($values && $this->variantAlreadyExist($values)) {
             $this->alert = true;

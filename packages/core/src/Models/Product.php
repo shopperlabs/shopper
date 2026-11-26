@@ -325,12 +325,14 @@ class Product extends Model implements HasReviews, Priceable, ProductContract, S
         $values = Arr::flatten($values);
 
         $match = fn (Builder $query): Builder => $query
-            ->whereIn('key', $values)
-            ->orWhereIn('value', $values);
+            ->where(fn (Builder $query): Builder => $query->whereIn('key', $values)->orWhereIn('value', $values))
+            ->whereHas('attribute', fn (Builder $query): Builder => $query->scopes(['enabled']));
 
         $query->where(fn (Builder $query): Builder => $query
-            ->whereHas('variants.values', $match)
-            ->orWhereHas('attributeProducts.value', $match));
+            ->whereHas('attributeProducts.value', $match)
+            ->orWhere(fn (Builder $query): Builder => $query
+                ->whereHas('variants.values', $match)
+                ->whereDoesntHave('attributeProducts', fn (Builder $query): Builder => $query->whereNotNull('attribute_value_id'))));
     }
 
     /**

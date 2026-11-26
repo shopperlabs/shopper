@@ -332,6 +332,36 @@ it('never exposes an option the merchant disabled', function (): void {
         ->and($options[0]['name'])->toBe('Color');
 });
 
+it('never lists a product under a value of an option the merchant disabled', function (): void {
+    $product = publishedProduct(['name' => 'Hoodie']);
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $size = Attribute::factory()->disabled()->create(['name' => 'Size']);
+    $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => 'red']);
+    $large = AttributeValue::factory()->create(['attribute_id' => $size->id, 'value' => 'Large', 'key' => 'large']);
+
+    $product->options()->attach($color->id, ['attribute_value_id' => $red->id]);
+    $product->options()->attach($size->id, ['attribute_value_id' => $large->id]);
+
+    $listed = fn (string $value): array => collect($this->getJson('/store/products?filter[option]='.$value)->assertOk()->json('data'))
+        ->pluck('attributes.name')
+        ->all();
+
+    expect($listed('red'))->toBe(['Hoodie'])
+        ->and($listed('large'))->toBe([]);
+});
+
+it('never lists an imported product under a value of an option the merchant disabled', function (): void {
+    $material = Attribute::factory()->disabled()->create(['name' => 'Material']);
+    $cotton = AttributeValue::factory()->create(['attribute_id' => $material->id, 'value' => 'Cotton', 'key' => 'cotton']);
+
+    $tee = publishedProduct(['name' => 'ImportedTee', 'type' => ProductType::Variant]);
+    ProductVariant::factory()->create(['product_id' => $tee->id])->values()->attach($cotton->id);
+
+    $this->getJson('/store/products?filter[option]=cotton')
+        ->assertOk()
+        ->assertJsonCount(0, 'data');
+});
+
 it('carries the free text of a text type option', function (): void {
     $product = publishedProduct(['name' => 'Jacket']);
     $material = Attribute::factory()->create(['name' => 'Material', 'type' => FieldType::Text]);
@@ -579,6 +609,42 @@ it('keeps two different facets an intersection', function (): void {
     )->pluck('attributes.name');
 
     expect($names->all())->toBe(['IntersectHit']);
+});
+
+it('stops listing a product under an option value it no longer offers', function (): void {
+    $size = Attribute::factory()->create(['name' => 'Size']);
+    $small = AttributeValue::factory()->create(['attribute_id' => $size->id, 'value' => 'S', 'key' => 's']);
+    $large = AttributeValue::factory()->create(['attribute_id' => $size->id, 'value' => 'L', 'key' => 'l']);
+
+    $tee = publishedProduct(['name' => 'OfferedTee', 'type' => ProductType::Variant]);
+    $tee->options()->attach($size->id, ['attribute_value_id' => $small->id]);
+    ProductVariant::factory()->create(['product_id' => $tee->id])->values()->attach($small->id);
+    ProductVariant::factory()->create(['product_id' => $tee->id])->values()->attach($large->id);
+
+    $listed = fn (string $value): array => collect($this->getJson('/store/products?filter[option]='.$value)->assertOk()->json('data'))
+        ->pluck('attributes.name')
+        ->all();
+
+    expect($listed('s'))->toBe(['OfferedTee'])
+        ->and($listed('l'))->toBe([]);
+});
+
+it('stops listing a product under an option it no longer offers at all', function (): void {
+    $size = Attribute::factory()->create(['name' => 'Size']);
+    $small = AttributeValue::factory()->create(['attribute_id' => $size->id, 'value' => 'S', 'key' => 's']);
+    $color = Attribute::factory()->create(['name' => 'Color']);
+    $red = AttributeValue::factory()->create(['attribute_id' => $color->id, 'value' => 'Red', 'key' => 'red']);
+
+    $tee = publishedProduct(['name' => 'SizedTee', 'type' => ProductType::Variant]);
+    $tee->options()->attach($size->id, ['attribute_value_id' => $small->id]);
+    ProductVariant::factory()->create(['product_id' => $tee->id])->values()->attach([$small->id, $red->id]);
+
+    $listed = fn (string $value): array => collect($this->getJson('/store/products?filter[option]='.$value)->assertOk()->json('data'))
+        ->pluck('attributes.name')
+        ->all();
+
+    expect($listed('s'))->toBe(['SizedTee'])
+        ->and($listed('red'))->toBe([]);
 });
 
 it('matches an option declared on a product that has no variants', function (): void {

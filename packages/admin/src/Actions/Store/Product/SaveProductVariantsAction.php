@@ -59,22 +59,40 @@ final class SaveProductVariantsAction
                 fn (ProductVariant $variant) => $variant->delete()
             );
 
+            $product->variants()->whereKey($existingVariantIds)->update(['sku' => null]);
+
             $position = (int) $product->variants()->max('position');
+            $unit = is_no_division_currency(shopper_currency()) ? 1 : 100;
 
             foreach ($variants as $key => $variantState) {
-                /** @var ProductVariant $variant */
-                $variant = $variantState['variant_id']
-                    ? $product->variants()->findOrFail($variantState['variant_id'])
-                    : resolve(ProductVariant::class)::query()->create([
+                $sku = blank($variantState['sku']) ? null : $variantState['sku'];
+
+                if ($variantState['variant_id']) {
+                    /** @var ProductVariant $variant */
+                    $variant = $product->variants()->findOrFail($variantState['variant_id']);
+                    $variant->update(['name' => $variantState['name'], 'sku' => $sku]);
+                } else {
+                    /** @var ProductVariant $variant */
+                    $variant = resolve(ProductVariant::class)::query()->create([
                         'name' => $variantState['name'],
                         'product_id' => $product->id,
-                        'sku' => $variantState['sku'],
+                        'sku' => $sku,
                         'position' => ++$position,
                     ]);
 
+                    $stock = (int) data_get($variantState, 'stock');
+
+                    if ($stock > 0) {
+                        app()->call(InitialQuantityInventory::class, [
+                            'quantity' => $stock,
+                            'product' => $variant,
+                        ]);
+                    }
+                }
+
                 $variants[$key]['variant_id'] = $variant->id;
 
-                $price = (int) $variantState['price'];
+                $price = (int) round((float) $variantState['price'] * $unit);
 
                 if ($price > 0) {
                     /** @var int $defaultCurrencyId */
@@ -94,18 +112,6 @@ final class SaveProductVariantsAction
                                 : null,
                         ],
                     );
-                }
-
-                /** @var int $stock */
-                $stock = data_get($variantState, 'stock');
-
-                if ($stock > 0) {
-                    $variant->clearStock();
-
-                    app()->call(InitialQuantityInventory::class, [
-                        'quantity' => $stock,
-                        'product' => $variant,
-                    ]);
                 }
 
                 $variant->values()->sync($variantState['values']);

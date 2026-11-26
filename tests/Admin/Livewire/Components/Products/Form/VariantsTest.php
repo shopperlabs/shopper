@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
+use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Enum\ProductType;
+use Shopper\Core\Models\Attribute;
+use Shopper\Core\Models\AttributeValue;
 use Shopper\Livewire\Pages\Product\Variants;
 use Tests\Core\Stubs\Product;
 use Tests\Core\Stubs\ProductVariant;
@@ -40,6 +43,24 @@ describe(Variants::class, function (): void {
         $component = Livewire::test(Variants::class, ['product' => $this->product]);
 
         expect($component->get('product')->id)->toBe($this->product->id);
+    });
+
+    it('hides the generate action when the product only has free text attributes', function (): void {
+        $material = Attribute::factory()->create(['type' => FieldType::Text]);
+        $this->product->options()->attach($material->id, ['attribute_custom_value' => 'Cotton']);
+
+        Livewire::test(Variants::class, ['product' => $this->product->fresh()])
+            ->loadTable()
+            ->assertActionHidden(TestAction::make('generate')->table());
+
+        $size = Attribute::factory()->create(['type' => FieldType::Checkbox]);
+        $this->product->options()->attach($size->id, [
+            'attribute_value_id' => AttributeValue::factory()->create(['attribute_id' => $size->id])->id,
+        ]);
+
+        Livewire::withoutLazyLoading()->test(Variants::class, ['product' => $this->product->fresh()])
+            ->loadTable()
+            ->assertActionVisible(TestAction::make('generate')->table());
     });
 
     it('hides the delete action for users without `products.variants.delete`', function (): void {

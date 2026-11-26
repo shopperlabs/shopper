@@ -61,6 +61,7 @@
                         <div class="flex items-center justify-between gap-4 py-2">
                             <button
                                 @click="expanded = ! expanded"
+                                :aria-expanded="expanded"
                                 type="button"
                                 class="text-sh-fg-secondary flex h-fit w-full flex-1 items-center gap-2 text-sm/5 font-medium"
                             >
@@ -83,6 +84,7 @@
                                     class="text-danger-500 hover:text-danger-700 dark:hover:text-danger-400 inline-flex items-center text-sm"
                                     type="button"
                                     wire:click="removeVariant('{{ $index }}')"
+                                    aria-label="{{ __('shopper::forms.actions.delete_label', ['label' => $variant['name']]) }}"
                                 >
                                     <x-untitledui-trash-03 class="size-5" aria-hidden="true" />
                                 </button>
@@ -97,37 +99,119 @@
                             <input type="hidden" wire:model="variants.{{ $index }}.values" />
                             <input type="hidden" wire:model="variants.{{ $index }}.variant_id" />
                             <div class="space-y-2">
-                                <x-shopper::label :isRequired="true">
+                                <x-shopper::label for="variant-{{ $variant['key'] }}-name" :isRequired="true">
                                     {{ __('shopper::forms.label.name') }}
                                 </x-shopper::label>
-                                <x-filament::input.wrapper>
-                                    <x-filament::input type="text" wire:model="variants.{{ $index }}.name" required />
+                                <x-filament::input.wrapper :valid="! $errors->has('variants.'.$index.'.name')">
+                                    <x-filament::input
+                                        id="variant-{{ $variant['key'] }}-name"
+                                        type="text"
+                                        wire:model="variants.{{ $index }}.name"
+                                        required
+                                        :aria-invalid="$errors->has('variants.'.$index.'.name') ? 'true' : null"
+                                        :aria-describedby="$errors->has('variants.'.$index.'.name') ? 'variant-'.$variant['key'].'-name-error' : null"
+                                    />
                                 </x-filament::input.wrapper>
+                                @error('variants.' . $index . '.name')
+                                    <p
+                                        id="variant-{{ $variant['key'] }}-name-error"
+                                        class="text-danger-500 mt-1 text-sm"
+                                        x-init="expanded = true"
+                                    >
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                             <div class="space-y-2">
-                                <x-shopper::label>
+                                <x-shopper::label for="variant-{{ $variant['key'] }}-sku">
                                     {{ __('shopper::forms.label.sku') }}
                                 </x-shopper::label>
-                                <x-filament::input.wrapper>
-                                    <x-filament::input type="text" wire:model="variants.{{ $index }}.sku" />
+                                <x-filament::input.wrapper :valid="! $errors->has('variants.'.$index.'.sku')">
+                                    <x-filament::input
+                                        id="variant-{{ $variant['key'] }}-sku"
+                                        type="text"
+                                        wire:model="variants.{{ $index }}.sku"
+                                        :aria-invalid="$errors->has('variants.'.$index.'.sku') ? 'true' : null"
+                                        :aria-describedby="$errors->has('variants.'.$index.'.sku') ? 'variant-'.$variant['key'].'-sku-error' : null"
+                                    />
                                 </x-filament::input.wrapper>
+                                @error('variants.' . $index . '.sku')
+                                    <p
+                                        id="variant-{{ $variant['key'] }}-sku-error"
+                                        class="text-danger-500 mt-1 text-sm"
+                                        x-init="expanded = true"
+                                    >
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                             <div class="space-y-2">
-                                <x-shopper::label>
+                                <x-shopper::label for="variant-{{ $variant['key'] }}-price">
                                     {{ __('shopper::forms.label.price') }}
                                 </x-shopper::label>
-                                <x-filament::input.wrapper :suffix="shopper_currency()">
-                                    <x-filament::input type="text" wire:model="variants.{{ $index }}.price" />
+                                <x-filament::input.wrapper
+                                    :suffix="shopper_currency()"
+                                    :valid="! $errors->has('variants.'.$index.'.price')"
+                                >
+                                    <x-filament::input
+                                        id="variant-{{ $variant['key'] }}-price"
+                                        type="text"
+                                        wire:model="variants.{{ $index }}.price"
+                                        :aria-invalid="$errors->has('variants.'.$index.'.price') ? 'true' : null"
+                                        :aria-describedby="$errors->has('variants.'.$index.'.price') ? 'variant-'.$variant['key'].'-price-error' : null"
+                                    />
                                 </x-filament::input.wrapper>
+                                @error('variants.' . $index . '.price')
+                                    <p
+                                        id="variant-{{ $variant['key'] }}-price-error"
+                                        class="text-danger-500 mt-1 text-sm"
+                                        x-init="expanded = true"
+                                    >
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                             <div class="space-y-2">
-                                <x-shopper::label>
+                                <x-shopper::label for="variant-{{ $variant['key'] }}-stock">
                                     {{ __('shopper::forms.label.stock_number_value') }}
                                 </x-shopper::label>
-                                <x-filament::input.wrapper>
-                                    <x-filament::input type="number" wire:model="variants.{{ $index }}.stock" />
+                                <x-filament::input.wrapper
+                                    :disabled="filled($variant['variant_id'])"
+                                    :valid="! $errors->has('variants.'.$index.'.stock')"
+                                >
+                                    <x-filament::input
+                                        id="variant-{{ $variant['key'] }}-stock"
+                                        type="number"
+                                        wire:model="variants.{{ $index }}.stock"
+                                        :disabled="filled($variant['variant_id'])"
+                                        :aria-invalid="$errors->has('variants.'.$index.'.stock') ? 'true' : null"
+                                        :aria-describedby="$errors->has('variants.'.$index.'.stock') ? 'variant-'.$variant['key'].'-stock-error' : (filled($variant['variant_id']) ? 'variant-'.$variant['key'].'-stock-hint' : null)"
+                                    />
                                 </x-filament::input.wrapper>
+                                @error('variants.' . $index . '.stock')
+                                    <p
+                                        id="variant-{{ $variant['key'] }}-stock-error"
+                                        class="text-danger-500 mt-1 text-sm"
+                                        x-init="expanded = true"
+                                    >
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+
+                                @if (filled($variant['variant_id']))
+                                    <p
+                                        id="variant-{{ $variant['key'] }}-stock-hint"
+                                        class="text-sh-fg-secondary text-sm"
+                                    >
+                                        {{ __('shopper::pages/products.variants.stock_managed_per_location') }}
+                                    </p>
+                                @endif
                             </div>
+                            @error('variants.' . $index . '.values.*')
+                                <p class="text-danger-500 col-span-full text-sm" x-init="expanded = true">
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
                     </x-shopper::card>
                 @endforeach

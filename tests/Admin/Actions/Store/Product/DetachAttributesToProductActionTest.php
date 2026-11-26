@@ -34,13 +34,12 @@ describe(DetachAttributesToProductAction::class, function (): void {
             'attribute_value_id' => $attributeValue->id,
         ]);
 
-        $action = app(DetachAttributesToProductAction::class);
-        $action($attributeProduct, $this->product);
+        app(DetachAttributesToProductAction::class)($attributeProduct);
 
         expect(AttributeProduct::query()->find($attributeProduct->id))->toBeNull();
     });
 
-    it('deletes product attribute and detaches from single variant', function (): void {
+    it('keeps the removed value on the variants built from it', function (): void {
         $attribute = Attribute::factory()->create(['name' => 'Color']);
         $attributeValue = AttributeValue::factory()->create([
             'attribute_id' => $attribute->id,
@@ -53,74 +52,12 @@ describe(DetachAttributesToProductAction::class, function (): void {
             'attribute_value_id' => $attributeValue->id,
         ]);
 
-        $variant = ProductVariant::factory()->create([
-            'product_id' => $this->product->id,
-        ]);
-        $variant->values()->attach($attributeValue->id);
-
-        expect($variant->values)->toHaveCount(1);
-
-        $action = app(DetachAttributesToProductAction::class);
-        $action($attributeProduct, $this->product);
-
-        expect(AttributeProduct::query()->find($attributeProduct->id))->toBeNull()
-            ->and($variant->fresh()->values)->toHaveCount(0);
-    });
-
-    it('deletes product attribute and detaches from multiple variants', function (): void {
-        $attribute = Attribute::factory()->create(['name' => 'Material']);
-        $attributeValue = AttributeValue::factory()->create([
-            'attribute_id' => $attribute->id,
-            'value' => 'Cotton',
-        ]);
-
-        $attributeProduct = AttributeProduct::query()->create([
-            'product_id' => $this->product->id,
-            'attribute_id' => $attribute->id,
-            'attribute_value_id' => $attributeValue->id,
-        ]);
-
-        $variant1 = ProductVariant::factory()->create(['product_id' => $this->product->id]);
-        $variant2 = ProductVariant::factory()->create(['product_id' => $this->product->id]);
-        $variant3 = ProductVariant::factory()->create(['product_id' => $this->product->id]);
-
-        $variant1->values()->attach($attributeValue->id);
-        $variant2->values()->attach($attributeValue->id);
-        $variant3->values()->attach($attributeValue->id);
-
-        expect($variant1->values)->toHaveCount(1)
-            ->and($variant2->values)->toHaveCount(1)
-            ->and($variant3->values)->toHaveCount(1);
-
-        $action = app(DetachAttributesToProductAction::class);
-        $action($attributeProduct, $this->product);
-
-        expect(AttributeProduct::query()->find($attributeProduct->id))->toBeNull()
-            ->and($variant1->fresh()->values)->toHaveCount(0)
-            ->and($variant2->fresh()->values)->toHaveCount(0)
-            ->and($variant3->fresh()->values)->toHaveCount(0);
-    });
-
-    it('runs in database transaction', function (): void {
-        $attribute = Attribute::factory()->create();
-        $attributeValue = AttributeValue::factory()->create(['attribute_id' => $attribute->id]);
-
-        $attributeProduct = AttributeProduct::query()->create([
-            'product_id' => $this->product->id,
-            'attribute_id' => $attribute->id,
-            'attribute_value_id' => $attributeValue->id,
-        ]);
-
         $variant = ProductVariant::factory()->create(['product_id' => $this->product->id]);
         $variant->values()->attach($attributeValue->id);
 
-        expect(AttributeProduct::query()->find($attributeProduct->id))->not->toBeNull()
-            ->and($variant->values)->toHaveCount(1);
-
-        $action = app(DetachAttributesToProductAction::class);
-        $action($attributeProduct, $this->product);
+        app(DetachAttributesToProductAction::class)($attributeProduct);
 
         expect(AttributeProduct::query()->find($attributeProduct->id))->toBeNull()
-            ->and($variant->fresh()->values)->toHaveCount(0);
+            ->and($variant->values()->get()->modelKeys())->toBe([$attributeValue->id]);
     });
 })->group('products', 'actions', 'attributes');

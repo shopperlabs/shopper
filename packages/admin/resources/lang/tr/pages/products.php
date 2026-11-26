@@ -76,6 +76,7 @@ return [
         'search_label' => 'Varyant ara',
         'search_placeholder' => 'Ürün varyantı ara',
         'variant_information' => 'Varyant bilgisi',
+        'stock_managed_per_location' => 'Bu varyantın stoğunu kendi sayfasından konum bazında yönetin.',
     ],
 
     'reviews' => [
@@ -112,6 +113,7 @@ return [
         'choose' => 'Özellik seç',
         'empty_title' => 'Etkin Özellik Yok',
         'empty_values' => 'Bu ürünle ilişkili özellikler burada listelenir.',
+        'variants_keep_value' => '{1} :count varyant hâlâ :value değerini kullanıyor. Varyantları yeniden oluşturana veya silene kadar satışta kalır.|[2,*] :count varyant hâlâ :value değerini kullanıyor. Varyantları yeniden oluşturana veya silene kadar satışta kalır.',
 
         'swatch' => [
             'action' => 'Değer görseli',

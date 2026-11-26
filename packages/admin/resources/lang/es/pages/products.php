@@ -76,6 +76,7 @@ return [
         'search_label' => 'Buscar variante',
         'search_placeholder' => 'Buscar variante de producto',
         'variant_information' => 'Información de la variante',
+        'stock_managed_per_location' => 'Gestiona el stock de esta variante por ubicación desde su página.',
     ],
 
     'reviews' => [
@@ -112,6 +113,7 @@ return [
         'choose' => 'Elegir atributos',
         'empty_title' => 'Sin atributos habilitados',
         'empty_values' => 'Los atributos asociados con este producto se listan aquí.',
+        'variants_keep_value' => '{1} :count variante todavía usa :value. Seguirá a la venta hasta que regeneres las variantes o la elimines.|[2,*] :count variantes todavía usan :value. Seguirán a la venta hasta que regeneres las variantes o las elimines.',
 
         'swatch' => [
             'action' => 'Imagen del valor',

@@ -18,6 +18,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Locked;
@@ -116,13 +117,19 @@ class Attributes extends Component implements HasActions, HasSchemas, HasTable
                     ->iconButton()
                     ->color('danger')
                     ->requiresConfirmation()
+                    ->modalDescription(function (AttributeProduct $record): ?string {
+                        $count = $this->product->variants()
+                            ->whereHas('values', fn (Builder $query): Builder => $query->whereKey($record->attribute_value_id))
+                            ->count();
+
+                        return $count > 0
+                            ? trans_choice('shopper::pages/products.attributes.variants_keep_value', $count, ['count' => $count, 'value' => $record->value?->value])
+                            : null;
+                    })
                     ->action(function (AttributeProduct $record): void {
                         $this->authorize('attributes.delete', $record);
 
-                        app()->call(DetachAttributesToProductAction::class, [
-                            'attributeProduct' => $record,
-                            'product' => $this->product,
-                        ]);
+                        app()->call(DetachAttributesToProductAction::class, ['attributeProduct' => $record]);
 
                         $this->dispatch('product.updated');
                     })

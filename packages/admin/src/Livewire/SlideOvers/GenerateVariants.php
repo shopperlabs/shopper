@@ -7,9 +7,11 @@ namespace Shopper\Livewire\SlideOvers;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Laravelcm\LivewireSlideOvers\SlideOverComponent;
 use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\Product\SaveProductVariantsAction;
+use Shopper\Components\Form\MoneyInput;
 use Shopper\Core\Macros\Arr;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
@@ -54,9 +56,28 @@ class GenerateVariants extends SlideOverComponent
             $this->authorize('products.variants.delete');
         }
 
-        if (collect($this->variants)->contains(fn (array $variant): bool => blank($variant['variant_id'] ?? null))) {
+        if (collect($this->variants)->contains(fn (array $variant): bool => ! ($variant['variant_id'] ?? null))) {
             $this->authorize('products.variants.create');
         }
+
+        $this->validate(
+            [
+                'variants.*.name' => ['required', 'string', 'max:255'],
+                'variants.*.sku' => ['nullable', 'string', 'max:255', 'distinct:ignore_case'],
+                'variants.*.price' => ['nullable', 'regex:'.MoneyInput::amountRegex(shopper_currency())],
+                'variants.*.stock' => Rule::forEach(
+                    fn (mixed $stock, string $attribute, array $data, array $variant): array => ($variant['variant_id'] ?? null) ? [] : ['nullable', 'integer', 'min:0']
+                ),
+                'variants.*.values.*' => [Rule::in($this->product->options()->pluck('attribute_value_id')->filter()->all())],
+            ],
+            attributes: [
+                'variants.*.name' => __('shopper::forms.label.name'),
+                'variants.*.sku' => __('shopper::forms.label.sku'),
+                'variants.*.price' => __('shopper::forms.label.price'),
+                'variants.*.stock' => __('shopper::forms.label.stock_number_value'),
+                'variants.*.values.*' => __('shopper::forms.label.value'),
+            ],
+        );
 
         $this->variants = app()->call(SaveProductVariantsAction::class, [
             'product' => $this->product,
@@ -93,16 +114,19 @@ class GenerateVariants extends SlideOverComponent
             ])
             ->toArray();
 
+        $unit = is_no_division_currency(shopper_currency()) ? 1 : 100;
+
         $variants = resolve(ProductVariantContract::class)::query()
-            ->with(['prices', 'values', 'prices.currency' => function ($query): void {
-                $query->where('code', shopper_currency());
+            ->with(['values', 'prices' => function ($query): void {
+                $query->where('currency_id', shopper_setting('default_currency_id'));
             }])
             ->where('product_id', $this->product->id)
             ->get()
             ->map(fn (ProductVariantContract $variant): array => [ // @phpstan-ignore-line
                 'id' => $variant->id,
                 'sku' => $variant->sku,
-                'price' => $variant->prices()->first()?->amount ?: 0, // @phpstan-ignore property.notFound
+                'name' => $variant->name,
+                'price' => ($variant->prices->first()->amount ?? 0) / $unit,
                 'stock' => $variant->stock,
                 'values' => $variant->values->mapWithKeys(
                     fn (AttributeValue $value): array => [
@@ -136,54 +160,43 @@ class GenerateVariants extends SlideOverComponent
     protected function mapVariantsToProductOptions(array $options, array $variants): array
     {
         $permutations = Arr::permutate($options);
+        $carried = collect($variants)->flatMap(fn (array $variant): array => array_keys($variant['values']))->unique()->all();
+        $valueless = collect($variants)->where('values', [])->count();
+        $matches = [];
 
-        if (count($options) === 1) {
-            $newPermutations = [];
+        foreach ([true, false] as $exact) {
+            foreach ($permutations as $index => $permutation) {
+                if (isset($matches[$index])) {
+                    continue;
+                }
 
-            foreach ($permutations as $p) {
-                $newPermutations[] = [
-                    array_key_first($options) => $p,
-                ];
+                $name = Arr::performPermutationIntoWord($permutation, 'value');
+
+                $variantIndex = collect($variants)
+                    ->except(array_column($matches, 'variant'))
+                    ->search(function (array $variant) use ($permutation, $carried, $valueless, $name, $exact): bool {
+                        $missing = Arr::recursiveArrayDiffAssoc($permutation, $variant['values']);
+
+                        if ($missing === []) {
+                            return true;
+                        }
+
+                        $fits = count($permutation) - count($missing) === count($variant['values'])
+                            && array_intersect(array_keys($missing), $carried) === [];
+
+                        return $fits && ($exact ? $variant['name'] === $name : $variant['values'] !== [] || $valueless === 1);
+                    });
+
+                if ($variantIndex !== false) {
+                    $matches[$index] = ['variant' => $variantIndex, 'exact' => $exact];
+                }
             }
-
-            $permutations = $newPermutations;
         }
 
-        $variantPermutations = [];
-
-        foreach ($permutations as $permutation) {
-            $variantIndex = collect($variants)->search(function ($variant) use ($permutation) {
-                $valueDifference = Arr::recursiveArrayDiffAssoc($permutation, $variant['values']);
-
-                if (! count($valueDifference)) {
-                    return $variant;
-                }
-
-                $amountMatched = count($permutation) - count($valueDifference);
-
-                return $amountMatched === count($variant['values']);
-            });
-
-            $variant = $variants[$variantIndex] ?? null;
-
-            $variantId = $variant['id'] ?? null;
-            $name = $variant['name'] ?? Arr::performPermutationIntoWord($permutation, 'value');
+        return collect($permutations)->map(function (array $permutation, int $index) use ($matches, $variants): array {
+            $match = $matches[$index] ?? null;
+            $variant = $match ? $variants[$match['variant']] : null;
             $sku = $variant['sku'] ?? null;
-            $price = $variant['price'] ?? 0;
-            $stock = $variant['stock'] ?? 0;
-
-            if ($variant) {
-                $existing = collect($variantPermutations)
-                    ->where('variant_id', $variant['id'])
-                    ->first();
-
-                if ($existing) {
-                    $variantId = null;
-                    $sku = null;
-                    $price = 0;
-                    $stock = 0;
-                }
-            }
 
             if ($sku === null) {
                 $variantSlug = mb_strtoupper(Str::slug(Arr::performPermutationIntoWord($permutation, 'value', '-')));
@@ -192,17 +205,15 @@ class GenerateVariants extends SlideOverComponent
                     : $variantSlug;
             }
 
-            $variantPermutations[] = [
+            return [
                 'key' => Str::random(),
-                'variant_id' => $variantId,
-                'name' => $name,
+                'variant_id' => $variant['id'] ?? null,
+                'name' => ($match['exact'] ?? false) ? $variant['name'] : Arr::performPermutationIntoWord($permutation, 'value'),
                 'sku' => $sku,
-                'price' => $price,
-                'stock' => $stock,
+                'price' => $variant['price'] ?? 0,
+                'stock' => $variant['stock'] ?? 0,
                 'values' => Arr::getPermutationIds($permutation),
             ];
-        }
-
-        return $variantPermutations;
+        })->all();
     }
 }
