@@ -24,7 +24,6 @@ use Shopper\Cart\Pipelines\CartPipelineRunner;
 use Shopper\Core\Enum\WebhookEventType;
 use Shopper\Core\Events\Payments\OrphanedPaymentRefunded;
 use Shopper\Core\Events\Payments\PaymentOrphaned;
-use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Shopper\Core\Webhooks\Facades\Webhooks;
 use Spatie\LaravelPackageTools\Package;
@@ -58,8 +57,6 @@ final class CartServiceProvider extends PackageServiceProvider
 
         Event::listen(PaymentOrphaned::class, RecognizeOrphanedPayment::class);
         Event::listen(OrphanedPaymentRefunded::class, ForgetRefundedPaymentSession::class);
-
-        PaymentMethod::resolveRelationUsing('carts', fn (PaymentMethod $method) => $method->hasMany(config('shopper.cart.models.cart', Cart::class), 'payment_method_id'));
     }
 
     public function packageRegistered(): void

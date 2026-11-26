@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
 use Shopper\Payment\Enum\PaymentMode;
@@ -84,10 +85,16 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
             ->query(
                 PaymentMethod::query()
                     ->with('zones')
-                    ->withExists([
-                        'orders' => fn (Builder $query): Builder => $query->withoutGlobalScope(SoftDeletingScope::class),
-                        'carts' => fn (Builder $query): Builder => $query->whereNull('completed_at')->whereNotNull('payment_session'),
+                    ->withExists(['orders' => fn (Builder $query): Builder => $query->withoutGlobalScope(SoftDeletingScope::class)])
+                    ->addSelect([
+                        'carts_exists' => resolve(CartContract::class)::query()
+                            ->select('id')
+                            ->whereColumn('payment_method_id', shopper_table('payment_methods').'.id')
+                            ->whereNull('completed_at')
+                            ->whereNotNull('payment_session')
+                            ->limit(1),
                     ])
+                    ->withCasts(['carts_exists' => 'boolean'])
                     ->latest()
             )
             ->columns([
