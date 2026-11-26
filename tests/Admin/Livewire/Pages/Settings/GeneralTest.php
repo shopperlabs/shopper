@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -9,6 +10,7 @@ use Livewire\Livewire;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
+use Shopper\Livewire\Pages\Settings\Currencies;
 use Shopper\Livewire\Pages\Settings\General;
 use Tests\Core\Stubs\User;
 
@@ -84,6 +86,39 @@ describe(General::class, function (): void {
         expect($logo)->not->toBeNull();
 
         Storage::disk($disk)->assertExists($logo);
+    });
+
+    it('locks the new default currency even when a concurrent request cached the previous one before the save committed', function (): void {
+        setupCurrencies(['USD', 'EUR'], 'USD');
+        $usd = Currency::query()->where('code', 'USD')->sole();
+        $eur = Currency::query()->where('code', 'EUR')->sole();
+        $country = Country::query()->firstOr(fn () => Country::factory()->create());
+
+        Setting::saved(function (Setting $setting) use ($usd): void {
+            if ($setting->key === 'social_links') {
+                Cache::put('shopper-setting.default_currency_id', $usd->id);
+            }
+        });
+
+        Livewire::test(General::class)
+            ->fillForm([
+                'name' => 'Test Store',
+                'email' => 'store@example.com',
+                'legal_name' => 'Test Store LLC',
+                'street_address' => 'Akwa Avenue 34',
+                'city' => 'Douala',
+                'postal_code' => '00237',
+                'country_id' => $country->id,
+                'currencies' => [$usd->id, $eur->id],
+                'default_currency_id' => $eur->id,
+            ])
+            ->call('store')
+            ->assertHasNoFormErrors();
+
+        Livewire::test(Currencies::class)
+            ->loadTable()
+            ->assertTableColumnExists('is_enabled', fn (ToggleColumn $column): bool => $column->isDisabled(), $eur)
+            ->assertTableColumnExists('is_enabled', fn (ToggleColumn $column): bool => ! $column->isDisabled(), $usd);
     });
 
     it('rejects an SVG file for the logo and cover uploads', function (): void {

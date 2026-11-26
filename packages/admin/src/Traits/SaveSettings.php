@@ -35,7 +35,7 @@ trait SaveSettings
                     'locked' => $locked,
                 ]);
 
-                $this->forgetSettingCache($key);
+                DB::afterCommit(fn () => $this->forgetSettingCache($key));
             }
         });
     }

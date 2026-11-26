@@ -13,5 +13,6 @@ return [
     'edit_rate' => 'Editar tipo de cambio',
     'rate_updated' => 'El tipo de cambio se ha actualizado correctamente.',
     'no_currency' => 'No se encontraron divisas.',
+    'locked' => 'Divisa predeterminada o usada por una zona, no se puede desactivar.',
 
 ];

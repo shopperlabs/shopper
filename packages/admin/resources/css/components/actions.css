@@ -1,0 +1,6 @@
+.fi-btn[disabled]:not(.fi-force-enabled),
+.fi-icon-btn[disabled]:not(.fi-force-enabled),
+.fi-link[disabled]:not(.fi-force-enabled),
+.fi-toggle[disabled] {
+  @apply opacity-40;
+}

@@ -53,10 +53,11 @@ class Currencies extends Component implements HasActions, HasSchemas, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Currency::withoutGlobalScopes()->orderBy('name'))
+            ->query(Currency::withoutGlobalScopes()->withExists('zone')->orderBy('name'))
             ->columns([
                 TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
+                    ->description(fn (Currency $record): ?string => $this->isLocked($record) ? __('shopper::pages/settings/currencies.locked') : null)
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('code')
@@ -72,6 +73,7 @@ class Currencies extends Component implements HasActions, HasSchemas, HasTable
                     ->sortable(),
                 ToggleColumn::make('is_enabled')
                     ->label(__('shopper::forms.label.status'))
+                    ->disabled(fn (Currency $record): bool => $this->isLocked($record))
                     ->beforeStateUpdated(fn (): mixed => $this->authorize('system.settings')),
             ])
             ->recordActions([
@@ -138,6 +140,7 @@ class Currencies extends Component implements HasActions, HasSchemas, HasTable
                     })
                     ->deselectRecordsAfterCompletion(),
             ])
+            ->checkIfRecordIsSelectableUsing(fn (Currency $record): bool => ! $this->isLocked($record))
             ->emptyStateIcon(Untitledui::CurrencyDollarCircle)
             ->emptyStateDescription(__('shopper::pages/settings/currencies.no_currency'));
     }
@@ -146,5 +149,11 @@ class Currencies extends Component implements HasActions, HasSchemas, HasTable
     {
         return view('shopper::livewire.pages.settings.currencies')
             ->title(__('shopper::pages/settings/currencies.title'));
+    }
+
+    private function isLocked(Currency $currency): bool
+    {
+        return $currency->is_enabled
+            && ($currency->zone_exists || $currency->id === (int) shopper_setting('default_currency_id'));
     }
 }

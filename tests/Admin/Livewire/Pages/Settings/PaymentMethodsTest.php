@@ -4,8 +4,16 @@ declare(strict_types=1);
 
 use Filament\Actions\Testing\TestAction;
 use Livewire\Livewire;
+use Shopper\Cart\Models\Cart;
+use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Enum\PaymentStatus;
+use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
+use Shopper\Livewire\Pages\Order\Detail;
 use Shopper\Livewire\Pages\Settings\PaymentMethods;
+use Shopper\Payment\Enum\TransactionStatus;
+use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Models\PaymentTransaction;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
@@ -90,6 +98,120 @@ describe(PaymentMethods::class, function (): void {
             ->callAction(TestAction::make('delete')->table($payment));
 
         expect(PaymentMethod::query()->find($payment->id))->toBeNull();
+    });
+
+    it('refuses to delete a payment method an order uses', function (bool $deleted): void {
+        $payment = PaymentMethod::factory()->create();
+        $order = Order::factory()->create(['payment_method_id' => $payment->id]);
+
+        if ($deleted) {
+            $order->delete();
+        }
+
+        Livewire::test(PaymentMethods::class)
+            ->assertActionDisabled(TestAction::make('delete')->table($payment))
+            ->callAction(TestAction::make('delete')->table($payment));
+
+        expect(PaymentMethod::query()->find($payment->id))->not->toBeNull()
+            ->and($order->fresh()->payment_method_id)->toBe($payment->id);
+    })->with(['placed' => false, 'soft deleted' => true]);
+
+    it('refuses to delete a payment method a checkout in progress holds a payment session on', function (): void {
+        $payment = PaymentMethod::factory()->create();
+        Cart::factory()->create([
+            'payment_method_id' => $payment->id,
+            'payment_session' => ['driver' => 'stripe', 'reference' => 'pi_123'],
+        ]);
+
+        Livewire::test(PaymentMethods::class)
+            ->assertActionDisabled(TestAction::make('delete')->table($payment))
+            ->callAction(TestAction::make('delete')->table($payment));
+
+        expect(PaymentMethod::query()->find($payment->id))->not->toBeNull();
+    });
+
+    it('deletes a payment method a cart only selected or a completed checkout held', function (): void {
+        $payment = PaymentMethod::factory()->create();
+        Cart::factory()->create(['payment_method_id' => $payment->id]);
+        Cart::factory()->create([
+            'payment_method_id' => $payment->id,
+            'payment_session' => ['driver' => 'stripe', 'reference' => 'pi_123'],
+            'completed_at' => now(),
+        ]);
+
+        Livewire::test(PaymentMethods::class)
+            ->assertActionEnabled(TestAction::make('delete')->table($payment))
+            ->callAction(TestAction::make('delete')->table($payment));
+
+        expect(PaymentMethod::query()->find($payment->id))->toBeNull();
+    });
+
+    it('keeps the driver of a payment method an order or a checkout in progress relies on', function (): void {
+        $ordered = PaymentMethod::factory()->create(['driver' => 'stripe']);
+        Order::factory()->create(['payment_method_id' => $ordered->id]);
+        $inCheckout = PaymentMethod::factory()->create(['driver' => 'stripe']);
+        Cart::factory()->create([
+            'payment_method_id' => $inCheckout->id,
+            'payment_session' => ['driver' => 'stripe', 'reference' => 'pi_123'],
+        ]);
+        $unused = PaymentMethod::factory()->create(['driver' => 'stripe']);
+
+        $component = Livewire::test(PaymentMethods::class);
+
+        foreach ([$ordered, $inCheckout, $unused] as $payment) {
+            $component
+                ->callAction(TestAction::make('edit')->table($payment), ['title' => $payment->title, 'driver' => 'manual'])
+                ->assertHasNoFormErrors();
+        }
+
+        expect($ordered->fresh()->driver)->toBe('stripe')
+            ->and($inCheckout->fresh()->driver)->toBe('stripe')
+            ->and($unused->fresh()->driver)->toBe('manual');
+    });
+
+    it('edits a payment method an order uses although its driver was never set', function (): void {
+        $payment = PaymentMethod::factory()->create(['driver' => null]);
+        Order::factory()->create(['payment_method_id' => $payment->id]);
+
+        Livewire::test(PaymentMethods::class)
+            ->callAction(TestAction::make('edit')->table($payment), ['title' => 'Cash on pickup'])
+            ->assertHasNoFormErrors();
+
+        expect($payment->fresh())
+            ->title->toBe('Cash on pickup')
+            ->driver->toBeNull();
+    });
+
+    it('keeps an authorized order capturable after a refused delete of its payment method', function (): void {
+        $this->user->givePermissionTo(['orders.read', 'orders.edit']);
+
+        $payment = PaymentMethod::factory()->create(['driver' => 'manual']);
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::New,
+            'payment_status' => PaymentStatus::Authorized,
+            'payment_method_id' => $payment->id,
+            'price_amount' => 5000,
+            'currency_code' => 'USD',
+        ]);
+        PaymentTransaction::factory()->create([
+            'order_id' => $order->id,
+            'payment_method_id' => $payment->id,
+            'type' => TransactionType::Authorize,
+            'status' => TransactionStatus::Success,
+            'reference' => 'manual_123',
+            'amount' => 5000,
+        ]);
+
+        Livewire::test(PaymentMethods::class)
+            ->callAction(TestAction::make('delete')->table($payment));
+
+        Livewire::test(Detail::class, ['order' => $order->fresh()])
+            ->assertActionVisible('capturePayment')
+            ->callAction('capturePayment')
+            ->assertNotified(__('shopper::pages/orders.notifications.captured'));
+
+        expect($order->fresh()->payment_status)->toBe(PaymentStatus::Paid)
+            ->and(PaymentTransaction::query()->where('type', TransactionType::Capture)->sole()->payment_method_id)->toBe($payment->id);
     });
 
     it('forbids mount for users without `system.settings`', function (): void {

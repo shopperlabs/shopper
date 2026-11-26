@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\PaymentMethodFactory;
 use Shopper\Core\Models\Contracts\PaymentMethod as PaymentMethodContract;
 use Shopper\Core\Models\Traits\HasPublicId;
@@ -28,6 +29,8 @@ use Shopper\Core\Models\Traits\HasZones;
  * @property-read array<string, mixed>|null $metadata
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
+ * @property-read ?bool $orders_exists
+ * @property-read ?bool $carts_exists
  */
 class PaymentMethod extends Model implements PaymentMethodContract
 {
@@ -43,6 +46,14 @@ class PaymentMethod extends Model implements PaymentMethodContract
     public function getTable(): string
     {
         return shopper_table('payment_methods');
+    }
+
+    /**
+     * @return HasMany<Order, $this>
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(config('shopper.models.order'), 'payment_method_id');
     }
 
     public function logo(): ?string

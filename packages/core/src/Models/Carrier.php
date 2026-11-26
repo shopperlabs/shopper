@@ -31,6 +31,8 @@ use Shopper\Core\Models\Traits\HasZones;
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  * @property-read Collection<int, CarrierOption> $options
+ * @property-read ?bool $options_exists
+ * @property-read ?bool $shipments_exists
  */
 class Carrier extends Model implements CarrierContract
 {
@@ -54,6 +56,14 @@ class Carrier extends Model implements CarrierContract
     public function options(): HasMany
     {
         return $this->hasMany(CarrierOption::class);
+    }
+
+    /**
+     * @return HasMany<OrderShipping, $this>
+     */
+    public function shipments(): HasMany
+    {
+        return $this->hasMany(OrderShipping::class, 'carrier_id');
     }
 
     public function logo(): ?string

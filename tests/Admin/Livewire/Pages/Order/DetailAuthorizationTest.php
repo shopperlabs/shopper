@@ -8,6 +8,7 @@ use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Events\Orders;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\PaymentMethod;
 use Shopper\Livewire\Pages\Order\Detail;
 use Tests\Core\Stubs\User;
 
@@ -48,6 +49,7 @@ describe('Detail authorization', function (): void {
         $order = Order::factory()->hasItems(1)->create([
             'status' => OrderStatus::Processing,
             'payment_status' => PaymentStatus::Authorized,
+            'payment_method_id' => PaymentMethod::factory()->create()->id,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])

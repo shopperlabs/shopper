@@ -22,6 +22,7 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read float $exchange_rate
  * @property-read bool $is_enabled
  * @property-read ?Zone $zone
+ * @property-read ?bool $zone_exists
  */
 class Currency extends Model implements CurrencyContract
 {

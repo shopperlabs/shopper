@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\CarrierOptionFactory;
 use Shopper\Core\Models\Contracts\CarrierOption as CarrierOptionContract;
 use Shopper\Core\Models\Traits\HasPublicId;
@@ -28,6 +29,7 @@ use Shopper\Core\Models\Traits\HasPublicId;
  * @property-read CarbonInterface $updated_at
  * @property-read Zone $zone
  * @property-read Carrier $carrier
+ * @property-read ?bool $orders_exists
  */
 class CarrierOption extends Model implements CarrierOptionContract
 {
@@ -62,6 +64,14 @@ class CarrierOption extends Model implements CarrierOptionContract
     public function zone(): BelongsTo
     {
         return $this->belongsTo(Zone::class, 'zone_id');
+    }
+
+    /**
+     * @return HasMany<Order, $this>
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(config('shopper.models.order'), 'shipping_option_id');
     }
 
     protected static function newFactory(): CarrierOptionFactory
