@@ -135,6 +135,40 @@ describe('Automatic promotions', function (): void {
         expect($this->cart->refresh()->promotions)->toBeEmpty();
     });
 
+    it('stops discounting the cart and the order once the automatic promotion expires', function (): void {
+        ($this->makeAutomatic)(['end_at' => now()->addHour()]);
+        $line = $this->cartManager->add($this->cart, $this->product, quantity: 2);
+
+        expect($this->cartManager->totals($this->cart->refresh())->discountTotal)->toBe(500);
+
+        $this->travel(2)->hours();
+        $this->cartManager->update($this->cart->refresh(), $line->id, ['quantity' => 3]);
+
+        $this->cartManager->totals($this->cart->refresh());
+        $cached = $this->cartManager->totals($this->cart->refresh());
+
+        expect($this->cart->refresh()->promotions)->toBeEmpty()
+            ->and($cached->discountTotal)->toBe(0)
+            ->and($cached->total)->toBe(7500);
+
+        $order = resolve(CreateOrderFromCartAction::class)->execute($this->cart->refresh());
+
+        expect($order->promotions)->toBeEmpty()
+            ->and($order->items->sum('discount_amount'))->toBe(0)
+            ->and($order->price_amount)->toBe(7500);
+    });
+
+    it('keeps the amount of a held payment session when an expired promotion left adjustments behind', function (): void {
+        ($this->makeAutomatic)();
+        $this->cartManager->add($this->cart, $this->product, quantity: 2);
+        $this->cartManager->calculate($this->cart->refresh());
+
+        $this->cart->promotions()->delete();
+        $this->cart->forceFill(['payment_session' => ['driver' => 'fake', 'reference' => 'pi_1', 'amount' => 5000, 'currency' => 'USD']])->save();
+
+        expect($this->cartManager->calculate($this->cart->refresh())->total)->toBe(5000);
+    });
+
     it('does not snapshot a suppressed automatic promotion onto the order', function (): void {
         ($this->makeAutomatic)(['value' => 10, 'combinable' => false, 'priority' => 5]);
         Discount::factory()->create([

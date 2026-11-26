@@ -99,14 +99,20 @@ describe(CreateOrderFromCartAction::class, function (): void {
     });
 
     it('transfers discount amount to order items', function (): void {
-        $this->cartManager->add($this->cart, $this->product, quantity: 2);
-
-        $line = $this->cart->lines->first();
-        $line->adjustments()->create([
-            'amount' => 5,
-            'code' => 'TEST',
-            'discount_id' => null,
+        Discount::factory()->create([
+            'code' => 'TEN',
+            'is_active' => true,
+            'type' => DiscountType::Percentage,
+            'value' => 10,
+            'apply_to' => DiscountApplyTo::Order,
+            'eligibility' => DiscountEligibility::Everyone,
+            'min_required' => DiscountRequirement::None,
+            'start_at' => now()->subDay(),
+            'end_at' => now()->addMonth(),
         ]);
+
+        $this->cartManager->add($this->cart, $this->product, quantity: 2);
+        $this->cartManager->applyCoupon($this->cart, 'TEN');
 
         $order = $this->action->execute($this->cart->refresh());
         $orderItem = $order->items->first();
