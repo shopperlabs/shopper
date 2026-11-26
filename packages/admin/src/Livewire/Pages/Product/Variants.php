@@ -26,6 +26,7 @@ use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\Contracts\Product;
 use Shopper\Core\Models\Contracts\ProductVariant;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -99,7 +100,7 @@ class Variants extends Component implements HasActions, HasSchemas, HasTable
                             ['product' => $this->product]
                         )
                     )
-                    ->visible($this->product->options->count() > 0),
+                    ->visible($this->product->options->contains(fn (Attribute $option): bool => ! $option->hasTextValue())),
                 Action::make('add')
                     ->label(__('shopper::pages/products.variants.add'))
                     ->action(

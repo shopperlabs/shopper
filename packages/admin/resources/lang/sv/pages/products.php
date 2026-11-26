@@ -76,6 +76,7 @@ return [
         'search_label' => 'Sök variant',
         'search_placeholder' => 'Sök produktvariant',
         'variant_information' => 'Variantinformation',
+        'stock_managed_per_location' => 'Hantera lagret för den här varianten per lagerplats från dess sida.',
     ],
 
     'reviews' => [
@@ -112,6 +113,7 @@ return [
         'choose' => 'Välj attribut',
         'empty_title' => 'Inga aktiverade attribut',
         'empty_values' => 'De attribut som är förknippade med denna produkt listas här.',
+        'variants_keep_value' => '{1} :count variant använder fortfarande :value. Den förblir till salu tills du genererar om varianterna eller tar bort den.|[2,*] :count varianter använder fortfarande :value. De förblir till salu tills du genererar om varianterna eller tar bort dem.',
 
         'swatch' => [
             'action' => 'Färgprovsbild (Swatch)',

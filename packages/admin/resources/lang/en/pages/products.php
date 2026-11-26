@@ -76,6 +76,7 @@ return [
         'search_label' => 'Search variant',
         'search_placeholder' => 'Search product variant',
         'variant_information' => 'Variant information',
+        'stock_managed_per_location' => 'Manage this variant\'s stock per location from its page.',
     ],
 
     'reviews' => [
@@ -112,6 +113,7 @@ return [
         'choose' => 'Choose attributes',
         'empty_title' => 'No enabled Attributes',
         'empty_values' => 'The attributes associated with this product are listed here.',
+        'variants_keep_value' => '{1} :count variant still uses :value. It stays on sale until you regenerate the variants or delete it.|[2,*] :count variants still use :value. They stay on sale until you regenerate the variants or delete them.',
 
         'swatch' => [
             'action' => 'Swatch image',

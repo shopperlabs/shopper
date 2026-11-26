@@ -58,6 +58,11 @@ class MoneyInput extends TextInput
         $this->currencyMask(thousandSeparator: $thousandSeparator, decimalSeparator: $decimalSeparator, precision: 2); // @phpstan-ignore method.notFound
     }
 
+    public static function amountRegex(string $currency): string
+    {
+        return is_no_division_currency($currency) ? '/^\d{1,9}$/' : '/^\d{1,6}(\.\d{0,2})?$/';
+    }
+
     public function prefix(string|Htmlable|Closure|null $label, bool|Closure $isInline = true): static
     {
         return parent::prefix($label, $isInline);
@@ -84,7 +89,7 @@ class MoneyInput extends TextInput
 
     public function amountRules(): static
     {
-        return $this->regex(fn (): string => is_no_division_currency($this->getCurrency()) ? '/^\d{1,9}$/' : '/^\d{1,6}(\.\d{0,2})?$/');
+        return $this->regex(fn (): string => self::amountRegex($this->getCurrency()));
     }
 
     public function isMoney(): bool
