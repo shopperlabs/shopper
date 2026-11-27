@@ -173,7 +173,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasSchemas
             ->label(__('shopper::forms.actions.capture_payment'))
             ->icon(Untitledui::CreditCardDown)
             ->authorize('orders.edit')
-            ->visible($this->order->isPaymentAuthorized() && $this->order->isNotCancelled() && ! $this->order->isArchived())
+            ->visible($this->order->isPaymentAuthorized() && $this->order->isNotCancelled() && ! $this->order->isArchived() && $this->order->paymentMethod !== null)
             ->requiresConfirmation()
             ->modalIcon(Untitledui::CreditCardDown)
             ->modalHeading(__('shopper::pages/orders.modals.capture_heading', ['number' => $this->order->number]))

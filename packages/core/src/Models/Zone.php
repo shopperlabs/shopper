@@ -40,6 +40,9 @@ use Shopper\Core\Models\Traits\HasSlug;
  * @property-read EloquentCollection<int, PaymentMethod> $paymentMethods
  * @property-read EloquentCollection<int, Country> $countries
  * @property-read EloquentCollection<int, Contracts\Collection> $collections
+ * @property-read ?bool $discounts_exists
+ * @property-read ?bool $orders_exists
+ * @property-read ?bool $shipping_options_exists
  */
 class Zone extends Model implements ZoneContract
 {
@@ -145,6 +148,22 @@ class Zone extends Model implements ZoneContract
     public function shippingOptions(): HasMany
     {
         return $this->hasMany(CarrierOption::class);
+    }
+
+    /**
+     * @return HasMany<Order, $this>
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(config('shopper.models.order'), 'zone_id');
+    }
+
+    /**
+     * @return HasMany<Discount, $this>
+     */
+    public function discounts(): HasMany
+    {
+        return $this->hasMany(Discount::class, 'zone_id');
     }
 
     protected static function newFactory(): ZoneFactory

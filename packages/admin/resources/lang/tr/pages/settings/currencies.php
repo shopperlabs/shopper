@@ -13,5 +13,6 @@ return [
     'edit_rate' => 'Döviz kurunu düzenle',
     'rate_updated' => 'Döviz kuru başarıyla güncellendi.',
     'no_currency' => 'Para birimi bulunamadı.',
+    'locked' => 'Varsayılan para birimi veya bir bölge tarafından kullanılıyor, devre dışı bırakılamaz.',
 
 ];

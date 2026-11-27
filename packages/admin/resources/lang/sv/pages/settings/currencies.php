@@ -13,5 +13,6 @@ return [
     'edit_rate' => 'Redigera växelkurs',
     'rate_updated' => 'Växelkurserna har uppdaterats.',
     'no_currency' => 'Inga valutor hittades.',
+    'locked' => 'Standardvaluta eller används av en zon, den kan inte inaktiveras.',
 
 ];

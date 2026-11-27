@@ -11,6 +11,9 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Locked;
@@ -43,7 +46,10 @@ class ZoneShippingOptions extends Component implements HasActions, HasSchemas
     #[Computed]
     public function zone(): ?Zone
     {
-        return Zone::with(['shippingOptions', 'shippingOptions.carrier'])->find($this->selectedZoneId);
+        return Zone::with([
+            'shippingOptions' => fn (HasMany $query): HasMany => $query->withExists(['orders' => fn (Builder $orders): Builder => $orders->withoutGlobalScope(SoftDeletingScope::class)]),
+            'shippingOptions.carrier',
+        ])->find($this->selectedZoneId);
     }
 
     public function deleteAction(): Action
@@ -54,10 +60,11 @@ class ZoneShippingOptions extends Component implements HasActions, HasSchemas
             ->icon(Untitledui::Trash03)
             ->color('danger')
             ->iconButton()
+            ->disabled(fn (array $arguments): bool => (bool) $this->zone->shippingOptions->firstWhere('id', (int) ($arguments['id'] ?? 0))?->orders_exists)
             ->action(function (array $arguments): void {
                 CarrierOption::query()
                     ->where('zone_id', $this->selectedZoneId)
-                    ->findOrFail($arguments['id'])
+                    ->findOrFail((int) $arguments['id'])
                     ->delete();
 
                 Notification::make()

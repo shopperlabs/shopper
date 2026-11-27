@@ -13,5 +13,6 @@ return [
     'edit_rate' => 'Edit exchange rate',
     'rate_updated' => 'Exchange rate has been successfully updated.',
     'no_currency' => 'No currencies found.',
+    'locked' => 'Default currency or used by a zone, it cannot be disabled.',
 
 ];

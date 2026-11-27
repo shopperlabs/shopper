@@ -13,5 +13,6 @@ return [
     'edit_rate' => 'Modifier le taux de change',
     'rate_updated' => 'Le taux de change a été mis à jour avec succès.',
     'no_currency' => 'Aucune devise trouvée.',
+    'locked' => 'Devise par défaut ou utilisée par une zone, elle ne peut pas être désactivée.',
 
 ];

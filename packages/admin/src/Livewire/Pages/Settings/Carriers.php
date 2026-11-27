@@ -78,7 +78,7 @@ class Carriers extends Component implements HasActions, HasSchemas, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Carrier::query()->latest())
+            ->query(Carrier::query()->withExists(['options', 'shipments'])->latest())
             ->columns([
                 ImageColumn::make('logo')
                     ->label(__('shopper::forms.label.logo'))
@@ -118,6 +118,7 @@ class Carriers extends Component implements HasActions, HasSchemas, HasTable
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
                     ->authorize('system.settings')
+                    ->disabled(fn (Carrier $record): bool => $record->options_exists || $record->shipments_exists)
                     ->iconButton(),
             ])
             ->emptyStateIcon(Untitledui::Truck)
@@ -148,7 +149,11 @@ class Carriers extends Component implements HasActions, HasSchemas, HasTable
                 ->options($this->getDriverOptions())
                 ->default('manual')
                 ->required()
-                ->helperText(__('shopper::pages/settings/carriers.driver_help'))
+                ->disabled(fn (?Carrier $record): bool => (bool) $record?->shipments_exists)
+                ->validatedWhenNotDehydrated(false)
+                ->helperText(fn (Select $component): string => $component->isDisabled()
+                    ? __('shopper::pages/settings/carriers.driver_locked')
+                    : __('shopper::pages/settings/carriers.driver_help'))
                 ->native(false)
                 ->allowHtml(),
             TextInput::make('link_url')

@@ -11,6 +11,8 @@ use Filament\Actions\DeleteAction;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Isolate;
 use Livewire\Attributes\Lazy;
@@ -42,7 +44,7 @@ class Detail extends Component implements HasActions, HasSchemas
             'currency',
             'carriers',
             'paymentMethods',
-        ])->find($this->currentZoneId);
+        ])->withExists(['orders' => fn (Builder $query): Builder => $query->withoutGlobalScope(SoftDeletingScope::class), 'shippingOptions', 'discounts'])->find($this->currentZoneId);
     }
 
     public function deleteAction(): Action
@@ -52,6 +54,7 @@ class Detail extends Component implements HasActions, HasSchemas
             ->record($this->zone)
             ->icon(Untitledui::Trash03)
             ->iconButton()
+            ->disabled(fn (Zone $record): bool => $record->orders_exists || $record->shipping_options_exists || $record->discounts_exists)
             ->successNotificationTitle(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/zones.single')]))
             ->after(function (): void {
                 unset($this->zone);

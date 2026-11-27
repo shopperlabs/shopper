@@ -8,6 +8,7 @@ use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Events\Orders;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\PaymentMethod;
 use Shopper\Livewire\Pages\Order\Detail;
 use Tests\Core\Stubs\User;
 
@@ -278,11 +279,22 @@ describe(Detail::class, function (): void {
         $order = Order::factory()->hasItems(1)->create([
             'status' => OrderStatus::New,
             'payment_status' => PaymentStatus::Authorized,
+            'payment_method_id' => PaymentMethod::factory()->create()->id,
         ]);
 
         Livewire::test(Detail::class, ['order' => $order])
             ->assertActionHidden('markPaid')
             ->assertActionVisible('capturePayment');
+    });
+
+    it('`capturePayment` action is hidden when the order has no payment method', function (): void {
+        $order = Order::factory()->hasItems(1)->create([
+            'status' => OrderStatus::New,
+            'payment_status' => PaymentStatus::Authorized,
+        ]);
+
+        Livewire::test(Detail::class, ['order' => $order])
+            ->assertActionHidden('capturePayment');
     });
 
     it('`capturePayment` action is hidden for a cancelled order', function (): void {

@@ -25,9 +25,12 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Mckenziearts\Icons\Untitledui\Enums\Untitledui;
+use Shopper\Cart\Models\Contracts\Cart as CartContract;
 use Shopper\Core\Models\PaymentMethod;
 use Shopper\Livewire\Concerns\WithSettingsBreadcrumbs;
 use Shopper\Payment\Enum\PaymentMode;
@@ -79,7 +82,21 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
     public function table(Table $table): Table
     {
         return $table
-            ->query(PaymentMethod::query()->with('zones')->latest())
+            ->query(
+                PaymentMethod::query()
+                    ->with('zones')
+                    ->withExists(['orders' => fn (Builder $query): Builder => $query->withoutGlobalScope(SoftDeletingScope::class)])
+                    ->addSelect([
+                        'carts_exists' => resolve(CartContract::class)::query()
+                            ->select('id')
+                            ->whereColumn('payment_method_id', shopper_table('payment_methods').'.id')
+                            ->whereNull('completed_at')
+                            ->whereNotNull('payment_session')
+                            ->limit(1),
+                    ])
+                    ->withCasts(['carts_exists' => 'boolean'])
+                    ->latest()
+            )
             ->columns([
                 ImageColumn::make('logo')
                     ->label(__('shopper::forms.label.logo'))
@@ -132,6 +149,7 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
                     ->label(__('shopper::forms.actions.delete'))
                     ->icon(Untitledui::Trash03)
                     ->authorize('system.settings')
+                    ->disabled(fn (PaymentMethod $record): bool => $record->orders_exists || $record->carts_exists)
                     ->iconButton(),
             ])
             ->emptyStateIcon(Untitledui::CreditCard02)
@@ -162,7 +180,11 @@ class PaymentMethods extends Component implements HasActions, HasSchemas, HasTab
                 ->options($this->getDriverOptions())
                 ->default('manual')
                 ->required()
-                ->helperText(__('shopper::pages/settings/payments.driver_help'))
+                ->disabled(fn (?PaymentMethod $record): bool => $record?->orders_exists || $record?->carts_exists)
+                ->validatedWhenNotDehydrated(false)
+                ->helperText(fn (Select $component): string => $component->isDisabled()
+                    ? __('shopper::pages/settings/payments.driver_locked')
+                    : __('shopper::pages/settings/payments.driver_help'))
                 ->native(false)
                 ->allowHtml(),
             TextInput::make('link_url')
