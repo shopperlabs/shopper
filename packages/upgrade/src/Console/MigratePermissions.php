@@ -6,6 +6,7 @@ namespace Shopper\Upgrade\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\PermissionRegistrar;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 use function Laravel\Prompts\confirm;
@@ -104,6 +105,8 @@ final class MigratePermissions extends Command
             callback: fn (): array => $this->apply($present),
             message: 'Renaming permissions...',
         );
+
+        resolve(PermissionRegistrar::class)->forgetCachedPermissions();
 
         info("{$renamed} permission(s) renamed to dot notation.");
 

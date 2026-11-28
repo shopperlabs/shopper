@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\DB;
+use Tests\Core\Stubs\User;
 
 uses(Tests\Upgrade\TestCase::class);
 
@@ -42,6 +43,23 @@ describe('shopper:upgrade:permissions', function (): void {
             ->and(DB::table(permissionsTable())->where('name', 'products.variants.edit')->value('group_name'))->toBe('products')
             ->and(DB::table(permissionsTable())->where('name', 'system.settings')->value('group_name'))->toBe('system')
             ->and(DB::table(permissionsTable())->where('name', 'browse_brands')->exists())->toBeFalse();
+    });
+
+    it('keeps the staff access under the new names without a manual cache reset', function (): void {
+        seedLegacyPermission('read_orders', 'orders');
+
+        $role = config('permission.models.role')::query()->create(['name' => 'staff', 'guard_name' => 'web']);
+        $role->givePermissionTo('read_orders');
+
+        $staff = User::factory()->create();
+        $staff->assignRole($role);
+
+        expect($staff->can('read_orders'))->toBeTrue();
+
+        $this->artisan('shopper:upgrade:permissions', ['--force' => true])
+            ->assertSuccessful();
+
+        expect($staff->fresh()->can('orders.read'))->toBeTrue();
     });
 
     it('does not modify data with `--dry-run`', function (): void {
