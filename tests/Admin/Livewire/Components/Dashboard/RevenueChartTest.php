@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 use Carbon\Carbon;
 use Livewire\Livewire;
-use Shopper\Core\Enum\OrderRefundStatus;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Order;
-use Shopper\Core\Models\OrderRefund;
 use Shopper\Livewire\Components\Dashboard\RevenueChart;
+use Shopper\Payment\Models\PaymentTransaction;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
@@ -26,7 +25,7 @@ beforeEach(function (): void {
 afterEach(fn () => Carbon::setTestNow());
 
 describe(RevenueChart::class, function (): void {
-    it('nets settled refunds against the month the refund was issued', function (): void {
+    it('nets successful refunds against the month the refund was issued', function (): void {
         $currency = shopper_currency();
 
         $order = Order::factory()->create([
@@ -38,11 +37,10 @@ describe(RevenueChart::class, function (): void {
             'created_at' => Carbon::parse('2026-05-10'),
         ]);
 
-        OrderRefund::factory()->create([
+        PaymentTransaction::factory()->refund()->create([
             'order_id' => $order->id,
             'amount' => 3000,
-            'currency' => $currency,
-            'status' => OrderRefundStatus::Refunded,
+            'currency_code' => $currency,
             'created_at' => Carbon::parse('2026-07-05'),
         ]);
 

@@ -270,7 +270,7 @@ final class CollectionProductsQuery
                 )
                 ->where('product_type', (new $productModel)->getMorphClass())
                 ->whereIn(shopper_table('orders').'.status', $validStatuses)
-                ->where(shopper_table('orders').'.payment_status', PaymentStatus::Paid->value)
+                ->whereIn(shopper_table('orders').'.payment_status', PaymentStatus::paidOrPartiallyRefunded())
                 ->groupBy('product_id')
                 ->havingRaw('SUM(quantity) '.$operator.' ?', [(int) $rule->value])
         );

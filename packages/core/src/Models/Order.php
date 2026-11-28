@@ -166,12 +166,12 @@ class Order extends Model implements OrderContract
 
     public function isPaid(): bool
     {
-        return $this->payment_status === PaymentStatus::Paid;
+        return in_array($this->payment_status, PaymentStatus::paidOrPartiallyRefunded(), strict: true);
     }
 
     public function allowsDownloads(): bool
     {
-        return in_array($this->payment_status, [PaymentStatus::Paid, PaymentStatus::PartiallyRefunded], strict: true);
+        return $this->isPaid();
     }
 
     public function isPaymentPending(): bool

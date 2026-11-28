@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Js;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
-use Shopper\Core\Enum\OrderRefundStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Currency;
-use Shopper\Core\Models\OrderRefund;
+use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Models\PaymentTransaction;
 
 final class RevenueChart extends ApexChartWidget
 {
@@ -121,10 +121,11 @@ final class RevenueChart extends ApexChartWidget
                     ->keyBy(fn ($row): string => $row->getAttribute('year').'-'.$row->getAttribute('month'))
                     ->map(fn ($row): int => (int) $row->getAttribute('total'));
 
-                $refunded = OrderRefund::query()
+                $refunded = PaymentTransaction::query()
                     ->selectRaw($refundedExpr['select'])
-                    ->whereIn('status', OrderRefundStatus::settled())
-                    ->where('currency', $currency)
+                    ->ofType(TransactionType::Refund)
+                    ->successful()
+                    ->where('currency_code', $currency)
                     ->where('created_at', '>=', $startDate)
                     ->where('created_at', '<=', $endDate)
                     ->groupByRaw($refundedExpr['groupBy'])

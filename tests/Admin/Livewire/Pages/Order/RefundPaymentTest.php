@@ -8,6 +8,7 @@ use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\PaymentMethod;
+use Shopper\Livewire\Components\Dashboard\StatCards;
 use Shopper\Livewire\Pages\Order\Detail;
 use Shopper\Payment\Enum\TransactionStatus;
 use Shopper\Payment\Enum\TransactionType;
@@ -175,5 +176,20 @@ describe('refundPayment action', function (): void {
 
         Livewire::test(Detail::class, ['order' => $this->order])
             ->assertActionHidden('refundPayment');
+    });
+
+    it('lets the staff complete a partially refunded order and nets the refund out of revenue', function (): void {
+        $this->user->givePermissionTo('orders.browse');
+        $this->order->update(['created_at' => now()]);
+
+        Livewire::test(Detail::class, ['order' => $this->order])
+            ->callAction('refundPayment', data: ['amount' => 30, 'reason' => 'requested_by_customer'])
+            ->assertActionVisible('markComplete')
+            ->callAction('markComplete');
+
+        $revenue = Livewire::test(StatCards::class)->instance()->cards[0]['value'];
+
+        expect($this->order->fresh()->status)->toBe(OrderStatus::Completed)
+            ->and($revenue)->toBe(shopper_money_format(2000, 'USD'));
     });
 })->group('livewire', 'orders', 'payment');

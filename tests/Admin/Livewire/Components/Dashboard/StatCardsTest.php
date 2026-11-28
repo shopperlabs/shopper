@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 use Carbon\Carbon;
 use Livewire\Livewire;
-use Shopper\Core\Enum\OrderRefundStatus;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\ShippingStatus;
 use Shopper\Core\Models\Order;
-use Shopper\Core\Models\OrderRefund;
 use Shopper\Livewire\Components\Dashboard\StatCards;
+use Shopper\Payment\Enum\TransactionStatus;
+use Shopper\Payment\Models\PaymentTransaction;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
@@ -48,7 +48,7 @@ describe(StatCards::class, function (): void {
             ->and($cards[0]['label'])->toBe(__('shopper::pages/dashboard.stats.products'));
     });
 
-    it('keeps refunded orders in revenue and deducts settled refund amounts', function (): void {
+    it('keeps refunded orders in revenue and deducts successful refund transactions', function (): void {
         $currency = shopper_currency();
 
         createDashboardOrder(['price_amount' => 10000]);
@@ -58,20 +58,19 @@ describe(StatCards::class, function (): void {
             'payment_status' => PaymentStatus::PartiallyRefunded,
         ]);
 
-        OrderRefund::factory()->create([
+        PaymentTransaction::factory()->refund()->create([
             'order_id' => $partiallyRefunded->id,
             'amount' => 2000,
-            'currency' => $currency,
-            'status' => OrderRefundStatus::Partial_Refund,
+            'currency_code' => $currency,
         ]);
 
         $awaitingRefund = createDashboardOrder(['price_amount' => 3000]);
 
-        OrderRefund::factory()->create([
+        PaymentTransaction::factory()->refund()->create([
             'order_id' => $awaitingRefund->id,
             'amount' => 999,
-            'currency' => $currency,
-            'status' => OrderRefundStatus::Awaiting,
+            'currency_code' => $currency,
+            'status' => TransactionStatus::Pending,
         ]);
 
         createDashboardOrder([
@@ -104,6 +103,27 @@ describe(StatCards::class, function (): void {
 
         expect($cards[0]['change'])->toBe(100.0)
             ->and($cards[0]['trend'])->toBe('up');
+    });
+
+    it('reports a drop when refunds outweigh sales in both months', function (): void {
+        $order = createDashboardOrder([
+            'price_amount' => 20000,
+            'created_at' => Carbon::parse('2026-05-10'),
+        ]);
+
+        foreach (['2026-06-10' => 5000, '2026-07-10' => 10000] as $refundedAt => $amount) {
+            PaymentTransaction::factory()->refund()->create([
+                'order_id' => $order->id,
+                'amount' => $amount,
+                'currency_code' => shopper_currency(),
+                'created_at' => Carbon::parse($refundedAt),
+            ]);
+        }
+
+        $cards = Livewire::test(StatCards::class)->instance()->cards;
+
+        expect($cards[0]['change'])->toBe(100.0)
+            ->and($cards[0]['trend'])->toBe('down');
     });
 
     it('counts orders of any payment status except cancelled and archived ones', function (): void {

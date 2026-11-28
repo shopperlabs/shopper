@@ -44,6 +44,14 @@ enum PaymentStatus: string implements HasColor, HasIcon, HasLabel
     }
 
     /**
+     * @return array<int, self>
+     */
+    public static function paidOrPartiallyRefunded(): array
+    {
+        return [self::Paid, self::PartiallyRefunded];
+    }
+
+    /**
      * @return array<string, array<int, self>>
      */
     public static function transitions(): array

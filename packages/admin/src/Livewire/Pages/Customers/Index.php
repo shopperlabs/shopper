@@ -28,6 +28,8 @@ use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Models\PaymentTransaction;
 use Shopper\Traits\HandlesAuthorizationExceptions;
 
 /**
@@ -91,7 +93,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
                                 OrderStatus::Processing,
                                 OrderStatus::Completed,
                             ])
-                            ->where('payment_status', PaymentStatus::Paid),
+                            ->whereIn('payment_status', PaymentStatus::paidOrPartiallyRefunded()),
                     ])
                     ->label(__('shopper::pages/customers.orders.placed')),
                 TextColumn::make('created_at')
@@ -151,23 +153,33 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
         $userModel = config('auth.providers.users.model');
         $usersTable = (new $userModel)->getTable();
 
-        $activeOrders = resolve(Order::class)::query()
+        $order = resolve(Order::class);
+
+        $activeOrders = $order::query()
             ->select('customer_id')
             ->whereIn('status', [
                 OrderStatus::Processing,
                 OrderStatus::Completed,
             ])
-            ->where('payment_status', PaymentStatus::Paid)
+            ->whereIn('payment_status', PaymentStatus::paidOrPartiallyRefunded())
             ->groupBy('customer_id');
 
-        $currencyOrders = resolve(Order::class)::query()
+        $refunds = PaymentTransaction::query()
+            ->select('order_id')
+            ->selectRaw('SUM(amount) as refunded')
+            ->ofType(TransactionType::Refund)
+            ->successful()
+            ->groupBy('order_id');
+
+        $currencyOrders = $order::query()
             ->select('customer_id')
-            ->selectRaw('SUM(price_amount) as per_customer_total')
+            ->selectRaw('SUM(price_amount - COALESCE(refunds.refunded, 0)) as per_customer_total')
+            ->leftJoinSub($refunds, 'refunds', 'refunds.order_id', '=', $order->qualifyColumn('id'))
             ->whereIn('status', [
                 OrderStatus::Processing,
                 OrderStatus::Completed,
             ])
-            ->where('payment_status', PaymentStatus::Paid)
+            ->whereIn('payment_status', PaymentStatus::paidOrPartiallyRefunded())
             ->where('currency_code', shopper_currency())
             ->groupBy('customer_id');
 

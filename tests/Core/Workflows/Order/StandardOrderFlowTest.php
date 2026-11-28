@@ -159,6 +159,30 @@ describe('Standard order — purchase to delivery', function (): void {
         Event::assertDispatched(OrderShipmentDelivered::class);
     });
 
+    it('auto-completes a partially refunded order once delivered', function (): void {
+        $order = Order::factory()->create([
+            'status' => OrderStatus::Processing,
+            'payment_status' => PaymentStatus::PartiallyRefunded,
+            'shipping_status' => ShippingStatus::Shipped,
+        ]);
+
+        $shipment = OrderShipping::query()->create([
+            'order_id' => $order->id,
+            'status' => ShipmentStatus::OutForDelivery,
+            'shipped_at' => now()->subDay(),
+        ]);
+
+        OrderItem::factory()->create([
+            'order_id' => $order->id,
+            'order_shipping_id' => $shipment->id,
+            'fulfillment_status' => FulfillmentStatus::Shipped,
+        ]);
+
+        (new MarkShipmentDeliveredAction)->execute($shipment);
+
+        expect($order->refresh()->status)->toBe(OrderStatus::Completed);
+    });
+
     it('records shipment events in the timeline', function (): void {
         $order = Order::factory()->create([
             'status' => OrderStatus::Processing,
