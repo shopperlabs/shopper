@@ -75,7 +75,7 @@ return [
     ],
 
     'create' => [
-        'description' => 'Créez un compte client, définissez ses identifiants et envoyez-lui un e-mail de bienvenue avec ses informations de connexion.',
+        'description' => 'Créez un compte client et, si vous le souhaitez, envoyez-lui par e-mail un lien pour choisir son mot de passe.',
     ],
 
     'modal' => [

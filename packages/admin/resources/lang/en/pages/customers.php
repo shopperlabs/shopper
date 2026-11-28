@@ -75,7 +75,7 @@ return [
     ],
 
     'create' => [
-        'description' => 'Create a customer account, set credentials, and optionally send a welcome email with their login details.',
+        'description' => 'Create a customer account and, optionally, email them a link to choose their password.',
     ],
 
     'modal' => [

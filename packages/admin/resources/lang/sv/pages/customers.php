@@ -75,7 +75,7 @@ return [
     ],
 
     'create' => [
-        'description' => 'Skapa ett kundkonto, ange inloggningsuppgifter och skicka valfritt ett välkomstmeddelande med inloggningsuppgifter via e-post.',
+        'description' => 'Skapa ett kundkonto och skicka vid behov en länk via e-post där kunden väljer sitt lösenord.',
     ],
 
     'modal' => [
