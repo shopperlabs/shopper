@@ -7,6 +7,8 @@ use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Order;
 use Shopper\Livewire\Pages\Customers\Index;
+use Shopper\Payment\Enum\TransactionStatus;
+use Shopper\Payment\Models\PaymentTransaction;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
@@ -149,5 +151,33 @@ describe(Index::class, function (): void {
 
         expect($stats['active_count'])->toBe(0)
             ->and($stats['avg_ltv'])->toBe(0);
+    });
+
+    it('keeps a partially refunded order and nets its successful refunds out of the lifetime value', function (): void {
+        $customer = User::factory()->create();
+        $customer->assignRole(config('shopper.admin.roles.user'));
+
+        $order = Order::factory()->create([
+            'customer_id' => $customer->id,
+            'status' => OrderStatus::Completed->value,
+            'payment_status' => PaymentStatus::PartiallyRefunded->value,
+            'price_amount' => 200_00,
+            'currency_code' => shopper_currency(),
+        ]);
+
+        PaymentTransaction::factory()->refund()->create(['order_id' => $order->id, 'amount' => 50_00]);
+        PaymentTransaction::factory()->refund()->create([
+            'order_id' => $order->id,
+            'amount' => 10_00,
+            'status' => TransactionStatus::Pending,
+        ]);
+
+        $component = Livewire::test(Index::class);
+
+        expect($component->instance()->stats)
+            ->active_count->toBe(1)
+            ->avg_ltv->toBe(150_00);
+
+        $component->loadTable()->assertTableColumnStateSet('orders_count', 1, $customer);
     });
 })->group('livewire', 'customers');

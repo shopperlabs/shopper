@@ -45,7 +45,7 @@ class StatsPanel extends Component
             ->where('discount_id', $this->discount->id)
             ->whereHas('order', fn (Builder $query): Builder => $query
                 ->whereIn('status', $paidStatuses)
-                ->where('payment_status', PaymentStatus::Paid));
+                ->whereIn('payment_status', PaymentStatus::paidOrPartiallyRefunded()));
 
         $orderIds = $promotions()->pluck('order_id');
         $ordersCount = $orderIds->count();

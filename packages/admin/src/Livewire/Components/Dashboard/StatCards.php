@@ -9,12 +9,12 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
-use Shopper\Core\Enum\OrderRefundStatus;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Contracts\Order;
 use Shopper\Core\Models\Contracts\Product as ProductContract;
-use Shopper\Core\Models\OrderRefund;
+use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Models\PaymentTransaction;
 
 /**
  * @property-read array<int, array{label: string, value: string|int, change: float, trend: string, icon: string, route: string}> $cards
@@ -158,9 +158,10 @@ final class StatCards extends Component
             ->whereBetween('created_at', $period)
             ->sum('price_amount');
 
-        $refunded = (int) OrderRefund::query()
-            ->whereIn('status', OrderRefundStatus::settled())
-            ->where('currency', $currency)
+        $refunded = (int) PaymentTransaction::query()
+            ->ofType(TransactionType::Refund)
+            ->successful()
+            ->where('currency_code', $currency)
             ->whereBetween('created_at', $period)
             ->sum('amount');
 
@@ -172,14 +173,9 @@ final class StatCards extends Component
      */
     private function calculateChange(int $current, int $previous): array
     {
-        if ($previous <= 0) {
-            return [
-                'change' => $current > 0 ? 100.0 : 0.0,
-                'trend' => $current > 0 ? 'up' : 'neutral',
-            ];
-        }
-
-        $change = round((($current - $previous) / $previous) * 100, 1);
+        $change = $previous === 0
+            ? ($current <=> 0) * 100.0
+            : round((($current - $previous) / abs($previous)) * 100, 1);
 
         return [
             'change' => abs($change),

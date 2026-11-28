@@ -25,8 +25,11 @@ use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Models\Address;
+use Shopper\Core\Models\Contracts\Order;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Models\Contracts\ShopperUser;
+use Shopper\Payment\Enum\TransactionType;
+use Shopper\Payment\Models\PaymentTransaction;
 use Shopper\Sidebar\Breadcrumbs\Breadcrumb;
 use Shopper\Sidebar\Traits\WithBreadcrumbs;
 use Shopper\Traits\HandlesAuthorizationExceptions;
@@ -63,26 +66,10 @@ class Show extends AbstractPageComponent implements HasActions, HasSchemas
 
         $userModel = config('auth.providers.users.model');
 
-        $activeScope = fn (Builder $query): Builder => $query
-            ->whereIn('status', [
-                OrderStatus::Processing,
-                OrderStatus::Completed,
-            ])
-            ->where('payment_status', PaymentStatus::Paid);
-
-        $currencyScope = fn (Builder $query): Builder => $activeScope($query)
-            ->where('currency_code', shopper_currency());
-
         /** @var ShopperUser $customer */
         $customer = $userModel::query()
             ->customers()
             ->with(['addresses', 'addresses.country'])
-            ->withCount([
-                'orders as paid_orders_count' => $activeScope,
-                'orders as paid_orders_in_currency_count' => $currencyScope,
-            ])
-            ->withSum(['orders as paid_orders_total' => $currencyScope], 'price_amount')
-            ->withMax(['orders as paid_last_order_at' => $activeScope], 'created_at')
             ->findOrFail($user);
 
         $this->customer = $customer;
@@ -108,10 +95,43 @@ class Show extends AbstractPageComponent implements HasActions, HasSchemas
     #[Computed]
     public function stats(): array
     {
-        $count = (int) ($this->customer->paid_orders_count ?? 0);
-        $countInCurrency = (int) ($this->customer->paid_orders_in_currency_count ?? 0);
-        $total = (int) ($this->customer->paid_orders_total ?? 0);
-        $lastOrderAt = $this->customer->paid_last_order_at ?? null;
+        $userModel = config('auth.providers.users.model');
+
+        $activeScope = fn (Builder $query): Builder => $query
+            ->whereIn('status', [
+                OrderStatus::Processing,
+                OrderStatus::Completed,
+            ])
+            ->whereIn('payment_status', PaymentStatus::paidOrPartiallyRefunded());
+
+        $currencyScope = fn (Builder $query): Builder => $activeScope($query)
+            ->where('currency_code', shopper_currency());
+
+        $order = resolve(Order::class);
+
+        $customer = $userModel::query()
+            ->whereKey($this->customer->getKey())
+            ->withCount([
+                'orders as paid_orders_count' => $activeScope,
+                'orders as paid_orders_in_currency_count' => $currencyScope,
+            ])
+            ->withSum(['orders as paid_orders_total' => $currencyScope], 'price_amount')
+            ->withMax(['orders as paid_last_order_at' => $activeScope], 'created_at')
+            ->addSelect([
+                'paid_orders_refunded' => PaymentTransaction::query()
+                    ->selectRaw('SUM(amount)')
+                    ->ofType(TransactionType::Refund)
+                    ->successful()
+                    ->whereIn('order_id', $currencyScope(
+                        $order::query()->select('id')->whereColumn('customer_id', (new $userModel)->qualifyColumn('id'))
+                    )),
+            ])
+            ->firstOrFail();
+
+        $count = (int) ($customer->paid_orders_count ?? 0);
+        $countInCurrency = (int) ($customer->paid_orders_in_currency_count ?? 0);
+        $total = (int) ($customer->paid_orders_total ?? 0) - (int) ($customer->paid_orders_refunded ?? 0);
+        $lastOrderAt = $customer->paid_last_order_at ?? null;
 
         return [
             'ltv' => $total,

@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Enum\Operator;
+use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Enum\PaymentStatus;
 use Shopper\Core\Enum\Rule;
 use Shopper\Core\Models\Collection;
 use Shopper\Core\Models\CollectionRule;
+use Shopper\Core\Models\Order;
+use Shopper\Core\Models\OrderItem;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\Zone;
 
@@ -189,5 +193,40 @@ describe(Collection::class, function (): void {
         $products = (new Shopper\Core\Queries\CollectionProductsQuery)->get($collection->refresh());
 
         expect($products->pluck('id')->all())->toBe([$highRated->id]);
+    });
+
+    it('counts the sales of a partially refunded order in a sales count rule', function (): void {
+        $collection = Collection::factory()->create(['type' => CollectionType::Auto, 'match_conditions' => 'all']);
+
+        CollectionRule::factory()->create([
+            'collection_id' => $collection->id,
+            'rule' => Rule::ProductSalesCount,
+            'operator' => Operator::GreaterThan,
+            'value' => '1',
+        ]);
+
+        $sold = Product::factory()->publish()->create();
+        $soldThenRefundedInPart = Product::factory()->publish()->create();
+        $awaitingPayment = Product::factory()->publish()->create();
+
+        foreach ([
+            [$sold, PaymentStatus::Paid],
+            [$soldThenRefundedInPart, PaymentStatus::PartiallyRefunded],
+            [$awaitingPayment, PaymentStatus::Pending],
+        ] as [$product, $paymentStatus]) {
+            OrderItem::factory()->create([
+                'product_id' => $product->id,
+                'product_type' => $product->getMorphClass(),
+                'quantity' => 2,
+                'order_id' => Order::factory()->create([
+                    'status' => OrderStatus::Completed,
+                    'payment_status' => $paymentStatus,
+                ])->id,
+            ]);
+        }
+
+        $products = (new Shopper\Core\Queries\CollectionProductsQuery)->get($collection->refresh());
+
+        expect($products->pluck('id')->sort()->values()->all())->toBe([$sold->id, $soldThenRefundedInPart->id]);
     });
 })->group('collection', 'models');

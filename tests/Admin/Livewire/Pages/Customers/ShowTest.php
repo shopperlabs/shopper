@@ -12,6 +12,8 @@ use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Order;
 use Shopper\Livewire\Pages\Customers\Show;
+use Shopper\Payment\Enum\TransactionStatus;
+use Shopper\Payment\Models\PaymentTransaction;
 use Tests\Core\Stubs\User;
 
 uses(Tests\Admin\TestCase::class);
@@ -107,6 +109,59 @@ describe(Show::class, function (): void {
             ->and($stats['orders_count'])->toBe(2)
             ->and($stats['aov'])->toBe(150_00)
             ->and($stats['last_order_at'])->not->toBeNull();
+    });
+
+    it('keeps a partially refunded order and nets its successful refunds out of the lifetime value', function (): void {
+        $customer = makeCustomer();
+
+        $orders = Order::factory()->count(2)->sequence(
+            ['payment_status' => PaymentStatus::Paid->value],
+            ['payment_status' => PaymentStatus::PartiallyRefunded->value],
+        )->create([
+            'customer_id' => $customer->id,
+            'status' => OrderStatus::Completed->value,
+            'price_amount' => 200_00,
+        ]);
+
+        PaymentTransaction::factory()->refund()->create(['order_id' => $orders[1]->id, 'amount' => 50_00]);
+        PaymentTransaction::factory()->refund()->create([
+            'order_id' => $orders[1]->id,
+            'amount' => 10_00,
+            'status' => TransactionStatus::Pending,
+        ]);
+        PaymentTransaction::factory()->refund()->create([
+            'order_id' => Order::factory()->create([
+                'customer_id' => makeCustomer()->id,
+                'status' => OrderStatus::Completed->value,
+                'payment_status' => PaymentStatus::PartiallyRefunded->value,
+            ])->id,
+            'amount' => 70_00,
+        ]);
+
+        $stats = Livewire::test(Show::class, ['user' => $customer->id])->instance()->stats;
+
+        expect($stats['orders_count'])->toBe(2)
+            ->and($stats['ltv'])->toBe(350_00)
+            ->and($stats['aov'])->toBe(175_00);
+    });
+
+    it('keeps the lifetime value after a Livewire round trip', function (): void {
+        $customer = makeCustomer();
+
+        Order::factory()->create([
+            'customer_id' => $customer->id,
+            'status' => OrderStatus::Completed->value,
+            'payment_status' => PaymentStatus::Paid->value,
+            'price_amount' => 200_00,
+        ]);
+
+        $stats = Livewire::test(Show::class, ['user' => $customer->id])
+            ->call('$refresh')
+            ->instance()
+            ->stats;
+
+        expect($stats['orders_count'])->toBe(1)
+            ->and($stats['ltv'])->toBe(200_00);
     });
 
     it('counts paid orders regardless of currency for active state', function (): void {
