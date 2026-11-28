@@ -10,6 +10,7 @@
     "laravel/prompts": "^0.3.16",
     "rector/rector": "^2.4",
     "spatie/laravel-package-tools": "^1.9",
+    "spatie/laravel-permission": "^7.0",
     "symfony/process": "^7.0|^8.0"
   },
   "suggest": {
