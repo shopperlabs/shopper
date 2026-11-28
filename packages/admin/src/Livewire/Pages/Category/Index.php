@@ -72,7 +72,7 @@ class Index extends AbstractPageComponent implements HasActions, HasSchemas, Has
             ])
             ->filters([
                 TernaryFilter::make('is_enabled')
-                    ->label(__('shopper::words.is_enabled')),
+                    ->label(__('shopper::forms.label.visibility')),
             ])
             ->recordActions([
                 Action::make('edit')
